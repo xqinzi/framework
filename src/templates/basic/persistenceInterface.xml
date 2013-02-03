@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<persistenceInterface xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="persistenceInterfacePackage" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistenceInterfacePackageByModel(#{clazz})"/>
+	<set var="persistenceInterfaceName" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistenceInterfaceNameByModel(#{clazz})"/>
+	package @{persistenceInterfacePackage};
+	
+	import br.com.concepting.framework.persistence.interfaces.IDAO;
+	
+	/**
+	 * Interface contendo as assinaturas dos métodos que implementam a persistência do modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public interface @{persistenceInterfaceName} extends IDAO{
+	}
+</persistenceInterface>

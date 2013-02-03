@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<actionFormClass xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="actionFormPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormPackageByModel(#{clazz})"/>
+	<set var="actionFormName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
+	<set var="actionFormClassName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
+	<iterate var="propertyInfo" values="#{propertiesInfo}" start="0" end="0">
+		<set var="mainPropertyId" value="@{propertyInfo.id}"/>
+		<set var="mainPropertyName" value="@{mainPropertyClass.simpleName}"/>
+		<set var="mainPropertyClassName" value="@{mainPropertyClass.name}"/>
+		<set var="mainPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{propertyInfo.clazz})"/>
+		<set var="capitalizedMainPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{mainPropertyId})"/>
+	</iterate>
+	package @{actionFormPackage};
+	
+	import java.util.Collection;
+	
+	import br.com.concepting.framework.web.form.BaseActionForm;
+	 
+	import @{mainPropertyClassName};
+	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+		<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+			<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+			<set var="propertyClassName" value="@{propertyClass.name}"/>
+			import @{propertyClassName};
+		</if>
+	</iterate>
+	/**
+	 * Classe que define o formulário vinculado ao modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public class @{actionFormName} extends BaseActionForm{
+		private Collection&lt;@{mainPropertyName}&gt; @{mainPropertyId}s = null;
+		<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+				<set var="propertyId" value="@{propertyInfo.id}"/>
+				<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+				<set var="propertyName" value="@{propertyClass.simpleName}"/>
+				<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
+				private Collection&lt;@{propertyName}&gt; @{propertyId}s = null;
+			</if>
+		</iterate>
+		<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+				<set var="propertyId" value="@{propertyInfo.id}"/>
+				<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+				<set var="propertyName" value="@{propertyClass.simpleName}"/>
+				<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
+				/**
+				 * TODO: Colocar descrição do método get@{capitalizedPropertyId}s.
+				 *
+				 * @return TODO: Colocar descrição do retorno.
+				 */
+				public Collection&lt;@{propertyName}&gt; get@{capitalizedPropertyId}s(){
+					return @{propertyId}s;
+				}
+		
+				/**
+				 * TODO: Colocar descrição do método set@{capitalizedPropertyId}s.
+				 *
+				 * @param @{propertyId}s TODO: Colocar descrição do parâmetro @{propertyId}s.
+				 */
+				public void set@{capitalizedPropertyId}s(Collection&lt;@{propertyName}&gt; @{propertyId}s){
+					this.@{propertyId}s = @{propertyId}s;
+				}
+			</if>
+		</iterate>
+		/**
+		 * TODO: Colocar descrição do método get@{capitalizedMainPropertyId}s.
+		 *
+		 * @return TODO: Colocar descrição do retorno.
+		 */
+		public Collection&lt;@{mainPropertyName}&gt; get@{capitalizedMainPropertyId}s(){
+			return @{mainPropertyId}s;
+		}
+
+		/**
+		 * TODO: Colocar descrição do método set@{capitalizedMainPropertyId}s.
+		 *
+		 * @param @{mainPropertyId}s TODO: Colocar descrição do parâmetro @{mainProperty}s.
+		 */
+		public void set@{capitalizedMainPropertyId}s(Collection&lt;@{mainPropertyName}&gt; @{mainPropertyId}s){
+			this.@{mainPropertyId}s = @{mainPropertyId}s;
+		}
+	}
+</actionFormClass>

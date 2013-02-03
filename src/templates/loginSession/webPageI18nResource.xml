@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<webPageI18nResource>
+	input.label=Informações de acesso
+	input.tooltip=
+	
+	changePassword.label=Mudar senha
+	changePassword.tooltip=
+	changeLanguage.label=Mudar idioma
+	changeLanguage.tooltip=
+	changeSkin.label=Mudar tema
+	changeSkin.tooltip=
+	forgotPassword.label=Enviar nova senha
+	
+	lastLogin.label=Último login
+	lastLogin.tooltip=
+	
+	currentLanguage.label=Idioma
+	currentLanguage.tooltip=
+	currentSkin.label=Tema
+	currentSkin.tooltip=
+
+	user.name.label=Usuário
+	user.name.tooltip=
+	user.email.label=e-Mail
+	user.email.tooltip=
+	user.password.label=Senha
+	user.password.tooltip=
+	user.newPassword.label=Nova senha
+	user.newPassword.tooltip=
+	user.confirmPassword.label=Confirmação
+	user.confirmPassword.tooltip=
+</webPageI18nResource>

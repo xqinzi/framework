@@ -1,0 +1,165 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual calendário.
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+
+/**
+ * Estilo que define o dia corrente.
+ */
+.currentCalendarBoxDay{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 11px;
+	font-weight: bold;
+	color      : #ffffff;
+	width      : 25px;
+	height     : 20px;
+	text-align : center;
+	background : #1e8fad;
+	cursor     : pointer;
+}
+
+/**
+ * Estilo que define o conteúdo do componente.
+ */
+.calendarBoxContent{
+	border         : none;
+	border-collapse: collapse;
+}
+
+.calendarBoxText{
+	border-spacing : 0px;
+	padding        : 0px;
+}
+
+/**
+ * Estilo que define o componente.
+ */
+.calendarBox{
+	position             : absolute;
+    -webkit-box-shadow   : 2px 3px 4px #aaaaaa;
+    -moz-box-shadow      : 2px 3px 4px #aaaaaa;
+	box-shadow           : 2px 3px 4px #aaaaaa;
+	-ms-filter           : "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
+	filter               : progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+	border               : 1px solid #888888;
+	-webkit-border-radius: 3px;
+	-moz-border-radius   : 3px;
+	border-radius        : 3px;
+	background           : #ffffff;
+	text-align           : center;
+	width                : 200px;
+	visibility           : hidden;
+}
+ 
+/**
+ * Estilo que define o dia do calendário.
+ */
+.calendarBoxDay{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 11px;
+	color      : #666666;
+	width      : 25px;
+	height     : 20px;
+	text-align : center;
+	border     : 1px solid #888888;
+	background : #ffffff;
+	cursor     : pointer;
+}
+
+/**
+ * Estilo que define o texto contendo a data atual.
+ */
+.calendarBoxDisplay{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 11px;
+	color      : #666666;
+	text-align : center;
+}
+
+/**
+ * Estilo que define o dia selecionado do calendário.
+ */
+.calendarBoxSelectedDay{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 11px;
+	font-weight: bold;
+	color      : #1e8fad;
+	width      : 25px;
+	height     : 20px;
+	text-align : center;
+	border     : 1px solid #888888;
+	background : #ffffff;
+	cursor     : pointer;
+}
+
+/**
+ * Estilo que define o cabeçalho dos dias da semana.
+ */
+.calendarBoxWeekHeader{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 11px;
+	font-weight: bold;
+	border     : 1px outset #888888;
+	background : #888888;
+	color      : #ffffff;
+	text-align : center;
+	width      : 25px;
+	height     : 20px;
+}
+
+/**
+ * Estilo que define o botão do próximo mês.
+ */
+.nextMonthButton{
+	background: url(../images/nextPageButton.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define o botão do próximo ano.
+ */
+.nextYearButton{
+	background: url(../images/lastPageButton.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define o botão do mês anterior.
+ */
+.previousMonthButton{
+	background: url(../images/previousPageButton.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define o botão do ano anterior.
+ */
+.previousYearButton{
+	background: url(../images/firstPageButton.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define o botão para exibição do componente.
+ */
+.showCalendarBoxButton{
+	background: url(../images/showCalendarBoxButton.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}	

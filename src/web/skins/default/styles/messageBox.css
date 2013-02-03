@@ -1,0 +1,53 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual caixa de diálogo.
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+ 
+/**
+ * Estilo que define o ícone para mensagens informativas.
+ */
+.messageBoxInfoIcon{
+	background: url(../images/infoIcon.png) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o ícone para mensagens de erro.
+ */
+.messageBoxErrorIcon{
+	background: url(../images/errorIcon.gif) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o ícone para mensagens de alerta.
+ */
+.messageBoxWarningIcon{
+	background: url(../images/warningIcon.gif) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o ícone para mensagens de validação.
+ */
+.messageBoxValidationIcon{
+	background: url(../images/warningIcon.gif) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o detalhamento da mensagem de erro.
+ */
+.errorTrace{
+	height     : 150px;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 12px;
+	border     : 1px solid silver;
+	width      : 400px;
+}

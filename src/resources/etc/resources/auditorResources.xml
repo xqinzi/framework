@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<auditorResources>
+	<auditor id="default" level="debug" default="true">
+		<appenders>
+			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
+				<options>
+					<option id="layoutClass" value="br.com.concepting.framework.audit.appenders.AuditorPatternLayout"/>
+					<option id="layoutPattern" value="[#{date}][#{systemModule}][#{userName}][#{systemSession.ip}/#{systemSession.hostName}][#{entityId} - #{businessId}] #{businessComplement} -> #{statusCode} #{statusMessage}"/>
+				</options>
+			</appender>
+		</appenders>
+	</auditor>
+	<auditor id="generate.code" level="info">
+		<appenders>
+			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
+				<options>
+					<option id="layoutClass" value="br.com.concepting.framework.audit.appenders.AuditorPatternLayout"/>
+					<option id="layoutPattern" value="[#{date}][#{businessId}] #{businessComplement} -> #{statusCode} #{statusMessage}"/>
+				</options>
+			</appender>
+		</appenders>
+	</auditor>
+</auditorResources>

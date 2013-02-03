@@ -1,0 +1,95 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual barra de menus.
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+
+/**
+ * Estilo que define a barra de menus.
+ */
+.menuBar{
+	position  : relative;
+    background: white;
+    border    : none;
+    text-align: left;
+    height    : 25px;
+    padding   : 2px;
+}
+
+/**
+ * Estilo que define a caixa de submenus.
+ */
+.menuBox{
+	position          : absolute;
+    background        : white;
+    border            : 1px solid #888888;
+	-moz-box-shadow   : 2px 3px 4px #aaaaaa;
+	-webkit-box-shadow: 2px 3px 4px #aaaaaa;
+	box-shadow        : 2px 3px 4px #aaaaaa;	
+	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
+	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa');
+	padding           : 2px;
+}
+
+/**
+ * Estilo que define o conteúdo do componente.
+ */
+.menuContent{
+    border-collapse: collapse;
+	border         : none;
+	padding        : 0px;
+	border-spacing : 0px;
+	margin         : 0px; 
+}
+
+/**
+ * Estilo que define um item de menu.
+ */
+.menuItem{
+    font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+    font-size     : 14px;  
+    color         : #666666;
+    padding-left  : 4px;
+    padding-right : 4px;
+    padding-top   : 2px;
+    padding-bottom: 2px;
+    white-space   : nowrap;
+    cursor        : pointer;
+    height        : 25px;
+}
+
+/**
+ * Estilo que define um item de menu selecionado.
+ */
+.menuItemSelected{
+    font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+    font-size     : 14px;
+    color         : #ffffff;
+    background    : #1e8fad;
+    cursor        : pointer;
+    padding-left  : 4px;
+    padding-right : 4px;
+    padding-top   : 2px;
+    padding-bottom: 2px;
+    white-space   : nowrap;
+    height        : 25px;
+}
+
+/**
+ * Estilo que define a barra separadora vertical de itens de menu.
+ */
+.menuBarSeparator{
+    border-left: 1px solid #888888;
+    width      : 2px;
+    height     : 85%;
+}
+
+/**
+ * Estilo que define a barra separadora horizontal de itens de menu.
+ */
+.menuBoxSeparator{
+    border-top: 1px solid #888888;
+	width     : 95%;
+    height    : 2px;
+}

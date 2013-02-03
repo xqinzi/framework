@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<persistenceClass xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="persistencePackage" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistencePackageByModel(#{clazz})"/>
+	<set var="persistenceName" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistenceNameByModel(#{clazz})"/>
+	<set var="persistenceInterfaceName" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistenceInterfaceNameByModel(#{clazz})"/>
+	<set var="persistenceInterfaceClassName" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistenceInterfaceClassNameByModel(#{clazz})"/>
+	package @{persistencePackage};
+	
+	import br.com.concepting.framework.persistence.BaseDAO;
+	import br.com.concepting.framework.persistence.HibernateDAO;
+	
+	import @{persistenceInterfaceClassName};
+
+	/**
+	 * Classe que implementa a persistência do modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public class @{persistenceName} extends HibernateDAO implements @{persistenceInterfaceName}{
+		/**
+		 * Construtor - Inicializa classe de persistência abrindo uma nova transação.
+		 */	
+		public @{persistenceName}(){
+			super();
+		}
+
+		/**
+		 * Construtor - Inicializa a persistência utilizando uma outra conexão já utilizada.
+		 * 
+		 * @param persistence Instância da persistência desejada.
+		 */
+		public @{persistenceName}(BaseDAO persistence){
+			super(persistence);
+		}
+
+		/**
+		 * Construtor - Inicializa a persistência indicando que já aberta uma transação.
+		 * 
+		 * @param useTransaction Indica se irá usar transação.
+		 */
+		public @{persistenceName}(Boolean useTransaction){
+			super(useTransaction);
+		}
+	}
+</persistenceClass>

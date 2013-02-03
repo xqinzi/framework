@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<actionClass>
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="actionPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
+	<set var="actionName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
+	package @{actionPackage};
+	
+	import br.com.concepting.framework.web.action.BaseAction;
+	
+	/**
+	 * Classe que define as ações a serem executadas pelo formulário vinculado ao modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public class @{actionName} extends BaseAction{
+		/**
+		 * @see br.com.concepting.framework.web.action.BaseAction#init()
+		 */
+		public void init() throws Throwable{
+			super.init();
+			
+			/* TODO: Definir ação de inicialização */
+		}
+	}
+</actionClass>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<actionClass>
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="actionPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
+	<set var="actionName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
+	package @{actionPackage};
+
+	/**
+	 * Classe que define as ações a serem executadas pelo formulário vinculado ao modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public class @{actionName} extends br.com.concepting.framework.security.web.action.LoginSessionAction{
+	}
+</actionClass>

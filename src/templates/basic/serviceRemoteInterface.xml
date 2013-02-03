@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<serviceRemoteInterface xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="serviceInterfacePackage" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfacePackageByModel(#{clazz})"/>
+	<set var="serviceInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceNameByModel(#{clazz})"/>
+	<set var="serviceInterfaceClassName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceClassNameByModel(#{clazz})"/>
+	<set var="serviceRemoteInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceRemoteInterfaceNameByModel(#{clazz})"/>
+	package @{serviceInterfacePackage};
+
+	import @{serviceInterfaceClassName};
+	
+	import javax.ejb.EJBObject;
+	
+	/**
+	 * Interface remota contendo as assinaturas dos métodos que implementam as regras de negócio que envolvem o modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public interface @{serviceRemoteInterfaceName} extends EJBObject, @{serviceInterfaceName}{
+	}
+</serviceRemoteInterface>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<serviceHomeInterface xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="serviceInterfacePackage" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfacePackageByModel(#{clazz})"/>
+	<set var="serviceHomeInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceHomeInterfaceNameByModel(#{clazz})"/>
+	<set var="serviceRemoteInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceRemoteInterfaceNameByModel(#{clazz})"/>
+	package @{serviceInterfacePackage};
+
+	import javax.ejb.EJBHome;
+	import javax.ejb.CreateException;	
+	import java.rmi.RemoteException;
+	
+	/**
+	 * Interface contendo a estrutura básica para a instanciar a classe remota que implementa as regras de negócio que envolvem o modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public interface @{serviceHomeInterfaceName} extends EJBHome{
+		/**
+		 * Retorna a instância remota da classe que implementa as regras de negócio.
+		 *
+		 * @return Instância remota da classe que implementa as regras de negócio.
+		 * @throws CreateException
+		 * @throws RemoteException
+		 */
+		public @{serviceRemoteInterfaceName} create() throws CreateException, RemoteException;
+	}
+</serviceHomeInterface>

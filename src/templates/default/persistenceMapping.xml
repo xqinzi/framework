@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<persistenceMapping xmlns:concepting="default namespace">
+	<hibernate-mapping>
+		<set var="modelInfo" value="#{this}"/>
+		<class name="@{modelInfo.clazz.name}" table="@{modelInfo.mappedRepositoryId}" dynamic-insert="true" dynamic-update="true" lazy="true" batch-size="1000">
+			<set var="identityPropertiesInfoSize" value="@{modelInfo.identityPropertiesInfo}.size()"/>
+			<set var="hasMultipleIdentities" value="@{identityPropertiesInfoSize} > 1"/>
+			<if expr="!@{hasMultipleIdentities}">
+				<iterate var="identityPropertyInfo" values="@{modelInfo.identityPropertiesInfo}">
+					<if expr="@{identityPropertyInfo.isModel}">
+						<set var="hasMultipleIdentities" value="new java.lang.Boolean(true)"/>
+					</if>
+				</iterate>
+			</if>
+			<set var="mappedPropertiesControl" value="new java.util.LinkedList()"/>
+			<if expr="@{hasMultipleIdentities}">
+				<composite-id>
+					<iterate var="identityPropertyInfo" values="@{modelInfo.identityPropertiesInfo}">
+						<if expr="@{identityPropertyInfo.isModel}">
+							<if expr="@{identityPropertyInfo.foreignKeyId} == ''">
+								<key-many-to-one name="@{identityPropertyInfo.id}" class="@{identityPropertyInfo.clazz.name}" lazy="false">
+									<iterate var="mappedPropertyId" values="@{identityPropertyInfo.mappedPropertiesIds}">
+										<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+										<column name="@{mappedPropertyId}"/>
+									</iterate>
+								</key-many-to-one>
+							</if>
+							<if expr="@{identityPropertyInfo.foreignKeyId} != ''">
+								<key-many-to-one name="@{identityPropertyInfo.id}" class="@{identityPropertyInfo.clazz.name}" lazy="false" foreign-key="@{identityPropertyInfo.foreignKeyId}">
+									<iterate var="mappedPropertyId" values="@{identityPropertyInfo.mappedPropertiesIds}">
+										<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+										<column name="@{mappedPropertyId}"/>
+									</iterate>
+								</key-many-to-one>
+							</if>
+						</if>
+						<if expr="!@{identityPropertyInfo.isModel}">
+							<if expr="@{identityPropertyInfo.mappedPropertyId} != ''">
+								<evaluate expr="@{mappedPropertiesControl}.add(@{identityPropertyInfo.mappedPropertyId})"/>
+								<key-property name="@{identityPropertyInfo.id}" column="@{identityPropertyInfo.mappedPropertyId}"/>
+							</if>
+						</if>
+					</iterate>
+				</composite-id>
+			</if>
+			<if expr="!@{hasMultipleIdentities}">
+				<if expr="@{identityPropertiesInfoSize} > 0">
+					<iterate var="identityPropertyInfo" values="@{modelInfo.identityPropertiesInfo}">
+						<if expr="@{identityPropertyInfo.mappedPropertyId} != ''">
+							<id name="@{identityPropertyInfo.id}" column="@{identityPropertyInfo.mappedPropertyId}">
+							    <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
+									<generator class="native"/>
+								</if>
+								<if expr="!@{identityPropertyInfo.autoGenerateIdentity}">
+							    	<generator class="assigned"/>
+								</if>
+								<evaluate expr="@{mappedPropertiesControl}.add(@{identityPropertyInfo.mappedPropertyId})"/>
+							</id>
+						</if>
+					</iterate>
+				</if>
+				<if expr="@{identityPropertiesInfoSize} == 0">
+					<!-- TODO: As chaves primárias deste mapeamento devem ser definidas. -->
+				</if>
+			</if>
+			<iterate var="propertyInfo" values="@{modelInfo.propertiesInfo}">
+				<if expr="!@{propertyInfo.isIdentity}">
+					<set var="nullable" value="!@{propertyInfo.nullable}"/>
+					<set var="constrained" value="exception"/>
+					<if expr="!@{propertyInfo.constrained}">
+						<set var="constrained" value="ignore"/>
+					</if>
+					<if expr="@{propertyInfo.relationType} == 'none'">
+						<if expr="@{propertyInfo.isModel}">
+							<set var="mappedPropertiesIds" value="new java.util.LinkedList()"/>
+							<iterate var="mappedPropertyId" values="@{propertyInfo.mappedPropertiesIds}">
+								<evaluate expr="@{mappedPropertiesIds}.add(@{mappedPropertyId})"/>
+							</iterate>
+							<set var="componentPropertiesSize" value="@{mappedPropertiesIds}.size()"/>
+							<set var="hasComponentProperties" value="@{componentPropertiesSize} > 0"/>
+							<if expr="@{hasComponentProperties}">
+								<component name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}">
+									<iterate var="propertyId" values="@{propertyInfo.propertiesIds}" index="cont">
+										<set var="mappedPropertyId" value="@{mappedPropertiesIds}.get(@{cont})"/>
+										<if expr="@{mappedPropertyId} != ''">
+											<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{mappedPropertyId})"/>
+											<if expr="@{alreadyMapped}">
+												<property name="@{propertyId}" column="@{mappedPropertyId}" insert="false" update="false" not-null="@{nullable}"/>
+											</if>
+											<if expr="!@{alreadyMapped}">
+												<property name="@{propertyId}" column="@{mappedPropertyId}" not-null="@{nullable}"/>
+												<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+											</if>
+										</if>
+										<if expr="@{mappedPropertyId} == ''">
+											<if expr="@{propertyInfo.formula} != ''">
+												<property name="@{propertyId}" not-null="@{nullable}">
+													<formula>
+														@{propertyInfo.formula}
+													</formula>
+												</property>
+											</if>
+										</if>
+									</iterate>
+								</component>
+							</if>
+						</if>
+						<if expr="!@{propertyInfo.isModel}">
+							<if expr="@{propertyInfo.mappedPropertyId} != ''">
+								<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{propertyInfo.mappedPropertyId})"/>
+								<if expr="@{alreadyMapped}">
+									<if expr="@{propertyInfo.keyId} == ''">
+										<if expr="!@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" not-null="@{nullable}"/>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique="true" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique="true" not-null="@{nullable}"/>
+											</if>
+										</if>
+									</if>
+									<if expr="@{propertyInfo.keyId} != ''">
+										<if expr="!@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+											</if>
+										</if>
+									</if>
+								</if>
+								<if expr="!@{alreadyMapped}">
+									<if expr="@{propertyInfo.keyId} == ''">
+										<if expr="!@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" not-null="@{nullable}"/>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique="true" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique="true" not-null="@{nullable}"/>
+											</if>
+										</if>
+									</if>
+									<if expr="@{propertyInfo.keyId} != ''">
+										<if expr="!@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" index="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.isUnique}">
+											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
+											</if>
+											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
+												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+											</if>
+										</if>
+									</if>
+									<evaluate expr="@{mappedPropertiesControl}.add(@{propertyInfo.mappedPropertyId})"/>
+								</if>
+							</if>
+							<if expr="@{propertyInfo.mappedPropertyId} == ''">
+								<if expr="@{propertyInfo.formula} != ''">
+									<property name="@{propertyInfo.id}" not-null="@{nullable}">
+										<formula>
+											@{propertyInfo.formula}
+										</formula>
+									</property>
+								</if>
+							</if>
+						</if>
+					</if>
+					<if expr="@{propertyInfo.relationType} == 'oneToOne'">
+						<set var="mappedRelationPropertiesIds" value="new java.util.LinkedList()"/>
+						<iterate var="mappedRelationPropertyId" values="@{propertyInfo.mappedRelationPropertiesIds}">
+							<evaluate expr="@{mappedRelationPropertiesIds}.add(@{mappedRelationPropertyId})"/>
+						</iterate>
+						<set var="count" value="@{mappedRelationPropertiesIds}.size()"/>
+						<if expr="@{count} == 0">
+							<!-- TODO: As chaves do relacionamento '@{propertyInfo.id}' devem ser definidas. -->
+						</if>
+						<if expr="@{count} > 0">
+							<set var="alreadyMapped" value="new java.lang.Boolean(false)"/>
+							<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+								<if expr="@{mappedPropertiesControl}.contains(@{mappedRelationPropertyId})">
+									<set var="alreadyMapped" value="new java.lang.Boolean(true)"/>
+								</if>
+							</iterate>
+							<set var="cascade" value=""/>
+							<if expr="@{propertyInfo.cascadeOnSave}">
+								<if expr="@{propertyInfo.cascadeOnDelete}">
+									<set var="cascade" value="all"/>
+								</if>
+								<if expr="!@{propertyInfo.cascadeOnDelete}">
+									<set var="cascade" value="save-update"/>
+								</if>
+							</if>
+							<if expr="!@{propertyInfo.cascadeOnSave}">
+								<if expr="@{propertyInfo.cascadeOnDelete}">
+									<set var="cascade" value="delete"/>
+								</if>
+							</if>
+							<if expr="@{alreadyMapped}">
+								<if expr="@{propertyInfo.relationJoinType} != 'none'">
+									<if expr="@{cascade} != ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+									<if expr="@{cascade} == ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" insert="false" update="false" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+								</if>
+								<if expr="@{propertyInfo.relationJoinType} == 'none'">
+									<if expr="@{cascade} != ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+									<if expr="@{cascade} == ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" insert="false" update="false" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+								</if>
+							</if>
+							<if expr="!@{alreadyMapped}">
+								<if expr="@{propertyInfo.relationJoinType} != 'none'">
+									<if expr="@{cascade} != ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+									<if expr="@{cascade} == ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="false" fetch="join" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+								</if>
+								<if expr="@{propertyInfo.relationJoinType} == 'none'">
+									<if expr="@{cascade} != ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" cascade="@{cascade}" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+									<if expr="@{cascade} == ''">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" index="@{propertyInfo.keyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" index="@{propertyInfo.keyId}" unique="true" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<if expr="!@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" index="@{propertyInfo.keyId}" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+												<if expr="@{propertyInfo.isUnique}">
+													<many-to-one name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}" lazy="no-proxy" index="@{propertyInfo.keyId}" unique="true" foreign-key="@{propertyInfo.foreignKeyId}" not-null="@{nullable}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+														</iterate>
+													</many-to-one>
+												</if>
+											</if>
+										</if>
+									</if>
+								</if>
+							</if>
+						</if>
+					</if>
+					<if expr="@{propertyInfo.relationType} == 'oneToMany'">
+						<set var="mappedRelationPropertiesIds" value="new java.util.LinkedList()"/>
+						<iterate var="mappedRelationPropertyId" values="@{propertyInfo.mappedRelationPropertiesIds}">
+							<evaluate expr="@{mappedRelationPropertiesIds}.add(@{mappedRelationPropertyId})"/>
+						</iterate>
+						<set var="count" value="@{mappedRelationPropertiesIds}.size()"/>
+						<if expr="@{count} == 0">
+							<!-- TODO: As chaves do relacionamento '@{propertyInfo.id}' devem ser definidas. -->
+						</if>
+						<if expr="@{count} > 0">
+							<set var="relationModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{propertyInfo.collectionItemsClass})"/>
+							<set var="mappedRelationRepositoryId" value="@{relationModelInfo.mappedRepositoryId}"/>
+							<if expr="@{mappedRelationRepositoryId} == ''">
+								<!-- TODO: O repositório do relacionamento '@{propertyInfo.id}' deve ser definido. -->
+							</if>
+							<if expr="@{mappedRelationRepositoryId} != ''">
+								<set var="lazyLoading" value="@{propertyInfo.relationJoinType} == 'none'"/>
+								<set var="cascade" value=""/>
+								<if expr="@{propertyInfo.cascadeOnSave}">
+									<if expr="@{propertyInfo.cascadeOnDelete}">
+										<set var="cascade" value="save-update,delete-orphan"/>
+									</if>
+									<if expr="!@{propertyInfo.cascadeOnDelete}">
+										<set var="cascade" value="save-update"/>
+									</if>
+								</if>
+								<if expr="!@{propertyInfo.cascadeOnSave}">
+									<if expr="@{propertyInfo.cascadeOnDelete}">
+										<set var="cascade" value="delete-orphan"/>
+									</if>
+								</if>
+								<if expr="@{cascade} != ''">
+									<bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000" cascade="@{cascade}">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<key>
+												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+													<column name="@{mappedRelationPropertyId}"/>
+													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+												</iterate>
+											</key>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<key foreign-key="@{propertyInfo.foreignKeyId}">
+												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+													<column name="@{mappedRelationPropertyId}"/>
+													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+												</iterate>
+											</key>
+										</if>
+										<one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+									</bag>
+								</if>
+								<if expr="@{cascade} == ''">
+									<bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000">
+										<if expr="@{propertyInfo.foreignKeyId} == ''">
+											<key>
+												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+													<column name="@{mappedRelationPropertyId}"/>
+													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+												</iterate>
+											</key>
+										</if>
+										<if expr="@{propertyInfo.foreignKeyId} != ''">
+											<key foreign-key="@{propertyInfo.foreignKeyId}">
+												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+													<column name="@{mappedRelationPropertyId}"/>
+													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+												</iterate>
+											</key>
+										</if>
+										<one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+									</bag>
+								</if>
+							</if>
+						</if>
+					</if>
+					<if expr="@{propertyInfo.relationType} == 'manyToMany'">
+						<if expr="@{propertyInfo.mappedRelationRepositoryId} == ''">
+							<!-- TODO: O repositório do relacionamento '@{propertyInfo.id}' deve ser definido. -->
+						</if>
+						<if expr="@{propertyInfo.mappedRelationRepositoryId} != ''">
+							<set var="mappedPropertiesIds" value="new java.util.LinkedList()"/>
+							<iterate var="mappedPropertyId" values="@{propertyInfo.mappedPropertiesIds}">
+								<evaluate expr="@{mappedPropertiesIds}.add(@{mappedPropertyId})"/>
+							</iterate>
+							<set var="count" value="@{mappedPropertiesIds}.size()"/>
+							<if expr="@{count} == 0">
+								<iterate var="propertyId" values="@{propertyInfo.propertiesIds}">
+									<set var="parentPropertyInfo" value="@{modelInfo}.getProperty(@{propertyId})"/>
+									<if expr="@{parentPropertyInfo.mappedPropertyId} != ''">
+										<evaluate expr="@{mappedPropertiesIds}.add(@{parentPropertyInfo.mappedPropertyId})"/>
+									</if>
+								</iterate>
+							</if>
+							<set var="mappedRelationPropertiesIds" value="new java.util.LinkedList()"/>
+							<iterate var="mappedRelationPropertyId" values="@{propertyInfo.mappedRelationPropertiesIds}">
+								<set expr="@{mappedRelationPropertiesIds}.add(@{mappedRelationPropertyId})"/>
+							</iterate>
+							<if expr="@{count} == 0">
+								<!-- TODO: As chaves do relacionamento '@{propertyInfo.id}' devem ser definidas. -->
+							</if>
+							<if expr="@{count} > 0">
+								<set var="count" value="@{mappedRelationPropertiesIds}.size()"/>
+								<if expr="@{count} == 0">
+									<!-- TODO: As chaves do relacionamento '@{propertyInfo.id}' devem ser definidas. -->
+								</if>		
+								<if expr="@{count} > 0">
+									<set var="lazyLoading" value="@{propertyInfo.relationJoinType} == 'none'"/>
+									<set var="cascade" value=""/>
+									<if expr="@{propertyInfo.cascadeOnSave}">
+										<if expr="@{propertyInfo.cascadeOnDelete}">
+											<set var="cascade" value="save-update,delete-orphan"/>
+										</if>
+										<if expr="!@{propertyInfo.cascadeOnDelete}">
+											<set var="cascade" value="save-update"/>
+										</if>
+									</if>
+									<if expr="!@{propertyInfo.cascadeOnSave}">
+										<if expr="@{propertyInfo.cascadeOnDelete}">
+											<set var="cascade" value="delete-orphan"/>
+										</if>
+									</if>
+									<if expr="@{cascade} != ''">
+										<bag name="@{propertyInfo.id}" table="@{propertyInfo.mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000" cascade="@{cascade}">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<key>
+													<iterate var="mappedPropertyId" values="@{mappedPropertiesIds}">
+														<column name="@{mappedPropertyId}"/>
+														<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+													</iterate>
+												</key>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<key foreign-key="@{propertyInfo.keyId}">
+													<iterate var="mappedPropertyId" values="@{mappedPropertiesIds}">
+														<column name="@{mappedPropertyId}"/>
+														<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+													</iterate>
+												</key>
+											</if>
+											<if expr="!@{propertyInfo.hasModel}">
+												<set var="relationElementType" value="@{propertyInfo.collectionItemsClass.simpleName}"/>
+												<set var="relationElementType" value="@{relationElementType}.toLowerCase()"/>
+												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+													<element column="@{mappedRelationPropertyId}" type="@{relationElementType}"/>
+													<evaluate expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+												</iterate>
+											</if>
+											<if expr="@{propertyInfo.hasModel}">
+												<if expr="@{propertyInfo.foreignKeyId} == ''">
+													<many-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+															<evaluate expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+														</iterate>
+													</many-to-many>
+												</if>
+												<if expr="@{propertyInfo.foreignKeyId} != ''">
+													<many-to-many class="@{propertyInfo.collectionItemsClass.name}" foreign-key="@{propertyInfo.foreignKeyId}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+															<evaluate expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+														</iterate>
+													</many-to-many>
+												</if>
+											</if>
+										</bag>
+									</if>
+									<if expr="@{cascade} == ''">
+										<bag name="@{propertyInfo.id}" table="@{propertyInfo.mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000">
+											<if expr="@{propertyInfo.keyId} == ''">
+												<key>
+													<iterate var="mappedPropertyId" values="@{mappedPropertiesIds}">
+														<column name="@{mappedPropertyId}"/>
+														<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+													</iterate>
+												</key>
+											</if>
+											<if expr="@{propertyInfo.keyId} != ''">
+												<key foreign-key="@{propertyInfo.keyId}">
+													<iterate var="mappedPropertyId" values="@{mappedPropertiesIds}">
+														<column name="@{mappedPropertyId}"/>
+														<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+													</iterate>
+												</key>
+											</if>
+											<if expr="!@{propertyInfo.hasModel}">
+												<set var="relationElementType" value="@{propertyInfo.collectionItemsClass.simpleName}"/>
+												<set var="relationElementType" value="@{relationElementType}.toLowerCase()"/>
+												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+													<element column="@{mappedRelationPropertyId}" type="@{relationElementType}"/>
+													<evaluate expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+												</iterate>
+											</if>
+											<if expr="@{propertyInfo.hasModel}">
+												<if expr="@{propertyInfo.foreignKeyId} == ''">
+													<many-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+															<evaluate expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+														</iterate>
+													</many-to-many>
+												</if>
+												<if expr="@{propertyInfo.foreignKeyId} != ''">
+													<many-to-many class="@{propertyInfo.collectionItemsClass.name}" foreign-key="@{propertyInfo.foreignKeyId}" not-found="@{constrained}">
+														<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+															<column name="@{mappedRelationPropertyId}"/>
+															<evaluate expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+														</iterate>
+													</many-to-many>
+												</if>
+											</if>
+										</bag>
+									</if>
+								</if>		
+							</if>
+						</if>
+					</if>
+				</if>
+			</iterate>
+		</class>
+	</hibernate-mapping>
+</persistenceMapping>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<factoryResources>
+	<contextFactory>
+		<factory id="glassfish" type="glassfish" default="true">
+			<class>com.sun.enterprise.naming.SerialInitContextFactory</class>
+			<url>iiop://#{serverName}:#{serverPort}</url>
+		</factory>
+		<factory id="jboss" type="jboss">
+			<class>org.jnp.interfaces.NamingContextFactory</class>
+			<url>jnp://#{serverName}:#{serverPort}</url>
+		</factory>
+	</contextFactory>
+	<ldapFactory>
+		<factory id="ldap" default="true">
+			<class>com.sun.jndi.ldap.LdapCtxFactory</class>
+			<url>ldap://#{serverName}:#{serverPort}/#{domain}</url>
+		</factory>
+	</ldapFactory>
+	<persistenceFactory>
+		<factory id="mssql" type="mssql">
+			<class>net.sourceforge.jtds.jdbc.Driver</class>
+			<url>jdbc:jtds:sqlserver://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+		<factory id="sybase" type="sybase">
+			<class>net.sourceforge.jtds.jdbc.Driver</class>
+			<url>jdbc:jtds:sybase://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+		<factory id="db2" type="db2">
+			<class>COM.ibm.db2.jdbc.app.DB2Driver</class>
+			<url>jdbc:db2://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+		<factory id="oracle" type="oracle">
+			<class>oracle.jdbc.driver.OracleDriver</class>
+			<url>jdbc:oracle:thin:@#{serverName}:#{serverPort}:#{repositoryId}</url>
+		</factory>
+		<factory id="mysql" type="mysql" default="true">
+			<class>com.mysql.jdbc.Driver</class>
+			<url>jdbc:mysql://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+		<factory id="postgresql" type="postgresql">
+			<class>org.postgresql.Driver</class>
+			<url>jdbc:postgresql://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+		<factory id="firebird" tyoe="firebird">
+			<class>org.firebirdsql.jdbc.FBDriver</class>
+			<url>jdbc:firebirdsql://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+		<factory id="informix" type="informix">
+			<class>com.informix.jdbc.IfxDriver</class>
+			<url>jdbc:informix-sqli://#{serverName}:#{serverPort}/#{repositoryId}</url>
+		</factory>
+	</persistenceFactory>
+</factoryResources>

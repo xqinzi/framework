@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<serviceClass xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="servicePackage" value="br.com.concepting.framework.service.util.ServiceUtil.getServicePackageByModel(#{clazz})"/>
+	<set var="serviceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceNameByModel(#{clazz})"/>
+	<set var="serviceInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceNameByModel(#{clazz})"/>
+	<set var="serviceInterfaceClassName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceClassNameByModel(#{clazz})"/>
+	package @{servicePackage};
+	
+	import br.com.concepting.framework.security.service.LoginSessionServiceImpl;
+	
+	import @{serviceInterfaceClassName};
+	
+	/**
+	 * Classe que implementa as regras de negócio que envolvem o modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public class @{serviceName} extends LoginSessionServiceImpl implements @{serviceInterfaceName}{
+	}
+</serviceClass>

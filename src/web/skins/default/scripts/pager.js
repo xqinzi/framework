@@ -1,0 +1,174 @@
+/**
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual 
+ * pager (paginador).
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+
+/**
+ * Executa uma ação de paginação.
+ * 
+ * @param name String contendo o identificador do componente.
+ * @param action String contendo a ação desejada.
+ * @param updateViews
+ * @param form String contendo o identificador do formulário.
+ */
+function pagerAction(name, action, updateViews, form){
+	if(!form)
+		return;
+
+	var object = document.getElementById(name + ".pagerAction");
+	
+	if(object)
+		object.value = action;
+	
+	object = document.forms[form].elements["updateViews"];
+	
+	if(object)
+		object.value = updateViews;
+
+	if(form)	
+		submitForm(document.forms[form]);
+}
+
+/**
+ * Atualiza a página atual.
+ * 
+ * @param name String contendo o identificador do componente.
+ * @param updateViews
+ * @param form String contendo o identificador do formulário.
+ */
+function refreshPage(name, updateViews, form){
+	if(form)
+		document.forms[form].action.value = "refresh";
+
+	pagerAction(name, "refreshPage", updateViews, form);
+}
+
+/**
+ * Move para a primeira página.
+ * 
+ * @param name String contendo o identificador do componente.
+ * @param updateViews
+ * @param form String contendo o identificador do formulário.
+ */
+function moveToFirstPage(name, updateViews, form){
+	if(form)
+		document.forms[form].action.value = "refresh";
+	
+	var pagerOnForm = usePagerOnForm(name);
+	
+	if(pagerOnForm){
+		var object = document.getElementById(name);
+		
+		if(object)
+			object.value = "objectId{0}"; 
+	}
+	
+	pagerAction(name, "firstPage", updateViews, form);
+}
+
+/**
+ * Move para a página anterior.
+ * 
+ * @param name String contendo o identificador do componente.
+ * @param updateViews
+ * @param form String contendo o identificador do formulário.
+ */
+function moveToPreviousPage(name, updateViews, form){
+	if(form)
+		document.forms[form].action.value = "refresh";
+
+	var pagerOnForm = usePagerOnForm(name);
+	
+	if(pagerOnForm){
+		var pagerIndex = getPagerIndex(name);
+		var object     = document.getElementById(name);
+			
+		if(object)
+			object.value = ("objectId{" + (pagerIndex - 1) + "}"); 
+	}
+
+	pagerAction(name, "previousPage", updateViews, form);
+}
+
+/**
+ * Move para a próxima página.
+ * 
+ * @param name String contendo o identificador do componente.
+ * @param updateViews
+ * @param form String contendo o identificador do formulário.
+ */
+function moveToNextPage(name, updateViews, form){
+	if(form)
+		document.forms[form].action.value = "refresh";
+
+	var pagerOnForm = usePagerOnForm(name);
+	
+	if(pagerOnForm){
+		var pagerIndex = getPagerIndex(name);
+		var object     = document.getElementById(name);
+			
+		if(object)
+			object.value = ("objectId{" + (pagerIndex + 1) + "}");
+	}
+
+	pagerAction(name, "nextPage", updateViews, form);
+}
+
+/**
+ * Move para a última página.
+ * 
+ * @param name String contendo o identificador do componente.
+ * @param updateViews
+ * @param form String contendo o identificador do formulário.
+ */
+function moveToLastPage(name, updateViews, form){
+	if(form)
+		document.forms[form].action.value = "refresh";
+
+	var pagerOnForm = usePagerOnForm(name);
+	
+	if(pagerOnForm){
+		var object = document.getElementById(name + ".dataValuesEndIndex");
+		
+		if(object){
+			var pagerEndIndex = parseInt(object.value); 
+			var object        = document.getElementById(name);
+			
+			if(object)
+				object.value = ("objectId{" + pagerEndIndex + "}"); 
+		}
+	}
+
+	pagerAction(name, "lastPage", updateViews, form);
+}
+
+function usePagerOnForm(name){
+	var object = document.getElementById(name + ".pagerOnForm");
+	
+	if(object)
+		if(object.value == "true")
+			return true;
+	
+	return false;
+}
+
+function getPagerIndex(name){
+	var object = document.getElementById(name);
+	
+	if(object){
+		var objectValue = object.value;
+		
+		if(objectValue.indexOf("objectId") >= 0){
+			var objectIndex = replaceAll(objectValue, "objectId{", "");
+			
+			objectIndex = replaceAll(objectIndex, "}", "");
+			
+			return parseInt(objectIndex);
+		}
+	}
+	
+	return 0;
+}

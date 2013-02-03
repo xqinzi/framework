@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<actionFormMapping>
+	<struts-config>
+		<form-beans>
+			<form-bean name="" type=""/>
+		</form-beans>
+		<global-exceptions>
+			<exception type="java.lang.Exception" key="" handler="br.com.concepting.framework.web.ActionExceptionHandler" path="/errorPage.jsp" scope="session"/>
+		</global-exceptions>
+		<global-forwards>
+			<forward name="index" path="/index.jsp"/>
+		</global-forwards>
+		<action-mappings>
+			<action path="" type="" name="" parameter="" input=""/>
+		</action-mappings>
+	</struts-config>
+</actionFormMapping>

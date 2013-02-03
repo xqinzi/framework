@@ -1,0 +1,93 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual barra de progresso.
+ * 
+ * @author fvilarinho
+ * @version 2.0
+ */
+
+/**
+ * Estilo que define o lado esquerdo da barra de progresso.
+ */
+.leftProgressBar{
+	background    : url(../images/leftProgressBar.gif) no-repeat;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o espaço vazio da barra de progresso.
+ */
+.emptyProgressBar{
+	background    : url(../images/emptyProgressBar.gif) repeat-x;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o espaço preenchido (genérico) da barra de progresso.
+ */
+.generalProgressBar{
+	background    : url(../images/generalProgressBar.gif) repeat-x;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o espaço preenchido (normal) da barra de progresso.
+ */
+.normalProgressBar{
+	background    : url(../images/normalProgressBar.gif) repeat-x;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o espaço preenchido (warning) da barra de progresso.
+ */
+.warningProgressBar{
+	background    : url(../images/warningProgressBar.gif) repeat-x;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o espaço preenchido (crítico) da barra de progresso.
+ */
+.criticalProgressBar{
+	background    : url(../images/criticalProgressBar.gif) repeat-x;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o lado direito da barra de progresso.
+ */
+.rightProgressBar{
+	background    : url(../images/rightProgressBar.gif) no-repeat;
+	width         : 1px;
+	height        : 17px;
+	padding       : 0px;
+	border-spacing: 0px;
+}
+
+/**
+ * Estilo que define o texto da barra de progresso.
+ */
+.progressBarText{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 12px; 
+	white-space: nowrap;
+	color      : #666666;
+}

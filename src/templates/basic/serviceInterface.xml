@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<serviceInterface xmlns:concepting="default namespace">
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="serviceInterfacePackage" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfacePackageByModel(#{clazz})"/>
+	<set var="serviceInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceNameByModel(#{clazz})"/>
+	package @{serviceInterfacePackage};
+	
+	import br.com.concepting.framework.audit.annotations.Auditable;
+	import br.com.concepting.framework.service.interfaces.IService;
+	
+	/**
+	 * Interface contendo as assinaturas dos métodos que implementam as regras de negócio que envolvem o modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	@Auditable 
+	public interface @{serviceInterfaceName} extends IService{
+	}
+</serviceInterface>

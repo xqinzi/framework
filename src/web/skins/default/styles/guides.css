@@ -1,0 +1,141 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual guias.
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+ 
+/**
+ * Estilo que define a guia atual.
+ */
+.currentGuide{
+	-webkit-border-top-left-radius : 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft     : 3px;
+	-moz-border-radius-topright    : 3px;
+	border-top-left-radius         : 3px;
+	border-top-right-radius        : 3px;
+	border-top                     : 1px solid #888888;
+	border-left                    : 1px solid #888888;
+	border-right                   : 1px solid #888888;
+	border-bottom                  : none;
+	background                     : url(../images/currentGuide.gif) repeat-x;
+	border-spacing                 : 0px;
+	padding                        : 1px;
+	text-align                     : center;
+	font-weight                    : bold;
+	color                          : #666666;
+	cursor                         : pointer;
+	height                         : 26px;
+}
+			
+/**
+ * Estilo que define o conteúdo da guia atual.
+ */
+.currentGuideContent{
+	-webkit-border-bottom-left-radius : 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft     : 3px;
+	-moz-border-radius-bottomright    : 3px;
+	border-bottom-left-radius         : 3px;
+	border-bottom-right-radius        : 3px;
+	border-bottom                     : 1px solid #888888;
+	border-left                       : 1px solid #888888;
+	border-right                      : 1px solid #888888;
+	border-top                        : none;
+	background                        : #efefef;
+	border-spacing                    : 0px;
+	padding                           : 1px;
+	font-family                       : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size                         : 12px;
+	color                             : #666666;
+	width                             : 100%;
+}
+
+/**
+ * Estilo que define o conjunto de botões das guias.
+ */
+.currentGuideBoxButtons{
+	background: #efefef;
+	height    : 40px;
+	text-align: right;
+}	
+
+/**
+ * Estilo que define o componente.
+ */
+.guides{
+	border-collapse: collapse;
+	border-spacing : 0px;
+	padding        : 0px;
+	margin         : 0px;
+}
+ 
+/**
+ * Estilo que define uma guia.
+ */
+.guide{
+	-webkit-border-top-left-radius : 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft     : 3px;
+	-moz-border-radius-topright    : 3px;
+	border-top-left-radius         : 3px;
+	border-top-right-radius        : 3px;
+	border                         : 1px solid #888888;
+	background                     : url(../images/guide.gif) repeat-x;
+	border-spacing                 : 0px;
+	padding                        : 1px;
+	text-align                     : center;
+	font-weight                    : normal;
+	color                          : #666666;
+	cursor                         : pointer;
+	height                         : 25px;
+}
+			
+/**
+ * Estilo que define a definição das guias.
+ */
+.guidesDefinition{
+	padding       : 0px;
+	border-spacing: 0px;
+	margin        : 0px;
+}
+
+/**
+ * Estilo que define a definição de uma guia.
+ */
+.guideDefinition{
+	padding       : 0px;
+	border-spacing: 0px;
+	margin        : 0px;
+}
+
+/**
+ * Estilo que define o label de uma guia.
+ */
+.guideLabel{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 14px;
+}
+
+/**
+ * Estilo que define o botão cuja a ação é posicionar na guia anterior.
+ */
+.previousGuideButton{
+	background: url(../images/firstPageButton.png) no-repeat;
+	width     : 24px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define o botão cuja a ação é posicionar na próxima guia.
+ */
+.nextGuideButton{
+	background: url(../images/lastPageButton.png) no-repeat;
+	width     : 24px;
+	height    : 20px;
+	border    : none;
+	cursor    : pointer;
+}

@@ -1,0 +1,131 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual grid.
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+
+/**
+ * Estilo que define o ícone de ordenação ascendente.
+ */
+.ascendOrderIcon{
+	background: url("../images/ascendOrderIcon.gif") no-repeat;
+	width     : 9px;
+	height    : 10px;
+	border    : none;
+}
+	
+/**
+ * Estilo que define o ícone de ordenação descendente.
+ */
+.descendOrderIcon{
+	background: url("../images/descendOrderIcon.gif") no-repeat;
+	width     : 9px;
+	height    : 10px;
+	border    : none;
+}
+
+/**
+ * Estilo que define o cabeçalho do componente.
+ */
+.gridHeader{
+	background : url(../images/gridHeader.gif);
+	color      : #ffffff;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 12px;
+	font-weight: bold;
+	padding    : 1px;
+	border     : 1px outset #efefef;
+	height     : 25px;
+}
+
+/**
+ * Estilo que define os links do cabeçalho do componente.
+ */
+.gridHeaderLink{
+	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size      : 12px;
+	text-decoration: none;
+	color          : #ffffff;
+	cursor         : pointer;
+}
+
+/**
+ * Estilo que define o efeito de passagem do mouse em um link do cabeçalho do componente.
+ */
+.gridHeaderLink:hover{
+	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size      : 12px;
+	text-decoration: underline;
+	color          : #ffffff;
+}
+
+/**
+ * Estilo que define o efeito de um link ativo do cabeçalho do componente.
+ */
+.gridHeaderLink:active{
+	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size      : 12px;
+	text-decoration: none;
+	color          : #ffffff;
+}
+
+/**
+ * Estilo que define os links dos detalhes do componente.
+ */
+.gridDetailLink{
+	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size      : 12px;
+	text-decoration: none;
+	color          : #666666;
+	cursor         : pointer;
+}
+
+/**
+ * Estilo que define o efeito de passagem do mouse em um link dos detalhes do componente.
+ */
+.gridDetailLink:hover{
+	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size      : 12px;
+	text-decoration: underline;
+	color          : #666666;
+	cursor         : pointer;
+}
+
+/**
+ * Estilo que define o efeito de um link ativo dos detalhes do componente.
+ */
+.gridDetailLink:active{
+	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size      : 12px;
+	text-decoration: none;
+	color          : #666666;
+}
+
+/**
+ * Estilo que define o agrupamento dos detalhes do componente.
+ */
+.gridAggregate{
+	background : #eaeace;
+	padding    : 1px;
+	color      : #666666;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-weight: bold;
+	font-size  : 12px;
+	border     : 1px outset #fffffa;
+	height     : 25px;
+}
+
+/**
+ * Estilo que define os detalhes do componente.
+ */
+.gridDetail{
+	background : #fffffa;
+	padding    : 1px;
+	color      : #666666;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-weight: normal;
+	font-size  : 12px;
+	border     : 1px outset #fffffa;
+	height     : 25px;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<networkResources>
+	<mailResources>
+		<mail id="localhost" default="true">
+			<serverName>localhost</serverName>
+			<transport type="smtp" port="25"/>
+			<storage type="pop3" port="110"/>
+		</mail>
+	</mailResources>
+	<ldapResources>
+		<ldap id="localhost" default="true">
+			<serverName>localhost</serverName>
+			<serverPort>389</serverPort>
+			<domain>localdomain</domain>
+		</ldap>
+	</ldapResources>
+</networkResources>

@@ -1,0 +1,105 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual 
+ treeView (árvore).
+ * 
+ * @author fvilarinho
+ * @version 1.0
+ */
+
+/**
+ * Estilo que define o componente.
+ */
+.treeView{
+	background           : #ffffff;
+	padding              : 5px;
+    border-spacing       : 0px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius   : 3px;
+	border-radius        : 3px;
+	border               : 1px solid #888888;
+	width                : 200px;
+}
+
+/**
+ * Estilo que define o label de um nó do treeView (árvore).
+ */
+.nodeLabel{
+	border     : none;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 12px;	
+	color      : #666666;
+	cursor     : pointer;
+	white-space: nowrap;
+}	
+
+/**
+ * Estilo que define o label de um nó selecionado do treeView (árvore).
+ */
+.nodeLabelSelected{
+	border     : none;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 14px;
+	font-weight: bold;	
+	color      : #1e8fad;
+	cursor     : pointer;
+	white-space: nowrap;
+}
+
+/**
+ * Estilo que define o ícone de um nó do treeView (árvore).
+ */
+.nodeIcon{
+	background : url(../images/nodeIcon.gif) no-repeat;
+	width      : 20px;
+	height     : 20px;
+	cursor     : pointer;
+}
+
+/**
+ * Estilo que define o ícone de nó (não expandido) com filhos.
+ */
+.closedFolderIcon{
+	background: url(../images/closedFolderIcon.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	cursor    : pointer;
+}	
+
+/**
+ * Estilo que define o ícone de nó (expandido) com filhos.
+ */
+.openedFolderIcon{
+	background: url(../images/openedFolderIcon.png) no-repeat;
+	width     : 20px;
+	height    : 20px;
+	cursor    : pointer;
+}	
+
+/**
+ * Estilo que define o ícone de expansão de um nó.
+ */
+.openLeafIcon{
+	background: url(../images/openLeafIcon.gif) no-repeat;
+	width     : 16px;
+	height    : 20px;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define o ícone de retração de um nó.
+ */
+.closeLeafIcon{
+	background: url(../images/closeLeafIcon.gif) no-repeat;
+	width     : 16px;
+	height    : 20px;
+	cursor    : pointer;
+}
+
+/**
+ * Estilo que define uma linha tracejada, usada na ligação entre os nós.
+ */
+.trace{
+	background: url(../images/trace.gif) no-repeat;
+	width     : 16px;
+	height    : 20px;
+}

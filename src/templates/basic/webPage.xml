@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<webPage xmlns:concepting="default namespace" 
+         xmlns:jsp="default namespace" 
+         xmlns:c="default namespace">
+    <set var="modelInfo" value="#{this}"/>
+    <set var="actionFormObjectId" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormObjectIdByModel(#{clazz})"/>
+    <set var="actionFormUrl" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormUrlByModel(#{clazz})"/>
+    <set var="actionFormResourceId" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormResourceIdByModel(#{clazz})"/>
+	<iterate var="mainPropertyInfo" values="@{modelInfo.propertiesInfo}" start="0" end="0">
+		<set var="mainPropertyId" value="@{mainPropertyInfo.id}"/>
+		<set var="mainPropertyClass" value="@{mainPropertyInfo.clazz}"/>
+		<set var="mainPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{mainPropertyClass})"/>
+	</iterate>
+	<set var="searchPropertiesInfo" value="@{mainPropertyModelInfo.searchPropertiesInfo}"/>
+	<set var="searchPropertiesInfoSize" value="@{searchPropertiesInfo}.size()"/>
+	<set var="identityPropertiesInfo" value="@{mainPropertyModelInfo.identityPropertiesInfo}"/>
+	<set var="identityPropertiesInfoSize" value="@{identityPropertiesInfo}.size()"/>
+	<set var="hasMultipleIdentities" value="@{identityPropertiesInfoSize} > 1"/>
+	<set var="mainPropertyIdentityId" value="@{mainPropertyId}"/>
+	<if expr="!@{hasMultipleIdentities}">
+		<iterate var="identityPropertyInfo" values="@{identityPropertiesInfo}" start="0" end="0">
+			<set var="mainPropertyIdentityId" value="@{mainPropertyIdentityId}.concat('.').concat(@{identityPropertyInfo.id})"/>
+		</iterate>
+	</if>
+	&lt;%@ page errorPage="/errorPage.jsp"%&gt;
+	&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;
+	&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%&gt;
+	&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%&gt;
+	&lt;%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%&gt;
+	&lt;%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%&gt;
+	&lt;%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%&gt;
+	&lt;%@ taglib uri="http://www.concepting.com.br/framework/tags" prefix="concepting"%&gt;
+	
+	<concepting:page title="${loginSession.systemModule}">
+		<concepting:form action="@{actionFormUrl}" resourceId="@{actionFormResourceId}">
+			<jsp:include page="/headerPage.jsp"/>
+			<table class="content">
+				<tr>
+					<td align="center">
+						<table class="panel">
+							<tr>
+								<td align="center">
+									<concepting:guides name="guides" width="60%">
+										<concepting:guide name="list">
+											<if expr="@{searchPropertiesInfoSize} > 0">
+												<concepting:searchPropertiesGroup>
+													<iterate var="searchPropertyInfo" values="@{searchPropertiesInfo}">
+														<if expr="@{searchPropertyInfo.mappedPropertyId} != '' or @{searchPropertyInfo.relationType} != 'none'">
+															<if expr="@{searchPropertyInfo.isModel} or @{searchPropertyInfo.hasModel}">
+																<concepting:list name="@{mainPropertyId}.@{searchPropertyInfo.id}" data="@{searchPropertyInfo.id}s"/>
+															</if>
+															<if expr="@{searchPropertyInfo.isDate}">
+																<concepting:calendar name="@{mainPropertyId}.@{searchPropertyInfo.id}"/>
+															</if>
+															<if expr="@{searchPropertyInfo.isBoolean}">
+																<concepting:check name="@{mainPropertyId}.@{searchPropertyInfo.id}"/>
+															</if>
+															<if expr="!@{searchPropertyInfo.isDate} and !@{searchPropertyInfo.isBoolean} and !@{searchPropertyInfo.isModel} and !@{searchPropertyInfo.hasModel}">
+																<concepting:text name="@{mainPropertyId}.@{searchPropertyInfo.id}"/>
+															</if>
+														</if>
+													</iterate>
+												</concepting:searchPropertiesGroup>
+											</if>
+											<concepting:grid name="@{mainPropertyIdentityId}" data="@{mainPropertyId}s" width="100%">
+												<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+													<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'none'">
+														<if expr="@{propertyInfo.isByteArray}">
+															<concepting:gridColumn name="@{propertyInfo.id}" resourceKey="@{mainPropertyId}.@{propertyInfo.id}" isImage="true" imageWidth="60"/>
+														</if>
+														<if expr="!@{propertyInfo.isByteArray}">
+															<concepting:gridColumn name="@{propertyInfo.id}" resourceKey="@{mainPropertyId}.@{propertyInfo.id}"/>
+														</if>
+													</if>
+												</iterate>
+												<concepting:pager/>
+												<concepting:addButton/>
+												<concepting:editButton/>
+												<concepting:deleteButton messageKey="confirmMessage"/>
+											</concepting:grid>
+										</concepting:guide>
+										<c:if test="${@{actionFormObjectId}.action == 'add' or @{actionFormObjectId}.action == 'edit' or (@{actionFormObjectId}.action == 'refresh' and (@{actionFormObjectId}.lastAction == 'add' or @{actionFormObjectId}.lastAction == 'edit'))}">
+											<concepting:guide name="input">
+												<fieldset class="group">
+													<legend class="groupLabel">
+														<concepting:label resourceKey="inputFieldset.label"/>:											
+													</legend>
+													<table>
+														<tr>
+															<td>
+																<c:choose>
+																	<c:when test="${@{actionFormObjectId}.action == 'edit'}">
+																		<iterate var="identityPropertyInfo" values="@{mainPropertyModelInfo.identityPropertiesInfo}">
+																			<concepting:label name="@{mainPropertyId}.@{identityPropertyInfo.id}"/>
+																		</iterate>
+																	</c:when>
+																	<c:when test="${@{actionFormObjectId}.action == 'add'}">
+																		<iterate var="identityPropertyInfo" values="@{mainPropertyModelInfo.identityPropertiesInfo}">
+																			<if expr="!@{identityPropertyInfo.autoGenerateIdentity} or !@{identityPropertyInfo.isNumber} or @{hasMultipleIdentities}">
+																				<if expr="@{identityPropertyInfo.isModel}">
+																					<concepting:list name="@{mainPropertyId}.@{identityPropertyInfo.id}" data="@{identityPropertyInfo.id}s"/>
+																				</if>
+																				<if expr="@{identityPropertyInfo.isDate}">
+																					<concepting:calendar name="@{mainPropertyId}.@{identityPropertyInfo.id}"/>
+																				</if>
+																				<if expr="@{identityPropertyInfo.isBoolean}">
+																					<concepting:check name="@{mainPropertyId}.@{identityPropertyInfo.id}"/>
+																				</if>
+																				<if expr="!@{identityPropertyInfo.isDate} and !@{identityPropertyInfo.isBoolean} and !@{identityPropertyInfo.isModel}">
+																					<concepting:text name="@{mainPropertyId}.@{identityPropertyInfo.id}"/>
+																				</if>
+																			</if>
+																		</iterate>
+																	</c:when>
+																</c:choose>
+																<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+																	<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'none'">
+																		<if expr="!@{propertyInfo.isIdentity}">
+																			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+																				<concepting:list name="@{mainPropertyId}.@{propertyInfo.id}" data="@{propertyInfo.id}s"/>
+																			</if>
+																			<if expr="@{propertyInfo.isDate}">
+																				<concepting:calendar name="@{mainPropertyId}.@{propertyInfo.id}"/>
+																			</if>
+																			<if expr="@{propertyInfo.isBoolean}">
+																				<concepting:check name="@{mainPropertyId}.@{propertyInfo.id}"/>
+																			</if>
+																			<if expr="@{propertyInfo.isByteArray}">
+																				<concepting:image name="@{mainPropertyId}.@{propertyInfo.id}" width="50"/>
+																			</if>
+																			<if expr="!@{propertyInfo.isDate} and !@{propertyInfo.isBoolean} and !@{propertyInfo.isModel} and !@{propertyInfo.hasModel} and !@{propertyInfo.isByteArray}">
+																				<concepting:text name="@{mainPropertyId}.@{propertyInfo.id}"/>
+																			</if>
+																		</if>
+																	</if>
+																</iterate>
+															</td>
+														</tr>
+													</table>
+												</fieldset>
+												<table class="panel">
+													<tr>
+														<td align="center">
+															<br/>
+															<concepting:confirmButton action="save" messageKey="confirmMessage" validate="true"/>
+															<concepting:backButton/>
+														</td>
+													</tr>
+												</table>
+												<c:if test="${@{actionFormObjectId}.action == 'add' or @{actionFormObjectId}.action == 'edit'}">
+													<concepting:script>
+														setCurrentGuide("input", "guides");
+													</concepting:script>
+												</c:if>
+											</concepting:guide>
+										</c:if>
+									</concepting:guides>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<jsp:include page="/footerPage.jsp"/>
+		</concepting:form>
+	</concepting:page>
+</webPage>

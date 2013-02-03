@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+
+<project name="ConceptingFramework" default="build">
+	<property file="build.properties"/>
+
+	<taskdef classname="br.com.concepting.framework.processors.ant.ProjectTask" name="project">
+		<classpath>
+			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+	
+	<taskdef classname="br.com.concepting.framework.processors.ant.SharedModulesBuildTask" name="sharedModulesBuild">
+		<classpath>
+			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<taskdef classname="br.com.concepting.framework.processors.ant.EjbModuleBuildTask" name="ejbModuleBuild">
+		<classpath>
+			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<taskdef classname="br.com.concepting.framework.processors.ant.WebModuleBuildTask" name="webModuleBuild">
+		<classpath>
+			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<taskdef classname="br.com.concepting.framework.processors.ant.WebServiceModuleBuildTask" name="webServiceModuleBuild">
+		<classpath>
+			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</taskdef>
+
+	<property name="remoteServices" value="${java.io.tmpdir}/${ant.project.name}/remoteServices.xml"/>
+	<property name="ejbDescriptor" value="build/modules/ejb/META-INF/ejb-jar.xml"/>
+	<property name="webServiceDescriptor" value="build/modules/webServices/META-INF/services.xml"/>
+	<property name="webDescriptor" value="src/web/WEB-INF/web.xml"/>
+	<condition property="build.ejb.module">
+		<or>
+			<available file="${ejbDescriptor}"/>
+			<available file="${remoteServices}"/>
+		</or>
+	</condition>
+	
+	<available file="${webDescriptor}" property="build.web.module"/>
+	<available file="${webServiceDescriptor}" property="build.web.services.module"/>
+	<available file="logo.jpg" property="display.splash"/>
+	
+	<target name="display.splash" if="display.splash">
+		<splash imageurl="file:./logo.jpg" showduration="0"/>
+	</target>
+	
+	<target name="new.project">
+		<antcall target="display.splash" taskname="new.project"/>
+
+		<echo message="${new.project.message}" taskname="new.project"/>
+		
+		<project action="create"/>
+		
+		<echo message="${ide.import.message}" taskname="new.project"/>
+		<echo message="${logo.message}" taskname="new.project"/>
+	</target>
+	
+	<target name="copy.dependencies">
+		<antcall target="display.splash" taskname="copy.dependencies"/>
+
+		<echo message="${copy.dependencies.message}" taskname="copy.dependencies"/>
+		
+		<project action="copyDependencies"/>
+	</target>
+	
+	<target name="clean">
+		<antcall target="display.splash" taskname="clean"/>
+
+		<echo message="${clean.message}" taskname="clean"/>
+		
+		<delete includeemptydirs="true" failonerror="false" taskname="clean.modules">
+			<fileset file="${remoteServices}"/>
+			<fileset dir="build/modules/" includes="**/*.xml"/>
+			<fileset dir="src/resources/etc/resources/mappings" includes="**/*.xml"/>
+			<fileset dir="src/web/META-INF" includes="**/*.xml"/>
+			<fileset dir="src/web/WEB-INF" includes="**/*.xml"/>
+		</delete>
+
+		<antcall target="clean.compile" taskname="clean"/>
+		<antcall target="clean.modules" taskname="clean"/>
+	</target>
+	
+	<target name="clean.compile">
+		<antcall target="display.splash" taskname="clean.compile"/>
+		
+		<echo message="${clean.compile.message}" taskname="clean.compile"/>
+
+		<delete includeemptydirs="true" failonerror="false" taskname="clean.compile">
+			<fileset dir="build/compile" includes="**/*.class"/>
+		</delete>
+	</target>
+	
+	<target name="clean.modules">
+		<antcall target="display.splash" taskname="clean.modules"/>
+
+		<echo message="${clean.modules.message}" taskname="clean.modules"/>
+
+		<delete includeemptydirs="true" taskname="clean.modules">
+			<fileset dir="build/modules" includes="**/*.?ar"/>
+		</delete>
+	</target>
+
+	<target name="compile">
+		<antcall target="display.splash" taskname="compile"/>
+
+		<echo message="${compile.message}" taskname="compile"/>
+		
+		<project action="createStructure"/>
+		
+		<javac srcdir="src/java" destdir="build/compile" source="1.6" target="1.6" includeantruntime="false" encoding="iso-8859-1" debug="${debug.mode}" nowarn="true" optimize="true" taskname="compile">
+			<classpath>
+				<fileset dir="dependencies/compile">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="build" depends="compile">
+		<antcall target="display.splash" taskname="build"/>
+
+		<echo message="${build.message}" taskname="build"/>
+		
+		<antcall target="build.shared.modules" taskname="build"/>
+		<antcall target="build.ejb.module" taskname="build"/>
+		<antcall target="build.web.module" taskname="build"/>
+		<antcall target="build.web.services.module" taskname="build"/>
+	</target>
+	
+	<target name="build.shared.modules">
+		<antcall target="display.splash" taskname="build.shared.modules"/>
+
+		<echo message="${build.shared.modules.message}" taskname="build.shared.modules"/>
+
+		<sharedModulesBuild taskname="build.shared.modules"/>
+	</target>
+
+	<target name="build.ejb.module" if="build.ejb.module">
+		<antcall target="display.splash" taskname="build.ejb.module"/>
+
+		<echo message="${build.ejb.module.message}" taskname="build.ejb.module"/>
+
+		<ejbModuleBuild taskname="build.ejb.module"/>
+	</target>
+
+	<target name="build.web.module" if="build.web.module">
+		<antcall target="display.splash" taskname="build.web.module"/>
+
+		<echo message="${build.web.module.message}" taskname="build.web.module"/>
+
+		<webModuleBuild taskname="build.web.module"/>
+	</target>
+	
+	<target name="build.web.services.module" if="build.web.services.module">
+		<antcall target="display.splash" taskname="build.web.services.module"/>
+
+		<echo message="${build.web.services.module.message}" taskname="build.web.services.module"/>
+
+		<webServiceModuleBuild taskname="build.web.services.module"/>
+	</target>
+
+	<target name="dist">
+		<antcall target="display.splash" taskname="dist"/>
+
+		<echo message="${dist.message}" taskname="dist"/>
+		
+		<antcall target="dist.shared.modules" taskname="dist"/>
+		<antcall target="dist.ejb.module" taskname="dist"/>
+		<antcall target="dist.web.module" taskname="dist"/>
+		<antcall target="dist.web.services.module" taskname="dist"/>
+	</target>
+	
+	<target name="dist.shared.modules">
+		<antcall target="display.splash" taskname="dist.shared.modules"/>
+
+		<echo message="${dist.shared.modules.message}" taskname="dist.shared.modules"/>
+
+		<copy todir="dist" file="build/modules/${ant.project.name}.jar" failonerror="false" overwrite="true" taskname="dist"/>
+		<copy todir="dist" file="build/modules/${ant.project.name}-resources.jar" failonerror="false" overwrite="true" taskname="dist"/>
+	</target>
+
+	<target name="dist.ejb.module" if="build.ejb.module">
+		<antcall target="display.splash" taskname="dist.ejb.module"/>
+
+		<echo message="${dist.ejb.module.message}" taskname="dist.ejb.module"/>
+
+		<copy todir="dist/ejb" file="build/modules/ejb/${ant.project.name}-ejb.jar" failonerror="false" overwrite="true" taskname="dist.ejb.module"/>
+		<copy todir="dist/ejb" file="build/modules/ejb/${ant.project.name}-ejb.ear" failonerror="false" overwrite="true" taskname="dist.ejb.module"/>
+	</target>
+
+	<target name="dist.web.module" if="build.web.module">
+		<antcall target="display.splash" taskname="dist.web.module"/>
+
+		<echo message="${dist.web.module.message}" taskname="dist.web.module"/>
+
+		<copy todir="dist/web" file="build/modules/web/${ant.project.name}.war" failonerror="false" overwrite="true" taskname="dist.web.module"/>
+		<copy todir="dist/web" file="build/modules/web/${ant.project.name}-web.ear" failonerror="false" overwrite="true" taskname="dist.web.module"/>
+	</target>
+
+	<target name="dist.web.services.module" if="build.web.services.module">
+		<antcall target="display.splash" taskname="dist.web.services.module"/>
+
+		<echo message="${dist.web.services.module.message}" taskname="dist.web.services.module"/>
+
+		<copy todir="dist/webServices" file="build/modules/webServices/${ant.project.name}.aar" failonerror="false" overwrite="true" taskname="dist.web.services.module"/>
+	</target>
+
+	<target name="deploy">
+		<antcall target="display.splash" taskname="deploy"/>
+
+		<echo message="${deploy.message}" taskname="deploy"/>
+		
+		<antcall target="deploy.ejb.module" taskname="deploy"/>
+		<antcall target="deploy.web.module" taskname="deploy"/>
+		<antcall target="deploy.web.services.module" taskname="deploy"/>
+	</target>
+
+	<target name="deploy.ejb.module" if="build.ejb.module">
+		<antcall target="display.splash" taskname="deploy.ejb.module"/>
+
+		<echo message="${deploy.ejb.module.message}" taskname="deploy.ejb.module"/>
+
+		<copy todir="${APPSERVER_DEPLOY_HOME}" file="dist/ejb/${ant.project.name}-ejb.ear" failonerror="false" overwrite="true" taskname="deploy.ejb.module"/>
+	</target>
+
+	<target name="deploy.web.module" if="build.web.module">
+		<antcall target="display.splash" taskname="deploy.web.module"/>
+
+		<echo message="${deploy.web.module.message}" taskname="deploy.web.module"/>
+
+		<copy todir="${APPSERVER_DEPLOY_HOME}" file="dist/web/${ant.project.name}-web.ear" failonerror="false" overwrite="true" taskname="deploy.web.module"/>
+	</target>
+
+	<target name="deploy.web.services.module" if="build.web.services.module">
+		<antcall target="display.splash" taskname="deploy.web.services.module"/>
+
+		<echo message="${deploy.web.services.module.message}" taskname="deploy.web.services.module"/>
+
+		<copy todir="${APPSERVER_DEPLOY_HOME}/axis2/WEB-INF/services" file="dist/webServices/${ant.project.name}.aar" failonerror="false" overwrite="true" taskname="deploy.web.services.module"/>
+	</target>
+
+	<target name="undeploy">
+		<antcall target="display.splash" taskname="undeploy"/>
+
+		<echo message="${undeploy.message}" taskname="undeploy"/>
+		
+		<delete failonerror="false" taskname="undeploy">
+			<fileset dir="${APPSERVER_DEPLOY_HOME}">
+				<include name="**/${ant.project.name}*.?ar"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="generate.code">
+		<antcall target="display.splash" taskname="generate.code"/>
+
+		<echo message="${generate.code.message}" taskname="generate.code"/>
+		
+		<javac srcdir="src/java" destdir="build/compile" source="1.6" target="1.6" includeantruntime="false" encoding="iso-8859-1" debug="${debug.mode}" nowarn="true" optimize="true" taskname="generate.code">
+			<include name="**/model/*.java"/>
+			<include name="**/service/**/*.java"/>
+			<classpath>
+				<fileset dir="dependencies/compile">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<apt srcdir="src/java" source="1.5" target="1.5" includeantruntime="false" encoding="iso-8859-1" factory="br.com.concepting.framework.processors.AnnotationProcessorFactory" compile="false" nowarn="true" optimize="true" taskname="generate.code">
+			<include name="**/model/*.java"/>
+			<classpath>
+				<dirset dir="build/compile"/>
+				<fileset dir="dependencies/compile">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</apt>
+		
+		<antcall target="compile" taskname="generate.code"/>
+	</target>
+	
+	<target name="generate.documentation">
+		<antcall target="display.splash" taskname="generate.documentation"/>
+
+		<echo message="${generate.documentation.message}" taskname="generate.documentation"/>
+
+		<javadoc packagenames="br.com.concepting.framework.*"
+			     destdir="docs/api" 
+				 public="true"
+			     author="true"
+			     version="true"
+			     use="false"
+			     splitindex="true"
+			     nohelp="true"
+			     windowtitle="${ant.project.name}"
+				 taskname="generate.documentation">
+			<sourcepath path="src/java"/>
+			<sourcepath path="src/tests"/>
+			<classpath>
+				<fileset dir="dependencies/compile">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</javadoc>
+	</target>
+	
+	<target name="generate.site">
+		<antcall target="display.splash" taskname="generate.site"/>
+	</target>
+</project>

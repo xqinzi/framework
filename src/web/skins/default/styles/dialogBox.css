@@ -1,0 +1,51 @@
+.dialogBox{
+	position  : absolute;
+	visibility: hidden;
+	z-index   : 101;
+}
+
+/**
+ * Estilo que define o texto do título do componente.
+ */
+.dialogBoxTitle{
+	background : url(../images/messageBoxTitle.gif) repeat-x;
+	color      : #666666;
+	height     : 25px;
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 14px;
+	font-weight: bold;
+	text-align : Center;
+	white-space: nowrap;
+}
+
+/**
+ * Estilo que define o conteúdo do componente.
+ */
+.dialogBoxContent{
+	-webkit-box-shadow   : 2px 3px 4px #aaaaaa;
+	-moz-box-shadow      : 2px 3px 4px #aaaaaa;
+	box-shadow           : 2px 3px 4px #aaaaaa;	
+	-ms-filter           : "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
+	filter               : progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa');
+	-webkit-border-radius: 3px;
+	-moz-border-radius   : 3px;
+	border-radius        : 3px;
+	border               : 1px solid #aaaaaa;         
+	background           : #efefef;
+	border-spacing       : 0px;
+	padding              : 1px;
+}
+
+/**
+ * Estilo que define o conteúdo do componente.
+ */
+.dialogBoxText{
+	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size     : 12px;
+	background    : #efefef;
+	color         : #666666;
+	width         : 100%;
+	border        : none;
+	border-spacing: 0px;
+	padding       : 0px;	
+} 

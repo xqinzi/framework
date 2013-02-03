@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<actionClass>
+	<set var="modelName" value="#{clazz.simpleName}"/>
+	<set var="modelClassName" value="#{clazz.name}"/>
+	<set var="actionPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
+	<set var="actionName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
+	<set var="actionFormClassName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
+	<set var="actionFormName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
+	<iterate var="mainPropertyInfo" values="#{propertiesInfo}" start="0" end="0">
+		<set var="mainPropertyId" value="@{mainPropertyInfo.id}"/>
+		<set var="mainPropertyClass" value="@{mainPropertyInfo.clazz}"/>
+		<set var="mainPropertyName" value="@{mainPropertyClass.simpleName}"/>
+		<set var="mainPropertyClassName" value="@{mainPropertyClass.name}"/>
+		<set var="mainPropertyServiceInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceNameByModel(@{mainPropertyClass})"/>
+		<set var="mainPropertyServiceInterfaceClassName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceClassNameByModel(@{mainPropertyClass})"/>
+		<set var="mainPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{mainPropertyClass})"/>
+		<set var="capitalizedMainPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{mainPropertyId})"/>
+	</iterate>
+	<set var="identityPropertiesInfo" value="@{mainPropertyModelInfo.identityPropertiesInfo}"/>
+	<set var="identityPropertiesInfoSize" value="@{identityPropertiesInfo}.size()"/>
+	<set var="hasMultipleIdentities" value="@{identityPropertiesInfoSize} > 1"/>
+	<set var="mainPropertyIdentityId" value=""/>
+	<if expr="!@{hasMultipleIdentities}">
+		<iterate var="mainPropertyInfo" values="@{identityPropertiesInfo}" start="0" end="0">
+			<set var="mainPropertyIdentityId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{mainPropertyInfo.id})"/>
+		</iterate>
+	</if>
+	package @{actionPackage};
+
+	import br.com.concepting.framework.web.action.BaseAction;
+	 
+	<if expr="@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != ''">
+		import java.util.Collection;
+		
+		import br.com.concepting.framework.model.exceptions.ItemNotSelectedException;
+	
+		import @{modelClassName};
+		import @{mainPropertyServiceInterfaceClassName};
+		import @{mainPropertyClassName};
+	</if>
+	import @{actionFormClassName};
+	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+		<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+			<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+			<set var="propertyClassName" value="@{propertyClass.name}"/>
+			<set var="propertyServiceInterfaceClassName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceClassNameByModel(@{propertyClass})"/>
+			import @{propertyClassName};
+			import @{propertyServiceInterfaceClassName};
+		</if>
+	</iterate>
+	
+	/**
+	 * Classe que define as ações a serem executadas pelo formulário vinculado ao modelo de dados '@{modelName}'.
+	 *
+	 * @author @{user}
+	 * @version 1.0
+	 * @since @{now}
+	 */
+	public class @{actionName} extends BaseAction{
+		/**
+		 * @see br.com.concepting.framework.web.action.BaseAction#init()
+		 */
+		public void init() throws Throwable{
+			super.init();
+			
+			search();
+		}
+		<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+				<set var="propertyId" value="@{propertyInfo.id}"/>
+				<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+				<set var="propertyName" value="@{propertyClass.simpleName}"/>
+				<set var="propertyServiceInterfaceName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceNameByModel(@{propertyClass})"/>
+				<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
+				/**
+				 * TODO: Colocar descrição do método list@{capitalizedPropertyId}s.
+				 *
+				 * @throws Throwable
+				 */
+				public void list@{capitalizedPropertyId}s() throws Throwable{
+					@{actionFormName} form = getActionForm();
+					@{propertyServiceInterfaceName} service = getService(@{propertyName}.class);
+					Collection&lt;@{propertyName}&gt; @{propertyId}s = service.list();
+					
+					form.set@{capitalizedPropertyId}s(@{propertyId}s);
+				}
+			</if>
+		</iterate>
+	    /**
+		 * TODO: Colocar descrição do método search.
+		 *
+		 * @throws Throwable
+		 */
+		public void search() throws Throwable{
+			@{actionFormName} form = getActionForm();
+			<if expr="!@{mainPropertyModelInfo.generatePersistence} and @{mainPropertyModelInfo.mappedRepositoryId} == ''">
+				//Metódo search não pode ser executado corretamente pois o modelo dados definido na propriedade '@{mainPropertyId}' não foi parametrizado para realizar persistência.
+			</if>
+			<if expr="(@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != '')">
+				@{modelName} model = form.getSearchModel();
+				@{mainPropertyName} @{mainPropertyId} = model.get@{capitalizedMainPropertyId}();
+				@{mainPropertyServiceInterfaceName} service = getService(@{mainPropertyName}.class);
+				Collection&lt;@{mainPropertyName}&gt; @{mainPropertyId}s = service.search(@{mainPropertyId});
+		  	   
+				form.set@{capitalizedMainPropertyId}s(@{mainPropertyId}s);
+			</if>
+			form.setModel(null);
+		}
+		  
+		/**
+		 * TODO: Colocar descrição do método add.
+		 *
+		 * @throws Throwable
+		 */
+		public void add() throws Throwable{
+			@{actionFormName} form = getActionForm();
+
+			form.setModel(null);
+
+			<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+				<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+					<set var="propertyId" value="@{propertyInfo.id}"/> 
+					<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
+					list@{capitalizedPropertyId}s();
+				</if>
+			</iterate>
+		}
+
+		/**
+		 * TODO: Colocar descrição do método edit.
+		 *
+		 * @throws Throwable
+		 */
+		public void edit() throws Throwable{
+			<if expr="!@{mainPropertyModelInfo.generatePersistence} and @{mainPropertyModelInfo.mappedRepositoryId} == ''">
+				//Metódo edit não pode ser executado corretamente pois o modelo dados definido na propriedade '@{mainPropertyId}' não foi parametrizado para realizar persistência.
+			</if>
+			<if expr="(@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != '')">
+				@{actionFormName} form = getActionForm();
+				@{modelName} model = form.getModel();
+				@{mainPropertyName} @{mainPropertyId} = model.get@{capitalizedMainPropertyId}();
+		  		<if expr="@{mainPropertyIdentityId} == ''">
+					//TODO: As chaves primárias do modelo de dados definido na propriedade '@{mainPropertyId}' não foram definidas.
+				</if>
+			  	<if expr="@{mainPropertyIdentityId} != ''">
+				  	<if expr="!@{hasMultipleIdentities}">   
+						if(@{mainPropertyId} == null || @{mainPropertyId}.get@{mainPropertyIdentityId}() == null || @{mainPropertyId}.get@{mainPropertyIdentityId}() == 0) throw new ItemNotSelectedException();
+					</if>
+				  	<if expr="@{hasMultipleIdentities}">
+						if(@{mainPropertyId} == null) throw new ItemNotSelectedException();
+				  	</if>
+				</if>
+				
+				@{mainPropertyServiceInterfaceName} service = getService(@{mainPropertyName}.class);
+				@{mainPropertyId} = service.find(@{mainPropertyId});
+				  	   
+				model.set@{capitalizedMainPropertyId}(@{mainPropertyId});
+	
+				form.setModel(model);
+			</if>
+			<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
+				<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
+					<set var="propertyId" value="@{propertyInfo.id}"/> 
+					<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
+					list@{capitalizedPropertyId}s();
+				</if>
+			</iterate>
+		}
+
+		/**
+		 * TODO: Colocar descrição do método delete.
+		 *
+		 * @throws Throwable
+		 */
+		public void delete() throws Throwable{
+			<if expr="!@{mainPropertyModelInfo.generatePersistence} and @{mainPropertyModelInfo.mappedRepositoryId} == ''">
+				//Metódo delete não pode ser executado corretamente pois o modelo dados definido na propriedade '@{mainPropertyId}' não foi parametrizado para realizar persistência.
+			</if>
+			<if expr="(@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != '')">
+				@{actionFormName} form = getActionForm();
+				@{modelName} model = form.getModel();
+				@{mainPropertyName} @{mainPropertyId} = model.get@{capitalizedMainPropertyId}();
+		  		<if expr="@{mainPropertyIdentityId} == ''">
+					//TODO: As chaves primárias do modelo de dados definido na propriedade '@{mainPropertyId}' não foram definidas.
+				</if>
+			  	<if expr="@{mainPropertyIdentityId} != ''">
+				  	<if expr="!@{hasMultipleIdentities}">   
+						if(@{mainPropertyId} == null || @{mainPropertyId}.get@{mainPropertyIdentityId}() == null || @{mainPropertyId}.get@{mainPropertyIdentityId}() == 0) throw new ItemNotSelectedException();
+					</if>
+				  	<if expr="@{hasMultipleIdentities}">
+						if(@{mainPropertyId} == null) throw new ItemNotSelectedException();
+				  	</if>
+				</if>
+				
+				@{mainPropertyServiceInterfaceName} service = getService(@{mainPropertyName}.class);
+				  	   
+				service.delete(@{mainPropertyId});
+			</if>
+			actionFormMessageController.addSuccessMessage();
+		  	   
+			search();
+		}
+
+		/**
+		 * TODO: Colocar descrição do método save.
+		 *
+		 * @throws Throwable
+		 */
+		public void save() throws Throwable{
+			<if expr="!@{mainPropertyModelInfo.generatePersistence} and @{mainPropertyModelInfo.mappedRepositoryId} == ''">
+				//Metódo delete não pode ser executado corretamente pois o modelo dados definido na propriedade '@{mainPropertyId}' não foi parametrizado para realizar persistência.
+			</if>
+			<if expr="(@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != '')">
+				@{actionFormName} form = getActionForm();
+				@{modelName} model = form.getModel();
+				@{mainPropertyName} @{mainPropertyId} = model.get@{capitalizedMainPropertyId}();
+				@{mainPropertyServiceInterfaceName} service = getService(@{mainPropertyName}.class);
+				  	   
+				service.save(@{mainPropertyId});
+			</if>
+			actionFormMessageController.addSuccessMessage();
+		  	   
+			search();
+		}
+	}
+</actionClass>
