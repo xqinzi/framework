@@ -72,6 +72,11 @@ public interface IDAO extends ICrud{
 	 */
 	public <C> C openConnection() throws InternalErrorException;
 	
+	/**
+	 * Inicia uma transação de persistência.
+	 * 
+	 * @throws InternalErrorException
+	 */
 	public void begin() throws InternalErrorException;
 	
 	/**

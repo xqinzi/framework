@@ -1183,6 +1183,9 @@ public abstract class HibernateDAO extends BaseDAO{
 		super.rollback();
 	}
 	
+	/**
+	 * @see br.com.concepting.framework.persistence.BaseDAO#begin()
+	 */
 	public void begin() throws InternalErrorException{
         if(useTransaction()){
             if(getTransaction() == null){
