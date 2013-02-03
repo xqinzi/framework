@@ -50,10 +50,20 @@ public class ObjectModel extends BaseModel{
 	@Property(relationType = RelationType.MANY_TO_MANY)
 	private List<GroupModel> groups = null;
 	
+	/**
+	 * Retorna a lista de grupos vinculados ao objeto.
+	 * 
+	 * @return Lista contendo a lista de grupos.
+	 */
 	public List<GroupModel> getGroups(){
         return groups;
     }
 
+    /**
+     * Define a lista de grupos vinculados ao objeto.
+     * 
+     * @param groups Lista contendo a lista de grupos.
+     */
     public <G extends GroupModel> void setGroups(List<G> groups){
         this.groups = (List)groups;
     }

@@ -34,10 +34,20 @@ public class ModelInfo extends CachedObject{
 	private Boolean            generateService          = false;
 	private ServiceType        serviceType              = ServiceType.CLASS;
 	
+	/**
+	 * Retorna o tipo de serviço a ser usado para geração de código.
+	 * 
+	 * @return Constante que define o tipo de serviço.
+	 */
 	public ServiceType getServiceType(){
         return serviceType;
     }
 
+    /**
+     * Define o tipo de serviço a ser usado para geração de código.
+     * 
+     * @param serviceType Constante que define o tipo de serviço.
+     */
     public void setServiceType(ServiceType serviceType){
         this.serviceType = serviceType;
     }

@@ -48,18 +48,38 @@ public enum ContextFactoryType implements IEnum{
 		setDefaultServerPort(defaultServerPort);
 	}
 
+	/**
+	 * Retorna a porta HTTP default para comunicação do servidor de aplicações.
+	 * 
+	 * @return Valor inteiro contendo o número da porta.
+	 */
 	public Integer getDefaultServerPort(){
     	return defaultServerPort;
     }
 
+    /**
+     * Define a porta HTTP default para comunicação do servidor de aplicações.
+     * 
+     * @param defaultServerPort Valor inteiro contendo o número da porta.
+     */
 	public void setDefaultServerPort(Integer defaultServerPort){
     	this.defaultServerPort = defaultServerPort;
     }
 
+    /**
+     * Retorna a porta JNDI default para comunicação do servidor de aplicações.
+     * 
+     * @return Valor inteiro contendo o número da porta.
+     */
     public Integer getDefaultLookupPort(){
         return defaultLookupPort;
     }
 
+    /**
+     * Define a porta HTTP default para comunicação do servidor de aplicações.
+     * 
+     * @param defaultLookupPort Valor inteiro contendo o número da porta.
+     */
     public void setDefaultLookupPort(Integer defaultLookupPort){
         this.defaultLookupPort = defaultLookupPort;
     }

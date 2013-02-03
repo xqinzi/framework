@@ -88,5 +88,10 @@ public @interface Model{
 	 */
 	boolean generateService() default false;
 	
+	/**
+	 * Indica o tipo de serviço que deve ser gerado.
+	 * 
+	 * @return Constante que define o tipo de serviço.
+	 */
 	ServiceType serviceType() default ServiceType.CLASS;
 }

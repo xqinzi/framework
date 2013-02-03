@@ -33,22 +33,47 @@ public abstract class BaseModel extends Node implements Comparable{
     private String currentLanguage = "";
 	private String sortProperty    = "";
 	
+    /**
+     * Retorna o identificador do tema atual.
+     * 
+     * @return String contendo o identifcador do tema.
+     */
     public String getCurrentSkin(){
         return currentSkin;
     }
 
+    /**
+     * Define o identificador do tema atual.
+     * 
+     * @param currentSkin String contendo o identifcador do tema.
+     */
     public void setCurrentSkin(String currentSkin){
         this.currentSkin = currentSkin;
     }
 
+    /**
+     * Retorna o identificador do idioma atual.
+     * 
+     * @return String contendo o identifcador do idioma.
+     */
     public String getCurrentLanguage(){
         return currentLanguage;
     }
 
+    /**
+     * Define o identificador do idioma atual.
+     * 
+     * @param currentLanguage String contendo o identifcador do idioma.
+     */
     public void setCurrentLanguage(String currentLanguage){
         this.currentLanguage = currentLanguage;
     }
     
+    /**
+     * Define o idioma atual.
+     * 
+     * @param currentLanguage Instância do idioma desejado.
+     */
     public void setCurrentLanguage(Locale currentLanguage){
         this.currentLanguage = currentLanguage.toString();
     }

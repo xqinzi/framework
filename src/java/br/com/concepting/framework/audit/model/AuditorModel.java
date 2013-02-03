@@ -72,10 +72,20 @@ public class AuditorModel extends BaseModel{
         this.systemModule = systemModule;
     }
     
+    /**
+     * Retorna a instância da sessão do sistema.
+     * 
+     * @return Instância contendo as propriedades da sessão do sistema.
+     */
     public <S extends SystemSessionModel> S getSystemSession(){
         return (S)systemSession;
     }
 
+    /**
+     * Define a instância da sessão do sistema.
+     * 
+     * @param systemSession Instância contendo as propriedades da sessão do sistema.
+     */
     public <S extends SystemSessionModel> void setSystemSession(S systemSession){
         this.systemSession = systemSession;
     }

@@ -69,16 +69,26 @@ public class ContextResource extends BaseResource{
 		return serverName;
 	}
 	
+    /**
+     * Retorna o número da porta para comunicação HTTP com o servidor de aplicações.
+     * 
+     * @return Valor inteiro contendo o número da porta.
+     */
 	public Integer getServerPort(){
         return serverPort;
     }
 
+    /**
+     * Define o número da porta para comunicação HTTP com o servidor de aplicações.
+     * 
+     * @param lookupPort Valor inteiro contendo o número da porta.
+     */
     public void setServerPort(Integer serverPort){
         this.serverPort = serverPort;
     }
 
     /**
-	 * Define o número da porta para comunicação com o servidor de aplicações.
+	 * Define o número da porta para comunicação JNDI com o servidor de aplicações.
 	 * 
 	 * @param lookupPort Valor inteiro contendo o número da porta.
 	 */
@@ -87,7 +97,7 @@ public class ContextResource extends BaseResource{
 	}
 
 	/**
-	 * Retorna o número da porta para comunicação.
+	 * Retorna o número da porta para comunicação JNDI com o servidor de aplicações.
 	 * 
 	 * @return Valor inteiro contendo o número da porta.
 	 */
@@ -96,7 +106,8 @@ public class ContextResource extends BaseResource{
 	}
 
 	/**
-	 * Retorna as configurações da classe responsável pela comunicação.
+	 * Retorna as configurações da classe responsável pela comunicação 
+	 * com o servidor de aplicações.
 	 * 
 	 * @return Instância contendo as configurações da classe.
 	 */
@@ -105,7 +116,8 @@ public class ContextResource extends BaseResource{
 	}
 
 	/**
-	 * Define as configurações da classe responsável pela comunicação.
+	 * Define as configurações da classe responsável pela comunicação
+	 * com o servidor de aplicações.
 	 * 
 	 * @param factoryResource Instância contendo as configurações da classe.
 	 */

@@ -52,18 +52,38 @@ public class SystemModuleModel extends BaseModel{
 	@Property(relationType = RelationType.ONE_TO_MANY)
 	private List<FormModel> forms = null;
 
+	/**
+	 * Retorna o nome do arquivo de logo.
+	 * 
+	 * @return String contendo o nome do arquivo.
+	 */
 	public String getLogoFileName(){
         return logoFileName;
     }
 
+    /**
+     * Define o nome do arquivo de logo.
+     * 
+     * @param logoFileName String contendo o nome do arquivo.
+     */
     public void setLogoFileName(String logoFileName){
         this.logoFileName = logoFileName;
     }
 
+    /**
+     * Retorna o formato do arquivo de logo.
+     * 
+     * @return String contendo o formato do arquivo.
+     */
     public String getLogoContentType(){
         return logoContentType;
     }
 
+    /**
+     * Define o formato do arquivo de logo.
+     * 
+     * @param logoContentType String contendo o formato do arquivo.
+     */
     public void setLogoContentType(String logoContentType){
         this.logoContentType = logoContentType;
     }
@@ -129,12 +149,10 @@ public class SystemModuleModel extends BaseModel{
 	 * @return Instância contendo as propriedades de um formulário.
 	 */
     public <F extends FormModel> F getForm(String formName){
-		if(forms != null && !(forms instanceof PersistentCollection)){
-			for(FormModel form : forms){
+		if(forms != null && !(forms instanceof PersistentCollection))
+			for(FormModel form : forms)
 				if(form.getName().equals(formName))
 					return (F)form;
-			}
-		}
 
 		return null;
 	}
