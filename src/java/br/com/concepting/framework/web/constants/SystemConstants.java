@@ -79,6 +79,9 @@ public abstract class SystemConstants extends ResourceConstants{
      * Constante que define o identificador do repositório de WEB Services.
      */
     public static final String DEFAULT_WEB_SERVICES_REPOSITORY_ID = "/axis2/services/";
-    
+
+    /**
+     * Constante que define o identificador da propriedade que armazena o idioma corrente.  
+     */
     public static final String CURRENT_LANGUAGE_KEY = "org.apache.struts.action.LOCALE";
 }

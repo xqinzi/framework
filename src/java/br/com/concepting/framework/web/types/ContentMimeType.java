@@ -24,8 +24,14 @@ public enum ContentMimeType implements IEnum{
 	 */
 	TEXT("text/plain", "Text", ".txt"),
 
+    /**
+     * Constante que define o tipo de conteúdo para arquivos do Microsoft Word 2003 ou superior.
+     */
 	WORD("application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Microsoft Word", ".docx"),
 	
+    /**
+     * Constante que define o tipo de conteúdp para arquivos do Microsoft Excel 2003 ou superior.
+     */
     EXCEL("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Microsoft Excel", ".xlsx"),
 
     /**

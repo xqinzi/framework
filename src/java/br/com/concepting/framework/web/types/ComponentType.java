@@ -119,8 +119,14 @@ public enum ComponentType implements IEnum{
 	 */
 	GUIDE("guide"),
 	
+	/**
+	 * Constante que define um conjunto de seções.
+	 */
 	ACCORDION("accordion"),
 	
+    /**
+     * Constante que define uma seção.
+     */
 	SECTION("section"),
 	
 	/**

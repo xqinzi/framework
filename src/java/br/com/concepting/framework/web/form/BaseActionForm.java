@@ -45,58 +45,134 @@ public abstract class BaseActionForm extends ActionForm{
 	private Map<String, String> languageMap               = null;
     private Collection<String>  skins                     = null;
     
+    /**
+     * Retorna o mapa de valores para uma lista de idiomas.
+     * 
+     * @return Instância contendo o mapa de valores.
+     */
     public Map<String, String> getLanguageMap(){
         return languageMap;
     }
     
+    /**
+     * Define o mapa de valores para uma lista de idiomas.
+     * 
+     * @param languageMap Instância contendo o mapa de valores.
+     */
     public void setLanguageMap(Map<String, String> languageMap){
         this.languageMap = languageMap;
     }
 
+    /**
+     * Retorna a lista de idiomas disponíveis.
+     * 
+     * @return Lista contendo os idiomas.
+     */
     public Collection<String> getLanguages(){
         return languages;
     }
 
+    /**
+     * Define a lista de idiomas disponíveis.
+     * 
+     * @param languages Lista contendo os idiomas.
+     */
     public void setLanguages(Collection<String> languages){
         this.languages = languages;
     }
 
+    /**
+     * Retorna a lista de temas (skins) disponíveis.
+     * 
+     * @return Lista contendo os temas (skins).
+     */
     public Collection<String> getSkins(){
         return skins;
     }
 
+    /**
+     * Define a lista de temas (skins) disponíveis.
+     * 
+     * @param skins Lista contendo os temas (skins).
+     */
     public void setSkins(Collection<String> skins){
         this.skins = skins;
     }
 
+    /**
+     * Retorna o identificador da propriedade do modelo de dados 
+     * que armazenará o nome do arquivo do upload.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
     public String getUploadFileNameProperty(){
         return uploadFileNameProperty;
     }
 
+    /**
+     * Define o identificador da propriedade do modelo de dados 
+     * que armazenará o nome do arquivo do upload.
+     * 
+     * @param uploadFileNameProperty String contendo o identificador da propriedade.
+     */
     public void setUploadFileNameProperty(String uploadFileNameProperty){
         this.uploadFileNameProperty = uploadFileNameProperty;
     }
 
+    /**
+     * Retorna o identificador da propriedade do modelo de dados 
+     * que armazenará o tipo do arquivo do upload.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
     public String getUploadContentTypeProperty(){
         return uploadContentTypeProperty;
     }
 
+    /**
+     * Define o identificador da propriedade do modelo de dados 
+     * que armazenará o tipo do arquivo do upload.
+     * 
+     * @param uploadContentTypeProperty String contendo o identificador da propriedade.
+     */
     public void setUploadContentTypeProperty(String uploadContentTypeProperty){
         this.uploadContentTypeProperty = uploadContentTypeProperty;
     }
 
+    /**
+     * Retorna a instância contendo as propriedades do arquivo do upload.
+     * 
+     * @return Instância contendo as propridades do arquivo.
+     */
     public FormFile getUploadFile(){
         return uploadFile;
     }
 
+    /**
+     * Define a instância contendo as propriedades do arquivo do upload.
+     * 
+     * @param uploadFile Instância contendo as propridades do arquivo.
+     */
     public void setUploadFile(FormFile uploadFile){
         this.uploadFile = uploadFile;
     }
 
+    /**
+     * Retorna o nome da propriedade que armazena os dados
+     * do arquivo do upload.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
     public String getUploadProperty(){
         return uploadProperty;
     }
 
+    /**
+     * Define o nome da propriedade que armazena os dados
+     * do arquivo do upload.
+     * 
+     * @param uploadProperty String contendo o identificador da propriedade.
+     */
     public void setUploadProperty(String uploadProperty){
         this.uploadProperty = uploadProperty;
     }

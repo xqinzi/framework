@@ -39,7 +39,7 @@ import br.com.concepting.framework.util.helpers.Node;
  * via Reflection.
  *
  * @author fvilarinho
- * @since 1.0
+ * @since 1.0 
  */
 public abstract class PropertyUtil extends PropertyUtils{
 	/**

@@ -143,6 +143,11 @@ public abstract class BaseAction extends DispatchAction{
 		}
 	}
 	
+	/**
+	 * Carrega a lista de idiomas disponíveis.
+	 * 
+	 * @throws Throwable
+	 */
 	protected void loadLanguages() throws Throwable{
 	    BaseActionForm     actionForm        = getActionForm();
 	    Collection<String> languages         = null;
@@ -160,6 +165,11 @@ public abstract class BaseAction extends DispatchAction{
 	    actionForm.setLanguages(languages);
 	}
 	
+	/**
+	 * Carrega a lista de temas (skins) disponíveis.
+	 * 
+	 * @throws Throwable
+	 */
 	protected void loadSkins() throws Throwable{
 	    BaseActionForm       actionForm = getActionForm();
         SystemResourceLoader loader     = new SystemResourceLoader();
@@ -168,6 +178,9 @@ public abstract class BaseAction extends DispatchAction{
         actionForm.setSkins(resource.getSkins());
 	}
 	
+	/**
+	 * Carrega o mapa de valores para a lista de idiomas disponíveis,
+	 */
 	protected void loadLanguageMap(){
         BaseActionForm      actionForm  = getActionForm();
         Map<String, String> languageMap = new LinkedHashMap<String, String>();
@@ -194,6 +207,11 @@ public abstract class BaseAction extends DispatchAction{
 		loadActionFormObjects();
 	}
 	
+	/**
+	 * Efetua a mudança do tema (skin) atual.
+	 * 
+	 * @throws Throwable
+	 */
 	public void changeCurrentSkin() throws Throwable{
         BaseActionForm actionForm = getActionForm();
         BaseModel      model      = actionForm.getModel();
@@ -201,6 +219,11 @@ public abstract class BaseAction extends DispatchAction{
         systemController.setCurrentSkin(model.getCurrentSkin());
 	}
 
+    /**
+     * Efetua a mudança do idioma atual.
+     * 
+     * @throws Throwable
+     */
     public void changeCurrentLanguage() throws Throwable{
         BaseActionForm actionForm = getActionForm();
         BaseModel      model      = actionForm.getModel();
@@ -224,6 +247,11 @@ public abstract class BaseAction extends DispatchAction{
 	public void refresh() throws Throwable{
 	}
 	
+	/**
+	 * Efetua o upload de um arquivo.
+	 * 
+	 * @throws Throwable
+	 */
 	public void uploadFile() throws Throwable{
 	    BaseActionForm actionForm = getActionForm();
 	    BaseModel      model      = actionForm.getModel();

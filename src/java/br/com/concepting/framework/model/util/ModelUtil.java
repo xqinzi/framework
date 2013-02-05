@@ -44,7 +44,7 @@ import br.com.concepting.framework.web.form.BaseActionForm;
  * modelo de dados.
  * 
  * @author fvilarinho
- * @since 1.0
+ * @since 1.0 
  */
 public class ModelUtil{
     /**
@@ -429,16 +429,38 @@ public class ModelUtil{
 		return null;
 	}
 	
+    /**
+     * Transforma um arquivo XML em uma lista de modelo de dados.
+     * 
+     * @param file Instância contendo as propriedades do arquivo XML.
+     * @return Lista de modelo de dados.
+     * @throws IOException
+     */
 	public static <M extends BaseModel> List<M> fromXmlFile(File file) throws IOException{
 	    return fromXmlFile(file, LanguageUtil.getDefaultLanguage());
 	}
 	
+    /**
+     * Transforma um arquivo XML em uma lista de modelo de dados.
+     * 
+     * @param file Instância contendo as propriedades do arquivo XML.
+     * @oaram language Instância contendo as propriedades do idioma desejado.
+     * @return Lista de modelo de dados.
+     * @throws IOException
+     */
     public static <M extends BaseModel> List<M> fromXmlFile(File file, Locale language) throws IOException{
         FileInputStream in = new FileInputStream(file);
         
         return fromXmlStream(in, language);
     }
     
+    /**
+     * Transforma um stream de dados com conteúdo XML em uma lista de modelo de dados.
+     * 
+     * @param in Instância do stream de dados desejado.
+     * @return Lista de modelo de dados.
+     * @throws IOException
+     */
     public static <M extends BaseModel> List<M> fromXmlStream(InputStream in) throws IOException{
         return fromXmlStream(in, LanguageUtil.getDefaultLanguage());
     }
@@ -578,10 +600,23 @@ public class ModelUtil{
 	    writer.write(node);
 	}
 	
+    /**
+     * Transforma um modelo de dados em uma instância de um nó XML.
+     * 
+     * @param model Instância do modelo de dados desejado.
+     * @return Instância do nó XML.
+     */
 	public static <M extends BaseModel> XmlNode toXmlNode(M model){
 	    return toXmlNode(model, LanguageUtil.getDefaultLanguage());
 	}
 	
+	/**
+	 * Transforma um modelo de dados em uma instância de um nó XML.
+	 * 
+	 * @param model Instância do modelo de dados desejado.
+	 * @param language Instância contendo as propriedades de idioma desejado.
+	 * @return Instância do nó XML.
+	 */
 	public static <M extends BaseModel> XmlNode toXmlNode(M model, Locale language){
 	    if(language == null)
 	        return toXmlNode(model);

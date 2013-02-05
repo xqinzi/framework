@@ -10,6 +10,9 @@ import br.com.concepting.framework.web.constants.SystemConstants;
  * @since 3.0
  */
 public abstract class TaglibConstants extends SystemConstants{
+    /**
+     * Constante que define o identificador do estilo default (CSS) para o componente visual accordion (conjunto de seções).
+     */
     public static final String DEFAULT_ACCORDION_STYLE_CLASS = "accordion";
     
     /**
@@ -247,10 +250,19 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_SEARCH_PROPERTIES_GROUP_STYLE_CLASS = "group";
     
+    /**
+     * Constante que define o identificador do estilo (CSS) default para o label do cabeçalho da seção.
+     */
     public static final String DEFAULT_SECTION_HEADER_LABEL_STYLE_CLASS = AttributeConstants.SECTION_HEADER_KEY.concat(AttributeConstants.LABEL_KEY);
 
+    /**
+     * Constante que define o identificador do estilo (CSS) default para o cabeçalho da seção.
+     */
     public static final String DEFAULT_SECTION_HEADER_STYLE_CLASS = AttributeConstants.SECTION_HEADER_KEY;
     
+    /**
+     * Constante que define o identificador do estilo (CSS) default para o conteúdo da seção.
+     */
     public static final String DEFAULT_SECTION_CONTENT_STYLE_CLASS = AttributeConstants.SECTION_CONTENT_KEY;
 
     /**
