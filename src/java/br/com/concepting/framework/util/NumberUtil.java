@@ -388,7 +388,14 @@ public class NumberUtil{
 		return parse(Integer.class, value);
 	}
     
-    private static <N extends Number> N parseNumber(Class<N> clazz, Number number){
+	/**
+	 * Converte um tipo de valor numérico para outro tipo.
+	 * 
+	 * @param clazz Tipo do valor numérico.
+	 * @param number Instância do valor numérico desejado.
+	 * @return Valor numérico convertido.
+	 */
+    public static <N extends Number> N convert(Class<N> clazz, Number number){
         if(PropertyUtil.isInteger(clazz))
             return (N)new Integer(number.intValue());
         else if(PropertyUtil.isLong(clazz))
@@ -435,7 +442,7 @@ public class NumberUtil{
 	public static <N extends Number> N parse(Class<N> clazz, String value, Locale language) throws ParseException{
 		NumberFormat parser = NumberFormat.getInstance(language);
 
-		return parseNumber(clazz, parser.parse(value));
+		return convert(clazz, parser.parse(value));
 	}
 
 	/**
@@ -468,7 +475,7 @@ public class NumberUtil{
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols(language);
 		DecimalFormat        parser  = new DecimalFormat(pattern, symbols);
 		
-		return parseNumber(clazz, parser.parse(value));
+		return convert(clazz, parser.parse(value));
 	}
 
 	/**

@@ -10,7 +10,7 @@ public class ExpectedErrorException extends ExpectedException{
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */
-	protected ExpectedErrorException(){
+	public ExpectedErrorException(){
         super();
     }
 

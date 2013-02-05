@@ -10,7 +10,7 @@ public class InternalErrorException extends Exception{
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */
-    protected InternalErrorException(){
+    public InternalErrorException(){
         super();
     }
     

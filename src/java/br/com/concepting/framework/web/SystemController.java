@@ -94,6 +94,11 @@ public class SystemController{
 		this.pageContext = pageContext;
 	}
 	
+    /**
+     * Define o identificador do tema (skin) atual.
+     * 
+     * @param currentSkin String contendo o identificador do tema (skin).
+     */
 	public void setCurrentSkin(String currentSkin){
 	    if(currentSkin.length() == 0)
 	        currentSkin = SystemConstants.DEFAULT_SKIN;
@@ -106,6 +111,11 @@ public class SystemController{
         securityController.setLoginSession(loginSession);
 	}
 	
+    /**
+     * Retorna o identificador do tema (skin) atual.
+     * 
+     * @return String contendo o identificador do tema (skin).
+     */
 	public String getCurrentSkin(){
 	    LoginSessionModel  loginSession  = securityController.getLoginSession();
 	    SystemSessionModel systemSession = loginSession.getSystemSession();
@@ -113,6 +123,11 @@ public class SystemController{
 	    return systemSession.getCurrentSkin();
 	}
 	
+    /**
+     * Define o idioma atual.
+     * 
+     * @param currentLanguage String contendo o identificador do idioma.
+     */
 	public void setCurrentLanguage(String currentLanguage){
 	    if(currentLanguage.length() == 0)
 	        currentLanguage = StringUtil.trim(LanguageUtil.getDefaultLanguage());
@@ -127,6 +142,11 @@ public class SystemController{
         session.setAttribute(SystemConstants.CURRENT_LANGUAGE_KEY, getCurrentLanguage());
 	}
 	
+	/**
+	 * Retorna a instância contendo as propriedades do idioma atual.
+	 * 
+	 * @return Instância contendo as propriedades do idioma.
+	 */
     public Locale getCurrentLanguage(){
         LoginSessionModel  loginSession  = securityController.getLoginSession();
         SystemSessionModel systemSession = loginSession.getSystemSession();

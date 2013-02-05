@@ -12,7 +12,7 @@ public class IncorrectSyntaxException extends InternalErrorException{
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */
-    protected IncorrectSyntaxException(){
+    public IncorrectSyntaxException(){
         super();
     }
     

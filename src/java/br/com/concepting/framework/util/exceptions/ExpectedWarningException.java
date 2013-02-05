@@ -10,7 +10,7 @@ public class ExpectedWarningException extends ExpectedException{
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */
-	protected ExpectedWarningException(){
+	public ExpectedWarningException(){
         super();
     }
 

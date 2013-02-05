@@ -47,10 +47,10 @@ public class Observer implements InvocationHandler{
 		if(interceptorClass == null)
 			interceptorClass = Interceptor.class;
 
-		List<Class> instanceInterfacesList = loadInterfaces(interceptableInstance);
-		Class       instanceInterfaces[]   = new Class[instanceInterfacesList.size()];
+		List<Class> interceptableInstanceInterfacesList = getInterceptableInstanceInterfaces(interceptableInstance);
+		Class       interceptableInstanceInterfaces[]   = new Class[interceptableInstanceInterfacesList.size()];
 
-		instanceInterfaces = instanceInterfacesList.toArray(instanceInterfaces);
+		interceptableInstanceInterfaces = interceptableInstanceInterfacesList.toArray(interceptableInstanceInterfaces);
 		
 		Class interceptableClass = null;
 		
@@ -59,21 +59,33 @@ public class Observer implements InvocationHandler{
 		else
 		    interceptableClass = interceptableInstance.getClass();
 
-        return (I)Proxy.newProxyInstance(interceptableClass.getClassLoader(), instanceInterfaces, new Observer(interceptableInstance, interceptableInterfaceClass, interceptorClass));
+        return (I)Proxy.newProxyInstance(interceptableClass.getClassLoader(), interceptableInstanceInterfaces, new Observer(interceptableInstance, interceptableInterfaceClass, interceptorClass));
 	}
 	
-	private static List<Class> loadInterfaces(Object interceptableInstance){
+    /**
+     * Retorna uma lista de interfaces implementadas pela instância do objeto interceptável.
+     * 
+     * @param interceptableInstance Instância do objeto interceptável.
+     * @return Lista de interfaces do objeto interceptável.
+     */
+	private static List<Class> getInterceptableInstanceInterfaces(Object interceptableInstance){
 	    List<Class> interceptableInterfaces = new LinkedList<Class>();
 	    
         if(!(interceptableInstance instanceof Class))
             interceptableInstance = interceptableInstance.getClass();
 
-	    loadInterfaces((Class)interceptableInstance, interceptableInterfaces);
+        loadInterceptableInstanceInterfaces((Class)interceptableInstance, interceptableInterfaces);
 	    
 	    return interceptableInterfaces;
 	}
 	
-	private static void loadInterfaces(Class interceptableInstance, List<Class> interceptableInterfaces){
+    /**
+     * Carrega a lista de interfaces implementadas pela instância do objeto interceptável.
+     * 
+     * @param interceptableInstance Instância do objeto interceptável.
+     * @param interceptableInterfaces Lista de interfaces do objeto interceptável.
+     */
+	private static void loadInterceptableInstanceInterfaces(Class interceptableInstance, List<Class> interceptableInterfaces){
 	    Class   instanceInterfaces[] = interceptableInstance.getInterfaces();
 	    Boolean found                = false;
 	    
@@ -104,7 +116,7 @@ public class Observer implements InvocationHandler{
 	                if(!found && instanceInterface.isInterface()) {
 	                    interceptableInterfaces.add(instanceInterface);
     	            
-	                    loadInterfaces(instanceInterface, interceptableInterfaces);
+	                    loadInterceptableInstanceInterfaces(instanceInterface, interceptableInterfaces);
 	                }
 	            }
 	        }

@@ -33,6 +33,12 @@ public abstract class ExceptionUtil{
 		return new String(buffer.toByteArray());
 	}
 	
+	/**
+	 * Retorna a exceção origem a partir da instância da exceção desejada.
+	 * 
+	 * @param exception Instância da exceção desejada.
+	 * @return Instância da exceção origem.
+	 */
 	public static Throwable getOriginException(Throwable exception){
         Throwable e = exception;
         
@@ -54,7 +60,6 @@ public abstract class ExceptionUtil{
 	 * @return True/False.
 	 */
 	public static Boolean isExpectedException(Throwable exception){
-	    
 		return (exception instanceof ExpectedException);
 	}
 

@@ -175,6 +175,12 @@ public class RobotInstance extends Robot{
 		setAutoWaitForIdle(true);
 	}
 	
+	/**
+	 * Retorna a instância (única) do robô de comandos.
+	 * 
+	 * @return Instância do robô de comandos.
+	 * @throws AWTException
+	 */
 	public static RobotInstance getInstance() throws AWTException{
 	    if(instance == null)
 	        instance = new RobotInstance();
