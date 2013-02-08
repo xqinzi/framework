@@ -8,9 +8,12 @@ import org.apache.commons.beanutils.ConstructorUtils;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
+import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.persistence.helpers.ModelFilter;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
+import br.com.concepting.framework.persistence.resource.PersistenceResource;
+import br.com.concepting.framework.persistence.resource.PersistenceResourceLoader;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
 import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
@@ -25,15 +28,11 @@ import br.com.concepting.framework.util.exceptions.InternalErrorException;
  * @since 1.0
  */
 public abstract class BaseService implements IService{
-    private <D extends IDAO> D getCurrentPersistence(){
-        return ServiceUtil.getCurrentPersistence(this);
-    }
-    
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#initialize()
      */
     public void initialize() throws InternalErrorException{
-        IDAO currentPersistence = getCurrentPersistence();
+        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
         
         if(currentPersistence == null){
             try{
@@ -48,7 +47,7 @@ public abstract class BaseService implements IService{
      * @see br.com.concepting.framework.service.interfaces.IService#begin()
      */
 	public void begin() throws InternalErrorException{
-        IDAO currentPersistence = getCurrentPersistence();
+        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
         
 	    if(currentPersistence != null && currentPersistence.useTransaction())
 	        currentPersistence.begin();
@@ -58,7 +57,7 @@ public abstract class BaseService implements IService{
 	 * @see br.com.concepting.framework.service.interfaces.IService#commit()
 	 */
 	public void commit() throws InternalErrorException{
-        IDAO currentPersistence = getCurrentPersistence();
+        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
 
         if(currentPersistence != null){
 			currentPersistence.commit();
@@ -71,7 +70,7 @@ public abstract class BaseService implements IService{
 	 * @see br.com.concepting.framework.service.interfaces.IService#rollback()
 	 */
 	public void rollback() throws InternalErrorException{
-        IDAO currentPersistence = getCurrentPersistence();
+        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
 
         if(currentPersistence != null){
             currentPersistence.rollback();
@@ -114,7 +113,7 @@ public abstract class BaseService implements IService{
 	 */
     protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
 		try{
-		    IDAO     currentPersistence = getCurrentPersistence();
+		    IDAO     currentPersistence = ServiceUtil.getCurrentPersistence(this);
     		IService service            = ServiceUtil.instantiate(modelClass);
     		
     		ServiceUtil.setCurrentPersistence(currentPersistence, service);
@@ -135,14 +134,19 @@ public abstract class BaseService implements IService{
 	 */
     protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
 		try{
-		    D        currentPersistence  = getCurrentPersistence();
+		    D        currentPersistence  = ServiceUtil.getCurrentPersistence(this);
 			Class<D> persistenceClass    = PersistenceUtil.getPersistenceClassByModel(modelClass);
 			D        persistenceInstance = null;
 			
 			if(currentPersistence == null){
-				persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, useTransaction());
-				persistenceInstance.openConnection();
-				persistenceInstance.begin();
+			    ModelInfo                 modelInfo                 = ModelUtil.getModelInfo(modelClass);
+			    String                    persistenceResourceId     = modelInfo.getPersistenceResourceId();
+			    PersistenceResourceLoader persistenceResourceLoader = new PersistenceResourceLoader();
+			    PersistenceResource       persistenceResource       = persistenceResourceLoader.get(persistenceResourceId);
+
+			    persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, useTransaction());
+				
+				persistenceInstance.openConnection(persistenceResource);
 
 				ServiceUtil.setCurrentPersistence(currentPersistence, this);
 			}

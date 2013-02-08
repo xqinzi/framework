@@ -46,7 +46,15 @@ public @interface Model{
 	 */
 	Property[] mappedProperties() default @Property;
 
-	/**
+    /**
+     * Define o identificador das configurações do repositório de persistência a
+     * ser utilizado.
+     * 
+     * @return String contendo o identificador das configurações de persistência.
+     */
+    String persistenceResourceId() default "";
+
+    /**
 	 * Define a classe responsável pela validação da propriedades do modelo de
 	 * dados.
 	 * 

@@ -63,5 +63,10 @@ public @interface Service{
      */
     Class interceptor() default ServiceInterceptor.class;
     
+    /**
+     * Anotação que define o tipo da transação.
+     * 
+     * @return Constante que define o tipo da transação.
+     */
     ServiceTransactionType transactionType() default ServiceTransactionType.NONE;
 }

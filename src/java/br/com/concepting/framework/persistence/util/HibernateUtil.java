@@ -53,11 +53,7 @@ public class HibernateUtil{
 	 * @throws InvalidResourceException
 	 */
 	public static Session getSession() throws HibernateException, IllegalArgumentException, InvalidResourceException{
-	    PersistenceResource persistenceResource = PersistenceUtil.getDefaultPersistenceResource();
-        HibernateSession    hibernateSession    = buildHibernateSession(persistenceResource, true);
-        SessionFactory      sessionFactory      = hibernateSession.getFactory();
-
-        return sessionFactory.getCurrentSession();
+        return getSession(PersistenceUtil.getDefaultPersistenceResource());
 	}
 	
 	/**
@@ -70,10 +66,21 @@ public class HibernateUtil{
 	 * @throws IllegalArgumentException
 	 */
 	public static <D extends IDAO> Session getSession(D dao) throws HibernateException, IllegalArgumentException{
-        PersistenceResource persistenceResource = dao.getPersistenceResource();
-        Boolean             useTransaction      = dao.useTransaction();
-        HibernateSession    hibernateSession    = buildHibernateSession(persistenceResource, useTransaction);
-        SessionFactory      sessionFactory      = hibernateSession.getFactory();
+        return getSession(dao.getPersistenceResource());
+	}
+	
+    /**
+     * Retorna uma sessão Hibernate com o repositório de dados utilizando configurações de conexão 
+     * específicas.
+     *
+     * @param persistenceResource Instância contendo as configurações de persistência.
+     * @return Instância da sessão Hibernate.
+     * @throws HibernateException
+     * @throws IllegalArgumentException
+     */
+    public static <D extends IDAO> Session getSession(PersistenceResource persistenceResource) throws HibernateException, IllegalArgumentException{
+        HibernateSession hibernateSession = buildHibernateSession(persistenceResource);
+        SessionFactory   sessionFactory   = hibernateSession.getFactory();
 
         try{
             return sessionFactory.openSession();
@@ -81,9 +88,9 @@ public class HibernateUtil{
         catch(Throwable e){
             return sessionFactory.getCurrentSession();
         }
-	}
-	
-	/**
+    }
+
+    /**
 	 * Retorna uma conexão JDBC com o repositório de dados utilizando as configurações de conexão 
 	 * default.
 	 * 
@@ -94,36 +101,49 @@ public class HibernateUtil{
      * @throws InvalidResourceException
 	 */
 	public static Connection getConnection() throws SQLException, HibernateException, IllegalArgumentException, InvalidResourceException{
-		return getConnection(PersistenceUtil.getDefaultPersistenceResource());
+        return getConnection(PersistenceUtil.getDefaultPersistenceResource());
 	}
 
 	/**
 	 * Retorna uma conexão JDBC com o repositório de dados utilizando configurações de conexão 
 	 * específicas.
 	 *
-	 * @param persistenceResource Instância contendo as configurações de persistência.
+     * @param dao Instância da classe de persistência contendo as configurações de persistência.
 	 * @return Instância da conexão JDBC.
 	 * @throws SQLException 
 	 * @throws HibernateException
 	 * @throws IllegalArgumentException
 	 */
-	public static Connection getConnection(PersistenceResource persistenceResource) throws SQLException, HibernateException, IllegalArgumentException{
-		HibernateSession   hibernateSession = buildHibernateSession(persistenceResource, true);
-		ConnectionProvider provider         = hibernateSession.getProvider();
-	
-		return provider.getConnection();
+	public static <D extends IDAO> Connection getConnection(D dao) throws SQLException, HibernateException, IllegalArgumentException{
+		return getConnection(dao.getPersistenceResource());
 	}
 
-	/**
+    /**
+     * Retorna uma conexão JDBC com o repositório de dados utilizando configurações de conexão 
+     * específicas.
+     *
+     * @param persistenceResource Instância contendo as configurações de persistência.
+     * @return Instância da conexão JDBC.
+     * @throws SQLException 
+     * @throws HibernateException
+     * @throws IllegalArgumentException
+     */
+    public static <D extends IDAO> Connection getConnection(PersistenceResource persistenceResource) throws SQLException, HibernateException, IllegalArgumentException{
+        HibernateSession   hibernateSession = buildHibernateSession(persistenceResource);
+        ConnectionProvider provider         = hibernateSession.getProvider();
+    
+        return provider.getConnection();
+    }
+
+    /**
 	 * Efetua a conexão com o repositório de persistência.
 	 * 
 	 * @param persistenceResource Instância contendo as configurações de persistência desejadas.
-	 * @param useTransaction Indica se deve ou não gerenciar transações.
 	 * @return Instância da conexão com o repositório de persistência.
 	 * @throws HibernateException
 	 * @throws IllegalArgumentException
 	 */
-	private static HibernateSession buildHibernateSession(PersistenceResource persistenceResource, Boolean useTransaction) throws HibernateException, IllegalArgumentException{
+	private static HibernateSession buildHibernateSession(PersistenceResource persistenceResource) throws HibernateException, IllegalArgumentException{
 		Cacher           cacher  = CacherManager.getInstance().getCacher(HibernateUtil.class);
 		CachedObject     object  = null;
 		HibernateSession session = null;
@@ -172,11 +192,6 @@ public class HibernateUtil{
 						hibernateProperties.setProperty(Environment.JNDI_URL, url);
 					}
 				}
-
-                if(useTransaction)
-                    hibernateProperties.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-                else
-                    hibernateProperties.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "jta");
             }
 			else{
 				String url = persistenceResource.getFactoryResource().getUrl();
@@ -188,7 +203,6 @@ public class HibernateUtil{
 				hibernateProperties.setProperty(Environment.USER, persistenceResource.getUser());
 				hibernateProperties.setProperty(Environment.PASS, persistenceResource.getPassword());
 				hibernateProperties.setProperty(Environment.C3P0_TIMEOUT, persistenceResource.getTimeout().toString());
-                hibernateProperties.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 			}
 
 			Map<String, String> options = persistenceResource.getOptions();

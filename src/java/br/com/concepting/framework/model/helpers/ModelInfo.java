@@ -25,8 +25,9 @@ public class ModelInfo extends CachedObject{
 	private List<PropertyInfo> validationPropertiesInfo = null;
 	private List<PropertyInfo> auditablePropertiesInfo  = null;
 	private Property           mappedProperties[]       = null;
+    private String             mappedRepositoryId       = "";
+	private String             persistenceResourceId    = "";
 	private Class              validatorClass           = null;
-	private String             mappedRepositoryId       = "";
 	private String             useCase                  = "";
 	private String             templateId               = "";
 	private String             descriptionPattern       = "";
@@ -34,7 +35,15 @@ public class ModelInfo extends CachedObject{
 	private Boolean            generateService          = false;
 	private ServiceType        serviceType              = ServiceType.CLASS;
 	
-	/**
+	public String getPersistenceResourceId(){
+        return persistenceResourceId;
+    }
+
+    public void setPersistenceResourceId(String persistenceResourceId){
+        this.persistenceResourceId = persistenceResourceId;
+    }
+
+    /**
 	 * Retorna o tipo de serviço a ser usado para geração de código.
 	 * 
 	 * @return Constante que define o tipo de serviço.

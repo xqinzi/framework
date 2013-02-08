@@ -19,8 +19,20 @@ import br.com.concepting.framework.util.exceptions.InternalErrorException;
  * @since 1.0
  */
 public interface IService{
+    /**
+     * Inicializa classe de serviço.
+     * 
+     * @throws RemoteException
+     * @throws InternalErrorException
+     */
     public void initialize() throws RemoteException, InternalErrorException;
     
+    /**
+     * Inicia a transação.
+     * 
+     * @throws RemoteException
+     * @throws InternalErrorException
+     */
     public void begin() throws RemoteException, InternalErrorException;
     
 	/**

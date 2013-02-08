@@ -16,6 +16,7 @@
 			<option id="hibernate.connection.is-connection-validation-required" value="true"/>
 			<option id="hibernate.transaction.factory_class" value="org.hibernate.transaction.CMTTransactionFactory"/>
 			<option id="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.SunONETransactionManagerLookup"/>
+			<option id="hibernate.current_session_context_class" value="jta"/> 
 		</options>
 	</persistence>
 	<persistence id="jboss-datasource" timeout="60" contextResourceId="jboss" factoryResourceId="mysql">
@@ -33,6 +34,7 @@
 			<option id="hibernate.connection.is-connection-validation-required" value="true"/>
 			<option id="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
 			<option id="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<option id="hibernate.current_session_context_class" value="jta"/> 
 		</options>
 	</persistence>
 	<persistence id="tomcat-datasource" timeout="60" factoryResourceId="mysql" default="true">
@@ -48,6 +50,7 @@
 			<option id="hibernate.connection.autoReconnect" value="true"/>
 			<option id="hibernate.connection.autoReconnectForPools" value="true"/>
 			<option id="hibernate.connection.is-connection-validation-required" value="true"/>
+			<option id="hibernate.current_session_context_class" value="thread"/> 
 		</options>
 	</persistence>
 </persistenceResources>

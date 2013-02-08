@@ -1100,7 +1100,7 @@ public abstract class HibernateDAO extends BaseDAO{
 		Session             connection                 = getConnection();
 		
 		try{
-			if(currentPersistenceResource == null || connection == null || !currentPersistenceResource.equals(persistenceResource)){
+			if(currentPersistenceResource == null || !currentPersistenceResource.equals(persistenceResource) || connection == null){
                 setPersistenceResource(persistenceResource);
 
                 connection = HibernateUtil.getSession(this);
@@ -1224,7 +1224,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#delete(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void delete(M model) throws InternalErrorException{
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = openConnection();
 
 		try{
 			connection.delete(model);
