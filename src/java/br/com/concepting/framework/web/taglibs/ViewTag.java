@@ -2,6 +2,12 @@ package br.com.concepting.framework.web.taglibs;
 
 import javax.servlet.jsp.tagext.BodyContent;
 
+/**
+ * Classe que define o componente para definir uma view de renderização .
+ * 
+ * @author fvilarinho
+ * @since 2.0
+ */
 public class ViewTag extends BaseTag{
     /**
      * @see br.com.concepting.framework.web.taglibs.BaseTag#renderOpen()
