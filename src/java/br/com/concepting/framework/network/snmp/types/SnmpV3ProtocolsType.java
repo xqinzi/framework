@@ -45,17 +45,17 @@ public enum SnmpV3ProtocolsType{
 	 */
 	AES256("AES256", new OID("1.3.6.1.6.3.10.1.2.21"));
 
-	private Object key;
-	private OID    oid;
+	private String algorithm = "";
+	private OID    oid       = null;
 	
 	/**
 	 * Construtor - Define o valor da constante.
 	 * 
-	 * @param key String contendo o valor desejado.
+	 * @param algorithm String contendo o valor desejado.
 	 * @páram oid Instância contendo o identificador do algoritmo.
 	 */
-	private SnmpV3ProtocolsType(String key, OID oid){
-		setKey(key);
+	private SnmpV3ProtocolsType(String algorithm, OID oid){
+		setAlgorithm(algorithm);
 		setOid(oid);
 	}
 	
@@ -82,23 +82,16 @@ public enum SnmpV3ProtocolsType{
 	 * 
 	 * @return Identificador do algoritmo.
 	 */
-    public <O> O getKey(){
-	    return (O)key;
+    public String getAlgorithm(){
+	    return algorithm;
     }
 
 	/**
 	 * Define o identificador do algoritmo.
 	 * 
-	 * @param key Identificador do algoritmo.
+	 * @param algorithm Identificador do algoritmo.
 	 */
-    public <O> void setKey(O key){
-    	this.key = key;
-    }
-    
-    /**
-     * @see java.lang.Enum#toString()
-     */
-    public String toString(){
-    	return getKey();
+    public void setAlgorithm(String algorithm){
+    	this.algorithm = algorithm;
     }
 }
