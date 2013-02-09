@@ -8,7 +8,7 @@ import java.awt.Color;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class ColorUtil{
+public class ColorUtil{
     /**
      * Representa um objeto contendo as propriedades de uma cor em uma string.
      * 
