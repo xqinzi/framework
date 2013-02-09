@@ -29,8 +29,8 @@ public enum ByteMetricType implements IMetric{
 	 */
 	TERA(Math.pow(1024, 4), "Tb");
 
-	private Double metricValue;
-	private String metricUnit;
+	private Double metricValue = 0d;
+	private String metricUnit  = "";
 
 	/**
 	 * Construtor - Define o valor da constante.

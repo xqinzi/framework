@@ -29,8 +29,8 @@ public enum NumberMetricType implements IMetric{
 	 */
 	TRILLION(Math.pow(1000, 4), "tri");
 
-	private Double metricValue;
-	private String metricUnit;
+	private Double metricValue = 0d;
+	private String metricUnit  = "";
 
 	/**
 	 * Construtor - Define o valor da constante.
