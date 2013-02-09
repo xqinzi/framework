@@ -1,6 +1,5 @@
 package br.com.concepting.framework.model.types;
 
-import br.com.concepting.framework.util.interfaces.IEnum;
 
 /** 
  * Classe que define as constantes das condições para pesquisa e/ou comparação de valores.
@@ -8,11 +7,11 @@ import br.com.concepting.framework.util.interfaces.IEnum;
  * @author fvilarinho
  * @since 1.0
  */
-public enum ConditionType implements IEnum{
+public enum ConditionType{
 	/**
 	 * Constante que define nenhuma condição.
 	 */
-	NONE("none"),
+	NONE,
 
 	/**
 	 * Constante que define a condição igual.
@@ -79,59 +78,25 @@ public enum ConditionType implements IEnum{
 	 */
 	NOT_IS_NULL("not is null");
 
-	private String key;
+	private String operator = "";
+	
+	private ConditionType(){
+	}
 
 	/**
 	 * Construtor - Define o valor da constante.
 	 * 
-	 * @param key String contendo o valor desejado.
+	 * @param operator String contendo o valor desejado.
 	 */
-	private ConditionType(String key){
-		setKey(key);
+	private ConditionType(String operator){
+		this.operator = operator;
 	}
+	
+	public String getOperator(){
+        return operator;
+    }
 
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#getKey()
-	 */
-    public <O> O getKey(){
-		return (O)key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#setKey(java.lang.Object)
-	 */
-	public <O> void setKey(O key){
-		this.key = (String)key;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString(){
-		return key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#toEnum(java.lang.Object)
-	 */
-	public <O> IEnum toEnum(O value) throws IllegalArgumentException{
-		return toConditionType((String)value);
-	}
-
-	/**
-	 * Converte uma string em uma instância da constante.
-	 * 
-	 * @param value String contendo o valor desejado.
-	 * @return Instância da constante.
-	 */
-	public static ConditionType toConditionType(String value) throws IllegalArgumentException{
-		if(value == null)
-			throw new IllegalArgumentException();
-		
-		for(ConditionType constant : values())
-			if(value.equals(constant.getKey()))
-				return constant;
-
-		return valueOf(value.toUpperCase());
-	}
+    public void setOperator(String operator){
+        this.operator = operator;
+    }
 }
