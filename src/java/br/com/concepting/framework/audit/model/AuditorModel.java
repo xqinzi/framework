@@ -238,7 +238,7 @@ public class AuditorModel extends BaseModel{
 		this.statusCode = statusCode;
 
 		try{
-			this.statusCodeType = AuditorStatusType.toAuditorStatusType(statusCode);
+			this.statusCodeType = AuditorStatusType.valueOf(statusCode.toUpperCase());
 		}
 		catch(Throwable e){
 			this.statusCodeType = null;
