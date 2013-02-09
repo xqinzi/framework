@@ -36,34 +36,74 @@ public class Interceptor{
 		setMethodArguments(methodArguments);
 	}
 
+	/**
+	 * Retorna a instância contendo as propriedade da classe interceptável.
+	 * 
+	 * @return Instância da classe interceptável.
+	 */
     public <I> I getInterceptableInstance(){
         return (I)interceptableInstance;
     }
     
+    /**
+     * Define a instância contendo as propriedade da classe interceptável.
+     * 
+     * @param interceptableInstance Instância da classe interceptável.
+     */
     public <I> void setInterceptableInstance(I interceptableInstance){
         this.interceptableInstance = interceptableInstance;
     }
 
+    /**
+     * Retorna a interface da classe interceptável.
+     * 
+     * @return Interface da classe interceptável.
+     */
 	public Class getInterceptableInterfaceClass(){
      	return interceptableInterfaceClass;
     }
 	
+    /**
+     * Define a interface da classe interceptável.
+     * 
+     * @param interceptableInterfaceClass Interface da classe interceptável.
+     */
 	public void setInterceptableInterfaceClass(Class interceptableInterfaceClass){
 	    this.interceptableInterfaceClass = interceptableInterfaceClass;
 	}
 
+    /**
+     * Retorna a instância contendo as propriedades do método interceptado.
+     * 
+     * @return Instância contendo as propriedades do método.
+     */
 	public Method getMethod(){
 		return method;
 	}
 	
+	/**
+	 * Define a instância contendo as propriedades do método interceptado.
+	 * 
+	 * @param method Instância contendo as propriedades do método.
+	 */
 	public void setMethod(Method method){
 	    this.method = method;
 	}
 
+    /**
+     * Retorna os argumentos do método interceptado.
+     * 
+     * @return Array contendo os argumentos do método.
+     */
     public <O> O[] getMethodArguments(){
 		return (O[])methodArguments;
 	}
 	
+    /**
+     * Define os argumentos do método interceptado.
+     * 
+     * @param methodArguments Array contendo os argumentos do método.
+     */
 	public <O> void setMethodArguments(O methodArguments[]){
 	    this.methodArguments = methodArguments;
 	}
