@@ -105,11 +105,9 @@ public class ConfirmButtonTag extends ButtonTag{
             confirmDialogBoxTag = new ConfirmDialogBoxTag();
             confirmDialogBoxTag.setPageContext(pageContext);
             confirmDialogBoxTag.setMessage(message);
-            confirmDialogBoxTag.setType(ActionFormMessageType.WARNING.toString());
+            confirmDialogBoxTag.setType(ActionFormMessageType.WARNING);
             confirmDialogBoxTag.doStartTag();
 
-            String        action         = getAction();
-            String        onClick        = getOnClick();
             StringBuilder onClickContent = new StringBuilder();
 
             onClickContent.append("showDialogBox('");
@@ -118,8 +116,8 @@ public class ConfirmButtonTag extends ButtonTag{
 
             setOnClick(onClickContent.toString());
 
-            confirmDialogBoxTag.setOnConfirm(onClick);
-            confirmDialogBoxTag.setOnConfirmAction(action);
+            confirmDialogBoxTag.setOnConfirm(getOnClick());
+            confirmDialogBoxTag.setOnConfirmAction(getAction());
             confirmDialogBoxTag.doEndTag();
         }
 	    
