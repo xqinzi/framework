@@ -23,6 +23,7 @@ import br.com.concepting.framework.web.form.BaseActionForm;
 import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.form.util.ActionFormMessageUtil;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
  * Classe que define o estrutura básica para o componente vinculado a uma propriedade de um 
@@ -39,12 +40,50 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     private Boolean                  focus                    = false;
 	private String                   pattern                  = "";
 	private Object                   value                    = null;
+	private String                   validationStyle          = "";
+	private String                   validationStyleClass     = "";
 	private SearchPropertiesGroupTag searchPropertiesGroupTag = null;
 	private String                   invalidPropertyMessage   = "";
     private String                   dataIsEmptyMessage       = "";
 	private Boolean                  showValidationMessages   = false;
     private PropertyInfo             propertyInfo             = null;
     
+    /**
+     * Retorna o estilo CSS para a mensagem de validação.
+     * 
+     * @return String contendo o estilo CSS.
+     */
+    public String getValidationStyle(){
+        return validationStyle;
+    }
+
+    /**
+     * Define o estilo CSS para a mensagem de validação.
+     * 
+     * @param validationStyle String contendo o estilo CSS.
+     */
+    public void setValidationStyle(String validationStyle){
+        this.validationStyle = validationStyle;
+    }
+
+    /**
+     * Retorna o estilo CSS para a mensagem de validação.
+     * 
+     * @return String contendo o estilo CSS.
+     */
+    public String getValidationStyleClass(){
+        return validationStyleClass;
+    }
+
+    /**
+     * Define o estilo CSS para a mensagem de validação.
+     * 
+     * @param validationStyleClass String contendo o estilo CSS.
+     */
+    public void setValidationStyleClass(String validationStyleClass){
+        this.validationStyleClass = validationStyleClass;
+    }
+
     /**
      * Retorna a mensagem quando não existem dados a serem exibidos.
      *
@@ -92,7 +131,25 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     	return showValidationMessages;
     }
 
-	/**
+    /**
+     * Indica se a mensagem de validação para esse componente deve ser exibida.
+     * 
+     * @return True/False.
+     */
+    public Boolean isShowValidationMessages(){
+        return showValidationMessages();
+    }
+    
+    /**
+     * Indica se a mensagem de validação para esse componente deve ser exibida.
+     * 
+     * @return True/False.
+     */
+    public Boolean getShowValidationMessages(){
+        return showValidationMessages();
+    }
+
+    /**
 	 * Define se a mensagem de validação para esse componente deve ser exibida.
 	 * 
 	 * @param showValidationMessages True/False.
@@ -338,6 +395,9 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
         String name = getName();
         
         setName(StringUtil.replaceAll(name, "search.", ""));
+        
+        if(validationStyleClass.length() == 0)
+            validationStyleClass = TaglibConstants.DEFAULT_VALIDATION_LABEL_STYLE_CLASS;
 
         super.initialize();
 
@@ -384,15 +444,15 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	    }
 		
 		if(propertyInfo != null){
-		    String alignment = getAlignment();
+		    AlignmentType alignment = getAlignment();
 		    
-			if(alignment.length() == 0){
+			if(alignment == null){
 				if(propertyInfo.isNumber())
-				    alignment = AlignmentType.RIGHT.toString();
+				    alignment = AlignmentType.RIGHT;
 				else if(propertyInfo.isDate() || propertyInfo.isBoolean() || propertyInfo.isByteArray())
-				    alignment = AlignmentType.CENTER.toString();
+				    alignment = AlignmentType.CENTER;
 				else
-				    alignment = AlignmentType.LEFT.toString();
+				    alignment = AlignmentType.LEFT;
 				
 				setAlignment(alignment);
 			}
@@ -597,12 +657,22 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
 			println("<tr>");
 			
-			String labelPosition = getLabelPosition();
+			PositionType labelPosition = getLabelPosition();
 			
-	        if(labelPosition.equals(PositionType.LEFT.toString()))
+	        if(labelPosition == PositionType.LEFT)
 	            println("<td></td>");
 			
-			println("<td class=\"validationLabel\">");
+			print("<td");
+			
+			if(validationStyle.length() > 0){
+			    print(" style=\"");
+			    print(validationStyle);
+			    print("\"");
+			}
+			    
+			print(" class=\"");
+			print(validationStyleClass);
+			println("\">");
 			
 			PropertiesResource    resources         = getI18nResource();
 			PropertiesResource    defaultResources  = getDefaultI18nResource();
@@ -644,7 +714,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                 }
 			}
 			
-            if(labelPosition.equals(PositionType.RIGHT.toString()))
+            if(labelPosition == PositionType.RIGHT)
                 println("</td></td>");
 		}
 	}
@@ -687,6 +757,8 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 		setPattern("");
 		setFocus(false);
 		setValue(null);
+		setValidationStyle("");
+		setValidationStyleClass("");
         setInvalidPropertyMessage("");
 		setShowValidationMessages(false);
 		setSearchPropertiesGroupTag(null);
