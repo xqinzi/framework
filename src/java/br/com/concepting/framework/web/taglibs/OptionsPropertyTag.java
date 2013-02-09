@@ -119,17 +119,17 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	    if(optionsPerRow == 0)
 	        optionsPerRow = TaglibConstants.DEFAULT_OPTIONS_PER_ROW;
 	    
-	    String type = getType();
+	    ComponentType componentType = getComponentType();
 	    
-	    if(type.length() == 0){
-	        type = ComponentType.OPTIONS.toString();
+	    if(componentType == null){
+	        componentType = ComponentType.OPTIONS;
 	        
-	        setType(type);
+	        setComponentType(componentType);
 	    }
 	    
-	    String labelPosition = getLabelPosition();
+	    PositionType labelPosition = getLabelPosition();
 
-		if(labelPosition.equals(PositionType.TOP.toString()) && !type.equals(ComponentType.LIST.toString())){
+		if(labelPosition == PositionType.TOP && componentType != ComponentType.LIST){
 		    String labelStyleClass = getLabelStyleClass();
 		    
 			if(labelStyleClass.length() == 0){
@@ -154,11 +154,11 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderOpen()
 	 */
 	protected void renderOpen() throws Throwable{
-		Boolean showLabel     = showLabel();
-		String  type          = getType();
-		String  labelPosition = getLabelPosition();
+		Boolean       showLabel     = showLabel();
+		ComponentType componentType = getComponentType();
+		PositionType  labelPosition = getLabelPosition();
 		
-		if(labelPosition.equals(PositionType.TOP.toString()) && !type.equals(ComponentType.LIST.toString()))
+		if(labelPosition == PositionType.TOP && componentType != ComponentType.LIST)
 			setShowLabel(false);
 
         renderLabelAttribute();
@@ -170,14 +170,14 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 		
 		setShowLabel(showLabel);
 
-		if(!type.equals(ComponentType.LIST.toString())){
+		if(componentType != ComponentType.LIST){
 			print("<fieldset");
 
 	        renderTooltip();
 
 			println(">");
 
-			if(labelPosition.equals(PositionType.TOP.toString()) && showLabel){
+			if(labelPosition == PositionType.TOP && showLabel){
 				renderLabelOpen();
 				renderLabelBody();
 				renderLabelClose();
@@ -191,9 +191,10 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	protected void renderDataAttributes() throws Throwable{
 		super.renderDataAttributes();
 		
-		PropertyInfo propertyInfo = getPropertyInfo();
+		ComponentType componentType = getComponentType();
+		PropertyInfo  propertyInfo  = getPropertyInfo();
 		
-		if(propertyInfo != null && propertyInfo.isCollection() && !getType().equals(ComponentType.LIST.toString())){
+		if(propertyInfo != null && propertyInfo.isCollection() && componentType != ComponentType.LIST){
 			HiddenPropertyTag noItemSelectedTag = new HiddenPropertyTag();
 
 			noItemSelectedTag.setPageContext(pageContext);
@@ -209,7 +210,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderClose()
 	 */
 	protected void renderClose() throws Throwable{
-		if(!getType().equals(ComponentType.LIST.toString()))
+		if(getComponentType() != ComponentType.LIST)
 			println("</fieldset>");
 
 		super.renderClose();
@@ -219,8 +220,8 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderLabelOpen()
 	 */
 	protected void renderLabelOpen() throws Throwable{
-		if(!getType().equals(ComponentType.LIST.toString())){
-			if(getLabelPosition().equals(PositionType.TOP.toString())){
+        if(getComponentType() != ComponentType.LIST){
+			if(getLabelPosition() == PositionType.TOP){
 				print("<legend");
 				
 				String labelStyleClass = getLabelStyleClass();
@@ -252,8 +253,8 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderLabelClose()
 	 */
 	protected void renderLabelClose() throws Throwable{
-		if(!getType().equals(ComponentType.LIST.toString())){
-			if(getLabelPosition().equals(PositionType.TOP.toString()))
+        if(getComponentType() != ComponentType.LIST){
+			if(getLabelPosition() == PositionType.TOP)
 				println("</legend>");
 			else
 				super.renderLabelClose();
@@ -333,7 +334,9 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 		Boolean               expressionResult    = false;
 		ExpressionProcessor   expressionProcessor = getExpressionProcessor();
 
-		println("<table class=\"panel\">");
+        print("<table class\"");
+        print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+        println("\">");
 		println("<tr>");
 
 		for(int cont1 = 0 ; cont1 < options.size() ; cont1++){
