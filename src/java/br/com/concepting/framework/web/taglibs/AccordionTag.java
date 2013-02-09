@@ -286,7 +286,7 @@ public class AccordionTag extends BaseActionFormElementTag{
      * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#initialize()
      */
     protected void initialize() throws Throwable{
-        setType(ComponentType.ACCORDION);
+        setComponentType(ComponentType.ACCORDION);
         
         if(sectionHeaderLabelStyleClass.length() == 0)
             sectionHeaderLabelStyleClass = TaglibConstants.DEFAULT_SECTION_HEADER_LABEL_STYLE_CLASS;
