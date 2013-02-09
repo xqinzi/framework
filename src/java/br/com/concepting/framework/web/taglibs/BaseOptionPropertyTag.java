@@ -8,7 +8,7 @@ import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.util.interfaces.IEnum;
+import br.com.concepting.framework.util.StringUtil;
 
 /**
  * Classe que define a estrutura básica para o componente visual de uma opção de seleção.
@@ -106,12 +106,7 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 		
 		if(optionValue != null){
 			if(propertyInfo != null){
-                if(propertyInfo.isEnum()){
-                    IEnum constant = (IEnum)optionValue;
-                    
-                    optionValue = constant.getKey();
-                }
-                else if(!propertyInfo.isModel() && !propertyInfo.hasModel()){
+                if(!propertyInfo.isModel() && !propertyInfo.hasModel()){
 		            try{
 		                String propertyId = propertyInfo.getId();
 		            
@@ -142,38 +137,31 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
             if(value != null){
     	        Object optionValue = getOptionValue();
     
-                if(optionValue instanceof IEnum && !(value instanceof IEnum)){
-                    IEnum enumInstance = (IEnum)optionValue;
+                if(propertyInfo.isCollection()){
+                    if(optionValue != null){
+                        Collection values  = (Collection)value;
+    
+                        setSelected(values.contains(optionValue));
+                    }
+                }
+                else if(propertyInfo.isBoolean())
+                    setSelected(Boolean.parseBoolean(value.toString()));
+                else if(optionValue instanceof BaseModel && !(value instanceof BaseModel)){
+                    ModelInfo modelInfo = ModelUtil.getModelInfo(optionValue.getClass());
                     
-                    setSelected(value.equals(enumInstance.getKey()));
-                }
-                else{
-                    if(propertyInfo.isCollection()){
-                        if(optionValue != null){
-                            Collection values  = (Collection)value;
-        
-                            setSelected(values.contains(optionValue));
-                        }
-                    }
-                    else if(propertyInfo.isBoolean())
-                        setSelected(Boolean.parseBoolean(value.toString()));
-                    else if(optionValue instanceof BaseModel && !(value instanceof BaseModel)){
-                        ModelInfo modelInfo = ModelUtil.getModelInfo(optionValue.getClass());
+                    if(modelInfo != null){
+                        List<PropertyInfo> identityProperties = modelInfo.getIdentityPropertiesInfo();
                         
-                        if(modelInfo != null){
-                            List<PropertyInfo> identityProperties = modelInfo.getIdentityPropertiesInfo();
+                        if(identityProperties != null && identityProperties.size() == 1){
+                            PropertyInfo identityPropertyInfo = identityProperties.get(0);
+                            Object       optionValueProperty  = PropertyUtil.getProperty(optionValue, identityPropertyInfo.getId());
                             
-                            if(identityProperties != null && identityProperties.size() == 1){
-                                PropertyInfo identityPropertyInfo = identityProperties.get(0);
-                                Object       optionValueProperty  = PropertyUtil.getProperty(optionValue, identityPropertyInfo.getId());
-                                
-                                setSelected(value.equals(optionValueProperty));
-                            }
+                            setSelected(value.equals(optionValueProperty));
                         }
                     }
-        	        else
-                        setSelected(value.equals(optionValue));
                 }
+    	        else
+                    setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
     		}
 		}
 	}
