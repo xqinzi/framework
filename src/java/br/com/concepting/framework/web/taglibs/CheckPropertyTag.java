@@ -14,7 +14,7 @@ public class CheckPropertyTag extends BaseOptionPropertyTag{
      * @see br.com.concepting.framework.web.taglibs.BaseOptionPropertyTag#initialize()
      */
     protected void initialize() throws Throwable{
-	    setType(ComponentType.CHECK);
+	    setComponentType(ComponentType.CHECKBOX);
         
 	    StringBuilder tagId = new StringBuilder();
         
@@ -52,6 +52,5 @@ public class CheckPropertyTag extends BaseOptionPropertyTag{
         }
         else
             setId(tagId.toString());
-        
 	}
 }
