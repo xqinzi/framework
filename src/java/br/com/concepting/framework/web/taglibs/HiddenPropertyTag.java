@@ -13,7 +13,7 @@ public class HiddenPropertyTag extends BasePropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    setType(ComponentType.HIDDEN);
+	    setComponentType(ComponentType.HIDDEN);
 	    
 	    super.initialize();
 	}

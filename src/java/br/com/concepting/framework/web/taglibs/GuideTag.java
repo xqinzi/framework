@@ -56,7 +56,7 @@ public class GuideTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        setType(ComponentType.GUIDE);
+        setComponentType(ComponentType.GUIDE);
 	    
         String labelStyleClass = getLabelStyleClass();
         

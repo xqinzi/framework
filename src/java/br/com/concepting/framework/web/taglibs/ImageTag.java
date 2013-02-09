@@ -53,7 +53,7 @@ public class ImageTag extends BaseOptionsPropertyTag{
 			}
 			
 			print("&contentDataScope=");
-			print(scopeType.toString());
+			print(scopeType.toString().toLowerCase());
 			
 			try{
     			print("&contentType=");
@@ -85,7 +85,7 @@ public class ImageTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseOptionsPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        setType(ComponentType.IMAGE);
+        setComponentType(ComponentType.IMAGE);
 
         super.initialize();
 	}
