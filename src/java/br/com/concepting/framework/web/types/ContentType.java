@@ -1,14 +1,12 @@
 package br.com.concepting.framework.web.types;
 
-import br.com.concepting.framework.util.interfaces.IEnum;
-
 /** 
  * Classe que define as constantes para os tipos de conteúdo suportados no download.
  *
  * @author fvilarinho
  * @since 1.0
  */
-public enum ContentMimeType implements IEnum{
+public enum ContentType{
 	/**
 	 * Constante que define o tipo de conteúdo para arquivos PDF.
 	 */
@@ -74,37 +72,31 @@ public enum ContentMimeType implements IEnum{
 	 */
 	GIF("image/gif", "GIF Image", ".gif");
 
-	private String key;
-	private String title;
-	private String extension;
+	private String mimeType  = "";
+	private String title     = "";
+	private String extension = "";
 
 	/**
 	 * Construtor - Define o valor da constante.
 	 * 
-	 * @param key String contendo o valor desejado.
+	 * @param mimeType String contendo o valor desejado.
 	 * @param extension String contendo a extensão.
 	 */
-	private ContentMimeType(String key, String title, String extension){
-		setKey(key);
+	private ContentType(String mimeType, String title, String extension){
+		setMimeType(mimeType);
 		setTitle(title);
 		setExtension(extension);
 	}
+	
+	public String getMimeType(){
+        return mimeType;
+    }
 
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#getKey()
-	 */
-    public <O> O getKey(){
-		return (O)key;
-	}
+	public void setMimeType(String mimeType){
+        this.mimeType = mimeType;
+    }
 
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#setKey(java.lang.Object)
-	 */
-	public <O> void setKey(O key){
-		this.key = (String)key;
-	}
-
-	/**
+    /**
 	 * Retorna a extensão do arquivo vinculado ao mime type.
 	 *
 	 * @return String contendo a extensão do arquivo.
@@ -138,36 +130,5 @@ public enum ContentMimeType implements IEnum{
 	 */
 	public void setExtension(String extension){
 		this.extension = extension;
-	}
-
-	/**
-	 * @see java.lang.Enum#toString()
-	 */
-	public String toString(){
-		return key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#toEnum(java.lang.Object)
-	 */
-	public <O> IEnum toEnum(O value) throws IllegalArgumentException{
-		return toContentMimeType((String)value);
-	}
-
-	/**
-	 * Converte uma string em uma instância da constante.
-	 * 
-	 * @param value String contendo o valor desejado.
-	 * @return Instância da constante.
-	 */
-	public static ContentMimeType toContentMimeType(String value) throws IllegalArgumentException{
-		if(value == null)
-			throw new IllegalArgumentException();
-
-		for(ContentMimeType constant : values())
-			if(value.equals(constant.getKey()) || value.equals(constant.getExtension()))
-				return constant;
-		
-		throw new IllegalArgumentException(value);
 	}
 }

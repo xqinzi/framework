@@ -1,6 +1,6 @@
 package br.com.concepting.framework.web.types;
 
-import br.com.concepting.framework.util.interfaces.IEnum;
+import br.com.concepting.framework.util.StringUtil;
 
 /** 
  * Classe que define as constantes dos tipos de componentes.
@@ -8,185 +8,146 @@ import br.com.concepting.framework.util.interfaces.IEnum;
  * @author fvilarinho
  * @since 1.0
  */
-public enum ComponentType implements IEnum{
+public enum ComponentType{
 	/**
 	 * Constante que define um campo invisível.
 	 */
-	HIDDEN("hidden"),
+	HIDDEN,
 
 	/**
 	 * Constantoe que define um campo de marcação.
 	 */
-	CHECK("checkBox"),
+	CHECKBOX,
 
 	/**
 	 * Constante que define um campo de seleção.
 	 */
-	RADIO("radio"),
+	RADIO,
 
 	/**
 	 * Constante que define uma lista de opções.
 	 */
-	LIST("list"),
+	LIST,
 	
     /**
      * Constante que define um label.
      */
-	LABEL("label"),
+	LABEL,
 
     /**
      * Constante que define um campo de calendário.
      */
-    CALENDAR("calendar"),
+    CALENDAR,
 
     /**
      * Constante que define um campo texto comum.
      */
-    TEXT_BOX("textBox"),
+    TEXTBOX,
     
     /**
      * Constante que define um campo texto de múltiplas linhas.
      */
-    TEXT_AREA("textArea"),
+    TEXTAREA,
 
     /**
      * Constante que define um campo de senha.
      */
-    PASSWORD("password"),
+    PASSWORD,
 
     /**
      * Constante que define um botão comum.
      */
-    BUTTON("button"),
+    BUTTON,
 
     /**
      * Constante que define um botão de descartar alterações (Undo).
      */
-    RESET_BUTTON("reset"),
+    UNDO_BUTTON,
 
     /**
      * Constante que define uma lista de seleção.
      */
-    OPTIONS("options"),
+    OPTIONS,
 
     /**
      * Constante que define uma imagem.
      */
-    IMAGE("image"),
+    IMAGE,
 
     /**
 	 * Constante que define uma tabela de dados.
 	 */
-	GRID("grid"),
+	GRID,
 	
 	/**
 	 * Constante que define uma coluna em uma tabela de dados.
 	 */
-	GRID_COLUMN("gridColumn"),
+	GRID_COLUMN,
 	
 	/**
 	 * Constante que define um paginador.
 	 */
-	PAGER("pager"),
+	PAGER,
     
     /**
      * Constante que define um componente de visualização em árvore.
      */
-    TREE_VIEW("treeView"),
+    TREEVIEW,
 	
 	/**
 	 * Constante que define uma barra de menus.
 	 */
-	MENU_BAR("menuBar"),
+	MENUBAR,
 
     /**
      * Constante que define um item de menu.
      */
-    MENU_ITEM("menuItem"),
+    MENUITEM,
     
     /**
      * Constante que define um separador de itens de menu.
      */
-    MENU_ITEM_SEPARATOR("menuItemSeparator"),
+    MENUITEM_SEPARATOR,
 
     /**
      * Constante que define uma aba.
      */
-    GUIDES("guides"),
+    GUIDES,
 
     /**
 	 * Constante que define uma aba.
 	 */
-	GUIDE("guide"),
+	GUIDE,
 	
 	/**
 	 * Constante que define um conjunto de seções.
 	 */
-	ACCORDION("accordion"),
+	ACCORDION,
 	
     /**
      * Constante que define uma seção.
      */
-	SECTION("section"),
+	SECTION,
 	
 	/**
 	 * Constante que define uma barra de progressão.
 	 */
-	PROGRESS_BAR("progressBar");
-
-	private String key;
-
-    /**
-	 * Construtor - Define o valor da constante.
-	 * 
-	 * @param key String contendo o valor desejado.
-	 */
-	private ComponentType(String key){
-		setKey(key);
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#getKey()
-	 */
-    public <O> O getKey(){
-		return (O)key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#setKey(java.lang.Object)
-	 */
-	public <O> void setKey(O key){
-		this.key = (String)key;
-	}
-
-	/**
-	 * @see java.lang.Enum#toString()
-	 */
-	public String toString(){
-		return key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#toEnum(java.lang.Object)
-	 */
-	public <O> IEnum toEnum(O value) throws IllegalArgumentException{
-		return toComponentType((String)value);
-	}
-
-	/**
-	 * Converte uma string em uma instância da constante.
-	 * 
-	 * @param value String contendo o valor desejado.
-	 * @return Instância da constante.
-	 */
-	public static ComponentType toComponentType(String value) throws IllegalArgumentException{
-		if(value == null)
-			throw new IllegalArgumentException();
-
-		for(ComponentType constant : values())
-			if(value.toUpperCase().equals(constant.toString().toUpperCase()))
-				return constant;
-		
-		throw new IllegalArgumentException(value);
+	PROGRESS_BAR;
+	
+	public String getId(){
+	    if(this == UNDO_BUTTON)
+	        return "reset";
+	    
+	    String        parts[]     = StringUtil.split(toString(), "_");
+	    StringBuilder componentId = new StringBuilder();
+	    
+	    for(int cont = 0 ; cont < parts.length ; cont++){
+	        if(cont == 0)
+	            componentId.append(parts[cont].toLowerCase());
+	        else
+	            componentId.append(StringUtil.capitalize(parts[cont]));
+	    }
+	    
+	    return componentId.toString();
 	}
 }
