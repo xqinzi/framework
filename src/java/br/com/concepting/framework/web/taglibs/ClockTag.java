@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
@@ -51,13 +52,8 @@ public class ClockTag extends BaseTag{
     protected void initialize() throws Throwable{
         setName(getTagId());
         
-        String styleClass = getStyleClass();
-        
-        if(styleClass.length() == 0){
-            styleClass = TaglibConstants.DEFAULT_CLOCK_STYLE_CLASS;
-            
-            setStyleClass(styleClass);
-        }
+        if(getStyleClass().length() == 0)
+            setStyleClass(TaglibConstants.DEFAULT_CLOCK_STYLE_CLASS);
         
         Locale currentLanguage = systemController.getCurrentLanguage();
 
@@ -118,7 +114,13 @@ public class ClockTag extends BaseTag{
         ScriptTag scriptTag = new ScriptTag();
         
         scriptTag.setPageContext(pageContext);
-        scriptTag.setContent("addLoadEvent(showClock);\n");
+        
+        StringBuilder content = new StringBuilder();
+        
+        content.append("addLoadEvent(showClock);");
+        content.append(StringUtil.getLineBreak());
+        
+        scriptTag.setContent(content.toString());
         scriptTag.doStartTag();
         scriptTag.doEndTag();
     }
