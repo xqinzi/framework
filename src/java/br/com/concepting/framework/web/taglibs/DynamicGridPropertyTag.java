@@ -14,8 +14,8 @@ import java.util.List;
  * @since 3.0
  */
 public class DynamicGridPropertyTag extends GridPropertyTag{
-    private String columnsData      = "";
-    private String columnsDataScope = ScopeType.FORM.toString();
+    private String    columnsData      = "";
+    private ScopeType columnsDataScope = null;
     
     /**
      * Retorna o identificador da lista de colunas.
@@ -38,10 +38,19 @@ public class DynamicGridPropertyTag extends GridPropertyTag{
     /**
      * Retorna o escopo de armazenamento da lista de colunas.
      *
-     * @return String contendo o escopo de armazenamento.
+     * @return Constante que define o escopo de armazenamento.
      */
-    public String getColumnsDataScope(){
+    public ScopeType getColumnsDataScope(){
         return columnsDataScope;
+    }
+
+    /**
+     * Define o escopo de armazenamento da lista de colunas.
+     *
+     * @param columnsDataScope Constante que define o escopo de armazenamento.
+     */
+    protected void setColumnsDataScope(ScopeType columnsDataScope){
+        this.columnsDataScope = columnsDataScope;
     }
 
     /**
@@ -50,7 +59,10 @@ public class DynamicGridPropertyTag extends GridPropertyTag{
      * @param columnsDataScope String contendo o escopo de armazenamento.
      */
     public void setColumnsDataScope(String columnsDataScope){
-        this.columnsDataScope = columnsDataScope;
+        if(columnsDataScope.length() > 0)
+            this.columnsDataScope = ScopeType.valueOf(columnsDataScope.toUpperCase());
+        else
+            this.columnsDataScope = null;
     }
 
     /**
@@ -62,14 +74,13 @@ public class DynamicGridPropertyTag extends GridPropertyTag{
         String actionForm = getActionForm();
 
         if(columnsData.length() > 0 && actionForm.length() > 0){
-		    ScopeType     columnsDataScopeType = ScopeType.toScopeType(columnsDataScope);
-            StringBuilder propertyId           = new StringBuilder();
+            StringBuilder propertyId = new StringBuilder();
             
-            if(columnsDataScopeType == ScopeType.FORM || columnsDataScopeType == ScopeType.MODEL){
+            if(columnsDataScope == ScopeType.FORM || columnsDataScope == ScopeType.MODEL){
                 propertyId.append(actionForm);
                 propertyId.append(".");
                 
-                if(columnsDataScopeType == ScopeType.MODEL){
+                if(columnsDataScope == ScopeType.MODEL){
                     if(isForSearch())
                         propertyId.append("searchModel");
                     else
@@ -83,7 +94,7 @@ public class DynamicGridPropertyTag extends GridPropertyTag{
             
             columnsData = propertyId.toString();
             
-		    List<DynamicGridColumn> columnsDataValues = systemController.findAttribute(columnsData, columnsDataScopeType);
+		    List<DynamicGridColumn> columnsDataValues = systemController.findAttribute(columnsData, columnsDataScope);
 		    
 		    if(columnsDataValues != null && columnsDataValues.size() > 0){
 		        GridColumnTag gridColumn = null;
@@ -118,6 +129,6 @@ public class DynamicGridPropertyTag extends GridPropertyTag{
         super.clearAttributes();
         
         setColumnsData("");
-        setColumnsDataScope(ScopeType.FORM.toString());
+        setColumnsDataScope("");
     }
 }
