@@ -34,7 +34,6 @@ import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;
 import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.helpers.XmlNode;
-import br.com.concepting.framework.util.interfaces.IEnum;
 import br.com.concepting.framework.util.types.SortOrderType;
 import br.com.concepting.framework.web.action.BaseAction;
 import br.com.concepting.framework.web.form.BaseActionForm;
@@ -514,7 +513,6 @@ public class ModelUtil{
                         PropertyInfo propertyInfo  = null;
                         String       propertyName  = "";
                         Object       propertyValue = null;
-                        IEnum        enumInstance  = null;
                         
                         for(XmlNode childNode : childNodes){
                             propertyInfo = modelInfo.getPropertyInfo(childNode.getAttribute("name"));
@@ -552,9 +550,8 @@ public class ModelUtil{
                                     PropertyUtil.setProperty(model, propertyName, propertyValue);
                                 }
                                 else if(propertyInfo.isEnum()){
-                                    enumInstance  = (IEnum)propertyInfo.getClazz().getEnumConstants()[0];
-                                    propertyValue = enumInstance.toEnum(childNode.getValue());
-                                    
+                                    propertyValue = Enum.valueOf(propertyInfo.getClazz(), childNode.getValue().toUpperCase());
+
                                     PropertyUtil.setProperty(model, propertyName, propertyValue);
                                 }
                                 else{
