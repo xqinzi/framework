@@ -14,11 +14,11 @@ public class MethodUtil extends MethodUtils{
 	/**
 	 * Retorna a instância de um método localiza na pilha de execução da JVM.
 	 *
-	 * @param position Valor inteiro contendo a posição do método na pilha.
+	 * @param level Valor inteiro contendo a nível do método na pilha da exceção.
 	 * @return Instância contendo as propriedades do método.
 	 * @throws ClassNotFoundException
 	 */
-	public static Method getMethodFromStackTrace(Integer position) throws ClassNotFoundException{
+	public static Method getMethodFromStackTrace(Integer level) throws ClassNotFoundException{
 		Thread            currentThread     = Thread.currentThread();
 		StackTraceElement stackTraceElement = null;
 		StackTraceElement stackTrace[]      = currentThread.getStackTrace();
@@ -28,7 +28,7 @@ public class MethodUtil extends MethodUtils{
 			stackTraceElement = stackTrace[cont];
 			
 			if(stackTraceElement.getMethodName().equals("getMethodFromStackTrace")){
-				cont += position;
+				cont += level;
 				
 				stackTraceElement = stackTrace[cont];
 				
