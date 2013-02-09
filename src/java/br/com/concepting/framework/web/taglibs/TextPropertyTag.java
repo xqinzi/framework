@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.NumberUtil;
+import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.types.ComponentType;
 
 /**
@@ -112,13 +113,8 @@ public class TextPropertyTag extends BasePropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    String type = getType();
-	    
-	    if(type.length() == 0){
-	        type = ComponentType.TEXT_BOX.toString();
-	        
-	        setType(type);
-	    }
+	    if(getComponentType() == null)
+	        setComponentType(ComponentType.TEXTBOX);
 	    
 		super.initialize();
 		
@@ -179,13 +175,13 @@ public class TextPropertyTag extends BasePropertyTag{
                 setSize(size);
 		}
 		
-		String        alignment    = getAlignment();
+		AlignmentType alignment    = getAlignment();
 		String        style        = getStyle();
 		StringBuilder styleContent = new StringBuilder();
 		
-		if(alignment.length() > 0){
+		if(alignment != null){
 			styleContent.append("text-align: ");
-			styleContent.append(alignment);
+			styleContent.append(alignment.toString().toLowerCase());
 			styleContent.append(";");
 			
 			if(style.length() > 0){

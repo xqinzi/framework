@@ -268,11 +268,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseOptionsPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        setType(ComponentType.TREE_VIEW);
+        setComponentType(ComponentType.TREEVIEW);
         
-        String labelPosition = getLabelPosition();
-        
-        if(labelPosition.length() == 0)
+        if(getLabelPosition() == null)
             setLabelPosition(PositionType.TOP);
         
         if(nodeIconStyleClass.length() == 0)
