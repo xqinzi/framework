@@ -20,9 +20,7 @@ public class PrintButtonTag extends ConfirmButtonTag{
 	 * @see br.com.concepting.framework.web.taglibs.ConfirmButtonTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        String action = getAction();
-        
-        if(action.length() == 0)
+        if(getAction() == null)
             setAction(ActionType.PRINT);
 		
 		super.initialize();

@@ -13,7 +13,7 @@ public class PasswordPropertyTag extends TextPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.TextPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-		setType(ComponentType.PASSWORD);
+		setComponentType(ComponentType.PASSWORD);
 		
 		super.initialize();
 	}
