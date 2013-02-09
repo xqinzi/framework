@@ -16,6 +16,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.web.SystemController;
+import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define a estrutura básica para um componente visual.
@@ -24,6 +25,7 @@ import br.com.concepting.framework.web.SystemController;
  * @since 1.0
  */
 public abstract class BaseTag extends BodyTagSupport implements Cloneable{
+    private   ComponentType      componentType      = null;
 	private   String             name               = "";
 	private   String             styleClass         = "";
 	private   String             style              = "";
@@ -42,8 +44,26 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
     protected SystemController   systemController   = null;
     protected SecurityController securityController = null;
     protected PrintWriter        out                = null;
+    
+    /**
+     * Retorna o tipo do componente.
+     * 
+     * @return Constante que define o tipo do componente.
+     */
+	public ComponentType getComponentType(){
+        return componentType;
+    }
 
-	/**
+    /**
+     * Define o tipo do componente.
+     * 
+     * @param componentType Constante que define o tipo do componente.
+     */
+    public void setComponentType(ComponentType componentType){
+        this.componentType = componentType;
+    }
+
+    /**
 	 * Retorna o identificador do diretório que contém os arquivos de propriedades.
 	 * 
 	 * @return String contendo o identificador do diretório.
@@ -354,7 +374,16 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
      	return enabled;
     }
 
-	/**
+    /**
+     * Indica se o componente está habilitado.
+     * 
+     * @return True/False.
+     */
+    public Boolean getEnabled(){
+        return isEnabled();
+    }
+
+    /**
 	 * Define se o componente está habilitado.
 	 * 
 	 * @param enabled True/False.
