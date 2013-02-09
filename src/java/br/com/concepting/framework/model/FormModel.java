@@ -22,7 +22,7 @@ public class FormModel extends BaseModel{
 	@Property(isIdentity = true, isForSearch = true)
 	private Integer id = 0;
 
-	@Property(isForSearch = true, relationType = RelationType.ONE_TO_ONE, relationJoinType = RelationJoinType.INNER, validations = ValidationType.REQUIRED)
+	@Property(isForSearch = true, relationType = RelationType.ONE_TO_ONE, relationJoinType = RelationJoinType.INNER_JOIN, validations = ValidationType.REQUIRED)
 	private SystemModuleModel systemModule = null;
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)

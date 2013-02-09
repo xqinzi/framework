@@ -26,7 +26,7 @@ public class ObjectModel extends BaseModel{
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
 	private String type = "";
 
-	@Property(relationType = RelationType.ONE_TO_ONE, isForSearch = true, relationJoinType = RelationJoinType.INNER, validations = ValidationType.REQUIRED)
+	@Property(relationType = RelationType.ONE_TO_ONE, isForSearch = true, relationJoinType = RelationJoinType.INNER_JOIN, validations = ValidationType.REQUIRED)
 	private FormModel form = null;
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED, isUnique=true)
@@ -113,7 +113,7 @@ public class ObjectModel extends BaseModel{
 	    if(type.length() == 0)
 	        return null;
 	    
-		return ComponentType.toComponentType(type);
+		return ComponentType.valueOf(type.toUpperCase());
 	}
 	
 	/**
