@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 
 /**
  * Classe que define as características de um gráfico baseado em um arquivo RRD.
@@ -13,7 +13,7 @@ import br.com.concepting.framework.web.types.ContentMimeType;
  * @since 1.0
  */
 public class RrdGraphDefinition{
-	private ContentMimeType contentType          = ContentMimeType.PNG;
+	private ContentType contentType          = ContentType.PNG;
 	private Integer         width                = 0;
 	private Integer         height               = 0;
 	private Double          maximumValue         = 0d;
@@ -279,7 +279,7 @@ public class RrdGraphDefinition{
 	 *
 	 * @return Instância contendo o formato da imagem do gráfico.
 	 */
-	public ContentMimeType getContentType(){
+	public ContentType getContentType(){
 		return contentType;
 	}
 
@@ -288,7 +288,7 @@ public class RrdGraphDefinition{
 	 *
 	 * @param contentType Instância contendo o formato da imagem do gráfico.
 	 */
-	public void setContentType(ContentMimeType contentType){
+	public void setContentType(ContentType contentType){
 		this.contentType = contentType;
 	}
 
