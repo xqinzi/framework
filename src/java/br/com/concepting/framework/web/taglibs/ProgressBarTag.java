@@ -73,7 +73,7 @@ public class ProgressBarTag extends BasePropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        setType(ComponentType.PROGRESS_BAR);
+        setComponentType(ComponentType.PROGRESS_BAR);
         
         if(maximumValue <= 0)
             maximumValue = TaglibConstants.DEFAULT_PROGRESS_BAR_MAXIMUM_VALUE;
@@ -161,9 +161,11 @@ public class ProgressBarTag extends BasePropertyTag{
 	 */
 	protected void renderClose() throws Throwable{
 		println("<td class=\"rightProgressBar\"></td>");
+		
 		print("<td class=\"progressBarText\">&nbsp;&nbsp;");
 		print(getFormattedValue());
 		println("&nbsp;%</td>");
+		
 		println("</tr>");
 		println("</table>");
 		
