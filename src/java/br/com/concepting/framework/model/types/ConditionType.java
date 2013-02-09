@@ -80,6 +80,9 @@ public enum ConditionType{
 
 	private String operator = "";
 	
+    /**
+     * Construtor - Inicializa objetos e/ou variáveis internas.
+     */
 	private ConditionType(){
 	}
 
@@ -89,13 +92,25 @@ public enum ConditionType{
 	 * @param operator String contendo o valor desejado.
 	 */
 	private ConditionType(String operator){
+	    this();
+	    
 		this.operator = operator;
 	}
 	
+	/**
+	 * Retorna o operador da condição.
+	 * 
+	 * @return String contendo o operador.
+	 */
 	public String getOperator(){
         return operator;
     }
 
+    /**
+     * Define o operador da condição.
+     * 
+     * @param operator String contendo o operador.
+     */
     public void setOperator(String operator){
         this.operator = operator;
     }
