@@ -1,5 +1,7 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.web.action.types.ActionType;
+
 /**
  * Classe que define o componente visual para uma caixa de confirmação.
  * 
@@ -7,9 +9,9 @@ package br.com.concepting.framework.web.taglibs;
  * @since 3.0
  */
 public class ConfirmDialogBoxTag extends MessageBoxTag{
-    private String onConfirmAction = "";
-    private String onConfirm       = "";
-    private String updateViews     = "";
+    private ActionType onConfirmAction = null;
+    private String     onConfirm       = "";
+    private String     updateViews     = "";
     
     /**
      * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
@@ -32,21 +34,30 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
     }
 
     /**
-     * Retorna o identificador da ação da confirmação.
+     * Retorn a ação a ser executada ao confirmar a operação.
      * 
-     * @return String contendo o identificador da ação.
+     * @return Constante que define a ação a ser executada.
      */
-    public String getOnConfirmAction(){
+    public ActionType getOnConfirmAction(){
         return onConfirmAction;
     }
 
     /**
-     * Define o identificador da ação da confirmação.
+     * Define a ação a ser executada ao confirmar a operação.
      * 
-     * @param onConfirmAction String contendo o identificador da ação.
+     * @param onConfirmAction Constante que define a ação a ser executada.
+     */
+    public void setOnConfirmAction(ActionType onConfirmAction){
+        this.onConfirmAction = onConfirmAction;
+    }
+
+    /**
+     * Define a ação a ser executada ao confirmar a operação.
+     * 
+     * @param onConfirmAction String que define a ação a ser executada.
      */
     public void setOnConfirmAction(String onConfirmAction){
-        this.onConfirmAction = onConfirmAction;
+        this.onConfirmAction = ActionType.valueOf(onConfirmAction.toUpperCase());
     }
 
     /**
@@ -81,15 +92,11 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
      * @see br.com.concepting.framework.web.taglibs.DialogBoxTag#renderButtons()
      */
     protected void renderButtons() throws Throwable{
-        StringBuilder cancelContent = new StringBuilder();
-
-        cancelContent.append("hideDialogBox('");
-        cancelContent.append(getName());
-        cancelContent.append("');");
-        
         StringBuilder confirmContent = new StringBuilder();
-        
-        confirmContent.append(cancelContent);
+
+        confirmContent.append("hideDialogBox('");
+        confirmContent.append(getName());
+        confirmContent.append("');");
 
         if(onConfirm.length() > 0){
             confirmContent.append(" ");
@@ -111,7 +118,6 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
         CloseButtonTag closeButtonTag = new CloseButtonTag();
 
         closeButtonTag.setPageContext(pageContext);
-        closeButtonTag.setOnClick(cancelContent.toString());
         closeButtonTag.doStartTag();
         closeButtonTag.doEndTag();
     }
