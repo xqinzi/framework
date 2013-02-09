@@ -14,7 +14,7 @@ import javax.mail.Address;
 
 import br.com.concepting.framework.util.ByteUtil;
 import br.com.concepting.framework.util.helpers.Message;
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 
 /** 
  * Classe que define a estrutura básica para uma mensagem de e-Mail.
@@ -23,37 +23,37 @@ import br.com.concepting.framework.web.types.ContentMimeType;
  * @since 1.0
  */
 public class MailMessage extends Message{
-	private String                          mimeType    = ContentMimeType.HTML.toString();
+	private ContentType                     mimeType    = ContentType.HTML;
 	private Collection<Map<String, Object>> attachments = null;
 
 	/**
 	 * Retorna o tipo do conteúdo da mensagem.
 	 * 
-	 * @return String contendo o tipo do conteúdo.
+	 * @return Constante que define o tipo do conteúdo.
 	 */
-	public String getMimeType(){
+	public ContentType getMimeType(){
 		return mimeType;
 	}
 
 	/**
 	 * Define o tipo do conteúdo da mensagem.
 	 * 
-	 * @param mimeType String contendo o tipo do conteúdo.
+	 * @param mimeType Constante que define o tipo do conteúdo.
 	 */
-	public void setMimeType(String mimeType){
+	public void setMimeType(ContentType mimeType){
 		this.mimeType = mimeType;
 	}
 	
 	/**
 	 * Define o tipo do conteúdo da mensagem.
 	 * 
-	 * @param mimeType Constante contendo o tipo do conteúdo.
+	 * @param mimeType String que define o tipo do conteúdo.
 	 */
-	public void setMimeType(ContentMimeType mimeType){
-		if(mimeType != null)
-			this.mimeType = mimeType.toString();
+	public void setMimeType(String mimeType){
+		if(mimeType.length() > 0)
+			this.mimeType = ContentType.valueOf(mimeType.toUpperCase());
 		else
-			this.mimeType = "";
+			this.mimeType = ContentType.HTML;
 	}
 
 	/**
