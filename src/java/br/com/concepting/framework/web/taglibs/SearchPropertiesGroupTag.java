@@ -16,7 +16,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
-    private String             action             = "";
+    private ActionType         action             = null;
 	private String             forward            = "";
 	private String             forwardOnFail      = "";
 	private String             onSubmit           = "";
@@ -85,12 +85,21 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
     }
 
 	/**
-	 * Retorna o identificador da ação de envio dos dados do formulário.
+	 * Retorna a constante da ação de envio dos dados do formulário.
 	 * 
 	 * @return String contendo o identificador da ação.
 	 */
-	public String getAction(){
+	public ActionType getAction(){
 		return action;
+	}
+	
+    /**
+     * Define o identificador da ação de envio dos dados do formulário.
+     * 
+     * @param action Instância contendo a constante que define a ação.
+     */
+	protected void setAction(ActionType action){
+	    this.action = action;
 	}
 
 	/**
@@ -99,16 +108,10 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 * @param action String contendo o identificador da ação.
 	 */
 	public void setAction(String action){
-		this.action = action;
-	}
-
-	/**
-	 * Define o identificador da ação de envio dos dados do formulário.
-	 * 
-	 * @param action Instância contendo a constante que define a ação.
-	 */
-	protected void setAction(ActionType action){
-		setAction(action.toString());
+	    if(action.length() > 0)
+	        this.action = ActionType.valueOf(action.toUpperCase());
+	    else
+	        this.action = null;
 	}
 
 	/**
@@ -227,8 +230,8 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    if(action.length() == 0)
-	        action = ActionType.SEARCH.toString();
+	    if(action == null)
+	        action = ActionType.SEARCH;
 	    
 	    String labelStyleClass = getLabelStyleClass();
 	    
@@ -427,7 +430,7 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
     protected void clearAttributes(){
 	    super.clearAttributes();
 
-	    setAction(ActionType.SEARCH.toString());
+	    setAction("");
 	    setForward("");
 	    setForwardOnFail("");
 	    setValidate(false);
