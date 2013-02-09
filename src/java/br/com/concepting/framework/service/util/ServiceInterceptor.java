@@ -160,7 +160,7 @@ public class ServiceInterceptor extends Interceptor{
             ContextFactoryType factoryType     = null;
             
             try{
-                factoryType = ContextFactoryType.toContextFactoryType(factoryResource.getType());
+                factoryType = ContextFactoryType.valueOf(factoryResource.getType().toUpperCase());
             }
             catch(Throwable e){
                 factoryType = ContextFactoryType.TOMCAT;
