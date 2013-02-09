@@ -15,7 +15,7 @@ public class RadioPropertyTag extends BaseOptionPropertyTag{
      * @see br.com.concepting.framework.web.taglibs.BaseOptionPropertyTag#initialize()
      */
     protected void initialize() throws Throwable{
-        setType(ComponentType.RADIO);
+        setComponentType(ComponentType.RADIO);
         
         Tag parent = findAncestorWithClass(this, OptionsPropertyTag.class);
 
