@@ -11,6 +11,7 @@ import org.apache.struts.taglib.html.HtmlTag;
 
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.LanguageUtil;
+import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
@@ -184,21 +185,44 @@ public class PageTag extends HtmlTag{
 		renderImports(systemController);
 	}
 	
+	/**
+	 * Renderiza os eventos de página.
+	 * 
+	 * @throws Throwable
+	 */
 	private void renderEvents() throws Throwable{
 	    renderEvents(systemController);
 	}
 	
+	/**
+	 * Renderiza as caixas de mensagem da página.
+	 * 
+	 * @throws Throwable
+	 */
 	private void renderMessageBoxes() throws Throwable{
 	    renderMessageBoxes(systemController);
 	}
 	
+    /**
+     * Renderiza as eventos da página.
+     * 
+     * @param systemController Instância da classe de controle de requisições.
+     * @throws Throwable
+     */
     protected static void renderEvents(SystemController systemController) throws Throwable{
         StringBuilder content = new StringBuilder();
         
-        content.append("addClickEvent(hideAllMenus);\n");
-        content.append("addClickEvent(hideAllParentMenus);\n");
-        content.append("addLoadEvent(hideLoadingBox);\n");
-        content.append("addLoadEvent(hideParentLoadingBox);\n");
+        content.append("addClickEvent(hideAllMenus);");
+        content.append(StringUtil.getLineBreak());
+
+        content.append("addClickEvent(hideAllParentMenus);");
+        content.append(StringUtil.getLineBreak());
+
+        content.append("addLoadEvent(hideLoadingBox);");
+        content.append(StringUtil.getLineBreak());
+
+        content.append("addLoadEvent(hideParentLoadingBox);");
+        content.append(StringUtil.getLineBreak());
         
         ScriptTag scriptTag = new ScriptTag();
         
@@ -208,6 +232,12 @@ public class PageTag extends HtmlTag{
         scriptTag.doEndTag();
     }
 
+    /**
+     * Renderiza as caixas de mensagens da página.
+     * 
+     * @param systemController Instância da classe de controle de requisições.
+     * @throws Throwable
+     */
     protected static void renderMessageBoxes(SystemController systemController) throws Throwable{
         PageContext   pageContext       = systemController.getPageContext();
         MessageBoxTag infoMessageBoxTag = new MessageBoxTag();
@@ -244,7 +274,7 @@ public class PageTag extends HtmlTag{
 	 * Renderiza imports da página, ou seja, inclui as referências de javascripts e 
 	 * estilos CSS.
 	 *
-	 * @param pageContext Instância contendo as propriedade de contexto da página.
+     * @param systemController Instância da classe de controle de requisições.
 	 * @throws Throwable
 	 */
 	protected static void renderImports(SystemController systemController) throws Throwable{
@@ -303,7 +333,8 @@ public class PageTag extends HtmlTag{
             content.append("\"");
         }
         
-        content.append(");\n");
+        content.append(");");
+        content.append(StringUtil.getLineBreak());
         
         scriptTag.setContent(content.toString());
         scriptTag.doStartTag();
@@ -323,7 +354,8 @@ public class PageTag extends HtmlTag{
             content.append("\"");
         }
         
-        content.append(");\n");
+        content.append(");");
+        content.append(StringUtil.getLineBreak());
 
         scriptTag.setContent(content.toString());
         scriptTag.doStartTag();

@@ -404,7 +404,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
 
         pagerActionTag.setPageContext(pageContext);
         pagerActionTag.setName(tagName.toString());
-        pagerActionTag.setValue(PagerActionType.REFRESH_PAGE.toString());
+        pagerActionTag.setValue(PagerActionType.REFRESH_PAGE);
         pagerActionTag.doStartTag();
         pagerActionTag.doEndTag();
 
