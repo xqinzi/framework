@@ -33,7 +33,7 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 import br.com.concepting.framework.util.constants.ReportConstants;
 import br.com.concepting.framework.util.helpers.ReportDataSource;
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -189,7 +189,7 @@ public abstract class ReportUtil{
     		    jasperPrint = JasperFillManager.fillReport(reportStream, reportParameters, new ReportDataSource((Collection)datasource));
     		
     		JRExporter            exporter     = null;
-    		ContentMimeType       exportType   = (ContentMimeType)reportParameters.get(ReportConstants.REPORT_EXPORT_TYPE_KEY);
+    		ContentType       exportType   = (ContentType)reportParameters.get(ReportConstants.REPORT_EXPORT_TYPE_KEY);
     		ByteArrayOutputStream exportStream = new ByteArrayOutputStream();
     		
     		switch(exportType){
@@ -319,14 +319,14 @@ public abstract class ReportUtil{
 			}
 		}
 
-		ContentMimeType exportType = (ContentMimeType)reportParameters.get(ReportConstants.REPORT_EXPORT_TYPE_KEY);
+		ContentType exportType = (ContentType)reportParameters.get(ReportConstants.REPORT_EXPORT_TYPE_KEY);
 		Integer         pageWidth  = 0;
 		Integer         pageHeight = 0;
 
 		if(exportType == null)
 			reportParameters.put(ReportConstants.REPORT_EXPORT_TYPE_KEY, ReportConstants.DEFAULT_REPORT_EXPORT_TYPE);
 		else{
-			if(exportType == ContentMimeType.TEXT){
+			if(exportType == ContentType.TEXT){
 				pageWidth = (Integer)reportParameters.get(ReportConstants.REPORT_TEXT_PAGE_WIDTH_KEY);
 				if(pageWidth == null)
 					pageWidth = ReportConstants.DEFAULT_REPORT_TEXT_PAGE_WIDTH;
