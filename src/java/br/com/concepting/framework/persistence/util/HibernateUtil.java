@@ -156,7 +156,7 @@ public class HibernateUtil{
 			Configuration   configuration              = new Configuration();
 			Properties      hibernateProperties        = new Properties();
 			FactoryResource persistenceFactoryResource = persistenceResource.getFactoryResource();
-			RepositoryType  repositoryType             = RepositoryType.toRepositoryType(persistenceFactoryResource.getType());
+			RepositoryType  repositoryType             = RepositoryType.valueOf(persistenceFactoryResource.getType().toUpperCase());
 
 			if(repositoryType == RepositoryType.MYSQL)
 				hibernateProperties.setProperty(Environment.DIALECT, MySQLDialect.class.getName());
