@@ -13,7 +13,7 @@ public class UndoButtonTag extends ButtonTag{
 	 * @see br.com.concepting.framework.web.taglibs.ButtonTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    setType(ComponentType.RESET_BUTTON);
+	    setComponentType(ComponentType.UNDO_BUTTON);
 	    
 	    super.initialize();
 	}
