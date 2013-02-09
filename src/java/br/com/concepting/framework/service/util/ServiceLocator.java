@@ -127,10 +127,10 @@ public class ServiceLocator{
                 
                 ContextFactoryType contextType = null;
                 
-                if(contextFactoryResource == null)
-                    contextType = ContextFactoryType.TOMCAT;
+                if(contextFactoryResource != null)
+                    contextType = ContextFactoryType.valueOf(contextFactoryResource.getType().toUpperCase());
                 else
-                    contextType = ContextFactoryType.toContextFactoryType(contextFactoryResource.getType());
+                    contextType = ContextFactoryType.TOMCAT;
                 
                 String lookupName = "";
                 
