@@ -201,7 +201,7 @@ public class Mail{
 		MimeMultipart parts = new MimeMultipart();
 		MimeBodyPart  part  = new MimeBodyPart();
 
-		part.setContent(message.getContent(), message.getMimeType());
+		part.setContent(message.getContent(), message.getContentType().getMimeType());
 
 		parts.addBodyPart(part);
 
@@ -364,7 +364,7 @@ public class Mail{
 		if(mailMessage.getReceivedDate() == null)
 			mailMessage.setReceivedDate(new Date());
 		
-		mailMessage.setMimeType(message.getContentType());
+		mailMessage.setContentType(message.getContentType());
 		mailMessage.setContent(buildContent(message, mailMessage));
 
 		return mailMessage;

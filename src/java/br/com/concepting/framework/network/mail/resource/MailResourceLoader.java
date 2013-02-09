@@ -50,9 +50,9 @@ public class MailResourceLoader extends NetworkResourceLoader{
 		resourceNode = resource.getNode("transport");
 		if(resourceNode != null){
 			try{
-				String transportType = StringUtil.trim(resourceNode.getAttribute("type"));
+				String transportType = StringUtil.trim(resourceNode.getAttribute("type")).toUpperCase();
 
-				mailResource.setTransport(MailTransportType.toMailTransport(transportType));
+				mailResource.setTransport(MailTransportType.valueOf(transportType));
 			}
 			catch(IllegalArgumentException e){
 				throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);
@@ -73,7 +73,7 @@ public class MailResourceLoader extends NetworkResourceLoader{
 			try{
 				String storageType = StringUtil.trim(resourceNode.getAttribute("type"));
 
-				mailResource.setStorage(MailStorageType.toMailStorage(storageType));
+				mailResource.setStorage(MailStorageType.valueOf(storageType));
 			}
 			catch(IllegalArgumentException e){
 				throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);

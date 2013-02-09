@@ -23,7 +23,7 @@ import br.com.concepting.framework.web.types.ContentType;
  * @since 1.0
  */
 public class MailMessage extends Message{
-	private ContentType                     mimeType    = ContentType.HTML;
+	private ContentType                     contentType = ContentType.HTML;
 	private Collection<Map<String, Object>> attachments = null;
 
 	/**
@@ -31,29 +31,29 @@ public class MailMessage extends Message{
 	 * 
 	 * @return Constante que define o tipo do conteúdo.
 	 */
-	public ContentType getMimeType(){
-		return mimeType;
+	public ContentType getContentType(){
+		return contentType;
 	}
 
 	/**
 	 * Define o tipo do conteúdo da mensagem.
 	 * 
-	 * @param mimeType Constante que define o tipo do conteúdo.
+	 * @param contentType Constante que define o tipo do conteúdo.
 	 */
-	public void setMimeType(ContentType mimeType){
-		this.mimeType = mimeType;
+	public void setContentType(ContentType contentType){
+		this.contentType = contentType;
 	}
 	
 	/**
 	 * Define o tipo do conteúdo da mensagem.
 	 * 
-	 * @param mimeType String que define o tipo do conteúdo.
+	 * @param contentType String que define o tipo do conteúdo.
 	 */
-	public void setMimeType(String mimeType){
-		if(mimeType.length() > 0)
-			this.mimeType = ContentType.valueOf(mimeType.toUpperCase());
+	public void setContentType(String contentType){
+		if(contentType.length() > 0)
+			this.contentType = ContentType.valueOf(contentType.toUpperCase());
 		else
-			this.mimeType = ContentType.HTML;
+			this.contentType = ContentType.HTML;
 	}
 
 	/**
