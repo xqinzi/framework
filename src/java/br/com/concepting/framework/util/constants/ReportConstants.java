@@ -1,6 +1,6 @@
 package br.com.concepting.framework.util.constants;
 
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 
 /**
  * Classe que define as constantes utilizadas nas rotinas de emissão de relatórios.
@@ -12,7 +12,7 @@ public abstract class ReportConstants{
     /**
      * Constante que define o tipo de exportação default do relatório.
      */
-    public static final ContentMimeType DEFAULT_REPORT_EXPORT_TYPE = ContentMimeType.PDF;
+    public static final ContentType DEFAULT_REPORT_EXPORT_TYPE = ContentType.PDF;
     
     /**
      * Constante que define a largura default de uma página texto.
