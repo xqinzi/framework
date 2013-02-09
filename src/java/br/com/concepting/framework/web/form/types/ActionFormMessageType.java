@@ -1,83 +1,29 @@
 package br.com.concepting.framework.web.form.types;
 
-import br.com.concepting.framework.util.interfaces.IEnum;
-
 /**
- * Classe que define as constantes para os tipos de mensagens em uma aplicação.
+ * Classe que define as constantes para os tipos de mensagens.
  * 
  * @author fvilarinho
  * @since 1.0
  */
-public enum ActionFormMessageType implements IEnum{
+public enum ActionFormMessageType{
 	/**
 	 * Constante que define o tipo de mensagem para informações.
 	 */
-	INFO("info"),
+	INFO,
 
 	/**
 	 * Constante que define o tipo de mensagem para avisos.
 	 */
-	WARNING("warning"),
+	WARNING,
 
 	/**
 	 * Constante que define o tipo de mensagem para erros.
 	 */
-	ERROR("error"),
+	ERROR,
 
 	/**
 	 * Constante que define o tipo de mensagem para validação.
 	 */
-	VALIDATION("validation");
-
-	private String key;
-
-	/**
-	 * Construtor - Define o valor da constante.
-	 * 
-	 * @param key String contendo o valor desejado.
-	 */
-	private ActionFormMessageType(String key){
-		setKey(key);
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#getKey()
-	 */
-    public <O> O getKey(){
-		return (O)key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#setKey(java.lang.Object)
-	 */
-	public <O> void setKey(O key){
-		this.key = (String)key;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString(){
-		return key;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#toEnum(java.lang.Object)
-	 */
-	public <O> IEnum toEnum(O value) throws IllegalArgumentException{
-		return toActionFormMessageType((String)value);
-	}
-
-	/**
-	 * Converte uma string em uma instância da constante.
-	 * 
-	 * @param value String contendo o valor desejado.
-	 * @return Instância da constante.
-	 */
-	public static ActionFormMessageType toActionFormMessageType(String value) throws IllegalArgumentException{
-		if(value == null)
-			throw new IllegalArgumentException();
-
-		return valueOf(value.toUpperCase());
-	}
+	VALIDATION;
 }
