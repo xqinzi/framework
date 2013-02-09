@@ -2,7 +2,6 @@ package br.com.concepting.framework.audit.appenders;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedList;
 
 import org.apache.commons.beanutils.ConstructorUtils;
@@ -26,6 +25,7 @@ import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.helpers.DateTime;
 
 /**
  * Classe que define a estrutura básica para um mecanismo de exibição/armazenamento 
@@ -105,7 +105,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
             model = new AuditorModel();
         }
 
-        model.setDate(new Date());
+        model.setCreateDate(new DateTime());
 
         Class     entity     = auditor.getEntity();
         Auditable annotation = (Auditable)entity.getAnnotation(Auditable.class);
