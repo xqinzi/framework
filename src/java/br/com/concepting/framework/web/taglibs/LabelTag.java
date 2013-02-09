@@ -3,6 +3,7 @@ package br.com.concepting.framework.web.taglibs;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define o componente de label vinculado a uma propriedade de um modelo de 
@@ -16,6 +17,8 @@ public class LabelTag extends BasePropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
+	    setComponentType(ComponentType.LABEL);
+	    
 	    String name  = getName();
 	    Object value = null;
 	    
