@@ -84,14 +84,29 @@ public class ButtonTag extends BaseActionFormElementTag{
 	        this.pagerAction = null; 
 	}
 
+    /**
+     * Retorna a ação a ser executada.
+     * 
+     * @return Constante que define a ação.
+     */
 	public ActionType getAction(){
 		return action;
 	}
 
+    /**
+     * Define a ação a ser executada.
+     * 
+     * @param action Constante que define a ação.
+     */
 	protected void setAction(ActionType action){
 		this.action = action;
 	}
 	
+    /**
+     * Define a ação a ser executada.
+     * 
+     * @param action String que define a ação.
+     */
 	public void setAction(String action){
 	    if(action.length() > 0)
 	        this.action = ActionType.valueOf(action.toUpperCase());
@@ -241,7 +256,9 @@ public class ButtonTag extends BaseActionFormElementTag{
 	 */
 	protected void buildIcon() throws Throwable{
 		if(iconUrl.length() > 0 || iconStyleClass.length() > 0 || iconStyle.length() > 0){
-            println("<td align=\"center\">");
+            print("<td align=\"");
+            print(AlignmentType.CENTER.toString().toLowerCase());
+            println("\">");
 
 			if(iconUrl.length() > 0){
 				print("<img src=\"");
@@ -268,9 +285,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 
 			println("</td>");
 			
-			PositionType labelPosition = getLabelPosition();
-
-			if(labelPosition == PositionType.BOTTOM){
+			if(getLabelPosition() == PositionType.BOTTOM){
 				println("</tr>");
 				println("<tr>");
 			}
