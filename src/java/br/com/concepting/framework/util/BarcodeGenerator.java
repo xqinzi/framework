@@ -9,7 +9,7 @@ import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
 import net.sourceforge.barbecue.output.OutputException;
 import br.com.concepting.framework.util.types.BarcodeType;
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 
 /**
  * Classe utilitária para geração de uma imagem de código de barra.
@@ -43,7 +43,7 @@ public class BarcodeGenerator{
 	 * @throws OutputException
 	 * @throws IOException
 	 */
-	public byte[] generate(BarcodeType barcodeType, ContentMimeType imageType, String value) throws BarcodeException, OutputException, IOException{
+	public byte[] generate(BarcodeType barcodeType, ContentType imageType, String value) throws BarcodeException, OutputException, IOException{
 		Barcode barcode = null;
 
 		switch(barcodeType){
