@@ -33,6 +33,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;
 import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.helpers.XmlNode;
 import br.com.concepting.framework.util.types.SortOrderType;
 import br.com.concepting.framework.web.action.BaseAction;
@@ -657,10 +658,15 @@ public class ModelUtil{
         	                        if(propertyInfo.hasModel())
         	                            itemChildNode = toXmlNode((BaseModel)item, language);
         	                        else if(PropertyUtil.isDate(propertyInfo.getCollectionItemsClass())){
-        	                            itemValue = DateTimeUtil.formatDateTime((Date)item, language);
+        	                            itemValue = DateTimeUtil.format((Date)item, language);
 
         	                            itemChildNode = new XmlNode("item", itemValue);
         	                        }
+                                    else if(PropertyUtil.isTime(propertyInfo.getCollectionItemsClass())){
+                                        itemValue = DateTimeUtil.format((DateTime)item, language);
+
+                                        itemChildNode = new XmlNode("item", itemValue);
+                                    }
                                     else if(PropertyUtil.isNumber(propertyInfo.getCollectionItemsClass())){
                                         itemValue = NumberUtil.format((Number)item, language);
                                         
@@ -678,10 +684,15 @@ public class ModelUtil{
         	                    }
                             }
     	                    else if(propertyInfo.isDate()){
-	                            propertyValue = DateTimeUtil.formatDateTime((Date)propertyValue, language);
+	                            propertyValue = DateTimeUtil.format((Date)propertyValue, language);
                                 
 	                            childNode.setValue((String)propertyValue);
     	                    }
+                            else if(propertyInfo.isTime()){
+                                propertyValue = DateTimeUtil.format((DateTime)propertyValue, language);
+                                
+                                childNode.setValue((String)propertyValue);
+                            }
     	                    else if(propertyInfo.isNumber()){
     	                        propertyValue = NumberUtil.format((Number)propertyValue, language);
                                 

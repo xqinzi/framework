@@ -327,14 +327,10 @@ public abstract class PropertyUtil extends PropertyUtils{
 		    
 		    Date value = (Date)instance;
 		    
-			if(pattern.length() == 0){
-			    if(useAdditionalFormatting)
-			        result = DateTimeUtil.formatDateTime(value, language);
-			    else
-			        result = DateTimeUtil.formatDate(value, language);
-			}
+			if(pattern.length() == 0)
+		        result = DateTimeUtil.format(value, language);
 			else
-				result = DateTimeUtil.format((Date)instance, pattern);
+				result = DateTimeUtil.format(value, pattern, language);
 		}
 		else if(instance instanceof Number){
 		    if(valueMap != null){
@@ -361,7 +357,7 @@ public abstract class PropertyUtil extends PropertyUtils{
 				if(valueMap != null)
 					item = valueMap.get(item);
 				
-				resultBuffer.append(format(item, language));
+				resultBuffer.append(format(item, pattern, useAdditionalFormatting, language));
 			}
 			
 			result = resultBuffer.toString();
