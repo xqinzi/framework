@@ -43,6 +43,4 @@ public abstract class SecurityConstants extends ResourceConstants{
      * Constante que define o identificador da classe do filtro de segurança para as sessões de login.
      */
     public static final String DEFAULT_SECURITY_FILTER_CLASS_ID = "br.com.concepting.framework.security.web.SecurityFilter";
-    
-    public static final String SYSTEM_AUTHENTICATION_KEY = "systemAuthentication";
-}
+} 
