@@ -1,8 +1,10 @@
 package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.action.types.ActionType;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.ComponentType;
 
 /**
@@ -12,16 +14,16 @@ import br.com.concepting.framework.web.types.ComponentType;
  * @since 1.0
  */
 public class ButtonTag extends BaseActionFormElementTag{
-	private String  action             = "";
-	private String  forward            = "";
-	private String  forwardOnFail      = "";
-    private String  iconStyleClass     = "";
-    private String  iconStyle          = "";
-    private String  iconUrl            = "";
-    private String  pagerAction        = "";
-    private String  updateViews        = "";
-	private Boolean validate           = false;
-	private String  validateProperties = "";
+	private ActionType      action             = null;
+	private String          forward            = "";
+	private String          forwardOnFail      = "";
+    private String          iconStyleClass     = "";
+    private String          iconStyle          = "";
+    private String          iconUrl            = "";
+    private PagerActionType pagerAction        = null;
+    private String          updateViews        = "";
+	private Boolean         validate           = false;
+	private String          validateProperties = "";
 	
     /**
      * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
@@ -53,48 +55,48 @@ public class ButtonTag extends BaseActionFormElementTag{
     }
 
     /**
-	 * Retorna a ação de paginação a ser executada.
-	 *  
-	 * @return String contendo a ação.
-	 */
-	public String getPagerAction(){
+     * Retorna a ação de paginação a ser executada.
+     * 
+     * @return Constante que define a ação de paginação.
+     */
+	public PagerActionType getPagerAction(){
      	return pagerAction;
     }
 
-	/**
-	 * Define a ação de paginação a ser executada.
-	 *  
-	 * @param pagerAction String contendo a ação.
-	 */
-	public void setPagerAction(String pagerAction){
+    /**
+     * Define a ação de paginação a ser executada.
+     * 
+     * @param pagerAction Constante que define a ação de paginação.
+     */
+	protected void setPagerAction(PagerActionType pagerAction){
      	this.pagerAction = pagerAction;
     }
+	
+    /**
+     * Define a ação de paginação a ser executada.
+     * 
+     * @param pagerAction String que define a ação de paginação.
+     */
+	public void setPagerAction(String pagerAction){
+	    if(pagerAction.length() > 0)
+	        this.pagerAction = PagerActionType.valueOf(pagerAction.toUpperCase());
+	    else
+	        this.pagerAction = null; 
+	}
 
-	/**
-	 * Retorna a ação do formulário a ser executada.
-	 * 
-	 * @return String contendo o identificador da ação.
-	 */
-	public String getAction(){
+	public ActionType getAction(){
 		return action;
 	}
 
-	/**
-	 * Define a ação do formulário a ser executada.
-	 * 
-	 * @param action String contendo o identificador da ação.
-	 */
-	public void setAction(String action){
+	protected void setAction(ActionType action){
 		this.action = action;
 	}
-
-	/**
-	 * Define a ação do formulário a ser executada.
-	 * 
-	 * @param action Instância contendo a constante que define a ação.
-	 */
-	public void setAction(ActionType action){
-		this.action = action.toString();
+	
+	public void setAction(String action){
+	    if(action.length() > 0)
+	        this.action = ActionType.valueOf(action.toUpperCase());
+	    else
+	        this.action = null;
 	}
 
 	/**
@@ -266,9 +268,9 @@ public class ButtonTag extends BaseActionFormElementTag{
 
 			println("</td>");
 			
-			String labelPosition = getLabelPosition();
+			PositionType labelPosition = getLabelPosition();
 
-			if(labelPosition.equals(PositionType.BOTTOM.toString())){
+			if(labelPosition == PositionType.BOTTOM){
 				println("</tr>");
 				println("<tr>");
 			}
@@ -281,7 +283,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 	protected void renderLabel() throws Throwable{
 	    super.renderLabel();
 		
-		if(getLabelPosition().equals(PositionType.TOP.toString())){
+		if(getLabelPosition() == PositionType.TOP){
 		    println("</tr>");
 		    println("<tr>");
 		}
@@ -306,12 +308,14 @@ public class ButtonTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderBody()
 	 */
 	protected void renderBody() throws Throwable{
-		println("<table class=\"panel\">");
+        print("<table class\"");
+        print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+        println("\">");
 		println("<tr>");
 
-		String labelPosition = getLabelPosition();
+		PositionType labelPosition = getLabelPosition();
 		
-		if(labelPosition.equals(PositionType.LEFT.toString()) || labelPosition.equals(PositionType.TOP.toString())){
+		if(labelPosition == PositionType.LEFT || labelPosition == PositionType.TOP){
             renderLabel();
 		    buildIcon();
 		}
@@ -335,28 +339,31 @@ public class ButtonTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    String type = getType();
+	    ComponentType componentType = getComponentType();
 	    
-	    if(type.length() == 0)
-	        setType(ComponentType.BUTTON);
+	    if(componentType == null){
+	        componentType = ComponentType.BUTTON;
+	        
+	        setComponentType(componentType);
+	    }
 
-	    String labelPosition = getLabelPosition();
+	    PositionType labelPosition = getLabelPosition();
 	    
-        if(labelPosition.length() == 0){
-            labelPosition = PositionType.RIGHT.toString();
+        if(labelPosition == null){
+            labelPosition = PositionType.RIGHT;
             
             setLabelPosition(labelPosition);
         }
         
-        String labelAlignment = getLabelAlignment();
+        AlignmentType labelAlignment = getLabelAlignment();
 	    
-	    if(labelAlignment.length() == 0){
-    	    if(labelPosition.equals(PositionType.TOP.toString()) || labelPosition.equals(PositionType.BOTTOM.toString()))
-    	        labelAlignment = AlignmentType.CENTER.toString();
-    	    else if(getLabelPosition().equals(PositionType.LEFT.toString()))
-                labelAlignment = AlignmentType.RIGHT.toString();
-            else if(getLabelPosition().equals(PositionType.RIGHT.toString()))
-                labelAlignment = AlignmentType.LEFT.toString();
+	    if(labelAlignment == null){
+    	    if(labelPosition == PositionType.TOP || labelPosition == PositionType.BOTTOM)
+    	        labelAlignment = AlignmentType.CENTER;
+    	    else if(labelPosition == PositionType.LEFT)
+                labelAlignment = AlignmentType.RIGHT;
+            else if(labelPosition == PositionType.RIGHT)
+                labelAlignment = AlignmentType.LEFT;
     	    
     	    setLabelAlignment(labelAlignment);
 	    }
@@ -371,42 +378,42 @@ public class ButtonTag extends BaseActionFormElementTag{
 		Boolean isEnabled  = isEnabled();
 		
 		if(styleClass.length() == 0){
-	        StringBuilder buffer = new StringBuilder();
+	        StringBuilder styleClassContent = new StringBuilder();
 			
-			buffer.append(name);
+			styleClassContent.append(name);
 
 			if(!isEnabled)
-				buffer.append("Disabled");
+				styleClassContent.append("Disabled");
 
-			setStyleClass(buffer.toString());
+			setStyleClass(styleClassContent.toString());
 		}
 		
 		String iconStyleClass = getIconStyleClass();
 
 		if(iconStyleClass.length() == 0){
-            StringBuilder buffer = new StringBuilder();
+            StringBuilder iconStyleClassContent = new StringBuilder();
 			
-			buffer.append(name);
-			buffer.append("Icon");
+			iconStyleClassContent.append(name);
+			iconStyleClassContent.append("Icon");
 
 			if(!isEnabled)
-				buffer.append("Disabled");
+				iconStyleClassContent.append("Disabled");
 
-			setIconStyleClass(buffer.toString());
+			setIconStyleClass(iconStyleClassContent.toString());
 		}
 		
 		String labelStyleClass = getLabelStyleClass();
 		
 		if(labelStyleClass.length() == 0){
-            StringBuilder buffer = new StringBuilder();
+            StringBuilder labelStyleClassContent = new StringBuilder();
             
-			buffer.append(name);
-			buffer.append("Label");
+			labelStyleClassContent.append(name);
+			labelStyleClassContent.append("Label");
 			
 			if(!isEnabled)
-				buffer.append("Disabled");
+				labelStyleClassContent.append("Disabled");
 			
-			setLabelStyleClass(buffer.toString());
+			setLabelStyleClass(labelStyleClassContent.toString());
 		}
 		
 		setName(name);
@@ -435,7 +442,7 @@ public class ButtonTag extends BaseActionFormElementTag{
             if(onClick.length() > 0 && !onClick.endsWith(";"))
                 onClickContent.append("; ");
             
-		    if(action.length() > 0){
+		    if(action != null){
      			onClickContent.append("document.");
      			onClickContent.append(actionForm);
      			
@@ -477,7 +484,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      				onClickContent.append("';");
      			}
 
-                if(gridTag != null && pagerAction.length() > 0){
+                if(gridTag != null && pagerAction != null){
                     onClickContent.append(" pagerAction('");
                     onClickContent.append(gridTag.getName());
                     onClickContent.append("', '");
@@ -536,6 +543,8 @@ public class ButtonTag extends BaseActionFormElementTag{
     protected void clearAttributes(){
     	super.clearAttributes();
 
+    	setAction("");
+    	setPagerAction("");
     	setForward("");
     	setForwardOnFail("");
     	setValidate(false);
