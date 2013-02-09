@@ -17,7 +17,6 @@ import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.interfaces.IEnum;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 import br.com.concepting.framework.web.form.BaseActionForm;
@@ -379,13 +378,12 @@ public class ActionFormPopulator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private IEnum populateEnumProperty(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private Enum populateEnumProperty(RequestInfo requestInfo, PropertyInfo propertyInfo){
 		try{
-			Class  enumClass    = (propertyInfo.isCollection() ? propertyInfo.getCollectionItemsClass() : propertyInfo.getClazz());
-			IEnum  enumInstance = (IEnum)enumClass.getEnumConstants()[0];
-			String value        = requestInfo.getValue();
-
-			return enumInstance.toEnum(value);
+			Class  enumClass = (propertyInfo.isCollection() ? propertyInfo.getCollectionItemsClass() : propertyInfo.getClazz());
+			String value     = StringUtil.trim(requestInfo.getValue()).toUpperCase();
+			
+			return Enum.valueOf(enumClass, value);
 		}
 		catch(IllegalArgumentException e){
 			return null;
