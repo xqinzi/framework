@@ -343,13 +343,6 @@ public @interface Property{
 	 * @return True/False.
 	 */
 	boolean persistPattern() default true;
-
-	/**
-	 * Define que a propriedade armazena informações de horário.
-	 *
-	 * @return True/False.
-	 */
-	boolean isTime() default false;
 	
 	/**
 	 * Define um texto extra para a propriedade. 
