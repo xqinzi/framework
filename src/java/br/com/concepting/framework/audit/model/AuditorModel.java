@@ -1,7 +1,6 @@
 package br.com.concepting.framework.audit.model;
 
 import java.util.Collection;
-import java.util.Date;
 
 import br.com.concepting.framework.audit.types.AuditorStatusType;
 import br.com.concepting.framework.model.BaseModel;
@@ -10,6 +9,7 @@ import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.persistence.types.RelationType;
+import br.com.concepting.framework.util.helpers.DateTime;
 
 /**
  * Classe que define o modelo de dados que armazena o registro de auditoria.
@@ -22,8 +22,8 @@ public class AuditorModel extends BaseModel{
 	@Property(isIdentity=true)
 	private Long id = 0l;
 
-	@Property(isForSearch=true, isTime=true)
-	private Date date = null;
+	@Property(isForSearch=true)
+	private DateTime createDate = null;
 	
     @Property
     private SystemSessionModel systemSession = null;
@@ -169,17 +169,17 @@ public class AuditorModel extends BaseModel{
 	 * 
 	 * @return Instância contendo a data/horário do registro de auditoria.
 	 */
-	public Date getDate(){
-		return date;
+	public DateTime getCreateDate(){
+		return createDate;
 	}
 
 	/**
 	 * Define a data/horário do registro de auditoria.
 	 * 
-	 * @param date Instância contendo a data/horário do registro de auditoria.
+	 * @param createDate Instância contendo a data/horário do registro de auditoria.
 	 */
-	public void setDate(Date date){
-		this.date = date;
+	public void setCreateDate(DateTime createDate){
+		this.createDate = createDate;
 	}
 
 	/**
