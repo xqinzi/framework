@@ -1,14 +1,12 @@
 package br.com.concepting.framework.util.types;
 
-import br.com.concepting.framework.util.interfaces.IEnum;
-
 /**
  * Classe que define as constantes para os tipos de comando do robô.
  * 
  * @author fvilarinho
  * @since 2.0
  */
-public enum RobotCommandType implements IEnum{
+public enum RobotCommandType{
 	/**
 	 * Constante que define o comando "mouseMove" (Movimento do mouse).
 	 */
@@ -122,43 +120,5 @@ public enum RobotCommandType implements IEnum{
 	 */
 	public void setMethod(String method){
 		this.method = method;
-	}
-	
-	/**
-	 * @see br.com.concepting.framework.util.interfaces.IEnum#getKey()
-	 */
-    public <O> O getKey(){
-        return (O)getMethod();
-    }
-
-    /**
-     * @see br.com.concepting.framework.util.interfaces.IEnum#setKey(java.lang.Object)
-     */
-    public <O> void setKey(O key){
-        setMethod((String)key);
-    }
-    
-    /**
-     * @see br.com.concepting.framework.util.interfaces.IEnum#toEnum(java.lang.Object)
-     */
-    public <O> IEnum toEnum(O value) throws IllegalArgumentException{
-        return toRobotCommandType((String)value);
-    }
-
-    /**
-	 * Converte uma string em uma instância da constante.
-	 * 
-	 * @param value String contendo o valor desejado.
-	 * @return Instância da constante.
-	 */
-	public static RobotCommandType toRobotCommandType(String value) throws IllegalArgumentException{
-		if(value == null)
-			throw new IllegalArgumentException();
-		
-		for(RobotCommandType constant : values())
-			if(value.equals(constant.getMethod()))
-				return constant;
-		
-		throw new IllegalArgumentException(value);
 	}
 }
