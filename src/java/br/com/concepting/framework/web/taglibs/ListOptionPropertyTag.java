@@ -1,6 +1,5 @@
 package br.com.concepting.framework.web.taglibs;
 
-
 /**
  * Classe que define o componente visual para uma opção de seleção em uma lista de opções.
  * 
