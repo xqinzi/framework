@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.MemoryCacheImageInputStream;
 
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 
 /**
  * Classe utilitária para manipulação de imagens.
@@ -27,7 +27,7 @@ public abstract class ImageUtil{
 	 * @return Constante contendo o formato da imagem.
 	 * @throws IOException
 	 */
-	public static ContentMimeType getImageFormat(byte imageData[]) throws IOException{
+	public static ContentType getImageFormat(byte imageData[]) throws IOException{
 		ByteArrayInputStream imageStream = new ByteArrayInputStream(imageData);
 
 		return getImageFormat(imageStream);
@@ -40,20 +40,24 @@ public abstract class ImageUtil{
 	 * @return Constante contendo o formato da imagem.
 	 * @throws IOException
 	 */
-	public static ContentMimeType getImageFormat(InputStream imageStream) throws IOException{
+	public static ContentType getImageFormat(InputStream imageStream) throws IOException{
 		MemoryCacheImageInputStream stream          = new MemoryCacheImageInputStream(imageStream);
 		Iterator<ImageReader>       readersIterator = ImageIO.getImageReaders(stream);
 
 		if(!readersIterator.hasNext())
 			throw new IOException();
 
-		ImageReader   reader = readersIterator.next();
-		StringBuilder buffer = new StringBuilder();
+		ImageReader   reader   = readersIterator.next();
+		StringBuilder mimeType = new StringBuilder();
 
-		buffer.append("image/");
-		buffer.append(reader.getFormatName().toLowerCase());
-
-		return ContentMimeType.toContentMimeType(buffer.toString());
+		mimeType.append("image/");
+		mimeType.append(reader.getFormatName().toLowerCase());
+		
+		for(ContentType constant : ContentType.values())
+		    if(mimeType.toString().equals(constant.getMimeType()))
+		        return constant;
+		
+		throw new IOException(new IllegalArgumentException(mimeType.toString()));
 	}
 
 	/**
@@ -63,7 +67,7 @@ public abstract class ImageUtil{
 	 * @return Constante contendo o formato da imagem.
 	 * @throws IOException
 	 */
-	public static ContentMimeType getImageFormat(String imageFilename) throws IOException{
+	public static ContentType getImageFormat(String imageFilename) throws IOException{
 		return getImageFormat(new File(imageFilename));
 	}
 
@@ -74,7 +78,7 @@ public abstract class ImageUtil{
 	 * @return Constante contendo o formato da imagem.
 	 * @throws IOException
 	 */
-	public static ContentMimeType getImageFormat(File imageFile) throws IOException{
+	public static ContentType getImageFormat(File imageFile) throws IOException{
 		FileInputStream imageStream = new FileInputStream(imageFile);
 
 		return getImageFormat(imageStream);
