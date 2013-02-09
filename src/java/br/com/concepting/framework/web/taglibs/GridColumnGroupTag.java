@@ -33,7 +33,7 @@ public class GridColumnGroupTag extends GridColumnTag{
 	 * @see br.com.concepting.framework.web.taglibs.GridColumnTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    if(getAlignment().length() == 0)
+	    if(getAlignment() == null)
 	        setAlignment(AlignmentType.CENTER);
 	    
 	    super.initialize();
