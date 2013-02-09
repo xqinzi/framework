@@ -13,14 +13,14 @@ import br.com.concepting.framework.util.types.PagerActionType;
  * @since 1.0
  */
 public class Pager implements java.io.Serializable{
-	private Integer     pages                  = 0;
-	private Integer     currentPage            = 1;
-	private Integer     itemsPerPage           = Constants.DEFAULT_ITEMS_PER_PAGE;
-	private Boolean     showFirstPageButton    = false;
-	private Boolean     showPreviousPageButton = false;
-	private Boolean     showNextPageButton     = false;
-	private Boolean     showLastPageButton     = false;
-	private Collection  data                   = null;
+	private Integer         pages                  = 0;
+	private Integer         currentPage            = 1;
+	private Integer         itemsPerPage           = Constants.DEFAULT_ITEMS_PER_PAGE;
+	private Boolean         showFirstPageButton    = false;
+	private Boolean         showPreviousPageButton = false;
+	private Boolean         showNextPageButton     = false;
+	private Boolean         showLastPageButton     = false;
+	private Collection      data                   = null;
 	private PagerActionType lastAction             = PagerActionType.REFRESH_PAGE;
 
 	/**
