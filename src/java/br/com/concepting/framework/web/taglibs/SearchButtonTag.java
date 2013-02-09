@@ -13,9 +13,7 @@ public class SearchButtonTag extends ButtonTag{
 	 * @see br.com.concepting.framework.web.taglibs.ButtonTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    String action = getAction();
-	    
-	    if(action.length() == 0)
+	    if(getAction() == null)
 	        setAction(ActionType.SEARCH);
 	    
 	    super.initialize();
