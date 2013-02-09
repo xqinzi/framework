@@ -367,7 +367,7 @@ public abstract class HibernateDAO extends BaseDAO{
 
 					orderByClause.append(propertyIdBuffer.toString());
 					orderByClause.append(" ");
-					orderByClause.append(propertySortOrder);
+					orderByClause.append(propertySortOrder.getOperator());
 				}
 
 				if(queryType != QueryType.LOAD_REFERENCE){
@@ -423,7 +423,9 @@ public abstract class HibernateDAO extends BaseDAO{
                                         joinClause.append(" ");
     
                                     if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE)
-                                        joinClause.append(propertyInfo.getRelationJoinType());
+                                        joinClause.append(propertyInfo.getRelationJoinType().getOperator());
+                                    else
+                                        joinClause.append(RelationJoinType.INNER_JOIN.getOperator());
 
                                     joinClause.append(" ");
                                     joinClause.append(propertyIdBuffer);
@@ -468,7 +470,7 @@ public abstract class HibernateDAO extends BaseDAO{
 
 									whereClause.append(propertyIdBuffer);
 									whereClause.append(" ");
-									whereClause.append(propertyCondition);
+									whereClause.append(propertyCondition.getOperator());
 									
 									break;
 								}
@@ -480,7 +482,7 @@ public abstract class HibernateDAO extends BaseDAO{
 
 									whereClause.append(propertyIdBuffer);
 									whereClause.append(" ");
-									whereClause.append(propertyCondition);
+                                    whereClause.append(propertyCondition.getOperator());
 									
 									break;
 								}
@@ -504,7 +506,7 @@ public abstract class HibernateDAO extends BaseDAO{
     										if(propertyInfo.isCaseSensitiveSearch())
     											whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
     										else
-    											whereClauseParameters.put(propertyParamBuffer.toString(), ((String)propertyValue).toLowerCase());
+    											whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
     									}
     
     									if(whereClause.length() == 0)
@@ -525,7 +527,7 @@ public abstract class HibernateDAO extends BaseDAO{
     									}
     
     									whereClause.append(" ");
-    									whereClause.append(propertyCondition);
+                                        whereClause.append(propertyCondition.getOperator());
     									whereClause.append(" :");
     									whereClause.append(propertyParamBuffer);
     								}
@@ -558,7 +560,7 @@ public abstract class HibernateDAO extends BaseDAO{
     
     									whereClause.append(propertyIdBuffer);
     									whereClause.append(" ");
-    									whereClause.append(propertyCondition);
+                                        whereClause.append(propertyCondition.getOperator());
     									whereClause.append(" :");
     									whereClause.append(propertyParamBuffer);
     								}
@@ -591,7 +593,7 @@ public abstract class HibernateDAO extends BaseDAO{
     
     									whereClause.append(propertyIdBuffer);
     									whereClause.append(" ");
-    									whereClause.append(propertyCondition);
+                                        whereClause.append(propertyCondition.getOperator());
     									whereClause.append(" :");
     									whereClause.append(propertyParamBuffer);
     								}
@@ -624,7 +626,7 @@ public abstract class HibernateDAO extends BaseDAO{
     
     									whereClause.append(propertyIdBuffer);
     									whereClause.append(" ");
-    									whereClause.append(propertyCondition);
+                                        whereClause.append(propertyCondition.getOperator());
     									whereClause.append(" :");
     									whereClause.append(propertyParamBuffer);
     								}
@@ -657,7 +659,7 @@ public abstract class HibernateDAO extends BaseDAO{
     
     									whereClause.append(propertyIdBuffer);
     									whereClause.append(" ");
-    									whereClause.append(propertyCondition);
+                                        whereClause.append(propertyCondition.getOperator());
     									whereClause.append(" :");
     									whereClause.append(propertyParamBuffer);
     								}
@@ -672,7 +674,7 @@ public abstract class HibernateDAO extends BaseDAO{
     									}
     								}
     
-    								if(propertyValue instanceof String && ((String)propertyValue).length() == 0)
+    								if(propertyValue instanceof String && StringUtil.trim(propertyValue).length() == 0)
     									processCondition = false;
     
     								if(propertyValue == null)
@@ -683,13 +685,13 @@ public abstract class HibernateDAO extends BaseDAO{
         									if(propertyValueBuffer == null)
         										propertyValueBuffer = PropertyUtil.getProperty(model, (propertyInfo.getSearchPropertyId().length() > 0 ? propertyInfo.getSearchPropertyId() : propertyInfo.getId()));
         
-        									if(propertyValueBuffer instanceof String && ((String)propertyValueBuffer).length() == 0)
+        									if(propertyValueBuffer instanceof String && StringUtil.trim(propertyValueBuffer).length() == 0)
         										propertyValueBuffer = propertyValue;
         
         									if(propertyValueBuffer == null)
         										propertyValueBuffer = propertyValue;
         
-        									if(propertyValueBuffer instanceof String && ((String)propertyValueBuffer).length() == 0)
+        									if(propertyValueBuffer instanceof String && StringUtil.trim(propertyValueBuffer).length() == 0)
         										processCondition = false;
         
         									if(processCondition){
@@ -711,7 +713,7 @@ public abstract class HibernateDAO extends BaseDAO{
         											if(propertyInfo.isCaseSensitiveSearch())
         												whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
         											else
-        												whereClauseParameters.put(propertyParamBuffer.toString(), ((String)propertyValue).toLowerCase());
+        												whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
         										}
         
         										if(whereClause.length() == 0)
@@ -732,7 +734,7 @@ public abstract class HibernateDAO extends BaseDAO{
         										}
         
             									whereClause.append(" ");
-            									whereClause.append(propertyCondition);
+            									whereClause.append(propertyCondition.getOperator());
             									whereClause.append(" :");
         										whereClause.append(propertyParamBuffer);
         
@@ -746,7 +748,7 @@ public abstract class HibernateDAO extends BaseDAO{
         											if(propertyInfo.isCaseSensitiveSearch())
         												whereClauseParameters.put(propertyParamBuffer.toString(), propertyValueBuffer);
         											else
-        												whereClauseParameters.put(propertyParamBuffer.toString(), ((String)propertyValueBuffer).toLowerCase());
+        												whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValueBuffer).toLowerCase());
         										}
         
         										whereClause.append(" and :");
@@ -760,7 +762,7 @@ public abstract class HibernateDAO extends BaseDAO{
     								break;
     							}
     							case SIMILARITY: {
-    								processCondition = (propertyValue instanceof String && ((String)propertyValue).length() > 0 && propertyInfo.getPhoneticPropertyId().length() > 0);
+    								processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0 && propertyInfo.getPhoneticPropertyId().length() > 0);
     								if(processCondition){
     									if(propertyParamBuffer == null)
     										propertyParamBuffer = new StringBuilder();
@@ -775,7 +777,7 @@ public abstract class HibernateDAO extends BaseDAO{
     									propertyParamBuffer.append(whereClauseParameters.size());
     
 										propertyValueBuffer = new StringBuilder();
-    									((StringBuilder)propertyValueBuffer).append(PhoneticUtil.soundCode((String)propertyValue));
+    									((StringBuilder)propertyValueBuffer).append(PhoneticUtil.soundCode(StringUtil.trim(propertyValue)));
     									((StringBuilder)propertyValueBuffer).append("%");
     
     									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValueBuffer.toString());
@@ -811,7 +813,7 @@ public abstract class HibernateDAO extends BaseDAO{
     								break;
     							}
     							case CONTEXT: {
-    								processCondition = (propertyValue instanceof String && ((String)propertyValue).length() > 0);
+    								processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0);
     								if(processCondition){
 										propertyValueBuffer = new StringBuilder();
     									((StringBuilder)propertyValueBuffer).append(propertyValue);
@@ -856,7 +858,7 @@ public abstract class HibernateDAO extends BaseDAO{
     									if(propertyInfo.isCaseSensitiveSearch())
     										whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
     									else
-    										whereClauseParameters.put(propertyParamBuffer.toString(), ((String)propertyValue).toLowerCase());
+    										whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
     
     									if(whereClause.length() == 0)
     										whereClause.append("where ");
@@ -1019,7 +1021,7 @@ public abstract class HibernateDAO extends BaseDAO{
                                     if(propertyValue instanceof Number && propertyValue.toString().equals("0"))
                                         processCondition = false;
     
-                                    if(propertyValue instanceof String && ((String)propertyValue).length() == 0)
+                                    if(propertyValue instanceof String && StringUtil.trim(propertyValue).length() == 0)
                                         processCondition = false;
     
                                     if(propertyValue == null)
@@ -1044,7 +1046,7 @@ public abstract class HibernateDAO extends BaseDAO{
                                             if(propertyInfo.isCaseSensitiveSearch())
                                                 whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
                                             else
-                                                whereClauseParameters.put(propertyParamBuffer.toString(), ((String)propertyValue).toLowerCase());
+                                                whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
                                         }
     
                                         if(whereClause.length() == 0)
