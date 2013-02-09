@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.types.DateFieldType;
 
 /**
@@ -17,7 +18,7 @@ import br.com.concepting.framework.util.types.DateFieldType;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class DateTimeUtil{
+public class DateTimeUtil{
     /**
      * Efetua a formatação de uma data a partir de uma máscara de formatação.
      *
@@ -31,7 +32,7 @@ public abstract class DateTimeUtil{
 		formatter.setLenient(false);
 
 		return formatter.format(date).toString();
-	}
+	} 
 
     /**
      * Efetua a formatação de uma data.
@@ -39,18 +40,8 @@ public abstract class DateTimeUtil{
      * @param date Instância da data desejada. 
      * @return String contendo a data formatada.
      */
-	public static String formatDate(Date date){
-		return formatDate(date, LanguageUtil.getDefaultLanguage());
-	}
-
-    /**
-     * Efetua a formatação de uma data/horário.
-     *
-     * @param date Instância da data/horário desejada. 
-     * @return String contendo a data/horário formatada.
-     */
-	public static String formatDateTime(Date date){
-		return formatDateTime(date, LanguageUtil.getDefaultLanguage());
+	public static String format(Date date){
+        return format(date, LanguageUtil.getDefaultLanguage());
 	}
 
     /**
@@ -60,20 +51,9 @@ public abstract class DateTimeUtil{
      * @param language Instância contendo as configurações do idioma desejadas.
      * @return Instância contendo a data/horário após processamento.
      */
-	public static String formatDate(Date date, Locale language){
-        return format(date, false, language);
+	public static String format(Date date, Locale language){
+        return format(date, (date instanceof DateTime), language);
 	}
-
-    /**
-     * Efetua a formatação de uma data/horário a partir de um idioma específico.
-     *
-     * @param date String contendo a data/horário desejado. 
-     * @param language Instância contendo as configurações do idioma desejadas.
-     * @return Instância contendo a data/horário após processamento.
-     */
-    public static String formatDateTime(Date date, Locale language){
-        return format(date, true, language);
-    }
     
     /**
      * Efetua a formatação de uma data/horário a partir de um idioma específico.
@@ -98,7 +78,7 @@ public abstract class DateTimeUtil{
 	 * @return Instância contendo a data/horário após processamento.
 	 * @throws ParseException
 	 */
-	public static Date parse(String value) throws ParseException{
+	public static <D extends Date> D parse(String value) throws ParseException{
 		return parse(value, LanguageUtil.getDefaultLanguage());
 	}
 
@@ -110,7 +90,7 @@ public abstract class DateTimeUtil{
 	 * @return Instância contendo a data/horário após processamento.
 	 * @throws ParseException
 	 */
-	public static Date parse(String value, String pattern) throws ParseException{
+	public static <D extends Date> D parse(String value, String pattern) throws ParseException{
 		SimpleDateFormat parser = new SimpleDateFormat(pattern);
 
 		parser.setLenient(false);
@@ -149,7 +129,7 @@ public abstract class DateTimeUtil{
 		if(buffer >= 0)
 			result.set(Calendar.MILLISECOND, buffer);
 
-		return result.getTime();
+		return (D)result.getTime();
 	}
 
 	/**
@@ -160,7 +140,7 @@ public abstract class DateTimeUtil{
 	 * @return Instância contendo a data/horário após processamento.
 	 * @throws ParseException
 	 */
-	public static Date parse(String value, Locale language) throws ParseException{
+	public static <D extends Date> D parse(String value, Locale language) throws ParseException{
 		SimpleDateFormat parser = null;
 		
 		try{
@@ -168,13 +148,13 @@ public abstract class DateTimeUtil{
      
      		parser.setLenient(false);
      
-     		return parser.parse(value);
+     		return (D)parser.parse(value);
 		}
 		catch(Throwable e){
 		    if(parser != null){
     			parser.applyPattern(getDefaultDatePattern(language));
     			
-    			return parser.parse(value);
+    			return (D) parser.parse(value);
 		    }
 		    
 		    return null;
@@ -423,7 +403,7 @@ public abstract class DateTimeUtil{
 	 * @param dateField Constante que define a propriedade desejada.
 	 * @return Instância da data/horário após processamento.
 	 */
-	public static Date add(Date date, Integer value, DateFieldType dateField){
+	public static <D extends Date> D add(D date, Integer value, DateFieldType dateField){
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(date);
@@ -466,7 +446,7 @@ public abstract class DateTimeUtil{
 			}
 		}
 
-		return calendar.getTime();
+		return (D)calendar.getTime();
 	}
 
 	/**
@@ -477,7 +457,7 @@ public abstract class DateTimeUtil{
 	 * @param dateField Constante que define a propriedade desejada.
 	 * @return Instância da data/horário após processamento.
 	 */
-	public static Date subtract(Date date, Integer value, DateFieldType dateField){
+	public static <D extends Date> D subtract(D date, Integer value, DateFieldType dateField){
 		return add(date, -value, dateField);
 	}
 	
@@ -485,16 +465,16 @@ public abstract class DateTimeUtil{
 	 * Formata um valor em milisegundos. O resultado da formatação utilizará a máscara 
 	 * HH:mm:ss.
 	 *
-	 * @param miliseconds Valor inteiro contendo os milisegundos.
+	 * @param milliseconds Valor inteiro contendo os milisegundos.
 	 * @return Valor formatado.
 	 */
-	public static String formatTimeInMillis(Long miliseconds){   
+	public static String format(Long milliseconds){   
 		StringBuilder result  = new StringBuilder();   
-        Integer       seconds = (int)(miliseconds / 1000);
+        Integer       seconds = (int)(milliseconds / 1000);
         Integer       hours   = 0;
         Integer       minutes = 0;
         
-        if(miliseconds != 0){   
+        if(milliseconds != 0){   
             hours   = seconds / 3600;
             seconds = seconds % 3600;
             minutes = seconds / 60;
