@@ -32,6 +32,7 @@ import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.helpers.Node;
 
 /**
@@ -90,7 +91,11 @@ public abstract class PropertyUtil extends PropertyUtils{
 	    return clazz.equals(Date.class);
 	}
 	
-	public static Boolean isByteArray(Class clazz){
+    public static Boolean isTime(Class clazz){
+        return clazz.equals(DateTime.class);
+    }
+
+    public static Boolean isByteArray(Class clazz){
 	    return (clazz.equals(byte[].class) || clazz.equals(Byte[].class));
 	}
 	
@@ -911,6 +916,7 @@ public abstract class PropertyUtil extends PropertyUtils{
 		propertyInfo.setIsByteArray(isByteArray(propertyClass));
 		propertyInfo.setIsCollection(isCollection(propertyClass));
 		propertyInfo.setIsDate(isDate(propertyClass));
+		propertyInfo.setIsTime(isTime(propertyClass));
 		propertyInfo.setIsModel(isModel(propertyClass));
 		propertyInfo.setIsNumber(isNumber(propertyClass));
     		
@@ -938,7 +944,6 @@ public abstract class PropertyUtil extends PropertyUtils{
     		propertyInfo.setAutoGenerateIdentity(propertyAnnotation.autoGenerateIdentity());
     		propertyInfo.setIsForSearch(propertyAnnotation.isForSearch());
     		propertyInfo.setSearchCondition(propertyAnnotation.searchCondition());
-    		propertyInfo.setIsTime(propertyAnnotation.isTime());
     		propertyInfo.setCaseSensitiveSearch(propertyAnnotation.caseSensitiveSearch());
     		propertyInfo.setContextSearchType(propertyAnnotation.contextSearchType());
     		propertyInfo.setValidations(propertyAnnotation.validations());
