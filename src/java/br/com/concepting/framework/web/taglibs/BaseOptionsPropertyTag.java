@@ -20,12 +20,12 @@ import br.com.concepting.framework.web.types.ScopeType;
  */
 public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     private String               data                = "";
-	private String               dataScope           = ScopeType.FORM.toString();
+	private ScopeType            dataScope           = null;
 	private List                 dataValues          = null;
 	private Integer              dataStartIndex      = 0;
 	private Integer              dataEndIndex        = 0;
     private String               valueMap            = "";
-    private String               valueMapScope       = ScopeType.FORM.toString();
+    private ScopeType            valueMapScope       = null;
     private Map                  valueMapInstance    = null;
 	private List<OptionStateTag> optionStates        = null;
 	private ExpressionProcessor  expressionProcessor = null;
@@ -102,19 +102,31 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     /**
      * Retorna o escopo de armazenamento do mapa de valores das opções de seleção.
      *
-     * @return String contendo o escopo de armazenamento.
+     * @return String Instância que define o escopo de armazenamento.
      */
-    public String getValueMapScope(){
+    public ScopeType getValueMapScope(){
         return valueMapScope;
     }
 
     /**
      * Define o escopo de armazenamento do mapa de valores das opções de seleção.
      *
-     * @param valueMapScope String contendo o escopo de armazenamento.
+     * @param valueMapScope Instância que define o escopo de armazenamento.
+     */
+    protected void setValueMapScope(ScopeType valueMapScope){
+        this.valueMapScope = valueMapScope;
+    }
+
+    /**
+     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
+     *
+     * @param valueMapScope String que define o escopo de armazenamento.
      */
     public void setValueMapScope(String valueMapScope){
-        this.valueMapScope = valueMapScope;
+        if(valueMapScope.length() > 0)
+            this.valueMapScope = ScopeType.valueOf(valueMapScope.toUpperCase());
+        else
+            this.valueMapScope = null;
     }
 
     /**
@@ -186,22 +198,34 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	/**
 	 * Retorna o escopo de armazenamento da lista de opções de seleção.
 	 *
-	 * @return String contendo o escopo de armazenamento.
+	 * @return Instância que define o escopo de armazenamento.
 	 */
-	public String getDataScope(){
+	public ScopeType getDataScope(){
     	return dataScope;
     }
 
 	/**
 	 * Define o escopo de armazenamento da lista de opções de seleção.
 	 *
-	 * @param dataScope String contendo o escopo de armazenamento.
+	 * @param dataScope Instância que define o escopo de armazenamento.
 	 */
-	public void setDataScope(String dataScope){
+	protected void setDataScope(ScopeType dataScope){
     	this.dataScope = dataScope;
     }
 
-	/**
+    /**
+     * Define o escopo de armazenamento da lista de opções de seleção.
+     *
+     * @param dataScope String que define o escopo de armazenamento.
+     */
+    public void setDataScope(String dataScope){
+        if(dataScope.length() > 0)
+            this.dataScope = ScopeType.valueOf(dataScope.toUpperCase());
+        else
+            this.dataScope = null;
+    }
+
+    /**
 	 * Retorna a lista de opções de seleção.
 	 *
 	 * @return Instância contendo a lista de opções.
@@ -321,17 +345,15 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 		String actionForm = getActionForm();
 
         if(dataValues == null || dataValues.size() == 0){
-    		if(data.length() > 0 && dataScope.length() > 0){
-    			ScopeType dataScopeType = ScopeType.toScopeType(dataScope);
-    			
+    		if(data.length() > 0 && dataScope != null){
     			if(!data.startsWith(actionForm)){
         			StringBuilder propertyId = new StringBuilder();
         			
-        			if(dataScopeType == ScopeType.FORM || dataScopeType == ScopeType.MODEL){
+        			if(dataScope == ScopeType.FORM || dataScope == ScopeType.MODEL){
         				propertyId.append(actionForm);
         				propertyId.append(".");
         				
-        				if(dataScopeType == ScopeType.MODEL){
+        				if(dataScope == ScopeType.MODEL){
         				    if(isForSearch())
         				        propertyId.append("searchModel");
         				    else
@@ -346,21 +368,19 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
         			data = propertyId.toString();
     			}
     			
-    			dataValues = systemController.findAttribute(data, dataScopeType);
+    			dataValues = systemController.findAttribute(data, dataScope);
     		}
 		}
         
-        if(valueMap.length() > 0 && valueMapScope.length() > 0){
-            ScopeType valueMapScopeType = ScopeType.toScopeType(valueMapScope);
-            
+        if(valueMap.length() > 0 && valueMapScope != null){
             if(!valueMap.startsWith(actionForm)){
                 StringBuilder propertyId = new StringBuilder();
 
-                if(valueMapScopeType == ScopeType.FORM || valueMapScopeType == ScopeType.MODEL){
+                if(valueMapScope == ScopeType.FORM || valueMapScope == ScopeType.MODEL){
                     propertyId.append(actionForm);
                     propertyId.append(".");
     
-                    if(valueMapScopeType == ScopeType.MODEL){
+                    if(valueMapScope == ScopeType.MODEL){
                         if(isForSearch())
                             propertyId.append("searchModel");
                         else
@@ -375,7 +395,7 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
                 valueMap = propertyId.toString();
             }
             
-            valueMapInstance = systemController.findAttribute(valueMap, valueMapScopeType);
+            valueMapInstance = systemController.findAttribute(valueMap, valueMapScope);
         }
 	}
 	
@@ -386,11 +406,11 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 		super.clearAttributes();
 		
 		setData("");
-		setDataScope(ScopeType.FORM.toString());
+		setDataScope("");
 		setDataValues(null);
         setDataIsEmptyMessage("");
 		setValueMap("");
-		setValueMapScope(ScopeType.FORM.toString());
+		setValueMapScope("");
 		setValueMapInstance(null);
 		setOptionStates(null);
 	}
