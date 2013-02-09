@@ -42,7 +42,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.OptionsPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        setType(ComponentType.LIST);
+        setComponentType(ComponentType.LIST);
 
         super.initialize();
 	}
