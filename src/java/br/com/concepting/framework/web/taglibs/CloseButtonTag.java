@@ -13,21 +13,24 @@ public class CloseButtonTag extends ButtonTag{
     public void initialize() throws Throwable{
         String        onClick        = getOnClick();
         StringBuilder onClickContent = new StringBuilder();
-
-        if(onClick.length() > 0){
-            onClickContent.append(onClick);
-            
-            if(getParent() instanceof DialogBoxTag)
-                onClickContent.append("; ");
-        }
         
         if(getParent() instanceof DialogBoxTag){
             onClickContent.append("hideDialogBox('");
             onClickContent.append(getName());
             onClickContent.append("');");
-            
-            setOnClick(onClickContent.toString());
         }    
+        
+        if(onClick.length() > 0){
+            if(getParent() instanceof DialogBoxTag)
+                onClickContent.append(" ");
+            
+            onClickContent.append(onClick);
+            
+            if(!onClick.endsWith(";"))
+                onClickContent.append(";");
+        }
+
+        setOnClick(onClickContent.toString());
         
         super.initialize();
     }
