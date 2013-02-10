@@ -1,6 +1,5 @@
 package br.com.concepting.framework.util.types;
 
-
 /**
  * Classe que define as constantes dos tipos de posição de um objeto/componente.
  * 
