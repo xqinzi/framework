@@ -16,7 +16,7 @@ public class ValidationFormMessage extends ActionFormMessage{
      * @param key Constante que define o tipo de validação.
      */
    public ValidationFormMessage(ValidationType key){
-       this(key.toString());
+       this(key.getId());
    }
 
    /**
