@@ -1,5 +1,6 @@
 package br.com.concepting.framework.model.types;
 
+
 /**
  * Classe que define as constantes dos tipos de validações das propriedades de um modelo de 
  * dados.
