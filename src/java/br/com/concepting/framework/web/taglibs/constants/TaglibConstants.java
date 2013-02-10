@@ -161,7 +161,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_MESSAGE_BOX_ERROR_TRACE_LABEL_KEY = "errorTrace.label";
 
     /**
-     * Constante que define o identificador do estilo (CSS) default do campo detalhes da exceção para o componente messageBox (caixa de mensagens).
+     * Constante que define o identificador do estilo CSS default do campo detalhes da exceção para o componente messageBox (caixa de mensagens).
      */
     public static final String DEFAULT_MESSAGE_BOX_ERROR_TRACE_STYLE_CLASS = "errorTrace";
     
@@ -181,7 +181,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_MESSAGE_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("messageBox.css");
     
     /**
-     * Constante que define o identificador do estilo (CSS) default do label do componente options (opções de seleção).
+     * Constante que define o identificador do estilo CSS default do label do componente options (opções de seleção).
      */
     public static final String DEFAULT_OPTIONS_LABEL_STYLE_CLASS = "groupLabel";
     
@@ -221,7 +221,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_PAGER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("pager.css");
     
     /**
-     * Constante que define o identificador do estilo (CSS) para tabelas na página.
+     * Constante que define o identificador do estilo CSS para tabelas na página.
      */
     public static final String DEFAULT_PANEL_STYLE_CLASS = "panel";
     
@@ -246,62 +246,62 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_PROGRESS_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("progressBar.css");
 
     /**
-     * Constante que define o identificador do estilo (CSS) default do label do componente searchPropertiesGroup (grupo de propriedades de pesquisa). 
+     * Constante que define o identificador do estilo CSS default do label do componente searchPropertiesGroup (grupo de propriedades de pesquisa). 
      */
     public static final String DEFAULT_SEARCH_PROPERTIES_GROUP_LABEL_STYLE_CLASS = "groupLabel";
     
     /**
-     * Constante que define o identificador do estilo (CSS) default para o componente searchPropertiesGroup (grupo de propriedades de pesquisa). 
+     * Constante que define o identificador do estilo CSS default para o componente searchPropertiesGroup (grupo de propriedades de pesquisa). 
      */
     public static final String DEFAULT_SEARCH_PROPERTIES_GROUP_STYLE_CLASS = "group";
     
     /**
-     * Constante que define o identificador do estilo (CSS) default para o label do cabeçalho da seção.
+     * Constante que define o identificador do estilo CSS default para o label do cabeçalho da seção.
      */
     public static final String DEFAULT_SECTION_HEADER_LABEL_STYLE_CLASS = AttributeConstants.SECTION_HEADER_KEY.concat(AttributeConstants.LABEL_KEY);
 
     /**
-     * Constante que define o identificador do estilo (CSS) default para o cabeçalho da seção.
+     * Constante que define o identificador do estilo CSS default para o cabeçalho da seção.
      */
     public static final String DEFAULT_SECTION_HEADER_STYLE_CLASS = AttributeConstants.SECTION_HEADER_KEY;
     
     /**
-     * Constante que define o identificador do estilo (CSS) default para o conteúdo da seção.
+     * Constante que define o identificador do estilo CSS default para o conteúdo da seção.
      */
     public static final String DEFAULT_SECTION_CONTENT_STYLE_CLASS = AttributeConstants.SECTION_CONTENT_KEY;
 
     /**
-     * Constante que define o identificador do estilo (CSS) default do ícone de um nó selecionado do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default do ícone de um nó selecionado do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_NODE_ICON_STYLE_CLASS = "nodeIcon";
 
     /**
-     * Constante que define o identificador do estilo (CSS) default do label de um nó do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default do label de um nó do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_NODE_LABEL_STYLE_CLASS = "nodeLabel";
     
     /**
-     * Constante que define o identificador do estilo (CSS) default do label de um nó selecionado do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default do label de um nó selecionado do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_NODE_LABEL_SELECTED_STYLE_CLASS = "nodeLabelSelected";
     
     /**
-     * Constante que define o identificador do estilo (CSS) default para o ícone de retração do nó do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default para o ícone de retração do nó do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_OPEN_LEAF_ICON_STYLE_CLASS = "openLeafIcon";
 
     /**
-     * Constante que define o identificador do estilo (CSS) default para o ícone de expansão do nó do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default para o ícone de expansão do nó do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_CLOSE_LEAF_ICON_STYLE_CLASS = "closeLeafIcon";
 
     /**
-     * Constante que define o identificador do estilo (CSS) default para o ícone do nó (expandido) do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default para o ícone do nó (expandido) do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_OPENED_FOLDER_ICON_STYLE_CLASS  = "openedFolderIcon";
     
     /**
-     * Constante que define o identificador do estilo (CSS) default para o ícone do nó (não expandido) do componente treeView (árvore).
+     * Constante que define o identificador do estilo CSS default para o ícone do nó (não expandido) do componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_CLOSED_FOLDER_ICON_STYLE_CLASS  = "closedFolderIcon";
     
@@ -317,7 +317,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_TREE_VIEW_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("treeView.css");
     
     /**
-     * Constante que define o identificador do estilo (CSS) para a mensagem de validação de uma propriedade do modelo de dados.
+     * Constante que define o identificador do estilo CSS para a mensagem de validação de uma propriedade do modelo de dados.
      */
     public static final String DEFAULT_VALIDATION_LABEL_STYLE_CLASS = "validationLabel";
     
