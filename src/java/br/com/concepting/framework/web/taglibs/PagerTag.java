@@ -302,9 +302,15 @@ public class PagerTag extends BaseOptionsPropertyTag{
 		PropertyInfo    propertyInfo = getPropertyInfo();
 		
 		if(propertyInfo == null || propertyInfo.isCollection()){
-			println("<table class=\"pager\">");
+			print("<table class=\"");
+			print(TaglibConstants.DEFAULT_PAGER_STYLE_CLASS);
+			println("\">");
 			println("<tr>");
-			println("<td align=\"center\" class=\"label\">");
+            print("<td align=\"");
+            print(AlignmentType.CENTER);
+            print("\" class=\"");
+            print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
+            println("\">");
 			println(getInvalidPropertyMessage());
 			println("</td>");
 			println("</tr>");
@@ -312,11 +318,15 @@ public class PagerTag extends BaseOptionsPropertyTag{
 		}
 		else{
 			if(gridTag == null){
-				println("<table class=\"pager\">");
+	            print("<table class=\"");
+	            print(TaglibConstants.DEFAULT_PAGER_STYLE_CLASS);
+	            println("\">");
 				println("<tr>");
 	
 				if(showItemsPerPage() && !pagerOnForm){
-					println("<td align=\"center\">");
+                    print("<td align=\"");
+                    print(AlignmentType.CENTER);
+                    println("\">");
 	
 					ItemsPerPagePropertyTag itemsPerPageTag = new ItemsPerPagePropertyTag(this);
 			
@@ -326,7 +336,9 @@ public class PagerTag extends BaseOptionsPropertyTag{
 					println("</td>");
 				}
 	
-				println("<td align=\"center\">");
+                print("<td align=\"");
+                print(AlignmentType.CENTER);
+                println("\">");
 	
 				FirstPageButtonTag firstPageButtonTag = new FirstPageButtonTag(this);
 	
@@ -335,7 +347,9 @@ public class PagerTag extends BaseOptionsPropertyTag{
 	
 				println("</td>");
 	
-				println("<td align=\"center\">");
+                print("<td align=\"");
+                print(AlignmentType.CENTER);
+                println("\">");
 	
 				PreviousPageButtonTag previousPageButtonTag = new PreviousPageButtonTag(this);
 	
@@ -344,11 +358,17 @@ public class PagerTag extends BaseOptionsPropertyTag{
 	
 				println("</td>");
 				
-				println("<td align=\"center\">");
+                print("<td align=\"");
+                print(AlignmentType.CENTER);
+                println("\">");
 	
-				println("<table class=\"pagerDisplay\">");
+				print("<table class=\"");
+				print(TaglibConstants.DEFAULT_PAGER_DISPLAY_STYLE_CLASS);
+				println("\">");
 				println("<tr>");
-				print("<td align=\"center\">");
+                print("<td align=\"");
+                print(AlignmentType.CENTER);
+                println("\">");
 				
 				Integer currentPage = pager.getCurrentPage();
 				
@@ -365,7 +385,9 @@ public class PagerTag extends BaseOptionsPropertyTag{
 				
 				println("</td>");
 				
-				println("<td align=\"center\">");
+                print("<td align=\"");
+                print(AlignmentType.CENTER);
+                println("\">");
 	
 				NextPageButtonTag nextPageButtonTag = new NextPageButtonTag(this);
 	
@@ -374,7 +396,9 @@ public class PagerTag extends BaseOptionsPropertyTag{
 	
 				println("</td>");
 				
-				println("<td align=\"center\">");
+                print("<td align=\"");
+                print(AlignmentType.CENTER);
+                println("\">");
 	
 				LastPageButtonTag lastPageButtonTag = new LastPageButtonTag(this);
 	
