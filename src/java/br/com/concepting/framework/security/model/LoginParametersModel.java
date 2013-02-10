@@ -13,7 +13,7 @@ import br.com.concepting.framework.persistence.types.RelationType;
  * @author fvilarinho
  * @since 1.0
  */
-@Model
+@Model 
 public class LoginParametersModel extends BaseModel{
     @Property(isIdentity=true)
     private Integer id = 0;
@@ -33,18 +33,38 @@ public class LoginParametersModel extends BaseModel{
 	@Property(relationType=RelationType.ONE_TO_MANY)
 	private List<AccessListModel> accessLists = null;
 	
+	/**
+	 * Retorna a quantidade de tentativas de login.
+	 * 
+	 * @return Valor numérico contendo a quantidade de tentativas de login.
+	 */
 	public Integer getLoginTries(){
         return loginTries;
     }
 
+    /**
+     * Define a quantidade de tentativas de login.
+     * 
+     * @param loginTries Valor numérico contendo a quantidade de tentativas de login.
+     */
     public void setLoginTries(Integer loginTries){
         this.loginTries = loginTries;
     }
 
+    /**
+     * Retorna as listas de acessos do login.
+     * 
+     * @return Listas de acesso do login.
+     */
     public <A extends AccessListModel> List<A> getAccessLists(){
         return (List<A>)accessLists;
     }
 
+    /**
+     * Define as listas de acessos do login.
+     * 
+     * @param acessLists Listas de acesso do login.
+     */
     public <A extends AccessListModel> void setAccessLists(List<A> accessLists){
         this.accessLists = (List)accessLists;
     }
