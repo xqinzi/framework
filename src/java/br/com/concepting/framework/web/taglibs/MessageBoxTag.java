@@ -14,6 +14,7 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.form.util.ActionFormMessageUtil;
@@ -26,30 +27,42 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class MessageBoxTag extends DialogBoxTag{
-    private String             type          = "";
-    private Boolean            showException = false;
-	private String             message       = "";
-	private Collection<String> messages      = null;
-	private Throwable          exception     = null;
+    private ActionFormMessageType type          = null;
+    private Boolean               showException = false;
+	private String                message       = "";
+	private Collection<String>    messages      = null;
+	private Throwable             exception     = null;
     
     /**
      * Retorna o tipo do componente.
      * 
-     * @return String contendo o tipo do componente.
+     * @return Constante que define o tipo do componente.
      */
-    public String getType(){
+    public ActionFormMessageType getType(){
         return type;
     }
 
     /**
      * Define o tipo do componente.
      * 
-     * @param type String contendo o tipo do componente.
+     * @param type Constante que define o tipo do componente.
      */
-    public void setType(String type){
+    protected void setType(ActionFormMessageType type){
         this.type = type;
     }
   
+    /**
+     * Define o tipo do componente.
+     * 
+     * @param type String contendo o tipo do componente.
+     */
+    public void setType(String type){
+        if(type.length() > 0)
+            this.type = ActionFormMessageType.valueOf(type.toUpperCase());
+        else
+            this.type = ActionFormMessageType.INFO;
+    }
+
     /**
 	 * Retorna a lista contendo as mensagens geradas.
 	 *
@@ -161,7 +174,7 @@ public class MessageBoxTag extends DialogBoxTag{
 				exception = e;
 			}
 			
-			type = ActionFormMessageType.ERROR.toString();
+			type = ActionFormMessageType.ERROR;
 
 			if(exception != null){
 			    message = ExceptionUtil.getTrace(exception); 
@@ -177,30 +190,25 @@ public class MessageBoxTag extends DialogBoxTag{
             String resourceKey = getResourceKey();
 
             if(resourceKey.length() == 0 && message.length() == 0){
-                ActionFormMessageType actionFormMessageType = ActionFormMessageType.toActionFormMessageType(type);
-	            ActionMessages        actionFormMessages    = actionFormMessageController.getMessages(actionFormMessageType);
+	            ActionMessages actionFormMessages = actionFormMessageController.getMessages(type);
 			
 	            if(actionFormMessages != null && actionFormMessages.size() > 0){
 	                Locale                      currentLanguage      = systemController.getCurrentLanguage();
 	                Iterator<ActionFormMessage> iterator             = actionFormMessages.get();
 	                ActionFormMessage           actionFormMessage    = null;
-	                String                      actionFormMessageKey = "";
 	                
 	                while(iterator.hasNext()){
 	                    actionFormMessage = iterator.next();
 	                    
 	                    if(!actionFormMessage.displayed()){
-    	                    actionFormMessageType = actionFormMessage.getType(); 
-                            actionFormMessageKey  = actionFormMessage.getKey();
-    				    
                             if(propertyId == null)
                                 propertyId = new StringBuilder();
                             else
                                 propertyId.delete(0, propertyId.length());
                             
-                            propertyId.append(actionFormMessageType);
+                            propertyId.append(actionFormMessage.getType());
                             propertyId.append(".");
-                            propertyId.append(actionFormMessageKey);
+                            propertyId.append(actionFormMessage.getKey());
     
     						message = defaultResources.getProperty(propertyId.toString(), false);
         					
@@ -218,12 +226,12 @@ public class MessageBoxTag extends DialogBoxTag{
 	                    }
 	                }
 	                
-	                actionFormMessageController.clearMessages(actionFormMessageType);
+	                actionFormMessageController.clearMessages(type);
 	            }
 	        }
 	        else if(resourceKey.length() > 0 && message.length() == 0){
     		    propertyId.delete(0, propertyId.length());
-    			propertyId.append(type);
+    			propertyId.append(type.toString().toLowerCase());
     			propertyId.append(".");
     			propertyId.append(resourceKey);
 			
@@ -246,7 +254,7 @@ public class MessageBoxTag extends DialogBoxTag{
             else
                 propertyId.delete(0, propertyId.length());
             
-            propertyId.append(type);
+            propertyId.append(type.toString().toLowerCase());
             propertyId.append(".");
             propertyId.append(AttributeConstants.TITLE_KEY);
             
@@ -268,15 +276,20 @@ public class MessageBoxTag extends DialogBoxTag{
 	    String name = getName();
 	    
 		println("<table>");
-
 		println("<tr>");
-		println("<td align=\"right\" valign=\"top\">");
+		print("<td align=\"");
+		print(AlignmentType.RIGHT.toString().toLowerCase());
+		print("\" valign=\"");
+		print(AlignmentType.TOP.toString().toLowerCase());
+		print("\">");
 		print("<div class=\"messageBox");
-		print(StringUtil.capitalize(getType()));
+		print(StringUtil.capitalize(type.toString().toLowerCase()));
 		println("Icon\"></div>");
 		println("</td>");
 		
-		println("<td align=\"center\">");
+		print("<td align=\"");
+		print(AlignmentType.CENTER);
+		println("\">");
 		println("<table class=\"dialogBoxText\">");
 		println("<tr>");
 
