@@ -33,7 +33,7 @@ import br.com.concepting.framework.web.constants.SystemConstants;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 import br.com.concepting.framework.web.form.BaseActionForm;
 import br.com.concepting.framework.web.helpers.RequestInfo;
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -563,7 +563,7 @@ public class SystemController{
 	 * @param contentData Array de bytes contendo o conteúdo desejado. 
 	 * @param contentType Constante que define o tipo de conteúdo.
 	 */
-	public void outputContent(byte contentData[], ContentMimeType contentType){
+	public void outputContent(byte contentData[], ContentType contentType){
 		outputContent(contentData, contentType.toString());
 	}
 
@@ -584,7 +584,7 @@ public class SystemController{
 	 * @param contentType Constante que define o tipo de conteúdo.
 	 * @param contentId String contendo o identificador do conteúdo.
 	 */
-	public void outputContent(byte contentData[], ContentMimeType contentType, String contentId){
+	public void outputContent(byte contentData[], ContentType contentType, String contentId){
 		outputContent(contentData, contentType.toString(), contentId);
 	}
 
@@ -787,10 +787,10 @@ public class SystemController{
 		try{
 			String sortOrder = StringUtil.trim(getRequest().getParameter(key.toString()));
             		
-			return SortOrderType.toSortOrderType(sortOrder);
+			return SortOrderType.valueOf(sortOrder.toUpperCase());
 		}
 		catch(Throwable e){
-			return SortOrderType.ASCEND;
+			return Constants.DEFAULT_SORT_ORDER_TYPE;
 		}
 	}
 
@@ -831,10 +831,12 @@ public class SystemController{
 		key.append(AttributeConstants.PAGER_ACTION_KEY);
 		
 		try{
-			return PagerActionType.toPagerActionType(getRequest().getParameter(key.toString()));
+		    String pagerActionType = StringUtil.trim(getRequest().getParameter(key.toString())).toUpperCase();
+		    
+			return PagerActionType.valueOf(pagerActionType);
 		}
 		catch(Throwable e){
-			return null;
+			return PagerActionType.REFRESH_PAGE;
 		}
     }
 
@@ -966,7 +968,9 @@ public class SystemController{
 		}
 
 		try{
-			return ScopeType.toScopeType(StringUtil.trim(getRequest().getParameter(key.toString())));
+		    String scopeType = StringUtil.trim(getRequest().getParameter(key.toString())).toUpperCase();
+		    
+			return ScopeType.valueOf(scopeType);
 		}
 		catch(Throwable e){
 			return SystemConstants.DEFAULT_SCOPE_TYPE;
