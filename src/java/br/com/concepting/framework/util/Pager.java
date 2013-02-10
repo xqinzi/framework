@@ -139,7 +139,7 @@ public class Pager implements java.io.Serializable{
 	/**
 	 * Retorna a última ação de paginação.
 	 * 
-	 * @return Instância contendo a constante que define a última ação de paginação.
+	 * @return Constante que define a última ação de paginação.
 	 */
 	public PagerActionType getLastAction(){
 		return lastAction;
