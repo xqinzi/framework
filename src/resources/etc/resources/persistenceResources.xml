@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <persistenceResources>
-	<persistence id="glassfish-datasource" timeout="60" contextResourceId="glassfish" factoryResourceId="mysql">
+	<persistence id="glassfish-datasource" timeout="60" contextResourceId="glassfish-localhost" factoryResourceId="mysql-factory">
 		<lookupName>jdbc/datasource</lookupName>
 		<options>
 			<option id="hibernate.show_sql" value="true"/>
@@ -19,7 +19,7 @@
 			<option id="hibernate.current_session_context_class" value="jta"/> 
 		</options>
 	</persistence>
-	<persistence id="jboss-datasource" timeout="60" contextResourceId="jboss" factoryResourceId="mysql">
+	<persistence id="jboss-datasource" timeout="60" contextResourceId="jboss-localhost" factoryResourceId="mysql-factory">
 		<lookupName>java:jdbc/datasource</lookupName>
 		<options>
 			<option id="hibernate.show_sql" value="true"/>
@@ -37,7 +37,7 @@
 			<option id="hibernate.current_session_context_class" value="jta"/> 
 		</options>
 	</persistence>
-	<persistence id="tomcat-datasource" timeout="60" factoryResourceId="mysql" default="true">
+	<persistence id="tomcat-datasource" timeout="60" contextResourceId="tomcat-localhost" factoryResourceId="mysql-factory" default="true">
 		<lookupName>java:comp/env/jdbc/datasource</lookupName>
 		<options>
 			<option id="hibernate.show_sql" value="true"/>
