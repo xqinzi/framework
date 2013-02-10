@@ -10,63 +10,64 @@ public enum DateFieldType{
 	/**
 	 * Constante que define o atributo de milisegundos.
 	 */
-	MILISECONDS(1000),
+	MILLISECONDS(1000),
 
 	/**
 	 * Constante que define o atributo de segundos.
 	 */
-	SECONDS(MILISECONDS.toInteger() * 1),
+	SECONDS(MILLISECONDS.getMilliseconds() * 1),
 
 	/**
 	 * Constante que define o atributo de minutos.
 	 */
-	MINUTES(SECONDS.toInteger() * 60),
+	MINUTES(SECONDS.getMilliseconds() * 60),
 
 	/**
 	 * Constante que define o atributo de horas.
 	 */
-	HOURS(MINUTES.toInteger() * 60),
+	HOURS(MINUTES.getMilliseconds() * 60),
 
 	/**
 	 * Constante que define o atributo de dias.
 	 */
-	DAY(HOURS.toInteger() * 24),
+	DAY(HOURS.getMilliseconds() * 24),
 
 	/**
 	 * Constante que define o atributo de meses.
 	 */
-	MONTH(DAY.toInteger() * 30),
+	MONTH(DAY.getMilliseconds() * 30),
 
 	/**
 	 * Constante que define o atributo de anos.
 	 */
-	YEAR(MONTH.toInteger() * 12);
+	YEAR(MONTH.getMilliseconds() * 12);
 
-	private Integer value;
+	private Integer milliseconds;
 
 	/**
-	 * Construtor - Define o valor da constante.
+	 * Construtor - Define a quantidade de milisegundos.
 	 * 
-	 * @param value Valor inteiro que define a constante.
+	 * @param milliseconds Valor inteiro que define a quantidade de milisegundos.
 	 */
-	private DateFieldType(Integer value){
-		setValue(value);
+	private DateFieldType(Integer milliseconds){
+		setMilliseconds(milliseconds);
 	}
-	
-	public Integer getValue(){
-        return value;
-    }
 
-    public void setValue(Integer value){
-        this.value = value;
+	/**
+	 * Retorna a quantidade de milisegundos.
+	 * 
+	 * @return Valor inteiro que define a quantidade de milisegundos.
+	 */
+    public Integer getMilliseconds(){
+        return milliseconds;
     }
 
     /**
-	 * Retorna o valor inteiro que define a constante.
-	 *
-	 * @return Valor inteiro da constante.
-	 */
-	public Integer toInteger(){
-		return value;
-	}
+     * Define a quantidade de milisegundos.
+     * 
+     * @param milliseconds Valor inteiro que define a quantidade de milisegundos.
+     */
+    public void setMilliseconds(Integer milliseconds){
+        this.milliseconds = milliseconds;
+    }
 }
