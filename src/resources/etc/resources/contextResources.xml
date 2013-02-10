@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <contextResources>
-	<context id="jboss-localhost" factoryResourceId="jboss">
+	<context id="jboss-localhost" factoryResourceId="jboss-factory">
 		<serverName>localhost</serverName>
 		<lookupPort>1099</lookupPort>
 	</context>
-	<context id="glassfish-localhost" factoryResourceId="glassfish">
+	<context id="glassfish-localhost" factoryResourceId="glassfish-factory">
 		<serverName>localhost</serverName>
 		<lookupPort>3700</lookupPort>
 	</context>
