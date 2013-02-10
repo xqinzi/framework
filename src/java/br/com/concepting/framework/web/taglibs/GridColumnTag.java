@@ -309,7 +309,6 @@ public class GridColumnTag extends BaseOptionsPropertyTag{
                 StringBuilder propertyId  = new StringBuilder();
                 
                 if(resourceKey.length() == 0){
-                    
                     propertyId.append(".");
                     propertyId.append(name);
                     
@@ -322,7 +321,7 @@ public class GridColumnTag extends BaseOptionsPropertyTag{
                     setResourceKey(resourceKey);
                 }
                 
-                ScopeType scopeType = ScopeType.toScopeType(gridTag.getDataScope());
+                ScopeType scopeType = gridTag.getDataScope();
                 
                 if(scopeType == ScopeType.FORM || scopeType == ScopeType.MODEL){
                     String         data         = gridTag.getData();
