@@ -13,6 +13,7 @@ import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.form.util.ActionFormMessageUtil;
+import br.com.concepting.framework.web.form.util.ValidationFormMessageUtil;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -202,7 +203,7 @@ public class ActionFormMessageController{
      * @param label String contendo o label da propriedade.
      */
     public void addValidationRequiredMessage(String name, String label){
-        addMessage(ActionFormMessageUtil.createValidationRequiredMessage(name, label));
+        addMessage(ValidationFormMessageUtil.createValidationRequiredMessage(name, label));
     }
     
     /**
@@ -214,7 +215,7 @@ public class ActionFormMessageController{
      * @param pattern String contendo a máscara de validação da data/horário.
      */
     public void addValidationDateTimeMessage(String name, String label, String pattern){
-        addMessage(ActionFormMessageUtil.createValidationDateTimeMessage(name, label, pattern));
+        addMessage(ValidationFormMessageUtil.createValidationDateTimeMessage(name, label, pattern));
     }
 
     /**
@@ -225,7 +226,7 @@ public class ActionFormMessageController{
      * @param label String contendo o label da propriedade.
      */
     public void addValidationNumberMessage(String name, String label){
-        addMessage(ActionFormMessageUtil.createValidationNumberMessage(name, label));
+        addMessage(ValidationFormMessageUtil.createValidationNumberMessage(name, label));
     }
     
     /**
@@ -238,7 +239,7 @@ public class ActionFormMessageController{
      * @param compareLabel String contendo o label da propriedade para comparação.
      */
     public void addValidationCompareMessage(String name, String label, ConditionType compareCondition, String compareName, String compareLabel){
-        addMessage(ActionFormMessageUtil.createValidationCompareMessage(name, label, compareCondition, compareName, compareLabel));
+        addMessage(ValidationFormMessageUtil.createValidationCompareMessage(name, label, compareCondition, compareName, compareLabel));
     }
 
     /**
@@ -250,7 +251,7 @@ public class ActionFormMessageController{
      * @param wordCount Valor inteiro contendo o número máximo de palavras aceitas.
      */
     public void addValidationWordCountMessage(String name, String label, Integer wordCount){
-        addMessage(ActionFormMessageUtil.createValidationWordCountMessage(name, label, wordCount));
+        addMessage(ValidationFormMessageUtil.createValidationWordCountMessage(name, label, wordCount));
     }
 
     /**
@@ -262,7 +263,7 @@ public class ActionFormMessageController{
      * @param minimumLength Valor numérico contendo o número mínimo de caracteres aceito.
      */
     public void addValidationMinimumLengthMessage(String name, String label, Integer minimumLength){
-        addMessage(ActionFormMessageUtil.createValidationMinimumLengthMessage(name, label, minimumLength));
+        addMessage(ValidationFormMessageUtil.createValidationMinimumLengthMessage(name, label, minimumLength));
     }
 
     /**
@@ -274,7 +275,7 @@ public class ActionFormMessageController{
      * @param maximumLength Valor numérico contendo o número máximo de caracteres aceito.
      */
     public void addValidationMaximumLengthMessage(String name, String label, Integer maximumLength){
-        addMessage(ActionFormMessageUtil.createValidationMaximumLengthMessage(name, label, maximumLength));
+        addMessage(ValidationFormMessageUtil.createValidationMaximumLengthMessage(name, label, maximumLength));
     }
 
     /**
@@ -286,7 +287,7 @@ public class ActionFormMessageController{
      * @param regularExpression String contendo a expressão regular desejada.
      */
     public void addValidationRegularExpressionMessage(String name, String label, String regularExpression){
-        addMessage(ActionFormMessageUtil.createValidationRegularExpressionMessage(name, label, regularExpression));
+        addMessage(ValidationFormMessageUtil.createValidationRegularExpressionMessage(name, label, regularExpression));
     }
 
     /**
@@ -297,7 +298,7 @@ public class ActionFormMessageController{
      * @param label String contendo o label da propriedade.
      */
     public void addValidationEmailMessage(String name, String label){
-        addMessage(ActionFormMessageUtil.createValidationEmailMessage(name, label));
+        addMessage(ValidationFormMessageUtil.createValidationEmailMessage(name, label));
     }
 
     /**
@@ -308,7 +309,7 @@ public class ActionFormMessageController{
      * @param pattern String contendo a máscara de validação.
      */
     public void addValidationPatternMessage(String name, String label, String pattern){
-        addMessage(ActionFormMessageUtil.createValidationPatternMessage(name, label, pattern));
+        addMessage(ValidationFormMessageUtil.createValidationPatternMessage(name, label, pattern));
     }
 
     /**
@@ -321,7 +322,7 @@ public class ActionFormMessageController{
      * @param endRange Instância contendo o range final.
      */
     public void addValidationRangeMessage(String name, String label, Object startRange, Object endRange){
-        addMessage(ActionFormMessageUtil.createValidationRangeMessage(name, label, startRange, endRange));
+        addMessage(ValidationFormMessageUtil.createValidationRangeMessage(name, label, startRange, endRange));
     }
 
     /**
@@ -332,6 +333,6 @@ public class ActionFormMessageController{
      * @param label String contendo o label da propriedade.
      */
     public void addValidationCustomMessage(String validation, String name, String label){
-        addMessage(ActionFormMessageUtil.createValidationCustomMessage(validation, name, label));
+        addMessage(ValidationFormMessageUtil.createValidationCustomMessage(validation, name, label));
     }
 }
