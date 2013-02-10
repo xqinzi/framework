@@ -49,7 +49,7 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
      */
     protected void setOnConfirmAction(ActionType onConfirmAction){
         if(onConfirmAction != null)
-            this.onConfirmAction = onConfirmAction.toString().toLowerCase();
+            this.onConfirmAction = onConfirmAction.getMethod();
         else
             this.onConfirmAction = "";
     }
