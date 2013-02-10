@@ -8,7 +8,7 @@ import br.com.concepting.framework.web.constants.SystemConstants;
  * 
  * @author fvilarinho
  * @since 3.0
- */
+ */ 
 public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do estilo default (CSS) para o componente visual accordion (conjunto de seções).
@@ -84,6 +84,11 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador para o arquivo de script default para o componente visual grid (tabela de dados).
      */
     public static final String DEFAULT_GRID_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("grid.js");
+
+    /**
+     * Constante que define o identificador do estilo default (CSS) para o componente visual guides (guias).
+     */
+    public static final String DEFAULT_GUIDES_STYLE_CLASS = "guides";
     
     /**
      * Constante que define o identificador do estilo default (CSS) para os labels de um guide (guia) do componente visual guides (guias).
@@ -310,6 +315,11 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do arquivo de estilos default (CSS) para o componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("treeView.css");
+    
+    /**
+     * Constante que define o identificador do estilo (CSS) para a mensagem de validação de uma propriedade do modelo de dados.
+     */
+    public static final String DEFAULT_VALIDATION_LABEL_STYLE_CLASS = "validationLabel";
     
     /**
      * Constante que define o identificador da chave do controle de paginadores.
