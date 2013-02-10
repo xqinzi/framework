@@ -15,8 +15,8 @@ import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.exceptions.InternalErrorException;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.SystemController;
-import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define a estrutura básica para um componente visual.
