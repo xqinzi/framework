@@ -132,7 +132,7 @@ public class PageTag extends HtmlTag{
             	baseTag.setPageContext(pageContext);
             	baseTag.doStartTag();
             	baseTag.doEndTag();
-
+ 
         		out.println();
         		
         		String encoding = getEncoding();
@@ -243,14 +243,14 @@ public class PageTag extends HtmlTag{
         MessageBoxTag infoMessageBoxTag = new MessageBoxTag();
 
         infoMessageBoxTag.setPageContext(pageContext);
-        infoMessageBoxTag.setType(ActionFormMessageType.INFO.toString());
+        infoMessageBoxTag.setType(ActionFormMessageType.INFO);
         infoMessageBoxTag.doStartTag();
         infoMessageBoxTag.doEndTag();
 
         MessageBoxTag warningMessageBoxTag = new MessageBoxTag();
 
         warningMessageBoxTag.setPageContext(pageContext);
-        warningMessageBoxTag.setType(ActionFormMessageType.WARNING.toString());
+        warningMessageBoxTag.setType(ActionFormMessageType.WARNING);
         warningMessageBoxTag.setShowOnLoad(true);
         warningMessageBoxTag.doStartTag();
         warningMessageBoxTag.doEndTag();
@@ -258,14 +258,14 @@ public class PageTag extends HtmlTag{
         MessageBoxTag errorMessageBoxTag = new MessageBoxTag();
 
         errorMessageBoxTag.setPageContext(pageContext);
-        errorMessageBoxTag.setType(ActionFormMessageType.ERROR.toString());
+        errorMessageBoxTag.setType(ActionFormMessageType.ERROR);
         errorMessageBoxTag.doStartTag();
         errorMessageBoxTag.doEndTag();
 
         MessageBoxTag validationMessageBoxTag = new MessageBoxTag();
 
         validationMessageBoxTag.setPageContext(pageContext);
-        validationMessageBoxTag.setType(ActionFormMessageType.VALIDATION.toString());
+        validationMessageBoxTag.setType(ActionFormMessageType.VALIDATION);
         validationMessageBoxTag.doStartTag();
         validationMessageBoxTag.doEndTag();
     }
