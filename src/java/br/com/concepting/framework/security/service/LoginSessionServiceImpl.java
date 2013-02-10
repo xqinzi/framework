@@ -28,6 +28,7 @@ import br.com.concepting.framework.security.util.CryptoDigest;
 import br.com.concepting.framework.service.BaseRemoteService;
 import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.exceptions.InternalErrorException;
+import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.types.DateFieldType;
 
 /**
@@ -178,7 +179,7 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
     
                 user = userDao.loadReference(user, "groups");
         
-                loginSession.setDate(new Date());
+                loginSession.setCreateDate(new DateTime());
                 loginSession.setUser(user);
 
                 if(!user.isSuperUser()){
