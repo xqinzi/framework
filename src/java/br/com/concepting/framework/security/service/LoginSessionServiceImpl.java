@@ -3,7 +3,6 @@ package br.com.concepting.framework.security.service;
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import br.com.concepting.framework.model.SystemModuleModel;
@@ -131,10 +130,10 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                         }
                     }
                 
-                    Date    expirePasswordDate     = user.getExpirePasswordDate();
-                    Date    now                    = new Date();
-                    Integer expirePasswordInterval = loginParameters.getExpirePasswordInterval();
-                    Integer changePasswordInterval = loginParameters.getChangePasswordInterval();
+                    DateTime expirePasswordDate     = user.getExpirePasswordDate();
+                    DateTime now                    = new DateTime();
+                    Integer  expirePasswordInterval = loginParameters.getExpirePasswordInterval();
+                    Integer  changePasswordInterval = loginParameters.getChangePasswordInterval();
                 
                     if(expirePasswordInterval != null && expirePasswordInterval > 0){
                         if(expirePasswordDate == null){
@@ -247,7 +246,7 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
         
                 user.setPassword(newPassword);
         
-                Date lastUpdateDate = new Date();
+                DateTime lastUpdateDate = new DateTime();
         
                 user.setLastUpdateDate(lastUpdateDate);
         
@@ -257,7 +256,7 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                     Integer expirePasswordInterval = loginParameters.getExpirePasswordInterval();
                     
                     if(expirePasswordInterval != null){
-                        Date expirePasswordDate = DateTimeUtil.add(lastUpdateDate, expirePasswordInterval, DateFieldType.DAY);
+                        DateTime expirePasswordDate = DateTimeUtil.add(lastUpdateDate, expirePasswordInterval, DateFieldType.DAY);
                         
                         user.setExpirePasswordDate(expirePasswordDate);
                     }
