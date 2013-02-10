@@ -21,4 +21,13 @@ public enum SortOrderType{
 	 * Constante que define a ordenação decrescente.
 	 */
 	DESCEND;
+
+    /**
+     * Retorna o operador da junção do relacionamento.
+     * 
+     * @return String contendo o operador.
+     */
+    public String getOperator(){
+        return toString().toLowerCase().substring(0, 3);
+    }
 }
