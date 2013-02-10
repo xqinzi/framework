@@ -9,9 +9,9 @@ import br.com.concepting.framework.web.action.types.ActionType;
  * @since 3.0
  */
 public class ConfirmDialogBoxTag extends MessageBoxTag{
-    private ActionType onConfirmAction = null;
-    private String     onConfirm       = "";
-    private String     updateViews     = "";
+    private String onConfirmAction = "";
+    private String onConfirm       = "";
+    private String updateViews     = "";
     
     /**
      * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
@@ -36,9 +36,9 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
     /**
      * Retorn a ação a ser executada ao confirmar a operação.
      * 
-     * @return Constante que define a ação a ser executada.
+     * @return String que define a ação a ser executada.
      */
-    public ActionType getOnConfirmAction(){
+    public String getOnConfirmAction(){
         return onConfirmAction;
     }
 
@@ -47,8 +47,11 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
      * 
      * @param onConfirmAction Constante que define a ação a ser executada.
      */
-    public void setOnConfirmAction(ActionType onConfirmAction){
-        this.onConfirmAction = onConfirmAction;
+    protected void setOnConfirmAction(ActionType onConfirmAction){
+        if(onConfirmAction != null)
+            this.onConfirmAction = onConfirmAction.toString().toLowerCase();
+        else
+            this.onConfirmAction = "";
     }
 
     /**
@@ -57,7 +60,7 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
      * @param onConfirmAction String que define a ação a ser executada.
      */
     public void setOnConfirmAction(String onConfirmAction){
-        this.onConfirmAction = ActionType.valueOf(onConfirmAction.toUpperCase());
+        this.onConfirmAction = onConfirmAction;
     }
 
     /**
@@ -120,5 +123,16 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
         closeButtonTag.setPageContext(pageContext);
         closeButtonTag.doStartTag();
         closeButtonTag.doEndTag();
+    }
+    
+    /**
+     * @see br.com.concepting.framework.web.taglibs.MessageBoxTag#clearAttributes()
+     */
+    protected void clearAttributes(){
+        super.clearAttributes();
+        
+        setOnConfirmAction("");
+        setOnConfirm("");
+        setUpdateViews("");
     }
 }
