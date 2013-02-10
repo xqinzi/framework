@@ -1,6 +1,6 @@
 package br.com.concepting.framework.web.taglibs;
 
-import br.com.concepting.framework.web.types.ComponentType;
+import br.com.concepting.framework.util.types.ComponentType;
 
 /**
  * Classe que define o componente visual para o botão com a função "undo" ou "reset".
