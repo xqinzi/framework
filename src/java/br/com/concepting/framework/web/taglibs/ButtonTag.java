@@ -267,7 +267,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 	protected void buildIcon() throws Throwable{
 		if(iconUrl.length() > 0 || iconStyleClass.length() > 0 || iconStyle.length() > 0){
             print("<td align=\"");
-            print(AlignmentType.CENTER.toString().toLowerCase());
+            print(AlignmentType.CENTER);
             println("\">");
 
 			if(iconUrl.length() > 0){
