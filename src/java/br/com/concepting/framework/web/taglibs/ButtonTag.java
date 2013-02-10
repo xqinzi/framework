@@ -119,7 +119,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      */
 	protected void setAction(ActionType action){
 	    if(action != null)
-	        this.action = action.toString().toLowerCase();
+	        this.action = action.getMethod();
         else
             this.action = "";
 	}
