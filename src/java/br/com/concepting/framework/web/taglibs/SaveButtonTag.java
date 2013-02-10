@@ -20,7 +20,7 @@ public class SaveButtonTag extends ConfirmButtonTag{
      * @see br.com.concepting.framework.web.taglibs.ConfirmButtonTag#initialize()
      */
     protected void initialize() throws Throwable{
-        if(getAction() == null)
+        if(!hasAction())
             setAction(ActionType.SAVE);
         
         super.initialize();
