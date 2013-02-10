@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
@@ -16,7 +17,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
-    private ActionType         action             = null;
+    private String             action             = "";
 	private String             forward            = "";
 	private String             forwardOnFail      = "";
 	private String             onSubmit           = "";
@@ -89,17 +90,20 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 * 
 	 * @return String contendo o identificador da ação.
 	 */
-	public ActionType getAction(){
+	public String getAction(){
 		return action;
 	}
 	
     /**
      * Define o identificador da ação de envio dos dados do formulário.
      * 
-     * @param action Instância contendo a constante que define a ação.
+     * @param action Constante que define a ação.
      */
 	protected void setAction(ActionType action){
-	    this.action = action;
+	    if(action != null)
+	        this.action = action.toString().toLowerCase();
+	    else
+	        this.action = "";
 	}
 
 	/**
@@ -108,10 +112,7 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 * @param action String contendo o identificador da ação.
 	 */
 	public void setAction(String action){
-	    if(action.length() > 0)
-	        this.action = ActionType.valueOf(action.toUpperCase());
-	    else
-	        this.action = null;
+        this.action = action;
 	}
 
 	/**
@@ -231,7 +232,7 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 */
 	protected void initialize() throws Throwable{
 	    if(action == null)
-	        action = ActionType.SEARCH;
+	        action = ActionType.SEARCH.getMethod();
 	    
 	    String labelStyleClass = getLabelStyleClass();
 	    
@@ -348,7 +349,9 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderBody()
 	 */
 	protected void renderBody() throws Throwable{
-		println("<table class=\"panel\">");
+		print("<table class=\"");
+		print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+		println("\">");
 		
 		println("<tr>");
 		println("<td height=\"5\"></td>");
@@ -367,7 +370,11 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 
 		println("</td>");
 		
-		println("<td align=\"right\" valign=\"top\" width=\"1\">");
+		print("<td align=\"");
+		print(AlignmentType.RIGHT.toString().toLowerCase());
+		print("\" valign=\"");
+		print(AlignmentType.TOP.toString().toLowerCase());
+		print("\" width=\"1\">");
 		
         if(onSubmit.length() > 0)
             searchButtonTag.setOnClick(onSubmit);
