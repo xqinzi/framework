@@ -56,10 +56,11 @@ public class ActionExceptionHandler extends ExceptionHandler{
 	 * @return Instância contendo as propriedades do redirecionamento.
 	 */
 	private ActionForward processForward(){
-        ActionForward forward = findForward();
-        String        action  = actionForm.getAction();
+        ActionForward forward    = findForward();
+        String        action     = actionForm.getAction();
+        ActionType    actionType = ActionType.valueOf(action.toUpperCase());
 
-        if(!action.equals(ActionType.REFRESH.toString()))
+        if(actionType != ActionType.REFRESH)
             actionForm.setLastAction(action);
 
         return forward;
