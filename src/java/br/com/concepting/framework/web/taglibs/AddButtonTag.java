@@ -13,7 +13,7 @@ public class AddButtonTag extends ButtonTag{
 	 * @see br.com.concepting.framework.web.taglibs.ButtonTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    if(getAction() == null)
+	    if(!hasAction())
 	        setAction(ActionType.ADD);
 	    
 	    super.initialize();
