@@ -206,7 +206,7 @@ public class MessageBoxTag extends DialogBoxTag{
                             else
                                 propertyId.delete(0, propertyId.length());
                             
-                            propertyId.append(actionFormMessage.getType());
+                            propertyId.append(actionFormMessage.getType().toString().toLowerCase());
                             propertyId.append(".");
                             propertyId.append(actionFormMessage.getKey());
     
