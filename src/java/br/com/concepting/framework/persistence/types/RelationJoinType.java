@@ -1,5 +1,7 @@
 package br.com.concepting.framework.persistence.types;
 
+import br.com.concepting.framework.util.StringUtil;
+
 /**
  * Classe que define as constantes para os tipos de junções do relacionamento.
  *
@@ -23,4 +25,13 @@ public enum RelationJoinType{
 	 * Constante que define o tipo right join.
 	 */
 	RIGHT_JOIN;
+	
+    /**
+     * Retorna o operador da junção do relacionamento.
+     * 
+     * @return String contendo o operador.
+     */
+    public String getOperator(){
+        return StringUtil.replaceAll(toString().toLowerCase(), "_", " ");
+    }
 }
