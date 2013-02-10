@@ -5,9 +5,9 @@ import java.util.List;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define o componente visual para um grupo de seleção de opções.
