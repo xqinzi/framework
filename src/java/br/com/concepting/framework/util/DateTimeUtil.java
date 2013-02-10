@@ -331,13 +331,10 @@ public class DateTimeUtil{
 	 * @return Valor inteiro contendo a diferença.
 	 */
 	public static Long diff(Date date1, Date date2, DateFieldType dateField){
-		if(dateField == DateFieldType.MILISECONDS)
-			return (date1.getTime() - date2.getTime());
-
 		Date dateBuffer1 = date1;
 		Date dateBuffer2 = date2;
 
-		if(dateField != DateFieldType.HOURS && dateField != DateFieldType.MINUTES && dateField != DateFieldType.SECONDS){
+		if(dateField != DateFieldType.HOURS && dateField != DateFieldType.MINUTES && dateField != DateFieldType.SECONDS && dateField != DateFieldType.MILLISECONDS){
 			Calendar calendar = Calendar.getInstance();
 
 			calendar.setTime(dateBuffer1);
@@ -355,7 +352,10 @@ public class DateTimeUtil{
 			dateBuffer2 = calendar.getTime();
 		}
 
-		return (((dateBuffer1.getTime() - dateBuffer2.getTime()) / dateField.toInteger()) / 1000);
+		if(dateField == DateFieldType.MILLISECONDS)
+		    return (dateBuffer1.getTime() - dateBuffer2.getTime());
+		    
+		return ((dateBuffer1.getTime() - dateBuffer2.getTime()) / dateField.getValue());
 	}
 
 	/**
@@ -451,7 +451,7 @@ public class DateTimeUtil{
 
 				break;
 			}
-			case MILISECONDS: {
+			case MILLISECONDS: {
 				calendar.add(Calendar.MILLISECOND, value);
 
 				break;
@@ -512,4 +512,15 @@ public class DateTimeUtil{
 
         return result.toString();   
     }
+	
+	public static void main(String args[]) throws InterruptedException{
+	    Date x = new Date();
+	    
+	    Thread.sleep(2000);
+	    
+	    Date y = new Date();
+	    
+	    System.out.println(diff(y, x, DateFieldType.MILLISECONDS));
+	    
+	}
 }
