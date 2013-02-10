@@ -11,11 +11,11 @@ import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 import br.com.concepting.framework.web.helpers.RequestInfo;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -458,12 +458,12 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		}
 		
         print(" align=\"");
-        print(labelAlignment.toString().toLowerCase());
+        print(labelAlignment);
 	    print("\"");
 	    
 	    if(labelVerticalAlignment != null){
 	        print(" valign=\"");
-            print(labelVerticalAlignment.toString().toLowerCase());
+            print(labelVerticalAlignment);
             print("\"");
 	    }
 
@@ -513,7 +513,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	    if(componentType != null){
     		if(componentType != ComponentType.LIST){
          		print(" type=\"");
-     		    print(componentType.getId());
+     		    print(componentType);
          		print("\"");
     		}
 	    }
@@ -569,21 +569,19 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		
 		println("<tr>");
 		
-		String labelPosition = StringUtil.trim(getLabelPosition());
-
-		if(labelPosition.equals(PositionType.LEFT.toString()) || labelPosition.equals(PositionType.TOP.toString())){
+		if(labelPosition == PositionType.LEFT || labelPosition == PositionType.TOP){
 			renderLabel();
 			
-			if(labelPosition.equals(PositionType.TOP.toString())){
+			if(labelPosition == PositionType.TOP){
 			    println("</tr>");
 			    println("<tr>");
 			}
 		}
 
 		print("<td valign=\"");
-		print(AlignmentType.TOP.toString().toLowerCase());
+		print(AlignmentType.TOP);
 		print("\" align=\"");
-		print(alignment.toString().toLowerCase());
+		print(alignment);
 		println("\">");
 	}
 
