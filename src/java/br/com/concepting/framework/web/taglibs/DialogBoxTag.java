@@ -5,6 +5,9 @@ import javax.servlet.jsp.tagext.BodyContent;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.VisibilityType;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
  * Classe que define o componente visual para uma caixa de diálogo.
@@ -152,9 +155,17 @@ public class DialogBoxTag extends BaseActionFormElementTag{
     protected void renderOpen() throws Throwable{
         print("<div id=\"");
         print(getName());
-        println(".dialogBox\" class=\"dialogBox\" style=\"visibility: hidden;\">");
+        print(".");
+        print(AttributeConstants.DIALOG_BOX_KEY);
+        print("\" class=\"");
+        print(TaglibConstants.DEFAULT_DIALOG_BOX_STYLE_CLASS);
+        print("\" style=\"visibility: ");
+        print(VisibilityType.HIDDEN);
+        println(";\">");
         
-        print("<table class=\"dialogBoxContent\"");
+        print("<table class=\"");
+        print(TaglibConstants.DEFAULT_DIALOG_BOX_CONTENT_STYLE_CLASS);
+        print("\"");
         
         if(getWidth().length() > 0){
             print(" width=\"");
@@ -171,7 +182,9 @@ public class DialogBoxTag extends BaseActionFormElementTag{
         println(">");
 
         println("<tr>");
-        print("<td class=\"dialogBoxTitle\" title=\"");
+        print("<td class=\"");
+        print(TaglibConstants.DEFAULT_DIALOG_BOX_TITLE_STYLE_CLASS);
+        print("\" title=\"");
         print(getTooltip());
         println("\">");
         println(title);
@@ -183,7 +196,9 @@ public class DialogBoxTag extends BaseActionFormElementTag{
         println("</tr>");
         
         println("<tr>");
-        println("<td class=\"dialogBoxText\">");
+        print("<td class=\"");
+        print(TaglibConstants.DEFAULT_DIALOG_BOX_TEXT_STYLE_CLASS);
+        println("\">");
     }
     
     /**
@@ -225,7 +240,11 @@ public class DialogBoxTag extends BaseActionFormElementTag{
         
         if(showButtons){
             println("<tr>");
-            println("<td valign=\"bottom\" align=\"center\" height=\"1\">");
+            print("<td valign=\"");
+            print(AlignmentType.BOTTOM);
+            print("\" align=\"");
+            print(AlignmentType.CENTER);
+            println("\" height=\"1\">");
             
             renderButtons();
             
