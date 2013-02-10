@@ -87,7 +87,9 @@ public class GuidesTag extends BaseActionFormElementTag{
 	protected void renderOpen() throws Throwable{
         String width = getWidth();
 	    
-		print("<table class=\"guides\"");
+		print("<table class=\"");
+		print(TaglibConstants.DEFAULT_GUIDE_LABEL_STYLE_CLASS);
+		print("\"");
 
         if(width.length() > 0){
             print(" style=\"width: ");
@@ -391,7 +393,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    setType(ComponentType.GUIDES);
+	    setComponentType(ComponentType.GUIDES);
 	    
 	    super.initialize();
 	}
