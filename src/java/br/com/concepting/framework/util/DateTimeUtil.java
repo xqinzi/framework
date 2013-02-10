@@ -26,8 +26,20 @@ public class DateTimeUtil{
      * @param pattern String contendo a máscara de formatação.
      * @return String contendo a data formatada.
      */
-	public static String format(Date date, String pattern){
-		SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+    public static String format(Date date, String pattern){
+        return format(date, pattern, LanguageUtil.getDefaultLanguage());
+    } 
+
+    /**
+     * Efetua a formatação de uma data a partir de uma máscara de formatação.
+     *
+     * @param date Instância da data desejada. 
+     * @param pattern String contendo a máscara de formatação.
+     * @param language Instância contendo as configurações do idioma desejadas.
+     * @return String contendo a data formatada.
+     */
+	public static String format(Date date, String pattern, Locale language){
+		SimpleDateFormat formatter = new SimpleDateFormat(pattern, language);
 
 		formatter.setLenient(false);
 
