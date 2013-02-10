@@ -53,7 +53,7 @@ public class ImageTag extends BaseOptionsPropertyTag{
 			}
 			
 			print("&contentDataScope=");
-			print(scopeType.toString().toLowerCase());
+			print(scopeType);
 			
 			try{
     			print("&contentType=");
