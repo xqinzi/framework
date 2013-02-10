@@ -278,11 +278,12 @@ public class MessageBoxTag extends DialogBoxTag{
 		println("<table>");
 		println("<tr>");
 		print("<td align=\"");
-		print(AlignmentType.RIGHT.toString().toLowerCase());
+		print(AlignmentType.RIGHT);
 		print("\" valign=\"");
-		print(AlignmentType.TOP.toString().toLowerCase());
+		print(AlignmentType.TOP);
 		print("\">");
-		print("<div class=\"messageBox");
+		print("<div class=\"");
+		print(TaglibConstants.DEFAULT_MESSAGE_BOX_STYLE_CLASS);
 		print(StringUtil.capitalize(type.toString().toLowerCase()));
 		println("Icon\"></div>");
 		println("</td>");
@@ -290,7 +291,9 @@ public class MessageBoxTag extends DialogBoxTag{
 		print("<td align=\"");
 		print(AlignmentType.CENTER);
 		println("\">");
-		println("<table class=\"dialogBoxText\">");
+		print("<table class=\"");
+		print(TaglibConstants.DEFAULT_DIALOG_BOX_TEXT_STYLE_CLASS);
+		println("\">");
 		println("<tr>");
 
 		if(showException()){
@@ -315,7 +318,9 @@ public class MessageBoxTag extends DialogBoxTag{
 
 			print("<a href=\"javascript:showHideErrorTraceDetails('");
 			print(name);
-			print("')\" class=\"link\"><b>");
+			print("');\" class=\"");
+			print(TaglibConstants.DEFAULT_LINK_STYLE_CLASS);
+			print("\"><b>");
 			print(StringUtil.trim(resources.getProperty(TaglibConstants.DEFAULT_MESSAGE_BOX_ERROR_TRACE_LABEL_KEY)));
 			println("</b></a>");
 
@@ -334,7 +339,7 @@ public class MessageBoxTag extends DialogBoxTag{
  			errorTraceTag.setResourceId(TaglibConstants.DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID);
  			errorTraceTag.setResourceKey(AttributeConstants.ERROR_TRACE_KEY);
 			errorTraceTag.setStyleClass(TaglibConstants.DEFAULT_MESSAGE_BOX_ERROR_TRACE_STYLE_CLASS);
-			errorTraceTag.setStyle("display: none;");
+			errorTraceTag.setStyle("display: NONE;");
 			errorTraceTag.setReadOnly(true);
 			errorTraceTag.doStartTag();
 			errorTraceTag.doEndTag();
@@ -342,7 +347,7 @@ public class MessageBoxTag extends DialogBoxTag{
 			println("</td>");
 		}
 		else{
-			println("<td style=\"white-space: nowrap;\">");
+			println("<td style=\"white-space: NOWRAP;\">");
 
 			if(getResourceKey().length() == 0){
 				if(messages != null && messages.size() > 0){
@@ -379,8 +384,12 @@ public class MessageBoxTag extends DialogBoxTag{
         
         StringBuilder content = new StringBuilder();
         
-        content.append("addLoadEvent(centralizeDialogBoxes);\n");
-        content.append("addResizeEvent(centralizeDialogBoxes);\n");
+        content.append("addLoadEvent(centralizeDialogBoxes);");
+        content.append(StringUtil.getLineBreak());
+        content.append(";");
+        content.append("addResizeEvent(centralizeDialogBoxes);");
+        content.append(StringUtil.getLineBreak());
+        content.append(";");
         
         ScriptTag scriptTag = new ScriptTag();
         
