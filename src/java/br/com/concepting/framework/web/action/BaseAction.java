@@ -149,11 +149,11 @@ public abstract class BaseAction extends DispatchAction{
 	 * @throws Throwable
 	 */
 	protected void loadLanguages() throws Throwable{
-	    BaseActionForm     actionForm        = getActionForm();
-	    Collection<String> languages         = null;
-        SystemResourceLoader  loader            = new SystemResourceLoader();
-        SystemResource        resource          = loader.get();
-        Collection<Locale> resourceLanguages = resource.getLanguages();
+	    BaseActionForm       actionForm        = getActionForm();
+	    Collection<String>   languages         = null;
+        SystemResourceLoader loader            = new SystemResourceLoader();
+        SystemResource       resource          = loader.get();
+        Collection<Locale>   resourceLanguages = resource.getLanguages();
         
         if(resourceLanguages != null && resourceLanguages.size() > 0){
             languages = new LinkedList<String>();
@@ -292,10 +292,10 @@ public abstract class BaseAction extends DispatchAction{
         actionMapping               = mapping;
 		actionForm                  = (BaseActionForm)form;
 
-        String action = StringUtil.trim(getMethodName(mapping, form, request, response, AttributeConstants.ACTION_KEY));
+        String action = StringUtil.trim(getMethodName(mapping, form, request, response, AttributeConstants.ACTION_KEY)).toLowerCase();
 
         if(action.length() == 0)
-            action = ActionType.INIT.toString();
+            action = ActionType.INIT.getMethod();
 
         actionForm.setName(actionMapping.getName());
 		actionForm.setAction(action);
@@ -322,10 +322,11 @@ public abstract class BaseAction extends DispatchAction{
 	 * @return Instância contendo as propriedades do redirecionamento.
 	 */
 	protected ActionForward processForward(){
-		ActionForward forward = findForward();
-		String        action  = actionForm.getAction();
+		ActionForward forward    = findForward();
+		String        action     = actionForm.getAction().toUpperCase();
+		ActionType    actionType = ActionType.valueOf(action);
 
-		if(!action.equals(ActionType.REFRESH.toString()))
+		if(actionType != ActionType.REFRESH)
 			actionForm.setLastAction(action);
 
 		if(!systemController.hasForwardOrRedirect() && !systemController.hasOutputContent())
