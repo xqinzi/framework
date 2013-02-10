@@ -1,6 +1,5 @@
 package br.com.concepting.framework.security.model;
 
-import java.util.Date;
 import java.util.List;
 
 import br.com.concepting.framework.model.BaseModel;
@@ -12,6 +11,7 @@ import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.model.types.ContextSearchType;
 import br.com.concepting.framework.model.types.ValidationType;
 import br.com.concepting.framework.persistence.types.RelationType;
+import br.com.concepting.framework.util.helpers.DateTime;
 
 /**
  * Classe que define o modelo de dados de um usuário.
@@ -46,16 +46,16 @@ public class UserModel extends BaseModel{
 	private String email = "";
 
 	@Property
-	private Date createDate = new Date();
+	private DateTime createDate = new DateTime();
 
 	@Property
-	private Date lastUpdateDate = null;
+	private DateTime lastUpdateDate = null;
 
 	@Property
 	private Boolean changePassword = false;
 
 	@Property
-	private Date expirePasswordDate = null;
+	private DateTime expirePasswordDate = null;
 
 	@Property
 	private Boolean superUser = false;
@@ -75,26 +75,56 @@ public class UserModel extends BaseModel{
 	@Property(relationType = RelationType.MANY_TO_MANY)
 	private List<GroupModel> groups = null;
  
+	/**
+	 * Retorna o nome do arquivo do logo.
+	 * 
+	 * @return String contendo o nome do arquivo do logo.
+	 */
     public String getLogoFileName(){
         return logoFileName;
     }
 
+    /**
+     * Define o nome do arquivo do logo.
+     * 
+     * @param logoFilename String contendo o nome do arquivo do logo.
+     */
     public void setLogoFileName(String logoFileName){
         this.logoFileName = logoFileName;
     }
 
+    /**
+     * Retorna o formato do logo.
+     * 
+     * @return String contendo o formato do logo.
+     */
     public String getLogoContentType(){
         return logoContentType;
     }
 
+    /**
+     * Define o formato do logo.
+     * 
+     * @param logoContentType String contendo o formato do logo.
+     */
     public void setLogoContentType(String logoContentType){
         this.logoContentType = logoContentType;
     }
 
+    /**
+     * Retorna um array de bytes contendo o logo.
+     * 
+     * @return Array de bytes contendo o logo.
+     */
     public byte[] getLogo(){
         return logo;
     }
 
+    /**
+     * Define um array de bytes contendo o logo.
+     * 
+     * @param logo Array de bytes contendo o logo.
+     */
     public void setLogo(byte[] logo){
         this.logo = logo;
     }
@@ -248,7 +278,7 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @return Instância contendo a data/horário de criação do usuário.
 	 */
-	public Date getCreateDate(){
+	public DateTime getCreateDate(){
 		return createDate;
 	}
 
@@ -257,7 +287,7 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @param createDate Instância contendo a data/horário de criação do usuário.
 	 */
-	public void setCreateDate(Date createDate){
+	public void setCreateDate(DateTime createDate){
 		this.createDate = createDate;
 	}
 
@@ -266,7 +296,7 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @return Instância contendo a data/horário de expiração da senha do usuário.
 	 */
-	public Date getExpirePasswordDate(){
+	public DateTime getExpirePasswordDate(){
 		return expirePasswordDate;
 	}
 
@@ -275,7 +305,7 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @param expirePasswordDate Instância contendo a data/horário de expiração da senha do usuário.
 	 */
-	public void setExpirePasswordDate(Date expirePasswordDate){
+	public void setExpirePasswordDate(DateTime expirePasswordDate){
 		this.expirePasswordDate = expirePasswordDate;
 	}
 
@@ -284,7 +314,7 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @return Instância contendo a data/horário da última atualização dos dados do usuário.
 	 */
-	public Date getLastUpdateDate(){
+	public DateTime getLastUpdateDate(){
 		return lastUpdateDate;
 	}
 
@@ -294,7 +324,7 @@ public class UserModel extends BaseModel{
 	 * @param lastUpdateDate Instância contendo a data/horário da última atualização dos dados do 
 	 * usuário.
 	 */
-	public void setLastUpdateDate(Date lastUpdateDate){
+	public void setLastUpdateDate(DateTime lastUpdateDate){
 		this.lastUpdateDate = lastUpdateDate;
 	}
 
