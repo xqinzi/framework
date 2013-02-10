@@ -355,7 +355,7 @@ public class DateTimeUtil{
 		if(dateField == DateFieldType.MILLISECONDS)
 		    return (dateBuffer1.getTime() - dateBuffer2.getTime());
 		    
-		return ((dateBuffer1.getTime() - dateBuffer2.getTime()) / dateField.getValue());
+		return ((dateBuffer1.getTime() - dateBuffer2.getTime()) / dateField.getMilliseconds());
 	}
 
 	/**
