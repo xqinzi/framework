@@ -34,15 +34,6 @@ public class ButtonTag extends BaseActionFormElementTag{
 	protected Boolean hasAction(){
 	    return (StringUtil.trim(action).length() > 0);
 	}
-	
-    /**
-     * Indica se possui ação de paginação definida.
-     * 
-     * @return True/False.
-     */
-    protected Boolean hasPagerAction(){
-        return (pagerAction != null);
-    }
 
     /**
      * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
