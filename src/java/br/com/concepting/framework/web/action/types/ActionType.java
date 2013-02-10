@@ -61,4 +61,13 @@ public enum ActionType{
 	 * Constante que define a ação de exclusão de dados.
 	 */
 	DELETE;
+	
+	/**
+	 * Retorna o identificador do método da ação.
+	 * 
+	 * @return String contendo o identificador do método.
+	 */
+	public String getMethod(){
+	    return toString().toLowerCase();
+	}
 }
