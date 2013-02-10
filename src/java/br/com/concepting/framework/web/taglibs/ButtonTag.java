@@ -513,7 +513,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      				onClickContent.append("';");
      			}
 
-                if(gridTag != null && pagerAction != null){
+                if(gridTag != null && hasAction()){
                     onClickContent.append(" pagerAction('");
                     onClickContent.append(gridTag.getName());
                     onClickContent.append("', '");
