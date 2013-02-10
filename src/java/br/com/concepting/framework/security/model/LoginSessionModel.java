@@ -1,13 +1,12 @@
 package br.com.concepting.framework.security.model;
 
-import java.util.Date;
-
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.persistence.types.RelationType;
+import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.types.SortOrderType;
 
 /**
@@ -21,8 +20,8 @@ public class LoginSessionModel extends BaseModel{
 	@Property(isIdentity = true, isForSearch = true)
 	private Long id = 0l;
 
-	@Property(isTime=true, sortOrder=SortOrderType.DESCEND)
-	private Date date = null;
+	@Property(sortOrder=SortOrderType.DESCEND)
+	private DateTime createDate = null;
 	
 	@Property(isAuditable=true)
 	private SystemSessionModel systemSession = null;
@@ -52,21 +51,21 @@ public class LoginSessionModel extends BaseModel{
     }
 
 	/**
-	 * Retorna a data do login do usuário.
+	 * Retorna a data/horário do login do usuário.
 	 *
-	 * @return Instância contendo a data do login.
+	 * @return Instância contendo a data/horário do login.
 	 */
-	public Date getDate(){
-     	return date;
+	public DateTime getCreateDate(){
+     	return createDate;
      }
 
 	/**
-	 * Define a data do login do usuário.
+	 * Define a data/horário do login do usuário.
 	 *
-	 * @param date Instância contendo a data do login.
+	 * @param createDate Instância contendo a data/horário do login.
 	 */
-	public void setDate(Date date){
-     	this.date = date;
+	public void setCreateDate(DateTime createDate){
+     	this.createDate = createDate;
      }
 
 	/**
