@@ -1,7 +1,7 @@
 package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.model.helpers.PropertyInfo;
-import br.com.concepting.framework.web.types.ComponentType;
+import br.com.concepting.framework.util.types.ComponentType;
 
 /**
  * Classe que define o componente visual para uma opção de marcação.
