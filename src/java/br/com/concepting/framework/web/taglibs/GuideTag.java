@@ -3,8 +3,8 @@ package br.com.concepting.framework.web.taglibs;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define o componente visual para uma guia.
