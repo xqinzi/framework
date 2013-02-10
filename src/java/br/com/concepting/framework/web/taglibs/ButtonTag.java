@@ -2,11 +2,11 @@ package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define o componente visual para um botão genérico.
