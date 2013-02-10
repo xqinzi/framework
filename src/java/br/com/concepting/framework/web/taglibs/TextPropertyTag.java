@@ -181,7 +181,7 @@ public class TextPropertyTag extends BasePropertyTag{
 		
 		if(alignment != null){
 			styleContent.append("text-align: ");
-			styleContent.append(alignment.toString().toLowerCase());
+			styleContent.append(alignment);
 			styleContent.append(";");
 			
 			if(style.length() > 0){
