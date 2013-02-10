@@ -134,6 +134,11 @@ public enum ComponentType{
 	 */
 	PROGRESS_BAR;
 	
+	/**
+	 * Retorna o identificador do tipo de componente.
+	 * 
+	 * @return String contendo o identificador do tipo de componente.
+	 */
 	public String getId(){
 	    if(this == UNDO_BUTTON)
 	        return "reset";
