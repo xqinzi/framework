@@ -26,11 +26,4 @@ public enum ActionFormMessageType{
 	 * Constante que define o tipo de mensagem para validação.
 	 */
 	VALIDATION;
-	
-	/**
-	 * @see java.lang.Enum#toString()
-	 */
-	public String toString(){
-	    return super.toString().toLowerCase();
-	}
 }
