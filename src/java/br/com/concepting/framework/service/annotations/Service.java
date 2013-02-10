@@ -22,14 +22,14 @@ public @interface Service{
 	/**
 	 * Anotação que define o tipo de serviço.
 	 * 
-	 * @return Instância contendo a constante que define o tipo de serviço.
+	 * @return Constante que define o tipo de serviço.
 	 */
 	ServiceType type() default ServiceType.CLASS;
 	
 	/**
 	 * Anotação que define o escopo do serviço.
 	 * 
-	 * @return Instância contendo a constante que define o escopo do serviço.
+	 * @return Constante que define o escopo do serviço.
 	 */
 	ScopeType scope() default ScopeType.APPLICATION;
 	
