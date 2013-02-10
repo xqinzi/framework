@@ -2,11 +2,11 @@
 
 <factoryResources>
 	<contextFactory>
-		<factory id="glassfish" type="glassfish" default="true">
+		<factory id="glassfish-factory" type="GLASSFISH" default="true">
 			<class>com.sun.enterprise.naming.SerialInitContextFactory</class>
 			<url>iiop://#{serverName}:#{serverPort}</url>
 		</factory>
-		<factory id="jboss" type="jboss">
+		<factory id="jboss-factory" type="JBOSS">
 			<class>org.jnp.interfaces.NamingContextFactory</class>
 			<url>jnp://#{serverName}:#{serverPort}</url>
 		</factory>
@@ -18,35 +18,35 @@
 		</factory>
 	</ldapFactory>
 	<persistenceFactory>
-		<factory id="mssql" type="mssql">
+		<factory id="mssql-factory" type="MSSQL">
 			<class>net.sourceforge.jtds.jdbc.Driver</class>
 			<url>jdbc:jtds:sqlserver://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="sybase" type="sybase">
+		<factory id="sybase-factory" type="SYBASE">
 			<class>net.sourceforge.jtds.jdbc.Driver</class>
 			<url>jdbc:jtds:sybase://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="db2" type="db2">
+		<factory id="db2-factory" type="DB2">
 			<class>COM.ibm.db2.jdbc.app.DB2Driver</class>
 			<url>jdbc:db2://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="oracle" type="oracle">
+		<factory id="oracle-factory" type="ORACLE">
 			<class>oracle.jdbc.driver.OracleDriver</class>
 			<url>jdbc:oracle:thin:@#{serverName}:#{serverPort}:#{repositoryId}</url>
 		</factory>
-		<factory id="mysql" type="mysql" default="true">
+		<factory id="mysql-factory" type="MYSQL" default="true">
 			<class>com.mysql.jdbc.Driver</class>
 			<url>jdbc:mysql://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="postgresql" type="postgresql">
+		<factory id="postgresql-factory" type="POSTGRESQL">
 			<class>org.postgresql.Driver</class>
 			<url>jdbc:postgresql://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="firebird" tyoe="firebird">
+		<factory id="firebird-factory" tyoe="FIREBIRD">
 			<class>org.firebirdsql.jdbc.FBDriver</class>
 			<url>jdbc:firebirdsql://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="informix" type="informix">
+		<factory id="informix-factory" type="INFORMIX">
 			<class>com.informix.jdbc.IfxDriver</class>
 			<url>jdbc:informix-sqli://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
