@@ -1,5 +1,6 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.PositionType;
@@ -14,7 +15,7 @@ import br.com.concepting.framework.web.types.ComponentType;
  * @since 1.0
  */
 public class ButtonTag extends BaseActionFormElementTag{
-	private ActionType      action             = null;
+	private String          action             = "";
 	private String          forward            = "";
 	private String          forwardOnFail      = "";
     private String          iconStyleClass     = "";
@@ -25,6 +26,24 @@ public class ButtonTag extends BaseActionFormElementTag{
 	private Boolean         validate           = false;
 	private String          validateProperties = "";
 	
+	/**
+	 * Indica se possui ação definida.
+	 * 
+	 * @return True/False.
+	 */
+	protected Boolean hasAction(){
+	    return (StringUtil.trim(action).length() > 0);
+	}
+	
+    /**
+     * Indica se possui ação de paginação definida.
+     * 
+     * @return True/False.
+     */
+    protected Boolean hasPagerAction(){
+        return (pagerAction != null);
+    }
+
     /**
      * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
      * processamento da ação requisitada.
@@ -87,31 +106,31 @@ public class ButtonTag extends BaseActionFormElementTag{
     /**
      * Retorna a ação a ser executada.
      * 
-     * @return Constante que define a ação.
+     * @return String que define a ação.
      */
-	public ActionType getAction(){
+	public String getAction(){
 		return action;
 	}
 
     /**
      * Define a ação a ser executada.
      * 
-     * @param action Constante que define a ação.
+     * @param action String que define a ação.
      */
-	protected void setAction(ActionType action){
-		this.action = action;
+	public void setAction(String action){
+        this.action = action;
 	}
 	
     /**
      * Define a ação a ser executada.
      * 
-     * @param action String que define a ação.
+     * @param action Constante que define a ação.
      */
-	public void setAction(String action){
-	    if(action.length() > 0)
-	        this.action = ActionType.valueOf(action.toUpperCase());
-	    else
-	        this.action = null;
+	protected void setAction(ActionType action){
+	    if(action != null)
+	        this.action = action.toString().toLowerCase();
+        else
+            this.action = "";
 	}
 
 	/**
@@ -354,13 +373,8 @@ public class ButtonTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    ComponentType componentType = getComponentType();
-	    
-	    if(componentType == null){
-	        componentType = ComponentType.BUTTON;
-	        
-	        setComponentType(componentType);
-	    }
+	    if(getComponentType() == null)
+	        setComponentType(ComponentType.BUTTON);
 
 	    PositionType labelPosition = getLabelPosition();
 	    
@@ -457,7 +471,7 @@ public class ButtonTag extends BaseActionFormElementTag{
             if(onClick.length() > 0 && !onClick.endsWith(";"))
                 onClickContent.append("; ");
             
-		    if(action != null){
+		    if(action.length() > 0){
      			onClickContent.append("document.");
      			onClickContent.append(actionForm);
      			
