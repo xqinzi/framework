@@ -5,7 +5,7 @@ import java.util.Locale;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
-import br.com.concepting.framework.web.types.ComponentType;
+import br.com.concepting.framework.util.types.ComponentType;
 
 /**
  * Classe que define o componente visual para entrada de texto com ou sem mascaramento.
@@ -106,7 +106,7 @@ public class TextPropertyTag extends BasePropertyTag{
 		Boolean isReadOnly = isReadOnly();
 		
 		if(isReadOnly)
-			print(" readOnly");
+			print(" readoOnly");
 	}
 	
 	/**
