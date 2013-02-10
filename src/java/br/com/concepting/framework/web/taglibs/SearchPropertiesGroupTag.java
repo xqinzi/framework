@@ -101,7 +101,7 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
      */
 	protected void setAction(ActionType action){
 	    if(action != null)
-	        this.action = action.toString().toLowerCase();
+	        this.action = action.getMethod();
 	    else
 	        this.action = "";
 	}
@@ -371,9 +371,9 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 		println("</td>");
 		
 		print("<td align=\"");
-		print(AlignmentType.RIGHT.toString().toLowerCase());
+		print(AlignmentType.RIGHT);
 		print("\" valign=\"");
-		print(AlignmentType.TOP.toString().toLowerCase());
+		print(AlignmentType.TOP);
 		print("\" width=\"1\">");
 		
         if(onSubmit.length() > 0)
