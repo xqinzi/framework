@@ -1,5 +1,7 @@
 package br.com.concepting.framework.model.types;
 
+import br.com.concepting.framework.util.StringUtil;
+
 
 /**
  * Classe que define as constantes dos tipos de validações das propriedades de um modelo de 
@@ -73,4 +75,23 @@ public enum ValidationType{
 	 * Constante que define a validação customização.
 	 */
 	CUSTOM;
+	
+    /**
+     * Retorna o identificador do tipo de validação.
+     * 
+     * @return String contendo o identificador do tipo de validação.
+     */
+    public String getId(){
+        String        parts[]      = StringUtil.split(toString(), "_");
+        StringBuilder validationId = new StringBuilder();
+        
+        for(int cont = 0 ; cont < parts.length ; cont++){
+            if(cont == 0)
+                validationId.append(parts[cont].toLowerCase());
+            else
+                validationId.append(StringUtil.capitalize(parts[cont]));
+        }
+        
+        return validationId.toString();
+    }
 }
