@@ -1,5 +1,8 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.VisibilityType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
@@ -14,16 +17,25 @@ public class CalendarPropertyTag extends TextPropertyTag{
 	 */
 	protected void renderBody() throws Throwable{
 		if(getPropertyInfo() != null && isEnabled() && !isReadOnly()){
-			println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"calendarBoxContent\">");
+			print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
+			print(TaglibConstants.DEFAULT_CALENDAR_CONTENT_STYLE_CLASS);
+			println("\">");
 			println("<tr>");
-			println("<td class=\"calendarBoxText\" valign=\"bottom\" width=\"1\">");
+			print("<td class=\"");
+			print(TaglibConstants.DEFAULT_CALENDAR_TEXT_STYLE_CLASS);
+			print("\" valign=\"");
+			print(AlignmentType.BOTTOM);
+			print("\" width=\"1\">");
 
 			super.renderBody();
 
 			println("</td>");
 			
 			println("<td width=\"5\"></td>");
-			println("<td valign=\"bottom\">");
+			
+			print("<td valign=\"");
+			print(AlignmentType.BOTTOM);
+			println("\">");
 
 			ShowCalendarBoxButtonTag showCalendarBoxButtonTag = new ShowCalendarBoxButtonTag(this);
 
@@ -38,9 +50,17 @@ public class CalendarPropertyTag extends TextPropertyTag{
 
             print("<div id=\"");
             print(name);
-            println(".calendarBox\" class=\"calendarBox\" style=\"visibility: hidden;\">");
+            print(".");
+            print(AttributeConstants.CALENDAR_KEY);
+            print("\" class=\"");
+            print(TaglibConstants.DEFAULT_CALENDAR_STYLE_CLASS);
+            print("\" style=\"visibility: ");
+            print(VisibilityType.HIDDEN);
+            println(";\">");
 
-			println("<table class=\"panel\">");
+            print("<table class\"");
+            print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+            println("\">");
 			println("<tr>");
 			println("<td>");
 
@@ -59,10 +79,16 @@ public class CalendarPropertyTag extends TextPropertyTag{
 
 			println("</td>");
 			
-			println("<td align=\"center\">");
+			print("<td align=\"");
+			print(AlignmentType.CENTER);
+			println("\">");
 			print("<span id=\"");
 			print(name);
-			println(".calendarBoxDisplay\" class=\"calendarBoxDisplay\"></span>");
+			print(".");
+			print(AttributeConstants.CALENDAR_DISPLAY_KEY);
+			print("\" class=\"");
+			print(TaglibConstants.DEFAULT_CALENDAR_DISPLAY_STYLE_CLASS);
+			println("\"></span>");
 			println("</td>");
 			
 			println("<td>");
@@ -86,7 +112,11 @@ public class CalendarPropertyTag extends TextPropertyTag{
             
             print("<span id=\"");
             print(name);
-            println(".calendarBoxDays\" class=\"calendarBoxDays\"></span>");
+            print(".");
+            print(AttributeConstants.CALENDAR_DAYS_KEY);
+            print("\" class=\"");
+            print(TaglibConstants.DEFAULT_CALENDAR_DAYS_STYLE_CLASS);
+            println("\"></span>");
 
             println("</div>");
 		}
