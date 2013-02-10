@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.web.types.ContentMimeType;
+import br.com.concepting.framework.web.types.ContentType;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -31,13 +31,13 @@ public class ContentLoaderServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     	SystemController controller       = new SystemController(request, response);
     	String           contentId        = controller.getRequestInfoValue(AttributeConstants.CONTENT_ID_KEY);
-    	ContentMimeType  contentType      = ContentMimeType.BINARY;
+    	ContentType      contentType      = ContentType.BINARY;
     	String           contentData      = controller.getRequestInfoValue(AttributeConstants.CONTENT_DATA_KEY);
     	ScopeType        contentDataScope = ScopeType.SESSION;
 
     	try{
-    		contentType      = ContentMimeType.toContentMimeType(controller.getRequestInfoValue(AttributeConstants.CONTENT_TYPE_KEY));
-        	contentDataScope = ScopeType.toScopeType(controller.getRequestInfoValue(AttributeConstants.CONTENT_DATA_SCOPE_KEY));
+    		contentType      = ContentType.valueOf(controller.getRequestInfoValue(AttributeConstants.CONTENT_TYPE_KEY).toUpperCase());
+        	contentDataScope = ScopeType.valueOf(controller.getRequestInfoValue(AttributeConstants.CONTENT_DATA_SCOPE_KEY).toUpperCase());
     	}
     	catch(Throwable e){
     	}
