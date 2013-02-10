@@ -9,7 +9,7 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.helpers.Node;
-import br.com.concepting.framework.web.types.ComponentType;
+import br.com.concepting.framework.util.types.ComponentType;
 
 /**
  * Classe que define o componente visual de uma lista de opções para seleção.
