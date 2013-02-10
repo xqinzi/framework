@@ -20,7 +20,7 @@ public class EditButtonTag extends ButtonTag{
      * @see br.com.concepting.framework.web.taglibs.ButtonTag#initialize()
      */
     protected void initialize() throws Throwable{
-        if(getAction() == null)
+        if(!hasAction())
             setAction(ActionType.EDIT);
 	    
 	    super.initialize();
