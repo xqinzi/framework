@@ -74,7 +74,7 @@ public class UserModel extends BaseModel{
 
 	@Property(relationType = RelationType.MANY_TO_MANY)
 	private List<GroupModel> groups = null;
-
+ 
     public String getLogoFileName(){
         return logoFileName;
     }
