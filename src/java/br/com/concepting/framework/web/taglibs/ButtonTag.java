@@ -1,6 +1,7 @@
 package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PagerActionType;
@@ -465,33 +466,41 @@ public class ButtonTag extends BaseActionFormElementTag{
 		    if(action.length() > 0){
      			onClickContent.append("document.");
      			onClickContent.append(actionForm);
+     			onClickContent.append(".");
      			
      			if(searchPropertiesTag != null)
-     				onClickContent.append(".validateSearchModel.value = ");
+     			    onClickContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
      			else
-     				onClickContent.append(".validateModel.value = ");
-     			
+     			    onClickContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+
+ 				onClickContent.append(".value = ");
      			onClickContent.append(validate);
      			onClickContent.append(";");
      			
      			if(validateProperties.length() > 0){
      				onClickContent.append(" document.");
      				onClickContent.append(actionForm);
-     				onClickContent.append(".validateProperties.value = '");
+     				onClickContent.append(".");
+     				onClickContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+     				onClickContent.append(".value = '");
      				onClickContent.append(validateProperties);
      				onClickContent.append("';");
      			}
      			
      			onClickContent.append(" document.");
      			onClickContent.append(actionForm);
-     			onClickContent.append(".action.value = '");
+                onClickContent.append(".");
+                onClickContent.append(AttributeConstants.ACTION_KEY);
+     			onClickContent.append(".value = '");
      			onClickContent.append(action);
      			onClickContent.append("';");
      			
      			if(forward.length() > 0){
      				onClickContent.append(" document.");
      				onClickContent.append(actionForm);
-     				onClickContent.append(".forward.value = '");
+     				onClickContent.append(".");
+     				onClickContent.append(AttributeConstants.FORWARD_KEY);
+     				onClickContent.append(".value = '");
      				onClickContent.append(forward);
      				onClickContent.append("';");
      			}
@@ -499,7 +508,9 @@ public class ButtonTag extends BaseActionFormElementTag{
      			if(forwardOnFail.length() > 0){
      				onClickContent.append(" document.");
      				onClickContent.append(actionForm);
-     				onClickContent.append(".forwardOnFail.value = '");
+                    onClickContent.append(".");
+                    onClickContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onClickContent.append(".value = '");
      				onClickContent.append(forwardOnFail);
      				onClickContent.append("';");
      			}
@@ -519,7 +530,9 @@ public class ButtonTag extends BaseActionFormElementTag{
                     if(updateViews.length() > 0){
                         onClickContent.append(" document.");
                         onClickContent.append(actionForm);
-                        onClickContent.append(".updateViews.value = '");
+                        onClickContent.append(".");
+                        onClickContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                        onClickContent.append(".value = '");
                         onClickContent.append(updateViews);
                         onClickContent.append("';");
                     }
