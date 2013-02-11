@@ -268,7 +268,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseOptionsPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        setComponentType(ComponentType.TREEVIEW);
+        setComponentType(ComponentType.TREE_VIEW);
         
         if(getLabelPosition() == null)
             setLabelPosition(PositionType.TOP);
@@ -592,14 +592,14 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				    trace.delete(0, trace.length());
 				    
 			    trace.append("<td class=\"");
-			    trace.append(TaglibConstants.DEFAULT_TREEVIEW_TRACE_STYLE_CLASS);
+			    trace.append(TaglibConstants.DEFAULT_TRACE_STYLE_CLASS);
 			    trace.append("\"></td>");
 
 				println(StringUtil.replicate(trace.toString(), level));
 
 				if(!node.hasChildNodes() && nodeOnExpandAction.length() == 0){
 					print("<td class=\"");
-					print(TaglibConstants.DEFAULT_TREEVIEW_TRACE_STYLE_CLASS);
+					print(TaglibConstants.DEFAULT_TRACE_STYLE_CLASS);
 					println("\"></td>");
 					
 					print("<td");
