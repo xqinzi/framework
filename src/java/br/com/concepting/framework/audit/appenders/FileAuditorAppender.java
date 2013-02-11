@@ -14,7 +14,7 @@ import br.com.concepting.framework.audit.Auditor;
  * @since 3.0
  */
 public class FileAuditorAppender extends BaseAuditorAppender{
-    private String filename = "";
+    private String fileName = "";
     
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -30,17 +30,17 @@ public class FileAuditorAppender extends BaseAuditorAppender{
 	 * 
 	 * @return String contendo o nome do arquivo.
 	 */
-    public String getFilename(){
-        return filename;
+    public String getFileName(){
+        return fileName;
     }
 
     /**
      * Define o nome do arquivo de armazenamento.
      * 
-     * @param filename String contendo o nome do arquivo.
+     * @param fileName String contendo o nome do arquivo.
      */
-    public void setFilename(String filename){
-        this.filename = filename;
+    public void setFileName(String fileName){
+        this.fileName = fileName;
     }
 
     /**
@@ -48,7 +48,7 @@ public class FileAuditorAppender extends BaseAuditorAppender{
 	 */
 	public void activateOptions(){
 		try{
-            setWriter(new PrintWriter(new FileOutputStream(new File(filename), true)));
+            setWriter(new PrintWriter(new FileOutputStream(new File(fileName), true)));
         }
         catch(Throwable e){
         }
