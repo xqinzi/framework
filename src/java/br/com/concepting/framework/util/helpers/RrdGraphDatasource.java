@@ -12,7 +12,7 @@ import br.com.concepting.framework.util.types.RrdGraphType;
  * @since 1.0
  */
 public class RrdGraphDatasource{
-	private String         filename       = "";
+	private String         fileName       = "";
 	private String         name           = "";
 	private String         label          = "";
 	private String         datasourceName = "";
@@ -27,14 +27,14 @@ public class RrdGraphDatasource{
      * Construtor - Inicializa objetos e/ou variáveis internas.
      *
      * @param name String contendo o nome do datasource.
-     * @param filename String contendo o nome do arquivo RRD.
+     * @param fileName String contendo o nome do arquivo RRD.
      * @param datasourceName String contendo o nome do datasource.
      * @param archiveType Instância contendo o tipo de consolidação.
      */
-	public RrdGraphDatasource(String name, String filename, String datasourceName, RrdArchiveType archiveType){
+	public RrdGraphDatasource(String name, String fileName, String datasourceName, RrdArchiveType archiveType){
 		super();
 		
-		setFilename(filename);
+		setFileName(fileName);
 		setName(name);
 		setDatasourceName(datasourceName);
 		setArchiveType(archiveType);
@@ -307,16 +307,16 @@ public class RrdGraphDatasource{
 	 *
 	 * @return String contendo o nome do arquivo RRD.
 	 */
-	public String getFilename(){
-    	return filename;
+	public String getFileName(){
+    	return fileName;
     }
 
 	/**
 	 * Define o nome do arquivo RRD.
 	 *
-	 * @param filename String contendo o nome do arquivo RRD.
+	 * @param fileName String contendo o nome do arquivo RRD.
 	 */
-	public void setFilename(String filename){
-    	this.filename = filename;
+	public void setFileName(String fileName){
+    	this.fileName = fileName;
     }
 }
