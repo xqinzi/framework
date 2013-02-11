@@ -1062,7 +1062,7 @@ public class SystemController{
                !requestInfoName.equals(AttributeConstants.FORWARD_ON_FAIL_KEY) && 
                !requestInfoName.equals(AttributeConstants.FORWARD_TO_ORIGIN_KEY) && 
                !requestInfoName.endsWith(".".concat(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY)) &&
- 			   !requestInfoName.endsWith(".".concat(AttributeConstants.IS_COLLAPSED_KEY)) &&
+ 			   !requestInfoName.endsWith(".".concat(AttributeConstants.IS_NODE_EXPANDED_KEY)) &&
  	 		   !requestInfoName.endsWith(".".concat(AttributeConstants.ITEMS_PER_PAGE_KEY)) &&
  	 		   !requestInfoName.endsWith(".".concat(AttributeConstants.LABEL_KEY)) &&
                !requestInfoName.equals(AttributeConstants.LAST_ACTION_KEY) &&
