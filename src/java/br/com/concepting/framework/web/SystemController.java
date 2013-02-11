@@ -1060,7 +1060,6 @@ public class SystemController{
                !requestInfoName.endsWith(".".concat(AttributeConstants.ERROR_TRACE_KEY)) &&
                !requestInfoName.equals(AttributeConstants.FORWARD_KEY) && 
                !requestInfoName.equals(AttributeConstants.FORWARD_ON_FAIL_KEY) && 
-               !requestInfoName.equals(AttributeConstants.FORWARD_TO_ORIGIN_KEY) && 
                !requestInfoName.endsWith(".".concat(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY)) &&
  			   !requestInfoName.endsWith(".".concat(AttributeConstants.IS_NODE_EXPANDED_KEY)) &&
  	 		   !requestInfoName.endsWith(".".concat(AttributeConstants.ITEMS_PER_PAGE_KEY)) &&
@@ -1073,6 +1072,10 @@ public class SystemController{
  			   !requestInfoName.endsWith(".".concat(AttributeConstants.PATTERN_KEY)) &&
                !requestInfoName.endsWith(".".concat(AttributeConstants.TOOLTIP_KEY)) &&
                !requestInfoName.equals(AttributeConstants.UPDATE_VIEWS_KEY) &&
+               !requestInfoName.equals(AttributeConstants.UPLOAD_DATA_KEY) &&
+               !requestInfoName.equals(AttributeConstants.UPLOAD_DATA_PROPERTY_KEY) &&
+               !requestInfoName.equals(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY) &&
+               !requestInfoName.equals(AttributeConstants.UPLOAD_CONTENT_TYPE_PROPERTY_KEY) &&
  			   !requestInfoName.equals(AttributeConstants.VALIDATE_MODEL_KEY) &&
                !requestInfoName.equals(AttributeConstants.VALIDATE_PROPERTIES_KEY) &&
                !requestInfoName.equals(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY))
