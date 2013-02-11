@@ -33,7 +33,9 @@ public abstract class AttributeConstants extends Constants{
     public static final String EDITABLE_DATA_KEY                 = "editableDataValues";
     public static final String EDITABLE_DATA_COLUMN_KEY          = "editableDataColumn";
     public static final String EDITABLE_DATA_SCOPE_KEY           = "editableDataValuesScope";
+    public static final String ERROR_ID_LABEL_KEY                = "errorId.label";
     public static final String ERROR_TRACE_KEY                   = "errorTrace";
+    public static final String ERROR_TRACE_LABEL_KEY             = "errorTrace.label";
     public static final String END_RANGE_KEY                     = "endRange";
     public static final String FORWARD_KEY                       = "forward";
     public static final String FORWARD_ON_FAIL_KEY               = "forwardOnFail";
@@ -46,8 +48,11 @@ public abstract class AttributeConstants extends Constants{
     public static final String ITEMS_PER_PAGE_KEY                = "itemsPerPage";
     public static final String LABEL_KEY                         = "label";
     public static final String LAST_ACTION_KEY                   = "lastAction";
-    public static final String LOADING_ERROR_KEY                 = "error.loading";
-    public static final String LOADING_KEY                       = "info.loading";
+    public static final String LOADING_BOX_KEY                   = "loadingBox";
+    public static final String LOADING_BOX_INFO_KEY              = "loadingBoxInfo";
+    public static final String LOADING_BOX_ERROR_KEY             = "loadingBoxError";
+    public static final String LOADING_ERROR_MESSAGE_KEY         = "error.loading";
+    public static final String LOADING_INFO_MESSAGE_KEY          = "info.loading";
     public static final String MAXIMUM_LENGTH_KEY                = "maximumLength";
     public static final String MENU_BAR_KEY                      = "menuBar";
     public static final String MENU_BOX_KEY                      = "menuBox";
@@ -66,6 +71,7 @@ public abstract class AttributeConstants extends Constants{
     public static final String REGULAR_EXPRESSION_KEY            = "expression";
     public static final String ROW_NUMBER_KEY                    = "rowNumber";
     public static final String SELECT_AN_ITEM_KEY                = "info.selectAnItem";
+    public static final String SHADE_KEY                         = "shade";
     public static final String SORT_PROPERTY_KEY                 = "sortProperty";
     public static final String SORT_ORDER_KEY                    = "sortOrder";
     public static final String SUCCESS_KEY                       = "info.success";
