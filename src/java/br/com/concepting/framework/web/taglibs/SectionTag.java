@@ -3,9 +3,15 @@ package br.com.concepting.framework.web.taglibs;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
+/**
+ * Classe que define o componente visual de uma seção.
+ * 
+ * @author fvilarinho
+ * @since 3.0
+ */
 public class SectionTag extends BaseActionFormElementTag{
     private String headerLabelStyleClass = "";
     private String headerLabelStyle      = "";
@@ -16,50 +22,110 @@ public class SectionTag extends BaseActionFormElementTag{
     private String onSelect              = "";
     private String content               = null;
     
+    /**
+     * Retorna o estilo CSS para o label do cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getHeaderLabelStyleClass(){
         return headerLabelStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para o label do cabeçalho da seção.
+     * 
+     * @param headerLabelStyleClass String contendo o identificador do estilo CSS.
+     */
     public void setHeaderLabelStyleClass(String headerLabelStyleClass){
         this.headerLabelStyleClass = headerLabelStyleClass;
     }
 
+    /**
+     * Retorna o estilo CSS para o label do cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getHeaderLabelStyle(){
         return headerLabelStyle;
     }
 
+    /**
+     * Define o estilo CSS para o label do cabeçalho da seção.
+     * 
+     * @param headerLabelStyle String contendo o identificador do estilo CSS.
+     */
     public void setHeaderLabelStyle(String headerLabelStyle){
         this.headerLabelStyle = headerLabelStyle;
     }
 
+    /**
+     * Retorna o estilo CSS para o cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getHeaderStyleClass(){
         return headerStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para o cabeçalho da seção.
+     * 
+     * @param headerStyleClass String contendo o identificador do estilo CSS.
+     */
     public void setHeaderStyleClass(String headerStyleClass){
         this.headerStyleClass = headerStyleClass;
     }
 
+    /**
+     * Retorna o estilo CSS para o cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getHeaderStyle(){
         return headerStyle;
     }
 
+    /**
+     * Define o estilo CSS para o cabeçalho da seção.
+     * 
+     * @param headerStyle String contendo o identificador do estilo CSS.
+     */
     public void setHeaderStyle(String headerStyle){
         this.headerStyle = headerStyle;
     }
 
+    /**
+     * Retorna o estilo CSS para o conteúdo da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getContentStyleClass(){
         return contentStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para o conteúdo da seção.
+     * 
+     * @param contentStyleClass String contendo o identificador do estilo CSS.
+     */
     public void setContentStyleClass(String contentStyleClass){
         this.contentStyleClass = contentStyleClass;
     }
 
+    /**
+     * Retorna o estilo CSS para o conteúdo da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getContentStyle(){
         return contentStyle;
     }
 
+    /**
+     * Define o estilo CSS para o conteúdo da seção.
+     * 
+     * @param contentStyle String contendo o identificador do estilo CSS.
+     */
     public void setContentStyle(String contentStyle){
         this.contentStyle = contentStyle;
     }
@@ -104,7 +170,7 @@ public class SectionTag extends BaseActionFormElementTag{
      * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#initialize()
      */
     protected void initialize() throws Throwable{
-        setType(ComponentType.SECTION);
+        setComponentType(ComponentType.SECTION);
 
         AccordionTag accordionTag = (AccordionTag)findAncestorWithClass(this, AccordionTag.class);
 
