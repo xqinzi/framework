@@ -20,7 +20,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 3.0
  */
 public class DownloadBoxPropertyTag extends BasePropertyTag{
-    private String fileNameProperty    = "";
+    private String filenameProperty    = "";
     private String contentTypeProperty = "";
     private String iconWidth           = "";
     private String iconHeight          = "";
@@ -68,8 +68,8 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
      * @return String contendo o identificador da propriedade do 
      * modelo de dados. 
      */
-    public String getFileNameProperty(){
-        return fileNameProperty;
+    public String getFilenameProperty(){
+        return filenameProperty;
     }
 
     /**
@@ -79,8 +79,8 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
      * @param filenameProperty String contendo o identificador da propriedade do 
      * modelo de dados. 
      */
-    public void setFileNameProperty(String fileNameProperty){
-        this.fileNameProperty = fileNameProperty;
+    public void setFilenameProperty(String filenameProperty){
+        this.filenameProperty = filenameProperty;
     }
 
     /**
@@ -118,11 +118,11 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
     /**
      * Renderiza o ícone para download.
      * 
-     * @param fileName String contendo o nome do arquivo
+     * @param filename String contendo o nome do arquivo
      * @param contentType Constante que define o formato do arquivo.
      * @throws Throwable
      */
-    private void renderDownloadIcon(String fileName, ContentType contentType) throws Throwable{
+    private void renderDownloadIcon(String filename, ContentType contentType) throws Throwable{
         print("<div class=\"");
         print(contentType.getExtension().substring(1).toLowerCase());
         print("Icon\"");
@@ -153,9 +153,9 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
         print(systemController.getContextPath());
         print("/contentLoaderServlet?");
         
-        if(fileName.length() > 0){
+        if(filename.length() > 0){
             print("contentId=");
-            print(fileName);
+            print(filename);
             print("&");
         }
         
@@ -195,11 +195,11 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                     byte content[] = (byte[])getValue();
 
                     if(content != null){
-                        String       fileName             = "";
-                        PropertyInfo fileNamePropertyInfo = modelInfo.getPropertyInfo(fileNameProperty);
+                        String       filename             = "";
+                        PropertyInfo filenamePropertyInfo = modelInfo.getPropertyInfo(filenameProperty);
                         
-                        if(fileNamePropertyInfo != null)
-                            fileName = StringUtil.trim(PropertyUtil.getProperty(model, fileNameProperty));
+                        if(filenamePropertyInfo != null)
+                            filename = StringUtil.trim(PropertyUtil.getProperty(model, filenameProperty));
                         
                         ContentType  contentType             = null;
                         PropertyInfo contentTypePropertyInfo = modelInfo.getPropertyInfo(contentTypeProperty);
@@ -224,8 +224,8 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                         if(contentType == null)
                             contentType = ContentType.BINARY;
                         
-                        if(fileNamePropertyInfo != null)
-                            renderDownloadIcon(fileName, contentType);
+                        if(filenamePropertyInfo != null)
+                            renderDownloadIcon(filename, contentType);
                         else{
                             if(contentType == ContentType.GIF || contentType == ContentType.JPEG || contentType == ContentType.PNG){
                                 ImageTag imageTag = new ImageTag();
@@ -242,7 +242,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                                 imageTag.doEndTag();
                             }
                             else
-                                renderDownloadIcon(fileName, contentType);
+                                renderDownloadIcon(filename, contentType);
                         }
                         
                         println("</td>");
@@ -251,8 +251,8 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                         print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
                         println("\">");
 
-                        if(fileName.length() > 0){
-                            println(fileName);
+                        if(filename.length() > 0){
+                            println(filename);
                             println("<br/>");
                         }
                         
@@ -283,7 +283,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
     protected void clearAttributes(){
         super.clearAttributes();
         
-        setFileNameProperty("");
+        setFilenameProperty("");
         setContentTypeProperty("");
         setIconWidth("");
         setIconHeight("");
