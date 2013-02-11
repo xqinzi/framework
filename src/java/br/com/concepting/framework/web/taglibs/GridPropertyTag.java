@@ -20,12 +20,13 @@ import br.com.concepting.framework.util.Pager;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.SortOrderType;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.helpers.RequestInfo;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
+import br.com.concepting.framework.web.types.ScopeType;
 
 /**
  * Classe que define o componente visual para uma tabela de dados.
@@ -410,8 +411,11 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 		rowStatesTags.add(rowStateTag);
 	}
 	
+	/**
+	 * @see br.com.concepting.framework.web.taglibs.BaseOptionsPropertyTag#initialize()
+	 */
 	protected void initialize() throws Throwable{
-	    setType(ComponentType.GRID);
+	    setComponentType(ComponentType.GRID);
 	    
         super.initialize();
 	}
@@ -570,7 +574,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			print("\"");
 		}
 		
-		println(" align=\"center\">");
+        print(" align=\"");
+        print(AlignmentType.CENTER);
+        println("\">");
 
 		renderControls();
 
@@ -615,7 +621,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			String                   columnValueLabel              = "";
 			Map                      columnValueMapInstance        = null;
 			String                   columnData                    = "";
-			String                   columnDataScope               = "";
+			ScopeType                columnDataScope               = null;
 			Boolean                  columnEditable                = false;
 			Boolean                  columnHasMultipleLines        = false;
 			String                   columnLinkStyleClass          = "";
@@ -623,7 +629,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			String                   columnStyle                   = "";
 			Integer                  columnRows                    = 0;
 			Integer                  columnColumns                 = 0;
-			String                   columnAlignment               = "";   
+			AlignmentType            columnAlignment               = null;   
 			String                   columnWidth                   = "";
 			String                   columnPattern                 = "";
 			Boolean                  columnUseAdditionalFormatting = false;
@@ -837,7 +843,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     								print("\"");
     							}
         
-        						println(" align=\"center\" width=\"1\">");
+        						print(" align=\"");
+        						print(AlignmentType.CENTER);
+        						println("\" width=\"1\">");
         
                                 if(optionTagId == null)
                                     optionTagId = new StringBuilder();
@@ -1016,7 +1024,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     									if(columnStateTag.getData().length() > 0)
     										columnData = columnStateTag.getData();
     									
-    									if(columnStateTag.getDataScope().length() > 0)
+    									if(columnStateTag.getDataScope() != null)
     										columnDataScope = columnStateTag.getDataScope();
 
     									if(columnStateTag.getValue() != null){
@@ -1100,12 +1108,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         							
         								if(columnPropertyInfo != null){
             								if(columnPropertyInfo.isNumber())
-            									columnAlignment = AlignmentType.RIGHT.toString();
+            									columnAlignment = AlignmentType.RIGHT;
             								else if(columnPropertyInfo.isDate() || columnPropertyInfo.isBoolean() || columnPropertyInfo.isByteArray())
-            									columnAlignment = AlignmentType.CENTER.toString();
+            									columnAlignment = AlignmentType.CENTER;
         								}
         								
-            							if(columnAlignment.length() > 0){
+            							if(columnAlignment != null){
             								print(" align=\"");
             								print(columnAlignment);
             								print("\"");
@@ -1382,7 +1390,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 		}
 		else{
 			println("<tr>");
-			print("<td align=\"center\" height=\"50\" class=\"");
+			print("<td align=\"");
+			print(AlignmentType.CENTER);
+			print("\" height=\"50\" class=\"");
 			
 	        columnStyleClass = detailStyleClass;
 	        
@@ -1445,7 +1455,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 		println("<tr>");
 		println("<td>");
 
-		println("<table class=\"panel\">");
+        print("<table class\"");
+        print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+        println("\">");
 		println("<tr>");
 
 		if(showSelection())
@@ -1455,7 +1467,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			GridColumnGroupTag columnGroup                 = null;
             String             currentColumnGroupName      = "";
             String             currentColumnGroupLabel     = "";
-			String             currentColumnGroupAlignment = "";
+			AlignmentType      currentColumnGroupAlignment = null;
             String             currentColumnGroupTooltip   = "";
 			Integer            columnsInGroup              = 0;
             String             columnHeaderLinkStyleClass  = headerLinkStyleClass;
@@ -1497,7 +1509,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         						print(columnsInGroup);
         						print("\"");
         
-        						if(currentColumnGroupAlignment.length() > 0){
+        						if(currentColumnGroupAlignment != null){
         							print(" align=\"");
         							print(currentColumnGroupAlignment);
         							print("\"");
@@ -1547,7 +1559,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                         print(columnsInGroup);
                         print("\"");
 
-                        if(currentColumnGroupAlignment.length() > 0){
+                        if(currentColumnGroupAlignment != null){
                             print(" align=\"");
                             print(currentColumnGroupAlignment);
                             print("\"");
@@ -1588,7 +1600,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                 print(columnsInGroup);
                 print("\"");
 
-                if(currentColumnGroupAlignment.length() > 0){
+                if(currentColumnGroupAlignment != null){
                     print(" align=\"");
                     print(currentColumnGroupAlignment);
                     print("\"");
@@ -1624,7 +1636,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 					print("\"");
 				}
 
-				print(" align=\"center\" width=\"1\"><b>");
+				print(" align=\"");
+				print(AlignmentType.CENTER);
+				print("\" width=\"1\"><b>");
 
 				if(propertyInfo != null && propertyInfo.isCollection()){
 					print("<a class=\"");
@@ -1687,11 +1701,11 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 				}
 			}
 
-			String columnName       = "";
-			String columnLabel      = "";
-			String columnAlignment  = "";
-			String columnTooltip    = "";
-			Double columnWidthValue = 0d;
+			String        columnName       = "";
+			String        columnLabel      = "";
+			AlignmentType columnAlignment  = null;
+			String        columnTooltip    = "";
+			Double        columnWidthValue = 0d;
 			
 			for(GridColumnTag columnTag : columnsTags){
 			    columnName      = columnTag.getName();
@@ -1732,7 +1746,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                     
     				print("\"");
     
-    				if(columnAlignment.length() > 0){
+    				if(columnAlignment != null){
     					print(" align=\"");
     					print(columnAlignment);
     					print("\"");
@@ -1740,11 +1754,13 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     
     				println(">");
     
-    				println("<table class=\"panel\">");
+                    print("<table class=\"");
+                    print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+                    println("\">");
     				println("<tr>");
     				print("<td");
     
-    				if(columnAlignment.length() > 0){
+    				if(columnAlignment != null){
     					print(" align=\"");
     					print(columnAlignment);
     					print("\"");
@@ -1821,9 +1837,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     				if(columnName.length() > 0){
         				if(columnName.equals(requestInfo.getSortProperty())){
         					println("</td>");
-        					println("<td align=\"right\" width=1>");
+        					
+        					print("<td align=\"");
+        					print(AlignmentType.RIGHT);
+        					print("\" width=\"1\">");
         					print("<div class=\"");
-        					print(requestInfo.getSortOrder());
+        					print(requestInfo.getSortOrder().getOperator());
         					println("endOrderIcon\"></div>");
         				}
     				}
@@ -1845,7 +1864,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	private void renderControls() throws Throwable{
-		println("<table class=\"gridControl\">");
+		print("<table class=\"");
+		print(TaglibConstants.DEFAULT_GRID_CONTROL_STYLE_CLASS);
+		println("\">");
 		println("<tr>");
 
 		renderPager();
@@ -1862,7 +1883,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	 */
 	private void renderPager() throws Throwable{
 		if(pagerTag != null){
-			println("<td align=\"center\">");
+			print("<td align=\"");
+			print(AlignmentType.CENTER);
+			println("\">");
 
 			pagerTag.render();
 
