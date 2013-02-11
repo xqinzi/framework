@@ -1,8 +1,8 @@
 package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.util.NumberUtil;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define o componente visual para uma barra de progressão.
@@ -88,9 +88,13 @@ public class ProgressBarTag extends BasePropertyTag{
 		if(getPropertyInfo() != null)
 			super.renderOpen();
 		
-		println("<table class=\"panel\">");
+        print("<table class=\"");
+        print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+        println("\">");
 		println("<tr>");
-		println("<td class=\"leftProgressBar\"></td>");
+		println("<td class=\"");
+		print(TaglibConstants.DEFAULT_LEFT_PROGRESS_BAR_STYLE_CLASS);
+		println("\"></td>");
 	}
 	
 	/**
@@ -121,27 +125,27 @@ public class ProgressBarTag extends BasePropertyTag{
     		
     		if(warningValue > 0){
     			if(percent < warningValue)
-    				print("normalProgressBar");
+    			    print(TaglibConstants.DEFAULT_NORMAL_PROGRESS_BAR_STYLE_CLASS);
     			else{
     				if(criticalValue > 0){
     					if(percent < criticalValue)
-    						print("warningProgressBar");
+    	                    print(TaglibConstants.DEFAULT_WARNING_PROGRESS_BAR_STYLE_CLASS);
     					else
-    						print("criticalProgressBar");
+                            print(TaglibConstants.DEFAULT_CRITICAL_PROGRESS_BAR_STYLE_CLASS);
     				}
     				else
-    					print("warningProgressBar");
+                        print(TaglibConstants.DEFAULT_WARNING_PROGRESS_BAR_STYLE_CLASS);
     			}
     		}
     		else{
     			if(criticalValue > 0){
     				if(percent < criticalValue)
-    					print("normalProgressBar");
+                        print(TaglibConstants.DEFAULT_NORMAL_PROGRESS_BAR_STYLE_CLASS);
     				else
-    					print("criticalProgressBar");
+                        print(TaglibConstants.DEFAULT_CRITICAL_PROGRESS_BAR_STYLE_CLASS);
     			}
     			else
-    				print("generalProgressBar");
+                    print(TaglibConstants.DEFAULT_GENERAL_PROGRESS_BAR_STYLE_CLASS);
     		}
     
     		print("\" style=\"width: ");
@@ -150,7 +154,9 @@ public class ProgressBarTag extends BasePropertyTag{
     		println(";\"></td>");
 		}
 		
-		print("<td class=\"emptyProgressBar\" style=\"width: ");
+		print("<td class=\"");
+		print(TaglibConstants.DEFAULT_EMPTY_PROGRESS_BAR_STYLE_CLASS);
+		print("\" style=\"width: ");
 		print(maximumWidth - currentWidth);
 		print(symbol);
 		println(";\"></td>");
@@ -160,9 +166,13 @@ public class ProgressBarTag extends BasePropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#renderClose()
 	 */
 	protected void renderClose() throws Throwable{
-		println("<td class=\"rightProgressBar\"></td>");
+		print("<td class=\"");
+		print(TaglibConstants.DEFAULT_RIGHT_PROGRESS_BAR_STYLE_CLASS);
+		println("\"></td>");
 		
-		print("<td class=\"progressBarText\">&nbsp;&nbsp;");
+		print("<td class=\"");
+		print(TaglibConstants.DEFAULT_PROGRESS_BAR_TEXT_STYLE_CLASS);
+		print("\">&nbsp;&nbsp;");
 		print(getFormattedValue());
 		println("&nbsp;%</td>");
 		
