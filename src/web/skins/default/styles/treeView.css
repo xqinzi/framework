@@ -21,6 +21,21 @@
 }
 
 /**
+ * Estilo que define o conteúdo do componente.
+ */
+.treeViewContent{
+}
+
+/**
+ * Estilo que define uma linha tracejada, usada na ligação entre os nós.
+ */
+.trace{
+	background: url(../images/trace.gif) no-repeat;
+	width     : 16px;
+	height    : 20px;
+}
+
+/**
  * Estilo que define o label de um nó do treeView (árvore).
  */
 .nodeLabel{
@@ -58,8 +73,8 @@
 /**
  * Estilo que define o ícone de nó (não expandido) com filhos.
  */
-.closedFolderIcon{
-	background: url(../images/closedFolderIcon.png) no-repeat;
+.closedNodeIcon{
+	background: url(../images/closedNodeIcon.png) no-repeat;
 	width     : 20px;
 	height    : 20px;
 	cursor    : pointer;
@@ -68,8 +83,8 @@
 /**
  * Estilo que define o ícone de nó (expandido) com filhos.
  */
-.openedFolderIcon{
-	background: url(../images/openedFolderIcon.png) no-repeat;
+.openedNodeIcon{
+	background: url(../images/openedNodeIcon.png) no-repeat;
 	width     : 20px;
 	height    : 20px;
 	cursor    : pointer;
@@ -78,8 +93,8 @@
 /**
  * Estilo que define o ícone de expansão de um nó.
  */
-.openLeafIcon{
-	background: url(../images/openLeafIcon.gif) no-repeat;
+.collapsedNodeIcon{
+	background: url(../images/collapsedNodeIcon.gif) no-repeat;
 	width     : 16px;
 	height    : 20px;
 	cursor    : pointer;
@@ -88,18 +103,9 @@
 /**
  * Estilo que define o ícone de retração de um nó.
  */
-.closeLeafIcon{
-	background: url(../images/closeLeafIcon.gif) no-repeat;
+.expandedNodeIcon{
+	background: url(../images/expandedNodeIcon.gif) no-repeat;
 	width     : 16px;
 	height    : 20px;
 	cursor    : pointer;
-}
-
-/**
- * Estilo que define uma linha tracejada, usada na ligação entre os nós.
- */
-.trace{
-	background: url(../images/trace.gif) no-repeat;
-	width     : 16px;
-	height    : 20px;
 }
