@@ -314,7 +314,7 @@ public class PageTag extends HtmlTag{
 		
         StringBuilder content = new StringBuilder();
         
-        content.append("initializeCalendarBoxWeekNames(");
+        content.append("initializeCalendarWeekNames(");
 
         Locale currentLanguage = systemController.getCurrentLanguage();
         
@@ -341,7 +341,7 @@ public class PageTag extends HtmlTag{
         scriptTag.doEndTag();
 
         content.delete(0, content.length());
-        content.append("initializeCalendarBoxMonthNames(");
+        content.append("initializeCalendarMonthNames(");
 
         String monthNames[] = symbols.getMonths();
         
