@@ -10,9 +10,12 @@ import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.SortOrderType;
+import br.com.concepting.framework.util.types.VisibilityType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -30,34 +33,74 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
     private String  menuBoxItemStyleClass         = "";
     private String  menuBoxItemSelectedStyleClass = "";
     
+    /**
+     * Retorna o estilo CSS para os itens da barra de menu.
+     * 
+     * @return String contendo o estilo CSS.
+     */
 	public String getMenuBarItemStyleClass(){
         return menuBarItemStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para os itens da barra de menu.
+     * 
+     * @param menuBarItemStyleClass String contendo o estilo CSS.
+     */
     public void setMenuBarItemStyleClass(String menuBarItemStyleClass){
         this.menuBarItemStyleClass = menuBarItemStyleClass;
     }
 
+    /**
+     * Retorna o estilo CSS para o item selecionado da barra de menu.
+     * 
+     * @return String contendo o estilo CSS.
+     */
     public String getMenuBarItemSelectedStyleClass(){
         return menuBarItemSelectedStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para o item selecionado da barra de menu.
+     * 
+     * @param menuBarItemSelectedStyleClass String contendo o estilo CSS.
+     */
     public void setMenuBarItemSelectedStyleClass(String menuBarItemSelectedStyleClass){
         this.menuBarItemSelectedStyleClass = menuBarItemSelectedStyleClass;
     }
 
+    /**
+     * Retorna o estilo CSS para o itens da caixa de itens de menu.
+     * 
+     * @return String contendo o estilo CSS.
+     */
     public String getMenuBoxItemStyleClass(){
         return menuBoxItemStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para o itens da caixa de itens de menu.
+     * 
+     * @param menuBoxItemStyleClass String contendo o estilo CSS.
+     */
     public void setMenuBoxItemStyleClass(String menuBoxItemStyleClass){
         this.menuBoxItemStyleClass = menuBoxItemStyleClass;
     }
 
+    /**
+     * Retorna o estilo CSS para o item selecionado da caixa de itens de menu.
+     * 
+     * @return String contendo o estilo CSS.
+     */
     public String getMenuBoxItemSelectedStyleClass(){
         return menuBoxItemSelectedStyleClass;
     }
 
+    /**
+     * Define o estilo CSS para o item selecionado da caixa de itens de menu.
+     * 
+     * @param menuBoxItemSelectedStyleClass String contendo o estilo CSS.
+     */
     public void setMenuBoxItemSelectedStyleClass(String menuBoxItemSelectedStyleClass){
         this.menuBoxItemSelectedStyleClass = menuBoxItemSelectedStyleClass;
     }
@@ -147,7 +190,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
         if(menuBoxItemSelectedStyleClass.length() == 0)
             menuBoxItemSelectedStyleClass = menuItemSelectedStyleClass;
 
-        setType(ComponentType.MENU_BAR);
+        setComponentType(ComponentType.MENUBAR);
 	    
 		super.initialize();
 		
@@ -204,7 +247,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
             print("/");
             
             if(menuItemIconData != null){
-                menuItemIconId.append("menuItemIcon");
+                menuItemIconId.append(TaglibConstants.DEFAULT_MENUITEM_ICON_STYLE_CLASS);
                 menuItemIconId.append(menuItem.toString().hashCode());
                 
                 systemController.setAttribute(menuItemIconId.toString(), menuItemIconData, ScopeType.SESSION);
@@ -255,7 +298,9 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	    if(menuItems == null)
 	        return;
 	    
-		println("<table class=\"menuContent\">");
+		print("<table class=\"");
+		print(TaglibConstants.DEFAULT_MENUBOX_CONTENT_STYLE_CLASS);
+		println("\">");
 		println("<tr>");
 		
 		LoginSessionModel loginSession  = securityController.getLoginSession();
@@ -301,15 +346,23 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                     hasSubmenuItems = menuItem.hasChildNodes();
 				    menuItemType    = menuItem.getObjectType();
 				    
-     				if(menuItemType == ComponentType.MENU_ITEM_SEPARATOR){
+     				if(menuItemType == ComponentType.MENUITEM_SEPARATOR){
      					if(parentMenu != null){
- 					        println("<td align=\"center\" colspan=\"3\">");
-     						println("<div class=\"menuBoxSeparator\"></div>");
+ 					        print("<td align=\"");
+ 					        print(AlignmentType.CENTER);
+ 					        println("\" colspan=\"3\">");
+     						print("<div class=\"");
+     						print(TaglibConstants.DEFAULT_MENUBOX_SEPARATOR_STYLE_CLASS);
+     						println("\"></div>");
      						println("</td>");
      					}
      					else{
-     						println("<td align=\"center\">");
-                            println("<div class=\"menuBarSeparator\"></div>");
+                            print("<td align=\"");
+                            print(AlignmentType.CENTER);
+                            println("\">");
+                            print("<div class=\"");
+                            print(TaglibConstants.DEFAULT_MENUBAR_SEPARATOR_STYLE_CLASS);
+                            println("\"></div>");
      						println("</td>");
      					}
      				}
@@ -317,9 +370,13 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
      				    if(parentMenuItem != null){
                             print("<td id=\"");
                             print(menuItemName);
-                            print(".menuItemIcon\" class=\"");
+                            print(".");
+                            print(AttributeConstants.MENUITEM_ICON_KEY);
+                            print("\" class=\"");
                             print(menuBoxItemStyleClass);
-                            println("\" align=\"center\" width=\"1\">");
+                            print("\" align=\"");
+                            print(AlignmentType.CENTER);
+                            println("\" width=\"1\">");
                             
                             renderMenuItemIcon(menuItem);
                             
@@ -328,7 +385,9 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 
                         print("<td id=\"");
      					print(menuItemName);
-     					print(".menuItem\" class=\"");
+     					print(".");
+     					print(AttributeConstants.MENUITEM_KEY);
+     					print("\" class=\"");
      					
      					if(parentMenuItem != null)
      					    print(menuBoxItemStyleClass);
@@ -400,14 +459,18 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
      
  						print("<td id=\"");
  						print(menuItemName);
- 						print(".menuItemArrow\" class=\"");
+ 						print(".");
+ 						print(AttributeConstants.MENUITEM_ARROW_KEY);
+ 						print("\" class=\"");
 
                         if(parentMenuItem != null)
                             print(menuBoxItemStyleClass);
                         else
                             print(menuBarItemStyleClass);
 
-                        print("\" align=\"right\" width=\"1\">");
+                        print("\" align=\"");
+                        print(AlignmentType.RIGHT);
+                        print("\" width=\"1\">");
 
  						if(hasSubmenuItems && parentMenu != null)
      						print("&raquo;");
@@ -441,9 +504,13 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 					
 					print("<div id=\"");
 					print(menuItemName);
-					print(".menuBox\" class=\"");
+					print(".");
+					print(AttributeConstants.MENUBOX_KEY);
+					print("\" class=\"");
 					print(TaglibConstants.DEFAULT_MENUBOX_STYLE_CLASS);
-					println("\" style=\"visibility: hidden;\">");
+					print("\" style=\"visibility: ");
+					print(VisibilityType.HIDDEN);
+					println(";\">");
 
 					renderMenuItems(submenusItems, menuItem);
 
@@ -459,7 +526,9 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	protected void renderOpen() throws Throwable{
 		print("<div id=\"");
 		print(getName());
-		print(".menuBar\" class=\"");
+		print(".");
+		print(AttributeConstants.MENUBAR_KEY);
+		print("\" class=\"");
 		print(TaglibConstants.DEFAULT_MENUBAR_STYLE_CLASS);
 		println("\">");
 	}
