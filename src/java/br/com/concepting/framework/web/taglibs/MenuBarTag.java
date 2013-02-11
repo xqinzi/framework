@@ -299,7 +299,12 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	        return;
 	    
 		print("<table class=\"");
-		print(TaglibConstants.DEFAULT_MENU_BOX_CONTENT_STYLE_CLASS);
+		
+        if(parentMenu != null)
+            print(TaglibConstants.DEFAULT_MENU_BOX_CONTENT_STYLE_CLASS);
+        else
+            print(TaglibConstants.DEFAULT_MENU_BAR_CONTENT_STYLE_CLASS);
+        
 		println("\">");
 		println("<tr>");
 		
