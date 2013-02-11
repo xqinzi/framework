@@ -37,8 +37,8 @@ public abstract class BaseActionForm extends ActionForm{
 	private String              validateProperties        = "";
 	private BaseModel           model                     = null;
 	private BaseModel           searchModel               = null;
-	private FormFile            uploadFile                = null;
-	private String              uploadProperty            = "";
+	private FormFile            uploadData                = null;
+	private String              uploadDataProperty        = "";
 	private String              uploadFileNameProperty    = "";
 	private String              uploadContentTypeProperty = "";
 	private Collection<String>  languages                 = null;
@@ -144,17 +144,17 @@ public abstract class BaseActionForm extends ActionForm{
      * 
      * @return Instância contendo as propridades do arquivo.
      */
-    public FormFile getUploadFile(){
-        return uploadFile;
+    public FormFile getUploadData(){
+        return uploadData;
     }
 
     /**
      * Define a instância contendo as propriedades do arquivo do upload.
      * 
-     * @param uploadFile Instância contendo as propridades do arquivo.
+     * @param uploadData Instância contendo as propridades do arquivo.
      */
-    public void setUploadFile(FormFile uploadFile){
-        this.uploadFile = uploadFile;
+    public void setUploadData(FormFile uploadData){
+        this.uploadData = uploadData;
     }
 
     /**
@@ -163,18 +163,18 @@ public abstract class BaseActionForm extends ActionForm{
      * 
      * @return String contendo o identificador da propriedade.
      */
-    public String getUploadProperty(){
-        return uploadProperty;
+    public String getUploadDataProperty(){
+        return uploadDataProperty;
     }
 
     /**
      * Define o nome da propriedade que armazena os dados
      * do arquivo do upload.
      * 
-     * @param uploadProperty String contendo o identificador da propriedade.
+     * @param uploadDataProperty String contendo o identificador da propriedade.
      */
-    public void setUploadProperty(String uploadProperty){
-        this.uploadProperty = uploadProperty;
+    public void setUploadDataProperty(String uploadDataProperty){
+        this.uploadDataProperty = uploadDataProperty;
     }
 
     /**
