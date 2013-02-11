@@ -354,7 +354,7 @@ public class GuidesTag extends BaseActionFormElementTag{
  				if(guidesSize > 1){
  					println("<tr>");
  					print("<td class=\"");
- 					print(TaglibConstants.DEFAULT_GUIDE_BUTTONS_STYLE_CLASS);
+ 					print(TaglibConstants.DEFAULT_GUIDES_BUTTONS_STYLE_CLASS);
  					print("\">");
  
  					if(cont > 0 && isEnabled()){
