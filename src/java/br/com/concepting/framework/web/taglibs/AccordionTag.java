@@ -5,9 +5,15 @@ import java.util.List;
 
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
+/**
+ * Classe que define o componente visual para um conjunto de seções.
+ * 
+ * @author fvilarinho
+ * @since 3.0
+ */
 public class AccordionTag extends BaseActionFormElementTag{
     private String           sectionHeaderLabelStyleClass = "";
     private String           sectionHeaderLabelStyle      = "";
@@ -16,93 +22,160 @@ public class AccordionTag extends BaseActionFormElementTag{
     private String           sectionContentStyleClass     = "";
     private String           sectionContentStyle          = "";
     private List<SectionTag> sectionsTags                 = null;
-    
+     
+    /**
+     * Retorna o identificador do estilo CSS que define o label do cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getSectionHeaderLabelStyleClass(){
         return sectionHeaderLabelStyleClass;
     }
 
+    /**
+     * Define o identificador do estilo CSS que define o label do cabeçalho da seção.
+     * 
+     * @param sectionHeaderLabelStyleClass String contendo o identificador do estilo CSS.
+     */
     public void setSectionHeaderLabelStyleClass(String sectionHeaderLabelStyleClass){
         this.sectionHeaderLabelStyleClass = sectionHeaderLabelStyleClass;
     }
 
+    /**
+     * Retorna o identificador do estilo CSS que define o label do cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getSectionHeaderLabelStyle(){
         return sectionHeaderLabelStyle;
     }
 
+    /**
+     * Define o identificador do estilo CSS que define o label do cabeçalho da seção.
+     * 
+     * @param sectionHeaderLabelStyle String contendo o identificador do estilo CSS.
+     */
     public void setSectionHeaderLabelStyle(String sectionHeaderLabelStyle){
         this.sectionHeaderLabelStyle = sectionHeaderLabelStyle;
     }
 
+    /**
+     * Retorna o identificador do estilo CSS que define o cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getSectionHeaderStyleClass(){
         return sectionHeaderStyleClass;
     }
 
+    /**
+     * Define o identificador do estilo CSS que define o cabeçalho da seção.
+     * 
+     * @param sectionHeaderStyleClass String contendo o identificador do estilo CSS.
+     */
     public void setSectionHeaderStyleClass(String sectionHeaderStyleClass){
         this.sectionHeaderStyleClass = sectionHeaderStyleClass;
     }
 
+    /**
+     * Retorna o identificador do estilo CSS que define o cabeçalho da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getSectionHeaderStyle(){
         return sectionHeaderStyle;
     }
 
+    /**
+     * Define o identificador do estilo CSS que define o cabeçalho da seção.
+     * 
+     * @param sectionHeaderStyle String contendo o identificador do estilo CSS.
+     */
     public void setSectionHeaderStyle(String sectionHeaderStyle){
         this.sectionHeaderStyle = sectionHeaderStyle;
     }
 
+    /**
+     * Retorna o identificador do estilo CSS que define o conteúdo da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getSectionContentStyleClass(){
         return sectionContentStyleClass;
     }
 
+    /**
+     * Define o identificador do estilo CSS que define o conteúdo da seção.
+     * 
+     * @param sectionContentStyleClass String contendo o identificador do estilo CSS.
+     */
     public void setSectionContentStyleClass(String sectionContentStyleClass){
         this.sectionContentStyleClass = sectionContentStyleClass;
     }
 
+    /**
+     * Retorna o identificador do estilo CSS que define o conteúdo da seção.
+     * 
+     * @return String contendo o identificador do estilo CSS.
+     */
     public String getSectionContentStyle(){
         return sectionContentStyle;
     }
 
+    /**
+     * Define o identificador do estilo CSS que define o conteúdo da seção.
+     * 
+     * @param sectionContentStyle String contendo o identificador do estilo CSS.
+     */
     public void setSectionContentStyle(String sectionContentStyle){
         this.sectionContentStyle = sectionContentStyle;
     }
 
+    /**
+     * Retorna a lista das seções.
+     * 
+     * @return Lista contendo as propriedades das seções.
+     */
     protected List<SectionTag> getSectionsTags(){
         return sectionsTags;
     }
 
+    /**
+     * Define as seções.
+     * 
+     * @param sectionsTags Lista contendo as propriedades das seções.
+     */
     protected void setSectionsTags(List<SectionTag> sectionsTags){
         this.sectionsTags = sectionsTags;
     }
 
+    /**
+     * Adiciona uma seção.
+     * 
+     * @param sectionTag Instância da tag contendo as propriedades da seção.
+     */
     protected void addSectionTag(SectionTag sectionTag){
         if(sectionsTags == null)
             sectionsTags = new LinkedList<SectionTag>();
         
         sectionsTags.add(sectionTag);
     }
-    
-    private String getCurrentSectionId(){
+
+    /**
+     * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderOpen()
+     */
+    protected void renderOpen() throws Throwable{
         StringBuilder currentSectionTagName = new StringBuilder();
         
         currentSectionTagName.append(getName());
         currentSectionTagName.append(".");
         currentSectionTagName.append(AttributeConstants.CURRENT_SECTION_KEY);
 
-        return currentSectionTagName.toString();
-    }
-    
-    private String getCurrentSectionName(){
-        return StringUtil.trim(systemController.getRequest().getParameter(getCurrentSectionId()));
-    }
-    
-    /**
-     * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderOpen()
-     */
-    protected void renderOpen() throws Throwable{
         HiddenPropertyTag currentSectionTag = new HiddenPropertyTag();
         
         currentSectionTag.setPageContext(pageContext);
-        currentSectionTag.setName(getCurrentSectionId());
-        currentSectionTag.setValue(getCurrentSectionName());
+        currentSectionTag.setName(currentSectionTagName.toString());
+        currentSectionTag.setValue(getRequestInfo().getCurrentSection());
         currentSectionTag.doStartTag();
         currentSectionTag.doEndTag();
         
@@ -229,9 +302,15 @@ public class AccordionTag extends BaseActionFormElementTag{
         println("</div>");
     }
     
+    /**
+     * Renderiza o conteúdo da seção.
+     * 
+     * @param sectionTag Instância da tag contendo as propriedade da seção.
+     * @throws Throwable
+     */
     protected void renderSectionContent(SectionTag sectionTag) throws Throwable{
         String sectionName        = sectionTag.getName();
-        String currentSectionName = getCurrentSectionName();
+        String currentSectionName = getRequestInfo().getCurrentSection();
 
         print("<div id=\"");
         print(sectionName);
@@ -247,7 +326,7 @@ public class AccordionTag extends BaseActionFormElementTag{
             print(" style=\"");
 
             if(!currentSectionName.equals(sectionName))
-                print(" display: none;");
+                print(" display: NONE;");
             
             if(style.length() > 0){
                 if(!currentSectionName.equals(sectionName))
