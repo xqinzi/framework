@@ -114,7 +114,7 @@ public class TextPropertyTag extends BasePropertyTag{
 	 */
 	protected void initialize() throws Throwable{
 	    if(getComponentType() == null)
-	        setComponentType(ComponentType.TEXTBOX);
+	        setComponentType(ComponentType.TEXT_BOX);
 	    
 		super.initialize();
 		
