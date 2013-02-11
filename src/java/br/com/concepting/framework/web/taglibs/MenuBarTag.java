@@ -173,10 +173,10 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	 */
 	protected void initialize() throws Throwable{
 	    if(menuItemStyleClass.length() == 0)
-	        menuItemStyleClass = TaglibConstants.DEFAULT_MENUITEM_STYLE_CLASS;
+	        menuItemStyleClass = TaglibConstants.DEFAULT_MENU_ITEM_STYLE_CLASS;
 
 	    if(menuItemSelectedStyleClass.length() == 0)
-            menuItemSelectedStyleClass = TaglibConstants.DEFAULT_MENUITEM_SELECTED_STYLE_CLASS;
+            menuItemSelectedStyleClass = TaglibConstants.DEFAULT_MENU_ITEM_SELECTED_STYLE_CLASS;
 	    
 	    if(menuBarItemStyleClass.length() == 0)
 	        menuBarItemStyleClass = menuItemStyleClass;
@@ -190,7 +190,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
         if(menuBoxItemSelectedStyleClass.length() == 0)
             menuBoxItemSelectedStyleClass = menuItemSelectedStyleClass;
 
-        setComponentType(ComponentType.MENUBAR);
+        setComponentType(ComponentType.MENU_BAR);
 	    
 		super.initialize();
 		
@@ -247,7 +247,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
             print("/");
             
             if(menuItemIconData != null){
-                menuItemIconId.append(TaglibConstants.DEFAULT_MENUITEM_ICON_STYLE_CLASS);
+                menuItemIconId.append(TaglibConstants.DEFAULT_MENU_ITEM_ICON_STYLE_CLASS);
                 menuItemIconId.append(menuItem.toString().hashCode());
                 
                 systemController.setAttribute(menuItemIconId.toString(), menuItemIconData, ScopeType.SESSION);
@@ -299,7 +299,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	        return;
 	    
 		print("<table class=\"");
-		print(TaglibConstants.DEFAULT_MENUBOX_CONTENT_STYLE_CLASS);
+		print(TaglibConstants.DEFAULT_MENU_BOX_CONTENT_STYLE_CLASS);
 		println("\">");
 		println("<tr>");
 		
@@ -346,13 +346,13 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                     hasSubmenuItems = menuItem.hasChildNodes();
 				    menuItemType    = menuItem.getObjectType();
 				    
-     				if(menuItemType == ComponentType.MENUITEM_SEPARATOR){
+     				if(menuItemType == ComponentType.MENU_ITEM_SEPARATOR){
      					if(parentMenu != null){
  					        print("<td align=\"");
  					        print(AlignmentType.CENTER);
  					        println("\" colspan=\"3\">");
      						print("<div class=\"");
-     						print(TaglibConstants.DEFAULT_MENUBOX_SEPARATOR_STYLE_CLASS);
+     						print(TaglibConstants.DEFAULT_MENU_BOX_SEPARATOR_STYLE_CLASS);
      						println("\"></div>");
      						println("</td>");
      					}
@@ -361,7 +361,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                             print(AlignmentType.CENTER);
                             println("\">");
                             print("<div class=\"");
-                            print(TaglibConstants.DEFAULT_MENUBAR_SEPARATOR_STYLE_CLASS);
+                            print(TaglibConstants.DEFAULT_MENU_BAR_SEPARATOR_STYLE_CLASS);
                             println("\"></div>");
      						println("</td>");
      					}
@@ -371,7 +371,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                             print("<td id=\"");
                             print(menuItemName);
                             print(".");
-                            print(AttributeConstants.MENUITEM_ICON_KEY);
+                            print(AttributeConstants.MENU_ITEM_ICON_KEY);
                             print("\" class=\"");
                             print(menuBoxItemStyleClass);
                             print("\" align=\"");
@@ -386,7 +386,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                         print("<td id=\"");
      					print(menuItemName);
      					print(".");
-     					print(AttributeConstants.MENUITEM_KEY);
+     					print(AttributeConstants.MENU_ITEM_KEY);
      					print("\" class=\"");
      					
      					if(parentMenuItem != null)
@@ -460,7 +460,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
  						print("<td id=\"");
  						print(menuItemName);
  						print(".");
- 						print(AttributeConstants.MENUITEM_ARROW_KEY);
+ 						print(AttributeConstants.MENU_ITEM_ARROW_KEY);
  						print("\" class=\"");
 
                         if(parentMenuItem != null)
@@ -505,9 +505,9 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 					print("<div id=\"");
 					print(menuItemName);
 					print(".");
-					print(AttributeConstants.MENUBOX_KEY);
+					print(AttributeConstants.MENU_BOX_KEY);
 					print("\" class=\"");
-					print(TaglibConstants.DEFAULT_MENUBOX_STYLE_CLASS);
+					print(TaglibConstants.DEFAULT_MENU_BOX_STYLE_CLASS);
 					print("\" style=\"visibility: ");
 					print(VisibilityType.HIDDEN);
 					println(";\">");
@@ -527,9 +527,9 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 		print("<div id=\"");
 		print(getName());
 		print(".");
-		print(AttributeConstants.MENUBAR_KEY);
+		print(AttributeConstants.MENU_BAR_KEY);
 		print("\" class=\"");
-		print(TaglibConstants.DEFAULT_MENUBAR_STYLE_CLASS);
+		print(TaglibConstants.DEFAULT_MENU_BAR_STYLE_CLASS);
 		println("\">");
 	}
 
@@ -548,7 +548,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 		
 		if(isStatic){
 			println("<script language=\"javascript\">");
-			print("makeStaticMenu(\"");
+			print("renderStaticMenu(\"");
 			print(getName());
 			println("\");");
 			println("</script>");
