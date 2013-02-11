@@ -252,30 +252,30 @@ public abstract class BaseAction extends DispatchAction{
 	 * 
 	 * @throws Throwable
 	 */
-	public void uploadFile() throws Throwable{
+	public void upload() throws Throwable{
 	    BaseActionForm actionForm = getActionForm();
 	    BaseModel      model      = actionForm.getModel();
-	    FormFile       uploadFile = actionForm.getUploadFile();
+	    FormFile       uploadData = actionForm.getUploadData();
 	    
-	    if(model == null || uploadFile == null)
+	    if(model == null || uploadData == null)
 	        throw new ItemNotSelectedException();
 	    
-        String uploadProperty = actionForm.getUploadProperty();
+        String uploadDataProperty = actionForm.getUploadDataProperty();
         
-        PropertyUtil.setProperty(model, uploadProperty, uploadFile.getFileData());
+        PropertyUtil.setProperty(model, uploadDataProperty, uploadData.getFileData());
         
         String uploadFileNameProperty = actionForm.getUploadFileNameProperty();
         
         if(uploadFileNameProperty.length() > 0)
-            PropertyUtil.setProperty(model, uploadFileNameProperty, uploadFile.getFileName());
+            PropertyUtil.setProperty(model, uploadFileNameProperty, uploadData.getFileName());
         
         String uploadContentTypeProperty = actionForm.getUploadContentTypeProperty();
         
         if(uploadContentTypeProperty.length() > 0)
-            PropertyUtil.setProperty(model, uploadContentTypeProperty, uploadFile.getContentType());
+            PropertyUtil.setProperty(model, uploadContentTypeProperty, uploadData.getContentType());
         
-        actionForm.setUploadFile(null);
-        actionForm.setUploadProperty("");
+        actionForm.setUploadData(null);
+        actionForm.setUploadDataProperty("");
         actionForm.setUploadFileNameProperty("");
         actionForm.setUploadContentTypeProperty("");
 
@@ -292,7 +292,7 @@ public abstract class BaseAction extends DispatchAction{
         actionMapping               = mapping;
 		actionForm                  = (BaseActionForm)form;
 
-        String action = StringUtil.trim(getMethodName(mapping, form, request, response, AttributeConstants.ACTION_KEY)).toLowerCase();
+        String action = StringUtil.trim(getMethodName(mapping, form, request, response, AttributeConstants.ACTION_KEY));
 
         if(action.length() == 0)
             action = ActionType.INIT.getMethod();
