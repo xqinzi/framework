@@ -283,8 +283,7 @@ public class MessageBoxTag extends DialogBoxTag{
 		print(AlignmentType.TOP);
 		print("\">");
 		print("<div class=\"");
-		print(TaglibConstants.DEFAULT_MESSAGE_BOX_STYLE_CLASS);
-		print(StringUtil.capitalize(type.toString().toLowerCase()));
+		print(type.toString().toLowerCase());
 		println("Icon\"></div>");
 		println("</td>");
 		
