@@ -11,15 +11,15 @@ var monthNames = null;
 /**
  * Inicializa lista de nomes dos meses a serem utilizados pelo componente.
  */
-function initializeCalendarBoxMonthNames(){
-	monthNames = initializeCalendarBoxMonthNames.arguments;
+function initializeCalendarMonthNames(){
+	monthNames = initializeCalendarMonthNames.arguments;
 }
 
 /**
  * Inicializa lista de nomes dos dias da semana a serem utilizados pelo componente.
  */
-function initializeCalendarBoxWeekNames(){
-	weekNames = initializeCalendarBoxWeekNames.arguments;
+function initializeCalendarWeekNames(){
+	weekNames = initializeCalendarWeekNames.arguments;
 }
 
 /**
@@ -35,7 +35,7 @@ function moveToNextMonth(name){
 		
 		updateDateProperty(name, currentDate);
 		
-		renderCalendarBox(name);
+		renderCalendar(name);
 	}
 }
 
@@ -55,7 +55,7 @@ function moveToNextYear(name){
 
 		updateDateProperty(name, currentDate);
 		
-		renderCalendarBox(name);
+		renderCalendar(name);
 	}
 }
 
@@ -72,7 +72,7 @@ function moveToPreviousMonth(name){
 		
 		updateDateProperty(name, currentDate);
 		
-		renderCalendarBox(name);
+		renderCalendar(name);
 	}
 }
 
@@ -92,7 +92,7 @@ function moveToPreviousYear(name){
  
 		updateDateProperty(name, currentDate);
 		
-		renderCalendarBox(name);
+		renderCalendar(name);
 	}
 }
 
@@ -205,17 +205,17 @@ function parseDateProperty(name){
  * 
  * @param name String contendo o identificador do componente.
  */
-function renderCalendarBox(name){
-	var calendarBox     = document.getElementById(name + ".calendarBox");
-	var calendarDays    = document.getElementById(name + ".calendarBoxDays");
-	var calendarDisplay = document.getElementById(name + ".calendarBoxDisplay");
+function renderCalendar(name){
+	var calendar        = document.getElementById(name + ".calendar");
+	var calendarDays    = document.getElementById(name + ".calendarDays");
+	var calendarDisplay = document.getElementById(name + ".calendarDisplay");
 	var currentDate     = parseDateProperty(name);
 	
 	updateDateProperty(name, currentDate);
 	
 	var firstDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 	
-	if(calendarBox && calendarDays && calendarDisplay && currentDate && firstDate){
+	if(calendar && calendarDays && calendarDisplay && currentDate && firstDate){
 		var weekDay = firstDate.getDay();
 		var rows    = 40;
 		var html    = "";
@@ -233,7 +233,7 @@ function renderCalendarBox(name){
 		html += "<tr>";
 
 		for(cont = 0 ; cont < 7 ; cont++){
-			html += "<td class=\"calendarBoxWeekHeader\">";
+			html += "<td class=\"calendarWeekHeader\">";
 			html += weekNames[cont].substring(0, 1);
 			html += "</td>";
 		}
@@ -253,18 +253,18 @@ function renderCalendarBox(name){
 				html += "<td class=\"";
 				
 				if(cont == currentDate.getDate())
-					html += "currentCalendarBoxDay";
+					html += "currentCalendarDay";
 				else
-					html += "calendarBoxDay";
+					html += "calendarDay";
 					
 				html += "\"";
 				html += " id=\"day";
 				html += cont;
-				html += "\" onClick=\"updateCurrentCalendarBoxDay('";
+				html += "\" onClick=\"updateCurrentCalendarDay('";
 				html += name;
-				html += "', this)\" onMouseOut=\"unselectCalendarBoxDay('";
+				html += "', this)\" onMouseOut=\"unselectCalendarDay('";
 				html += name;
-				html += "', this)\" onMouseOver=\"selectCalendarBoxDay('";
+				html += "', this)\" onMouseOver=\"selectCalendarDay('";
 				html += name;
 				html += "', this)\">";
 				html += date.getDate();
@@ -298,12 +298,12 @@ function renderCalendarBox(name){
  * @param name String contendo o identificador do componente.
  * @param calendarDay Objeto que define o dia desejado.
  */
-function selectCalendarBoxDay(name, calendarDay){
+function selectCalendarDay(name, calendarDay){
 	var currentDate = parseDateProperty(name);
 	
 	if(calendarDay.innerHTML != currentDate.getDate())
 		if(calendarDay)
-			changeStyle(calendarDay, "calendarBoxSelectedDay");
+			changeStyle(calendarDay, "calendarSelectedDay");
 }
 
 /**
@@ -311,17 +311,17 @@ function selectCalendarBoxDay(name, calendarDay){
  * 
  * @param name String contendo o identificador do componente.
  */
-function showHideCalendarBox(name){
-	var calendarBox = document.getElementById(name + ".calendarBox");
+function showHideCalendar(name){
+	var calendar = document.getElementById(name + ".calendar");
 	
-	if(calendarBox){
-		if(calendarBox.style.visibility == "hidden"){
-			renderCalendarBox(name);
+	if(calendar){
+		if(calendar.style.visibility == "HIDDEN"){
+			renderCalendar(name);
 	
-			calendarBox.style.visibility = "visible";
+			calendar.style.visibility = "VISIBLE";
 		}
 		else
-			calendarBox.style.visibility = "hidden";
+			calendar.style.visibility = "HIDDEN";
 	}
 }
 
@@ -331,12 +331,12 @@ function showHideCalendarBox(name){
  * @param name String contendo o identificador do componente.
  * @param calendarDay Objeto que define o dia desejado.
  */
-function unselectCalendarBoxDay(name, calendarDay){
+function unselectCalendarDay(name, calendarDay){
 	var currentDate = parseDateProperty(name);
 	
 	if(calendarDay.innerHTML != currentDate.getDate())
 		if(calendarDay)
-			changeStyle(calendarDay, "calendarBoxDay");
+			changeStyle(calendarDay, "calendarDay");
 }
 
 /**
@@ -345,7 +345,7 @@ function unselectCalendarBoxDay(name, calendarDay){
  * @param name String contendo o identificador do componente.
  * @param day Objeto que define o dia desejado.
  */
-function updateCurrentCalendarBoxDay(name, day){
+function updateCurrentCalendarDay(name, day){
 	var currentDate = parseDateProperty(name);
 	
 	if(currentDate){
@@ -353,18 +353,18 @@ function updateCurrentCalendarBoxDay(name, day){
 		var dayObject = document.getElementById("day" + currentDate.getDate());
 	
 		if(dayObject && currentDate){
-			changeStyle(dayObject, "calendarBoxDay");
+			changeStyle(dayObject, "calendarDay");
 	
 			currentDate.setDate(dayValue);
 	
 			dayObject = document.getElementById("day" + dayValue);
 			
 			if(dayObject){
-				changeStyle(dayObject, "currentCalendarBoxDay");
+				changeStyle(dayObject, "currentCalendarDay");
 	
 				updateDateProperty(name, currentDate);
 				
-				showHideCalendarBox(name);
+				showHideCalendar(name);
 			}
 		}
 	}
