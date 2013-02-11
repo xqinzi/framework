@@ -871,13 +871,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
  						print(actionForm);
  						
  						if(nodeAction.length() > 0){
- 							print(".attributes['action'].value = '");
+ 							print(".attributes['");
+ 							print(AttributeConstants.ACTION_KEY);
+ 							print("'].value = '");
  							print(systemController.getContextPath());
  							print("/");
  							print(nodeAction);
  						}
  						else{
- 							print(".action.value = '");
+ 							print(".");
+ 							print(AttributeConstants.ACTION_KEY);
+ 							print(".value = '");
  							print(nodeOnSelectAction);
  						}
 
@@ -893,17 +897,23 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
  						    
                         print(" document.");
                         print(actionForm);
- 						print(".forward.value = '");
+ 						print(".");
+ 						print(AttributeConstants.FORWARD_KEY);
+ 						print(".value = '");
  						print(nodeForward);
  						print("'; document.");
  						print(actionForm);
- 						print(".forwardOnFail.value = '");
+ 						print(".");
+ 						print(AttributeConstants.FORWARD_ON_FAIL_KEY);
+ 						print(".value = '");
  						print(nodeForwardOnFail);
 						print("'; submitForm(document.");
  						print(actionForm);
  						print("); document.");
  						print(actionForm);
-						print(".attributes['action'].value = '");
+						print(".attributes['");
+						print(AttributeConstants.ACTION_KEY);
+						print("'].value = '");
 						print(TagUtils.getInstance().getActionMappingURL(action, this.pageContext));
                         print("';");
                         
@@ -917,9 +927,13 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                         
 						print(" document.");
  						print(actionForm);
-						print(".forward.value = ''; document.");
+						print(".");
+						print(AttributeConstants.FORWARD_KEY);
+						print(".value = ''; document.");
  						print(actionForm);
-						print(".forwardOnFail.value = '';");
+						print(".");
+						print(AttributeConstants.FORWARD_ON_FAIL_KEY);
+						print(".value = '';");
  					}
 
  					print("\"");
