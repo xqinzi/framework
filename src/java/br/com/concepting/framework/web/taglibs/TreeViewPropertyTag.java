@@ -12,9 +12,9 @@ import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.helpers.Node;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -274,25 +274,25 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
             setLabelPosition(PositionType.TOP);
         
         if(nodeIconStyleClass.length() == 0)
-            nodeIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_NODE_ICON_STYLE_CLASS;
+            nodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_ICON_STYLE_CLASS;
         
         if(nodeLabelStyleClass.length() == 0)
-            nodeLabelStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_NODE_LABEL_STYLE_CLASS;
+            nodeLabelStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_STYLE_CLASS;
 
         if(nodeLabelSelectedStyleClass.length() == 0)
-            nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_NODE_LABEL_SELECTED_STYLE_CLASS;
+            nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_SELECTED_STYLE_CLASS;
         
         if(openLeafIconStyleClass.length() == 0)
-            openLeafIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_OPEN_LEAF_ICON_STYLE_CLASS;
+            openLeafIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPEN_LEAF_ICON_STYLE_CLASS;
 
         if(closeLeafIconStyleClass.length() == 0)
-            closeLeafIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_CLOSE_LEAF_ICON_STYLE_CLASS;
+            closeLeafIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSE_LEAF_ICON_STYLE_CLASS;
 
         if(openedFolderIconStyleClass.length() == 0)
-            openedFolderIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_OPENED_FOLDER_ICON_STYLE_CLASS;
+            openedFolderIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPENED_FOLDER_ICON_STYLE_CLASS;
 
         if(closedFolderIconStyleClass.length() == 0)
-            closedFolderIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_CLOSED_FOLDER_ICON_STYLE_CLASS;
+            closedFolderIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSED_FOLDER_ICON_STYLE_CLASS;
 
         super.initialize();
 	}
@@ -317,7 +317,11 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		println("<tr>");
 		println("<td>");
 
-		print("<div id=\"treeView\" class=\"treeView\" style=\"overflow: auto;");
+		print("<div id=\"");
+		print(AttributeConstants.TREEVIEW_KEY);
+		print("\" class=\"");
+		print(TaglibConstants.DEFAULT_TREEVIEW_STYLE_CLASS);
+		print("\" style=\"overflow: auto;");
 		
 		String width  = getWidth();
 		String height = getHeight();
@@ -343,7 +347,11 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#renderBody()
 	 */
 	protected void renderBody() throws Throwable{
-		println("<div id=\"treeViewContent\">");
+		println("<div id=\"");
+		print(AttributeConstants.TREEVIEW_CONTENT_KEY);
+		print("\" class=\"");
+		print(TaglibConstants.DEFAULT_TREEVIEW_CONTENT_STYLE_CLASS);
+		println("\">");
 		
 		PropertyInfo propertyInfo = getPropertyInfo();
 		List         dataValues   = getDataValues();
@@ -351,7 +359,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		if(propertyInfo != null && dataValues != null && dataValues.size() > 0)
 			renderNodes();
 		else{
-			print("<span class=\"nodeLabel\">");
+			print("<span class=\"");
+			print(TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_STYLE_CLASS);
+			print("\">");
 
 			if(propertyInfo == null)
 				print(getInvalidPropertyMessage());
@@ -412,7 +422,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     			selectionTag.setName(getName());
     			selectionTag.setResourceDir(getResourceDir());
     			selectionTag.setResourceId(getResourceId());
-    			selectionTag.setStyle("display: none");
+    			selectionTag.setStyle("display: NONE");
     			selectionTag.setData(getData());
     			selectionTag.setDataScope(getDataScope());
     			selectionTag.setShowLabel(false);
@@ -494,6 +504,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		String            onUnSelectContent     = "";
         Locale            currentLanguage       = systemController.getCurrentLanguage();
         StringBuilder     content               = null;
+        StringBuilder     trace                 = null;
         ScriptTag         scriptTag             = null;
 		
 		for(Integer cont = 0 ; cont < nodes.size() ; cont++){
@@ -556,7 +567,8 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					nodeId.delete(0, nodeId.length());
 				
 				nodeId.append(name);
-				nodeId.append(".node");
+				nodeId.append(".");
+				nodeId.append(AttributeConstants.NODE_KEY);
 				nodeId.append(nodeIndex.toString().hashCode());
 
 				if(parent != null){
@@ -566,16 +578,30 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 						parentNodeId.delete(0, parentNodeId.length());
 					
 					parentNodeId.append(name);
-					parentNodeId.append(".node");
+					parentNodeId.append(".");
+					parentNodeId.append(AttributeConstants.NODE_KEY);
 					parentNodeId.append(index.hashCode());
 				}
 
 				println("<table>");
 				println("<tr>");
-				println(StringUtil.replicate("<td class=\"trace\"></td>", level));
+				
+				if(trace == null)
+				    trace = new StringBuilder();
+				else
+				    trace.delete(0, trace.length());
+				    
+			    trace.append("<td class=\"");
+			    trace.append(TaglibConstants.DEFAULT_TREEVIEW_TRACE_STYLE_CLASS);
+			    trace.append("\"></td>");
+
+				println(StringUtil.replicate(trace.toString(), level));
 
 				if(!node.hasChildNodes() && nodeOnExpandAction.length() == 0){
-					println("<td class=\"trace\"></td>");
+					print("<td class=\"");
+					print(TaglibConstants.DEFAULT_TREEVIEW_TRACE_STYLE_CLASS);
+					println("\"></td>");
+					
 					print("<td");
 					
 					if(nodeIconUrl.length() > 0 || nodeIconData != null){
@@ -650,7 +676,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
 					print("<td id=\"");
 					print(nodeId);
-					print(".leafIcon\" class=\"");
+					print(".");
+					print(AttributeConstants.NODE_EXPAND_ICON_KEY);
+					print("\" class=\"");
 
 					if(!nodeIsCollapsed)
 						print(openLeafIconStyleClass);
@@ -708,7 +736,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 						    else
 								nodeIconId.delete(0, nodeIconId.length());
 							
-							nodeIconId.append("nodeIcon");
+							nodeIconId.append(AttributeConstants.NODE_ICON_KEY);
 							nodeIconId.append(nodeIndex.toString().hashCode());
 							
 							systemController.setAttribute(nodeIconId.toString(), nodeIconData, ScopeType.SESSION);
@@ -740,8 +768,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					else{
 						print(" id=\"");
 						print(nodeId);
-						print(".folderIcon\"");
-						print(" class=\"");
+						print(".");
+						print(AttributeConstants.NODE_ICON_KEY);
+						print("\" class=\"");
 
 						if(!nodeIsCollapsed)
 							print(closedFolderIconStyleClass);
@@ -756,7 +785,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
 				print("<td id=\"");
 				print(nodeId);
-				print(".label\" class=\"");
+				print(".");
+				print(AttributeConstants.LABEL_KEY);
+				print("\" class=\"");
 
 				if(value != null){
      				if(propertyInfo.isCollection()){
@@ -919,7 +950,8 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					    content.append(AttributeConstants.CURRENT_NODE_KEY);
 					    content.append("').value = '");
 					    content.append(nodeId);
-					    content.append("';\n");
+					    content.append("';");
+					    content.append(StringUtil.getLineBreak());
 					    
 					    scriptTag = new ScriptTag();
 					    scriptTag.setPageContext(pageContext);
@@ -934,7 +966,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				print("\"");
 
 				if(!nodeIsCollapsed)
-					print(" style=\"display: none;\"");
+					print(" style=\"display: NONE;\"");
 
 				println(">");
 
