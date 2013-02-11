@@ -35,13 +35,13 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         tagId.delete(0, tagId.length());
         tagId.append(name);
         tagId.append(".");
-        tagId.append(AttributeConstants.UPLOAD_FileName_TYPE_PROPERTY_KEY);
+        tagId.append(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
 
         HiddenPropertyTag uploadFileNamePropertyTag = new HiddenPropertyTag();
         
         uploadFileNamePropertyTag.setPageContext(pageContext);
         uploadFileNamePropertyTag.setId(tagId.toString());
-        uploadFileNamePropertyTag.setName(AttributeConstants.UPLOAD_FileName_TYPE_PROPERTY_KEY);
+        uploadFileNamePropertyTag.setName(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
         uploadFileNamePropertyTag.setValue(getFileNameProperty());
         uploadFileNamePropertyTag.doStartTag();
         uploadFileNamePropertyTag.doEndTag();
@@ -78,12 +78,12 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         tagId.delete(0, tagId.length());
         tagId.append(name);
         tagId.append(".");
-        tagId.append(AttributeConstants.UPLOAD_FILE_KEY);
+        tagId.append(AttributeConstants.UPLOAD_DATA_KEY);
 
         print("<input type=\"FILE\" id=\"");
         print(tagId);
         print("\" name=\"");
-        print(AttributeConstants.UPLOAD_FILE_KEY);
+        print(AttributeConstants.UPLOAD_DATA_KEY);
         print("\" style=\"display: NONE;\" onChange=\"");
         print(onChange);
         println("\">");
@@ -104,7 +104,7 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         onClick.append("document.getElementById('");
         onClick.append(name);
         onClick.append(".");
-        onClick.append(AttributeConstants.UPLOAD_FILE_KEY);
+        onClick.append(AttributeConstants.UPLOAD_DATA_KEY);
         onClick.append("').click();");
 
         UploadButtonTag uploadButtonTag = new UploadButtonTag();
