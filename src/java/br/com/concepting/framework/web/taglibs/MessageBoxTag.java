@@ -301,7 +301,7 @@ public class MessageBoxTag extends DialogBoxTag{
 		    
 			println("<td>");
 			print("<b>");
-			print(StringUtil.trim(resources.getProperty(TaglibConstants.DEFAULT_MESSAGE_BOX_ERROR_ID_LABEL_KEY)));
+			print(StringUtil.trim(resources.getProperty(AttributeConstants.ERROR_ID_LABEL_KEY)));
 			println(":</b>");
 			println("</td>");
 			println("</tr>");
@@ -321,7 +321,7 @@ public class MessageBoxTag extends DialogBoxTag{
 			print("');\" class=\"");
 			print(TaglibConstants.DEFAULT_LINK_STYLE_CLASS);
 			print("\"><b>");
-			print(StringUtil.trim(resources.getProperty(TaglibConstants.DEFAULT_MESSAGE_BOX_ERROR_TRACE_LABEL_KEY)));
+			print(StringUtil.trim(resources.getProperty(AttributeConstants.ERROR_TRACE_LABEL_KEY)));
 			println("</b></a>");
 
             StringBuilder tagName = new StringBuilder();
@@ -338,7 +338,7 @@ public class MessageBoxTag extends DialogBoxTag{
  			errorTraceTag.setShowLabel(false);
  			errorTraceTag.setResourceId(TaglibConstants.DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID);
  			errorTraceTag.setResourceKey(AttributeConstants.ERROR_TRACE_KEY);
-			errorTraceTag.setStyleClass(TaglibConstants.DEFAULT_MESSAGE_BOX_ERROR_TRACE_STYLE_CLASS);
+			errorTraceTag.setStyleClass(TaglibConstants.DEFAULT_ERROR_TRACE_STYLE_CLASS);
 			errorTraceTag.setStyle("display: NONE;");
 			errorTraceTag.setReadOnly(true);
 			errorTraceTag.doStartTag();
