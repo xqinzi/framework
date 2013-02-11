@@ -63,12 +63,12 @@ public abstract class ImageUtil{
 	/**
 	 * Retorna o formato de uma imagem a partir do seu caminho de armazenamento.
 	 * 
-	 * @param imageFilename String contendo o caminho da imagem.
+	 * @param imageFileName String contendo o caminho da imagem.
 	 * @return Constante contendo o formato da imagem.
 	 * @throws IOException
 	 */
-	public static ContentType getImageFormat(String imageFilename) throws IOException{
-		return getImageFormat(new File(imageFilename));
+	public static ContentType getImageFormat(String imageFileName) throws IOException{
+		return getImageFormat(new File(imageFileName));
 	}
 
 	/**
