@@ -87,7 +87,7 @@ public class UserModel extends BaseModel{
     /**
      * Define o nome do arquivo do logo.
      * 
-     * @param logoFilename String contendo o nome do arquivo do logo.
+     * @param logoFileName String contendo o nome do arquivo do logo.
      */
     public void setLogoFileName(String logoFileName){
         this.logoFileName = logoFileName;
