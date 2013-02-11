@@ -513,7 +513,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	    if(componentType != null){
     		if(componentType != ComponentType.LIST){
          		print(" type=\"");
-     		    print(componentType);
+     		    print(componentType.getType());
          		print("\"");
     		}
 	    }
