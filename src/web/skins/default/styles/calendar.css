@@ -8,7 +8,7 @@
 /**
  * Estilo que define o dia corrente.
  */
-.currentCalendarBoxDay{
+.currentCalendarDay{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	font-weight: bold;
@@ -23,12 +23,12 @@
 /**
  * Estilo que define o conteúdo do componente.
  */
-.calendarBoxContent{
+.calendarContent{
 	border         : none;
 	border-collapse: collapse;
 }
 
-.calendarBoxText{
+.calendarText{
 	border-spacing : 0px;
 	padding        : 0px;
 }
@@ -36,7 +36,7 @@
 /**
  * Estilo que define o componente.
  */
-.calendarBox{
+.calendar{
 	position             : absolute;
     -webkit-box-shadow   : 2px 3px 4px #aaaaaa;
     -moz-box-shadow      : 2px 3px 4px #aaaaaa;
@@ -56,7 +56,7 @@
 /**
  * Estilo que define o dia do calendário.
  */
-.calendarBoxDay{
+.calendarDay{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	color      : #666666;
@@ -71,7 +71,7 @@
 /**
  * Estilo que define o texto contendo a data atual.
  */
-.calendarBoxDisplay{
+.calendarDisplay{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	color      : #666666;
@@ -81,7 +81,7 @@
 /**
  * Estilo que define o dia selecionado do calendário.
  */
-.calendarBoxSelectedDay{
+.calendarSelectedDay{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	font-weight: bold;
@@ -97,7 +97,7 @@
 /**
  * Estilo que define o cabeçalho dos dias da semana.
  */
-.calendarBoxWeekHeader{
+.calendarWeekHeader{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	font-weight: bold;
@@ -156,8 +156,8 @@
 /**
  * Estilo que define o botão para exibição do componente.
  */
-.showCalendarBoxButton{
-	background: url(../images/showCalendarBoxButton.png) no-repeat;
+.showCalendarButton{
+	background: url(../images/showCalendarButton.png) no-repeat;
 	width     : 20px;
 	height    : 20px;
 	border    : none;
