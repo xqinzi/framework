@@ -10,56 +10,56 @@
  * Esconde/Exibe o contéudo de um nó.
  * 
  * @param nodeId String contendo o identificador do nó.
- * @param openLeafIconClass String contendo o identificador do estilo de expansão do nó.
- * @param closeLeafIconClass String contendo o identificador do estilo de retração do nó.
- * @param openedFolderIconClass String contendo o identificador do estilo de um nó expandido.
- * @param closedFolderIconClass String contendo o identificador do estilo de um nó não 
+ * @param expandedNodeIconClass String contendo o identificador do estilo de retração do nó.
+ * @param collapsedNodeIconClass String contendo o identificador do estilo de expansão do nó.
+ * @param openedNodeIconClass String contendo o identificador do estilo de um nó expandido.
+ * @param closedNodeIconClass String contendo o identificador do estilo de um nó não 
  * expandido.
  * @param form Instância contendo as propriedades do formulário.
  * @param onExpandAction String contendo o identificador da ação a ser executada ao expandir 
  * um nó.
  * @param actionTarget String contendo o identificador do destino da ação a ser executada.
  */
-function showHideNode(nodeId, openLeafIconClass, closeLeafIconClass, openedFolderIconClass, closedFolderIconClass, form, onExpandAction, actionTarget){
+function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, openedNodeIconClass, closedNodeIconClass, form, onExpandAction, actionTarget){
 	var node       = document.getElementById(nodeId);
 	var submitFlag = false;
 	
 	if(node){
-		if(node.style.display == "none"){
+		if(node.style.display == "NONE"){
 			node.style.display = "";
 			
 			if(form && onExpandAction)
 				submitFlag = true;
 		}
 		else
-			node.style.display = "none";
+			node.style.display = "NONE";
 	}
 	
-	var nodeLeaf = document.getElementById(nodeId + ".leafIcon");
+	var nodeExpandIcon = document.getElementById(nodeId + ".nodeExpandIcon");
 	
-	if(nodeLeaf){ 
-		if(nodeLeaf.className == closeLeafIconClass)
-			nodeLeaf.className = openLeafIconClass;
+	if(nodeExpandIcon){ 
+		if(nodeExpandIcon.className == collapsedNodeIconClass)
+			nodeExpandIcon.className = expandedNodeIconClass;
 		else
-			nodeLeaf.className = closeLeafIconClass;
+			nodeExpandIcon.className = collapsedNodeIconClass;
 	} 
  
-	var nodeFolder = document.getElementById(nodeId + ".folderIcon");
+	var nodeIcon = document.getElementById(nodeId + ".nodeIcon");
 	
-	if(nodeFolder){
-		if(nodeFolder.className == closedFolderIconClass)
-			nodeFolder.className = openedFolderIconClass;
+	if(nodeIcon){
+		if(nodeIcon.className == closedNodeIconClass)
+			nodeIcon.className = openedNodeIconClass;
 		else
-			nodeFolder.className = closedFolderIconClass;
+			nodeIcon.className = closedNodeIconClass;
 	}
 	
-	var nodeCollapsed = document.getElementById(nodeId + ".isCollapsed");
+	var nodeExpanded = document.getElementById(nodeId + ".isNodeExpanded");
 	
-	if(nodeCollapsed){
-		if(nodeCollapsed.value == "false")
-			nodeCollapsed.value = "true";
+	if(nodeExpanded){
+		if(nodeExpanded.value == "false")
+			nodeExpanded.value = "true";
 		else
-			nodeCollapsed.value = "false";
+			nodeExpanded.value = "false";
 	}
 	
 	if(submitFlag){
