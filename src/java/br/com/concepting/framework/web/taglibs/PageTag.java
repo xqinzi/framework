@@ -138,7 +138,7 @@ public class PageTag extends HtmlTag{
         		String encoding = getEncoding();
 
         		if(encoding.length() > 0){
-            		out.print("<meta http-equiv=\"content-type\" content=\"text/html; charset=");
+            		out.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=");
             		out.print(encoding);
             		out.println("\">");
             		
@@ -146,7 +146,7 @@ public class PageTag extends HtmlTag{
             	}
         		
         		if(language.length() > 0){
-            		out.print("<meta http-equiv=\"content-language\" content=\"");
+            		out.print("<meta http-equiv=\"Content-Language\" content=\"");
             		out.print(language);
             		out.println("\">");
             		
@@ -421,11 +421,11 @@ public class PageTag extends HtmlTag{
 		styleTag.doStartTag();
 		styleTag.doEndTag();
 
-        scriptTag.setUrl(TaglibConstants.DEFAULT_TREEVIEW_SCRIPT_RESOURCE_ID);
+        scriptTag.setUrl(TaglibConstants.DEFAULT_TREE_VIEW_SCRIPT_RESOURCE_ID);
 		scriptTag.doStartTag();
 		scriptTag.doEndTag();
 
-		styleTag.setUrl(TaglibConstants.DEFAULT_TREEVIEW_STYLE_RESOURCE_ID);
+		styleTag.setUrl(TaglibConstants.DEFAULT_TREE_VIEW_STYLE_RESOURCE_ID);
 		styleTag.doStartTag();
 		styleTag.doEndTag();
 	}
