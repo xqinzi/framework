@@ -26,6 +26,12 @@
 }
 
 /**
+ * Estilo que define os controles do componente.
+ */
+.gridControl{
+}
+
+/**
  * Estilo que define o cabeçalho do componente.
  */
 .gridHeader{

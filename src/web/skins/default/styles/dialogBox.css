@@ -1,3 +1,13 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelos componentes visuais de caixas de diálogo.
+ * 
+ * @author fvilarinho
+ * @version 3.0
+ */
+
+/**
+ * Estilo que define o componente.
+ */
 .dialogBox{
 	position  : absolute;
 	visibility: hidden;
@@ -37,7 +47,7 @@
 }
 
 /**
- * Estilo que define o conteúdo do componente.
+ * Estilo que define o texto do conteúdo do componente.
  */
 .dialogBoxText{
 	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
@@ -48,4 +58,40 @@
 	border        : none;
 	border-spacing: 0px;
 	padding       : 0px;	
-} 
+}
+
+/**
+ * Estilo que define o ícone de informação.
+ */
+.infoIcon{
+	background: url(../images/infoIcon.png) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o ícone de erro.
+ */
+.errorIcon{
+	background: url(../images/errorIcon.gif) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o ícone de alerta.
+ */
+.warningIcon{
+	background: url(../images/warningIcon.gif) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}
+
+/**
+ * Estilo que define o ícone de validação.
+ */
+.validationIcon{
+	background: url(../images/warningIcon.gif) no-repeat;
+	width     : 36px;
+	height    : 36px;
+}

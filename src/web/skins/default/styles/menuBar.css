@@ -35,7 +35,18 @@
 /**
  * Estilo que define o conteúdo do componente.
  */
-.menuContent{
+.menuBarContent{
+    border-collapse: collapse;
+	border         : none;
+	padding        : 0px;
+	border-spacing : 0px;
+	margin         : 0px; 
+}
+
+/**
+ * Estilo que define o conteúdo do componente.
+ */
+.menuBoxContent{
     border-collapse: collapse;
 	border         : none;
 	padding        : 0px;

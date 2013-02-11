@@ -6,42 +6,6 @@
  */
  
 /**
- * Estilo que define o ícone para mensagens informativas.
- */
-.messageBoxInfoIcon{
-	background: url(../images/infoIcon.png) no-repeat;
-	width     : 36px;
-	height    : 36px;
-}
-
-/**
- * Estilo que define o ícone para mensagens de erro.
- */
-.messageBoxErrorIcon{
-	background: url(../images/errorIcon.gif) no-repeat;
-	width     : 36px;
-	height    : 36px;
-}
-
-/**
- * Estilo que define o ícone para mensagens de alerta.
- */
-.messageBoxWarningIcon{
-	background: url(../images/warningIcon.gif) no-repeat;
-	width     : 36px;
-	height    : 36px;
-}
-
-/**
- * Estilo que define o ícone para mensagens de validação.
- */
-.messageBoxValidationIcon{
-	background: url(../images/warningIcon.gif) no-repeat;
-	width     : 36px;
-	height    : 36px;
-}
-
-/**
  * Estilo que define o detalhamento da mensagem de erro.
  */
 .errorTrace{

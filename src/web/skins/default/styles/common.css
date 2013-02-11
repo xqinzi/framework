@@ -2,9 +2,12 @@
  * Arquivo que contém as definições dos estilos utilizados por todos os componentes visuais.
  * 
  * @author fvilarinho
- * @version 1.0
+ * @version 3.0
  */
 
+/**
+ * Estilo que define a sombra de página ao carregar um modal.
+ */
 .shade{
 	position  : absolute; 
 	left      : 0px;  
@@ -137,6 +140,9 @@
 	text-decoration: underline;
 }
 
+/**
+ * Estilo que define a caixa de upload de arquivo.
+ */
 .uploadBox{
 	border         : none;
 	border-collapse: collapse;
@@ -144,6 +150,9 @@
 	padding        : 0px;
 }
 
+/**
+ * Estilo que define a caixa de download de arquivo.
+ */
 .downloadBox{
 	border         : none;
 	border-collapse: collapse;
@@ -440,7 +449,7 @@ option:hover{
  * Estilo que define o botão cancelar.
  */
 .cancelButton{
-	background: url("../images/deleteButton.png") no-repeat;
+	background: url("../images/cancelButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
 	border    : none;
@@ -452,7 +461,7 @@ option:hover{
  * Estilo que define o botão fechar do componente.
  */
 .closeButton{
-	background: url("../images/deleteButton.png") no-repeat;
+	background: url("../images/closeButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
 	border    : none;
@@ -566,6 +575,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o botão de upload.
+ */
 .uploadButton{
 	background: url("../images/uploadButton.png") no-repeat;
 	width     : 26px;
@@ -574,6 +586,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos PDF.
+ */
 .pdfIcon{
 	background: url("../images/pdfIcon.png") no-repeat;
 	width     : 50px;
@@ -581,6 +596,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos binários.
+ */
 .binaryIcon{
 	background: url("../images/binaryIcon.png") no-repeat;
 	width     : 50px;
@@ -588,6 +606,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos RTF.
+ */
 .rtfIcon{
 	background: url("../images/rtfIcon.png") no-repeat;
 	width     : 50px;
@@ -595,6 +616,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos do MS-Word 2000.
+ */
 .docIcon{
 	background: url("../images/docIcon.png") no-repeat;
 	width     : 50px;
@@ -602,6 +626,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos do MS-Word 2003 ou superior.
+ */
 .docxIcon{
 	background: url("../images/docIcon.png") no-repeat;
 	width     : 50px;
@@ -609,6 +636,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos do MS-Excel 2000.
+ */
 .xlsIcon{
 	background: url("../images/xlsIcon.png") no-repeat;
 	width     : 50px;
@@ -616,6 +646,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos do MS-Excel 2003 ou superior.
+ */
 .xlsxIcon{
 	background: url("../images/xlsIcon.png") no-repeat;
 	width     : 50px;
@@ -623,6 +656,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos de imagem GIF.
+ */
 .gifIcon{
 	background: url("../images/gifIcon.png") no-repeat;
 	width     : 50px;
@@ -630,6 +666,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos de imagem JPG.
+ */
 .jpgIcon{
 	background: url("../images/jpgIcon.png") no-repeat;
 	width     : 50px;
@@ -637,6 +676,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos de imagem PNG.
+ */
 .pngIcon{
 	background: url("../images/pngIcon.png") no-repeat;
 	width     : 50px;
@@ -644,6 +686,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos HTML.
+ */
 .htmlIcon{
 	background: url("../images/htmlIcon.png") no-repeat;
 	width     : 50px;
@@ -651,6 +696,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos texto.
+ */
 .txtIcon{
 	background: url("../images/txtIcon.png") no-repeat;
 	width     : 50px;
@@ -658,6 +706,9 @@ option:hover{
 	cursor    : pointer;
 }
 
+/**
+ * Estilo que define o ícone para arquivos XML.
+ */
 .xmlIcon{
 	background: url("../images/xmlIcon.png") no-repeat;
 	width     : 50px;
