@@ -35,16 +35,16 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         tagId.delete(0, tagId.length());
         tagId.append(name);
         tagId.append(".");
-        tagId.append(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
+        tagId.append(AttributeConstants.UPLOAD_FileName_TYPE_PROPERTY_KEY);
 
-        HiddenPropertyTag uploadFilenamePropertyTag = new HiddenPropertyTag();
+        HiddenPropertyTag uploadFileNamePropertyTag = new HiddenPropertyTag();
         
-        uploadFilenamePropertyTag.setPageContext(pageContext);
-        uploadFilenamePropertyTag.setId(tagId.toString());
-        uploadFilenamePropertyTag.setName(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
-        uploadFilenamePropertyTag.setValue(getFilenameProperty());
-        uploadFilenamePropertyTag.doStartTag();
-        uploadFilenamePropertyTag.doEndTag();
+        uploadFileNamePropertyTag.setPageContext(pageContext);
+        uploadFileNamePropertyTag.setId(tagId.toString());
+        uploadFileNamePropertyTag.setName(AttributeConstants.UPLOAD_FileName_TYPE_PROPERTY_KEY);
+        uploadFileNamePropertyTag.setValue(getFileNameProperty());
+        uploadFileNamePropertyTag.doStartTag();
+        uploadFileNamePropertyTag.doEndTag();
 
         tagId.delete(0, tagId.length());
         tagId.append(name);
@@ -70,7 +70,7 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         onChange.append(".enctype = 'multipart/form-data'; document.");
         onChange.append(actionForm);
         onChange.append(".action.value = '");
-        onChange.append(ActionType.UPLOAD_FILE);
+        onChange.append(ActionType.UPLOAD.getMethod());
         onChange.append("'; document.");
         onChange.append(actionForm);
         onChange.append(".submit();");
