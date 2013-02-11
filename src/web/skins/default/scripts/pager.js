@@ -43,7 +43,7 @@ function refreshPage(name, updateViews, form){
 	if(form)
 		document.forms[form].action.value = "refresh";
 
-	pagerAction(name, "refreshPage", updateViews, form);
+	pagerAction(name, "REFRESH_PAGE", updateViews, form);
 }
 
 /**
@@ -66,7 +66,7 @@ function moveToFirstPage(name, updateViews, form){
 			object.value = "objectId{0}"; 
 	}
 	
-	pagerAction(name, "firstPage", updateViews, form);
+	pagerAction(name, "FIRST_PAGE", updateViews, form);
 }
 
 /**
@@ -90,7 +90,7 @@ function moveToPreviousPage(name, updateViews, form){
 			object.value = ("objectId{" + (pagerIndex - 1) + "}"); 
 	}
 
-	pagerAction(name, "previousPage", updateViews, form);
+	pagerAction(name, "PREVIOUS_PAGE", updateViews, form);
 }
 
 /**
@@ -114,7 +114,7 @@ function moveToNextPage(name, updateViews, form){
 			object.value = ("objectId{" + (pagerIndex + 1) + "}");
 	}
 
-	pagerAction(name, "nextPage", updateViews, form);
+	pagerAction(name, "NEXT_PAGE", updateViews, form);
 }
 
 /**
@@ -142,9 +142,15 @@ function moveToLastPage(name, updateViews, form){
 		}
 	}
 
-	pagerAction(name, "lastPage", updateViews, form);
+	pagerAction(name, "LAST_PAGE", updateViews, form);
 }
 
+/**
+ * Indica se o paginador está vinculado ao formulário.
+ * 
+ * @param name String contendo o identificador do paginador.
+ * @return True/False.
+ */
 function usePagerOnForm(name){
 	var object = document.getElementById(name + ".pagerOnForm");
 	
@@ -155,6 +161,12 @@ function usePagerOnForm(name){
 	return false;
 }
 
+/**
+ * Retorna o índice de paginação.
+ * 
+ * @param name String contendo o identificador do paginador.
+ * @return Valor numérico contendo o índice de paginação.
+ */
 function getPagerIndex(name){
 	var object = document.getElementById(name);
 	
