@@ -14,7 +14,10 @@ import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.exceptions.InternalErrorException;
+import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.VisibilityType;
 import br.com.concepting.framework.web.SystemController;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.ScopeType;
  
 /**
@@ -216,28 +219,51 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         
         out.println();
 
-        out.println("<div id=\"shade\" class=\"shade\" style=\"visibility: hidden;\"></div>");
+        out.print("<div id=\"");
+        out.print(AttributeConstants.SHADE_KEY);
+        out.print("\" class=\"");
+        out.print(TaglibConstants.DEFAULT_SHADE_STYLE_CLASS);
+        out.print("\" style=\"visibility: ");
+        out.print(VisibilityType.HIDDEN);
+        out.println(";\"></div>");
+        
         out.print("<div id=\"");
         out.print(getBeanName());
-        out.println(".loadingBox\" class=\"loadingBox\" style=\"visibility: hidden;\">");
+        out.print(".");
+        out.print(AttributeConstants.LOADING_BOX_KEY);
+        out.print("\" class=\"");
+        out.print(TaglibConstants.DEFAULT_LOADING_BOX_STYLE_CLASS);
+        out.print("\" style=\"visibility: ");
+        out.print(VisibilityType.HIDDEN);
+        out.println(";\">");
         
         PropertiesResource resource = getDefaultI18nResource();
-        String             message  = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_KEY));
+        String             message  = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_INFO_MESSAGE_KEY));
 
         out.print("<span id=\"");
         out.print(getBeanName());
-        out.println(".loadingBoxInfo\">");
+        out.print(".");
+        out.print(AttributeConstants.LOADING_BOX_INFO_KEY);
+        out.print("\" class=\"");
+        out.print(TaglibConstants.DEFAULT_LOADING_BOX_INFO_STYLE_CLASS);
+        out.println("\">");
         
         out.println("<table>");
         
         out.println("<tr>");
-        out.println("<td align=\"center\">");
-        out.println("<div class=\"loadingBoxIcon\"></div>");
+        out.print("<td align=\"");
+        out.print(AlignmentType.CENTER);
+        out.println("\">");
+        out.print("<span class=\"");
+        out.print(TaglibConstants.DEFAULT_LOADING_BOX_ICON_STYLE_CLASS);
+        out.println("\"></span>");
         out.println("</td>");
         out.println("</tr>");
         
         out.println("<tr>");
-        out.println("<td class=\"loadingBoxText\">");
+        out.print("<td class=\"");
+        out.print(TaglibConstants.DEFAULT_LOADING_BOX_TEXT_STYLE_CLASS);
+        out.print("\">");
         out.print(message);
         out.println("</td>");
         out.println("</tr>");
@@ -246,22 +272,30 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         
         out.println("</span>");
 
-        message = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_ERROR_KEY));
+        message = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_ERROR_MESSAGE_KEY));
         
         out.print("<span id=\"");
         out.print(getBeanName());
-        out.println(".loadingBoxError\" class=\"loadingBoxText\" style=\"display: none;\">");
+        out.print(".");
+        out.print(AttributeConstants.LOADING_BOX_ERROR_KEY);
+        out.println("\" class=\"");
+        out.print(TaglibConstants.DEFAULT_LOADING_BOX_TEXT_STYLE_CLASS);
+        out.println("\" style=\"display: NONE;\">");
         
         out.println("<table>");
         
         out.println("<tr>");
-        out.println("<td class=\"loadingBoxText\">");
+        out.print("<td class=\"");
+        out.print(TaglibConstants.DEFAULT_LOADING_BOX_TEXT_STYLE_CLASS);
+        out.print("\">");
         out.print(message);
         out.println("</td>");
         out.println("</tr>");
         
         out.println("<tr>");
-        out.println("<td align=\"center\">");
+        out.print("<td align=\"");
+        out.print(AlignmentType.CENTER);
+        out.println("\">");
         
         ConfirmButtonTag closeButtonTag = new ConfirmButtonTag();
 
