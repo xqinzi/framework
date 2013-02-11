@@ -82,7 +82,7 @@ public class TextAreaPropertyTag extends TextPropertyTag{
 	 * @see br.com.concepting.framework.web.taglibs.TextPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-	    setComponentType(ComponentType.TEXTAREA);
+	    setComponentType(ComponentType.TEXT_AREA);
 
 	    super.initialize();
 	}
