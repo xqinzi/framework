@@ -9,10 +9,10 @@
  * Estilo que define a barra de menus.
  */
 .menuBar{
-	position  : relative;
-    background: white;
-    border    : none;
-    text-align: left;
+	position  : RELATIVE;
+    background: WHITE;
+    border    : NONE;
+    text-align: LEFT;
     height    : 25px;
     padding   : 2px;
 }
@@ -21,9 +21,9 @@
  * Estilo que define a caixa de submenus.
  */
 .menuBox{
-	position          : absolute;
-    background        : white;
-    border            : 1px solid #888888;
+	position          : ABSOLUTE;
+    background        : WHITE;
+    border            : 1px SOLID #888888;
 	-moz-box-shadow   : 2px 3px 4px #aaaaaa;
 	-webkit-box-shadow: 2px 3px 4px #aaaaaa;
 	box-shadow        : 2px 3px 4px #aaaaaa;	
@@ -36,8 +36,8 @@
  * Estilo que define o conteúdo do componente.
  */
 .menuBarContent{
-    border-collapse: collapse;
-	border         : none;
+    border-collapse: COLLAPSE;
+	border         : NONE;
 	padding        : 0px;
 	border-spacing : 0px;
 	margin         : 0px; 
@@ -47,8 +47,8 @@
  * Estilo que define o conteúdo do componente.
  */
 .menuBoxContent{
-    border-collapse: collapse;
-	border         : none;
+    border-collapse: COLLAPSE;
+	border         : NONE;
 	padding        : 0px;
 	border-spacing : 0px;
 	margin         : 0px; 
@@ -65,8 +65,8 @@
     padding-right : 4px;
     padding-top   : 2px;
     padding-bottom: 2px;
-    white-space   : nowrap;
-    cursor        : pointer;
+    white-space   : NOWRAP;
+    cursor        : POINTER;
     height        : 25px;
 }
 
@@ -78,12 +78,12 @@
     font-size     : 14px;
     color         : #ffffff;
     background    : #1e8fad;
-    cursor        : pointer;
+    cursor        : POINTER;
     padding-left  : 4px;
     padding-right : 4px;
     padding-top   : 2px;
     padding-bottom: 2px;
-    white-space   : nowrap;
+    white-space   : NOWRAP;
     height        : 25px;
 }
 
@@ -91,7 +91,7 @@
  * Estilo que define a barra separadora vertical de itens de menu.
  */
 .menuBarSeparator{
-    border-left: 1px solid #888888;
+    border-left: 1px SOLID #888888;
     width      : 2px;
     height     : 85%;
 }
@@ -100,7 +100,7 @@
  * Estilo que define a barra separadora horizontal de itens de menu.
  */
 .menuBoxSeparator{
-    border-top: 1px solid #888888;
+    border-top: 1px SOLID #888888;
 	width     : 95%;
     height    : 2px;
 }

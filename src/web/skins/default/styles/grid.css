@@ -9,20 +9,20 @@
  * Estilo que define o ícone de ordenação ascendente.
  */
 .ascendOrderIcon{
-	background: url("../images/ascendOrderIcon.gif") no-repeat;
+	background: url("../images/ascendOrderIcon.gif") NO-REPEAT;
 	width     : 9px;
 	height    : 10px;
-	border    : none;
+	border    : NONE;
 }
 	
 /**
  * Estilo que define o ícone de ordenação descendente.
  */
 .descendOrderIcon{
-	background: url("../images/descendOrderIcon.gif") no-repeat;
+	background: url("../images/descendOrderIcon.gif") NO-REPEAT;
 	width     : 9px;
 	height    : 10px;
-	border    : none;
+	border    : NONE;
 }
 
 /**
@@ -39,9 +39,9 @@
 	color      : #ffffff;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 12px;
-	font-weight: bold;
+	font-weight: BOLD;
 	padding    : 1px;
-	border     : 1px outset #efefef;
+	border     : 1px OUTSET #efefef;
 	height     : 25px;
 }
 
@@ -51,9 +51,9 @@
 .gridHeaderLink{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px;
-	text-decoration: none;
+	text-decoration: NONE;
 	color          : #ffffff;
-	cursor         : pointer;
+	cursor         : POINTER;
 }
 
 /**
@@ -62,7 +62,7 @@
 .gridHeaderLink:hover{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px;
-	text-decoration: underline;
+	text-decoration: UNDERLINE;
 	color          : #ffffff;
 }
 
@@ -72,7 +72,7 @@
 .gridHeaderLink:active{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px;
-	text-decoration: none;
+	text-decoration: NONE;
 	color          : #ffffff;
 }
 
@@ -82,9 +82,9 @@
 .gridDetailLink{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px;
-	text-decoration: none;
+	text-decoration: NONE;
 	color          : #666666;
-	cursor         : pointer;
+	cursor         : POINTER;
 }
 
 /**
@@ -93,9 +93,9 @@
 .gridDetailLink:hover{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px;
-	text-decoration: underline;
+	text-decoration: UNDERLINE;
 	color          : #666666;
-	cursor         : pointer;
+	cursor         : POINTER;
 }
 
 /**
@@ -104,7 +104,7 @@
 .gridDetailLink:active{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px;
-	text-decoration: none;
+	text-decoration: NONE;
 	color          : #666666;
 }
 
@@ -116,9 +116,9 @@
 	padding    : 1px;
 	color      : #666666;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-weight: bold;
+	font-weight: BOLD;
 	font-size  : 12px;
-	border     : 1px outset #fffffa;
+	border     : 1px OUTSET #fffffa;
 	height     : 25px;
 }
 
@@ -130,8 +130,8 @@
 	padding    : 1px;
 	color      : #666666;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-weight: normal;
+	font-weight: NORMAL;
 	font-size  : 12px;
-	border     : 1px outset #fffffa;
+	border     : 1px OUTSET #fffffa;
 	height     : 25px;
 }

@@ -9,7 +9,7 @@
  * Estilo que define a sombra de página ao carregar um modal.
  */
 .shade{
-	position  : absolute; 
+	position  : ABSOLUTE; 
 	left      : 0px;  
 	top       : 0px; 
 	width     : 100%; 
@@ -24,19 +24,19 @@
  * Estilo que define o espaço total da página.
  */
 .canvas{
-	border        : none;
+	border        : NONE;
 	width         : 100%;
 	height        : 100%;
 	border-spacing: 0px;
 	padding       : 0px;
-	text-align    : center;
+	text-align    : CENTER;
 }
 
 /**
  * Estilo que define um painel de conteúdo.
  */
 .panel{
-	border        : none;
+	border        : NONE;
 	border-spacing: 0px;
 	padding       : 0px;
 	width         : 100%;
@@ -52,15 +52,15 @@
 	-moz-border-radius-topright    : 3px;
 	border-top-left-radius         : 3px;
 	border-top-right-radius        : 3px;
-	border                         : 1px dotted #888888;
+	border                         : 1px DOTTED #888888;
 	width                          : 100%;
 	height                         : 7.5%;
 	font-family                    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size                      : 12px;
-	font-weight                    : normal;
+	font-weight                    : NORMAL;
 	color                          : #666666;
-	text-align                     : center;
-	white-space                    : nowrap;
+	text-align                     : CENTER;
+	white-space                    : NOWRAP;
 }
 
 /**
@@ -68,15 +68,15 @@
  */
 .content{
 	border-spacing: 0px;
-	border-left   : 1px dotted #888888; 
-	border-right  : 1px dotted #888888; 
+	border-left   : 1px DOTTED #888888; 
+	border-right  : 1px DOTTED #888888; 
 	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size     : 12px;
 	color         : #666666;
 	padding       : 0px;
 	width         : 100%;
 	height        : 84%;
-    text-align    : center;
+    text-align    : CENTER;
 }
 
 /**
@@ -89,14 +89,14 @@
 	-moz-border-radius-bottomright    : 3px;
 	border-bottom-left-radius         : 3px;
 	border-bottom-right-radius        : 3px;
-	border                            : 1px dotted #888888; 
+	border                            : 1px DOTTED #888888; 
 	width                             : 100%; 
 	height                            : 5%;
 	font-family                       : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size                         : 12px;
-	font-weight                       : normal;
+	font-weight                       : NORMAL;
 	color                             : #666666;
-	text-align                        : center;
+	text-align                        : CENTER;
 }
 
 /**
@@ -105,7 +105,7 @@
 .title{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 18px;
-	font-weight: bold; 
+	font-weight: BOLD; 
 	color      : #666666;
 }
 
@@ -115,7 +115,7 @@
 .subTitle{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 16px;
-	font-weight: bold; 
+	font-weight: BOLD; 
 	color      : #666666;
 }
 
@@ -126,8 +126,8 @@
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 12px; 
 	color          : #1e8fad;
-	text-decoration: none;
-	cursor         : pointer;
+	text-decoration: NONE;
+	cursor         : POINTER;
 }
 
 /**
@@ -144,8 +144,8 @@
  * Estilo que define a caixa de upload de arquivo.
  */
 .uploadBox{
-	border         : none;
-	border-collapse: collapse;
+	border         : NONE;
+	border-collapse: COLLAPSE;
 	border-spacing : 0px;  
 	padding        : 0px;
 }
@@ -154,8 +154,8 @@
  * Estilo que define a caixa de download de arquivo.
  */
 .downloadBox{
-	border         : none;
-	border-collapse: collapse;
+	border         : NONE;
+	border-collapse: COLLAPSE;
 	border-spacing : 0px;  
 	padding        : 0px;
 }
@@ -164,9 +164,9 @@
  * Estilo que define a caixa de carregamento da página.
  */
 .loadingBox{
-	position             : absolute;
-	visibility           : hidden;
-	background           : white;
+	position             : ABSOLUTE;
+	visibility           : HIDDEN;
+	background           : WHITE;
 	z-index              : 102;
 	padding              : 2;
     -webkit-box-shadow   : 2px 3px 4px #aaaaaa;
@@ -177,7 +177,7 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 }
 
 /**
@@ -186,8 +186,8 @@
 .loadingBoxText{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 12px;
-	font-weight: bold;
-	text-align : center;
+	font-weight: BOLD;
+	text-align : CENTER;
 	color      : #666666;
 }
 
@@ -206,7 +206,7 @@
 .clock{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 14px;
-	white-space: nowrap;
+	white-space: NOWRAP;
 	color      : #666666;
 }
 
@@ -216,10 +216,10 @@
 .label{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 12px; 
-	white-space: nowrap;
+	white-space: NOWRAP;
 	color      : #666666;
 	width      : 140px;
-	overflow   : hidden;
+	overflow   : HIDDEN;
 }
 
 /**
@@ -228,10 +228,10 @@
 .textBox{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size            : 12px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
-	outline              : none;
+	outline              : NONE;
 	-webkit-transition   : all 0.25s ease-in-out;
 	-moz-transition      : all 0.25s ease-in-out;
 	transition           : all 0.25s ease-in-out;
@@ -249,7 +249,7 @@
 	box-shadow        : 0 0 5px #1e8fad;
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
-	border            : 1px solid #1e8fad;
+	border            : 1px SOLID #1e8fad;
 }
 
 /**
@@ -258,7 +258,7 @@
 .textArea{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size            : 12px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
 	-webkit-transition   : all 0.25s ease-in-out;
@@ -278,7 +278,7 @@
 	box-shadow        : 0 0 5px #1e8fad;
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
-	border            : 1px solid #1e8fad;
+	border            : 1px SOLID #1e8fad;
 }
 
 /**
@@ -287,10 +287,10 @@
 .password{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size            : 12px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
-	outline              : none;
+	outline              : NONE;
 	-webkit-transition   : all 0.25s ease-in-out;
 	-moz-transition      : all 0.25s ease-in-out;
 	transition           : all 0.25s ease-in-out;
@@ -308,7 +308,7 @@
     -moz-box-shadow   : 0 0 5px #1e8fad;
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
-	border            : 1px solid #1e8fad;
+	border            : 1px SOLID #1e8fad;
 }
 
 /**
@@ -317,10 +317,10 @@
 .list{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size            : 12px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
-	outline              : none;
+	outline              : NONE;
 	transition           : all 0.25s ease-in-out;
 	-webkit-transition   : all 0.25s ease-in-out;
 	-moz-transition      : all 0.25s ease-in-out;
@@ -338,7 +338,7 @@
 	box-shadow        : 0 0 5px #1e8fad;
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
-	border            : 1px solid #1e8fad;
+	border            : 1px SOLID #1e8fad;
 }
 
 /**
@@ -372,7 +372,7 @@ option:hover{
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 }
 
 /**
@@ -381,7 +381,7 @@ option:hover{
 .groupLabel{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 12px;
-	font-weight: bold;
+	font-weight: BOLD;
 	color      : #666666;
 }
 
@@ -401,13 +401,13 @@ option:hover{
 	-moz-border-radius   : 3px;
 	-webkit-border-radius: 3px;
 	border-radius        : 3px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 	background           : #fefefe;
 	-webkit-transition   : all 0.25s ease-in-out;
 	-moz-transition      : all 0.25s ease-in-out;
 	transition           : all 0.25s ease-in-out;
-	cursor               : pointer;
-	white-space          : nowrap;
+	cursor               : POINTER;
+	white-space          : NOWRAP;
 }
 
 /**
@@ -419,7 +419,7 @@ option:hover{
 	box-shadow        : 0 0 5px #1e8fad;
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
-	border            : 1px solid #1e8fad;
+	border            : 1px SOLID #1e8fad;
 }
 
 /**
@@ -431,7 +431,7 @@ option:hover{
 	box-shadow        : 0 0 5px #1e8fad;
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
-	border            : 1px solid #1e8fad;
+	border            : 1px SOLID #1e8fad;
 }
 
 /**
@@ -441,8 +441,8 @@ option:hover{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 12px;
 	color      : #666666;
-	text-align : center;
-	white-space: nowrap;
+	text-align : CENTER;
+	white-space: NOWRAP;
 }
 
 /**
@@ -452,8 +452,8 @@ option:hover{
 	background: url("../images/cancelButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 
@@ -464,8 +464,8 @@ option:hover{
 	background: url("../images/closeButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -483,8 +483,8 @@ option:hover{
 	background: url("../images/confirmButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 } 
 
 /**
@@ -494,8 +494,8 @@ option:hover{
 	background: url("../images/backButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -505,8 +505,8 @@ option:hover{
 	background: url("../images/backButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -516,8 +516,8 @@ option:hover{
 	background: url("../images/searchButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -527,8 +527,8 @@ option:hover{
 	background: url("../images/saveButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -538,8 +538,8 @@ option:hover{
 	background: url("../images/addButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -549,8 +549,8 @@ option:hover{
 	background: url("../images/editButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -560,8 +560,8 @@ option:hover{
 	background: url("../images/deleteButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -571,8 +571,8 @@ option:hover{
 	background: url("../images/printButton.png") no-repeat;
 	width     : 28px;
 	height    : 24px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -582,8 +582,8 @@ option:hover{
 	background: url("../images/uploadButton.png") no-repeat;
 	width     : 26px;
 	height    : 26px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
@@ -593,7 +593,7 @@ option:hover{
 	background: url("../images/pdfIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -603,7 +603,7 @@ option:hover{
 	background: url("../images/binaryIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -613,7 +613,7 @@ option:hover{
 	background: url("../images/rtfIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -623,7 +623,7 @@ option:hover{
 	background: url("../images/docIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -633,7 +633,7 @@ option:hover{
 	background: url("../images/docIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -643,7 +643,7 @@ option:hover{
 	background: url("../images/xlsIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -653,7 +653,7 @@ option:hover{
 	background: url("../images/xlsIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -663,7 +663,7 @@ option:hover{
 	background: url("../images/gifIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -673,7 +673,7 @@ option:hover{
 	background: url("../images/jpgIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -683,7 +683,7 @@ option:hover{
 	background: url("../images/pngIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -693,7 +693,7 @@ option:hover{
 	background: url("../images/htmlIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -703,7 +703,7 @@ option:hover{
 	background: url("../images/txtIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }
 
 /**
@@ -713,5 +713,5 @@ option:hover{
 	background: url("../images/xmlIcon.png") no-repeat;
 	width     : 50px;
 	height    : 50px;
-	cursor    : pointer;
+	cursor    : POINTER;
 }

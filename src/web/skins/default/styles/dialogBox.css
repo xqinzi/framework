@@ -9,8 +9,8 @@
  * Estilo que define o componente.
  */
 .dialogBox{
-	position  : absolute;
-	visibility: hidden;
+	position  : ABSOLUTE;
+	visibility: HIDDEN;
 	z-index   : 101;
 }
 
@@ -18,14 +18,14 @@
  * Estilo que define o texto do título do componente.
  */
 .dialogBoxTitle{
-	background : url(../images/messageBoxTitle.gif) repeat-x;
+	background : url(../images/messageBoxTitle.gif) REPEAT-X;
 	color      : #666666;
 	height     : 25px;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 14px;
-	font-weight: bold;
-	text-align : Center;
-	white-space: nowrap;
+	font-weight: BOLD;
+	text-align : CENTER;
+	white-space: NOWRAP;
 }
 
 /**
@@ -40,7 +40,7 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
-	border               : 1px solid #aaaaaa;         
+	border               : 1px SOLID #aaaaaa;         
 	background           : #efefef;
 	border-spacing       : 0px;
 	padding              : 1px;
@@ -55,7 +55,7 @@
 	background    : #efefef;
 	color         : #666666;
 	width         : 100%;
-	border        : none;
+	border        : NONE;
 	border-spacing: 0px;
 	padding       : 0px;	
 }

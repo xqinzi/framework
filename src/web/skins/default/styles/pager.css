@@ -9,84 +9,84 @@
  * Estilo que define o botão da primeira página.
  */
 .firstPageButton{
-	background: url("../images/firstPageButton.png") no-repeat;	
+	background: url("../images/firstPageButton.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão desabilitado da primeira página.
  */
 .firstPageButtonDisabled{
-	background: url("../images/firstPageButtonDisabled.png") no-repeat;	
+	background: url("../images/firstPageButtonDisabled.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
+	border    : NONE;
 }
 
 /**
  * Estilo que define o botão da página anterior.
  */
 .previousPageButton{
-	background: url("../images/previousPageButton.png") no-repeat;	
+	background: url("../images/previousPageButton.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão desabilitado da página anterior.
  */
 .previousPageButtonDisabled{
-	background: url("../images/previousPageButtonDisabled.png") no-repeat;	
+	background: url("../images/previousPageButtonDisabled.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
+	border    : NONE;
 }
 
 /**
  * Estilo que define o botão da próxima página.
  */
 .nextPageButton{
-	background: url("../images/nextPageButton.png") no-repeat;	
+	background: url("../images/nextPageButton.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão desabilitado da próxima página.
  */
 .nextPageButtonDisabled{
-	background: url("../images/nextPageButtonDisabled.png") no-repeat;	
+	background: url("../images/nextPageButtonDisabled.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
+	border    : NONE;
 }
 
 /**
  * Estilo que define o botão da última página.
  */
 .lastPageButton{
-	background: url("../images/lastPageButton.png") no-repeat;	
+	background: url("../images/lastPageButton.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão desabilitado da última página.
  */
 .lastPageButtonDisabled{
-	background: url("../images/lastPageButtonDisabled.png") no-repeat;	
+	background: url("../images/lastPageButtonDisabled.png") NO-REPEAT;	
 	width     : 20px;
 	height    : 20px;
-	border    : none;
+	border    : NONE;
 }
 
 /**
@@ -103,12 +103,12 @@
 .pagerDisplay{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size            : 12px;
-	font-weight          : bold;
+	font-weight          : BOLD;
 	color                : #5393a6;
 	width                : 20px;
 	background           : #ffffff;
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 }

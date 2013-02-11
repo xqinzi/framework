@@ -9,7 +9,7 @@
  * Estilo que define o componente.
  */
 .guides{
-	border-collapse: collapse;
+	border-collapse: COLLAPSE;
 	border-spacing : 0px;
 	padding        : 0px;
 	margin         : 0px;
@@ -25,14 +25,14 @@
 	-moz-border-radius-topright    : 3px;
 	border-top-left-radius         : 3px;
 	border-top-right-radius        : 3px;
-	border                         : 1px solid #888888;
-	background                     : url(../images/guide.gif) repeat-x;
+	border                         : 1px SOLID #888888;
+	background                     : url(../images/guide.gif) REPEAT-X;
 	border-spacing                 : 0px;
 	padding                        : 1px;
-	text-align                     : center;
-	font-weight                    : normal;
+	text-align                     : CENTER;
+	font-weight                    : NORMAL;
 	color                          : #666666;
-	cursor                         : pointer;
+	cursor                         : POINTER;
 	height                         : 25px;
 }
 
@@ -46,17 +46,17 @@
 	-moz-border-radius-topright    : 3px;
 	border-top-left-radius         : 3px;
 	border-top-right-radius        : 3px;
-	border-top                     : 1px solid #888888;
-	border-left                    : 1px solid #888888;
-	border-right                   : 1px solid #888888;
-	border-bottom                  : none;
-	background                     : url(../images/currentGuide.gif) repeat-x;
+	border-top                     : 1px SOLID #888888;
+	border-left                    : 1px SOLID #888888;
+	border-right                   : 1px SOLID #888888;
+	border-bottom                  : NONE;
+	background                     : url(../images/currentGuide.gif) REPEAT-X;
 	border-spacing                 : 0px;
 	padding                        : 1px;
-	text-align                     : center;
-	font-weight                    : bold;
+	text-align                     : CENTER;
+	font-weight                    : BOLD;
 	color                          : #666666;
-	cursor                         : pointer;
+	cursor                         : POINTER;
 	height                         : 26px;
 }
 			
@@ -70,10 +70,10 @@
 	-moz-border-radius-bottomright    : 3px;
 	border-bottom-left-radius         : 3px;
 	border-bottom-right-radius        : 3px;
-	border-bottom                     : 1px solid #888888;
-	border-left                       : 1px solid #888888;
-	border-right                      : 1px solid #888888;
-	border-top                        : none;
+	border-bottom                     : 1px SOLID #888888;
+	border-left                       : 1px SOLID #888888;
+	border-right                      : 1px SOLID #888888;
+	border-top                        : NONE;
 	background                        : #efefef;
 	border-spacing                    : 0px;
 	padding                           : 1px;
@@ -89,7 +89,7 @@
 .guidesButtons{
 	background: #efefef;
 	height    : 40px;
-	text-align: right;
+	text-align: RIGHT;
 }	
 			
 /**
@@ -122,20 +122,20 @@
  * Estilo que define o botão cuja a ação é posicionar na guia anterior.
  */
 .previousGuideButton{
-	background: url(../images/firstPageButton.png) no-repeat;
+	background: url(../images/firstPageButton.png) NO-REPEAT;
 	width     : 24px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão cuja a ação é posicionar na próxima guia.
  */
 .nextGuideButton{
-	background: url(../images/lastPageButton.png) no-repeat;
+	background: url(../images/lastPageButton.png) NO-REPEAT;
 	width     : 24px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }

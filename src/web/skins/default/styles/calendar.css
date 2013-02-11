@@ -11,21 +11,21 @@
 .currentCalendarDay{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
-	font-weight: bold;
+	font-weight: BOLD;
 	color      : #ffffff;
 	width      : 25px;
 	height     : 20px;
-	text-align : center;
+	text-align : CENTER;
 	background : #1e8fad;
-	cursor     : pointer;
+	cursor     : POINTER;
 }
 
 /**
  * Estilo que define o conteúdo do componente.
  */
 .calendarContent{
-	border         : none;
-	border-collapse: collapse;
+	border         : NONE;
+	border-collapse: COLLAPSE;
 }
 
 .calendarText{
@@ -37,20 +37,20 @@
  * Estilo que define o componente.
  */
 .calendar{
-	position             : absolute;
+	position             : ABSOLUTE;
     -webkit-box-shadow   : 2px 3px 4px #aaaaaa;
     -moz-box-shadow      : 2px 3px 4px #aaaaaa;
 	box-shadow           : 2px 3px 4px #aaaaaa;
 	-ms-filter           : "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#aaaaaa')";
 	filter               : progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
-	border               : 1px solid #888888;
+	border               : 1px SOLID #888888;
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
 	background           : #ffffff;
-	text-align           : center;
+	text-align           : CENTER;
 	width                : 200px;
-	visibility           : hidden;
+	visibility           : HIDDEN;
 }
  
 /**
@@ -62,10 +62,10 @@
 	color      : #666666;
 	width      : 25px;
 	height     : 20px;
-	text-align : center;
-	border     : 1px solid #888888;
+	text-align : CENTER;
+	border     : 1px SOLID #888888;
 	background : #ffffff;
-	cursor     : pointer;
+	cursor     : POINTER;
 }
 
 /**
@@ -75,7 +75,7 @@
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	color      : #666666;
-	text-align : center;
+	text-align : CENTER;
 }
 
 /**
@@ -84,14 +84,14 @@
 .calendarSelectedDay{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
-	font-weight: bold;
+	font-weight: BOLD;
 	color      : #1e8fad;
 	width      : 25px;
 	height     : 20px;
-	text-align : center;
-	border     : 1px solid #888888;
+	text-align : CENTER;
+	border     : 1px SOLID #888888;
 	background : #ffffff;
-	cursor     : pointer;
+	cursor     : POINTER;
 }
 
 /**
@@ -100,11 +100,11 @@
 .calendarWeekHeader{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
-	font-weight: bold;
-	border     : 1px outset #888888;
+	font-weight: BOLD;
+	border     : 1px OUTSET #888888;
 	background : #888888;
 	color      : #ffffff;
-	text-align : center;
+	text-align : CENTER;
 	width      : 25px;
 	height     : 20px;
 }
@@ -113,53 +113,53 @@
  * Estilo que define o botão do próximo mês.
  */
 .nextMonthButton{
-	background: url(../images/nextPageButton.png) no-repeat;
+	background: url(../images/nextPageButton.png) NO-REPEAT;
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão do próximo ano.
  */
 .nextYearButton{
-	background: url(../images/lastPageButton.png) no-repeat;
+	background: url(../images/lastPageButton.png) NO-REPEAT;
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão do mês anterior.
  */
 .previousMonthButton{
-	background: url(../images/previousPageButton.png) no-repeat;
+	background: url(../images/previousPageButton.png) NO-REPEAT;
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão do ano anterior.
  */
 .previousYearButton{
-	background: url(../images/firstPageButton.png) no-repeat;
+	background: url(../images/firstPageButton.png) NO-REPEAT;
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }
 
 /**
  * Estilo que define o botão para exibição do componente.
  */
 .showCalendarButton{
-	background: url(../images/showCalendarButton.png) no-repeat;
+	background: url(../images/showCalendarButton.png) NO-REPEAT;
 	width     : 20px;
 	height    : 20px;
-	border    : none;
-	cursor    : pointer;
+	border    : NONE;
+	cursor    : POINTER;
 }	
