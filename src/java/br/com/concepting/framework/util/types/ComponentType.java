@@ -17,7 +17,7 @@ public enum ComponentType{
 	/**
 	 * Constantoe que define um campo de marcação.
 	 */
-	CHECKBOX,
+	CHECK_BOX,
 
 	/**
 	 * Constante que define um campo de seleção.
@@ -42,12 +42,12 @@ public enum ComponentType{
     /**
      * Constante que define um campo texto comum.
      */
-    TEXTBOX,
+    TEXT_BOX,
     
     /**
      * Constante que define um campo texto de múltiplas linhas.
      */
-    TEXTAREA,
+    TEXT_AREA,
 
     /**
      * Constante que define um campo de senha.
@@ -92,7 +92,7 @@ public enum ComponentType{
     /**
      * Constante que define um componente de visualização em árvore.
      */
-    TREEVIEW,
+    TREE_VIEW,
 	
 	/**
 	 * Constante que define uma barra de menus.
@@ -135,13 +135,13 @@ public enum ComponentType{
 	PROGRESS_BAR;
 	
 	/**
-	 * Retorna o identificador do tipo de componente.
+	 * Retorna o identificador do componente.
 	 * 
-	 * @return String contendo o identificador do tipo de componente.
+	 * @return String contendo o identificador do componente.
 	 */
 	public String getId(){
 	    if(this == UNDO_BUTTON)
-	        return "RESET";
+	        return "reset";
 	    
 	    String        parts[]     = StringUtil.split(toString(), "_");
 	    StringBuilder componentId = new StringBuilder();
@@ -154,5 +154,14 @@ public enum ComponentType{
 	    }
 	    
 	    return componentId.toString();
+	}
+	
+    /**
+     * Retorna o identificador do tipo do componente.
+     * 
+     * @return String contendo o identificador do tipo do componente.
+     */
+	public String getType(){
+	    return StringUtil.replaceAll(toString(), "_", "");
 	}
 }
