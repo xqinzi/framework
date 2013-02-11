@@ -37,10 +37,10 @@ public class CalendarPropertyTag extends TextPropertyTag{
 			print(AlignmentType.BOTTOM);
 			println("\">");
 
-			ShowCalendarBoxButtonTag showCalendarBoxButtonTag = new ShowCalendarBoxButtonTag(this);
+			ShowCalendarButtonTag showCalendarButtonTag = new ShowCalendarButtonTag(this);
 
-			showCalendarBoxButtonTag.doStartTag();
-			showCalendarBoxButtonTag.doEndTag();
+			showCalendarButtonTag.doStartTag();
+			showCalendarButtonTag.doEndTag();
 
 			println("</td>");
 			println("</tr>");
@@ -130,11 +130,11 @@ public class CalendarPropertyTag extends TextPropertyTag{
 	 * @author fvilarinho
 	 * @since 2.0
 	 */
-	private class ShowCalendarBoxButtonTag extends ButtonTag{
+	private class ShowCalendarButtonTag extends ButtonTag{
 		/**
 		 * Construtor - Inicializa objetos e/ou variáveis internas.
 		 */
-		public ShowCalendarBoxButtonTag(CalendarPropertyTag calendarTag){
+		public ShowCalendarButtonTag(CalendarPropertyTag calendarTag){
 			super();
 			
 			setPageContext(calendarTag.getPageContext());
@@ -142,7 +142,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
 			
 			StringBuilder onClickContent = new StringBuilder();
 
-			onClickContent.append("showHideCalendarBox('");
+			onClickContent.append("showHideCalendar('");
 			onClickContent.append(calendarTag.getName());
 			onClickContent.append("');");
 			
