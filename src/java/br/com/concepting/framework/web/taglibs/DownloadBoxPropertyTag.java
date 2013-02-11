@@ -14,7 +14,7 @@ import br.com.concepting.framework.web.types.ContentType;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
- * Classe que define o componente visual para uma caixa de download..
+ * Classe que define o componente visual para uma caixa de download.
  * 
  * @author fvilarinho
  * @since 3.0
