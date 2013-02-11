@@ -323,13 +323,13 @@ public class Rrd4JImpl extends BaseRrdImpl{
         				
             			if(datasource.getArchiveType() != null){
         					if(datasource.getArchiveType() == RrdArchiveType.AVERAGE)
-        						rrdGraphDef.datasource(datasource.getName(), datasource.getFilename(), datasource.getDatasourceName(), ConsolFun.AVERAGE);
+        						rrdGraphDef.datasource(datasource.getName(), datasource.getFileName(), datasource.getDatasourceName(), ConsolFun.AVERAGE);
         					else if(datasource.getArchiveType() == RrdArchiveType.LAST)
-        						rrdGraphDef.datasource(datasource.getName(), datasource.getFilename(), datasource.getDatasourceName(), ConsolFun.LAST);
+        						rrdGraphDef.datasource(datasource.getName(), datasource.getFileName(), datasource.getDatasourceName(), ConsolFun.LAST);
         					else if(datasource.getArchiveType() == RrdArchiveType.MAX)
-        						rrdGraphDef.datasource(datasource.getName(), datasource.getFilename(), datasource.getDatasourceName(), ConsolFun.MAX);
+        						rrdGraphDef.datasource(datasource.getName(), datasource.getFileName(), datasource.getDatasourceName(), ConsolFun.MAX);
         					else if(datasource.getArchiveType() == RrdArchiveType.MIN)
-        						rrdGraphDef.datasource(datasource.getName(), datasource.getFilename(), datasource.getDatasourceName(), ConsolFun.MIN);
+        						rrdGraphDef.datasource(datasource.getName(), datasource.getFileName(), datasource.getDatasourceName(), ConsolFun.MIN);
             			}
             			else if(datasource.getFormula().length() > 0)
             				rrdGraphDef.datasource(datasource.getName(), datasource.getFormula());
