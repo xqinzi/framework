@@ -1,45 +1,61 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.web.action.types.ActionType;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+
+/**
+ * Classe que define o componente visual para uma caixa de upload.
+ * 
+ * @author fvilarinho
+ * @since 3.0
+ */
 public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
+    /**
+     * @see br.com.concepting.framework.web.taglibs.DownloadBoxPropertyTag#renderBody()
+     */
     protected void renderBody() throws Throwable{
         String        actionForm = getActionForm();
         String        name       = getName();
         StringBuilder tagId      = new StringBuilder();
         
         tagId.append(name);
-        tagId.append(".uploadProperty");
+        tagId.append(".");
+        tagId.append(AttributeConstants.UPLOAD_DATA_PROPERTY_KEY);
 
-        HiddenPropertyTag uploadPropertyTag = new HiddenPropertyTag();
+        HiddenPropertyTag uploadDataPropertyTag = new HiddenPropertyTag();
         
-        uploadPropertyTag.setPageContext(pageContext);
-        uploadPropertyTag.setId(tagId.toString());
-        uploadPropertyTag.setName("uploadProperty");
-        uploadPropertyTag.setValue(name);
-        uploadPropertyTag.doStartTag();
-        uploadPropertyTag.doEndTag();
+        uploadDataPropertyTag.setPageContext(pageContext);
+        uploadDataPropertyTag.setId(tagId.toString());
+        uploadDataPropertyTag.setName(AttributeConstants.UPLOAD_DATA_PROPERTY_KEY);
+        uploadDataPropertyTag.setValue(name);
+        uploadDataPropertyTag.doStartTag();
+        uploadDataPropertyTag.doEndTag();
         
         tagId.delete(0, tagId.length());
         tagId.append(name);
-        tagId.append(".uploadFileNameProperty");
+        tagId.append(".");
+        tagId.append(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
 
-        HiddenPropertyTag uploadFileNamePropertyTag = new HiddenPropertyTag();
+        HiddenPropertyTag uploadFilenamePropertyTag = new HiddenPropertyTag();
         
-        uploadFileNamePropertyTag.setPageContext(pageContext);
-        uploadFileNamePropertyTag.setId(tagId.toString());
-        uploadFileNamePropertyTag.setName("uploadFileNameProperty");
-        uploadFileNamePropertyTag.setValue(getFileNameProperty());
-        uploadFileNamePropertyTag.doStartTag();
-        uploadFileNamePropertyTag.doEndTag();
+        uploadFilenamePropertyTag.setPageContext(pageContext);
+        uploadFilenamePropertyTag.setId(tagId.toString());
+        uploadFilenamePropertyTag.setName(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
+        uploadFilenamePropertyTag.setValue(getFileNameProperty());
+        uploadFilenamePropertyTag.doStartTag();
+        uploadFilenamePropertyTag.doEndTag();
 
         tagId.delete(0, tagId.length());
         tagId.append(name);
-        tagId.append(".uploadContentTypeProperty");
+        tagId.append(".");
+        tagId.append(AttributeConstants.UPLOAD_CONTENT_TYPE_PROPERTY_KEY);
 
         HiddenPropertyTag contentTypePropertyTag = new HiddenPropertyTag();
         
         contentTypePropertyTag.setPageContext(pageContext);
         contentTypePropertyTag.setId(tagId.toString());
-        contentTypePropertyTag.setName("uploadContentTypeProperty");
+        contentTypePropertyTag.setName(AttributeConstants.UPLOAD_CONTENT_TYPE_PROPERTY_KEY);
         contentTypePropertyTag.setValue(getContentTypeProperty());
         contentTypePropertyTag.doStartTag();
         contentTypePropertyTag.doEndTag();
@@ -53,21 +69,28 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         onChange.append(actionForm);
         onChange.append(".enctype = 'multipart/form-data'; document.");
         onChange.append(actionForm);
-        onChange.append(".action.value = 'uploadFile'; document.");
+        onChange.append(".action.value = '");
+        onChange.append(ActionType.UPLOAD_FILE);
+        onChange.append("'; document.");
         onChange.append(actionForm);
         onChange.append(".submit();");
         
         tagId.delete(0, tagId.length());
         tagId.append(name);
-        tagId.append(".uploadFile");
+        tagId.append(".");
+        tagId.append(AttributeConstants.UPLOAD_FILE_KEY);
 
-        print("<input type=\"file\" id=\"");
+        print("<input type=\"FILE\" id=\"");
         print(tagId);
-        print("\" name=\"uploadFile\" style=\"display: none;\" onChange=\"");
+        print("\" name=\"");
+        print(AttributeConstants.UPLOAD_FILE_KEY);
+        print("\" style=\"display: NONE;\" onChange=\"");
         print(onChange);
         println("\">");
 
-        println("<table class=\"uploadBox\">");
+        print("<table class=\"");
+        print(TaglibConstants.DEFAULT_UPLOAD_BOX_STYLE_CLASS);
+        println("\">");
         println("<tr>");
         println("<td>");
         
@@ -80,15 +103,16 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         
         onClick.append("document.getElementById('");
         onClick.append(name);
-        onClick.append(".uploadFile').click();");
+        onClick.append(".");
+        onClick.append(AttributeConstants.UPLOAD_FILE_KEY);
+        onClick.append("').click();");
 
-        ButtonTag buttonTag = new ButtonTag();
+        UploadButtonTag uploadButtonTag = new UploadButtonTag();
         
-        buttonTag.setPageContext(pageContext);
-        buttonTag.setName("uploadButton");
-        buttonTag.setOnClick(onClick.toString());
-        buttonTag.doStartTag();
-        buttonTag.doEndTag();
+        uploadButtonTag.setPageContext(pageContext);
+        uploadButtonTag.setOnClick(onClick.toString());
+        uploadButtonTag.doStartTag();
+        uploadButtonTag.doEndTag();
         
         println("</td>");
         println("</tr>");
