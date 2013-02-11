@@ -1,5 +1,7 @@
 package br.com.concepting.framework.web.action.types;
 
+import br.com.concepting.framework.util.StringUtil;
+
 /**
  * Classe que define as constantes para acões genéricas.
  * 
@@ -60,14 +62,29 @@ public enum ActionType{
 	/**
 	 * Constante que define a ação de exclusão de dados.
 	 */
-	DELETE;
+	DELETE,
+	
+	/**
+	 * Constante que define a ação para upload de arquivo.
+	 */
+	UPLOAD;
 	
 	/**
 	 * Retorna o identificador do método da ação.
 	 * 
 	 * @return String contendo o identificador do método.
 	 */
-	public String getMethod(){
-	    return toString().toLowerCase();
-	}
+    public String getMethod(){
+        String        parts[]  = StringUtil.split(toString(), "_");
+        StringBuilder methodId = new StringBuilder();
+        
+        for(int cont = 0 ; cont < parts.length ; cont++){
+            if(cont == 0)
+                methodId.append(parts[cont].toLowerCase());
+            else
+                methodId.append(StringUtil.capitalize(parts[cont]));
+        }
+        
+        return methodId.toString();
+    }
 }
