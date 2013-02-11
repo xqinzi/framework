@@ -97,17 +97,17 @@ public enum ComponentType{
 	/**
 	 * Constante que define uma barra de menus.
 	 */
-	MENUBAR,
+	MENU_BAR,
 
     /**
      * Constante que define um item de menu.
      */
-    MENUITEM,
+    MENU_ITEM,
     
     /**
      * Constante que define um separador de itens de menu.
      */
-    MENUITEM_SEPARATOR,
+    MENU_ITEM_SEPARATOR,
 
     /**
      * Constante que define uma aba.
@@ -141,7 +141,7 @@ public enum ComponentType{
 	 */
 	public String getId(){
 	    if(this == UNDO_BUTTON)
-	        return "reset";
+	        return "RESET";
 	    
 	    String        parts[]     = StringUtil.split(toString(), "_");
 	    StringBuilder componentId = new StringBuilder();
