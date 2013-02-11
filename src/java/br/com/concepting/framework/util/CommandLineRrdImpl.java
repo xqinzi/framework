@@ -498,10 +498,10 @@ public class CommandLineRrdImpl extends BaseRrdImpl{
 	/**
 	 * @see br.com.concepting.framework.util.interfaces.IRrd#generateGraph(java.lang.String, java.util.Date, java.util.Date, br.com.concepting.framework.util.helpers.RrdGraphDefinition)
 	 */
-	public void generateGraph(String filename, Date startTime, Date endTime, RrdGraphDefinition definition) throws IOException, IllegalArgumentException{
+	public void generateGraph(String fileName, Date startTime, Date endTime, RrdGraphDefinition definition) throws IOException, IllegalArgumentException{
 		byte data[] = generateGraph(startTime, endTime, definition);
 		
-		FileUtil.toBinaryFile(filename, data);
+		FileUtil.toBinaryFile(fileName, data);
     }
 
 	/**
@@ -674,7 +674,7 @@ public class CommandLineRrdImpl extends BaseRrdImpl{
         				buffer.append("DEF:");
         				buffer.append(datasource.getName());
         				buffer.append("=");
-        				buffer.append(datasource.getFilename());
+        				buffer.append(datasource.getFileName());
         				buffer.append(":");
         				buffer.append(datasource.getDatasourceName());
         				buffer.append(":");
