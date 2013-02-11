@@ -193,7 +193,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	}
 
 	/**
-	 * Retorna o estilo CSS para o ícone para esconder o nó.
+	 * Retorna o estilo CSS para o ícone para retrair o nó.
 	 * 
 	 * @return String contendo o estilo CSS.
 	 */
@@ -202,7 +202,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	}
 
 	/**
-	 * Define o estilo CSS para o ícone para esconder o nó.
+	 * Define o estilo CSS para o ícone para retrair o nó.
 	 * 
 	 * @param expandedNodeIconStyleClass String contendo o estilo CSS.
 	 */
@@ -274,25 +274,25 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
             setLabelPosition(PositionType.TOP);
         
         if(nodeIconStyleClass.length() == 0)
-            nodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_ICON_STYLE_CLASS;
+            nodeIconStyleClass = TaglibConstants.DEFAULT_NODE_ICON_STYLE_CLASS;
         
         if(nodeLabelStyleClass.length() == 0)
-            nodeLabelStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_STYLE_CLASS;
+            nodeLabelStyleClass = TaglibConstants.DEFAULT_NODE_LABEL_STYLE_CLASS;
 
         if(nodeLabelSelectedStyleClass.length() == 0)
-            nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_SELECTED_STYLE_CLASS;
+            nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_NODE_LABEL_SELECTED_STYLE_CLASS;
         
         if(expandedNodeIconStyleClass.length() == 0)
-            expandedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPEN_LEAF_ICON_STYLE_CLASS;
+            expandedNodeIconStyleClass = TaglibConstants.DEFAULT_EXPANDED_NODE_ICON_STYLE_CLASS;
 
         if(collapsedNodeIconStyleClass.length() == 0)
-            collapsedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSE_LEAF_ICON_STYLE_CLASS;
+            collapsedNodeIconStyleClass = TaglibConstants.DEFAULT_COLLAPSED_NODE_ICON_STYLE_CLASS;
 
         if(openedNodeIconStyleClass.length() == 0)
-            openedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPENED_FOLDER_ICON_STYLE_CLASS;
+            openedNodeIconStyleClass = TaglibConstants.DEFAULT_OPENED_NODE_ICON_STYLE_CLASS;
 
         if(closedNodeIconStyleClass.length() == 0)
-            closedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSED_FOLDER_ICON_STYLE_CLASS;
+            closedNodeIconStyleClass = TaglibConstants.DEFAULT_CLOSED_NODE_ICON_STYLE_CLASS;
 
         super.initialize();
 	}
@@ -318,10 +318,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		println("<td>");
 
 		print("<div id=\"");
-		print(AttributeConstants.TREEVIEW_KEY);
+		print(AttributeConstants.TREE_VIEW_KEY);
 		print("\" class=\"");
-		print(TaglibConstants.DEFAULT_TREEVIEW_STYLE_CLASS);
-		print("\" style=\"overflow: auto;");
+		print(TaglibConstants.DEFAULT_TREE_VIEW_STYLE_CLASS);
+		print("\" style=\"overflow: AUTO;");
 		
 		String width  = getWidth();
 		String height = getHeight();
@@ -348,9 +348,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 */
 	protected void renderBody() throws Throwable{
 		println("<div id=\"");
-		print(AttributeConstants.TREEVIEW_CONTENT_KEY);
+		print(AttributeConstants.TREE_VIEW_CONTENT_KEY);
 		print("\" class=\"");
-		print(TaglibConstants.DEFAULT_TREEVIEW_CONTENT_STYLE_CLASS);
+		print(TaglibConstants.DEFAULT_TREE_VIEW_CONTENT_STYLE_CLASS);
 		println("\">");
 		
 		PropertyInfo propertyInfo = getPropertyInfo();
@@ -360,7 +360,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 			renderNodes();
 		else{
 			print("<span class=\"");
-			print(TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_STYLE_CLASS);
+			print(TaglibConstants.DEFAULT_NODE_LABEL_STYLE_CLASS);
 			print("\">");
 
 			if(propertyInfo == null)
@@ -422,7 +422,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     			selectionTag.setName(getName());
     			selectionTag.setResourceDir(getResourceDir());
     			selectionTag.setResourceId(getResourceId());
-    			selectionTag.setStyle("display: NONE");
+    			selectionTag.setStyle("display: NONE;");
     			selectionTag.setData(getData());
     			selectionTag.setDataScope(getDataScope());
     			selectionTag.setShowLabel(false);
@@ -616,7 +616,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 						    else
 								nodeIconId.delete(0, nodeIconId.length());
 							
-							nodeIconId.append("nodeIcon");
+							nodeIconId.append(AttributeConstants.NODE_ICON_KEY);
 							nodeIconId.append(nodeIndex.toString().hashCode());
 							
 							systemController.setAttribute(nodeIconId.toString(), nodeIconData, ScopeType.SESSION);
