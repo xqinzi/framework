@@ -31,7 +31,7 @@ function setCurrentGuide(guideName, guidesName, guideOnSelect){
 	if(currentGuideDefinition && currentGuideContent){
 		changeStyle(currentGuideDefinition, "guide");
 
-		currentGuideContent.style.display = "none";
+		currentGuideContent.style.display = "NONE";
 	}
 		
 	if(guideDefinition && guideContent){

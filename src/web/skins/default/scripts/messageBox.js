@@ -16,10 +16,10 @@ function showHideErrorTraceDetails(name){
 	var messageBoxErrorTrace = document.getElementById(name + ".errorTrace");
 
 	if(messageBox && messageBoxErrorTrace){
-		if(messageBoxErrorTrace.style.display == "none")
+		if(messageBoxErrorTrace.style.display == "NONE")
 			messageBoxErrorTrace.style.display = "";
 		else
-			messageBoxErrorTrace.style.display = "none";
+			messageBoxErrorTrace.style.display = "NONE";
 		
 		centralizeObject(messageBox);
 	}

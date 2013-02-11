@@ -576,9 +576,9 @@ function showLoadingBox(form){
 	var loadingBoxObjectError = (targetObject ? targetObject.document.getElementById(loadingBoxObjectId + "Error") : document.getElementById(loadingBoxObjectId + "Error"));
 	
 	if(loadingBoxObject && loadingBoxObjectInfo && loadingBoxObjectError){
-		loadingBoxObject.style.visibility   = "visible";
+		loadingBoxObject.style.visibility   = "VISIBLE";
 		loadingBoxObjectInfo.style.display  = "";
-		loadingBoxObjectError.style.display = "none";
+		loadingBoxObjectError.style.display = "NONE";
 			
 		centralizeObject(loadingBoxObject, target);
 	}	
@@ -638,31 +638,45 @@ function buildFormRequest(){
 		element     = elements[cont1];
 		elementType = element.type;
 		
-		if(elementType && elementType.indexOf("file") < 0){
-			if(element.disabled == false && element.name != ""){
-				if(elementType){
-					elementType = element.type.toLowerCase();
-					
-					if(elementType.indexOf("select-") >= 0){
-						options = element.options;
+		if(elementType){
+			elementType = elementType.toUpperCase();
+			
+			if(elementType.indexOf("FILE") < 0){
+				if(element.disabled == false && element.name != ""){
+					if(elementType){
+						elementType = element.type.toUpperCase();
 						
-						for(cont2 = 0 ; cont2 < options.length ; cont2++){
-							option = options[cont2];
+						if(elementType.indexOf("SELECT-") >= 0){
+							options = element.options;
 							
-							if(option.selected == true){
+							for(cont2 = 0 ; cont2 < options.length ; cont2++){
+								option = options[cont2];
+								
+								if(option.selected == true){
+									if(result.length > 0)
+										result += "&";
+								
+									result += element.name;
+									result += "=";
+									
+									if(option.value && option.value.length > 0)
+										result += encodeURI(option.value);
+								}
+							}
+						}
+						else if(elementType == "RADIO" || elementType == "CHECKBOX"){
+							if(element.checked == true){
 								if(result.length > 0)
 									result += "&";
-							
+									
 								result += element.name;
 								result += "=";
 								
-								if(option.value && option.value.length > 0)
-									result += encodeURI(option.value);
-							}
+								if(element.value && element.value.length > 0)
+									result += encodeURI(element.value);
+							}		
 						}
-					}
-					else if(elementType == "radio" || elementType == "checkbox"){
-						if(element.checked == true){
+						else if(elementType != "BUTTON"){
 							if(result.length > 0)
 								result += "&";
 								
@@ -671,19 +685,9 @@ function buildFormRequest(){
 							
 							if(element.value && element.value.length > 0)
 								result += encodeURI(element.value);
-						}		
-					}
-					else if(elementType != "button"){
-						if(result.length > 0)
-							result += "&";
-							
-						result += element.name;
-						result += "=";
-						
-						if(element.value && element.value.length > 0)
-							result += encodeURI(element.value);
-					}
-				}	
+						}
+					}	
+				}
 			}
 		}
 	}
@@ -834,7 +838,7 @@ function processFormResponse(requestHandler){
 			var loadingBoxObjectError = document.getElementById(loadingBoxObjectId + "Error");
 			
 			if(loadingBoxObject && loadingBoxObjectInfo && loadingBoxObjectError){
-				loadingBoxObjectInfo.style.display  = "none";
+				loadingBoxObjectInfo.style.display  = "NONE";
 				loadingBoxObjectError.style.display = "";
 				
 				centralizeObject(loadingBoxObject);
@@ -895,6 +899,9 @@ function showClock(){
 	}
 }
 
+/**
+ * Chama a ação para a troca do tema (skin) atual.
+ */
 function changeCurrentSkin(){
 	document.forms[0].forward.value            = "";
 	document.forms[0].forwardOnFail.value      = "";
@@ -905,6 +912,9 @@ function changeCurrentSkin(){
 	submitForm(document.forms[0]);
 }
 
+/**
+ * Chama a ação para a troca do idioma atual.
+ */
 function changeCurrentLanguage(){
 	document.forms[0].forward.value            = "";
 	document.forms[0].forwardOnFail.value      = "";

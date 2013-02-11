@@ -66,7 +66,7 @@ function selectMenuItem(menuItem, menuItemClass){
                    		if(bufferMenuId == parentMenuId)
                        		break;
 
-                   		bufferMenu.style.visibility = "hidden";
+                   		bufferMenu.style.visibility = "HIDDEN";
                    	}
                    	else
                    		break;
@@ -86,7 +86,7 @@ function selectMenuItem(menuItem, menuItemClass){
                	menu.style.top  = parseInt(menuItem.offsetTop);
             }
 
-            menu.style.visibility = "visible";
+            menu.style.visibility = "VISIBLE";
         
             currentMenu = menu;
         }
@@ -124,7 +124,7 @@ function hideAllMenus(){
                	if(menuId.indexOf(".menuBar") >= 0)
                    	break;
 
-               	menu.style.visibility = "hidden";
+               	menu.style.visibility = "HIDDEN";
            	}
            	else
                	break;
@@ -151,11 +151,11 @@ function hideAllParentMenus(){
  * 
  * @param name String contendo o identificador do componente.
  */
-function makeStaticMenu(name){
+function renderStaticMenu(name){
 	var object = document.getElementById(name + ".menuBar");
 	
 	if(object)
 		object.style.top = document.body.scrollTop + "px";
 
-	setTimeout("makeStaticMenu(\"" + name + "\")", 0);
+	setTimeout("renderStaticMenu(\"" + name + "\")", 0);
 }
