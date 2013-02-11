@@ -42,7 +42,7 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         uploadFilenamePropertyTag.setPageContext(pageContext);
         uploadFilenamePropertyTag.setId(tagId.toString());
         uploadFilenamePropertyTag.setName(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
-        uploadFilenamePropertyTag.setValue(getFileNameProperty());
+        uploadFilenamePropertyTag.setValue(getFilenameProperty());
         uploadFilenamePropertyTag.doStartTag();
         uploadFilenamePropertyTag.doEndTag();
 
