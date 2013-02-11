@@ -27,10 +27,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	private String  nodeIconStyleClass          = "";
 	private String  nodeLabelStyleClass         = "";
 	private String  nodeLabelSelectedStyleClass = "";
-	private String  openLeafIconStyleClass      = "";
-	private String  closeLeafIconStyleClass     = "";
-	private String  openedFolderIconStyleClass  = "";
-	private String  closedFolderIconStyleClass  = "";
+    private String  expandedNodeIconStyleClass  = "";
+	private String  collapsedNodeIconStyleClass = "";
+	private String  openedNodeIconStyleClass    = "";
+	private String  closedNodeIconStyleClass    = "";
 	private String  onSelect                    = "";
 	private String  onUnSelect                  = "";
 	private Integer expandLevel                 = 0;
@@ -143,17 +143,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * 
 	 * @return String contendo o estilo CSS.
 	 */
-	public String getClosedFolderIconStyleClass(){
-		return closedFolderIconStyleClass;
+	public String getClosedNodeIconStyleClass(){
+		return closedNodeIconStyleClass;
 	}
 
 	/**
 	 * Define o estilo CSS para o ícone do nó fechado.
 	 * 
-	 * @param closedFolderIconStyleClass String contendo o estilo CSS.
+	 * @param closedNodeIconStyleClass String contendo o estilo CSS.
 	 */
-	public void setClosedFolderIconStyleClass(String closedFolderIconStyleClass){
-		this.closedFolderIconStyleClass = closedFolderIconStyleClass;
+	public void setClosedNodeIconStyleClass(String closedNodeIconStyleClass){
+		this.closedNodeIconStyleClass = closedNodeIconStyleClass;
 	}
 
 	/**
@@ -161,17 +161,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * 
 	 * @return String contendo o estilo CSS.
 	 */
-	public String getCloseLeafIconStyleClass(){
-		return closeLeafIconStyleClass;
+	public String getCollapsedNodeIconStyleClass(){
+		return collapsedNodeIconStyleClass;
 	}
 
 	/**
 	 * Define o estilo CSS para o ícone de expansão do nó.
 	 * 
-	 * @param closeLeafIconStyleClass String contendo o estilo CSS.
+	 * @param collapsedNodeIconStyleClass String contendo o estilo CSS.
 	 */
-	public void setCloseLeafIconStyleClass(String closeLeafIconStyleClass){
-		this.closeLeafIconStyleClass = closeLeafIconStyleClass;
+	public void setCollapsedNodeIconStyleClass(String collapsedNodeIconStyleClass){
+		this.collapsedNodeIconStyleClass = collapsedNodeIconStyleClass;
 	}
 
 	/**
@@ -179,17 +179,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * 
 	 * @return String contendo o estilo CSS.
 	 */
-	public String getOpenedFolderIconStyleClass(){
-		return openedFolderIconStyleClass;
+	public String getOpenedNodeIconStyleClass(){
+		return openedNodeIconStyleClass;
 	}
 
 	/**
 	 * Define o estilo CSS para o ícone do nó expandido.
 	 * 
-	 * @param openedFolderIconStyleClass String contendo o estilo CSS.
+	 * @param openedNodeIconStyleClass String contendo o estilo CSS.
 	 */
-	public void setOpenedFolderIconStyleClass(String openedFolderIconStyleClass){
-		this.openedFolderIconStyleClass = openedFolderIconStyleClass;
+	public void setOpenedNodeIconStyleClass(String openedNodeIconStyleClass){
+		this.openedNodeIconStyleClass = openedNodeIconStyleClass;
 	}
 
 	/**
@@ -197,17 +197,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * 
 	 * @return String contendo o estilo CSS.
 	 */
-	public String getOpenLeafIconStyleClass(){
-		return openLeafIconStyleClass;
+	public String getExpandedNodeIconStyleClass(){
+		return expandedNodeIconStyleClass;
 	}
 
 	/**
 	 * Define o estilo CSS para o ícone para esconder o nó.
 	 * 
-	 * @param openLeafIconStyleClass String contendo o estilo CSS.
+	 * @param expandedNodeIconStyleClass String contendo o estilo CSS.
 	 */
-	public void setOpenLeafIconStyleClass(String openLeafIconStyleClass){
-		this.openLeafIconStyleClass = openLeafIconStyleClass;
+	public void setExpandedNodeIconStyleClass(String expandedNodeIconStyleClass){
+		this.expandedNodeIconStyleClass = expandedNodeIconStyleClass;
 	}
 
 	/**
@@ -282,17 +282,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
         if(nodeLabelSelectedStyleClass.length() == 0)
             nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_TREEVIEW_NODE_LABEL_SELECTED_STYLE_CLASS;
         
-        if(openLeafIconStyleClass.length() == 0)
-            openLeafIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPEN_LEAF_ICON_STYLE_CLASS;
+        if(expandedNodeIconStyleClass.length() == 0)
+            expandedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPEN_LEAF_ICON_STYLE_CLASS;
 
-        if(closeLeafIconStyleClass.length() == 0)
-            closeLeafIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSE_LEAF_ICON_STYLE_CLASS;
+        if(collapsedNodeIconStyleClass.length() == 0)
+            collapsedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSE_LEAF_ICON_STYLE_CLASS;
 
-        if(openedFolderIconStyleClass.length() == 0)
-            openedFolderIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPENED_FOLDER_ICON_STYLE_CLASS;
+        if(openedNodeIconStyleClass.length() == 0)
+            openedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_OPENED_FOLDER_ICON_STYLE_CLASS;
 
-        if(closedFolderIconStyleClass.length() == 0)
-            closedFolderIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSED_FOLDER_ICON_STYLE_CLASS;
+        if(closedNodeIconStyleClass.length() == 0)
+            closedNodeIconStyleClass = TaglibConstants.DEFAULT_TREEVIEW_CLOSED_FOLDER_ICON_STYLE_CLASS;
 
         super.initialize();
 	}
@@ -488,10 +488,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		Object            nodeValue             = null;
 		String            nodeValueLabel        = "";
 		StringBuilder     nodeValueBuffer       = null;
-		StringBuilder     nodeCollapsedId       = null;
-		HiddenPropertyTag nodeCollapsedTag      = null;
-		String            nodeIsCollapsedBuffer = "";
-		Boolean           nodeIsCollapsed       = false;
+		StringBuilder     nodeExpandedId        = null;
+		HiddenPropertyTag nodeExpandedTag       = null;
+		String            nodeIsExpandedBuffer  = "";
+		Boolean           nodeIsExpanded        = false;
 		Boolean           nodeIsSelected        = false;
 		String            nodeForward           = "";
 		String            nodeForwardOnFail     = "";
@@ -654,25 +654,25 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					println("</td>");
 				}
 				else{
-				    if(nodeCollapsedId == null)
-				        nodeCollapsedId = new StringBuilder();
+				    if(nodeExpandedId == null)
+				        nodeExpandedId = new StringBuilder();
 				    else
-						nodeCollapsedId.delete(0, nodeCollapsedId.length());
+				        nodeExpandedId.delete(0, nodeExpandedId.length());
 					
-					nodeCollapsedId.append(nodeId);
-					nodeCollapsedId.append(".");
-					nodeCollapsedId.append(AttributeConstants.IS_COLLAPSED_KEY);
+				    nodeExpandedId.append(nodeId);
+				    nodeExpandedId.append(".");
+				    nodeExpandedId.append(AttributeConstants.IS_NODE_EXPANDED_KEY);
 
-					nodeIsCollapsedBuffer = StringUtil.trim(systemController.getRequest().getParameter(nodeCollapsedId.toString()));
+					nodeIsExpandedBuffer = StringUtil.trim(systemController.getRequest().getParameter(nodeExpandedId.toString()));
 
-					if(nodeIsCollapsedBuffer.length() == 0){
+					if(nodeIsExpandedBuffer.length() == 0){
 						if(getExpandLevel() <= level)
-							nodeIsCollapsed = false;
+							nodeIsExpanded = false;
 						else
-							nodeIsCollapsed = true;
+							nodeIsExpanded = true;
 					}
 					else
-						nodeIsCollapsed = Boolean.parseBoolean(nodeIsCollapsedBuffer);
+					    nodeIsExpanded = Boolean.parseBoolean(nodeIsExpandedBuffer);
 
 					print("<td id=\"");
 					print(nodeId);
@@ -680,10 +680,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					print(AttributeConstants.NODE_EXPAND_ICON_KEY);
 					print("\" class=\"");
 
-					if(!nodeIsCollapsed)
-						print(openLeafIconStyleClass);
+					if(nodeIsExpanded)
+						print(expandedNodeIconStyleClass);
 					else
-						print(closeLeafIconStyleClass);
+						print(collapsedNodeIconStyleClass);
 
 					print("\" onClick=\"");
 					
@@ -702,13 +702,13 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     				print("showHideNode('");
 					print(nodeId);
 					print("', '");
-					print(openLeafIconStyleClass);
+					print(expandedNodeIconStyleClass);
 					print("', '");
-					print(closeLeafIconStyleClass);
+					print(collapsedNodeIconStyleClass);
 					print("', '");
-					print(openedFolderIconStyleClass);
+					print(openedNodeIconStyleClass);
 					print("', '");
-					print(closedFolderIconStyleClass);
+					print(closedNodeIconStyleClass);
 					print("'");
 					
 					if(nodeOnExpandAction.length() > 0){
@@ -772,10 +772,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 						print(AttributeConstants.NODE_ICON_KEY);
 						print("\" class=\"");
 
-						if(!nodeIsCollapsed)
-							print(closedFolderIconStyleClass);
+						if(!nodeIsExpanded)
+							print(closedNodeIconStyleClass);
 						else
-							print(openedFolderIconStyleClass);
+							print(openedNodeIconStyleClass);
 
 						println("\">");
 					}
@@ -965,18 +965,18 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				print(nodeId);
 				print("\"");
 
-				if(!nodeIsCollapsed)
+				if(!nodeIsExpanded)
 					print(" style=\"display: NONE;\"");
 
 				println(">");
 
 				if(node.hasChildNodes() || nodeOnExpandAction.length() > 0){
-					nodeCollapsedTag = new HiddenPropertyTag();
-					nodeCollapsedTag.setPageContext(pageContext);
-					nodeCollapsedTag.setName(nodeCollapsedId.toString());
-					nodeCollapsedTag.setValue(nodeIsCollapsed);
-					nodeCollapsedTag.doStartTag();
-					nodeCollapsedTag.doEndTag();
+					nodeExpandedTag = new HiddenPropertyTag();
+					nodeExpandedTag.setPageContext(pageContext);
+					nodeExpandedTag.setName(nodeExpandedId.toString());
+					nodeExpandedTag.setValue(nodeIsExpanded);
+					nodeExpandedTag.doStartTag();
+					nodeExpandedTag.doEndTag();
 
 					if(node.hasChildNodes()){
 						nodeChilds = node.getChildNodes();
@@ -1012,10 +1012,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	    setNodeIconStyleClass("");
 	    setNodeLabelSelectedStyleClass("");
 	    setNodeLabelStyleClass("");
-	    setOpenLeafIconStyleClass("");
-	    setCloseLeafIconStyleClass("");
-	    setOpenedFolderIconStyleClass("");
-	    setClosedFolderIconStyleClass("");
+	    setExpandedNodeIconStyleClass("");
+	    setCollapsedNodeIconStyleClass("");
+	    setOpenedNodeIconStyleClass("");
+	    setClosedNodeIconStyleClass("");
 	    setOnSelect("");
 	    setOnUnSelect("");
 	    setExpandLevel(0);
