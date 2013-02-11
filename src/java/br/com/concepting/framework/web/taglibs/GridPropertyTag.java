@@ -1822,8 +1822,10 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         				
             			print(" document.");
         				print(actionForm);
-        				print(".action.value = '");
-        				print(ActionType.REFRESH);
+        				print(".");
+        				print(AttributeConstants.ACTION_KEY);
+        				print(".value = '");
+        				print(ActionType.REFRESH.getMethod());
         				print("'; submitForm(document.");
         				print(actionForm);
         				print(");\"");
