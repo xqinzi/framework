@@ -64,7 +64,7 @@
  * Estilo que define o ícone de informação.
  */
 .infoIcon{
-	background: url(../images/infoIcon.png) no-repeat;
+	background: url(../images/infoIcon.png) NO-REPEAT;
 	width     : 36px;
 	height    : 36px;
 }
@@ -73,7 +73,7 @@
  * Estilo que define o ícone de erro.
  */
 .errorIcon{
-	background: url(../images/errorIcon.gif) no-repeat;
+	background: url(../images/errorIcon.gif) NO-REPEAT;
 	width     : 36px;
 	height    : 36px;
 }
@@ -82,7 +82,7 @@
  * Estilo que define o ícone de alerta.
  */
 .warningIcon{
-	background: url(../images/warningIcon.gif) no-repeat;
+	background: url(../images/warningIcon.gif) NO-REPEAT;
 	width     : 36px;
 	height    : 36px;
 }
@@ -91,7 +91,7 @@
  * Estilo que define o ícone de validação.
  */
 .validationIcon{
-	background: url(../images/warningIcon.gif) no-repeat;
+	background: url(../images/warningIcon.gif) NO-REPEAT;
 	width     : 36px;
 	height    : 36px;
 }

@@ -195,7 +195,7 @@
  * Estilo que define o ícone da caixa de carregamento da página.
  */
 .loadingBoxIcon{
-	background: url(../images/loadingBoxIcon.gif) no-repeat;
+	background: url(../images/loadingBoxIcon.gif) NO-REPEAT;
 	width     : 36px;
 	height    : 36px;
 }
@@ -449,7 +449,7 @@ option:hover{
  * Estilo que define o botão cancelar.
  */
 .cancelButton{
-	background: url("../images/cancelButton.png") no-repeat;
+	background: url("../images/cancelButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -461,7 +461,7 @@ option:hover{
  * Estilo que define o botão fechar do componente.
  */
 .closeButton{
-	background: url("../images/closeButton.png") no-repeat;
+	background: url("../images/closeButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -480,7 +480,7 @@ option:hover{
  * Estilo que define o botão confirmar.
  */
 .confirmButton{
-	background: url("../images/confirmButton.png") no-repeat;
+	background: url("../images/confirmButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -491,7 +491,7 @@ option:hover{
  * Estilo que define o botão undo.
  */
 .undoButton{
-	background: url("../images/backButton.png") no-repeat;
+	background: url("../images/backButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -502,7 +502,7 @@ option:hover{
  * Estilo que define o botão voltar.
  */
 .backButton{
-	background: url("../images/backButton.png") no-repeat;
+	background: url("../images/backButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -513,7 +513,7 @@ option:hover{
  * Estilo que define o botão de pesquisa.
  */
 .searchButton{
-	background: url("../images/searchButton.png") no-repeat;
+	background: url("../images/searchButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -524,7 +524,7 @@ option:hover{
  * Estilo que define o botão de salvar.
  */
 .saveButton{
-	background: url("../images/saveButton.png") no-repeat;
+	background: url("../images/saveButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -535,7 +535,7 @@ option:hover{
  * Estilo que define o botão de inclusão.
  */
 .addButton{
-	background: url("../images/addButton.png") no-repeat;
+	background: url("../images/addButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -546,7 +546,7 @@ option:hover{
  * Estilo que define o botão de edição.
  */
 .editButton{
-	background: url("../images/editButton.png") no-repeat;
+	background: url("../images/editButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -557,7 +557,7 @@ option:hover{
  * Estilo que define o botão de exclusão.
  */
 .deleteButton{
-	background: url("../images/deleteButton.png") no-repeat;
+	background: url("../images/deleteButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -568,7 +568,7 @@ option:hover{
  * Estilo que define o botão de impressão.
  */
 .printButton{
-	background: url("../images/printButton.png") no-repeat;
+	background: url("../images/printButton.png") NO-REPEAT;
 	width     : 28px;
 	height    : 24px;
 	border    : NONE;
@@ -579,7 +579,7 @@ option:hover{
  * Estilo que define o botão de upload.
  */
 .uploadButton{
-	background: url("../images/uploadButton.png") no-repeat;
+	background: url("../images/uploadButton.png") NO-REPEAT;
 	width     : 26px;
 	height    : 26px;
 	border    : NONE;
@@ -590,7 +590,7 @@ option:hover{
  * Estilo que define o ícone para arquivos PDF.
  */
 .pdfIcon{
-	background: url("../images/pdfIcon.png") no-repeat;
+	background: url("../images/pdfIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -600,7 +600,7 @@ option:hover{
  * Estilo que define o ícone para arquivos binários.
  */
 .binaryIcon{
-	background: url("../images/binaryIcon.png") no-repeat;
+	background: url("../images/binaryIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -610,7 +610,7 @@ option:hover{
  * Estilo que define o ícone para arquivos RTF.
  */
 .rtfIcon{
-	background: url("../images/rtfIcon.png") no-repeat;
+	background: url("../images/rtfIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -620,7 +620,7 @@ option:hover{
  * Estilo que define o ícone para arquivos do MS-Word 2000.
  */
 .docIcon{
-	background: url("../images/docIcon.png") no-repeat;
+	background: url("../images/docIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -630,7 +630,7 @@ option:hover{
  * Estilo que define o ícone para arquivos do MS-Word 2003 ou superior.
  */
 .docxIcon{
-	background: url("../images/docIcon.png") no-repeat;
+	background: url("../images/docIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -640,7 +640,7 @@ option:hover{
  * Estilo que define o ícone para arquivos do MS-Excel 2000.
  */
 .xlsIcon{
-	background: url("../images/xlsIcon.png") no-repeat;
+	background: url("../images/xlsIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -650,7 +650,7 @@ option:hover{
  * Estilo que define o ícone para arquivos do MS-Excel 2003 ou superior.
  */
 .xlsxIcon{
-	background: url("../images/xlsIcon.png") no-repeat;
+	background: url("../images/xlsIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -660,7 +660,7 @@ option:hover{
  * Estilo que define o ícone para arquivos de imagem GIF.
  */
 .gifIcon{
-	background: url("../images/gifIcon.png") no-repeat;
+	background: url("../images/gifIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -670,7 +670,7 @@ option:hover{
  * Estilo que define o ícone para arquivos de imagem JPG.
  */
 .jpgIcon{
-	background: url("../images/jpgIcon.png") no-repeat;
+	background: url("../images/jpgIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -680,7 +680,7 @@ option:hover{
  * Estilo que define o ícone para arquivos de imagem PNG.
  */
 .pngIcon{
-	background: url("../images/pngIcon.png") no-repeat;
+	background: url("../images/pngIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -690,7 +690,7 @@ option:hover{
  * Estilo que define o ícone para arquivos HTML.
  */
 .htmlIcon{
-	background: url("../images/htmlIcon.png") no-repeat;
+	background: url("../images/htmlIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -700,7 +700,7 @@ option:hover{
  * Estilo que define o ícone para arquivos texto.
  */
 .txtIcon{
-	background: url("../images/txtIcon.png") no-repeat;
+	background: url("../images/txtIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
@@ -710,7 +710,7 @@ option:hover{
  * Estilo que define o ícone para arquivos XML.
  */
 .xmlIcon{
-	background: url("../images/xmlIcon.png") no-repeat;
+	background: url("../images/xmlIcon.png") NO-REPEAT;
 	width     : 50px;
 	height    : 50px;
 	cursor    : POINTER;
