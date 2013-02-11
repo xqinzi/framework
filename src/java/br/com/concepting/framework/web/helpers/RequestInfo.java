@@ -13,6 +13,7 @@ import br.com.concepting.framework.web.types.ScopeType;
 public class RequestInfo{
     private String          currentGuide         = "";
     private String          currentNode          = "";
+    private String          currentSection       = "";
     private String          data                 = "";
     private ScopeType       dataScope            = null;
     private Integer         dataStartIndex       = 0;
@@ -30,6 +31,24 @@ public class RequestInfo{
 	private String          sortProperty         = "";
     private String          value                = "";
     private String          values[]             = null;
+    
+    /**
+     * Retorna o identificador da seção atual.
+     * 
+     * @return String contendo o identificador da seção atual.
+     */
+    public String getCurrentSection(){
+        return currentSection;
+    }
+
+    /**
+     * Define o identificador da seção atual.
+     * 
+     * @param currentSession String contendo o identificador da seção atual.
+     */
+    public void setCurrentSection(String currentSection){
+        this.currentSection = currentSection;
+    }
 
     /**
      * Retorna a ação de paginação executada.
