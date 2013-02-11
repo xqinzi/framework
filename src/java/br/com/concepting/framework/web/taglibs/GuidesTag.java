@@ -6,9 +6,10 @@ import java.util.List;
 
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.AlignmentType;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.helpers.RequestInfo;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ComponentType;
 
 /**
  * Classe que define o componente visual para um conjunto de guias de navegação.
@@ -103,7 +104,9 @@ public class GuidesTag extends BaseActionFormElementTag{
         
         println(">");
         println("<tr>");
-        println("<td class=\"guidesDefinition\">");
+        print("<td class=\"");
+        print(TaglibConstants.DEFAULT_GUIDES_DEFINITION_STYLE_CLASS);
+        println("\">");
 	}
 	
 	/**
@@ -185,14 +188,20 @@ public class GuidesTag extends BaseActionFormElementTag{
         currentGuideTag.doStartTag();
         currentGuideTag.doEndTag();
 
-        println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"panel\">");
+        print("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"");
+        print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+        println("\">");
 		println("<tr>");
 
 		for(GuideTag guideTag : guidesTags){
 			guideName  = guideTag.getName();
 			guideWidth = guideTag.getWidth();
 
-            print("<td class=\"guideDefinition\" valign=\"bottom\" width=\"");
+		    print("<td class=\"");
+		    print(TaglibConstants.DEFAULT_GUIDE_DEFINITION_STYLE_CLASS);
+            print(" valign=\"");
+            print(AlignmentType.BOTTOM);
+            println("\" width=\"");
 
             if(guideWidth.length() > 0)
 				print(guideWidth);
@@ -207,13 +216,17 @@ public class GuidesTag extends BaseActionFormElementTag{
             
             println(">");
             
-            println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"panel\">");
+            print("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"");
+            print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+            println("\">");
             println("<tr>");
             print("<td id=\"");
 			print(name);
 			print(".");
 			print(guideName);
-            print(".guideDefinition\" class=\"");
+            print(".");
+            print(AttributeConstants.GUIDE_DEFINITION_KEY);
+            print("\" class=\"");
 
 			if(guideName.equals(currentGuide))
 				print("currentGuide");
@@ -290,7 +303,9 @@ public class GuidesTag extends BaseActionFormElementTag{
 		println("</tr>");
 		
 		println("<tr>");
-		println("<td class=\"guideDefinition\">");
+		print("<td class=\"");
+		print(TaglibConstants.DEFAULT_GUIDE_DEFINITION_STYLE_CLASS);
+		println("\">");
 
 		Integer                cont                   = 0;
 		NextGuideButtonTag     nextGuideButtonTag     = null;
@@ -309,14 +324,18 @@ public class GuidesTag extends BaseActionFormElementTag{
 			print(name);
 			print(".");
 			print(guideName);
-			print(".guideContent\"");
+			print(".");
+			print(AttributeConstants.GUIDE_CONTENT_KEY);
+			print("\"");
 
 			if(!guideName.equals(currentGuide))
-				print(" style=\"display: none;\"");
+				print(" style=\"display: NONE;\"");
 
 			println(">");
 			
-			print("<table class=\"currentGuideContent\"");
+			print("<table class=\"");
+			print(TaglibConstants.DEFAULT_GUIDE_CONTENT_STYLE_CLASS);
+			print("\"");
 
 			if(guideHeight.length() > 0){
 				print(" height=\"");
@@ -334,7 +353,9 @@ public class GuidesTag extends BaseActionFormElementTag{
 			if(showNavigation){
  				if(guidesSize > 1){
  					println("<tr>");
- 					println("<td class=\"currentGuideBoxButtons\">");
+ 					print("<td class=\"");
+ 					print(TaglibConstants.DEFAULT_GUIDE_BUTTONS_STYLE_CLASS);
+ 					print("\">");
  
  					if(cont > 0 && isEnabled()){
  						if(guidesTags.get(cont - 1).isEnabled()){
@@ -367,7 +388,8 @@ public class GuidesTag extends BaseActionFormElementTag{
 			    content.append(guideName);
 			    content.append("\", \"");
 			    content.append(name);
-			    content.append("\");\n");
+			    content.append("\");");
+			    content.append(StringUtil.getLineBreak());
 			    
 			    scriptTag = new ScriptTag();
 			    scriptTag.setPageContext(pageContext);
