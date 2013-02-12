@@ -641,6 +641,7 @@ public class SystemController{
 		
         requestInfo.setCurrentGuide(getRequestInfoCurrentGuide(name));
         requestInfo.setCurrentNode(getRequestInfoCurrentNode(name));
+        requestInfo.setCurrentSection(getRequestInfoCurrentSection(name));
         requestInfo.setData(getRequestInfoData(name, false));
         requestInfo.setDataScope(getRequestInfoDataScope(name, false));
         requestInfo.setDataStartIndex(getRequestInfoDataStartIndex(name));
@@ -751,6 +752,21 @@ public class SystemController{
         key.append(name);
         key.append(".");
         key.append(AttributeConstants.CURRENT_NODE_KEY);
+
+        return StringUtil.trim(getRequest().getParameter(key.toString()));
+    }
+
+    /**
+     * Retorna a seção atual.
+     * 
+     * @param name String contendo o identificador do componente.
+     */
+    private String getRequestInfoCurrentSection(String name){
+        StringBuilder key = new StringBuilder();
+
+        key.append(name);
+        key.append(".");
+        key.append(AttributeConstants.CURRENT_SECTION_KEY);
 
         return StringUtil.trim(getRequest().getParameter(key.toString()));
     }
