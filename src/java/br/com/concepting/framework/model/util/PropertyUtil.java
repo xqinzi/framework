@@ -32,6 +32,8 @@ import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.util.helpers.Currency;
 import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.helpers.Node;
 
@@ -79,62 +81,162 @@ public abstract class PropertyUtil extends PropertyUtils{
 		}
 	}
 
+    /**
+     * Indica se a classe é do tipo String.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
 	public static Boolean isString(Class clazz){
 	    return (clazz.equals(String.class));
 	}
 	
+    /**
+     * Indica se a classe é do tipo Boolean.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
 	public static Boolean isBoolean(Class clazz){
         return (clazz.equals(boolean.class) || clazz.equals(Boolean.class));
 	}
 	
+    /**
+     * Indica se a classe é do tipo Date.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
 	public static Boolean isDate(Class clazz){
 	    return clazz.equals(Date.class);
 	}
 	
+    /**
+     * Indica se a classe é do tipo DateTime.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isTime(Class clazz){
         return clazz.equals(DateTime.class);
     }
 
+    /**
+     * Indica se a classe é um array de bytes.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isByteArray(Class clazz){
 	    return (clazz.equals(byte[].class) || clazz.equals(Byte[].class));
 	}
 	
+    /**
+     * Indica se a classe é do tipo Integer.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
 	public static Boolean isInteger(Class clazz){
 	    return (clazz.equals(int.class) || clazz.equals(Integer.class));
 	}
 	
+    /**
+     * Indica se a classe é do tipo Long.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isLong(Class clazz){
         return (clazz.equals(long.class) || clazz.equals(Long.class));
     }
     
+    /**
+     * Indica se a classe é do tipo Short.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isShort(Class clazz){
         return (clazz.equals(short.class) || clazz.equals(Short.class));
     }
     
+    /**
+     * Indica se a classe é do tipo Byte.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isByte(Class clazz){
         return (clazz.equals(byte.class) || clazz.equals(Byte.class));
     }
     
+    /**
+     * Indica se a classe é do tipo Float.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isFloat(Class clazz){
         return (clazz.equals(float.class) || clazz.equals(Float.class));
     }
 
+    /**
+     * Indica se a classe é do tipo Double.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isDouble(Class clazz){
         return (clazz.equals(double.class) || clazz.equals(Double.class));
     }
 
+    /**
+     * Indica se a classe é do tipo BigInteger.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isBigInteger(Class clazz){
         return (clazz.equals(BigInteger.class));
     }
 
+    /**
+     * Indica se a classe é do tipo BigDecimal.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isBigDecimal(Class clazz){
         return (clazz.equals(BigDecimal.class));
     }
 
+    /**
+     * Indica se a classe é um número.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isNumber(Class clazz){
         return (isByte(clazz) || isShort(clazz) || isInteger(clazz) || isLong(clazz) || isFloat(clazz) || isDouble(clazz) || isBigInteger(clazz) || isBigDecimal(clazz));
 	}
 	
+    /**
+     * Indica se a classe é um número.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
+    public static Boolean isCurrency(Class clazz){
+        return (clazz.equals(Currency.class));
+    }
+
+    /**
+     * Indica se a classe é um modelo de dados.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
     public static Boolean isModel(Class clazz){
         Class superClass = clazz;
         
@@ -148,6 +250,12 @@ public abstract class PropertyUtil extends PropertyUtils{
         return (clazz.getAnnotation(Model.class) != null && superClass.equals(BaseModel.class));
 	}
 	
+    /**
+     * Indica se a classe é uma coleção.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
 	public static Boolean isCollection(Class clazz){
         Class superClass = clazz;
         
@@ -161,6 +269,12 @@ public abstract class PropertyUtil extends PropertyUtils{
         return (superClass.equals(AbstractCollection.class) || superClass.equals(Collection.class));
 	}
 	
+    /**
+     * Indica se a classe é um Enum.
+     * 
+     * @param clazz Classe a ser verificada.
+     * @return True/False.
+     */
 	public static Boolean isEnum(Class clazz){
 	    return clazz.isEnum();
 	}
@@ -220,21 +334,14 @@ public abstract class PropertyUtil extends PropertyUtils{
 	 * Efetua a formatação de uma instância.
 	 *
 	 * @param instance Instância a ser formatada.
-	 * @return String formatada.
-	 */
-	public static String format(Object instance){
-		return format(instance, LanguageUtil.getDefaultLanguage());
-	}
-
-	/**
-	 * Efetua a formatação de uma instância.
-	 *
-	 * @param instance Instância a ser formatada.
 	 * @param language Instância contendo as propriedades do idioma desejado.
 	 * @return String formatada.
 	 */
 	public static String format(Object instance, Locale language){
-		return format(instance, false, language);
+	    if(language == null)
+	        return format(instance, null, "", false, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
+	    
+		return format(instance, null, "", false, Constants.DEFAULT_NUMBER_PRECISION, language);
 	}
 
 	/**
@@ -257,49 +364,68 @@ public abstract class PropertyUtil extends PropertyUtils{
 	 * @return String formatada.
 	 */
 	public static String format(Object instance, String pattern, Locale language){
-		return format(instance, null, pattern, false, language);
+	    if(language == null)
+	        format(instance, null, pattern, false, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
+	    
+		return format(instance, null, pattern, false, Constants.DEFAULT_NUMBER_PRECISION, language);
 	}
+	
+    /**
+     * Efetua a formatação de uma instância.
+     *
+     * @param instance Instância a ser formatada.
+     * @return String formatada.
+     */
+    public static String format(Object instance){
+        return format(instance, null, "", false, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
+    }
 
-	/**
+    /**
 	 * Efetua a formatação de uma instância.
 	 *
 	 * @param instance Instância a ser formatada.
 	 * @param useAdditionalFormatting Indica se deve ser usado o caracter separador de milhar quando 
-	 * a instância for uma valor numérico, ou se a máscara de formatação de data/horário deve ser 
-	 * utilizada quando a instância for uma data/horário.
+	 * a instância for uma valor numérico.
 	 * @return String formatada.
 	 */
 	public static String format(Object instance, Boolean useAdditionalFormatting){
-		return format(instance, useAdditionalFormatting, LanguageUtil.getDefaultLanguage());
+        return format(instance, null, "", useAdditionalFormatting, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
 	}
 
-	/**
+    /**
+     * Efetua a formatação de uma instância.
+     *
+     * @param instance Instância a ser formatada.
+     * @param useAdditionalFormatting Indica se deve ser usado o caracter separador de milhar quando 
+     * a instância for uma valor numérico.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @return String formatada.
+     */
+    public static String format(Object instance, Boolean useAdditionalFormatting, Locale language){
+        if(language == null)
+            return format(instance, null, "", useAdditionalFormatting, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
+        
+        return format(instance, null, "", useAdditionalFormatting, Constants.DEFAULT_NUMBER_PRECISION, language);
+    }
+
+    /**
 	 * Efetua a formatação de uma instância.
 	 *
 	 * @param instance Instância a ser formatada.
 	 * @param useAdditionalFormatting Indica se deve ser usado o caracter separador de milhar quando 
-	 * a instância for uma valor numérico, ou se a máscara de formatação de data/horário deve ser 
-	 * utilizada quando a instância for uma data/horário.
+	 * a instância for uma valor numérico.
+	 * @param precision Valor numérico contendo as decimais de precisão.
 	 * @param language Instância contendo as propriedades do idioma desejado.
 	 * @return String formatada.
 	 */
-	public static String format(Object instance, Boolean useAdditionalFormatting, Locale language){
-		return format(instance, null, "", useAdditionalFormatting, language);
-	}
-
-	/**
-	 * Efetua a formatação de uma instância.
-	 *
-	 * @param instance Instância a ser formatada.
-	 * @param pattern String contendo a máscara desejada.
-	 * @param useAdditionalFormatting Indica se deve ser usado o caracter separador de milhar quando 
-	 * a instância for uma valor numérico, ou se a máscara de formatação de data/horário deve ser
-	 * utilizada quando a instância for uma data/horário.
-	 * @param language Instância contendo as propriedades do idioma desejado.
-	 * @return String formatada.
-	 */
-	public static String format(Object instance, String pattern, Boolean useAdditionalFormatting, Locale language){
-		return format(instance, null, pattern, useAdditionalFormatting, language);
+	public static String format(Object instance, Boolean useAdditionalFormatting, Integer precision, Locale language){
+	    if(language == null)
+	        return format(instance, null, "", useAdditionalFormatting, precision, LanguageUtil.getDefaultLanguage());
+	    
+	    if(precision == null)
+	        return format(instance, null, "", useAdditionalFormatting, Constants.DEFAULT_NUMBER_PRECISION, language);
+	    
+		return format(instance, null, "", useAdditionalFormatting, precision, language);
 	}
 
 	/**
@@ -308,13 +434,14 @@ public abstract class PropertyUtil extends PropertyUtils{
 	 * @param instance Instância a ser formatada.
 	 * @param valueMap Mapa de valores das propriedades da instância.
 	 * @param pattern String contendo a máscara desejada.
-	 * @param useAdditionalFormatting Indica se deve ser usado o caracter separador de milhar quando 
-	 * a instância for uma valor numérico, ou se a máscara de formatação de data/horário deve ser 
-	 * utilizada quando a instância for uma data/horário.
+	 * @param useAdditionalFormatting Indica se deve ser usado o caracter separador de milhar quando
+     * a instância for uma valor numérico. 
+	 * @param precision Valor inteiro contendo o número de decimais de precisão. Usado quando
+	 * a instância for uma valor numérico.
 	 * @param language Instância contendo as propriedades do idioma desejado.
 	 * @return String formatada.
 	 */
-	public static String format(Object instance, Map valueMap, String pattern, Boolean useAdditionalFormatting, Locale language){
+	public static String format(Object instance, Map valueMap, String pattern, Boolean useAdditionalFormatting, Integer precision, Locale language){
 		String result = "";
 		
 		if(instance instanceof Date){
@@ -343,7 +470,7 @@ public abstract class PropertyUtil extends PropertyUtils{
             Number value = (Number)instance;
 		    
 			if(pattern.length() == 0)
-				result = NumberUtil.format(value, useAdditionalFormatting, language);
+				result = NumberUtil.format(value, useAdditionalFormatting, precision, language);
 			else
 				result = NumberUtil.format(value, pattern, language);
 		}
@@ -357,7 +484,7 @@ public abstract class PropertyUtil extends PropertyUtils{
 				if(valueMap != null)
 					item = valueMap.get(item);
 				
-				resultBuffer.append(format(item, pattern, useAdditionalFormatting, language));
+				resultBuffer.append(format(item, valueMap, pattern, useAdditionalFormatting, precision, language));
 			}
 			
 			result = resultBuffer.toString();
@@ -915,6 +1042,7 @@ public abstract class PropertyUtil extends PropertyUtils{
 		propertyInfo.setIsTime(isTime(propertyClass));
 		propertyInfo.setIsModel(isModel(propertyClass));
 		propertyInfo.setIsNumber(isNumber(propertyClass));
+		propertyInfo.setIsCurrency(isCurrency(propertyClass));
     		
 		if(propertyInfo.isCollection()){
 			Class collectionItemsClass = null;
@@ -972,6 +1100,8 @@ public abstract class PropertyUtil extends PropertyUtils{
     		propertyInfo.setComparePropertyId(propertyAnnotation.comparePropertyId());
     		propertyInfo.setWordCount(propertyAnnotation.wordCount());
     		propertyInfo.setTag(propertyAnnotation.tag());
+    		propertyInfo.setPrecision(propertyAnnotation.precision());
+    		propertyInfo.setLanguage(propertyAnnotation.language());
 		}
     			
     	return propertyInfo;
