@@ -444,7 +444,7 @@ public class ModelUtil{
      * Transforma um arquivo XML em uma lista de modelo de dados.
      * 
      * @param file Instância contendo as propriedades do arquivo XML.
-     * @oaram language Instância contendo as propriedades do idioma desejado.
+     * @param language Instância contendo as propriedades do idioma desejado.
      * @return Lista de modelo de dados.
      * @throws IOException
      */

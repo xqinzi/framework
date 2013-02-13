@@ -35,10 +35,22 @@ public class ModelInfo extends CachedObject{
 	private Boolean            generateService          = false;
 	private ServiceType        serviceType              = ServiceType.CLASS;
 	
+	/**
+	 * Retorna o identificador das configurações de persistência vinculada ao
+	 * modelo de dados.
+	 * 
+	 * @return String contendo o identificador da configuração de persistência.
+	 */
 	public String getPersistenceResourceId(){
         return persistenceResourceId;
     }
 
+    /**
+     * Define o identificador das configurações de persistência vinculada ao
+     * modelo de dados.
+     * 
+     * @param persistenceResourceId String contendo o identificador da configuração de persistência.
+     */
     public void setPersistenceResourceId(String persistenceResourceId){
         this.persistenceResourceId = persistenceResourceId;
     }

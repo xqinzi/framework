@@ -230,7 +230,7 @@ public class ObjectModel extends BaseModel{
 	/**
 	 * Define o título do objeto.
 	 *  
-	 * @param label String contendo o título.
+	 * @param title String contendo o título.
 	 */
 	public void setTitle(String title){
 		this.title = title;
