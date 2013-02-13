@@ -2,6 +2,7 @@ package br.com.concepting.framework.web.taglibs;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.jsp.tagext.Tag;
 
@@ -17,6 +18,7 @@ import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.form.BaseActionForm;
@@ -24,6 +26,7 @@ import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.form.util.ActionFormMessageUtil;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.ScopeType;
 
 /**
  * Classe que define o estrutura básica para o componente vinculado a uma propriedade de um 
@@ -33,6 +36,9 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public abstract class BasePropertyTag extends BaseActionFormElementTag{
+    private String                   valueMap                 = "";
+    private ScopeType                valueMapScope            = null;
+    private Map                      valueMapInstance         = null;
 	private String                   onChange                 = "";
 	private String                   onKeyPress               = "";
 	private String                   onKeyUp                  = "";
@@ -47,6 +53,72 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     private String                   dataIsEmptyMessage       = "";
 	private Boolean                  showValidationMessages   = false;
     private PropertyInfo             propertyInfo             = null;
+    
+    /**
+     * Retorna o identificador do mapa de valores das opções de seleção.
+     *
+     * @return String contendo o identificador do mapa de valores.
+     */
+    public String getValueMap(){
+        return valueMap;
+    }
+
+    /**
+     * Define o identificador do mapa de valores das opções de seleção.
+     *
+     * @param valueMap String contendo o identificador do mapa de valores.
+     */
+    public void setValueMap(String valueMap){
+        this.valueMap = valueMap;
+    }
+
+    /**
+     * Retorna o escopo de armazenamento do mapa de valores das opções de seleção.
+     *
+     * @return String Instância que define o escopo de armazenamento.
+     */
+    public ScopeType getValueMapScope(){
+        return valueMapScope;
+    }
+
+    /**
+     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
+     *
+     * @param valueMapScope Instância que define o escopo de armazenamento.
+     */
+    protected void setValueMapScope(ScopeType valueMapScope){
+        this.valueMapScope = valueMapScope;
+    }
+
+    /**
+     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
+     *
+     * @param valueMapScope String que define o escopo de armazenamento.
+     */
+    public void setValueMapScope(String valueMapScope){
+        if(valueMapScope.length() > 0)
+            this.valueMapScope = ScopeType.valueOf(valueMapScope.toUpperCase());
+        else
+            this.valueMapScope = null;
+    }
+
+    /**
+     * Retorna a instância contendo o mapa de valores das opções de seleção.
+     *
+     * @return Instância contendo o mapa de valores.
+     */
+    protected Map getValueMapInstance(){
+        return valueMapInstance;
+    }
+
+    /**
+     * Define a instância contendo o mapa de valores das opções de seleção.
+     *
+     * @param valueMapInstance Instância contendo o mapa de valores.
+     */
+    protected void setValueMapInstance(Map valueMapInstance){
+        this.valueMapInstance = valueMapInstance;
+    }
     
     /**
      * Retorna o estilo CSS para a mensagem de validação.
@@ -202,8 +274,9 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	protected String getPattern(){
 	    if(propertyInfo != null){
 	        if(this.pattern.length() == 0){
-			    String pattern         = propertyInfo.getPattern();
-                Locale currentLanguage = systemController.getCurrentLanguage();
+			    String  pattern         = propertyInfo.getPattern();
+                Integer precision       = propertyInfo.getPrecision();
+                Locale  currentLanguage = systemController.getCurrentLanguage();
 				
 				if(pattern.length() == 0){
 				    Boolean useAdditionalFormatting = useAdditionalFormatting();
@@ -215,7 +288,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 					        pattern = DateTimeUtil.getDefaultDatePattern(currentLanguage);
 					}
 					else if(propertyInfo.isNumber())
-						pattern = NumberUtil.getDefaultPattern(propertyInfo.getClazz(), useAdditionalFormatting);
+						pattern = NumberUtil.getDefaultPattern(propertyInfo.getClazz(), useAdditionalFormatting, precision);
 				}
 				
 				this.pattern = pattern;
@@ -364,6 +437,18 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	    
 	    return false;
 	}
+	
+	/**
+	 * Retorna a quantidade de decimais de precisão.
+	 * 
+	 * @return Valor inteiro contendo a quantidade de decimais.
+	 */
+	protected Integer getPrecision(){
+	    if(propertyInfo != null)
+	        return propertyInfo.getPrecision();
+	    
+	    return Constants.DEFAULT_NUMBER_PRECISION;
+	}
 
 	/**
 	 * Retorna o valor do componente formatado.
@@ -372,7 +457,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	 */
 	protected String getFormattedValue(){
 	    if(getPropertyInfo() != null || getValue() != null)
-    		return PropertyUtil.format(getValue(), getPattern(), useAdditionalFormatting(), systemController.getCurrentLanguage());
+    		return PropertyUtil.format(getValue(), valueMapInstance, getPattern(), useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage());
 	    
 	    return getInvalidPropertyMessage();
 	}
@@ -403,17 +488,43 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
         setName(name);
 
+        String         actionForm = getActionForm();
+        BaseActionForm form       = systemController.getActionForm(actionForm);
+        
+        if(valueMap.length() > 0 && valueMapScope != null){
+            if(!valueMap.startsWith(actionForm)){
+                StringBuilder propertyId = new StringBuilder();
+
+                if(valueMapScope == ScopeType.FORM || valueMapScope == ScopeType.MODEL){
+                    propertyId.append(actionForm);
+                    propertyId.append(".");
+    
+                    if(valueMapScope == ScopeType.MODEL){
+                        if(isForSearch())
+                            propertyId.append("searchModel");
+                        else
+                            propertyId.append("model");
+                        
+                        propertyId.append(".");
+                    }
+                }
+                
+                propertyId.append(valueMap);
+            
+                valueMap = propertyId.toString();
+            }
+            
+            valueMapInstance = systemController.findAttribute(valueMap, valueMapScope);
+        }
+
         PropertiesResource resources = getDefaultI18nResource();
         
         dataIsEmptyMessage = StringUtil.trim(resources.getProperty(AttributeConstants.DATA_IS_EMPTY_KEY));
 
         if(propertyInfo == null){
-    		String actionForm = getActionForm();
-        
     		invalidPropertyMessage = StringUtil.trim(resources.getProperty(AttributeConstants.INVALID_PROPERTY_KEY));
         
     		if(actionForm.length() > 0){
-    			BaseActionForm form  = systemController.getActionForm(actionForm);
      			BaseModel      model = (form != null ? (isForSearch() ? form.getSearchModel() : form.getModel()) : null);
          
      			if(model != null){
@@ -750,6 +861,9 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	protected void clearAttributes(){
 		super.clearAttributes();
 		
+        setValueMap("");
+        setValueMapScope("");
+        setValueMapInstance(null);
 		setOnChange("");
 		setOnKeyPress("");
 		setOnKeyDown("");
