@@ -118,7 +118,7 @@ public class ActionFormMessageController{
     /**
      * Adiciona uma mensagem no sistema.
      * 
-     * @param message Instância contendo as propriedades da mensagem.
+     * @param actionFormMessage Instância contendo as propriedades da mensagem.
      */
     public void addMessage(ActionFormMessage actionFormMessage){
         ActionFormMessageType type               = actionFormMessage.getType();

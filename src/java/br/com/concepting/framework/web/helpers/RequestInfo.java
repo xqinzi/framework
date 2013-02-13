@@ -44,7 +44,7 @@ public class RequestInfo{
     /**
      * Define o identificador da seção atual.
      * 
-     * @param currentSession String contendo o identificador da seção atual.
+     * @param currentSection String contendo o identificador da seção atual.
      */
     public void setCurrentSection(String currentSection){
         this.currentSection = currentSection;

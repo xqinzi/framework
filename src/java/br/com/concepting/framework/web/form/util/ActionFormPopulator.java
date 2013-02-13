@@ -394,8 +394,8 @@ public class ActionFormPopulator{
 	 * Retorna um item de uma lista de dados a partir de seu índice de armazenamento.
 	 * 
 	 * @param dataValues Lista de dados desejada.
-	 * @param dataValuesIndex
-	 * @return
+	 * @param dataValuesIndex String contendo o índice de armazenamento.
+	 * @return Instância do item desejado.
 	 */
     private <O> O getDataValuesItem(List<O> dataValues, String dataValuesIndex){
         Integer pos   = dataValuesIndex.indexOf("_");
