@@ -7,7 +7,6 @@
 	package @{serviceInterfacePackage};
 	
 	import br.com.concepting.framework.audit.annotations.Auditable;
-	import br.com.concepting.framework.security.service.interfaces.LoginSessionService;
 	
 	/**
 	 * Interface contendo as assinaturas dos métodos que implementam as regras de negócio que envolvem o modelo de dados '#{clazz.simpleName}'.
@@ -17,6 +16,6 @@
 	 * @since @{now}
 	 */
 	@Auditable
-	public interface @{serviceInterfaceName} extends LoginSessionService{
+	public interface @{serviceInterfaceName} extends br.com.concepting.framework.security.service.interfaces.LoginSessionService{
 	}
 </serviceInterface>

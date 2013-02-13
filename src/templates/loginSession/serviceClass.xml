@@ -8,8 +8,6 @@
 	<set var="serviceInterfaceClassName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceClassNameByModel(#{clazz})"/>
 	package @{servicePackage};
 	
-	import br.com.concepting.framework.security.service.LoginSessionServiceImpl;
-	
 	import @{serviceInterfaceClassName};
 	
 	/**
@@ -19,6 +17,6 @@
 	 * @version 1.0
 	 * @since @{now}
 	 */
-	public class @{serviceName} extends LoginSessionServiceImpl implements @{serviceInterfaceName}{
+	public class @{serviceName} extends br.com.concepting.framework.security.service.interfaces.LoginSessionServiceImpl implements @{serviceInterfaceName}{
 	}
 </serviceClass>
