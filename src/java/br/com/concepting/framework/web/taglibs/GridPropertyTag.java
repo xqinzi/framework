@@ -19,6 +19,7 @@ import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.util.Pager;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PagerActionType;
@@ -52,8 +53,8 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	private PagerTag                  pagerTag             = null;
 	private List<ButtonTag>           buttonsTags          = null;
 	private List<GridRowStateTag>     rowStatesTags        = null;
-
-	/**
+	
+    /**
 	 * Retorna o estilo CSS para o agrupamento.
 	 * 
 	 * @return String contendo o estilo CSS.
@@ -295,6 +296,24 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	public Boolean showSelection(){
 		return showSelection;
 	}
+	
+    /**
+     * Indica se o componente deve conter as opções de seleção.
+     * 
+     * @return True/False.
+     */
+    public Boolean isShowSelection(){
+        return showSelection();
+    }
+
+    /**
+     * Indica se o componente deve conter as opções de seleção.
+     * 
+     * @return True/False.
+     */
+    public Boolean getShowSelection(){
+        return isShowSelection();
+    }
 
 	/**
 	 * Define se o componente deve conter as opções de seleção.
@@ -633,6 +652,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			String                   columnWidth                   = "";
 			String                   columnPattern                 = "";
 			Boolean                  columnUseAdditionalFormatting = false;
+			Integer                  columnPrecision               = 0;
 			String                   columnLink                    = "";
 			String                   columnOnSelect                = "";
 			String                   columnOnBlur                  = "";
@@ -742,6 +762,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         						    try{
             							columnPropertyInfo            = PropertyUtil.getPropertyInfo(currentModel, columnTag.getName());
             							columnUseAdditionalFormatting = columnPropertyInfo.useAdditionalFormatting();
+            							columnPrecision               = columnPropertyInfo.getPrecision();
             							
             							if(columnPattern.length() == 0)
             							    columnPattern = columnPropertyInfo.getPattern();
@@ -749,6 +770,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         						    catch(Throwable e){
         						        columnPropertyInfo            = null;
         						        columnUseAdditionalFormatting = false;
+        						        columnPrecision               = Constants.DEFAULT_NUMBER_PRECISION;
         						    }
             							
         							if(columnTag.getParent() instanceof GridColumnGroupTag)
@@ -766,7 +788,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
             							    columnValue = columnTag.getValue();
             							}
                 								
-        							    columnValueLabel = PropertyUtil.format(columnValue, columnValueMapInstance, columnPattern, columnUseAdditionalFormatting, currentLanguage);
+        							    columnValueLabel = PropertyUtil.format(columnValue, columnValueMapInstance, columnPattern, columnUseAdditionalFormatting, columnPrecision, currentLanguage);
         							    
                                         if(aggregateValue == null || !aggregateValue.equals(columnValueLabel)){
         		    						aggregateStyleClass = columnGroupTag.getStyleClass();
@@ -1152,7 +1174,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         								
         								println(">");
         								
-    									columnValueLabel = PropertyUtil.format(columnValue, columnValueMapInstance, columnPattern, columnUseAdditionalFormatting, currentLanguage);
+    									columnValueLabel = PropertyUtil.format(columnValue, columnValueMapInstance, columnPattern, columnUseAdditionalFormatting, columnPrecision, currentLanguage);
     									columnValueLabel = StringUtil.replaceAll(columnValueLabel, StringUtil.getLineBreak(), "");
     									columnValueLabel = StringUtil.decode(columnValueLabel);
 
