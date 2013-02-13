@@ -350,4 +350,18 @@ public @interface Property{
 	 * @return String do texto desejado.
 	 */
 	String tag() default "";
+
+	/**
+	 * Define o número de casas decimais de precisão.
+	 * 
+	 * @return Valor inteiro contendo o número de casas decimais.
+	 */
+	int precision() default 2;
+	
+	/**
+	 * Define o idioma a ser utilizado na formatação/parsing da propriedade.
+	 * 
+	 * @return String contendo o identificador do idioma a ser utilizado.
+	 */
+	String language() default "";
 }
