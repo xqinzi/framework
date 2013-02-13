@@ -55,4 +55,9 @@ public abstract class Constants{
      * Constante que define o identificador da chave que armazena a codificação.
      */
     public static final String ENCODING_KEY = "acceptCharset";
+    
+    /**
+     * Constante que define o número de decimais de precisão default.
+     */
+    public static final Integer DEFAULT_NUMBER_PRECISION = 2;
 }
