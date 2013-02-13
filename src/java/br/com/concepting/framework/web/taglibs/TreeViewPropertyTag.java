@@ -557,7 +557,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 			}
 			else{
 				nodeValue      = PropertyUtil.getProperty(node, propertyId);
-				nodeValueLabel = PropertyUtil.format(nodeValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), currentLanguage);
+				nodeValueLabel = PropertyUtil.format(nodeValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
 			}
 			
 			if((parent == null && node.getParent() == null) || (parent != null && parent.equals(node.getParent()))){
