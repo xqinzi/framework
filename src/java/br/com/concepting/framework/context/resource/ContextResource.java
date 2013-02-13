@@ -81,7 +81,7 @@ public class ContextResource extends BaseResource{
     /**
      * Define o número da porta para comunicação HTTP com o servidor de aplicações.
      * 
-     * @param lookupPort Valor inteiro contendo o número da porta.
+     * @param serverPort Valor inteiro contendo o número da porta.
      */
     public void setServerPort(Integer serverPort){
         this.serverPort = serverPort;
