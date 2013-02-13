@@ -26,6 +26,13 @@ import br.com.concepting.framework.web.form.ActionFormMessageController;
 public class LoginSessionListener implements HttpSessionListener{
     protected SystemController systemController = null;
     
+    /**
+     * Retorna a instância da classe de serviço a partir de seu modelo de dados.
+     * 
+     * @param modelClass Classe que define o modelo de dados.
+     * @return Instância da classe de serviço desejada.
+     * @throws InternalErrorException
+     */
     private <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
         SecurityController  securityController = systemController.getSecurityController();
         LoginSessionModel   loginSession       = securityController.getLoginSession();
@@ -63,7 +70,6 @@ public class LoginSessionListener implements HttpSessionListener{
     /**
      * Executado no momento do instanciamento da sessão HTTP.
      * 
-     * @param systemController Instância do controlador do sistema.
      * @throws Throwable
      */
     public void onCreate() throws Throwable{

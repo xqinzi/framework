@@ -63,7 +63,7 @@ public class LoginParametersModel extends BaseModel{
     /**
      * Define as listas de acessos do login.
      * 
-     * @param acessLists Listas de acesso do login.
+     * @param accessLists Listas de acesso do login.
      */
     public <A extends AccessListModel> void setAccessLists(List<A> accessLists){
         this.accessLists = (List)accessLists;

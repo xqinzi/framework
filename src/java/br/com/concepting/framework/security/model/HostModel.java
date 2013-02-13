@@ -51,7 +51,7 @@ public class HostModel extends BaseModel{
     /**
      * Define o nome do host.
      * 
-     * @param naem String contendo o nome do host.
+     * @param name String contendo o nome do host.
      */
     public void setName(String name){
         this.name = name;

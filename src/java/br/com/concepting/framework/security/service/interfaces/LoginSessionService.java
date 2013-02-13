@@ -39,7 +39,7 @@ public interface LoginSessionService extends IService{
     /**
      * Efetua o login do usuário.
      * 
-     * @param user Instância do modelo de dados do usuário.
+     * @param loginSession Instância do modelo de dados da sessão de login do usuário.
      * @throws UserAlreadyLoggedInException
      * @throws UserNotFoundException
      * @throws UserBlockedException
@@ -57,7 +57,7 @@ public interface LoginSessionService extends IService{
 	/**
 	 * Efetua a mudança de senha do usuário.
 	 * 
-     * @param user Instância do modelo de dados do usuário.
+     * @param loginSession Instância do modelo de dados da sessão de login do usuário.
 	 * @throws PasswordsNotMatchException
 	 * @throws InternalErrorException
 	 * @throws RemoteException
@@ -69,6 +69,7 @@ public interface LoginSessionService extends IService{
 	/**
 	 * Efetua o logout do usuário.
 	 * 
+     * @param loginSession Instância do modelo de dados da sessão de login do usuário.
 	 * @throws InternalErrorException
 	 * @throws RemoteException
 	 */
