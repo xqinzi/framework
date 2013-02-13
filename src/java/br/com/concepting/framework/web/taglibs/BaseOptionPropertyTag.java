@@ -117,7 +117,7 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 				}
 			}
 			
-			return PropertyUtil.format(optionValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), systemController.getCurrentLanguage());
+			return PropertyUtil.format(optionValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage());
 		}
 
 		return super.getFormattedValue();
