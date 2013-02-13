@@ -30,6 +30,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private Boolean           isBoolean                     = false;
 	private Boolean           isNumber                      = false;
 	private Boolean           isByteArray                   = false;
+	private Boolean           isCurrency                    = false;
 	private Boolean           autoGenerateIdentity          = false;
 	private String            keyId                         = "";
 	private String            foreignKeyId                  = "";
@@ -70,6 +71,8 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private ConditionType     compareCondition              = null;
 	private String            comparePropertyId             = "";
 	private String            tag                           = "";
+	private Integer           precision                     = 0;
+	private String            language                      = "";
 	
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -77,8 +80,73 @@ public class PropertyInfo implements Comparable, Cloneable{
 	public PropertyInfo(){
 	    super();
 	}
-
+	
 	/**
+	 * Retorna o identificador do idioma a ser utilizado na formatação/parsing da
+	 * propriedade do modelo de dados.
+	 * 
+	 * @return String contendo o identificador da propriedade.
+	 */
+	public String getLanguage(){
+        return language;
+    }
+
+    /**
+     * Define o identificador do idioma a ser utilizado na formatação/parsing da
+     * propriedade do modelo de dados.
+     * 
+     * @param language String contendo o identificador da propriedade.
+     */
+    public void setLanguage(String language){
+        this.language = language;
+    }
+
+    /**
+	 * Indica se a propriedade é um valor monetário.
+	 * 
+	 * @return True/False.
+	 */
+    public Boolean isCurrency(){
+        return isCurrency;
+    }
+
+    /**
+     * Indica se a propriedade é um valor monetário.
+     * 
+     * @return True/False.
+     */
+    public Boolean getIsCurrency(){
+        return isCurrency();
+    }
+
+    /**
+     * Define se a propriedade é um valor monetário.
+     * 
+     * @param isCurrency True/False.
+     */
+    public void setIsCurrency(Boolean isCurrency){
+        this.isCurrency = isCurrency;
+    }
+
+    /**
+	 * Retorna o número de casas decimais de precisão.
+	 * 
+	 * @return Valor inteiro contendo o número de casas decimais.
+	 */
+	public Integer getPrecision(){
+        return precision;
+    }
+
+    /**
+     * Define o número de casas decimais de precisão.
+     * 
+     * @param precision Valor inteiro contendo o número de casas decimais.
+     */
+    public void setPrecision(Integer precision){
+        this.precision = precision;
+    }
+
+    /**
 	 * Retorna a expressão regular definida.
 	 * 
 	 * @return String contendo a expressão regular.
