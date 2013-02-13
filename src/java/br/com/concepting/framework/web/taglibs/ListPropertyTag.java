@@ -208,7 +208,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
     				else
     				    pattern = getPattern();
     				
-				    optionTagLabelBuffer.append(PropertyUtil.format(optionTagLabel, getValueMapInstance(), pattern, useAdditionalFormatting(), systemController.getCurrentLanguage()));
+				    optionTagLabelBuffer.append(PropertyUtil.format(optionTagLabel, getValueMapInstance(), pattern, useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage()));
     
     				optionTag = new ListOptionPropertyTag();
     				optionTag.setPageContext(pageContext);
