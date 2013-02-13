@@ -11,7 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.util.types.NumberMetricType;
+import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.util.helpers.Currency;
 
 /**
  * Classe utilitária para manipulação de valores numéricos.
@@ -29,16 +30,20 @@ public class NumberUtil{
 		numberPatterns.put(Short.class, "##,###");
 		numberPatterns.put(Integer.class, "#,###,###,###");
 		numberPatterns.put(Long.class, "#,###,###,###,###,###,###");
+		numberPatterns.put(BigInteger.class, "#,###,###,###,###,###,###");
 		numberPatterns.put(Float.class, "#,###,###,##0.00");
 		numberPatterns.put(Double.class, "#,###,###,###,###,###,##0.00");
+		numberPatterns.put(BigDecimal.class, "#,###,###,###,###,###,##0.00");
 
 		numberRange = new LinkedHashMap<Class, Number[]>();
 		numberRange.put(Byte.class, new Number[]{Byte.MIN_VALUE, Byte.MAX_VALUE});
 		numberRange.put(Short.class, new Number[]{Short.MIN_VALUE, Short.MAX_VALUE});
 		numberRange.put(Integer.class, new Number[]{Integer.MIN_VALUE, Integer.MAX_VALUE});
 		numberRange.put(Long.class, new Number[]{Long.MIN_VALUE, Long.MAX_VALUE});
+		numberRange.put(BigInteger.class, new Number[]{Long.MIN_VALUE, Long.MAX_VALUE});
 		numberRange.put(Float.class, new Number[]{Float.MIN_VALUE, Float.MAX_VALUE});
 		numberRange.put(Double.class, new Number[]{Double.MIN_VALUE, Double.MAX_VALUE});
+		numberRange.put(BigDecimal.class, new Number[]{Double.MIN_VALUE, Double.MAX_VALUE});
 	}
 
 	/**
@@ -441,7 +446,7 @@ public class NumberUtil{
 	 */
 	public static <N extends Number> N parse(Class<N> clazz, String value, Locale language) throws ParseException{
 		NumberFormat parser = NumberFormat.getInstance(language);
-
+		
 		return convert(clazz, parser.parse(value));
 	}
 
@@ -478,15 +483,46 @@ public class NumberUtil{
 		return convert(clazz, parser.parse(value));
 	}
 
-	/**
+    /**
+     * Formata um valor numérico.
+     * 
+     * @param value Instância contendo o valor numérico.
+     * @return String contendo o valor numérico formatado.
+     */
+    public static String format(Number value){
+        return format(value, false, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
+    }
+
+    /**
+     * Formata um valor numérico.
+     * 
+     * @param value Instância contendo o valor numérico.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @return String contendo o valor numérico formatado.
+     */
+    public static String format(Number value, Locale language){
+        if(language == null)
+            return format(value, false, Constants.DEFAULT_NUMBER_PRECISION, LanguageUtil.getDefaultLanguage());
+        
+        return format(value, false, Constants.DEFAULT_NUMBER_PRECISION, language);
+    }
+    
+    /**
 	 * Formata um valor numérico.
 	 * 
 	 * @param value Instância contendo o valor numérico.
+	 * @param precision Valor inteiro contendo as decimais de precisão.
 	 * @param language Instância contendo as propriedades do idioma desejado.
 	 * @return String contendo o valor numérico formatado.
 	 */
-	public static String format(Number value, Locale language){
-		return format(value, false, language);
+	public static String format(Number value, Integer precision, Locale language){
+        if(language == null)
+            return format(value, false, precision, LanguageUtil.getDefaultLanguage());
+
+        if(precision == null)
+            return format(value, false, Constants.DEFAULT_NUMBER_PRECISION, language);
+
+        return format(value, false, precision, language);
 	}
 
 	/**
@@ -497,13 +533,22 @@ public class NumberUtil{
      * @param language Instância contendo as propriedades do idioma desejado.
 	 * @return String contendo o valor numérico formatado.
 	 */
-	public static String format(Number value, Boolean useGroupSeparator, Locale language){
+	public static String format(Number value, Boolean useGroupSeparator, Integer precision, Locale language){
 		if(language == null)
-			return format(value, useGroupSeparator, LanguageUtil.getDefaultLanguage());
+			return format(value, useGroupSeparator, precision, LanguageUtil.getDefaultLanguage());
 		
-		NumberFormat formatter = NumberFormat.getInstance(language);
+		if(precision == null)
+		    return format(value, useGroupSeparator, Constants.DEFAULT_NUMBER_PRECISION, language);
+		
+		NumberFormat formatter = null;
+		
+		if(value instanceof Currency)
+		    formatter = NumberFormat.getCurrencyInstance(language);
+		else
+		    formatter = NumberFormat.getInstance(language);
 
 		formatter.setGroupingUsed(useGroupSeparator);
+		formatter.setMaximumFractionDigits(precision);
 
 		return formatter.format(value);
 	}
@@ -543,9 +588,10 @@ public class NumberUtil{
 	 * Retorna uma máscara de formatação default de um tipo de valor numérico.
 	 * 
 	 * @param clazz Classe do valor numérico
+	 * @param precision Valor inteiro contendo a quantidade de decimais de precisão.
 	 * @return String contendo a máscara de formatação.
 	 */
-	public static String getDefaultPattern(Class clazz){
+	public static String getDefaultPattern(Class clazz, Integer precision){
 		String pattern = "";
 
 		if(clazz != null){
@@ -563,6 +609,9 @@ public class NumberUtil{
 				clazz = Double.class;
 
 			pattern = StringUtil.trim(numberPatterns.get(clazz));
+
+			if(clazz.equals(Float.class) || clazz.equals(Double.class) || clazz.equals(BigDecimal.class))
+			    pattern = pattern.concat(StringUtil.replicate(pattern, precision - 2));
 		}
 
 		return pattern;
@@ -574,10 +623,11 @@ public class NumberUtil{
 	 * @param clazz Classe do valor numérico
 	 * @param useGroupSeparator Indica se a máscara deve conter o caracter separador de 
 	 * milhar.
+     * @param precision Valor inteiro contendo a quantidade de decimais de precisão.
 	 * @return String contendo a máscara de formatação.
 	 */
-	public static String getDefaultPattern(Class clazz, Boolean useGroupSeparator){
-		String pattern = getDefaultPattern(clazz);
+	public static String getDefaultPattern(Class clazz, Boolean useGroupSeparator, Integer precision){
+		String pattern = getDefaultPattern(clazz, precision);
 
 		if(!useGroupSeparator)
 			pattern = StringUtil.replaceAll(pattern, ",", "");
@@ -688,116 +738,6 @@ public class NumberUtil{
 	 */
 	public static long fromHexadecimal(String value){
 		return Long.parseLong(value, 16);
-	}
-
-	/**
-	 * Formata um valor numérico utilizando o idioma padrão.
-	 *
-	 * @param value Valor numérico a ser formatado. 
-	 * @return String contendo o valor formatado.
-	 */
-	public static String formatNumber(Double value){
-		return formatNumber(value, LanguageUtil.getDefaultLanguage());
-	}
-	
-    /**
-     * Formata um valor numérico utilizando o idioma padrão.
-     *
-     * @param value Valor numérico a ser formatado. 
-     * @return String contendo o valor formatado.
-     */
-	public static String formatNumber(BigDecimal value){
-		return formatNumber(value.doubleValue());
-	}
-	
-	/**
-	 * Formata um valor numérico utilizando um idioma específico.
-	 *
-	 * @param value Valor numérico a ser formatado.
-	 * @param language Instância contendo as propriedades do idioma desejado. 
-	 * @return String contendo o valor formatado.
-	 */
-	public static String formatNumber(Double value, Locale language){
-		NumberMetricType currentMetric = null;
-		
-		for(NumberMetricType metric : NumberMetricType.values())
-			if(value >= metric.getMetricValue())
-				currentMetric = metric; 
-		
-		return formatNumber(value, currentMetric, language);
-	}
-	
-    /**
-     * Formata um valor numérico utilizando o idioma padrão.
-     *
-     * @param value Valor numérico a ser formatado. 
-     * @param language Instância contendo as propriedades do idioma desejado. 
-     * @return String contendo o valor formatado.
-     */
-	public static String formatNumber(BigDecimal value, Locale language){
-		return formatNumber(value.doubleValue(), language);
-	}
-
-	/**
-	 * Formata um valor numérico utilizando o idioma padrão.
-	 *
-	 * @param value Valor numérico a ser formatado.
-	 * @param metric Instância contendo a métrica da formatação. 
-	 * @return String contendo o valor formatado.
-	 */
-	public static String formatNumber(Double value, NumberMetricType metric){
-		return formatNumber(value, metric, LanguageUtil.getDefaultLanguage());
-	}
-
-    /**
-     * Formata um valor numérico utilizando o idioma padrão.
-     *
-     * @param value Valor numérico a ser formatado.
-     * @param metric Instância contendo a métrica da formatação. 
-     * @return String contendo o valor formatado.
-     */
-	public static String formatNumber(BigDecimal value, NumberMetricType metric){
-		return formatNumber(value.doubleValue(), metric, LanguageUtil.getDefaultLanguage());
-	}
-
-	/**
-	 * Formata um valor numérico utilizando um idioma específico.
-	 *
-	 * @param value Valor numérico a ser formatado.
-	 * @param metric Instância contendo a métrica da formatação. 
-	 * @param language Instância contendo as propriedades do idioma desejado. 
-	 * @return String contendo o valor formatado.
-	 */
-	public static String formatNumber(Double value, NumberMetricType metric, Locale language){
-		StringBuilder buffer      = new StringBuilder();
-		Double        metricValue = (metric == null ? 1 : metric.getMetricValue());
-		String        metricUnit  = (metric == null ? "" : metric.getMetricUnit());
-		Double        valueBuffer = value / metricValue;
-		Double        modBuffer   = value % metricValue;
-		
-		if(modBuffer == 0)
-			valueBuffer = (double)Math.round(valueBuffer);
-		
-		buffer.append(NumberUtil.format(valueBuffer, (modBuffer > 0 ? "0.00" : "0"), language));
-
-		if(metric != null){
-			buffer.append(" ");
-			buffer.append(metricUnit);
-		}
-		
-		return buffer.toString();
-    }
-	
-    /**
-     * Formata um valor numérico utilizando um idioma específico.
-     *
-     * @param value Valor numérico a ser formatado.
-     * @param metric Instância contendo a métrica da formatação. 
-     * @param language Instância contendo as propriedades do idioma desejado. 
-     * @return String contendo o valor formatado.
-     */
-	public static String formatNumber(BigDecimal value, NumberMetricType metric, Locale language){
-		return formatNumber(value.doubleValue(), metric, language);
 	}
 	
 	/**
