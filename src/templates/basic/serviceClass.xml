@@ -9,12 +9,8 @@
 	package @{servicePackage};
 	
 	import br.com.concepting.framework.service.BaseService;
-	<if expr="#{serviceType} == 'webService'">
+	<if expr="#{serviceType} == 'WEB_SERVICE'">
 		import br.com.concepting.framework.service.types.ServiceType;
-		import br.com.concepting.framework.util.exceptions.InternalErrorException;
-		import br.com.concepting.framework.util.exceptions.ItemNotFoundException
-		import br.com.concepting.framework.util.exceptions.ItemAlreadyExistsException;
-		import br.com.concepting.framework.persistence.helpers.ModelFilter;
 		
 		import #{clazz};
 		
@@ -28,115 +24,9 @@
 	 * @version 1.0
 	 * @since @{now}
 	 */
-	<if expr="#{serviceType} == 'webService'">
+	<if expr="#{serviceType} == 'WEB_SERVICE'">
 		@Service(type=ServiceType.WEB_SERVICE, name="service/@{serviceName}")
     </if>
 	public class @{serviceName} extends BaseService implements @{serviceInterfaceName}{
-		<if expr="#{serviceType} == 'webService'">
-			public @{modelName}[] list() throws InternalErrorException{
-				List&lt;@{modelName}&gt; buffer = super.list();
-				@{modelName}[] result = new @{modelName}[buffer.size()];
-				
-				result = buffer.toArray(result);
-				
-				return result;
-			}
-	
-			public @{modelName}[] search(@{modelName} model) throws InternalErrorException{
-				List&lt;@{modelName}&gt; buffer = super.search(model);
-				@{modelName}[] result = new @{modelName}[buffer.size()];
-				
-				result = buffer.toArray(result);
-				
-				return result;
-			}
-			
-			public @{modelName}[] search(@{modelName} model, ModelFilter modelFilter) throws InternalErrorException{
-				List&lt;@{modelName}&gt; buffer = super.search(model, modelFilter);
-				@{modelName}[] result = new @{modelName}[buffer.size()];
-				
-				result = buffer.toArray(result);
-				
-				return result;
-			}
-			
-			public @{modelName} find(@{modelName} model) throws ItemNotFoundException, InternalErrorException{
-				return super.find(model);
-			}
-
-			public void delete(@{modelName} model) throws InternalErrorException{
-				super.delete(model);
-			}
-		
-			public void deleteAll(@{modelName}[] modelList) throws InternalErrorException{
-				super.deleteAll(Arrays.asList(modelList));
-			}
-
-			public @{modelName} save(@{modelName} model) throws ItemAlreadyExistsException, InternalErrorException{
-				super.save(model);
-				
-				return model;
-			}
-		
-			public @{modelName}[] saveAll(@{modelName}[] modelList) throws ItemAlreadyExistsException, InternalErrorException{
-				List&lt;@{modelName}&gt; buffer = Arrays.asList(modelList);
-				
-				super.saveAll(buffer);
-				
-				@{modelName}[] result = new @{modelName}[buffer.size()];
-				
-				result = buffer.toArray(result);
-				
-				return result;
-			}
-		
-			public @{modelName} insert(@{modelName} model) throws ItemAlreadyExistsException, InternalErrorException{
-				super.insert(model);
-		
-				return model;
-			}
-		
-			public @{modelName}[] insertAll(@{modelName}[] modelList) throws ItemAlreadyExistsException, InternalErrorException{
-				List&lt;@{modelName}&gt; buffer = Arrays.asList(modelList);
-				
-				super.insertAll(buffer);
-				
-				@{modelName}[] result = new @{modelName}[buffer.size()];
-				
-				result = buffer.toArray(result);
-				
-				return result;
-			}
-		
-			public @{modelName} update(@{modelName} model) throws InternalErrorException{
-				super.update(model);
-		
-				return model;
-			}
-		
-			public @{modelName}[] updateAll(@{modelName}[] modelList) throws InternalErrorException{
-				List&lt;@{modelName}&gt; buffer = Arrays.asList(modelList);
-				
-				super.updateAll(buffer);
-				
-				@{modelName}[] result = new @{modelName}[buffer.size()];
-				
-				result = buffer.toArray(result);
-				
-				return result;
-			}
-		
-			public void deleteAll() throws InternalErrorException{
-				super.deleteAll();
-			}
-		
-			public @{modelName} loadReference(M model, String referencePropertyId) throws InternalErrorException{
-				return super.loadReference(model referencePropertyId);
-			}
-		
-			public void saveReference(M model, String referencePropertyId) throws InternalErrorException{
-				return super.saveReference(model, referencePropertyId);
-			}
-		</if>
 	}
 </serviceClass>

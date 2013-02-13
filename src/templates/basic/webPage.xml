@@ -46,7 +46,7 @@
 											<if expr="@{searchPropertiesInfoSize} > 0">
 												<concepting:searchPropertiesGroup>
 													<iterate var="searchPropertyInfo" values="@{searchPropertiesInfo}">
-														<if expr="@{searchPropertyInfo.mappedPropertyId} != '' or @{searchPropertyInfo.relationType} != 'none'">
+														<if expr="@{searchPropertyInfo.mappedPropertyId} != '' or @{searchPropertyInfo.relationType} != 'NONE'">
 															<if expr="@{searchPropertyInfo.isModel} or @{searchPropertyInfo.hasModel}">
 																<concepting:list name="@{mainPropertyId}.@{searchPropertyInfo.id}" data="@{searchPropertyInfo.id}s"/>
 															</if>
@@ -65,7 +65,7 @@
 											</if>
 											<concepting:grid name="@{mainPropertyIdentityId}" data="@{mainPropertyId}s" width="100%">
 												<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
-													<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'none'">
+													<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'NONE'">
 														<if expr="@{propertyInfo.isByteArray}">
 															<concepting:gridColumn name="@{propertyInfo.id}" resourceKey="@{mainPropertyId}.@{propertyInfo.id}" isImage="true" imageWidth="60"/>
 														</if>
@@ -115,7 +115,7 @@
 																	</c:when>
 																</c:choose>
 																<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
-																	<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'none'">
+																	<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'NONE'">
 																		<if expr="!@{propertyInfo.isIdentity}">
 																			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
 																				<concepting:list name="@{mainPropertyId}.@{propertyInfo.id}" data="@{propertyInfo.id}s"/>

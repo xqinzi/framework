@@ -39,6 +39,7 @@
 		import @{mainPropertyServiceInterfaceClassName};
 		import @{mainPropertyClassName};
 	</if>
+	
 	import @{actionFormClassName};
 	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
 		<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
@@ -87,6 +88,7 @@
 				}
 			</if>
 		</iterate>
+		
 	    /**
 		 * TODO: Colocar descrição do método search.
 		 *

@@ -26,6 +26,7 @@
 			import @{propertyClassName};
 		</if>
 	</iterate>
+	
 	/**
 	 * Classe que define o formulário vinculado ao modelo de dados '@{modelName}'.
 	 *
@@ -44,6 +45,7 @@
 				private Collection&lt;@{propertyName}&gt; @{propertyId}s = null;
 			</if>
 		</iterate>
+		
 		<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
 			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
 				<set var="propertyId" value="@{propertyInfo.id}"/>
@@ -69,6 +71,7 @@
 				}
 			</if>
 		</iterate>
+		
 		/**
 		 * TODO: Colocar descrição do método get@{capitalizedMainPropertyId}s.
 		 *
