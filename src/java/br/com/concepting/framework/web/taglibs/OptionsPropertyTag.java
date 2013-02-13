@@ -370,7 +370,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                 else
                     pattern = getPattern();
                 
-                optionTagLabel = PropertyUtil.format(optionTagLabel, getValueMapInstance(), pattern, useAdditionalFormatting(), systemController.getCurrentLanguage());
+                optionTagLabel = PropertyUtil.format(optionTagLabel, getValueMapInstance(), pattern, useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage());
     
     			if(propertyInfo.isCollection())
     				optionTag = new CheckPropertyTag();
