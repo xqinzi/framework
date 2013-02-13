@@ -3,7 +3,6 @@ package br.com.concepting.framework.web.taglibs;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.hibernate.collection.AbstractPersistentCollection;
 
@@ -24,9 +23,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	private List                 dataValues          = null;
 	private Integer              dataStartIndex      = 0;
 	private Integer              dataEndIndex        = 0;
-    private String               valueMap            = "";
-    private ScopeType            valueMapScope       = null;
-    private Map                  valueMapInstance    = null;
 	private List<OptionStateTag> optionStates        = null;
 	private ExpressionProcessor  expressionProcessor = null;
 
@@ -79,72 +75,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
         }
         
         return expressionProcessor;
-    }
-
-    /**
-     * Retorna o identificador do mapa de valores das opções de seleção.
-     *
-     * @return String contendo o identificador do mapa de valores.
-     */
-    public String getValueMap(){
-        return valueMap;
-    }
-
-    /**
-     * Define o identificador do mapa de valores das opções de seleção.
-     *
-     * @param valueMap String contendo o identificador do mapa de valores.
-     */
-    public void setValueMap(String valueMap){
-        this.valueMap = valueMap;
-    }
-
-    /**
-     * Retorna o escopo de armazenamento do mapa de valores das opções de seleção.
-     *
-     * @return String Instância que define o escopo de armazenamento.
-     */
-    public ScopeType getValueMapScope(){
-        return valueMapScope;
-    }
-
-    /**
-     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
-     *
-     * @param valueMapScope Instância que define o escopo de armazenamento.
-     */
-    protected void setValueMapScope(ScopeType valueMapScope){
-        this.valueMapScope = valueMapScope;
-    }
-
-    /**
-     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
-     *
-     * @param valueMapScope String que define o escopo de armazenamento.
-     */
-    public void setValueMapScope(String valueMapScope){
-        if(valueMapScope.length() > 0)
-            this.valueMapScope = ScopeType.valueOf(valueMapScope.toUpperCase());
-        else
-            this.valueMapScope = null;
-    }
-
-    /**
-     * Retorna a instância contendo o mapa de valores das opções de seleção.
-     *
-     * @return Instância contendo o mapa de valores.
-     */
-    protected Map getValueMapInstance(){
-        return valueMapInstance;
-    }
-
-    /**
-     * Define a instância contendo o mapa de valores das opções de seleção.
-     *
-     * @param valueMapInstance Instância contendo o mapa de valores.
-     */
-    protected void setValueMapInstance(Map valueMapInstance){
-        this.valueMapInstance = valueMapInstance;
     }
     
     /**
@@ -371,32 +301,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     			dataValues = systemController.findAttribute(data, dataScope);
     		}
 		}
-        
-        if(valueMap.length() > 0 && valueMapScope != null){
-            if(!valueMap.startsWith(actionForm)){
-                StringBuilder propertyId = new StringBuilder();
-
-                if(valueMapScope == ScopeType.FORM || valueMapScope == ScopeType.MODEL){
-                    propertyId.append(actionForm);
-                    propertyId.append(".");
-    
-                    if(valueMapScope == ScopeType.MODEL){
-                        if(isForSearch())
-                            propertyId.append("searchModel");
-                        else
-                            propertyId.append("model");
-                        
-                        propertyId.append(".");
-                    }
-                }
-                
-                propertyId.append(valueMap);
-            
-                valueMap = propertyId.toString();
-            }
-            
-            valueMapInstance = systemController.findAttribute(valueMap, valueMapScope);
-        }
 	}
 	
 	/**
@@ -409,9 +313,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 		setDataScope("");
 		setDataValues(null);
         setDataIsEmptyMessage("");
-		setValueMap("");
-		setValueMapScope("");
-		setValueMapInstance(null);
 		setOptionStates(null);
 	}
 }
