@@ -2,12 +2,14 @@ package br.com.concepting.framework.web.taglibs;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
+import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
@@ -90,7 +92,7 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#getFormattedValue()
 	 */
-	protected String getFormattedValue(){
+	protected String getFormattedValue() throws Throwable{
 		if(optionIndex.length() > 0){
 			StringBuilder buffer = new StringBuilder();
 
@@ -102,10 +104,24 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 		}
 
 		Object       optionValue  = getOptionValue();
+        Locale       language     = systemController.getCurrentLanguage();
 		PropertyInfo propertyInfo = getPropertyInfo();
 		
 		if(optionValue != null){
 			if(propertyInfo != null){
+			    String languageId = propertyInfo.getLanguage();
+			    
+			    if(languageId.length() == 0){
+			        String languagePropertyId = propertyInfo.getLanguagePropertyId();
+			        
+			        if(languagePropertyId.length() > 0){
+			            languageId = (String)PropertyUtil.getProperty(optionValue, languagePropertyId);
+			            language   = LanguageUtil.getLanguageByString(languageId);
+			        }
+			    }
+			    else
+			        language = LanguageUtil.getLanguageByString(languageId);
+			    
                 if(!propertyInfo.isModel() && !propertyInfo.hasModel()){
 		            try{
 		                String propertyId = propertyInfo.getId();
@@ -117,7 +133,7 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 				}
 			}
 			
-			return PropertyUtil.format(optionValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage());
+			return PropertyUtil.format(optionValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), language);
 		}
 
 		return super.getFormattedValue();

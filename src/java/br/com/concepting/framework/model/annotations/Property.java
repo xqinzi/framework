@@ -364,4 +364,11 @@ public @interface Property{
 	 * @return String contendo o identificador do idioma a ser utilizado.
 	 */
 	String language() default "";
+	
+    /**
+     * Define a propriedade que armazena o idioma a ser utilizado na formatação/parsing da propriedade.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
+	String languagePropertyId() default "";
 }

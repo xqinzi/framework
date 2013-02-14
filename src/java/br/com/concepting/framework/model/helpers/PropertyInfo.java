@@ -73,6 +73,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private String            tag                           = "";
 	private Integer           precision                     = 0;
 	private String            language                      = "";
+	private String            languagePropertyId            = "";
 	
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -81,7 +82,17 @@ public class PropertyInfo implements Comparable, Cloneable{
 	    super();
 	}
 	
-	/**
+    /**
+     * Retorna o identificador da propriedade que armazena o idioma a ser utilizado na 
+     * formatação/parsing da propriedade do modelo de dados.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
+    public String getLanguagePropertyId(){
+        return languagePropertyId;
+    }
+
+    /**
 	 * Retorna o identificador do idioma a ser utilizado na formatação/parsing da
 	 * propriedade do modelo de dados.
 	 * 
@@ -99,6 +110,16 @@ public class PropertyInfo implements Comparable, Cloneable{
      */
     public void setLanguage(String language){
         this.language = language;
+    }
+
+    /**
+     * Define o identificador da propriedade que armazena o idioma a ser utilizado na 
+     * formatação/parsing da propriedade do modelo de dados.
+     * 
+     * @param languagePropertyId String contendo o identificador da propriedade.
+     */
+    public void setLanguagePropertyId(String languagePropertyId){
+        this.languagePropertyId = languagePropertyId;
     }
 
     /**

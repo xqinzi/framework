@@ -15,6 +15,7 @@ import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessorUtil;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.DateTimeUtil;
+import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
@@ -449,15 +450,63 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	    
 	    return Constants.DEFAULT_NUMBER_PRECISION;
 	}
+	
+	/**
+	 * Retorna o idioma a ser utilizado pelo componente.
+	 * 
+	 * @return Instância contendo as propriedades do idioma.
+	 */
+	private Locale getLanguage(){
+        Locale       language     = systemController.getCurrentLanguage();
+        PropertyInfo propertyInfo = getPropertyInfo();
+        
+        if(propertyInfo != null && !propertyInfo.isModel() && !propertyInfo.isCollection()){
+            String languageId = propertyInfo.getLanguage();
+            
+            if(languageId.length() == 0){
+                String languagePropertyId = propertyInfo.getLanguagePropertyId();
+                
+                if(languagePropertyId.length() > 0){
+                    String         actionForm = getActionForm();
+                    BaseActionForm form       = systemController.getActionForm(actionForm);
+                    BaseModel      model      = (form != null ? (isForSearch() ? form.getSearchModel() : form.getModel()) : null);
+                    
+                    if(model != null){
+                        try{
+                            Integer pos = getName().lastIndexOf(".");
+                            
+                            if(pos >= 0){
+                                String propertyId = getName().substring(0, pos);
+                                
+                                model = (BaseModel)PropertyUtil.getProperty(model, propertyId);
+                            }
+                            
+                            languageId = (String)PropertyUtil.getProperty(model, languagePropertyId);
+                            
+                            if(languageId.length() > 0)
+                                language = LanguageUtil.getLanguageByString(languageId);
+                        }
+                        catch(Throwable e){
+                        }
+                    }
+                }
+            }
+            else
+                language = LanguageUtil.getLanguageByString(languageId);
+        }
+        
+        return language;
+	}
 
 	/**
 	 * Retorna o valor do componente formatado.
 	 * 
 	 * @return String contendo o valor formatado.
+	 * @throws Throwable
 	 */
-	protected String getFormattedValue(){
+	protected String getFormattedValue() throws Throwable{
 	    if(getPropertyInfo() != null || getValue() != null)
-    		return PropertyUtil.format(getValue(), valueMapInstance, getPattern(), useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage());
+    		return PropertyUtil.format(getValue(), valueMapInstance, getPattern(), useAdditionalFormatting(), getPrecision(), getLanguage());
 	    
 	    return getInvalidPropertyMessage();
 	}
@@ -525,7 +574,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     		invalidPropertyMessage = StringUtil.trim(resources.getProperty(AttributeConstants.INVALID_PROPERTY_KEY));
         
     		if(actionForm.length() > 0){
-     			BaseModel      model = (form != null ? (isForSearch() ? form.getSearchModel() : form.getModel()) : null);
+     			BaseModel model = (form != null ? (isForSearch() ? form.getSearchModel() : form.getModel()) : null);
          
      			if(model != null){
     				ModelInfo modelInfo = ModelUtil.getModelInfo(model.getClass());
