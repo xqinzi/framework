@@ -313,6 +313,7 @@
 			     splitindex="true"
 			     nohelp="true"
 			     windowtitle="${ant.project.name}"
+				 encoding="iso-8859-1"
 				 taskname="generate.documentation">
 			<sourcepath path="src/java"/>
 			<sourcepath path="src/tests"/>
