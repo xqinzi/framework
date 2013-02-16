@@ -21,6 +21,7 @@ import org.hibernate.StaleStateException;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
@@ -42,7 +43,6 @@ import br.com.concepting.framework.util.MethodUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.PhoneticUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.types.SortOrderType;
 
 /**

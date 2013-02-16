@@ -1,7 +1,7 @@
 package br.com.concepting.framework.persistence.interfaces;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 
 /**
  * Interface que define a estrutura básica para as classes de persistência.

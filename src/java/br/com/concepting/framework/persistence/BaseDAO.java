@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
@@ -16,7 +17,6 @@ import br.com.concepting.framework.persistence.resource.PersistenceResourceLoade
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
 import br.com.concepting.framework.util.MethodUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 
 /**
  * Classe que define a estrutura básica para as classes de persistência de modelos de dados.
