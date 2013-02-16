@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.upload.FormFile;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.FormModel;
 import br.com.concepting.framework.model.SystemModuleModel;
@@ -31,7 +32,6 @@ import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.util.ServiceUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
