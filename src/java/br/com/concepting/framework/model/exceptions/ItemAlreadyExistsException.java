@@ -1,6 +1,6 @@
 package br.com.concepting.framework.model.exceptions;
 
-import br.com.concepting.framework.util.exceptions.ExpectedWarningException;
+import br.com.concepting.framework.exceptions.ExpectedWarningException;
 
 /** 
  * Classe que define a exceção disparada quanto um elemento já existe em um repositório qualquer.
