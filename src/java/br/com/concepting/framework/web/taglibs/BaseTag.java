@@ -8,13 +8,13 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.security.web.SecurityController;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.SystemController;
 

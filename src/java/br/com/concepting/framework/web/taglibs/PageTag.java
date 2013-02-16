@@ -9,10 +9,10 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.taglib.html.HtmlTag;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
