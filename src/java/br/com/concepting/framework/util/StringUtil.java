@@ -16,7 +16,7 @@ import javax.swing.text.MaskFormatter;
 
 import org.htmlparser.util.Translate;
 
-import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.util.helpers.Indent;
 import br.com.concepting.framework.util.types.AlignmentType;
 

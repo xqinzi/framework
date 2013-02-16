@@ -5,11 +5,11 @@ import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
 
+import br.com.concepting.framework.exceptions.ExpectedErrorException;
+import br.com.concepting.framework.exceptions.ExpectedException;
+import br.com.concepting.framework.exceptions.ExpectedWarningException;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
-import br.com.concepting.framework.util.exceptions.ExpectedErrorException;
-import br.com.concepting.framework.util.exceptions.ExpectedException;
-import br.com.concepting.framework.util.exceptions.ExpectedWarningException;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 
 /**
  * Classe utilitária para manipulação de exceções.

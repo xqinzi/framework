@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.constants.Constants;
 
 /**
  * Classe utilitária para manipulação de arquivos e conteúdo binário.

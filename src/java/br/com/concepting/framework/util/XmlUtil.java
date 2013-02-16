@@ -15,8 +15,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**

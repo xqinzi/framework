@@ -3,7 +3,7 @@ package br.com.concepting.framework.util;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.util.types.PagerActionType;
 
 /**

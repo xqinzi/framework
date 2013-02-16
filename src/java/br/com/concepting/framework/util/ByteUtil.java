@@ -12,7 +12,7 @@ import java.util.Locale;
 import org.w3c.tools.codec.Base64Decoder;
 import org.w3c.tools.codec.Base64Encoder;
 
-import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.util.types.ByteMetricType;
 
 /**

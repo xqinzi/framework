@@ -16,7 +16,7 @@ import java.util.concurrent.TimeoutException;
 
 import javax.imageio.ImageIO;
 
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.interfaces.IRobotShell32API;
 import br.com.concepting.framework.util.interfaces.IRobotUser32API;
 

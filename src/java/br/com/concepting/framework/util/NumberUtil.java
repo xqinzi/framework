@@ -10,8 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.helpers.Currency;
 
 /**

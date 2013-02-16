@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 
 /**
  * Classe utilitária responsável por interceptar a execução de um método.
