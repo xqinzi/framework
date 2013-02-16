@@ -6,9 +6,11 @@ br.com.concepting.framework.audit.model
 br.com.concepting.framework.audit.resource
 br.com.concepting.framework.audit.types
 br.com.concepting.framework.caching
+br.com.concepting.framework.constants
 br.com.concepting.framework.context.constants
 br.com.concepting.framework.context.resource
 br.com.concepting.framework.context.types
+br.com.concepting.framework.exceptions
 br.com.concepting.framework.model
 br.com.concepting.framework.model.annotations
 br.com.concepting.framework.model.exceptions
@@ -39,6 +41,7 @@ br.com.concepting.framework.persistence.types
 br.com.concepting.framework.persistence.util
 br.com.concepting.framework.processors
 br.com.concepting.framework.processors.ant
+br.com.concepting.framework.processors.constants
 br.com.concepting.framework.resource
 br.com.concepting.framework.resource.constants
 br.com.concepting.framework.resource.exceptions
@@ -59,7 +62,6 @@ br.com.concepting.framework.service.types
 br.com.concepting.framework.service.util
 br.com.concepting.framework.util
 br.com.concepting.framework.util.constants
-br.com.concepting.framework.util.exceptions
 br.com.concepting.framework.util.helpers
 br.com.concepting.framework.util.interfaces
 br.com.concepting.framework.util.types
