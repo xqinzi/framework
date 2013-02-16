@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
@@ -19,7 +20,6 @@ import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
  
 /**
  * Classe que define a estrutura básica para uma classe de serviço.

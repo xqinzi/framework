@@ -4,13 +4,13 @@ import java.rmi.RemoteException;
 import java.util.Collection;
 
 import br.com.concepting.framework.audit.annotations.Auditable;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.persistence.helpers.ModelFilter;
 import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.types.ServiceTransactionType;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
  
 /** 
  * Interface que define a estrutura básica para um serviço.

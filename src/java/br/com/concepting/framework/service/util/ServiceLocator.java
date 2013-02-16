@@ -16,6 +16,7 @@ import br.com.concepting.framework.caching.CacherManager;
 import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.context.resource.ContextResourceLoader;
 import br.com.concepting.framework.context.types.ContextFactoryType;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.model.util.PropertyUtil;
@@ -26,7 +27,6 @@ import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.util.MethodUtil;
 import br.com.concepting.framework.util.Observer;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 
 /**
  * Classe utilitária responsável por localizar um serviço JNDI. 
