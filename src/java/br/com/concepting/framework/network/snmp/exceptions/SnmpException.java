@@ -1,6 +1,6 @@
 package br.com.concepting.framework.network.snmp.exceptions;
 
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 
 /**
  * Classe que define a exceção para erros em rotina SNMP.
