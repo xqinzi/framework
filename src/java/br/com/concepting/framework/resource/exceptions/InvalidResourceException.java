@@ -1,6 +1,6 @@
 package br.com.concepting.framework.resource.exceptions;
 
-import br.com.concepting.framework.util.exceptions.IncorrectSyntaxException;
+import br.com.concepting.framework.exceptions.IncorrectSyntaxException;
 
 /**
  * Classe que define a exceção quando um recurso não pôde ser lido ou não foi encontrado.
