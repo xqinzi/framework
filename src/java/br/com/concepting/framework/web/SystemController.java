@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 
+import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.security.model.LoginSessionModel;
@@ -25,8 +27,6 @@ import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.SortOrderType;
 import br.com.concepting.framework.web.constants.SystemConstants;

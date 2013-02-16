@@ -6,11 +6,11 @@ import java.util.Locale;
 
 import org.apache.struts.taglib.TagUtils;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.helpers.Node;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;

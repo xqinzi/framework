@@ -1,6 +1,6 @@
 package br.com.concepting.framework.web.taglibs.constants;
 
-import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.web.constants.SystemConstants;
 
 /**

@@ -1,6 +1,6 @@
 package br.com.concepting.framework.util.helpers;
 
-import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.constants.Constants;
 
 /**
  * Classe que define a estrutura básica para regras de indentação.

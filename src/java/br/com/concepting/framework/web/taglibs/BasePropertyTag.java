@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.jsp.tagext.Tag;
 
+import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -18,8 +20,6 @@ import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.form.BaseActionForm;

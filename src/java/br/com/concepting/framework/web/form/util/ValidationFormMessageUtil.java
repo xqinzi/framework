@@ -1,8 +1,8 @@
 package br.com.concepting.framework.web.form.util;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.model.types.ValidationType;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.web.form.helpers.ValidationFormMessage;
 
 /**

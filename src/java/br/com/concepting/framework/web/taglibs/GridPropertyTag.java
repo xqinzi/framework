@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.jsp.PageContext;
 
+import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
@@ -18,8 +20,6 @@ import br.com.concepting.framework.processors.ExpressionProcessorUtil;
 import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.util.Pager;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PagerActionType;

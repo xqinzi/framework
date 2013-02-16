@@ -2,6 +2,7 @@ package br.com.concepting.framework.web.taglibs;
 
 import javax.servlet.jsp.PageContext;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.FormModel;
 import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.SystemModuleModel;
@@ -9,7 +10,6 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;

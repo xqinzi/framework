@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.apache.struts.action.ActionMessages;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;

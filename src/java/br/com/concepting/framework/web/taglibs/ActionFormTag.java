@@ -8,12 +8,12 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.taglib.html.HiddenTag;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;

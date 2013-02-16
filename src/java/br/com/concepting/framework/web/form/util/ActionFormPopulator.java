@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -16,7 +17,6 @@ import br.com.concepting.framework.security.web.SecurityController;
 import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 import br.com.concepting.framework.web.form.BaseActionForm;

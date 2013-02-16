@@ -3,8 +3,8 @@ package br.com.concepting.framework.web.taglibs;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 

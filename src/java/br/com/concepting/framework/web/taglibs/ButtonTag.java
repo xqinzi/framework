@@ -1,7 +1,7 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PagerActionType;

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.concepting.framework.util.constants.AttributeConstants;
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.web.types.ContentType;
 import br.com.concepting.framework.web.types.ScopeType;
 

@@ -2,12 +2,12 @@ package br.com.concepting.framework.web.taglibs;
 
 import java.util.List;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.helpers.Node;
 import br.com.concepting.framework.util.types.ComponentType;
 

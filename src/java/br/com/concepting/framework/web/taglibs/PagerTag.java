@@ -6,12 +6,12 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
+import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.Pager;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.web.helpers.RequestInfo;
