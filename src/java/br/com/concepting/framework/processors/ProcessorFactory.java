@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 
+import br.com.concepting.framework.exceptions.IncorrectSyntaxException;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.util.LanguageUtil;
-import br.com.concepting.framework.util.exceptions.IncorrectSyntaxException;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**

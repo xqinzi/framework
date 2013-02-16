@@ -14,14 +14,14 @@ import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.types.FileSet;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.util.PropertyUtil;
+import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.resource.PropertiesResourceLoader;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;
-import br.com.concepting.framework.util.constants.AttributeConstants;
-import br.com.concepting.framework.util.constants.ProjectConstants;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**

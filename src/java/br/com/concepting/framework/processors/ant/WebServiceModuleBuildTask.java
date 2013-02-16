@@ -9,8 +9,8 @@ import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.types.FileSet;
 
+import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.ProjectConstants;
 
 /**
  * Classe que define a tarefa responsável por criar/configurar o pacote de WEB services.

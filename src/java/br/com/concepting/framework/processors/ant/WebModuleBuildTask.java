@@ -10,10 +10,10 @@ import org.apache.tools.ant.types.FileSet;
 import org.dom4j.DocumentType;
 import org.dom4j.tree.DefaultDocumentType;
 
+import br.com.concepting.framework.constants.Constants;
+import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlWriter;
-import br.com.concepting.framework.util.constants.Constants;
-import br.com.concepting.framework.util.constants.ProjectConstants;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**
