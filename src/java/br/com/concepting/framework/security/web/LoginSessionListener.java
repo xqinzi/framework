@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.security.model.LoginSessionModel;
@@ -13,7 +14,6 @@ import br.com.concepting.framework.security.service.interfaces.LoginSessionServi
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.util.ServiceUtil;
 import br.com.concepting.framework.util.ExceptionUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 

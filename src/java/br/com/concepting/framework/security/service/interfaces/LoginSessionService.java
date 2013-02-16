@@ -3,6 +3,7 @@ package br.com.concepting.framework.security.service.interfaces;
 import java.rmi.RemoteException;
 
 import br.com.concepting.framework.audit.annotations.Auditable;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.security.exceptions.ExpiredPasswordException;
@@ -21,7 +22,6 @@ import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceTransactionType;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 
 /**
  * Interface contendo as assinaturas dos métodos que implementam as regras de negócio que envolvem 

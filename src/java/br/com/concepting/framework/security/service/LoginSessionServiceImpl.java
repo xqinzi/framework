@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
@@ -26,7 +27,6 @@ import br.com.concepting.framework.security.service.interfaces.LoginSessionServi
 import br.com.concepting.framework.security.util.CryptoDigest;
 import br.com.concepting.framework.service.BaseRemoteService;
 import br.com.concepting.framework.util.DateTimeUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.types.DateFieldType;
 
