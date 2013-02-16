@@ -2,8 +2,8 @@ package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.util.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
-import br.com.concepting.framework.util.types.VisibilityType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.VisibilityType;
 
 /**
  * Classe que define o componente visual de um calendário.
