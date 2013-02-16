@@ -1,6 +1,6 @@
 package br.com.concepting.framework.security.exceptions;
 
-import br.com.concepting.framework.util.exceptions.ExpectedWarningException;
+import br.com.concepting.framework.exceptions.ExpectedWarningException;
 
 /**
  * Classe que define a exceção quando a sessão de login expirar.

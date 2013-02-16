@@ -1,6 +1,6 @@
 package br.com.concepting.framework.security.exceptions;
 
-import br.com.concepting.framework.util.exceptions.ExpectedErrorException;
+import br.com.concepting.framework.exceptions.ExpectedErrorException;
 
 /**
  * Classe que define a exceção quando o usuário não existe.
