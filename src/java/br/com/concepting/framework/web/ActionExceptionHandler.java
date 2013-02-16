@@ -10,8 +10,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.ExceptionUtil;
-import br.com.concepting.framework.util.exceptions.InternalErrorException;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 import br.com.concepting.framework.web.form.BaseActionForm;
