@@ -1,6 +1,6 @@
 package br.com.concepting.framework.resource.constants;
 
-import br.com.concepting.framework.util.constants.Constants;
+import br.com.concepting.framework.constants.Constants;
 
 /**
  * Classe que define as constantes utilizadas pelas rotinas de manipulação de configurações.
