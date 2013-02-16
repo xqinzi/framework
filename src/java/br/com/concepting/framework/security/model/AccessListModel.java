@@ -7,6 +7,12 @@ import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.persistence.types.RelationType;
 
+/**
+ * Classe que define o modelo de dados para uma lista de acessos.
+ * 
+ * @author fvilarinho
+ * @since 3.0
+ */
 @Model 
 public class AccessListModel extends BaseModel{
     @Property(isIdentity=true)
