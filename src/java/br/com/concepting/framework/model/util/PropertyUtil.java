@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
@@ -32,7 +33,6 @@ import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.helpers.Currency;
 import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.helpers.Node;

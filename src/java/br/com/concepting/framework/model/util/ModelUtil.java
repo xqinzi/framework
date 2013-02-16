@@ -1,3 +1,4 @@
+
 package br.com.concepting.framework.model.util;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import org.dom4j.DocumentException;
 
 import br.com.concepting.framework.caching.Cacher;
 import br.com.concepting.framework.caching.CacherManager;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
@@ -32,7 +34,6 @@ import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;
-import br.com.concepting.framework.util.constants.Constants;
 import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.helpers.XmlNode;
 import br.com.concepting.framework.util.types.SortOrderType;
