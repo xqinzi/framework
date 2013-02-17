@@ -120,7 +120,7 @@ public class XmlNode extends Node{
     }
     
     /**
-     * Remove as definições do namespaces nas tags.
+     * Remove as definições do nomespaces nas tags.
      * 
      * @param value String contendo as tags com namespace definido.
      * @return String sem namespaces.
@@ -172,18 +172,18 @@ public class XmlNode extends Node{
     }
     
     /**
-     * Retorna o identificador do namespace do nó.
+     * Retorna o identificador do nomespace do nó.
      * 
-     * @return String contendo o identificador do namespace.
+     * @return String contendo o identificador do nomespace.
      */
     public String getNamespace(){
         return namespace;
     }
 
     /**
-     * Define o identificador do namespace do nó.
+     * Define o identificador do nomespace do nó.
      * 
-     * @param namespace String contendo o identificador do namespace.
+     * @param namespace String contendo o identificador do nomespace.
      */
     public void setNamespace(String namespace){
         this.namespace = namespace;

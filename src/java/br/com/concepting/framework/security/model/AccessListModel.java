@@ -73,18 +73,18 @@ public class AccessListModel extends BaseModel{
     }
 
     /**
-     * Retorna o name da lista.
+     * Retorna o nome da lista.
      * 
-     * @return String contendo o name da lista.
+     * @return String contendo o nome da lista.
      */
     public String getName(){
         return name;
     }
 
     /**
-     * Define o name da lista.
+     * Define o nome da lista.
      * 
-     * @param name String contendo o name da lista.
+     * @param name String contendo o nome da lista.
      */
     public void setName(String name){
         this.name = name;
