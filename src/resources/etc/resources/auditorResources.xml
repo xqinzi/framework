@@ -6,7 +6,7 @@
 			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
 				<options>
 					<option id="layoutClass" value="br.com.concepting.framework.audit.appenders.AuditorPatternLayout"/>
-					<option id="layoutPattern" value="[#{date}][#{systemModule}][#{userName}][#{systemSession.ip}/#{systemSession.hostName}][#{entityId} - #{businessId}] #{businessComplement} -> #{statusCode} #{statusMessage}"/>
+					<option id="layoutPattern" value="[#{createDate}][#{systemModule}][#{userName}][#{systemSession.ip}/#{systemSession.hostName}][#{entityId} - #{businessId}] #{businessComplement} -> #{statusCode} #{statusMessage}"/>
 				</options>
 			</appender>
 		</appenders>
@@ -16,7 +16,7 @@
 			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
 				<options>
 					<option id="layoutClass" value="br.com.concepting.framework.audit.appenders.AuditorPatternLayout"/>
-					<option id="layoutPattern" value="[#{date}][#{businessId}] #{businessComplement} -> #{statusCode} #{statusMessage}"/>
+					<option id="layoutPattern" value="[#{createDate}][#{businessId}] #{businessComplement} -> #{statusCode} #{statusMessage}"/>
 				</options>
 			</appender>
 		</appenders>
