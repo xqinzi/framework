@@ -5,16 +5,16 @@
 				<xs:element name="auditor" maxOccurs="unbounded" minOccurs="1">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="appenders">
+							<xs:element name="appenders" maxOccurs="1" minOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="appender">
+										<xs:element name="appender" minOccurs="1">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="options">
+													<xs:element name="options" minOccurs="0">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="option" maxOccurs="unbounded" minOccurs="0">
+																<xs:element name="option" maxOccurs="unbounded" minOccurs="1">
 																	<xs:complexType>
 																		<xs:simpleContent>
 																			<xs:extension base="xs:string">
