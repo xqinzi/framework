@@ -1,6 +1,8 @@
 package br.com.concepting.framework.context.resource;
 
 import br.com.concepting.framework.context.constants.ContextConstants;
+import br.com.concepting.framework.context.types.ContextFactoryType;
+import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.resource.XmlResourceLoader;
@@ -58,11 +60,31 @@ public class ContextResourceLoader extends XmlResourceLoader{
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
 	 */
     public <R extends BaseResource> R get(String id) throws InvalidResourceException{
-		ContextResource contextResource = super.get(id);
-		XmlNode         resource        = contextResource.getContent();
-		XmlNode         resourceNode    = null;
+		ContextResource    contextResource    = super.get(id);
+		XmlNode            resource           = contextResource.getContent();
+        String             factoryResourceId  = StringUtil.trim(resource.getAttribute("factoryResourceId"));
+        FactoryResource    factoryResource    = null;
+        ContextFactoryType contextFactoryType = null;
 
-		resourceNode = resource.getNode("serverName");
+        if(factoryResourceId.length() > 0){
+            ContextFactoryResourceLoader factoryResourceLoader = null;
+
+            if(getResourceDir().length() > 0)
+                factoryResourceLoader = new ContextFactoryResourceLoader(getResourceDir(), FactoryConstants.DEFAULT_RESOURCE_ID);
+            else
+                factoryResourceLoader = new ContextFactoryResourceLoader();
+
+            factoryResource = factoryResourceLoader.get(factoryResourceId);
+
+            contextResource.setFactoryResource(factoryResource);
+            
+            contextFactoryType = ContextFactoryType.valueOf(factoryResource.getType().toUpperCase());
+        }
+        else
+            contextFactoryType = ContextFactoryType.TOMCAT;
+
+        XmlNode resourceNode = resource.getNode("serverName");
+        
 		if(resourceNode != null){
 			String serverName = StringUtil.trim(resourceNode.getValue());
 
@@ -71,6 +93,8 @@ public class ContextResourceLoader extends XmlResourceLoader{
 
 			contextResource.setServerName(serverName);
 		}
+		else
+		    contextResource.setServerName(NetworkConstants.LOCALHOST_ID);
 
         resourceNode = resource.getNode("lookupPort");
         if(resourceNode != null){
@@ -83,6 +107,8 @@ public class ContextResourceLoader extends XmlResourceLoader{
                 throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);
             }
         }
+        else
+            contextResource.setLookupPort(contextFactoryType.getDefaultLookupPort());
 
         resourceNode = resource.getNode("serverPort");
 		if(resourceNode != null){
@@ -94,7 +120,9 @@ public class ContextResourceLoader extends XmlResourceLoader{
 			catch(Throwable e){
 				throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);
 			}
-		}
+        }
+        else
+            contextResource.setLookupPort(contextFactoryType.getDefaultServerPort());
 		
 		Boolean useSsl = false;
 		
@@ -105,22 +133,6 @@ public class ContextResourceLoader extends XmlResourceLoader{
 		}
 
 		contextResource.setUseSsl(useSsl);
-
-		String          factoryResourceId = StringUtil.trim(resource.getAttribute("factoryResourceId"));
-		FactoryResource factoryResource   = null;
-
-		if(factoryResourceId.length() > 0){
-			ContextFactoryResourceLoader factoryResourceLoader = null;
-
-			if(getResourceDir().length() > 0)
-				factoryResourceLoader = new ContextFactoryResourceLoader(getResourceDir(), FactoryConstants.DEFAULT_RESOURCE_ID);
-			else
-				factoryResourceLoader = new ContextFactoryResourceLoader();
-
-			factoryResource = factoryResourceLoader.get(factoryResourceId);
-
-			contextResource.setFactoryResource(factoryResource);
-		}
 
 		return (R)contextResource;
 	}
