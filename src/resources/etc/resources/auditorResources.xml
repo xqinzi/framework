@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
-<auditorResources>
+<auditorResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="auditorResources.xsd">
 	<auditor id="default" level="debug" default="true">
 		<appenders>
 			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
