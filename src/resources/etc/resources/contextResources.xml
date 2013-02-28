@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 
-<contextResources>
-	<context id="jboss-localhost" factoryResourceId="jboss-factory">
-		<serverName>localhost</serverName>
-		<lookupPort>1099</lookupPort>
-	</context>
-	<context id="glassfish-localhost" factoryResourceId="glassfish-factory">
-		<serverName>localhost</serverName>
-		<lookupPort>3700</lookupPort>
-	</context>
-	<context id="tomcat-localhost" default="true"/>
+<contextResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="contextResources.xsd">
+	<context id="weblogic-localhost" factoryResourceId="weblogic-factory"/>
+	<context id="websphere-localhost" factoryResourceId="websphere-factory"/>
+	<context id="jboss-localhost" factoryResourceId="jboss-factory"/>
+	<context id="glassfish-localhost" factoryResourceId="glassfish-factory" default="true"/>
+	<context id="tomcat-localhost"/>
 </contextResources>

@@ -1,4 +1,4 @@
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:element name="auditorResources">
 		<xs:complexType>
 			<xs:sequence>
@@ -35,9 +35,9 @@
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
-						<xs:attribute type="xs:string" name="id" use="requred"/>
+						<xs:attribute type="xs:string" name="id" use="required"/>
 						<xs:attribute type="xs:string" name="level" use="required"/>
-						<xs:attribute type="xs:string" name="default" use="optional"/>
+						<xs:attribute type="xs:boolean" name="default" use="optional"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
