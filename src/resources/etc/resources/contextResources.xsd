@@ -1,0 +1,21 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="contextResources">
+		<xs:complexType>
+    		<xs:sequence>
+        		<xs:element name="context" maxOccurs="unbounded" minOccurs="0">
+          			<xs:complexType mixed="true">
+            			<xs:sequence>
+              				<xs:element type="xs:string" name="serverName" minOccurs="0"/>
+              				<xs:element type="xs:short" name="lookupPort" minOccurs="0"/>
+              				<xs:element type="xs:short" name="serverPort" minOccurs="0"/>
+            			</xs:sequence>
+			            <xs:attribute type="xs:string" name="id" use="required"/>
+			            <xs:attribute type="xs:boolean" name="useSsl" use="optional"/>
+			            <xs:attribute type="xs:string" name="factoryResourceId" use="optional"/>
+			            <xs:attribute type="xs:boolean" name="default" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
