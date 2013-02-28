@@ -25,7 +25,12 @@ public enum ContextFactoryType{
 	/**
 	 * Constante que define o servidor Websphere.
 	 */
-	WEBSPHERE("IBM Websphere", 2809, 8080);
+	WEBSPHERE("IBM Websphere", 2809, 8080),
+	
+    /**
+     * Constante que define o servidor Weblogic.
+     */
+	WEBLOGIC("Oracle Weblogic", 7001, 8080);
 	
 	private String  description       = "";
     private Integer defaultLookupPort = 0;
