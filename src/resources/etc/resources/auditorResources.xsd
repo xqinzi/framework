@@ -2,19 +2,19 @@
 	<xs:element name="auditorResources">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="auditor" maxOccurs="unbounded" minOccurs="1">
+				<xs:element name="auditor" minOccurs="1" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="appenders" maxOccurs="1" minOccurs="1">
+							<xs:element name="appenders" minOccurs="1" maxOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="appender" minOccurs="1">
+										<xs:element name="appender" minOccurs="1" maxOccurs="unbounded">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="options" minOccurs="0">
+													<xs:element name="options" minOccurs="0" maxOccurs="1">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="option" maxOccurs="unbounded" minOccurs="1">
+																<xs:element name="option" minOccurs="1" maxOccurs="unbounded">
 																	<xs:complexType>
 																		<xs:simpleContent>
 																			<xs:extension base="xs:string">
@@ -36,7 +36,20 @@
 							</xs:element>
 						</xs:sequence>
 						<xs:attribute type="xs:string" name="id" use="required"/>
-						<xs:attribute type="xs:string" name="level" use="required"/>
+						<xs:attribute name="level" use="required">
+                  			<xs:simpleType>
+						    	<xs:restriction base="xs:string">
+						        	<xs:enumeration value="ALL"/>
+						        	<xs:enumeration value="DEBUG"/>
+						        	<xs:enumeration value="ERROR"/>
+						        	<xs:enumeration value="FATAL"/>
+						        	<xs:enumeration value="INFO"/>
+						        	<xs:enumeration value="TRACE"/>
+						        	<xs:enumeration value="WARN"/>
+						        	<xs:enumeration value="OFF"/>
+						    	</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
 						<xs:attribute type="xs:boolean" name="default" use="optional"/>
 					</xs:complexType>
 				</xs:element>

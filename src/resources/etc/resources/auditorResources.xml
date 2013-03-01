@@ -2,7 +2,7 @@
 
 <auditorResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:noNamespaceSchemaLocation="auditorResources.xsd">
-	<auditor id="default" level="debug" default="true">
+	<auditor id="default" level="DEBUG" default="true">
 		<appenders>
 			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
 				<options>
@@ -12,7 +12,7 @@
 			</appender>
 		</appenders>
 	</auditor>
-	<auditor id="generate.code" level="info">
+	<auditor id="generate.code" level="INFO">
 		<appenders>
 			<appender class="br.com.concepting.framework.audit.appenders.ConsoleAuditorAppender">
 				<options>
