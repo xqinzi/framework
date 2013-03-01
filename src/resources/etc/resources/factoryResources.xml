@@ -1,7 +1,16 @@
 <?xml version="1.0"?>
 
-<factoryResources>
+<factoryResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="factoryResources.xsd">
 	<contextFactory>
+		<factory id="weblogic-factory" type="WEBLOGIC">
+			<class>weblogic.jndi.WLInitialContextFactory</class>
+			<url>t3://#{serverName}:#{serverPort}</url>
+		</factory>
+		<factory id="websphere-factory" type="WEBSPHERE">
+			<class>com.ibm.websphere.naming.WsnInitialContextFactory</class>
+			<url>corbaloc:iiop:#{serverName}:#{serverPort}</url>
+		</factory>
 		<factory id="glassfish-factory" type="GLASSFISH" default="true">
 			<class>com.sun.enterprise.naming.SerialInitContextFactory</class>
 			<url>iiop://#{serverName}:#{serverPort}</url>
@@ -42,7 +51,7 @@
 			<class>org.postgresql.Driver</class>
 			<url>jdbc:postgresql://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
-		<factory id="firebird-factory" tyoe="FIREBIRD">
+		<factory id="firebird-factory" type="FIREBIRD">
 			<class>org.firebirdsql.jdbc.FBDriver</class>
 			<url>jdbc:firebirdsql://#{serverName}:#{serverPort}/#{repositoryId}</url>
 		</factory>
