@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
-<systemResources>
+<systemResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="systemResources.xsd">
 	<mainPage>/mainPage.jsp</mainPage>
 	<loginPage>/loginPage.jsp</loginPage>
 	<languages>
