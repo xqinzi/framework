@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 
-<networkResources>
+<networkResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="networkResources.xsd">
 	<mailResources>
 		<mail id="localhost" default="true">
 			<serverName>localhost</serverName>
-			<transport type="smtp" port="25"/>
-			<storage type="pop3" port="110"/>
+			<transport type="SMTP"/>
+			<storage type="POP3"/>
 		</mail>
 	</mailResources>
 	<ldapResources>
@@ -13,6 +14,7 @@
 			<serverName>localhost</serverName>
 			<serverPort>389</serverPort>
 			<domain>localdomain</domain>
+			<baseDn>dc=localdomain</baseDn>
 		</ldap>
 	</ldapResources>
 </networkResources>

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
-<persistenceResources>
+<persistenceResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:noNamespaceSchemaLocation="persistenceResources.xsd">
 	<persistence id="glassfish-datasource" timeout="60" contextResourceId="glassfish-localhost" factoryResourceId="mysql-factory" default="true">
 		<lookupName>jdbc/datasource</lookupName>
 		<options>
