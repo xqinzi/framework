@@ -6,20 +6,8 @@
           			<xs:complexType mixed="true">
             			<xs:sequence>
               				<xs:element type="xs:string" name="serverName" minOccurs="0" maxOccurs="1"/>
-              				<xs:element name="lookupPort" minOccurs="0" maxOccurs="1">
-              					<xs:simpleType>
-              						<xs:restriction base="xs:short">
-              							<xs:pattern value="[0-9]{5}"/>
-              						</xs:restriction>
-              					</xs:simpleType>
-              				</xs:element>
-              				<xs:element name="serverPort" minOccurs="0" maxOccurs="1">
-              					<xs:simpleType>
-              						<xs:restriction base="xs:short">
-              							<xs:pattern value="[0-9]{5}"/>
-              						</xs:restriction>
-              					</xs:simpleType>
-              				</xs:element>
+              				<xs:element type="xs:short" name="lookupPort" minOccurs="0" maxOccurs="1"/>
+              				<xs:element type="xs:short" name="serverPort" minOccurs="0" maxOccurs="1"/>
             			</xs:sequence>
 			            <xs:attribute type="xs:string" name="id" use="required"/>
 			            <xs:attribute type="xs:boolean" name="useSsl" use="optional"/>
