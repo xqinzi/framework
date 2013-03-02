@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 
-<securityResources>
+<securityResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:noNamespaceSchemaLocation="securityResources.xsd">
 	<filter>
 		<excludePatterns>
 			<pattern>*</pattern>
@@ -8,6 +9,6 @@
 	</filter>
 	<session>
 		<class>br.com.concepting.framework.security.model.LoginSessionModel</class>
-		<timeout>5</timeout>
+		<timeout>50</timeout>
 	</session>
 </securityResources>
