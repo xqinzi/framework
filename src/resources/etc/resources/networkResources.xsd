@@ -1,0 +1,84 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="networkResources">
+    	<xs:complexType>
+      		<xs:sequence>
+        		<xs:element name="mailResources" minOccurs="1" maxOccurs="1">
+          			<xs:complexType>
+            			<xs:sequence>
+              				<xs:element name="mail" minOccurs="1" maxOccurs="unbounded">
+                				<xs:complexType>
+                  					<xs:sequence>
+                    					<xs:element type="xs:string" name="serverName" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="user" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:boolean" name="useTls" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:boolean" name="useSsl" minOccurs="0" maxOccurs="1"/>
+                   						<xs:element name="transport" minOccurs="1" maxOccurs="1">
+                     						<xs:complexType>
+                       							<xs:simpleContent>
+                         							<xs:extension base="xs:string">
+	                           							<xs:attribute name="type" use="required">
+								                  			<xs:simpleType>
+														    	<xs:restriction base="xs:string">
+														        	<xs:enumeration value="SMTP"/>
+														        	<xs:enumeration value="ESMTP"/>
+														    	</xs:restriction>
+															</xs:simpleType>
+	                           							</xs:attribute>
+	                           							<xs:attribute type="xs:short" name="port" use="optional"/>
+                         							</xs:extension>
+                       							</xs:simpleContent>
+                     						</xs:complexType>
+                   						</xs:element>
+                   						<xs:element name="storage" minOccurs="1" maxOccurs="1">
+                     						<xs:complexType>
+                       							<xs:simpleContent>
+                         							<xs:extension base="xs:string">
+	                           							<xs:attribute name="type" use="required">
+								                  			<xs:simpleType>
+														    	<xs:restriction base="xs:string">
+														        	<xs:enumeration value="POP3"/>
+														        	<xs:enumeration value="IMAP"/>
+														    	</xs:restriction>
+															</xs:simpleType>
+	                           							</xs:attribute>
+	                           							<xs:attribute type="xs:short" name="port" use="optional"/>
+                         							</xs:extension>
+                       							</xs:simpleContent>
+                     						</xs:complexType>
+                   						</xs:element>
+                  					</xs:sequence>
+                 					<xs:attribute type="xs:string" name="id" use="required"/>
+                 					<xs:attribute type="xs:boolean" name="default" use="optional"/>
+               					</xs:complexType>
+             				</xs:element>
+           				</xs:sequence>
+         			</xs:complexType>
+       			</xs:element>
+       			<xs:element name="ldapResources" minOccurs="0" maxOccurs="1">
+         			<xs:complexType>
+           				<xs:sequence>
+             				<xs:element name="ldap" minOccurs="1" maxOccurs="1">
+               					<xs:complexType>
+                 					<xs:sequence>
+                   						<xs:element type="xs:string" name="serverName" minOccurs="0" maxOccurs="1"/>
+                   						<xs:element type="xs:short" name="serverPort" minOccurs="0" maxOccurs="1"/>
+                   						<xs:element type="xs:string" name="authenticationType" minOccurs="0" maxOccurs="1"/>
+                   						<xs:element type="xs:string" name="domain" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="user" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="baseDn" minOccurs="1" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="userDn" minOccurs="0" maxOccurs="1"/>
+                    					<xs:element type="xs:short" name="timeout" minOccurs="0" maxOccurs="1"/>
+                 					</xs:sequence>
+                 					<xs:attribute type="xs:string" name="id" use="required"/>
+                 					<xs:attribute type="xs:boolean" name="default" use="optional"/>
+               					</xs:complexType>
+             				</xs:element>
+           				</xs:sequence>
+         			</xs:complexType>
+       			</xs:element>
+     		</xs:sequence>
+   		</xs:complexType>
+ 	</xs:element>
+</xs:schema>
