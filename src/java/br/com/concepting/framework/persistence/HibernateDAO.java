@@ -1108,6 +1108,8 @@ public abstract class HibernateDAO extends BaseDAO{
                 connection = HibernateUtil.getSession(this);
 
                 setConnection(connection);
+                
+                begin();
 			}
 
 			return (C)connection;

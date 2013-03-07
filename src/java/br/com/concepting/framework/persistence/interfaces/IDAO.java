@@ -25,25 +25,6 @@ public interface IDAO extends ICrud{
 	public void setPersistenceResource(PersistenceResource persistenceResource);
 	
 	/**
-	 * Retorna a conexão atual com o repositório de persistência.
-	 * 
-	 * @return Instância contendo a conexão atual.
-	 */
-	public <C> C getConnection();
-	
-	/**
-	 * Define a conexão atual com o repositório de persistência.
-	 * 
-	 * @param connection Instância contendo a conexão atual.
-	 */
-	public <C> void setConnection(C connection);
-	
-	/**
-	 * Fecha uma conexão com o repositório de persistência.
-	 */
-	public void closeConnection();
-	
-	/**
 	 * Abre uma conexão com o repositório de persistência a partir de uma instância de propriedades de 
 	 * conexão com o repositório. 
 	 *
@@ -71,6 +52,11 @@ public interface IDAO extends ICrud{
 	 * @throws InternalErrorException
 	 */
 	public <C> C openConnection() throws InternalErrorException;
+    
+    /**
+     * Fecha uma conexão com o repositório de persistência.
+     */
+    public void closeConnection();
 	
 	/**
 	 * Inicia uma transação de persistência.
@@ -88,11 +74,4 @@ public interface IDAO extends ICrud{
 	 * Descarta as operações de persistências.
 	 */
 	public void rollback() throws InternalErrorException;
-
-	/**
-	 * Indica se a classe de persistência utilizará controle transacional.
-	 *
-	 * @return True/False.
-	 */
-	public Boolean useTransaction();
 }

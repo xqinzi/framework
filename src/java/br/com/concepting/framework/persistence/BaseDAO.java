@@ -47,8 +47,8 @@ public abstract class BaseDAO implements IDAO{
 		this();
 
 		if(currentPersistence != null){
-			this.currentPersistence = currentPersistence;
-			this.useTransaction     = false;
+		    setCurrentPersistence(currentPersistence);
+			setUseTransaction(false);
 		}
 	}
 
@@ -60,14 +60,25 @@ public abstract class BaseDAO implements IDAO{
 	public BaseDAO(Boolean useTransaction){
 		this();
 
-		this.useTransaction = useTransaction;
+		setUseTransaction(useTransaction);
 	}
 
 	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#useTransaction()
+	 * Indica se deve-se usar o controle transacional.
+	 * 
+	 * @return True/False.
 	 */
-	public Boolean useTransaction(){
+	protected Boolean useTransaction(){
 		return useTransaction;
+	}
+	
+    /**
+     * Define se deve-se usar o controle transacional.
+     * 
+     * @param useTransaction True/False.
+     */
+	protected void setUseTransaction(Boolean useTransaction){
+	    this.useTransaction = useTransaction;
 	}
 	
 	/**
@@ -75,7 +86,7 @@ public abstract class BaseDAO implements IDAO{
 	 *
 	 * @return Instância da transação.
 	 */
-    public <O> O getTransaction(){
+    protected <O> O getTransaction(){
     	return (O)transaction;
     }
 
@@ -84,7 +95,7 @@ public abstract class BaseDAO implements IDAO{
 	 *
 	 * @param transaction Instância da transação.
 	 */
-	public <O> void setTransaction(O transaction){
+	protected <O> void setTransaction(O transaction){
     	this.transaction = transaction;
     }
 
@@ -100,27 +111,27 @@ public abstract class BaseDAO implements IDAO{
 		else
 			persistenceResource = persistenceResourceLoader.getDefault();
 
-		return (C)openConnection(persistenceResource);
+		return openConnection(persistenceResource);
 	}
 
 	/**
 	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#openConnection(br.com.concepting.framework.persistence.resource.PersistenceResource)
 	 */
     public <C> C openConnection(PersistenceResource persistenceResource) throws InternalErrorException{
-		return (C)connection;
+        return getConnection();
 	}
 
 	/**
 	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#openConnection()
 	 */
     public <C> C openConnection() throws InternalErrorException{
-		return (C)connection;
+        return getConnection();
 	}
 
 	/**
 	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getConnection()
 	 */
-    public <C> C getConnection(){
+    protected <C> C getConnection(){
 		if(currentPersistence != null)
 			return (C)currentPersistence.getConnection();
 		
@@ -132,7 +143,7 @@ public abstract class BaseDAO implements IDAO{
 	 * 
 	 * @param connection Instância da conexão com o repositório.
 	 */
-	public <C> void setConnection(C connection){
+	protected <C> void setConnection(C connection){
 		if(currentPersistence != null)
 			currentPersistence.setConnection(connection);
 		else	
