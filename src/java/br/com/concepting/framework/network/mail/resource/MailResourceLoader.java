@@ -1,5 +1,6 @@
 package br.com.concepting.framework.network.mail.resource;
 
+import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.network.mail.types.MailStorageType;
 import br.com.concepting.framework.network.mail.types.MailTransportType;
 import br.com.concepting.framework.network.resource.NetworkResourceLoader;
@@ -44,8 +45,8 @@ public class MailResourceLoader extends NetworkResourceLoader{
 
 			mailResource.setServerName(serverName);
 		}
-		else 
-			throw new InvalidResourceException(getResourceId(), resource.getText());
+		else
+		    mailResource.setServerName(NetworkConstants.LOCALHOST_ID);
 
 		resourceNode = resource.getNode("transport");
 		if(resourceNode != null){
@@ -67,6 +68,10 @@ public class MailResourceLoader extends NetworkResourceLoader{
 				throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);
 			}
 		}
+		else{
+		    mailResource.setTransport(NetworkConstants.DEFAULT_MAIL_TRANSPORT);
+		    mailResource.setTransportPort(NetworkConstants.DEFAULT_MAIL_TRANSPORT_PORT);
+		}
 
 		resourceNode = resource.getNode("storage");
 		if(resourceNode != null){
@@ -87,6 +92,10 @@ public class MailResourceLoader extends NetworkResourceLoader{
 			catch(Throwable e){
 				throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);
 			}
+		}
+		else{
+		    mailResource.setStorage(NetworkConstants.DEFAULT_MAIL_STORAGE);
+		    mailResource.setStoragePort(NetworkConstants.DEFAULT_MAIL_STORAGE_PORT);
 		}
 
 		String useSsl = StringUtil.trim(resource.getAttribute("useSsl"));

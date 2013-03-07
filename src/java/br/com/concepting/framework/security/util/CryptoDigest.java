@@ -33,7 +33,7 @@ public class CryptoDigest{
 	 * @throws NoSuchAlgorithmException
 	 */
 	public CryptoDigest(Boolean useBase64) throws NoSuchAlgorithmException{
-		this(SecurityConstants.DEFAULT_DIGEST_ALGORITHM, useBase64);
+		this(SecurityConstants.DEFAULT_DIGEST_ALGORITHM_ID, useBase64);
 	}
 
 	/**

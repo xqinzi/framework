@@ -17,17 +17,17 @@ public abstract class SecurityConstants extends ResourceConstants{
     /**
      * Constante que define o algoritmo de digest default.
      */
-    public static final String DEFAULT_DIGEST_ALGORITHM = "MD5";
+    public static final String DEFAULT_DIGEST_ALGORITHM_ID = "MD5";
     
     /**
      * Constante que define o algoritmo default de criptografia com chave.
      */
-    public static final String DEFAULT_CRYPTO_ALGORITHM_WITH_PASSPHRASE = "PBEWithMD5andDES";
+    public static final String DEFAULT_CRYPTO_ALGORITHM_WITH_PASSPHRASE_ID = "PBEWithMD5andDES";
 
     /**
      * Constante que define o algoritmo default de criptografia sem chave.
      */
-    public static final String DEFAULT_CRYPTO_ALGORITHM_WITHOUT_PASSPHRASE = "DES";
+    public static final String DEFAULT_CRYPTO_ALGORITHM_WITHOUT_PASSPHRASE_ID = "DES";
     
     /**
      * Constante que define o algoritmo default de criptografia com chave.

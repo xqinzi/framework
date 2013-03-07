@@ -26,6 +26,16 @@ public abstract class NetworkConstants extends ResourceConstants{
      */
     public static final String LOCALHOST_ID = "localhost";
     
+    /**
+     * Constante que define o identificador do domínio local.
+     */
+    public static final String LOCALDOMAIN_ID = "localdomain";
+    
+    /**
+     * Constante que define a porta padrão do serviço LDAP.
+     */
+    public static final Integer DEFAULT_LDAP_PORT = 389;
+    
 	/**
 	 * Constante que define o identificador da factory de contexto LDAP.
 	 */

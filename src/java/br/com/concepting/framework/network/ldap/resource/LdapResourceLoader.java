@@ -1,5 +1,6 @@
 package br.com.concepting.framework.network.ldap.resource;
 
+import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.network.resource.NetworkResourceLoader;
 import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
@@ -40,8 +41,8 @@ public class LdapResourceLoader extends NetworkResourceLoader{
 
 			ldapResource.setServerName(serverName);
 		}
-		else 
-			throw new InvalidResourceException(getResourceId(), resource.getText());
+		else
+		    ldapResource.setServerName(NetworkConstants.LOCALHOST_ID);
 
 		resourceNode = resource.getNode("serverPort");
 		if(resourceNode != null){
@@ -54,8 +55,8 @@ public class LdapResourceLoader extends NetworkResourceLoader{
 				throw new InvalidResourceException(getResourceId(), resourceNode.getText(), e);
 			}
 		}
-		else 
-			throw new InvalidResourceException(getResourceId(), resource.getText());
+		else
+		    ldapResource.setServerPort(NetworkConstants.DEFAULT_LDAP_PORT);
 
 		resourceNode = resource.getNode("authenticationType");
 		if(resourceNode != null){
@@ -84,8 +85,17 @@ public class LdapResourceLoader extends NetworkResourceLoader{
 
 			ldapResource.setBaseDn(baseDn);
 		}
+		else
+		    ldapResource.setBaseDn("dc=".concat(NetworkConstants.LOCALDOMAIN_ID));
 
-		return (R)ldapResource;
+        resourceNode = resource.getNode("userDn");
+        if(resourceNode != null){
+            String baseDn = StringUtil.trim(resourceNode.getValue());
+
+            ldapResource.setBaseDn(baseDn);
+        }
+
+        return (R)ldapResource;
 	}
 
 	/**

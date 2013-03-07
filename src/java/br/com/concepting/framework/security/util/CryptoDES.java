@@ -47,7 +47,7 @@ public class CryptoDES extends BaseCrypto{
      * @throws NoSuchPaddingException
      */
     public CryptoDES(Boolean useBase64) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException{
-    	super(SecurityConstants.DEFAULT_CRYPTO_ALGORITHM_WITHOUT_PASSPHRASE, useBase64);
+    	super(SecurityConstants.DEFAULT_CRYPTO_ALGORITHM_WITHOUT_PASSPHRASE_ID, useBase64);
     }
 
     /**
@@ -80,7 +80,7 @@ public class CryptoDES extends BaseCrypto{
     	this(useBase64);
     	
         KeySpec   keySpec = new PBEKeySpec(passPhrase.toCharArray());
-        SecretKey key     = SecretKeyFactory.getInstance(SecurityConstants.DEFAULT_CRYPTO_ALGORITHM_WITH_PASSPHRASE).generateSecret(keySpec);
+        SecretKey key     = SecretKeyFactory.getInstance(SecurityConstants.DEFAULT_CRYPTO_ALGORITHM_WITH_PASSPHRASE_ID).generateSecret(keySpec);
         
         encrypt = Cipher.getInstance(key.getAlgorithm());
         decrypt = Cipher.getInstance(key.getAlgorithm());

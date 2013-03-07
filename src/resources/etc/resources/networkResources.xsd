@@ -13,7 +13,7 @@
                     					<xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
                     					<xs:element type="xs:boolean" name="useTls" minOccurs="0" maxOccurs="1"/>
                     					<xs:element type="xs:boolean" name="useSsl" minOccurs="0" maxOccurs="1"/>
-                   						<xs:element name="transport" minOccurs="1" maxOccurs="1">
+                   						<xs:element name="transport" minOccurs="0" maxOccurs="1">
                      						<xs:complexType>
                        							<xs:simpleContent>
                          							<xs:extension base="xs:string">
@@ -30,7 +30,7 @@
                        							</xs:simpleContent>
                      						</xs:complexType>
                    						</xs:element>
-                   						<xs:element name="storage" minOccurs="1" maxOccurs="1">
+                   						<xs:element name="storage" minOccurs="0" maxOccurs="1">
                      						<xs:complexType>
                        							<xs:simpleContent>
                          							<xs:extension base="xs:string">
@@ -67,7 +67,7 @@
                    						<xs:element type="xs:string" name="domain" minOccurs="0" maxOccurs="1"/>
                     					<xs:element type="xs:string" name="user" minOccurs="0" maxOccurs="1"/>
                     					<xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
-                    					<xs:element type="xs:string" name="baseDn" minOccurs="1" maxOccurs="1"/>
+                    					<xs:element type="xs:string" name="baseDn" minOccurs="0" maxOccurs="1"/>
                     					<xs:element type="xs:string" name="userDn" minOccurs="0" maxOccurs="1"/>
                     					<xs:element type="xs:short" name="timeout" minOccurs="0" maxOccurs="1"/>
                  					</xs:sequence>

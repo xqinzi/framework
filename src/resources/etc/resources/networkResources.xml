@@ -3,18 +3,9 @@
 <networkResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:noNamespaceSchemaLocation="networkResources.xsd">
 	<mailResources>
-		<mail id="localhost" default="true">
-			<serverName>localhost</serverName>
-			<transport type="SMTP"/>
-			<storage type="POP3"/>
-		</mail>
+		<mail id="localhost" default="true"/>
 	</mailResources>
 	<ldapResources>
-		<ldap id="localhost" default="true">
-			<serverName>localhost</serverName>
-			<serverPort>389</serverPort>
-			<domain>localdomain</domain>
-			<baseDn>dc=localdomain</baseDn>
-		</ldap>
+		<ldap id="localhost" default="true"/>
 	</ldapResources>
 </networkResources>
