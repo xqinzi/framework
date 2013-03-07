@@ -49,7 +49,7 @@ public abstract class BaseService implements IService{
 	public void begin() throws InternalErrorException{
         IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
         
-	    if(currentPersistence != null && currentPersistence.useTransaction())
+	    if(currentPersistence != null)
 	        currentPersistence.begin();
     }
 
