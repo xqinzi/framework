@@ -128,9 +128,11 @@ public abstract class BaseDAO implements IDAO{
         return getConnection();
 	}
 
-	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getConnection()
-	 */
+    /**
+     * Retorna a instância da conexão com o repositório de persistência.
+     * 
+     * @return Instância da conexão contendo o repositório de persistência.
+     */
     protected <C> C getConnection(){
 		if(currentPersistence != null)
 			return (C)currentPersistence.getConnection();
