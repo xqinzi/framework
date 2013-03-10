@@ -31,6 +31,27 @@ public class SystemResourceLoader extends XmlResourceLoader{
     }
     
     /**
+     * Construtor - Efetua a leitura de um arquivo de configurações específico.
+     * 
+     * @param resourceDir String contendo o diretório de armazenamento do arquivo.
+     * @param resourceId String contendo o identificador do arquivo.
+     * @throws InvalidResourceException
+     */
+    public SystemResourceLoader(String resourceDir, String resourceId) throws InvalidResourceException{
+        super(resourceDir, resourceId);
+    }
+
+    /**
+     * Construtor - Efetua a leitura de um arquivo de configurações específico.
+     * 
+     * @param resourceId String contendo o identificador do arquivo.
+     * @throws InvalidResourceException
+     */
+    public SystemResourceLoader(String resourceId) throws InvalidResourceException{
+        super(resourceId);
+    }
+
+    /**
      * Retorna a instância contendo as configurações.
      * 
      * @return Instância contendo as configurações.
