@@ -8,7 +8,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.types.FileSet;
 
-import br.com.concepting.framework.processors.AnnotationProcessor;
+import br.com.concepting.framework.processors.AnnotationProcessorFactory;
 import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
@@ -41,7 +41,7 @@ public class SharedModulesBuildTask extends Task{
             
             annotationProcessorFile = new File(annotationProcessorDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat("javax.annotation.processing.Processor"));  
             
-            FileUtil.toTextFile(annotationProcessorFile.getAbsolutePath(), AnnotationProcessor.class.getName());
+            FileUtil.toTextFile(annotationProcessorFile.getAbsolutePath(), AnnotationProcessorFactory.class.getName());
         }
         
         StringBuilder remoteServicesFileName = new StringBuilder();
