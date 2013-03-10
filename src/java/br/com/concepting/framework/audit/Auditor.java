@@ -23,7 +23,6 @@ import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.util.ExceptionUtil;
-import br.com.concepting.framework.util.MethodUtil;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
@@ -40,51 +39,6 @@ public class Auditor{
 	private Object            businessArgumentsValues = null;
 	private LoginSessionModel loginSession            = null;
 	private AuditorResource   auditorResource         = null;
-	
-	/**
-	 * Construtor - Inicializa objetos e/ou variáveis internas.
-	 * 
-	 * @param businessArguments Instâncias dos argumentos do método.
-	 */
-    public Auditor(Object businessArguments){
-        this(businessArguments, null);
-    }
-
-    /**
-     * Construtor - Inicializa objetos e/ou variáveis internas.
-     * 
-     * @param businessArguments Instâncias dos argumentos do método.
-     * @param auditorResource Instância das configurações de auditoria.
-     */
-    public Auditor(Object businessArguments, AuditorResource auditorResource){
-        super();
-
-        try{
-            business = MethodUtil.getMethodFromStackTrace(2);
-        }
-        catch(Throwable e){
-        }
-        
-        if(business != null)
-            entity = business.getDeclaringClass();
-        else
-            entity = Object.class;
-        
-        setEntity(entity);
-        setBusiness(business);
-        setBusinessArgumentsValues(businessArguments);
-        setLoginSession(loginSession);
-        setAuditorResource(auditorResource);
-
-        logger = Logger.getLogger(entity);
-        
-        Logger.getRootLogger().removeAllAppenders();
-
-        loadAuditorResource();
-        loadLevel();
-        loadAppenders();
-	    
-	}
 	
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -392,7 +346,7 @@ public class Auditor{
      * @param status Constante que define o status de processamento da auditoria.
      */
 	public void info(AuditorStatusType status){
-	    info(status.getDescription());
+	    logger.info(status);
 	}
 
 	/**
@@ -431,14 +385,14 @@ public class Auditor{
 	 * Inicializa a auditoria.
 	 */
 	public void start(){
-		logger.info(AuditorStatusType.INIT);
+		info(AuditorStatusType.INIT);
 	}
 
 	/**
 	 * Finaliza a auditoria sem erros.
 	 */
 	public void end(){
-		logger.info(AuditorStatusType.PROCESSED);
+		info(AuditorStatusType.PROCESSED);
 	}
 
 	/**
@@ -447,6 +401,6 @@ public class Auditor{
 	 * @param exception Instância da exceção gerada.
 	 */
 	public void end(Throwable exception){
-	    logger.info(AuditorStatusType.PROCESSED_WITH_ERROR, exception);
+	    logger.info(AuditorStatusType.ERROR, exception);
 	}
 }
