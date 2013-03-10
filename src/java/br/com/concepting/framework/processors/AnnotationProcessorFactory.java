@@ -10,6 +10,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic.Kind;
 
 import br.com.concepting.framework.audit.constants.AuditorConstants;
 import br.com.concepting.framework.audit.resource.AuditorResource;
@@ -137,7 +138,7 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
             auditorResource = auditorResourceLoader.get(AuditorConstants.DEFAULT_GENERATE_CODE_RESOURCE_KEY);
         }
         catch(InvalidResourceException e){
-            e.printStackTrace();
+            environment.getMessager().printMessage(Kind.ERROR, e.getMessage());
         }
     }
 	
@@ -161,6 +162,7 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
                                 annotationProcessor.process();
                         }
                         catch(Throwable e){
+                            this.environment.getMessager().printMessage(Kind.ERROR, e.getMessage());
                         }
                     }
                 }
