@@ -125,12 +125,13 @@
 		
 		<project action="createStructure"/>
 		
-		<javac srcdir="src/java" destdir="build/compile" source="1.6" target="1.6" includeantruntime="false" encoding="iso-8859-1" debug="${debug.mode}" nowarn="true" optimize="true" taskname="compile">
+		<javac srcdir="src/java" destdir="build/compile" source="${compile.compliance}" target="${compile.compliance}" includeantruntime="false" encoding="iso-8859-1" debug="${debug.mode}" nowarn="true" optimize="true" taskname="compile">
 			<classpath>
 				<fileset dir="dependencies/compile">
 					<include name="**/*.jar"/>
 				</fileset>
 			</classpath>
+			<compilerarg line="-proc:none"/>
 		</javac>
 	</target>
 	
@@ -138,7 +139,7 @@
 		<antcall target="display.splash" taskname="build"/>
 
 		<echo message="${build.message}" taskname="build"/>
-		
+
 		<antcall target="build.shared.modules" taskname="build"/>
 		<antcall target="build.ejb.module" taskname="build"/>
 		<antcall target="build.web.module" taskname="build"/>
@@ -269,34 +270,24 @@
 		</delete>
 	</target>
 
-	<target name="generate.code">
+	<target name="generate.code" depends="compile">
 		<antcall target="display.splash" taskname="generate.code"/>
 
 		<echo message="${generate.code.message}" taskname="generate.code"/>
 		
-		<javac srcdir="src/java" destdir="build/compile" source="1.6" target="1.6" includeantruntime="false" encoding="iso-8859-1" debug="${debug.mode}" nowarn="true" optimize="true" taskname="generate.code">
-			<include name="**/model/*.java"/>
-			<include name="**/service/**/*.java"/>
-			<classpath>
-				<fileset dir="dependencies/compile">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</javac>
-		<apt srcdir="src/java" source="1.5" target="1.5" includeantruntime="false" encoding="iso-8859-1" factory="br.com.concepting.framework.processors.AnnotationProcessorFactory" compile="false" nowarn="true" optimize="true" taskname="generate.code">
+		<javac srcdir="src/java" includeantruntime="false" encoding="iso-8859-1" debug="${debug.mode}" nowarn="true" optimize="true" taskname="generate.code">
 			<include name="**/model/*.java"/>
 			<classpath>
 				<dirset dir="build/compile"/>
 				<fileset dir="dependencies/compile">
 					<include name="**/*.jar"/>
 				</fileset>
-				<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
-					<include name="**/*.jar"/>
-				</fileset>
 			</classpath>
-		</apt>
+			<compilerarg line="-proc:only"/>
+			<compilerarg line="-AprojectName=${ant.project.name}"/>
+		</javac>
 		
-		<antcall target="compile" taskname="generate.code"/>
+		<antcall target="compile"/>
 	</target>
 	
 	<target name="generate.documentation">
