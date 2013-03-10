@@ -19,6 +19,7 @@ import br.com.concepting.framework.audit.Auditor;
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.helpers.ModelInfo;
+import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
 import br.com.concepting.framework.processors.AnnotationProcessorFactory;
@@ -66,6 +67,11 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
      */
     public ModelAnnotationProcessor(Class declaration, AnnotationProcessorFactory annotationProcessorFactory){
         super(declaration, annotationProcessorFactory);
+        
+        this.modelInfo = ModelUtil.getModelInfo(declaration);
+        
+        if(this.modelInfo != null)
+            this.templateId = this.modelInfo.getTemplateId();
     }
 
     /**
@@ -110,13 +116,16 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
      * Inicia o processamento do modelo de dados.
      */
     public void process(){
+        if(this.modelInfo == null)
+            return;
+        
         ExpressionProcessorUtil.addVariable(AttributeConstants.USER_KEY, System.getProperty("user.name"));
         ExpressionProcessorUtil.addVariable(AttributeConstants.NOW_KEY, new Date());
         
         StringBuilder templateFilesDirName = new StringBuilder();
         
         templateFilesDirName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
-        templateFilesDirName.append(modelInfo.getTemplateId());
+        templateFilesDirName.append(templateId);
         
         File templateFilesDir = new File(templateFilesDirName.toString());
         
@@ -139,7 +148,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                         Method method = getClass().getMethod(templateMethodName.toString());
                     
                         if(method != null){
-                            auditor = new Auditor(getClass(), method, getDeclaration(), getAnnotationProcessorFactory().getAuditorResource());
+                            auditor = new Auditor(getClass(), method, getDeclaration().getName(), getAnnotationProcessorFactory().getAuditorResource());
                             auditor.start();
                         
                             method.invoke(this);
