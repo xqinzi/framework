@@ -13,9 +13,8 @@
 		import br.com.concepting.framework.service.types.ServiceType;
 		
 		import #{clazz};
-		
-		import java.util.Arrays;
 	</if>
+	import @{serviceInterfaceClassName};
 	
 	/**
 	 * Classe que implementa as regras de negócio que envolvem o modelo de dados '@{modelName}'.
