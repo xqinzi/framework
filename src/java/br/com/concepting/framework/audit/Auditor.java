@@ -60,7 +60,7 @@ public class Auditor{
         super();
 
         try{
-            business = MethodUtil.getMethodFromStackTrace(3);
+            business = MethodUtil.getMethodFromStackTrace(2);
         }
         catch(Throwable e){
         }
@@ -385,6 +385,15 @@ public class Auditor{
 	public void info(String message){
 		logger.info(message);
 	}
+	
+    /**
+     * Gera uma mensagem de informação.
+     * 
+     * @param status Constante que define o status de processamento da auditoria.
+     */
+	public void info(AuditorStatusType status){
+	    info(status.getDescription());
+	}
 
 	/**
 	 * Gera uma mensagem de debug.
@@ -422,14 +431,14 @@ public class Auditor{
 	 * Inicializa a auditoria.
 	 */
 	public void start(){
-		logger.info(AuditorStatusType.INITIALIZING);
+		logger.info(AuditorStatusType.INIT);
 	}
 
 	/**
 	 * Finaliza a auditoria sem erros.
 	 */
 	public void end(){
-		logger.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR);
+		logger.info(AuditorStatusType.PROCESSED);
 	}
 
 	/**
