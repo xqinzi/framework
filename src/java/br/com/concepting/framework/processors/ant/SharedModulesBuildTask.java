@@ -8,7 +8,9 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.types.FileSet;
 
+import br.com.concepting.framework.processors.AnnotationProcessor;
 import br.com.concepting.framework.processors.constants.ProjectConstants;
+import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.helpers.XmlNode;
@@ -24,12 +26,24 @@ public class SharedModulesBuildTask extends Task{
      * Efetua o empacotamento EJB da aplicação.
      */
     public void build() throws Throwable{
-        File modulesDir          = new File(ProjectConstants.DEFAULT_MODULES_DIR);
-        File resourcesDir        = new File(ProjectConstants.DEFAULT_RESOURCES_DIR);
-        File sharedModuleFile    = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".jar"));
-        File resourcesModuleFile = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-resources.jar"));
-        File compileDir          = new File(ProjectConstants.DEFAULT_COMPILE_DIR);
-
+        File modulesDir              = new File(ProjectConstants.DEFAULT_MODULES_DIR);
+        File resourcesDir            = new File(ProjectConstants.DEFAULT_RESOURCES_DIR);
+        File sharedModuleFile        = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".jar"));
+        File resourcesModuleFile     = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-resources.jar"));
+        File compileDir              = new File(ProjectConstants.DEFAULT_COMPILE_DIR);
+        File annotationProcessorFile = null;
+        
+        if(getProject().getName().equals(ProjectConstants.CONCEPTING_FRAMEWORK_ID)){
+            File annotationProcessorDir = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat("META-INF").concat(StringUtil.getDirectorySeparator()).concat("services"));
+        
+            if(!annotationProcessorDir.exists())
+                annotationProcessorDir.mkdirs();
+            
+            annotationProcessorFile = new File(annotationProcessorDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat("javax.annotation.processing.Processor"));  
+            
+            FileUtil.toTextFile(annotationProcessorFile.getAbsolutePath(), AnnotationProcessor.class.getName());
+        }
+        
         StringBuilder remoteServicesFileName = new StringBuilder();
         
         remoteServicesFileName.append(StringUtil.trim(System.getProperty("java.io.tmpdir")));
@@ -61,15 +75,25 @@ public class SharedModulesBuildTask extends Task{
                 
                 for(XmlNode childNode : childNodes){
                     remoteServiceClassName     = StringUtil.trim(childNode.getAttribute("class"));
-                    remoteServiceClassFileName = StringUtil.replaceAll(remoteServiceClassName, ".", "/").concat(".class");
+                    remoteServiceClassFileName = StringUtil.replaceAll(remoteServiceClassName, ".", StringUtil.getDirectorySeparator()).concat(".class");
                     
                     if(remoteServiceClassFileName.length() > 0)
                         fileset.setExcludes(remoteServiceClassFileName);
                 }
             }
         }
-            
+           
         jar.addFileset(fileset);
+        
+        if(annotationProcessorFile != null){
+            fileset = new FileSet();
+            
+            fileset.setDir(modulesDir);
+            fileset.setIncludes("*/services/*");
+        
+            jar.addFileset(fileset);
+        }
+        
         jar.setUpdate(false);
         jar.execute();
         
