@@ -15,6 +15,7 @@ br.com.concepting.framework.model
 br.com.concepting.framework.model.annotations
 br.com.concepting.framework.model.exceptions
 br.com.concepting.framework.model.helpers
+br.com.concepting.framework.model.processors
 br.com.concepting.framework.model.types
 br.com.concepting.framework.model.util
 br.com.concepting.framework.network.constants
@@ -42,6 +43,7 @@ br.com.concepting.framework.persistence.util
 br.com.concepting.framework.processors
 br.com.concepting.framework.processors.ant
 br.com.concepting.framework.processors.constants
+br.com.concepting.framework.processors.interfaces
 br.com.concepting.framework.resource
 br.com.concepting.framework.resource.constants
 br.com.concepting.framework.resource.exceptions
