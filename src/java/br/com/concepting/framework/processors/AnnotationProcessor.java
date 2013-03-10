@@ -7,9 +7,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.TypeElement;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.dom4j.DocumentType;
@@ -32,6 +40,7 @@ import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.resource.SystemResource;
 import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
+import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
 import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.BaseRemoteService;
@@ -51,10 +60,6 @@ import br.com.concepting.framework.web.form.util.ActionFormUtil;
 import br.com.concepting.framework.web.helpers.JSPIndent;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
-import com.sun.mirror.apt.AnnotationProcessorEnvironment;
-import com.sun.mirror.declaration.TypeDeclaration;
-import com.sun.mirror.util.SimpleDeclarationVisitor;
-
 /**
  * Classe que implementa o processamento das anotações dos modelos de dados.
  * Utilizado para geração de código a partir de templates.
@@ -62,80 +67,103 @@ import com.sun.mirror.util.SimpleDeclarationVisitor;
  * @author fvilarinho
  * @since 1.0
  */
-public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcessor{
-	private AnnotationProcessorEnvironment environment     = null;
-	private AuditorResource                auditorResource = null;
-	private ModelInfo                      modelInfo       = null;
+@SupportedAnnotationTypes({"br.com.concepting.framework.model.annotations.Model"})
+public class AnnotationProcessor extends AbstractProcessor{
+	private AuditorResource       auditorResource = null;
+	private ProcessingEnvironment environment     = null;
 
-	/**
-	 * Construtor - Define as configurações para o processamento das anotações.
-	 * 
-	 * @param environment Instância contendo as configurações de ambiente para processamento 
-	 * das anotações.
+    public synchronized void init(ProcessingEnvironment environment){
+        super.init(environment);
+        
+        this.environment = environment;
+        
+        try{
+            initialize();
+        }
+        catch(InvalidResourceException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+	 * @see javax.annotation.processing.AbstractProcessor#getSupportedSourceVersion()
 	 */
-	public AnnotationProcessor(AnnotationProcessorEnvironment environment){
-		super();
-
-		this.environment = environment;
-		
-		initialize();
+	public SourceVersion getSupportedSourceVersion() {
+	    return SourceVersion.latestSupported();
 	}
 	
-	/**
+	private String getProjectName(){
+	    return StringUtil.trim(this.environment.getOptions().get("projectName"));
+	}
+	
+	private String getProjectDir(){
+        String  projectName = getProjectName();
+        String  projectDir  = new File("").getAbsolutePath();
+        Integer pos         = projectDir.lastIndexOf(projectName);
+	 
+        if(pos >= 0)
+            projectDir = projectDir.substring(0, pos + projectName.length());
+
+        if(!projectDir.endsWith(StringUtil.getDirectorySeparator()))
+            projectDir = projectDir.concat(StringUtil.getDirectorySeparator());
+        
+        return projectDir;
+	}
+	
+	private String getProjectResourcesDir(){
+        String projectResourcesDir = getProjectDir();
+        
+        projectResourcesDir = projectResourcesDir.concat(ProjectConstants.DEFAULT_RESOURCES_DIR);
+
+        return projectResourcesDir;
+	}
+
+    /**
 	 * Inicializa processamento.
-	 */
-	private void initialize(){
-    	try{
-    		AuditorResourceLoader auditorResourceLoader = new AuditorResourceLoader(ProjectConstants.DEFAULT_RESOURCES_DIR, AuditorConstants.DEFAULT_RESOURCE_ID);
-
-    		auditorResource = auditorResourceLoader.get(AuditorConstants.DEFAULT_GENERATE_CODE_RESOURCE_KEY);
-		}
-		catch(Throwable e){
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Retorna a instância contendo as configurações de ambiente para processamento das anotações.
 	 * 
-	 * @return Instância contendo as configurações de ambiente para processamento das anotações.
+	 * @throws InvalidResourceException 
 	 */
-	public AnnotationProcessorEnvironment getEnvironment(){
-		return environment;
-	}
+	private void initialize() throws InvalidResourceException{
+        AuditorResourceLoader auditorResourceLoader = new AuditorResourceLoader(getProjectResourcesDir(), AuditorConstants.DEFAULT_RESOURCE_ID);
 
-	/**
-	 * Define a instância contendo as configurações de ambiente para processamento das anotações.
-	 * 
-	 * @param environment Instância contendo as configurações de ambiente para processamento 
-	 * das anotações.
-	 */
-	public void setEnvironment(AnnotationProcessorEnvironment environment){
-		this.environment = environment;
-	}
-
-	/**
-	 * @see com.sun.mirror.apt.AnnotationProcessor#process()
-	 */
-	public void process(){
-		Collection<TypeDeclaration> declarations = environment.getTypeDeclarations();
-		
-		for(TypeDeclaration declaration : declarations)
-			if(declaration.getSimpleName().endsWith(Model.class.getSimpleName()) && 
-			   !declaration.getSimpleName().startsWith(BaseModel.class.getSimpleName()) &&
-			   !declaration.getQualifiedName().equals(LoginSessionModel.class.getName()))
-				declaration.accept(geAnnotationProcessorVisitor(declaration));
+        auditorResource = auditorResourceLoader.get(AuditorConstants.DEFAULT_GENERATE_CODE_RESOURCE_KEY);
 	}
 	
 	/**
-	 * Retorna a instância da classe auxiliar que implementa o processamento das anotações. 
-	 *
-	 * @param declaration Classe que define o modelo de dados a ser processado.
-	 * @return Instância da classe auxiliar que implementa o processamento.
+	 * @see javax.annotation.processing.AbstractProcessor#process(java.util.Set, javax.annotation.processing.RoundEnvironment)
 	 */
-	protected AnnotationProcessorVisitor geAnnotationProcessorVisitor(TypeDeclaration declaration){
-		return new AnnotationProcessorVisitor(declaration);
-	}
+    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment environment){
+        try{
+            Set<? extends Element> declarations = null;
+            
+            if(annotations != null && annotations.size() > 0){
+                for(TypeElement annotation : annotations){
+                    declarations = environment.getElementsAnnotatedWith(annotation);
+                    
+                    if(declarations != null && declarations.size() > 0){
+                        String className = "";
+                        
+                        for(Element declaration : declarations){
+                            className = declaration.toString();
+                                                      
+                            if(className.endsWith(Model.class.getSimpleName()) && 
+                               !className.startsWith(BaseModel.class.getSimpleName()) &&
+                               !className.equals(LoginSessionModel.class.getName())){
+                               new AnnotationProcessorVisitor(declaration);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return true;
+        }
+        catch(Throwable e){
+            e.printStackTrace();
+            
+            return false;
+        }
+    }
 
 	/**
 	 * Classe que define o scripting para o processamento das anotações.
@@ -143,45 +171,23 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 	 * @author fvilarinho
 	 * @since 1.0
 	 */
-	public class AnnotationProcessorVisitor extends SimpleDeclarationVisitor{
+	public class AnnotationProcessorVisitor{
 		private Class<BaseModel> declaration = null;
 		private String           templateId  = "";
+		private ModelInfo        modelInfo   = null;
 		
-		/**
-		 * Construtor - Define as informações contendo as anotações de um modelo de dados.
-		 * 
-		 * @param declaration Instância contendo as informações do modelo de dados.
-		 */
-        private AnnotationProcessorVisitor(TypeDeclaration declaration){
+        private AnnotationProcessorVisitor(Element declaration) throws Throwable{
 			super();
 			
-			try{
-				this.declaration = (Class<BaseModel>)Class.forName(declaration.getQualifiedName());
+            this.declaration = (Class<BaseModel>)Class.forName(declaration.toString());
+            this.modelInfo   = ModelUtil.getModelInfo(this.declaration);
 			
-				process();
-			}
-			catch(Throwable e){
-				e.printStackTrace();
-			}
+            if(this.modelInfo != null){
+                this.templateId = this.modelInfo.getTemplateId();
+                
+                process();
+            }
 		}
-		
-		/**
-		 * Retorna a classe que define o modelo de dados a ser processamento.
-		 *
-		 * @return Classe que define o modelo de dados.
-		 */
-		public Class<BaseModel> getDeclaration(){
-        	return declaration;
-        }
-
-		/**
-		 * Define a classe que define o modelo de dados a ser processamento.
-		 *
-		 * @param declaration Classe que define o modelo de dados.
-		 */
-		public void setDeclaration(Class<BaseModel> declaration){
-        	this.declaration = declaration;
-        }
 
 		/**
 		 * Inicia o processamento do modelo de dados.
@@ -192,33 +198,28 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 			ExpressionProcessorUtil.addVariable(AttributeConstants.USER_KEY, System.getProperty("user.name"));
 			ExpressionProcessorUtil.addVariable(AttributeConstants.NOW_KEY, new Date());
 			
-			modelInfo = ModelUtil.getModelInfo(declaration);
-			if(modelInfo != null){
-				templateId = modelInfo.getTemplateId();
+			StringBuilder templateFilesDirName = new StringBuilder();
+			
+			templateFilesDirName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
+			templateFilesDirName.append(templateId);
+			
+			File templateFilesDir = new File(templateFilesDirName.toString());
+			
+			if(templateFilesDir.exists()){
+				File           templateFiles[]    = templateFilesDir.listFiles();
+				StringBuilder  templateMethodName = null;
 				
-				StringBuilder templateFilesDirName = new StringBuilder();
-				
-				templateFilesDirName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
-				templateFilesDirName.append(templateId);
-				
-				File templateFilesDir = new File(templateFilesDirName.toString());
-				
-				if(templateFilesDir.exists()){
-					File           templateFiles[]    = templateFilesDir.listFiles();
-					StringBuilder  templateMethodName = null;
-					
-					for(File templateFile : templateFiles){
-						if(!templateFile.isDirectory() && templateFile.getName().endsWith(".xml")){
-    						if(templateMethodName == null)
-    							templateMethodName = new StringBuilder();
-    						else
-    							templateMethodName.delete(0, templateMethodName.length());
-    						
-    						templateMethodName.append("generate");
-    						templateMethodName.append(StringUtil.split(StringUtil.capitalize(templateFile.getName()), ".")[0]);
-    						
-    						MethodUtils.invokeMethod(this, templateMethodName.toString(), null);
-						}
+				for(File templateFile : templateFiles){
+					if(!templateFile.isDirectory() && templateFile.getName().endsWith(".xml")){
+						if(templateMethodName == null)
+							templateMethodName = new StringBuilder();
+						else
+							templateMethodName.delete(0, templateMethodName.length());
+						
+						templateMethodName.append("generate");
+						templateMethodName.append(StringUtil.split(StringUtil.capitalize(templateFile.getName()), ".")[0]);
+						
+						MethodUtils.invokeMethod(this, templateMethodName.toString(), null);
 					}
 				}
 			}
@@ -247,8 +248,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!persistenceClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder persistenceClassTemplateFileName = new StringBuilder();
 
 						persistenceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -268,24 +267,22 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 						
 						FileUtil.toTextFile(persistenceClassFileName.toString(), persistenceClassContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}	
 				else{
 					if(persistenceClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						persistenceClassFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -315,8 +312,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!persistenceInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder persistenceInterfaceClassTemplateFileName = new StringBuilder();
 
 						persistenceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -336,24 +331,22 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 
 						FileUtil.toTextFile(persistenceInterfaceClassFileName.toString(), persistenceInterfaceContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 				else{
 					if(persistenceInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						persistenceInterfaceFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -394,15 +387,10 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                 persistenceMappingFileName.append(".hbm.xml");
 				
                 XmlNode persistenceResourceMapping = new XmlNode("mapping", persistenceMappingName);
-				
-                File persistenceMappingFile = new File(persistenceMappingFileName.toString());
+                File    persistenceMappingFile     = new File(persistenceMappingFileName.toString());
 
 				if(modelInfo.getMappedRepositoryId().length() > 0){
                     if(!persistenceMappingFile.exists()){
-                        generateMessage = true;
-
-                        auditor.info("creating...");
-
     					StringBuilder persistenceMappingTemplateFileName = new StringBuilder();
     
     					persistenceMappingTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -428,12 +416,12 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
     					persistenceMappingTemplateWriter.write(persistenceMappingContent);
                     }
     					
-					List<XmlNode> childs = persistenceResourcesMappings.getChildNodes();
-					Boolean       found  = false;
+					List<XmlNode> persistenceMappings = persistenceResourcesMappings.getChildNodes();
+					Boolean       found               = false;
 					
-					if(childs != null && childs.size() > 0){
-					    for(XmlNode child : childs){
-					        if(child.getValue().equals(persistenceMappingName)){
+					if(persistenceMappings != null && persistenceMappings.size() > 0){
+					    for(XmlNode persistenceMapping : persistenceMappings){
+					        if(persistenceMapping.getValue().equals(persistenceMappingName)){
 					            found = true;
 					            
 					            break;
@@ -441,18 +429,35 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					    }
 					}
 					
-					if(!found)
+					if(!found){
+                        generateMessage = true;
+
 					    persistenceResourcesMappings.addChildNode(persistenceResourceMapping);
+					}
 				}
 				else{
 					if(persistenceMappingFile.exists()){
 						generateMessage = true;
-
-						auditor.info("removing...");
-
-						persistenceMappingFile.delete();
 						
-						persistenceResourcesMappings.removeChildNode(persistenceResourceMapping);
+						List<XmlNode> persistenceMappings = persistenceResourcesMappings.getChildNodes();
+	                    
+	                    if(persistenceMappings != null && persistenceMappings.size() > 0){
+	                        XmlNode persistenceMapping = null;
+	                        
+	                        for(int cont = 0 ; cont < persistenceMappings.size() ; cont++){
+	                            persistenceMapping = persistenceMappings.get(cont);
+	                            
+	                            if(persistenceMapping.getValue().equals(persistenceMappingName)){
+	                                persistenceMappings.remove(cont);
+	                                
+	                                cont--;
+	                                
+	                                break;
+	                            }
+	                        }
+	                    }
+
+                        persistenceResourcesMappings.setChildNodes(persistenceMappings);
 					}
 				}
 				
@@ -461,12 +466,12 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                     
                     persistenceResourcesWriter.write(persistenceResourcesContent);
                     
-                    auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+                    auditor.info(AuditorStatusType.PROCESSED);
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -497,8 +502,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!serviceClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder serviceClassTemplateFileName = new StringBuilder();
 
 						serviceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -518,7 +521,7 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 
 						FileUtil.toTextFile(serviceClassFileName.toString(), serviceClassContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 					else{
 						Class<IService> serviceInterfaceClass = null;
@@ -541,16 +544,12 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 							if(serviceClassContent.contains(BaseService.class.getSimpleName())){
 								generateMessage = true;
 
-								auditor.info("updating...");
-
 								serviceClassContent = StringUtil.replaceAll(serviceClassContent, BaseService.class.getSimpleName(), BaseRemoteService.class.getSimpleName());
 							}
 						}
 						else{
 							if(serviceClassContent.contains(BaseRemoteService.class.getSimpleName())){
 								generateMessage = true;
-
-								auditor.info("updating...");
 
 								serviceClassContent = StringUtil.replaceAll(serviceClassContent, BaseRemoteService.class.getSimpleName(), BaseService.class.getSimpleName());
 							}
@@ -559,7 +558,7 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 						if(generateMessage){
 							FileUtil.toTextFile(serviceClassFileName.toString(), serviceClassContent);
 
-							auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+							auditor.info(AuditorStatusType.PROCESSED);
 						}
 					}
 				}
@@ -567,17 +566,15 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(serviceClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						serviceClassFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -606,8 +603,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!serviceInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder serviceInterfaceClassTemplateFileName = new StringBuilder();
 
 						serviceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -627,24 +622,22 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 
 						FileUtil.toTextFile(serviceInterfaceClassFileName.toString(), serviceInterfaceContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 				else{
 					if(serviceInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						serviceInterfaceFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -687,8 +680,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(isRemoteService && !serviceHomeInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder serviceHomeInterfaceClassTemplateFileName = new StringBuilder();
 
 						serviceHomeInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -708,33 +699,29 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 						
 						FileUtil.toTextFile(serviceHomeInterfaceClassFileName.toString(), serviceHomeInterfaceContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 					else if(!isRemoteService && serviceHomeInterfaceFile.exists()) {
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						serviceHomeInterfaceFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 				else{
 					if(serviceHomeInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						serviceHomeInterfaceFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -777,8 +764,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(isRemoteService && !serviceRemoteInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder serviceRemoteInterfaceClassTemplateFileName = new StringBuilder();
 
 						serviceRemoteInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -798,33 +783,29 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 
 						FileUtil.toTextFile(serviceRemoteInterfaceClassFileName.toString(), serviceRemoteInterfaceContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 					else if(!isRemoteService && serviceRemoteInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						serviceRemoteInterfaceFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 				else{
 					if(serviceRemoteInterfaceFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						serviceRemoteInterfaceFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -851,28 +832,20 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					return;
 				}
 
-				Stateless     statelessAnnotation = serviceClass.getAnnotation(Stateless.class);
-				Stateful      statefulAnnotation  = serviceClass.getAnnotation(Stateful.class);
-                Service       serviceAnnotation   = (Service)serviceInterfaceClass.getAnnotation(Service.class);
-                String        tempDir             = StringUtil.trim(System.getProperty("java.io.tmpdir"));
-                XmlNode       rootNode            = null;
-                XmlNode       childNode           = null;
-                List<XmlNode> childNodes          = null;
-                String        projectDir          = StringUtil.trim(environment.getOptions().get("-sourcepath")).concat(StringUtil.getDirectorySeparator());
-                
-                if(!StringUtil.getDirectorySeparator().equals("/"))
-                    projectDir = StringUtil.replaceAll(projectDir, StringUtil.getDirectorySeparator(), "/");
-                
-                projectDir = StringUtil.replaceAll(projectDir, ProjectConstants.DEFAULT_JAVA_DIR, "");
-                
-                File hasRemoteServicesDir = new File(projectDir);
-                
-                hasRemoteServicesDir = new File(tempDir.concat(StringUtil.getDirectorySeparator()).concat(hasRemoteServicesDir.getName()));
+				Stateless     statelessAnnotation  = serviceClass.getAnnotation(Stateless.class);
+				Stateful      statefulAnnotation   = serviceClass.getAnnotation(Stateful.class);
+                Service       serviceAnnotation    = (Service)serviceInterfaceClass.getAnnotation(Service.class);
+                String        tempDir              = StringUtil.trim(System.getProperty("java.io.tmpdir"));
+                XmlNode       rootNode             = null;
+                XmlNode       childNode            = null;
+                List<XmlNode> childNodes           = null;
+                String        projectName          = getProjectName();
+                File          hasRemoteServicesDir = new File(tempDir.concat(StringUtil.getDirectorySeparator()).concat(projectName));
                 
                 if(!hasRemoteServicesDir.exists())
                     hasRemoteServicesDir.mkdirs();
                 
-                File hasRemoteServicesFile = new File(hasRemoteServicesDir.getAbsolutePath().concat("/remoteServices.xml"));
+                File hasRemoteServicesFile = new File(hasRemoteServicesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat("remoteServices.xml"));
                 
                 if(hasRemoteServicesFile.exists()){
                     XmlReader reader = new XmlReader(hasRemoteServicesFile);
@@ -1003,8 +976,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 						if(!hasServiceMapping){
 							generateMessage = true;
 
-                            auditor.info("creating...");
-
 							if(!isFirstServiceMapping){
 								newServiceMapping = new XmlNode();
 								newServiceMapping.setName("session");
@@ -1034,8 +1005,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                                !serviceMapping.getNode("session-type").getValue().equals(StringUtil.capitalize(serviceAnnotation.type().toString(), true))){
     							generateMessage = true;
                                 
-                                auditor.info("updating...");
-    
     							serviceMapping.getNode("ejb-name").setValue(serviceAnnotation.name());
     							serviceMapping.getNode("home").setValue(serviceHomeInterfaceId);
     							serviceMapping.getNode("remote").setValue(serviceRemoteInterfaceId);
@@ -1047,13 +1016,11 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					}
 					else{
 						if(hasServiceMapping){
-					        auditor.info("removing...");
-
 							if((serviceMappingsItems.size() - 1) == 0){
 	                            if(serviceMappingFile.exists())
 	                                serviceMappingFile.delete();
 	                            
-                                auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+                                auditor.info(AuditorStatusType.PROCESSED);
 							}
 							else{
 	                            serviceMappingsItems.remove(serviceMapping);
@@ -1065,13 +1032,11 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 				}
 				else{
 					if(hasServiceMapping){
-						auditor.info("removing...");
-
 						if((serviceMappingsItems.size() - 1) == 0){
 						    if(serviceMappingFile.exists())
 						        serviceMappingFile.delete();
 						 
-					        auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+					        auditor.info(AuditorStatusType.PROCESSED);
 						}
 						else{
 							serviceMappingsItems.remove(serviceMapping);
@@ -1088,12 +1053,12 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
     
     				serviceMappingWriter.write(serviceMappingTemplateContent);
     
-                    auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+                    auditor.info(AuditorStatusType.PROCESSED);
 				}
             }
             catch(Throwable e){
                 if(generateMessage)
-                    auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+                    auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
                 auditor.error(e);
             }
@@ -1122,8 +1087,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!actionClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder actionClassTemplateFileName = new StringBuilder();
 
 						actionClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -1143,24 +1106,22 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 						
 						FileUtil.toTextFile(actionClassFileName.toString(), actionClassContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 				else{
 					if(actionClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						actionClassFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -1189,8 +1150,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!actionFormClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						StringBuilder actionFormClassTemplateFileName = new StringBuilder();
 
 						actionFormClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -1210,24 +1169,22 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                         
 						FileUtil.toTextFile(actionFormClassFileName.toString(), actionFormClassContent, encoding);
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 				else{
 					if(actionFormClassFile.exists()){
 						generateMessage = true;
 
-						auditor.info("removing...");
-
 						actionFormClassFile.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -1296,8 +1253,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 				if(modelInfo.getUseCase().length() > 0){
 					if(!hasActionMapping){
 						generateMessage = true;
-
-						auditor.info("creating action...");
 						
 						String        actionFormUrl   = ActionFormUtil.getActionFormUrlByModel(declaration);
 						StringBuilder actionFormInput = new StringBuilder();
@@ -1331,8 +1286,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 				else{
 					if(hasActionMapping){
 						generateMessage = true;
-
-						auditor.info("removing action...");
 
 						if((actionMappingsItems.size() - 1) == 0){
 							actionMappingAttributes.put("path", "");
@@ -1381,8 +1334,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!hasActionFormMapping){
 						generateMessage = true;
 
-						auditor.info("creating form...");
-
 						if(!isFirstActionFormMapping){
 							actionFormMapping = new XmlNode();
 
@@ -1407,8 +1358,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(hasActionFormMapping){
 						generateMessage = true;
 
-						auditor.info("removing form...");
-
 						if((actionFormMappingsItems.size() - 1) == 0){
 							actionFormMappingAttributes.put("name", "");
 							actionFormMappingAttributes.put("type", "");
@@ -1428,12 +1377,12 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
     				formMappingWriter.write(actionFormMappingTemplateContent);
     
     				if(generateMessage)
-    					auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+    					auditor.info(AuditorStatusType.PROCESSED);
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -1487,8 +1436,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 					if(!webPageFile.exists() || !webPageDir.exists() || !webPageImagesDir.exists() || !webPageStylesDir.exists() || !webPageScriptsDir.exists()){
 						generateMessage = true;
 
-						auditor.info("creating...");
-
 						if(!webPageDir.exists())
 							webPageDir.mkdirs();
 
@@ -1521,7 +1468,7 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 							
 							FileUtil.toTextFile(webPageFileName.toString(), webPageContent, encoding);
 
-							auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+							auditor.info(AuditorStatusType.PROCESSED);
 						}
 					}
 					
@@ -1548,13 +1495,13 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 						if(webPageDir.exists())
 							webPageDir.delete();
 
-						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+						auditor.info(AuditorStatusType.PROCESSED);
 					}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
@@ -1763,8 +1710,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                     if(!hasWebServiceMapping){
                         generateMessage = true;
 
-                        auditor.info("creating...");
-
                         if(!isFirstWebServiceMapping){
                             newWebServiceMapping = new XmlNode();
                             newWebServiceMapping.setName("service");
@@ -1806,8 +1751,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                     else{
                         if(!webServicesMapping.getAttribute("name").equals(serviceAnnotation.name())){
                             generateMessage = true;
-                            
-                            auditor.info("updating...");
 
                             webServicesMapping.addAttribute("name", serviceAnnotation.name());
                             webServicesMapping.addAttribute("scope", serviceAnnotation.scope().toString());
@@ -1818,13 +1761,11 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
                 }
                 else{
                     if(hasWebServiceMapping){
-                        auditor.info("removing...");
-
                         if((webServicesMappingsItems.size() - 1) == 0){
                             if(webServicesMappingFile.exists())
                                 webServicesMappingFile.delete();
                             
-                            auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+                            auditor.info(AuditorStatusType.PROCESSED);
                         }
                         else{
                             webServicesMappingsItems.remove(webServicesMapping);
@@ -1841,12 +1782,12 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
     
                     webServicesMappingWriter.write(webServicesMappingTemplateContent);
     
-                    auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+                    auditor.info(AuditorStatusType.PROCESSED);
                 }
             }
             catch(Throwable e){
                 if(generateMessage)
-                    auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+                    auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
                 auditor.error(e);
             }
@@ -1862,7 +1803,7 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
 			Auditor auditor         = new Auditor(declaration.getName(), auditorResource);
 
 			try{
-			    SystemResourceLoader loader                      = new SystemResourceLoader();
+			    SystemResourceLoader loader                      = new SystemResourceLoader(getProjectResourcesDir(), SystemConstants.DEFAULT_RESOURCE_ID);
 			    SystemResource       resource                    = loader.get();
                 List<Locale>         languages                   = resource.getLanguages();
 			    String               actionFormUrl               = ActionFormUtil.getActionFormUrlByModel(declaration);
@@ -1885,8 +1826,6 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
     					if(!webPageI18nResourceFile.exists()){
     						generateMessage = true;
     
-    						auditor.info("creating ".concat(language.toString()).concat("..."));
-    
     						StringBuilder webPageI18nResourceTemplateFileName = new StringBuilder();
     
     						webPageI18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
@@ -1906,25 +1845,23 @@ public class AnnotationProcessor implements com.sun.mirror.apt.AnnotationProcess
     
     						FileUtil.toTextFile(webPageI18nResourceFileName.toString(), webPageI18nResourceContent, encoding);
     
-    						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+    						auditor.info(AuditorStatusType.PROCESSED);
     					}
     				}
     				else{
     					if(webPageI18nResourceFile.exists() && modelInfo.getMappedRepositoryId().length() == 0){
     						generateMessage = true;
     
-    					    auditor.info("removing ".concat(language.toString()).concat("..."));
-    					    
     						webPageI18nResourceFile.delete();
     
-    						auditor.info(AuditorStatusType.PROCESSED_WITHOUT_ERROR.toString());
+    						auditor.info(AuditorStatusType.PROCESSED);
     					}
     				}
 				}
 			}
 			catch(Throwable e){
 				if(generateMessage)
-					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR.toString());
+					auditor.info(AuditorStatusType.PROCESSED_WITH_ERROR);
 
 				auditor.error(e);
 			}
