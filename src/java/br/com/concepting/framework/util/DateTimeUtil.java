@@ -512,15 +512,4 @@ public class DateTimeUtil{
 
         return result.toString();   
     }
-	
-	public static void main(String args[]) throws InterruptedException{
-	    Date x = new Date();
-	    
-	    Thread.sleep(2000);
-	    
-	    Date y = new Date();
-	    
-	    System.out.println(diff(y, x, DateFieldType.MILLISECONDS));
-	    
-	}
 }
