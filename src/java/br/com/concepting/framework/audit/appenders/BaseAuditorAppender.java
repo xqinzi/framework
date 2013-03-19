@@ -15,6 +15,7 @@ import br.com.concepting.framework.audit.annotations.Auditable;
 import br.com.concepting.framework.audit.constants.AuditorConstants;
 import br.com.concepting.framework.audit.model.AuditorBusinessComplementModel;
 import br.com.concepting.framework.audit.model.AuditorModel;
+import br.com.concepting.framework.audit.types.AuditorStatusType;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
@@ -163,7 +164,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
             model.setSystemModule(loginSession.getSystemModule());
         }
 
-        model.setStatusCode(StringUtil.trim(event.getMessage()));
+        model.setStatusCode(AuditorStatusType.valueOf(StringUtil.trim(event.getMessage()).toUpperCase()));
         
         ThrowableInformation information = event.getThrowableInformation();
         
