@@ -44,10 +44,7 @@ public class AuditorModel extends BaseModel{
     private Collection<AuditorBusinessComplementModel> businessComplement = null;
 
     @Property
-	private String statusCode = "";
-	
-    @Property
-    private AuditorStatusType statusCodeType = null;
+    private AuditorStatusType statusCode = null;
 
     @Property
 	private String statusMessage = "";
@@ -219,52 +216,20 @@ public class AuditorModel extends BaseModel{
 	}
 
 	/**
-	 * Retorna o identificador do status de processamento a ser registrado na 
-	 * auditoria.
-	 * 
-	 * @return String contendo o identificador do status.
-	 */
-	public String getStatusCode(){
-		return statusCode;
-	}
-
-    /**
-     * Define o identificador do status de processamento a ser registrado na 
-     * auditoria.
-     * 
-     * @param statusCode String contendo o identificador do status.
-     */
-	public void setStatusCode(String statusCode){
-		this.statusCode = statusCode;
-
-		try{
-			this.statusCodeType = AuditorStatusType.valueOf(statusCode.toUpperCase());
-		}
-		catch(Throwable e){
-			this.statusCodeType = null;
-		}
-	}
-
-	/**
 	 * Retorna a constante do status de processamento a ser registrado na auditoria.
 	 * 
 	 * @return Instância da constante do status.
 	 */
-	public AuditorStatusType getStatusCodeType(){
-		return statusCodeType;
+	public AuditorStatusType getStatusCode(){
+		return statusCode;
 	}
 
     /**
      * Define a constante do status de processamento a ser registrado na auditoria.
      * 
-     * @param statusCodeType Instância da constante do status.
+     * @param statusCode Instância da constante do status.
      */
-	public void setStatusCodeType(AuditorStatusType statusCodeType){
-		this.statusCodeType = statusCodeType;
-
-		if(statusCodeType == null)
-			this.statusCode = null;
-		else
-			this.statusCode = statusCodeType.toString();
+	public void setStatusCode(AuditorStatusType statusCode){
+		this.statusCode = statusCode;
 	}
 }
