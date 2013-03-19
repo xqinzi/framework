@@ -27,7 +27,7 @@ public class SystemModuleModel extends BaseModel{
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
 	private String title = "";
-
+	
 	@Property(isForSearch = true, validations = ValidationType.REQUIRED)
 	private String url = "";
 
