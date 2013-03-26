@@ -8,6 +8,12 @@
 	<set var="serviceInterfaceClassName" value="br.com.concepting.framework.service.util.ServiceUtil.getServiceInterfaceClassNameByModel(#{clazz})"/>
 	package @{servicePackage};
 	
+	import java.rmi.RemoteException;
+	
+	import br.com.concepting.framework.exceptions.InternalErrorException;
+	import br.com.concepting.framework.security.model.LoginSessionModel;
+	import br.com.concepting.framework.security.model.UserModel;
+
 	import @{serviceInterfaceClassName};
 	
 	/**
@@ -17,6 +23,9 @@
 	 * @version 1.0
 	 * @since @{now}
 	 */
-	public class @{serviceName} extends br.com.concepting.framework.security.service.interfaces.LoginSessionServiceImpl implements @{serviceInterfaceName}{
+	public class @{serviceName} extends br.com.concepting.framework.security.service.LoginSessionServiceImpl implements @{serviceInterfaceName}{
+		protected &lt;L extends LoginSessionModel, U extends UserModel&gt; void sendForgottenPasswordMessage(U user) throws InternalErrorException, RemoteException{
+			//TODO: Implementar mensagem de esquecimento de senha.
+		}
 	}
 </serviceClass>
