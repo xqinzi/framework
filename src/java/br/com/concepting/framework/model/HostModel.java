@@ -1,4 +1,4 @@
-package br.com.concepting.framework.security.model;
+package br.com.concepting.framework.model;
 
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.annotations.Model;
@@ -15,10 +15,7 @@ public class HostModel extends BaseModel{
     @Property(isIdentity=true)
     private Integer id = 0;
     
-    @Property(isForSearch=true)
-    private String name = "";
-    
-    @Property(isForSearch=true)
+    @Property
     private String ip = "";
 
     /**
@@ -37,24 +34,6 @@ public class HostModel extends BaseModel{
      */
     public void setId(Integer id){
         this.id = id;
-    }
-
-    /**
-     * Retorna o nome do host.
-     * 
-     * @return String contendo o nome do host.
-     */
-    public String getName(){
-        return name;
-    }
-
-    /**
-     * Define o nome do host.
-     * 
-     * @param name String contendo o nome do host.
-     */
-    public void setName(String name){
-        this.name = name;
     }
 
     /**

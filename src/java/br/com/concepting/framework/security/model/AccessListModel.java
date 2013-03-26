@@ -3,6 +3,7 @@ package br.com.concepting.framework.security.model;
 import java.util.List;
 
 import br.com.concepting.framework.model.BaseModel;
+import br.com.concepting.framework.model.HostModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.persistence.types.RelationType;
@@ -21,7 +22,7 @@ public class AccessListModel extends BaseModel{
     @Property(isForSearch=true)
     private String name = "";
     
-    @Property(relationType=RelationType.MANY_TO_MANY)
+    @Property(relationType=RelationType.MANY_TO_MANY, cascadeOnDelete=true, cascadeOnSave=true)
     private List<HostModel> hosts = null;
     
     @Property

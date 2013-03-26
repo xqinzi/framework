@@ -17,7 +17,7 @@ public abstract class AttributeConstants extends Constants{
     public static final String CURRENT_GUIDE_KEY                 = "currentGuide";
     public static final String CURRENT_NODE_KEY                  = "currentNode";
     public static final String CURRENT_SECTION_KEY               = "currentSection";
-    public static final String USER_KEY                          = "@{user}";
+    public static final String USER_KEY                          = "user";
     public static final String CALENDAR_KEY                      = "calendar";
     public static final String CALENDAR_DISPLAY_KEY              = "calendarDisplay";
     public static final String CALENDAR_DAYS_KEY                 = "calendarDays";

@@ -10,6 +10,7 @@ import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.model.types.ContextSearchType;
 import br.com.concepting.framework.model.types.ValidationType;
+import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.persistence.types.RelationType;
 import br.com.concepting.framework.util.helpers.DateTime;
 
@@ -39,7 +40,7 @@ public class UserModel extends BaseModel{
 	@Property
 	private String confirmPassword = "";
 
-	@Property
+	@Property(isForSearch = true)
 	private Boolean active = true;
 
 	@Property(isForSearch=true)
@@ -69,7 +70,7 @@ public class UserModel extends BaseModel{
     @Property
     private String logoContentType = "";
 
-	@Property
+	@Property(relationType = RelationType.ONE_TO_ONE, relationJoinType = RelationJoinType.LEFT_JOIN, cascadeOnDelete = true, cascadeOnSave = true)
 	private LoginParametersModel loginParameters = null;
 
 	@Property(relationType = RelationType.MANY_TO_MANY)

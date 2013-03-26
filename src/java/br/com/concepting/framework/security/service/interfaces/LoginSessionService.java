@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import br.com.concepting.framework.audit.annotations.Auditable;
 import br.com.concepting.framework.exceptions.InternalErrorException;
+import br.com.concepting.framework.model.HostModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.security.exceptions.ExpiredPasswordException;
@@ -15,7 +16,6 @@ import br.com.concepting.framework.security.exceptions.UserAlreadyLoggedInExcept
 import br.com.concepting.framework.security.exceptions.UserBlockedException;
 import br.com.concepting.framework.security.exceptions.UserNotFoundException;
 import br.com.concepting.framework.security.model.AccessListModel;
-import br.com.concepting.framework.security.model.HostModel;
 import br.com.concepting.framework.security.model.LoginParametersModel;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;

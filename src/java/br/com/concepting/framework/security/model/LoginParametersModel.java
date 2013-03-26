@@ -30,7 +30,7 @@ public class LoginParametersModel extends BaseModel{
 	@Property
 	private Integer loginTries = 0;
 	
-	@Property(relationType=RelationType.ONE_TO_MANY)
+	@Property(relationType=RelationType.MANY_TO_MANY, cascadeOnDelete = true, cascadeOnSave = true)
 	private List<AccessListModel> accessLists = null;
 	
 	/**
