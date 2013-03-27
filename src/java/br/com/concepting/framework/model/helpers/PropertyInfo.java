@@ -31,6 +31,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private Boolean           isNumber                      = false;
 	private Boolean           isByteArray                   = false;
 	private Boolean           isCurrency                    = false;
+	private Boolean           isString                      = false;
 	private Boolean           autoGenerateIdentity          = false;
 	private String            keyId                         = "";
 	private String            foreignKeyId                  = "";
@@ -53,6 +54,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private String            searchPropertyId              = "";
 	private String            propertiesIds[]               = null;
 	private String            mappedPropertyId              = "";
+	private String            mappedPropertyType            = "";
 	private String            mappedPropertiesIds[]         = null;
 	private String            mappedRelationPropertiesIds[] = null;
 	private String            mappedRelationRepositoryId    = "";
@@ -82,6 +84,24 @@ public class PropertyInfo implements Comparable, Cloneable{
 	    super();
 	}
 	
+	/**
+	 * Retorna o tipo do mapeamento da propriedade no repositório de persistência.
+	 * 
+	 * @return String contendo o tipo de mapeamento da propriedade.
+	 */
+    public String getMappedPropertyType(){
+        return mappedPropertyType;
+    }
+
+    /**
+     * Define o tipo do mapeamento da propriedade no repositório de persistência.
+     * 
+     * @param mappedPropertyType String contendo o tipo de mapeamento da propriedade.
+     */
+    public void setMappedPropertyType(String mappedPropertyType){
+        this.mappedPropertyType = mappedPropertyType;
+    }
+
     /**
      * Retorna o identificador da propriedade que armazena o idioma a ser utilizado na 
      * formatação/parsing da propriedade do modelo de dados.
@@ -1444,8 +1464,20 @@ public class PropertyInfo implements Comparable, Cloneable{
 	public void setWordCount(Integer wordCount){
 		this.wordCount = wordCount;
 	}
+	
+	public Boolean isString(){
+	    return isString;
+	}
+	
+	public Boolean getIsString(){
+        return isString();
+    }
 
-	/**
+    public void setIsString(Boolean isString){
+        this.isString = isString;
+    }
+
+    /**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	public boolean equals(Object object){

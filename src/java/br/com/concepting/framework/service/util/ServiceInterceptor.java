@@ -49,7 +49,8 @@ public class ServiceInterceptor extends Interceptor{
     		IService service = getInterceptableInstance();
             Auditor  auditor = getAuditor();
     		
-    		auditor.setLoginSession(ServiceUtil.getLoginSession(service));
+            if(auditor != null)
+                auditor.setLoginSession(ServiceUtil.getLoginSession(service));
     		
     		Method   method            = getMethod();
     		Service  serviceAnnotation = method.getAnnotation(Service.class);
@@ -74,7 +75,8 @@ public class ServiceInterceptor extends Interceptor{
                 IService service = getInterceptableInstance();
                 Auditor  auditor = getAuditor();
                 
-                auditor.setLoginSession(ServiceUtil.getLoginSession(service));
+                if(auditor != null)
+                    auditor.setLoginSession(ServiceUtil.getLoginSession(service));
     
         		service.commit();
             }
@@ -93,7 +95,8 @@ public class ServiceInterceptor extends Interceptor{
                 IService service = getInterceptableInstance();
                 Auditor  auditor = getAuditor();
                 
-                auditor.setLoginSession(ServiceUtil.getLoginSession(service));
+                if(auditor != null)
+                    auditor.setLoginSession(ServiceUtil.getLoginSession(service));
         		
     		    service.rollback();
             }

@@ -32,8 +32,26 @@ public class LoginParametersModel extends BaseModel{
 	
 	@Property(relationType=RelationType.MANY_TO_MANY, cascadeOnDelete = true, cascadeOnSave = true)
 	private List<AccessListModel> accessLists = null;
-	
+
 	/**
+	 * Retorna o identificador da parametrização do login.
+	 * 
+	 * @return Valor inteiro contendo o identificador da parametrização.
+	 */
+	public Integer getId(){
+        return id;
+    }
+
+    /**
+     * Define o identificador da parametrização do login.
+     * 
+     * @param id Valor inteiro contendo o identificador da parametrização.
+     */
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    /**
 	 * Retorna a quantidade de tentativas de login.
 	 * 
 	 * @return Valor numérico contendo a quantidade de tentativas de login.

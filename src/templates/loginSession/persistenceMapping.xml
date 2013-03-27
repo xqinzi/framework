@@ -48,7 +48,7 @@
 				<if expr="@{identityPropertiesInfoSize} > 0">
 					<iterate var="identityPropertyInfo" values="@{modelInfo.identityPropertiesInfo}">
 						<if expr="@{identityPropertyInfo.mappedPropertyId} != ''">
-							<id name="@{identityPropertyInfo.id}" column="@{identityPropertyInfo.mappedPropertyId}">
+							<id name="@{identityPropertyInfo.id}" type="@{propertyInfo.mappedPropertyType}" column="@{identityPropertyInfo.mappedPropertyId}">
 							    <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
 									<generator class="native"/>
 								</if>
@@ -86,10 +86,10 @@
 										<if expr="@{mappedPropertyId} != ''">
 											<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{mappedPropertyId})"/>
 											<if expr="@{alreadyMapped}">
-												<property name="@{propertyId}" column="@{mappedPropertyId}" insert="false" update="false" not-null="@{nullable}"/>
+												<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
 											</if>
 											<if expr="!@{alreadyMapped}">
-												<property name="@{propertyId}" column="@{mappedPropertyId}" not-null="@{nullable}"/>
+												<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
 												<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
 											</if>
 										</if>
@@ -112,76 +112,36 @@
 								<if expr="@{alreadyMapped}">
 									<if expr="@{propertyInfo.keyId} == ''">
 										<if expr="!@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
 										</if>
 										<if expr="@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique="true" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique="true" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" unique="true" not-null="@{nullable}"/>
 										</if>
 									</if>
 									<if expr="@{propertyInfo.keyId} != ''">
 										<if expr="!@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
 										</if>
 										<if expr="@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
 										</if>
 									</if>
 								</if>
 								<if expr="!@{alreadyMapped}">
 									<if expr="@{propertyInfo.keyId} == ''">
 										<if expr="!@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
 										</if>
 										<if expr="@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique="true" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique="true" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" unique="true" not-null="@{nullable}"/>
 										</if>
 									</if>
 									<if expr="@{propertyInfo.keyId} != ''">
 										<if expr="!@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" index="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
 										</if>
 										<if expr="@{propertyInfo.isUnique}">
-											<if expr="@{propertyInfo.clazz.simpleName} == 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}" type="serializable"/>
-											</if>
-											<if expr="@{propertyInfo.clazz.simpleName} != 'Object'">
-												<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-											</if>
+											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
 										</if>
 									</if>
 									<evaluate expr="@{mappedPropertiesControl}.add(@{propertyInfo.mappedPropertyId})"/>
@@ -189,7 +149,7 @@
 							</if>
 							<if expr="@{propertyInfo.mappedPropertyId} == ''">
 								<if expr="@{propertyInfo.formula} != ''">
-									<property name="@{propertyInfo.id}" not-null="@{nullable}">
+									<property name="@{propertyInfo.id}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}">
 										<formula>
 											@{propertyInfo.formula}
 										</formula>

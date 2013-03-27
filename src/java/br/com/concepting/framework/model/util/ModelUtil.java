@@ -1,4 +1,3 @@
-
 package br.com.concepting.framework.model.util;
 
 import java.io.File;
@@ -15,6 +14,7 @@ import java.util.Locale;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.dom4j.DocumentException;
+import org.hibernate.type.StringType;
 
 import br.com.concepting.framework.caching.Cacher;
 import br.com.concepting.framework.caching.CacherManager;
@@ -717,5 +717,9 @@ public class ModelUtil{
 	    }
 	    
 	    return node;
+	}
+	
+	public static void main(String args[]){
+	    System.out.println(StringType.INSTANCE.getName());
 	}
 }

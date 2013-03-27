@@ -874,7 +874,7 @@ public abstract class HibernateDAO extends BaseDAO{
     									}
     
     									whereClause.append(" ");
-    									whereClause.append(propertyCondition);
+    									whereClause.append(propertyCondition.getOperator());
     									whereClause.append(" :");
     									whereClause.append(propertyParamBuffer);
     								}
@@ -912,7 +912,7 @@ public abstract class HibernateDAO extends BaseDAO{
         										}
         
             									whereClause.append(" ");
-            									whereClause.append(propertyCondition);
+            									whereClause.append(propertyCondition.getOperator());
             									whereClause.append(" (");
         
         										if(propertyParamBuffer == null)
@@ -980,7 +980,7 @@ public abstract class HibernateDAO extends BaseDAO{
         										}
         
             									whereClause.append(" ");
-            									whereClause.append(propertyCondition);
+            									whereClause.append(propertyCondition.getOperator());
             									whereClause.append(" (");
         
         										if(propertyParamBuffer == null)
@@ -1067,7 +1067,7 @@ public abstract class HibernateDAO extends BaseDAO{
                                         }
 
                                         whereClause.append(" ");
-                                        whereClause.append(propertyCondition);
+                                        whereClause.append(propertyCondition.getOperator());
                                         whereClause.append(" :");
                                         whereClause.append(propertyParamBuffer);
 

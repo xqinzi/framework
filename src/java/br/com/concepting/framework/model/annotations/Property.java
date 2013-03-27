@@ -189,6 +189,13 @@ public @interface Property{
 	 * @return String contendo o mapeamento das propriedades.
 	 */
 	String[] propertiesIds() default {};
+	
+	/**
+	 * Define o tipo do mapeamento da propriedade no repositório de persistência.
+	 * 
+	 * @return String contendo o tipo do mapeamento.
+	 */
+	String mappedPropertyType() default "";
 
 	/**
 	 * Define o mapeamento da propriedade no repositório de persistência.

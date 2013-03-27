@@ -95,32 +95,32 @@ public class AuditorPatternLayout extends SimpleLayout{
 		
 		if(businessComplement != null){ 
 			for(C item : businessComplement){
-    			itemValue = item.getValue();
+    			itemValue = item.getPropertyValue();
     			
-    			if(!currentClass.equals(item.getClazz())){
+    			if(!currentClass.equals(item.getModelClass())){
                     hasBusinessComplement = true;
                     
     				if(currentClass.length() > 0)
     					result.append("), ");
     				
-    				result.append(item.getClazz());
+    				result.append(item.getModelClass());
     				result.append(" (");
     				
-    				currentClass = item.getClazz();
+    				currentClass = item.getModelClass();
     			}
 
 			    if(cont > 0)
 			        result.append(", ");
     			
-			    if(item.getId().length() > 0){
-        			result.append(item.getId());
+			    if(item.getPropertyId().length() > 0){
+        			result.append(item.getPropertyId());
         			result.append("=");
 			    }
     			
     			if(itemValue == null)
     				result.append("null");
     			else{
-                    if(item.getId().length() > 0){
+                    if(item.getPropertyId().length() > 0){
         				if(itemValue instanceof Collection)
         					result.append("[");
     
@@ -130,7 +130,7 @@ public class AuditorPatternLayout extends SimpleLayout{
                     
 					result.append(PropertyUtil.format(itemValue));
 
-                    if(item.getId().length() > 0){
+                    if(item.getPropertyId().length() > 0){
     					if(itemValue instanceof Date || itemValue instanceof String)
     						result.append("\"");
         			    

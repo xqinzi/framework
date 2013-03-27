@@ -287,11 +287,11 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                                         else{
                                             item = (C)ConstructorUtils.invokeConstructor((propertyInfo.getCollectionItemsClass().equals(Object.class) ? AuditorBusinessComplementModel.class : propertyInfo.getCollectionItemsClass()), null);
                                         
-                                            item.setModel(model);
-                                            item.setClazz(modelInfo.getClazz().getName());
-                                            item.setId(auditablePropertyInfo.getId());
-                                            item.setType(auditablePropertyInfo.getClazz().getName());
-                                            item.setValue(value);
+                                            item.setAuditor(model);
+                                            item.setModelClass(modelInfo.getClazz().getName());
+                                            item.setPropertyId(auditablePropertyInfo.getId());
+                                            item.setPropertyType(auditablePropertyInfo.getClazz().getName());
+                                            item.setPropertyValue(value);
                                         
                                             businessComplements.add(item);
                                         }
@@ -309,10 +309,10 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                         try{
                             item = (C)ConstructorUtils.invokeConstructor((propertyInfo.getCollectionItemsClass().equals(Object.class) ? AuditorBusinessComplementModel.class : propertyInfo.getCollectionItemsClass()), null);
                         
-                            item.setModel(model);
-                            item.setId(businessArgumentId);
-                            item.setType(businessArgumentValue.getClass().getName());
-                            item.setValue(businessArgumentValue);
+                            item.setAuditor(model);
+                            item.setPropertyId(businessArgumentId);
+                            item.setPropertyType(businessArgumentValue.getClass().getName());
+                            item.setPropertyValue(businessArgumentValue);
                     
                             businessComplements.add(item);
                         }

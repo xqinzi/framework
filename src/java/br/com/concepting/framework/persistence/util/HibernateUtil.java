@@ -219,11 +219,15 @@ public class HibernateUtil{
 			    StringBuilder persistenceMappingResource = new StringBuilder();
 			    InputStream   persistenceMappingStream   = null;
 			    
+			    System.out.println(persistenceMappings.size());
+			    
 			    for(String persistenceMapping : persistenceMappings){
 			        persistenceMappingResource.delete(0, persistenceMappingResource.length());
 			        persistenceMappingResource.append(PersistenceConstants.DEFAULT_MAPPINGS_DIR);
 			        persistenceMappingResource.append(persistenceMapping);
 			        persistenceMappingResource.append(".hbm.xml");
+			        
+			        System.out.println(persistenceMappingResource);
 			        
 			        persistenceMappingStream = HibernateUtil.class.getClassLoader().getResourceAsStream(persistenceMappingResource.toString());
 			        

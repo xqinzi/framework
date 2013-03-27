@@ -20,6 +20,20 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.hibernate.type.BigDecimalType;
+import org.hibernate.type.BigIntegerType;
+import org.hibernate.type.BinaryType;
+import org.hibernate.type.BooleanType;
+import org.hibernate.type.ByteType;
+import org.hibernate.type.CurrencyType;
+import org.hibernate.type.DateType;
+import org.hibernate.type.DoubleType;
+import org.hibernate.type.FloatType;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.LongType;
+import org.hibernate.type.SerializableType;
+import org.hibernate.type.ShortType;
+import org.hibernate.type.StringType;
 
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.BaseModel;
@@ -1043,7 +1057,8 @@ public abstract class PropertyUtil extends PropertyUtils{
 		propertyInfo.setIsModel(isModel(propertyClass));
 		propertyInfo.setIsNumber(isNumber(propertyClass));
 		propertyInfo.setIsCurrency(isCurrency(propertyClass));
-    		
+		propertyInfo.setIsString(isString(propertyClass));
+		
 		if(propertyInfo.isCollection()){
 			Class collectionItemsClass = null;
 
@@ -1058,6 +1073,7 @@ public abstract class PropertyUtil extends PropertyUtils{
 		}
     
 		if(propertyAnnotation != null){
+	        propertyInfo.setMappedPropertyType(propertyAnnotation.mappedPropertyType());
     		propertyInfo.setIsUnique(propertyAnnotation.isUnique());
     		propertyInfo.setIsAuditable(propertyAnnotation.isAuditable());
     		propertyInfo.setIsIdentity(propertyAnnotation.isIdentity());
@@ -1103,6 +1119,39 @@ public abstract class PropertyUtil extends PropertyUtils{
     		propertyInfo.setPrecision(propertyAnnotation.precision());
     		propertyInfo.setLanguage(propertyAnnotation.language());
 		}
+		
+        if(propertyInfo.getMappedPropertyType().length() == 0){
+            if(isEnum(propertyClass))
+                propertyInfo.setMappedPropertyType(StringType.INSTANCE.getName());
+            else if(isBoolean(propertyClass))
+                propertyInfo.setMappedPropertyType(BooleanType.INSTANCE.getName());
+            else if(isByteArray(propertyClass))
+                propertyInfo.setMappedPropertyType(BinaryType.INSTANCE.getName());
+            else if(isDate(propertyClass) || isTime(propertyClass))
+                propertyInfo.setMappedPropertyType(DateType.INSTANCE.getName());
+            else if(isBigDecimal(propertyClass))
+                propertyInfo.setMappedPropertyType(BigDecimalType.INSTANCE.getName());
+            else if(isBigInteger(propertyClass))
+                propertyInfo.setMappedPropertyType(BigIntegerType.INSTANCE.getName());
+            else if(isByte(propertyClass))
+                propertyInfo.setMappedPropertyType(ByteType.INSTANCE.getName());
+            else if(isCurrency(propertyClass))
+                propertyInfo.setMappedPropertyType(CurrencyType.INSTANCE.getName());
+            else if(isDouble(propertyClass))
+                propertyInfo.setMappedPropertyType(DoubleType.INSTANCE.getName());
+            else if(isFloat(propertyClass))
+                propertyInfo.setMappedPropertyType(FloatType.INSTANCE.getName());
+            else if(isInteger(propertyClass))
+                propertyInfo.setMappedPropertyType(IntegerType.INSTANCE.getName());
+            else if(isLong(propertyClass))
+                propertyInfo.setMappedPropertyType(LongType.INSTANCE.getName());
+            else if(isShort(propertyClass))
+                propertyInfo.setMappedPropertyType(ShortType.INSTANCE.getName());
+            else if(isString(propertyClass))
+                propertyInfo.setMappedPropertyType(StringType.INSTANCE.getName());
+            else
+                propertyInfo.setMappedPropertyType(SerializableType.INSTANCE.getName());
+        }
     			
     	return propertyInfo;
 	}

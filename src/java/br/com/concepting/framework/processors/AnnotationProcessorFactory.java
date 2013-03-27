@@ -20,7 +20,6 @@ import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.processors.ModelAnnotationProcessor;
 import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.processors.interfaces.IAnnotationProcessor;
-import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.util.StringUtil;
 
@@ -137,8 +136,7 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
 
             auditorResource = auditorResourceLoader.get(AuditorConstants.DEFAULT_GENERATE_CODE_RESOURCE_KEY);
         }
-        catch(InvalidResourceException e){
-            environment.getMessager().printMessage(Kind.ERROR, e.getMessage());
+        catch(Throwable e){
         }
     }
 	

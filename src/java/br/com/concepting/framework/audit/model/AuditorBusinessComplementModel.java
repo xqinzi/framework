@@ -13,36 +13,36 @@ import br.com.concepting.framework.model.annotations.Property;
 @Model
 public class AuditorBusinessComplementModel extends BaseModel{
 	@Property(isIdentity=true)
-	private AuditorModel model = null;
+	private AuditorModel auditor = null;
 	
 	@Property(isIdentity=true)
-	private String clazz = "";
+	private String modelClass = "";
 	
 	@Property(isIdentity=true)
-	private String id = "";
+	private String propertyId = "";
 	
 	@Property
-	private String type = "";
+	private String propertyType = "";
 		
 	@Property
-	private Object value = null;
+	private Object propertyValue = null;
 	
     /**
      * Retorna a instância do modelo de dados que armazena o registro de auditoria.
      *
      * @return Instância do modelo de dados.
      */
-    public AuditorModel getModel(){
-        return model;
+    public AuditorModel getAuditor(){
+        return auditor;
     }
 
     /**
      * Define a instância do modelo de dados que armazena o registro de auditoria.
      *
-     * @param model Instância do modelo de dados.
+     * @param auditor Instância do modelo de dados.
      */
-    public void setModel(AuditorModel model){
-        this.model = model;
+    public void setAuditor(AuditorModel auditor){
+        this.auditor = auditor;
     }
 	
     /**
@@ -50,17 +50,17 @@ public class AuditorBusinessComplementModel extends BaseModel{
      *
      * @return String contendo o identificador da classe do modelo de dados. 
      */
-	public String getClazz(){
-        return clazz;
+	public String getModelClass(){
+        return modelClass;
     }
 
     /**
      * Define o identificador da classe do modelo de dados auditado.
      *
-     * @param clazz String contendo o identificador da classe do modelo de dados. 
+     * @param modelClass String contendo o identificador da classe do modelo de dados. 
      */
-    public void setClazz(String clazz){
-        this.clazz = clazz;
+    public void setModelClass(String modelClass){
+        this.modelClass = modelClass;
     }
 
 	/**
@@ -68,8 +68,8 @@ public class AuditorBusinessComplementModel extends BaseModel{
 	 *
 	 * @return String contendo o identificador da propriedade. 
 	 */
-	public String getId(){
-    	return id;
+	public String getPropertyId(){
+    	return propertyId;
     }
 
     /**
@@ -77,8 +77,8 @@ public class AuditorBusinessComplementModel extends BaseModel{
      *
      * @param id String contendo o identificador da propriedade. 
      */
-	public void setId(String id){
-    	this.id = id;
+	public void setPropertyId(String propertyId){
+    	this.propertyId = propertyId;
     }
 
 	/**
@@ -86,8 +86,8 @@ public class AuditorBusinessComplementModel extends BaseModel{
 	 *
 	 * @return String contendo o identificador do tipo de dados. 
 	 */
-	public String getType(){
-    	return type;
+	public String getPropertyType(){
+    	return propertyType;
     }
 
     /**
@@ -95,8 +95,8 @@ public class AuditorBusinessComplementModel extends BaseModel{
      *
      * @param type String contendo o identificador do tipo de dados. 
      */
-	public void setType(String type){
-    	this.type = type;
+	public void setPropertyType(String propertyType){
+    	this.propertyType = propertyType;
     }
 
 	/**
@@ -104,8 +104,8 @@ public class AuditorBusinessComplementModel extends BaseModel{
 	 *
 	 * @return Instância do valor da propriedade. 
 	 */
-    public <O> O getValue(){
-    	return (O)value;
+    public <O> O getPropertyValue(){
+    	return (O)propertyValue;
     }
 
     /**
@@ -113,7 +113,7 @@ public class AuditorBusinessComplementModel extends BaseModel{
      *
      * @param value Instância do valor da propriedade. 
      */
-	public <O> void setValue(O value){
-    	this.value = value;
+	public <O> void setPropertyValue(O propertyValue){
+    	this.propertyValue = propertyValue;
     }
 }

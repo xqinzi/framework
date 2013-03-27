@@ -16,6 +16,7 @@ import org.dom4j.DocumentType;
 import org.dom4j.tree.DefaultDocumentType;
 
 import br.com.concepting.framework.audit.Auditor;
+import br.com.concepting.framework.audit.resource.AuditorResource;
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.helpers.ModelInfo;
@@ -130,9 +131,10 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         File templateFilesDir = new File(templateFilesDirName.toString());
         
         if(templateFilesDir.exists()){
-            File           templateFiles[]    = templateFilesDir.listFiles();
-            StringBuilder  templateMethodName = null;
-            Auditor        auditor            = null;
+            File           templateFiles[]     = templateFilesDir.listFiles();
+            StringBuilder   templateMethodName = null;
+            Auditor         auditor            = null;
+            AuditorResource auditorResource    = getAnnotationProcessorFactory().getAuditorResource();
             
             for(File templateFile : templateFiles){
                 if(!templateFile.isDirectory() && templateFile.getName().endsWith(".xml")){
@@ -148,12 +150,15 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                         Method method = getClass().getMethod(templateMethodName.toString());
                     
                         if(method != null){
-                            auditor = new Auditor(getClass(), method, getDeclaration().getName(), getAnnotationProcessorFactory().getAuditorResource());
-                            auditor.start();
+                            if(auditorResource != null){
+                                auditor = new Auditor(getClass(), method, getDeclaration().getName(), auditorResource);
+                                auditor.start();
+                            }
                         
                             method.invoke(this);
                         
-                            auditor.end();
+                            if(auditor != null)
+                                auditor.end();
                         }
                     }
                     catch(Throwable e){
@@ -269,12 +274,9 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         XmlNode   persistenceResourcesContent  = persistenceResourcesReader.getRoot();
         XmlNode   persistenceResourcesMappings = persistenceResourcesContent.getNode("mappings");
         
-        if(persistenceResourcesMappings == null){
+        if(persistenceResourcesMappings == null)
             persistenceResourcesMappings = new XmlNode("mappings");
-            
-            persistenceResourcesContent.addChildNode(persistenceResourcesMappings);
-        }
-
+        
         String        persistenceMappingName     = getDeclaration().getName();
         StringBuilder persistenceMappingFileName = new StringBuilder();
 
@@ -314,21 +316,29 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 persistenceMappingTemplateWriter.write(persistenceMappingContent);
             }
                 
-            if(persistenceMappings != null && persistenceMappings.size() > 0){
+            Boolean found = false;
+                    
+            if(persistenceMappings != null){
                 for(XmlNode persistenceMapping : persistenceMappings){
                     if(persistenceMapping.getValue().equals(persistenceMappingName)){
-                        generatePersistenceMappingFile = true;
-                        
-                        persistenceResourcesMappings.addChildNode(persistenceResourceMapping);
+                        found = true;
                         
                         break;
                     }
                 }
             }
+            else
+                persistenceResourcesContent.addChildNode(persistenceResourcesMappings);
+                
+            if(!found){
+                generatePersistenceMappingFile = true;
+                
+                persistenceResourcesMappings.addChildNode(persistenceResourceMapping);
+            }
         }
         else{
             if(persistenceMappingFile.exists()){
-                if(persistenceMappings != null && persistenceMappings.size() > 0){
+                if(persistenceMappings != null){
                     XmlNode persistenceMapping = null;
                     
                     for(int cont = 0 ; cont < persistenceMappings.size() ; cont++){
@@ -347,8 +357,6 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         }
         
         if(generatePersistenceMappingFile){
-            persistenceResourcesMappings.setChildNodes(persistenceMappings);
-
             XmlWriter persistenceResourcesWriter = new XmlWriter(persistenceResourcesFile, persistenceResourcesReader.getDocumentType(), persistenceResourcesReader.getEncoding());
             
             persistenceResourcesWriter.write(persistenceResourcesContent);
