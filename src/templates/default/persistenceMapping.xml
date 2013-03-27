@@ -48,7 +48,7 @@
 				<if expr="@{identityPropertiesInfoSize} > 0">
 					<iterate var="identityPropertyInfo" values="@{modelInfo.identityPropertiesInfo}">
 						<if expr="@{identityPropertyInfo.mappedPropertyId} != ''">
-							<id name="@{identityPropertyInfo.id}" type="@{propertyInfo.mappedPropertyType}" column="@{identityPropertyInfo.mappedPropertyId}">
+							<id name="@{identityPropertyInfo.id}" type="@{identityPropertyInfo.mappedPropertyType}" column="@{identityPropertyInfo.mappedPropertyId}">
 							    <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
 									<generator class="native"/>
 								</if>
@@ -81,28 +81,34 @@
 							<set var="hasComponentProperties" value="@{componentPropertiesSize} > 0"/>
 							<if expr="@{hasComponentProperties}">
 								<component name="@{propertyInfo.id}" class="@{propertyInfo.clazz.name}">
-									<iterate var="propertyId" values="@{propertyInfo.propertiesIds}" index="cont">
-										<set var="mappedPropertyId" value="@{mappedPropertiesIds}.get(@{cont})"/>
-										<if expr="@{mappedPropertyId} != ''">
-											<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{mappedPropertyId})"/>
-											<if expr="@{alreadyMapped}">
-												<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
+									<set var="componentModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{propertyInfo.clazz})"/>
+									<if expr="@{componentModelInfo} != null">
+										<iterate var="propertyId" values="@{propertyInfo.propertiesIds}" index="cont">
+											<set var="componentPropertyInfo" value="@{componentModelInfo}.getPropertyInfo(@{propertyId})"/>
+											<if expr="@{componentPropertyInfo} != null">
+												<set var="mappedPropertyId" value="@{mappedPropertiesIds}.get(@{cont})"/>
+												<if expr="@{mappedPropertyId} != ''">
+													<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{mappedPropertyId})"/>
+													<if expr="@{alreadyMapped}">
+														<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{componentPropertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
+													</if>
+													<if expr="!@{alreadyMapped}">
+														<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{componentPropertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
+														<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+													</if>
+												</if>
+												<if expr="@{mappedPropertyId} == ''">
+													<!-- TODO: O mapeamento da propriedade @{propertyId} deve definido. -->
+												</if>
 											</if>
-											<if expr="!@{alreadyMapped}">
-												<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
-												<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
+											<if expr="@{componentPropertyInfo} == null">
+												<!-- TODO: A propriedade @{propertyId} não existe no componente. -->
 											</if>
-										</if>
-										<if expr="@{mappedPropertyId} == ''">
-											<if expr="@{propertyInfo.formula} != ''">
-												<property name="@{propertyId}" not-null="@{nullable}">
-													<formula>
-														@{propertyInfo.formula}
-													</formula>
-												</property>
-											</if>
-										</if>
-									</iterate>
+										</iterate>
+									</if>
+									<if expr="@{componentModelInfo} == null">
+										<!-- TODO: As propriedades deste componente devem ser definidas. -->
+									</if>
 								</component>
 							</if>
 						</if>
