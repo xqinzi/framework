@@ -41,7 +41,7 @@ import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
-import br.com.concepting.framework.persistence.helpers.DateTimeType;
+import br.com.concepting.framework.persistence.types.DateTimeType;
 import br.com.concepting.framework.processors.ExpressionProcessor;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.DateTimeUtil;
