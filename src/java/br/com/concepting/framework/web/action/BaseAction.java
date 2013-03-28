@@ -323,10 +323,17 @@ public abstract class BaseAction extends DispatchAction{
 	 */
 	protected ActionForward processForward(){
 		ActionForward forward    = findForward();
-		String        action     = actionForm.getAction().toUpperCase();
-		ActionType    actionType = ActionType.valueOf(action);
+		String        action     = actionForm.getAction();
+		ActionType    actionType = null;
+		
+		try{
+		    actionType = ActionType.valueOf(action.toUpperCase());
+		}
+		catch(Throwable e){
+		    actionType = null;
+		}
 
-		if(actionType != ActionType.REFRESH)
+		if(actionType != null && actionType != ActionType.REFRESH)
 			actionForm.setLastAction(action);
 
 		if(!systemController.hasForwardOrRedirect() && !systemController.hasOutputContent())
