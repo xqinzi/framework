@@ -140,9 +140,6 @@ public enum ComponentType{
 	 * @return String contendo o identificador do componente.
 	 */
 	public String getId(){
-	    if(this == UNDO_BUTTON)
-	        return "reset";
-	    
 	    String        parts[]     = StringUtil.split(toString(), "_");
 	    StringBuilder componentId = new StringBuilder();
 	    
@@ -162,6 +159,9 @@ public enum ComponentType{
      * @return String contendo o identificador do tipo do componente.
      */
 	public String getType(){
-	    return StringUtil.replaceAll(toString(), "_", "");
+        if(this == UNDO_BUTTON)
+            return "RESET";
+
+        return StringUtil.replaceAll(toString(), "_", "");
 	}
 }
