@@ -41,6 +41,7 @@ import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
+import br.com.concepting.framework.persistence.helpers.DateTimeType;
 import br.com.concepting.framework.processors.ExpressionProcessor;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.DateTimeUtil;
@@ -1127,7 +1128,9 @@ public abstract class PropertyUtil extends PropertyUtils{
                 propertyInfo.setMappedPropertyType(BooleanType.INSTANCE.getName());
             else if(isByteArray(propertyClass))
                 propertyInfo.setMappedPropertyType(BinaryType.INSTANCE.getName());
-            else if(isDate(propertyClass) || isTime(propertyClass))
+            else if(isTime(propertyClass))
+                propertyInfo.setMappedPropertyType(DateTimeType.class.getName());
+            else if(isDate(propertyClass))
                 propertyInfo.setMappedPropertyType(DateType.INSTANCE.getName());
             else if(isBigDecimal(propertyClass))
                 propertyInfo.setMappedPropertyType(BigDecimalType.INSTANCE.getName());
