@@ -16,9 +16,7 @@ import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.resource.PersistenceResourceLoader;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
-import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
-import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceUtil;
  
 /**
@@ -28,78 +26,41 @@ import br.com.concepting.framework.service.util.ServiceUtil;
  * @since 1.0
  */
 public abstract class BaseService implements IService{
+    private IDAO currentPersistence = null;
+
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#initialize()
      */
-    public void initialize() throws InternalErrorException{
-        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
-        
-        if(currentPersistence == null){
-            try{
-                currentPersistence = getPersistence();
-            }
-            catch(Throwable e){
-            }
+    public void initialize(){
+        try{
+            currentPersistence = getPersistence(false);
+        }
+        catch(InternalErrorException e){
         }
     }
-    
+
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#begin()
      */
 	public void begin() throws InternalErrorException{
-        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
-        
-	    if(currentPersistence != null)
-	        currentPersistence.begin();
+        if(currentPersistence != null)
+            currentPersistence.begin();
     }
 
     /**
 	 * @see br.com.concepting.framework.service.interfaces.IService#commit()
 	 */
 	public void commit() throws InternalErrorException{
-        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
-
-        if(currentPersistence != null){
-			currentPersistence.commit();
-
-			ServiceUtil.setCurrentPersistence(null, this);
-		}
+        if(currentPersistence != null)
+            currentPersistence.commit();
 	}
 
 	/**
 	 * @see br.com.concepting.framework.service.interfaces.IService#rollback()
 	 */
 	public void rollback() throws InternalErrorException{
-        IDAO currentPersistence = ServiceUtil.getCurrentPersistence(this);
-
-        if(currentPersistence != null){
+        if(currentPersistence != null)
             currentPersistence.rollback();
-
-            ServiceUtil.setCurrentPersistence(null, this);
-        }
-	}
-
-	/**
-	 * Indica se a classe de serviço irá gerenciar transações.
-	 *
-	 * @return True/False.
-	 */
-    private Boolean useTransaction(){
-		Class   serviceClass = getClass();
-		Class   interfaces[] = serviceClass.getInterfaces();
-		Service annotation   = null;
-
-		for(Class interfaceItem : interfaces){
-			annotation = (Service)interfaceItem.getAnnotation(Service.class);
-			
-			if(annotation != null)
-				break;
-		}
-
-		if(annotation != null && annotation.type() != ServiceType.CLASS && annotation.type() != ServiceType.WEB_SERVICE)
-			return false;
-
-		return true;
 	}
 
 	/**
@@ -112,48 +73,51 @@ public abstract class BaseService implements IService{
 	 * @throws InternalErrorException
 	 */
     protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
-		try{
-		    IDAO     currentPersistence = ServiceUtil.getCurrentPersistence(this);
-    		IService service            = ServiceUtil.instantiate(modelClass);
-    		
-    		ServiceUtil.setCurrentPersistence(currentPersistence, service);
-
-			return (S)service;
-		}
-		catch(Throwable e){
-			throw new InternalErrorException(e);
-		}
+		return ServiceUtil.instantiate(modelClass);
 	}
+    
+    /**
+     * Retorna a instância da classe de persistência vinculada a um modelo de dados.
+     *
+     * @param modelClass Classe do modelo de dados desejado.
+     * @return Instância da classe de persistência.
+     * @throws InternalErrorException
+     */
+    protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
+        return getPersistence(modelClass, true);
+    }
 
 	/**
 	 * Retorna a instância da classe de persistência vinculada a um modelo de dados.
 	 *
 	 * @param modelClass Classe do modelo de dados desejado.
+	 * @param beginTransaction Indica se deve inicializar a transação.
 	 * @return Instância da classe de persistência.
 	 * @throws InternalErrorException
 	 */
-    protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
+    private <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass, Boolean beginTransaction) throws InternalErrorException{
 		try{
-		    D        currentPersistence  = ServiceUtil.getCurrentPersistence(this);
-			Class<D> persistenceClass    = PersistenceUtil.getPersistenceClassByModel(modelClass);
-			D        persistenceInstance = null;
-			
-			if(currentPersistence == null){
-			    ModelInfo                 modelInfo                 = ModelUtil.getModelInfo(modelClass);
-			    String                    persistenceResourceId     = modelInfo.getPersistenceResourceId();
-			    PersistenceResourceLoader persistenceResourceLoader = new PersistenceResourceLoader();
-			    PersistenceResource       persistenceResource       = persistenceResourceLoader.get(persistenceResourceId);
+            Class<D> persistenceClass    = PersistenceUtil.getPersistenceClassByModel(modelClass);
+            D        persistenceInstance = null;
+            
+            if(currentPersistence == null){
+                ModelInfo                 modelInfo                 = ModelUtil.getModelInfo(modelClass);
+                String                    persistenceResourceId     = modelInfo.getPersistenceResourceId();
+                PersistenceResourceLoader persistenceResourceLoader = new PersistenceResourceLoader();
+                PersistenceResource       persistenceResource       = persistenceResourceLoader.get(persistenceResourceId);
+                
+                persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, null);
+                
+                persistenceInstance.setPersistenceResource(persistenceResource);
+                persistenceInstance.openConnection();
+                
+                if(beginTransaction)
+                    persistenceInstance.begin();
+            }
+            else
+                persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, currentPersistence);
 
-			    persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, useTransaction());
-				
-				persistenceInstance.openConnection(persistenceResource);
-
-				ServiceUtil.setCurrentPersistence(currentPersistence, this);
-			}
-			else
-				persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, currentPersistence);
-			
-			return persistenceInstance;
+            return persistenceInstance;
 		}
 		catch(ClassNotFoundException e){
 			throw new InternalErrorException(e);
@@ -172,16 +136,27 @@ public abstract class BaseService implements IService{
 		}
 	}
 
-	/**
+    /**
+     * Retorna a instância da classe de persistência vinculada a classe de serviço.
+     * 
+     * @return Instância da classe de persistência.
+     * @throws InternalErrorException
+     */
+    protected <D extends IDAO, M extends BaseModel> D getPersistence() throws InternalErrorException{
+        return getPersistence(true);
+    }
+
+    /**
 	 * Retorna a instância da classe de persistência vinculada a classe de serviço.
 	 * 
 	 * @return Instância da classe de persistência.
+     * @param beginTransaction Indica se deve inicializar a transação.
 	 * @throws InternalErrorException
 	 */
-    protected <D extends IDAO, M extends BaseModel> D getPersistence() throws InternalErrorException{
+    private <D extends IDAO, M extends BaseModel> D getPersistence(Boolean beginTransaction) throws InternalErrorException{
 		try{
 			Class<M> modelClass  = ModelUtil.getModelClassByService(getClass());
-			IDAO     persistence = getPersistence(modelClass);
+			IDAO     persistence = getPersistence(modelClass, beginTransaction);
 
 			return (D)persistence;
 		}
