@@ -35,18 +35,23 @@ public class LabelTag extends BasePropertyTag{
     			}
 			}
 			
-			PropertiesResource resources   = getI18nResource();
-			String             resourceKey = getResourceKey();
+            String resourceKey = getResourceKey();
+            
+            if(resourceKey.length() > 0){
+    			PropertiesResource resources = getI18nResource();
+    
+    			value = resources.getProperty(resourceKey, false);
+    				
+    			if(value == null){
+        			resources = getDefaultI18nResource();
+        			value     = StringUtil.trim(resources.getProperty(getResourceKey()));
+    			}
 
-			value = resources.getProperty(resourceKey, false);
-				
-			if(value == null){
-    			resources = getDefaultI18nResource();
-    			value     = StringUtil.trim(resources.getProperty(getResourceKey()));
-			}
-			
-			if(value != null)
-			    setValue(value);
+    			if(value != null)
+                    setValue(value);
+            }
+            else
+                value = getValue();
 		}
 		else
 			super.initialize();

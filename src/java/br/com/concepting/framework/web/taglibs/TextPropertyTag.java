@@ -175,7 +175,7 @@ public class TextPropertyTag extends BasePropertyTag{
                 setSize(size);
 		}
 		
-		AlignmentType alignment    = getAlignment();
+		AlignmentType alignment    = getAlignmentType();
 		String        style        = getStyle();
 		StringBuilder styleContent = new StringBuilder();
 		

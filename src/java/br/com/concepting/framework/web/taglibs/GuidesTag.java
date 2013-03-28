@@ -88,7 +88,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 	protected void renderOpen() throws Throwable{
         String width = getWidth();
 	    
-		print("<table class=\"");
+		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
 		print(TaglibConstants.DEFAULT_GUIDE_LABEL_STYLE_CLASS);
 		print("\"");
 
@@ -199,9 +199,9 @@ public class GuidesTag extends BaseActionFormElementTag{
 
 		    print("<td class=\"");
 		    print(TaglibConstants.DEFAULT_GUIDE_DEFINITION_STYLE_CLASS);
-            print(" valign=\"");
+            print("\" valign=\"");
             print(AlignmentType.BOTTOM);
-            println("\" width=\"");
+            print("\" width=\"");
 
             if(guideWidth.length() > 0)
 				print(guideWidth);

@@ -38,7 +38,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  */
 public abstract class BasePropertyTag extends BaseActionFormElementTag{
     private String                   valueMap                 = "";
-    private ScopeType                valueMapScope            = null;
+    private String                   valueMapScope            = null;
     private Map                      valueMapInstance         = null;
 	private String                   onChange                 = "";
 	private String                   onKeyPress               = "";
@@ -76,19 +76,15 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     /**
      * Retorna o escopo de armazenamento do mapa de valores das opções de seleção.
      *
-     * @return String Instância que define o escopo de armazenamento.
+     * @return Constante que define o escopo de armazenamento.
      */
-    public ScopeType getValueMapScope(){
-        return valueMapScope;
-    }
-
-    /**
-     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
-     *
-     * @param valueMapScope Instância que define o escopo de armazenamento.
-     */
-    protected void setValueMapScope(ScopeType valueMapScope){
-        this.valueMapScope = valueMapScope;
+    public ScopeType getValueMapScopeType(){
+        try{
+            return ScopeType.valueOf(valueMapScope);
+        }
+        catch(Throwable e){
+            return null;
+        }
     }
 
     /**
@@ -97,10 +93,19 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
      * @param valueMapScope String que define o escopo de armazenamento.
      */
     public void setValueMapScope(String valueMapScope){
-        if(valueMapScope.length() > 0)
-            this.valueMapScope = ScopeType.valueOf(valueMapScope.toUpperCase());
+        this.valueMapScope = StringUtil.trim(valueMapScope).toUpperCase();
+    }
+
+    /**
+     * Define o escopo de armazenamento do mapa de valores das opções de seleção.
+     *
+     * @param valueMapScope Constante que define o escopo de armazenamento.
+     */
+    protected void setValueMapScopeType(ScopeType valueMapScope){
+        if(valueMapScope != null)
+            this.valueMapScope = valueMapScope.toString();
         else
-            this.valueMapScope = null;
+            this.valueMapScope = "";
     }
 
     /**
@@ -541,8 +546,10 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
         BaseActionForm form       = systemController.getActionForm(actionForm);
         
         if(valueMap.length() > 0 && valueMapScope != null){
+            ScopeType valueMapScope = getValueMapScopeType();
+
             if(!valueMap.startsWith(actionForm)){
-                StringBuilder propertyId = new StringBuilder();
+                StringBuilder propertyId    = new StringBuilder();
 
                 if(valueMapScope == ScopeType.FORM || valueMapScope == ScopeType.MODEL){
                     propertyId.append(actionForm);
@@ -604,7 +611,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	    }
 		
 		if(propertyInfo != null){
-		    AlignmentType alignment = getAlignment();
+		    AlignmentType alignment = getAlignmentType();
 		    
 			if(alignment == null){
 				if(propertyInfo.isNumber())
@@ -614,7 +621,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 				else
 				    alignment = AlignmentType.LEFT;
 				
-				setAlignment(alignment);
+				setAlignmentType(alignment);
 			}
 			
 			String onBlur          = getOnBlur();
@@ -817,7 +824,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
 			println("<tr>");
 			
-			PositionType labelPosition = getLabelPosition();
+			PositionType labelPosition = getLabelPositionType();
 			
 	        if(labelPosition == PositionType.LEFT)
 	            println("<td></td>");

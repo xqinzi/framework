@@ -270,8 +270,8 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	protected void initialize() throws Throwable{
         setComponentType(ComponentType.TREE_VIEW);
         
-        if(getLabelPosition() == null)
-            setLabelPosition(PositionType.TOP);
+        if(getLabelPositionType() == null)
+            setLabelPositionType(PositionType.TOP);
         
         if(nodeIconStyleClass.length() == 0)
             nodeIconStyleClass = TaglibConstants.DEFAULT_NODE_ICON_STYLE_CLASS;

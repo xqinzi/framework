@@ -9,6 +9,7 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.taglib.html.HtmlTag;
 
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.LanguageUtil;
@@ -24,12 +25,12 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class PageTag extends HtmlTag{
-    private   String           title                       = "";
-    private   String           encoding                    = "";
-	private   String           language                    = "";
-	private   String           resourceId                  = "";
-    protected SystemController systemController            = null;
-    protected PrintWriter      out                         = null;
+    private   String           title            = "";
+    private   String           encoding         = "";
+	private   String           language         = "";
+	private   String           resourceId       = "";
+    protected SystemController systemController = null;
+    protected PrintWriter      out              = null;
 
 	/**
 	 * Retorna o título da página.
@@ -135,7 +136,13 @@ public class PageTag extends HtmlTag{
  
         		out.println();
         		
-        		String encoding = getEncoding();
+        		String encoding = StringUtil.trim(getEncoding());
+        		
+        		if(encoding.length() == 0){
+        		    encoding = Constants.DEFAULT_ENCODING;
+        		    
+        		    setEncoding(encoding);
+        		}
 
         		if(encoding.length() > 0){
             		out.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=");

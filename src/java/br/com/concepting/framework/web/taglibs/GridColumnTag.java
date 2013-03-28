@@ -321,7 +321,7 @@ public class GridColumnTag extends BaseOptionsPropertyTag{
                     setResourceKey(resourceKey);
                 }
                 
-                ScopeType scopeType = gridTag.getDataScope();
+                ScopeType scopeType = gridTag.getDataScopeType();
                 
                 if(scopeType == ScopeType.FORM || scopeType == ScopeType.MODEL){
                     String         data         = gridTag.getData();

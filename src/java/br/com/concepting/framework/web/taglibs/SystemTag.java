@@ -10,14 +10,30 @@ import br.com.concepting.framework.security.resource.SecurityResource;
 import br.com.concepting.framework.security.resource.SecurityResourceLoader;
 import br.com.concepting.framework.web.taglibs.BaseTag;
 
+/**
+ * Classe que define o componente visual para inicialização da aplicação.
+ * 
+ * @author fvilarinho
+ * @since 1.0
+ */
 public class SystemTag extends BaseTag{
     private SystemResource   systemResource   = null;
     private SecurityResource securityResource = null;
 
+    /**
+     * Retorna a instância contendo as configurações da aplicação.
+     * 
+     * @return Instância contendo as configurações da aplicação.
+     */
     protected SystemResource getSystemResource(){
         return systemResource;
     }
 
+    /**
+     * Define a instância contendo as configurações da aplicação.
+     * 
+     * @param systemResource Instância contendo as configurações da aplicação.
+     */
     protected void setSystemResource(SystemResource systemResource){
         this.systemResource = systemResource;
     }

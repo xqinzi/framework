@@ -127,7 +127,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	        setComponentType(componentType);
 	    }
 	    
-	    PositionType labelPosition = getLabelPosition();
+	    PositionType labelPosition = getLabelPositionType();
 
 		if(labelPosition == PositionType.TOP && componentType != ComponentType.LIST){
 		    String labelStyleClass = getLabelStyleClass();
@@ -156,7 +156,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	protected void renderOpen() throws Throwable{
 		Boolean       showLabel     = showLabel();
 		ComponentType componentType = getComponentType();
-		PositionType  labelPosition = getLabelPosition();
+		PositionType  labelPosition = getLabelPositionType();
 		
 		if(labelPosition == PositionType.TOP && componentType != ComponentType.LIST)
 			setShowLabel(false);
@@ -221,7 +221,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 */
 	protected void renderLabelOpen() throws Throwable{
         if(getComponentType() != ComponentType.LIST){
-			if(getLabelPosition() == PositionType.TOP){
+			if(getLabelPositionType() == PositionType.TOP){
 				print("<legend");
 				
 				String labelStyleClass = getLabelStyleClass();
@@ -254,7 +254,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 */
 	protected void renderLabelClose() throws Throwable{
         if(getComponentType() != ComponentType.LIST){
-			if(getLabelPosition() == PositionType.TOP)
+			if(getLabelPositionType() == PositionType.TOP)
 				println("</legend>");
 			else
 				super.renderLabelClose();
@@ -380,7 +380,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     			optionTag.setPageContext(pageContext);
     			optionTag.setName(getName());
     			optionTag.setLabel(optionTagLabel.toString());
-                optionTag.setLabelPosition(PositionType.RIGHT);
+                optionTag.setLabelPositionType(PositionType.RIGHT);
                 
                 if(optionState != null){
                     optionTag.setLabelStyle(optionState.getStyle());

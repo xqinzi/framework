@@ -9,6 +9,7 @@ import org.hibernate.collection.AbstractPersistentCollection;
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.processors.ExpressionProcessor;
+import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -19,7 +20,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  */
 public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     private String               data                = "";
-	private ScopeType            dataScope           = null;
+	private String               dataScope           = "";
 	private List                 dataValues          = null;
 	private Integer              dataStartIndex      = 0;
 	private Integer              dataEndIndex        = 0;
@@ -125,22 +126,27 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     	this.data = data;
     }
 
-	/**
-	 * Retorna o escopo de armazenamento da lista de opções de seleção.
-	 *
-	 * @return Instância que define o escopo de armazenamento.
-	 */
-	public ScopeType getDataScope(){
-    	return dataScope;
+    /**
+     * Retorna o escopo de armazenamento da lista de opções de seleção.
+     *
+     * @return String que define o escopo de armazenamento.
+     */
+    public String getDataScope(){
+        return dataScope;
     }
 
-	/**
-	 * Define o escopo de armazenamento da lista de opções de seleção.
+    /**
+	 * Retorna o escopo de armazenamento da lista de opções de seleção.
 	 *
-	 * @param dataScope Instância que define o escopo de armazenamento.
+	 * @return Constante que define o escopo de armazenamento.
 	 */
-	protected void setDataScope(ScopeType dataScope){
-    	this.dataScope = dataScope;
+	protected ScopeType getDataScopeType(){
+	    try{
+	        return ScopeType.valueOf(dataScope);
+	    }
+	    catch(Throwable e){
+	        return null;
+	    }
     }
 
     /**
@@ -149,10 +155,19 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
      * @param dataScope String que define o escopo de armazenamento.
      */
     public void setDataScope(String dataScope){
-        if(dataScope.length() > 0)
-            this.dataScope = ScopeType.valueOf(dataScope.toUpperCase());
-        else
-            this.dataScope = null;
+        this.dataScope = StringUtil.trim(dataScope).toUpperCase();
+    }
+
+	/**
+	 * Define o escopo de armazenamento da lista de opções de seleção.
+	 *
+	 * @param dataScope Constante que define o escopo de armazenamento.
+	 */
+	protected void setDataScopeType(ScopeType dataScope){
+	    if(dataScope != null)
+	        this.dataScope = dataScope.toString();
+	    else
+	        this.dataScope = "";
     }
 
     /**
@@ -276,6 +291,8 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 
         if(dataValues == null || dataValues.size() == 0){
     		if(data.length() > 0 && dataScope != null){
+    		    ScopeType dataScope = getDataScopeType();
+    		    
     			if(!data.startsWith(actionForm)){
         			StringBuilder propertyId = new StringBuilder();
         			

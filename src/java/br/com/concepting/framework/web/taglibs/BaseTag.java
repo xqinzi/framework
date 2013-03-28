@@ -50,7 +50,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
      * 
      * @return Constante que define o tipo do componente.
      */
-	public ComponentType getComponentType(){
+	protected ComponentType getComponentType(){
         return componentType;
     }
 
@@ -59,7 +59,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
      * 
      * @param componentType Constante que define o tipo do componente.
      */
-    public void setComponentType(ComponentType componentType){
+    protected void setComponentType(ComponentType componentType){
         this.componentType = componentType;
     }
 

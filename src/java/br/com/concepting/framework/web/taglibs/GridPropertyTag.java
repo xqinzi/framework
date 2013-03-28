@@ -917,7 +917,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     						    columnWidth            = columnTag.getWidth();
     						    columnLink             = columnTag.getLink();
                                 columnData             = columnTag.getData();
-                                columnDataScope        = columnTag.getDataScope();
+                                columnDataScope        = columnTag.getDataScopeType();
                                 columnOnBlur           = columnTag.getOnBlur();
                                 columnOnFocus          = columnTag.getOnFocus();
                                 columnOnChange         = columnTag.getOnChange();
@@ -1047,7 +1047,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     										columnData = columnStateTag.getData();
     									
     									if(columnStateTag.getDataScope() != null)
-    										columnDataScope = columnStateTag.getDataScope();
+    										columnDataScope = columnStateTag.getDataScopeType();
 
     									if(columnStateTag.getValue() != null){
     										try{
@@ -1126,7 +1126,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         							}
         
         							if(columnPropertyInfo != null || columnValue != null){
-        								columnAlignment = columnTag.getAlignment();
+        								columnAlignment = columnTag.getAlignmentType();
         							
         								if(columnPropertyInfo != null){
             								if(columnPropertyInfo.isNumber())
@@ -1263,12 +1263,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         											editableDataColumnTag.setEnabled(columnEditable);
         										else if(editableDataColumnTag instanceof ListPropertyTag){
         											((ListPropertyTag)editableDataColumnTag).setData(columnData);
-        											((ListPropertyTag)editableDataColumnTag).setDataScope(columnDataScope);
+        											((ListPropertyTag)editableDataColumnTag).setDataScopeType(columnDataScope);
         											((ListPropertyTag)editableDataColumnTag).setSize(columnSize);
         											((ListPropertyTag)editableDataColumnTag).setValueMapInstance(columnValueMapInstance);
         										}
         										else if(editableDataColumnTag instanceof TextPropertyTag){
-    												((TextPropertyTag)editableDataColumnTag).setAlignment(columnAlignment);
+    												((TextPropertyTag)editableDataColumnTag).setAlignment(columnAlignment.toString());
         											((TextPropertyTag)editableDataColumnTag).setSize(columnSize);
         										}
 
@@ -1512,7 +1512,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     						currentColumnGroupName      = StringUtil.trim(columnGroup.getName());
     						currentColumnGroupLabel     = StringUtil.trim(columnGroup.getLabel());
     						currentColumnGroupTooltip   = columnGroup.getTooltip();
-    						currentColumnGroupAlignment = columnGroup.getAlignment();
+    						currentColumnGroupAlignment = columnGroup.getAlignmentType();
     					}
     					
         				if(!currentColumnGroupName.equals(columnGroup.getName())){
@@ -1558,7 +1558,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                             currentColumnGroupName      = StringUtil.trim(columnGroup.getName());
                             currentColumnGroupLabel     = columnGroup.getLabel();
                             currentColumnGroupTooltip   = columnGroup.getTooltip();
-                            currentColumnGroupAlignment = columnGroup.getAlignment();
+                            currentColumnGroupAlignment = columnGroup.getAlignmentType();
         					columnsInGroup              = 0;
         				}
     
@@ -1732,7 +1732,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			for(GridColumnTag columnTag : columnsTags){
 			    columnName      = columnTag.getName();
                 columnWidth     = columnTag.getWidth();
-                columnAlignment = columnTag.getAlignment();
+                columnAlignment = columnTag.getAlignmentType();
 			    columnLabel     = StringUtil.trim(columnTag.getLabel());
                 columnTooltip   = StringUtil.trim(columnTag.getTooltip());
 			    

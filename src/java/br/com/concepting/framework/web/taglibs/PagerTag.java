@@ -705,7 +705,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
 			setShowLabel(pagerTag.showItemsPerPageLabel());
 			setSize(TaglibConstants.DEFAULT_PAGER_ITEMS_PER_PAGE_SIZE);
 			setMaxlength(TaglibConstants.DEFAULT_PAGER_ITEMS_PER_PAGE_SIZE);
-			setAlignment(AlignmentType.RIGHT);
+			setAlignment(AlignmentType.RIGHT.toString());
 			
 			Pager   pager        = pagerTag.getPager();
 			Integer itemsPerPage = pager.getItemsPerPage();

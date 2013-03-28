@@ -25,13 +25,13 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 2.0
  */
 public abstract class BaseActionFormElementTag extends BaseTag{
-    private   AlignmentType               alignment                   = null;
+    private   String                      alignment                   = "";
 	private   String                      label                       = null;
 	private   String                      labelStyleClass             = "";
 	private   String                      labelStyle                  = "";
-	private   AlignmentType               labelAlignment              = null;
-	private   AlignmentType               labelVerticalAlignment      = null;
-	private   PositionType                labelPosition               = null;
+	private   String                      labelAlignment              = "";
+	private   String                      labelVerticalAlignment      = "";
+	private   String                      labelPosition               = "";
 	private   Boolean                     showLabel                   = true;
 	private   String                      actionForm                  = "";
     private   ActionFormTag               actionFormTag               = null;
@@ -68,51 +68,70 @@ public abstract class BaseActionFormElementTag extends BaseTag{
     }
 
     /**
-     * Retorna o alinhamento do componente.
+     * Retorna o tipo de alinhamento do componente.
      * 
-     * @return Constante que define o alinhamento do componente.
+     * @return String que define o tipo de alinhamento do componente.
      */
-    public AlignmentType getAlignment(){
+    public String getAlignment(){
         return alignment;
-    }
-
-    /**
-     * Define o alinhamento do componente.
-     * 
-     * @param alignment Constante que define o alinhamento do componente.
-     */
-    protected void setAlignment(AlignmentType alignment){
-        this.alignment = alignment;
     }
     
     /**
-     * Define o alinhamento do componente.
+     * Retorna a tipo de alinhamento do componente.
      * 
-     * @param alignment String que define o alinhamento do componente.
+     * @return Constante que define o alinhamento do componente.
+     */
+    protected AlignmentType getAlignmentType(){
+        try{
+            return AlignmentType.valueOf(alignment);
+        }
+        catch(Throwable e){
+            return null;
+        }
+    }
+    
+    /**
+     * Define o tipo de alinhamento do componente.
+     * 
+     * @param alignment String que define o tipo de alinhamento do componente.
      */
     public void setAlignment(String alignment){
-        if(alignment.length() > 0)
-            this.alignment = AlignmentType.valueOf(alignment.toUpperCase());
+        this.alignment = alignment;
+    }
+
+    /**
+     * Define o tipo de alinhamento do componente.
+     * 
+     * @param alignment Constante que define o tipo de alinhamento do componente.
+     */
+    protected void setAlignmentType(AlignmentType alignment){
+        if(alignment != null)
+            this.alignment = alignment.toString();
         else
-            this.alignment = null;
+            this.alignment = "";
     }
 
     /**
      * Retorna o tipo de alinhamento do label do componente.
      * 
-     * @return Constante que define o tipo de alinhamento.
+     * @return String que define o tipo de alinhamento.
      */
-    public AlignmentType getLabelAlignment(){
+    public String getLabelAlignment(){
         return labelAlignment;
     }
-
+    
     /**
-     * Define o tipo de alinhamento do label do componente.
+     * Retorna o tipo de alinhamento do label do componente.
      * 
-     * @param labelAlignment Constante que define o tipo de alinhamento.
+     * @return Constante que define o tipo de alinhamento.
      */
-    protected void setLabelAlignment(AlignmentType labelAlignment){
-        this.labelAlignment = labelAlignment;
+    protected AlignmentType getLabelAlignmentType(){
+        try{
+            return AlignmentType.valueOf(labelAlignment);
+        }
+        catch(Throwable e){
+            return null;
+        }
     }
 
     /**
@@ -121,10 +140,28 @@ public abstract class BaseActionFormElementTag extends BaseTag{
      * @param labelAlignment String que define o tipo de alinhamento.
      */
     public void setLabelAlignment(String labelAlignment){
-        if(labelAlignment.length() > 0)
-            this.labelAlignment = AlignmentType.valueOf(labelAlignment.toUpperCase());
+        this.labelAlignment = StringUtil.trim(labelAlignment).toUpperCase();
+    }
+
+    /**
+     * Define o tipo de alinhamento do label do componente.
+     * 
+     * @param labelAlignment Constante que define o tipo de alinhamento.
+     */
+    protected void setLabelAlignmentType(AlignmentType labelAlignment){
+        if(labelAlignment != null)
+            this.labelAlignment = labelAlignment.toString();
         else
-            this.labelAlignment = null;
+            this.labelAlignment = "";
+    }
+
+    /**
+     * Retorna o tipo de alinhamento vertical do label do componente.
+     * 
+     * @return String que define o tipo de alinhamento vertical.
+     */
+    public String getLabelVerticalAlignment(){
+        return labelVerticalAlignment;
     }
 
     /**
@@ -132,17 +169,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
      * 
      * @return Constante que define o tipo de alinhamento vertical.
      */
-    public AlignmentType getLabelVerticalAlignment(){
-        return labelVerticalAlignment;
-    }
-
-    /**
-     * Define o tipo de alinhamento vertical do label do componente.
-     * 
-     * @param labelAlignment Constante que define o tipo de alinhamento vertical.
-     */
-    protected void setLabelVerticalAlignment(AlignmentType labelVerticalAlignment){
-        this.labelAlignment = labelVerticalAlignment;
+    protected AlignmentType getLabelVerticalAlignmentType(){
+        try{
+            return AlignmentType.valueOf(labelVerticalAlignment);
+        }
+        catch(Throwable e){
+            return null;
+        }
     }
 
     /**
@@ -151,10 +184,19 @@ public abstract class BaseActionFormElementTag extends BaseTag{
      * @param labelVerticalAlignment String que define o tipo de alinhamento vertical.
      */
     public void setLabelVerticalAlignment(String labelVerticalAlignment){
-        if(labelVerticalAlignment.length() > 0)
-            this.labelVerticalAlignment = AlignmentType.valueOf(labelVerticalAlignment.toUpperCase());
+        this.labelVerticalAlignment = StringUtil.trim(labelVerticalAlignment).toUpperCase();
+    }
+
+    /**
+     * Define o tipo de alinhamento vertical do label do componente.
+     * 
+     * @param labelAlignment Constante que define o tipo de alinhamento vertical.
+     */
+    protected void setLabelVerticalAlignment(AlignmentType labelVerticalAlignment){
+        if(labelVerticalAlignment != null)
+            this.labelVerticalAlignment = labelVerticalAlignment.toString();
         else
-            this.labelVerticalAlignment = null;
+            this.labelVerticalAlignment = ""; 
     }
 
     /**
@@ -209,31 +251,45 @@ public abstract class BaseActionFormElementTag extends BaseTag{
     /**
      * Retorna a posição do label do componente.
      * 
+     * @return String que define a posição do label.
+     */
+	public String getLabelPosition(){
+	    return labelPosition;
+	}
+	
+    /**
+     * Retorna a posição do label do componente.
+     * 
      * @return Constante que define a posição do label.
      */
-	public PositionType getLabelPosition(){
-		return labelPosition;
+	protected PositionType getLabelPositionType(){
+        try{
+            return PositionType.valueOf(labelPosition);
+        }
+        catch(Throwable e){
+            return null;
+        }
 	}
+
+	/**
+     * Define a posição do label do componente.
+     * 
+     * @param labelPosition String contendo a posição do label.
+     */
+    public void setLabelPosition(String labelPosition){
+        this.labelPosition = StringUtil.trim(labelPosition).toUpperCase();
+    }
 
     /**
      * Define a posição do label do componente.
      * 
      * @param labelPosition Constante que define a posição do label.
      */
-	protected void setLabelPosition(PositionType labelPosition){
-		this.labelPosition = labelPosition;
-	}
-
-	/**
-	 * Define a posição do label do componente.
-	 * 
-	 * @param labelPosition String contendo a posição do label.
-	 */
-	public void setLabelPosition(String labelPosition){
-	    if(labelPosition.length() > 0)
-	        this.labelPosition = PositionType.valueOf(labelPosition.toUpperCase());
+	protected void setLabelPositionType(PositionType labelPosition){
+	    if(labelPosition != null)
+	        this.labelPosition = labelPosition.toString();
 	    else
-	        this.labelPosition = null;
+	        this.labelPosition = "";
 	}
 
 	/**
@@ -308,7 +364,6 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		this.labelStyle = labelStyle;
 	}
 
-
 	/**
 	 * Indica se o usuário autenticado possui permissão de visualizar o componente.
 	 * 
@@ -331,8 +386,15 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-		if(labelPosition == null)
+	    PositionType labelPosition = getLabelPositionType();
+	    
+		if(labelPosition == null){
 		    labelPosition = PositionType.LEFT;
+		    
+		    setLabelPositionType(labelPosition);
+		}
+		
+		AlignmentType labelAlignment = getLabelAlignmentType();
 		
         if(labelAlignment == null){
             if(labelPosition == PositionType.TOP || labelPosition == PositionType.BOTTOM)
@@ -341,6 +403,8 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 labelAlignment = AlignmentType.RIGHT;
             else if(labelPosition == PositionType.RIGHT)
                 labelAlignment = AlignmentType.LEFT;
+            
+            setLabelAlignmentType(labelAlignment);
         }
         
         ActionFormTag actionFormTag = getActionFormTag();
@@ -569,6 +633,8 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		
 		println("<tr>");
 		
+		PositionType labelPosition = getLabelPositionType();
+		
 		if(labelPosition == PositionType.LEFT || labelPosition == PositionType.TOP){
 			renderLabel();
 			
@@ -601,6 +667,8 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	 */
 	protected void renderClose() throws Throwable{
 		println("</td>");
+
+		PositionType labelPosition = getLabelPositionType();
 		
 		if(labelPosition == PositionType.RIGHT || labelPosition == PositionType.BOTTOM){
             if(labelPosition == PositionType.BOTTOM){

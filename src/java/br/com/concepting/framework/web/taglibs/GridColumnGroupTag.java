@@ -34,7 +34,7 @@ public class GridColumnGroupTag extends GridColumnTag{
 	 */
 	protected void initialize() throws Throwable{
 	    if(getAlignment() == null)
-	        setAlignment(AlignmentType.CENTER);
+	        setAlignment(AlignmentType.CENTER.toString());
 	    
 	    super.initialize();
 	}

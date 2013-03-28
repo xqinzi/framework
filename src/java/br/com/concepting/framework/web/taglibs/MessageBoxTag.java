@@ -27,11 +27,11 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class MessageBoxTag extends DialogBoxTag{
-    private ActionFormMessageType type          = null;
-    private Boolean               showException = false;
-	private String                message       = "";
-	private Collection<String>    messages      = null;
-	private Throwable             exception     = null;
+    private String             type          = "";
+    private Boolean            showException = false;
+	private String             message       = "";
+	private Collection<String> messages      = null;
+	private Throwable          exception     = null;
     
     /**
      * Retorna o tipo do componente.
@@ -39,7 +39,12 @@ public class MessageBoxTag extends DialogBoxTag{
      * @return Constante que define o tipo do componente.
      */
     public ActionFormMessageType getType(){
-        return type;
+        try{
+            return ActionFormMessageType.valueOf(type);
+        }
+        catch(Throwable e){
+            return null;
+        }
     }
 
     /**
@@ -48,7 +53,10 @@ public class MessageBoxTag extends DialogBoxTag{
      * @param type Constante que define o tipo do componente.
      */
     protected void setType(ActionFormMessageType type){
-        this.type = type;
+        if(type != null)
+            this.type = type.toString();
+        else
+            this.type = "";
     }
   
     /**
@@ -57,10 +65,7 @@ public class MessageBoxTag extends DialogBoxTag{
      * @param type String contendo o tipo do componente.
      */
     public void setType(String type){
-        if(type.length() > 0)
-            this.type = ActionFormMessageType.valueOf(type.toUpperCase());
-        else
-            this.type = ActionFormMessageType.INFO;
+        this.type = StringUtil.trim(type).toUpperCase();
     }
 
     /**
@@ -163,18 +168,19 @@ public class MessageBoxTag extends DialogBoxTag{
             setName(propertyId.toString());
         }
 
-        if(showException()){
-			exception = systemController.getCurrentException();
+        exception = systemController.getCurrentException();
 
-			try{
-				if(exception == null)
-					exception = pageContext.getException();
-			}
-			catch(Throwable e){
-				exception = e;
-			}
+        try{
+            if(exception == null)
+                exception = pageContext.getException();
+        }
+        catch(Throwable e){
+            exception = e;
+        }
+
+        if(showException()){
 			
-			type = ActionFormMessageType.ERROR;
+			setType(ActionFormMessageType.ERROR);
 
 			if(exception != null){
 			    message = ExceptionUtil.getTrace(exception); 
@@ -185,65 +191,68 @@ public class MessageBoxTag extends DialogBoxTag{
 			}
 		}
 		else{
-            messages = new LinkedList<String>();
-
-            String resourceKey = getResourceKey();
-
-            if(resourceKey.length() == 0 && message.length() == 0){
-	            ActionMessages actionFormMessages = actionFormMessageController.getMessages(type);
-			
-	            if(actionFormMessages != null && actionFormMessages.size() > 0){
-	                Locale                      currentLanguage      = systemController.getCurrentLanguage();
-	                Iterator<ActionFormMessage> iterator             = actionFormMessages.get();
-	                ActionFormMessage           actionFormMessage    = null;
-	                
-	                while(iterator.hasNext()){
-	                    actionFormMessage = iterator.next();
-	                    
-	                    if(!actionFormMessage.displayed()){
-                            if(propertyId == null)
-                                propertyId = new StringBuilder();
-                            else
-                                propertyId.delete(0, propertyId.length());
-                            
-                            propertyId.append(actionFormMessage.getType().toString().toLowerCase());
-                            propertyId.append(".");
-                            propertyId.append(actionFormMessage.getKey());
+		    if(exception == null){
+                messages = new LinkedList<String>();
     
-    						message = defaultResources.getProperty(propertyId.toString(), false);
-        					
-        					if(message == null)
-        					    if(resources != null)
-        					        message = StringUtil.trim(resources.getProperty(propertyId.toString()));
-        					
-        					message = PropertyUtil.fillPropertiesInString(actionFormMessage, message, currentLanguage);
-        					message = ActionFormMessageUtil.fillAttributesInString(actionFormMessage, message, currentLanguage);
+                String resourceKey = getResourceKey();
+    
+                if(resourceKey.length() == 0 && message.length() == 0){
+                    ActionFormMessageType actionFormMessageType = getType();   
+    	            ActionMessages        actionFormMessages    = actionFormMessageController.getMessages(actionFormMessageType);
+    			
+    	            if(actionFormMessages != null && actionFormMessages.size() > 0){
+    	                Locale                      currentLanguage      = systemController.getCurrentLanguage();
+    	                Iterator<ActionFormMessage> iterator             = actionFormMessages.get();
+    	                ActionFormMessage           actionFormMessage    = null;
+    	                
+    	                while(iterator.hasNext()){
+    	                    actionFormMessage = iterator.next();
+    	                    
+    	                    if(!actionFormMessage.displayed()){
+                                if(propertyId == null)
+                                    propertyId = new StringBuilder();
+                                else
+                                    propertyId.delete(0, propertyId.length());
+                                
+                                propertyId.append(actionFormMessage.getType().toString().toLowerCase());
+                                propertyId.append(".");
+                                propertyId.append(actionFormMessage.getKey());
         
-        					if(!messages.contains(message))
-        						messages.add(message);
-        					
-        					actionFormMessage.setDisplayed(true);
-	                    }
-	                }
-	                
-	                actionFormMessageController.clearMessages(type);
-	            }
-	        }
-	        else if(resourceKey.length() > 0 && message.length() == 0){
-    		    propertyId.delete(0, propertyId.length());
-    			propertyId.append(type.toString().toLowerCase());
-    			propertyId.append(".");
-    			propertyId.append(resourceKey);
-			
-    			if(resources != null)
-    			    message = resources.getProperty(propertyId.toString(), false);
-			
-    			if(message == null)
-    			    message = StringUtil.trim(defaultResources.getProperty(propertyId.toString()));
-	        }
-
-            if(!messages.contains(message) && message.length() > 0)
-                messages.add(message);
+        						message = defaultResources.getProperty(propertyId.toString(), false);
+            					
+            					if(message == null)
+            					    if(resources != null)
+            					        message = StringUtil.trim(resources.getProperty(propertyId.toString()));
+            					
+            					message = PropertyUtil.fillPropertiesInString(actionFormMessage, message, currentLanguage);
+            					message = ActionFormMessageUtil.fillAttributesInString(actionFormMessage, message, currentLanguage);
+            
+            					if(!messages.contains(message))
+            						messages.add(message);
+            					
+            					actionFormMessage.setDisplayed(true);
+    	                    }
+    	                }
+    	                
+    	                actionFormMessageController.clearMessages(actionFormMessageType);
+    	            }
+    	        }
+    	        else if(resourceKey.length() > 0 && message.length() == 0){
+        		    propertyId.delete(0, propertyId.length());
+        			propertyId.append(type.toString().toLowerCase());
+        			propertyId.append(".");
+        			propertyId.append(resourceKey);
+    			
+        			if(resources != null)
+        			    message = resources.getProperty(propertyId.toString(), false);
+    			
+        			if(message == null)
+        			    message = StringUtil.trim(defaultResources.getProperty(propertyId.toString()));
+    	        }
+    
+                if(!messages.contains(message) && message.length() > 0)
+                    messages.add(message);
+		    }
 		}
         
         String title = getTitle();
@@ -385,10 +394,8 @@ public class MessageBoxTag extends DialogBoxTag{
         
         content.append("addLoadEvent(centralizeDialogBoxes);");
         content.append(StringUtil.getLineBreak());
-        content.append(";");
         content.append("addResizeEvent(centralizeDialogBoxes);");
         content.append(StringUtil.getLineBreak());
-        content.append(";");
         
         ScriptTag scriptTag = new ScriptTag();
         

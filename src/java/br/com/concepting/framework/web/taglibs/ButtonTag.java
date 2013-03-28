@@ -16,16 +16,16 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class ButtonTag extends BaseActionFormElementTag{
-	private String          action             = "";
-	private String          forward            = "";
-	private String          forwardOnFail      = "";
-    private String          iconStyleClass     = "";
-    private String          iconStyle          = "";
-    private String          iconUrl            = "";
-    private PagerActionType pagerAction        = null;
-    private String          updateViews        = "";
-	private Boolean         validate           = false;
-	private String          validateProperties = "";
+	private String  action             = "";
+	private String  forward            = "";
+	private String  forwardOnFail      = "";
+    private String  iconStyleClass     = "";
+    private String  iconStyle          = "";
+    private String  iconUrl            = "";
+    private String  pagerAction        = "";
+    private String  updateViews        = "";
+	private Boolean validate           = false;
+	private String  validateProperties = "";
 	
 	/**
 	 * Indica se possui ação definida.
@@ -71,7 +71,12 @@ public class ButtonTag extends BaseActionFormElementTag{
      * @return Constante que define a ação de paginação.
      */
 	public PagerActionType getPagerAction(){
-     	return pagerAction;
+	    try{
+	        return PagerActionType.valueOf(pagerAction);
+	    }
+	    catch(Throwable e){
+	        return null;
+	    }
     }
 
     /**
@@ -80,7 +85,10 @@ public class ButtonTag extends BaseActionFormElementTag{
      * @param pagerAction Constante que define a ação de paginação.
      */
 	protected void setPagerAction(PagerActionType pagerAction){
-     	this.pagerAction = pagerAction;
+	    if(pagerAction != null)
+	        this.pagerAction = pagerAction.toString();
+	    else
+	        this.pagerAction = "";
     }
 	
     /**
@@ -89,10 +97,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      * @param pagerAction String que define a ação de paginação.
      */
 	public void setPagerAction(String pagerAction){
-	    if(pagerAction.length() > 0)
-	        this.pagerAction = PagerActionType.valueOf(pagerAction.toUpperCase());
-	    else
-	        this.pagerAction = null; 
+	    this.pagerAction = StringUtil.trim(pagerAction).toUpperCase();
 	}
 
     /**
@@ -296,7 +301,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 
 			println("</td>");
 			
-			if(getLabelPosition() == PositionType.BOTTOM){
+			if(getLabelPositionType() == PositionType.BOTTOM){
 				println("</tr>");
 				println("<tr>");
 			}
@@ -309,7 +314,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 	protected void renderLabel() throws Throwable{
 	    super.renderLabel();
 		
-		if(getLabelPosition() == PositionType.TOP){
+		if(getLabelPositionType() == PositionType.TOP){
 		    println("</tr>");
 		    println("<tr>");
 		}
@@ -334,12 +339,12 @@ public class ButtonTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderBody()
 	 */
 	protected void renderBody() throws Throwable{
-        print("<table class\"");
+        print("<table class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
 		println("<tr>");
 
-		PositionType labelPosition = getLabelPosition();
+		PositionType labelPosition = getLabelPositionType();
 		
 		if(labelPosition == PositionType.LEFT || labelPosition == PositionType.TOP){
             renderLabel();
@@ -368,15 +373,15 @@ public class ButtonTag extends BaseActionFormElementTag{
 	    if(getComponentType() == null)
 	        setComponentType(ComponentType.BUTTON);
 
-	    PositionType labelPosition = getLabelPosition();
+	    PositionType labelPosition = getLabelPositionType();
 	    
         if(labelPosition == null){
             labelPosition = PositionType.RIGHT;
             
-            setLabelPosition(labelPosition);
+            setLabelPositionType(labelPosition);
         }
         
-        AlignmentType labelAlignment = getLabelAlignment();
+        AlignmentType labelAlignment = getLabelAlignmentType();
 	    
 	    if(labelAlignment == null){
     	    if(labelPosition == PositionType.TOP || labelPosition == PositionType.BOTTOM)
@@ -386,7 +391,7 @@ public class ButtonTag extends BaseActionFormElementTag{
             else if(labelPosition == PositionType.RIGHT)
                 labelAlignment = AlignmentType.LEFT;
     	    
-    	    setLabelAlignment(labelAlignment);
+    	    setLabelAlignmentType(labelAlignment);
 	    }
 
 		String name  = getName();
