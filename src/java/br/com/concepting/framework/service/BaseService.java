@@ -16,7 +16,9 @@ import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.resource.PersistenceResourceLoader;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
+import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
+import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceUtil;
  
 /**
@@ -37,6 +39,32 @@ public abstract class BaseService implements IService{
         }
         catch(InternalErrorException e){
         }
+    }
+    
+    /**
+     * Indica se a classe de serviço irá gerenciar transações.
+     *
+     * @return True/False.
+     */
+    private Boolean useTransaction(){
+        if(this instanceof BaseRemoteService)
+            return false;
+        
+        Class   serviceClass = getClass();
+        Class   interfaces[] = serviceClass.getInterfaces();
+        Service annotation   = null;
+
+        for(Class interfaceItem : interfaces){
+            annotation = (Service)interfaceItem.getAnnotation(Service.class);
+            
+            if(annotation != null)
+                break;
+        }
+
+        if(annotation == null || (annotation != null && annotation.type() != ServiceType.CLASS && annotation.type() != ServiceType.WEB_SERVICE))
+            return false;
+
+        return true;
     }
 
     /**
@@ -84,7 +112,7 @@ public abstract class BaseService implements IService{
      * @throws InternalErrorException
      */
     protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
-        return getPersistence(modelClass, true);
+        return getPersistence(modelClass, useTransaction());
     }
 
 	/**
@@ -143,7 +171,7 @@ public abstract class BaseService implements IService{
      * @throws InternalErrorException
      */
     protected <D extends IDAO, M extends BaseModel> D getPersistence() throws InternalErrorException{
-        return getPersistence(true);
+        return getPersistence(useTransaction());
     }
 
     /**
