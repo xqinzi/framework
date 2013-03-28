@@ -35,7 +35,8 @@ public abstract class BaseService implements IService{
      */
     public void initialize(){
         try{
-            currentPersistence = getPersistence(false);
+            if(currentPersistence != null)
+                currentPersistence = getPersistence(false);
         }
         catch(InternalErrorException e){
         }
