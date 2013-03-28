@@ -17,7 +17,7 @@ import br.com.concepting.framework.persistence.types.RelationType;
  * @author fvilarinho
  * @since 1.0
  */
-@Model
+@Model(descriptionPattern="#{title} - #{version}")
 public class SystemModuleModel extends BaseModel{
 	@Property(isIdentity = true, isForSearch = true)
 	private Integer id = null;
