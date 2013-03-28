@@ -206,7 +206,8 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                     throw new PasswordWillExpireException(daysUntilExpire);
             }
             finally{
-                userDao.update(user);
+                if(user.getId() != null && user.getId() > 0)
+                    userDao.update(user);
                 
                 loginSession.setUser(user);
             }
