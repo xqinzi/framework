@@ -5,10 +5,6 @@ import br.com.concepting.framework.caching.Cacher;
 import br.com.concepting.framework.caching.CacherManager;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
-import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
-import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
-import br.com.concepting.framework.persistence.interfaces.IDAO;
-import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.util.StringUtil;
@@ -21,111 +17,49 @@ import br.com.concepting.framework.util.StringUtil;
  */
 public class ServiceUtil{
     /**
-     * Define as propriedades da sessão de login vinculada a uma classe de serviço.
+     * Retorna a instância da sessão de login referenciada na classe de serviço.
      * 
-     * @param loginSession Instância contendo as propriedades da sessão de login.
-     * @param service Instância da classe de serviço desejado.
+     * @param service Instância da classe de serviço.
+     * @return Instância da sessão de login.
      */
-    public static <S extends IService, L extends LoginSessionModel> void setLoginSession(L loginSession, S service){
+    public static <L extends LoginSessionModel, S extends IService> L getLoginSession(S service){
+        try{
+            Cacher       cacher = CacherManager.getInstance().getCacher(ServiceUtil.class.getName());
+            CachedObject object = cacher.get(service.toString());
+            
+            return (L)object.getContent();
+        }
+        catch(Throwable e){
+            return null;
+        }
+    }
+    
+    /**
+     * Define a instância da sessão de login referenciada na classe de serviço.
+     * 
+     * @param loginSession Instância da sessão de login.
+     * @param service Instância da classe de serviço.
+     */
+    public static <L extends LoginSessionModel, S extends IService> void setLoginSession(L loginSession, S service){
         if(service != null){
+            Cacher       cacher = CacherManager.getInstance().getCacher(ServiceUtil.class.getName());
             CachedObject object = new CachedObject();
             
-            object.setId(SecurityConstants.LOGIN_SESSION_KEY);
-            
-            Cacher cacher = CacherManager.getInstance().getCacher(service.toString());
-
-            try{
-                cacher.remove(object);
-            }
-            catch(ItemNotFoundException e){
-            }
-
+            object.setId(service.toString());
             object.setContent(loginSession);
-        
-            try{
-                cacher.add(object);
-            }
-            catch(ItemAlreadyExistsException e){
-            }
-        }
-    }
-    
-    /**
-     * Retorna as propriedades da sessão de login vinculada a uma classe de serviço.
-     * 
-     * @param service Instância da classe de serviço desejado.
-     * @return Instância contendo as propriedades da sessão de login.
-     */
-    public static <S extends IService, L extends LoginSessionModel> L getLoginSession(S service){
-        L loginSession = null;
-        
-        if(service != null){
-            CachedObject object = null;
-            Cacher       cacher = CacherManager.getInstance().getCacher(service.toString());
-        
-            try{
-                object       = cacher.get(SecurityConstants.LOGIN_SESSION_KEY);
-                loginSession = object.getContent();
-            }
-            catch(ItemNotFoundException e){
-            }
-        }
-        
-        return loginSession;
-    }
-    
-    /**
-     * Define a classe de persistência atual vinculada a uma classe de serviço.
-     * 
-     * @param currentPersistence Instância da classe de persistência desejada.
-     * @param service Instância da classe de serviço desejada.
-     */
-    public static <S extends IService, D extends IDAO> void setCurrentPersistence(D currentPersistence, S service){
-        if(service != null){
-            CachedObject object = new CachedObject();
             
-            object.setId(service.getClass().getName());
-            
-            Cacher cacher = CacherManager.getInstance().getCacher(service.toString());
-
             try{
                 cacher.remove(object);
             }
-            catch(ItemNotFoundException e){
+            catch(Throwable e){
             }
-
-            object.setContent(currentPersistence);
-        
+            
             try{
                 cacher.add(object);
             }
-            catch(ItemAlreadyExistsException e){
+            catch(Throwable e){
             }
         }
-    }
-    
-    /**
-     * Retorna a classe de persistência atual vinculada a uma classe de serviço.
-     * 
-     * @param service Instância da classe de serviço desejada.
-     * @return Instância da classe de persistência vinculada.
-     */
-    public static <S extends IService, D extends IDAO> D getCurrentPersistence(S service){
-        D dao = null;
-        
-        if(service != null){
-            CachedObject object = null;
-            Cacher       cacher = CacherManager.getInstance().getCacher(service.toString());
-        
-            try{
-                object = cacher.get(service.getClass().getName());
-                dao    = object.getContent();
-            }
-            catch(ItemNotFoundException e){
-            }
-        }
-        
-        return dao;
     }
     
 	/**
