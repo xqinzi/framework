@@ -32,8 +32,8 @@ import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
 import br.com.concepting.framework.persistence.helpers.ModelFilter;
+import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
-import br.com.concepting.framework.persistence.resource.PersistenceResourceLoader;
 import br.com.concepting.framework.persistence.types.QueryType;
 import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.persistence.types.RelationType;
@@ -57,32 +57,108 @@ public abstract class HibernateDAO extends BaseDAO{
 	private List<String>       similarityPropertiesIds  = null;
 	private Collection<String> processedRelations       = null;
 
-	/**
-	 * Construtor - Inicializa a persistência.
-	 */
+    /**
+     * Construtor - Inicializa a classe de persistência.
+     */
 	public HibernateDAO(){
 		super();
 	}
+	
+    /**
+     * Construtor - Inicializa a classe de persistência.
+     * 
+     * @param dao Instância da classe de persistência a ser encapsulada.
+     */
+    public HibernateDAO(IDAO dao){
+        super(dao);
+    }
+
+    /**
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#begin()
+     */
+	public void begin() throws InternalErrorException{
+	    try{
+    	    Session     connection  = getConnection();
+    	    Transaction transaction = connection.getTransaction();
+    
+    	    if(transaction != null)
+    	        transaction.begin();
+    	    
+    	    setTransaction(transaction);
+	    }
+	    catch(Throwable e){
+	        throw new InternalErrorException(e);
+	    }
+    }
 
 	/**
-	 * Construtor - Inicializa a persistência utilizando uma persistência já utilizada.
-	 * 
-	 * @param persistence Instância da persistência desejada.
+	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#commit()
 	 */
-	public HibernateDAO(BaseDAO persistence){
-		super(persistence);
-	}
+    public void commit() throws InternalErrorException{
+        try{
+            Transaction transaction = getTransaction();
 
-	/**
-	 * Construtor - Inicializa a persistência indicando que já aberta uma transação.
-	 * 
-	 * @param useTransaction Indica se irá usar transação.
-	 */
-	public HibernateDAO(Boolean useTransaction){
-		super(useTransaction);
-	}
+            if(transaction != null)
+                transaction.commit();
+        }
+        catch(Throwable e){
+            throw new InternalErrorException(e);
+        }
+        finally{
+            setTransaction(null);
+            
+            closeConnection();
+        }
+    }
 
-	/**
+    /**
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#rollback()
+     */
+    public void rollback() throws InternalErrorException{
+        try{
+            Transaction transaction = getTransaction();
+
+            if(transaction != null)
+                transaction.commit();
+        }
+        catch(Throwable e){
+            throw new InternalErrorException(e);
+        }
+        finally{
+            setTransaction(null);
+            
+            closeConnection();
+        }
+    }
+
+    /**
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#openConnection()
+     */
+    public <C> C openConnection() throws InternalErrorException{
+        try{
+            PersistenceResource persistenceRespurce = getPersistenceResource();
+            
+            return (C)HibernateUtil.getSession(persistenceRespurce);
+        }
+        catch(Throwable e){
+            throw new InternalErrorException(e);
+        }
+    }
+
+    /**
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#closeConnection()
+     */
+    public void closeConnection(){
+        try{
+            Session connection = getConnection();
+            
+            connection.close();
+        }
+        catch(Throwable e){
+        }
+    }
+
+    /**
 	 * Monta a query HQL baseada no modelo de dados.
 	 * 
 	 * @param model Instância do modelo de dados.
@@ -93,7 +169,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	 */
 	private <M extends BaseModel> Query buildQuery(M model, Object referenceProperty, ModelFilter modelFilter, QueryType queryType) throws InternalErrorException{
 		try{
-    		Session             connection       = openConnection(getPersistenceResource());
+    		Session             connection       = getConnection();
     		String              statementId      = MethodUtil.getMethodFromStackTrace(2).getName();
     		Map<String, Object> clauseParameters = new LinkedHashMap<String, Object>();
     		String              queryString      = buildQueryString(model, modelFilter, clauseParameters, queryType);
@@ -1092,143 +1168,10 @@ public abstract class HibernateDAO extends BaseDAO{
 	}
 
 	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#openConnection(br.com.concepting.framework.persistence.resource.PersistenceResource)
-	 */
-    public <C> C openConnection(PersistenceResource persistenceResource) throws InternalErrorException{
-		if(persistenceResource == null)
-			return (C)openConnection();
-		
-		PersistenceResource currentPersistenceResource = getPersistenceResource();
-		Session             connection                 = getConnection();
-		
-		try{
-			if(currentPersistenceResource == null || !currentPersistenceResource.equals(persistenceResource) || connection == null){
-                setPersistenceResource(persistenceResource);
-
-                connection = HibernateUtil.getSession(this);
-
-                setConnection(connection);
-                
-                begin();
-			}
-
-			return (C)connection;
-		}
-		catch(HibernateException e){
-            closeConnection();
-
-            throw new InternalErrorException(e);
-		}
-	}
-
-	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#closeConnection()
-	 */
-	public void closeConnection(){
-		Session session = getConnection();
-
-		try{
-			session.flush();
-		}
-		catch(Throwable e){
-		}
-		
-		try{
-			session.clear();
-		}
-		catch(Throwable e){
-		}
-
-		try{
-			session.close();
-		}
-		catch(Throwable e){
-		}
-		finally{
-			super.closeConnection();
-		}
-	}
-
-	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#openConnection()
-	 */
-    public <C> C openConnection() throws InternalErrorException{
-		BaseDAO currentPersistence = getCurrentPersistence();
-		Session connection         = (currentPersistence != null ? (Session)currentPersistence.openConnection() : (Session)getConnection());
-		
-		if(connection == null){
-			PersistenceResourceLoader persistenceResourceLoader = new PersistenceResourceLoader();
-			PersistenceResource       persistenceResource       = persistenceResourceLoader.getDefault();
-
-			return (C)openConnection(persistenceResource);
-		}
-
-		return (C)connection;
-	}
-
-	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#rollback()
-	 */
-	public void rollback() throws InternalErrorException{
-		if(useTransaction()){
-		    try{
-    			Transaction transaction = getTransaction();
-    			
-                if(transaction != null)
-                    transaction.rollback();
-            }
-            catch(ConstraintViolationException e){
-                throw new InternalErrorException(e);
-            }
-            catch(HibernateException e){
-            }
-		}
-
-		super.rollback();
-	}
-	
-	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#begin()
-	 */
-	public void begin() throws InternalErrorException{
-        if(useTransaction()){
-            if(getTransaction() == null){
-                Session connection = getConnection();
-                
-                setTransaction(connection.beginTransaction());
-            
-                if(connection.isOpen() && connection.isDirty())
-                    connection.flush();
-            }
-        }
-	}
-
-	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#commit()
-	 */
-	public void commit() throws InternalErrorException{
-		if(useTransaction()){
-		    try{
-    			Transaction transaction = getTransaction();
-    			
-    			if(transaction != null)
-    			    transaction.commit();
-            }
-		    catch(ConstraintViolationException e){
-	            throw new InternalErrorException(e);
-		    }
-            catch(HibernateException e){
-            }
-		}
-		
-		super.commit();
-	}
-
-	/**
 	 * @see br.com.concepting.framework.persistence.BaseDAO#delete(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void delete(M model) throws InternalErrorException{
-		Session connection = openConnection();
+		Session connection = getConnection();
 
 		try{
 			connection.delete(model);
@@ -1391,7 +1334,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			if(propertyInfo == null || propertyInfo.getRelationType() == RelationType.NONE)
 				return model;
 
-			Session connection  = openConnection();
+			Session connection  = getConnection();
 			M       modelBuffer = (M)model.clone();
 			
 			try{
@@ -1439,7 +1382,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#saveReference(br.com.concepting.framework.model.BaseModel, java.lang.String)
 	 */
 	public <M extends BaseModel> void saveReference(M model, String referencePropertyId) throws InternalErrorException{
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
 			if(model == null)
@@ -1481,7 +1424,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	    
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
     		M           model    = null;
@@ -1515,14 +1458,14 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#save(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void save(M model) throws ItemAlreadyExistsException, InternalErrorException{
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
 			try{
 				connection.saveOrUpdate(model);
 			}
 			catch(NonUniqueObjectException e){
-				connection.merge(model);
+				connection.update(model);
 			}
 		}
 		catch(NonUniqueObjectException e){
@@ -1547,7 +1490,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#insert(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void insert(M model) throws ItemAlreadyExistsException, InternalErrorException{
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
 			connection.save(model);
@@ -1573,7 +1516,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#update(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void update(M model) throws InternalErrorException{
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
 			connection.update(model);
@@ -1599,7 +1542,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	     
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
 			M           model    = null;
@@ -1640,7 +1583,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	    
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
 			M           model    = null;
@@ -1676,7 +1619,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	    
-		Session connection = openConnection(getPersistenceResource());
+		Session connection = getConnection();
 
 		try{
     		M           model    = null;

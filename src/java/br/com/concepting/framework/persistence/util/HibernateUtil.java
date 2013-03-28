@@ -56,19 +56,6 @@ public class HibernateUtil{
         return getSession(PersistenceUtil.getDefaultPersistenceResource());
 	}
 	
-	/**
-	 * Retorna uma sessão Hibernate com o repositório de dados utilizando configurações de conexão 
-	 * específicas.
-	 *
-	 * @param dao Instância da classe de persistência contendo as configurações de persistência.
-	 * @return Instância da sessão Hibernate.
-	 * @throws HibernateException
-	 * @throws IllegalArgumentException
-	 */
-	public static <D extends IDAO> Session getSession(D dao) throws HibernateException, IllegalArgumentException{
-        return getSession(dao.getPersistenceResource());
-	}
-	
     /**
      * Retorna uma sessão Hibernate com o repositório de dados utilizando configurações de conexão 
      * específicas.
@@ -82,12 +69,7 @@ public class HibernateUtil{
         HibernateSession hibernateSession = buildHibernateSession(persistenceResource);
         SessionFactory   sessionFactory   = hibernateSession.getFactory();
 
-        try{
-            return sessionFactory.openSession();
-        }
-        catch(Throwable e){
-            return sessionFactory.getCurrentSession();
-        }
+        return sessionFactory.getCurrentSession();
     }
 
     /**
@@ -102,20 +84,6 @@ public class HibernateUtil{
 	 */
 	public static Connection getConnection() throws SQLException, HibernateException, IllegalArgumentException, InvalidResourceException{
         return getConnection(PersistenceUtil.getDefaultPersistenceResource());
-	}
-
-	/**
-	 * Retorna uma conexão JDBC com o repositório de dados utilizando configurações de conexão 
-	 * específicas.
-	 *
-     * @param dao Instância da classe de persistência contendo as configurações de persistência.
-	 * @return Instância da conexão JDBC.
-	 * @throws SQLException 
-	 * @throws HibernateException
-	 * @throws IllegalArgumentException
-	 */
-	public static <D extends IDAO> Connection getConnection(D dao) throws SQLException, HibernateException, IllegalArgumentException{
-		return getConnection(dao.getPersistenceResource());
 	}
 
     /**
@@ -219,20 +187,23 @@ public class HibernateUtil{
 			    StringBuilder persistenceMappingResource = new StringBuilder();
 			    InputStream   persistenceMappingStream   = null;
 			    
-			    System.out.println(persistenceMappings.size());
-			    
 			    for(String persistenceMapping : persistenceMappings){
 			        persistenceMappingResource.delete(0, persistenceMappingResource.length());
 			        persistenceMappingResource.append(PersistenceConstants.DEFAULT_MAPPINGS_DIR);
 			        persistenceMappingResource.append(persistenceMapping);
 			        persistenceMappingResource.append(".hbm.xml");
 			        
-			        System.out.println(persistenceMappingResource);
-			        
 			        persistenceMappingStream = HibernateUtil.class.getClassLoader().getResourceAsStream(persistenceMappingResource.toString());
 			        
 			        if(persistenceMappingStream != null)
 			            configuration.addInputStream(persistenceMappingStream);
+			        else{
+			            try{
+                            configuration.addClass(Class.forName(persistenceMapping));
+                        }
+                        catch(ClassNotFoundException e1){
+                        }
+			        }
 			    }
 			}
 			

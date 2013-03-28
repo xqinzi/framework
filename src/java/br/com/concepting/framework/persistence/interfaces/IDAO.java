@@ -11,67 +11,78 @@ import br.com.concepting.framework.persistence.resource.PersistenceResource;
  */
 public interface IDAO extends ICrud{
     /**
-     * Retorna a instância contendo as configurações de conexão com o repositórios de dados.
+     * Inicia a transação.
      * 
-     * @return Instância contendo as configurações de conexão.
+     * @throws InternalErrorException
      */
-	public PersistenceResource getPersistenceResource();
-	
-    /**
-     * Define a instância contendo as configurações de conexão com o repositórios de dados.
-     * 
-     * param persistenceResource Instância contendo as configurações de conexão.
-     */
-	public void setPersistenceResource(PersistenceResource persistenceResource);
-	
-	/**
-	 * Abre uma conexão com o repositório de persistência a partir de uma instância de propriedades de 
-	 * conexão com o repositório. 
-	 *
-	 * @param persistenceResourceId String contendo o identificador das configurações de conexão com 
-	 * o repositório.
-	 * @return Instância contendo a conexão com o repositório.
-	 * @throws InternalErrorException
-	 */
-	public <C> C openConnection(String persistenceResourceId) throws InternalErrorException;
-
-	/**
-	 * Abre uma conexão com o repositório de persistência a partir de uma instância de propriedades de 
-	 * conexão com o repositório. 
-	 *
-	 * @param persistenceResource Instância contendo as propriedades de conexão com o repositório.
-	 * @return Instância contendo a conexão com o repositório.
-	 * @throws InternalErrorException
-	 */
-	public <C> C openConnection(PersistenceResource persistenceResource) throws InternalErrorException;
-
-	/**
-	 * Abre uma conexão com o repositório de persistência.
-	 *
-	 * @return Instância contendo a conexão com o repositório.
-	 * @throws InternalErrorException
-	 */
-	public <C> C openConnection() throws InternalErrorException;
+    public void begin() throws InternalErrorException;
     
     /**
-     * Fecha uma conexão com o repositório de persistência.
+     * Confirma as operações da transação.
+     * 
+     * @throws InternalErrorException
+     */
+    public void commit() throws InternalErrorException;
+    
+    /**
+     * Descarta as operações da transação.
+     * 
+     * @throws InternalErrorException
+     */
+    public void rollback() throws InternalErrorException;
+    
+    /**
+     * Define a instância contendo as configurações de persistência.
+     * 
+     * @param persistenceResource Instância contendo as configurações de persistência.
+     */
+    public void setPersistenceResource(PersistenceResource persistenceResource);
+    
+    /**
+     * Retorna a instância contendo as configurações de persistência.
+     * 
+     * @return Instância contendo as configurações de persistência.
+     */
+    public PersistenceResource getPersistenceResource();
+    
+    /**
+     * Abre uma conexão com o repositório de persistência.
+     * 
+     * @return Instância da conexão com o repositório de persistência.
+     * @throws InternalErrorException
+     */
+    public <C> C openConnection() throws InternalErrorException;
+    
+    /**
+     * Fecha a conexão com o repositório de persistência.
      */
     public void closeConnection();
+    
+	/**
+	 * Retorna a conexão com o repositório de persistência.
+	 *
+	 * @return Instância contendo a conexão com o repositório.
+	 */
+	public <C> C getConnection();
 	
-	/**
-	 * Inicia uma transação de persistência.
-	 * 
-	 * @throws InternalErrorException
-	 */
-	public void begin() throws InternalErrorException;
+    /**
+     * Define a conexão com o repositório de persistência.
+     *
+     * @param connection Instância contendo a conexão com o repositório.
+     */
+	public <C> void setConnection(C connection);
 	
-	/**
-	 * Confirma as operações de persistências.
-	 */
-	public void commit() throws InternalErrorException;
-
-	/**
-	 * Descarta as operações de persistências.
-	 */
-	public void rollback() throws InternalErrorException;
+    /**
+     * Retorna a transação com o repositório de persistência.
+     *
+     * @return Instância contendo a transação com o repositório.
+     */
+	public <T> T getTransaction();
+	
+    /**
+     * Define a transação com o repositório de persistência.
+     *
+     * @param transaction Instância contendo a transação com o repositório.
+     */
+	public <T> void setTransaction(T transaction);
 }
