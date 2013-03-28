@@ -130,7 +130,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
             entityId = annotation.entityId();
         
         if(entityId.length() == 0)
-            entityId = entity.getName();
+            entityId = entity.getSimpleName();
             
         model.setEntityId(entityId);
         
