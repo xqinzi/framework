@@ -42,8 +42,10 @@ public abstract class BaseDAO implements IDAO{
 	public BaseDAO(IDAO dao){
 	    this();
 	
-	    if(dao != null)
-	        this.connection = dao.getConnection();
+	    if(dao != null){
+	        this.connection          = dao.getConnection();
+	        this.persistenceResource = dao.getPersistenceResource();
+	    }
 	    
 	    this.transaction = null;
 	}
