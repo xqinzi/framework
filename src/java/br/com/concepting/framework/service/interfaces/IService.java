@@ -20,12 +20,9 @@ import br.com.concepting.framework.service.types.ServiceTransactionType;
  */
 public interface IService{
     /**
-     * Inicializa classe de serviço.
-     * 
-     * @throws RemoteException
-     * @throws InternalErrorException
+     * Inicia classe de serviço.
      */
-    public void initialize() throws RemoteException, InternalErrorException;
+    public void initialize();
     
     /**
      * Inicia a transação.
