@@ -58,7 +58,14 @@ public class ActionExceptionHandler extends ExceptionHandler{
 	private ActionForward processForward(){
         ActionForward forward    = findForward();
         String        action     = actionForm.getAction();
-        ActionType    actionType = ActionType.valueOf(action.toUpperCase());
+        ActionType    actionType = null;
+        
+        try{
+            actionType = ActionType.valueOf(action.toUpperCase());
+        }
+        catch(Throwable e){
+            actionType = null;
+        }
 
         if(actionType != ActionType.REFRESH)
             actionForm.setLastAction(action);
