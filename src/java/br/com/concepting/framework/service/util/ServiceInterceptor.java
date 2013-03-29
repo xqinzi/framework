@@ -16,10 +16,10 @@ import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
-import br.com.concepting.framework.service.types.ServiceTransactionType;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.util.Interceptor;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.types.TransactionType;
 import br.com.concepting.framework.web.constants.SystemConstants;
 
 /**
@@ -54,8 +54,11 @@ public class ServiceInterceptor extends Interceptor{
     		
             Service serviceAnnotation = getMethod().getAnnotation(Service.class);
             
-            if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE)
+            if(serviceAnnotation != null && serviceAnnotation.transactionType() != TransactionType.NONE){
+                service.setTransactionType(serviceAnnotation.transactionType());
+                service.setTransactionTimeout(serviceAnnotation.transactionTimeout());
                 service.begin();
+            }
 		}
 		
 		super.before();
@@ -75,7 +78,7 @@ public class ServiceInterceptor extends Interceptor{
     
                 Service serviceAnnotation = getMethod().getAnnotation(Service.class);
                 
-                if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE)
+                if(serviceAnnotation != null && serviceAnnotation.transactionType() != TransactionType.NONE)
                     service.commit();
             }
 	    }
@@ -98,7 +101,7 @@ public class ServiceInterceptor extends Interceptor{
         		
                 Service serviceAnnotation = getMethod().getAnnotation(Service.class);
                 
-                if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE){
+                if(serviceAnnotation != null && serviceAnnotation.transactionType() != TransactionType.NONE){
                     Class   rollbackFor[] = serviceAnnotation.rollbackFor();
                     Boolean found         = false;
                     
