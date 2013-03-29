@@ -69,4 +69,11 @@ public @interface Service{
      * @return Constante que define o tipo da transação.
      */
     ServiceTransactionType transactionType() default ServiceTransactionType.NONE;
+    
+    /**
+     * Define as exceções que farão com que seja feito o rollback.
+     *  
+     * @return Array contendo as exceções.
+     */
+    Class[] rollbackFor() default {Throwable.class, Exception.class};
 }
