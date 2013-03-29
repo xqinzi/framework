@@ -2,6 +2,7 @@ package br.com.concepting.framework.persistence.interfaces;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
+import br.com.concepting.framework.util.types.TransactionType;
 
 /**
  * Interface que define a estrutura básica para as classes de persistência.
@@ -30,6 +31,27 @@ public interface IDAO extends ICrud{
      * @throws InternalErrorException
      */
     public void rollback() throws InternalErrorException;
+    
+    /**
+     * Efetua o bloqueio da transação.
+     * 
+     * @param object Instância do objeto a ser bloqueado.
+     */
+    public <O> void doTransactionLock(O object);
+    
+    /**
+     * Retorna o tempo do timeout do bloqueio da transação.
+     * 
+     * @return Valor inteiro contendo o timeout do bloqueio.
+     */
+    public Integer getTransactionTimeout();
+    
+    /**
+     * Define o tempo do timeout do bloqueio da transação.
+     * 
+     * @param transactionTimeout Valor inteiro contendo o timeout do bloqueio.
+     */
+    public void setTransactionTimeout(Integer transactionTimeout);
     
     /**
      * Define a instância contendo as configurações de persistência.
@@ -85,4 +107,18 @@ public interface IDAO extends ICrud{
      * @param transaction Instância contendo a transação com o repositório.
      */
 	public <T> void setTransaction(T transaction);
+	
+	/**
+	 * Retorna o tipo de transação.
+	 * 
+	 * @return Constante que define o tipo de transação.
+	 */
+	public TransactionType getTransactionType();
+	
+    /**
+     * Define o tipo de transação.
+     * 
+     * @param transactionType Constante que define o tipo de transação.
+     */
+	public void setTransactionType(TransactionType transactionType);
 }
