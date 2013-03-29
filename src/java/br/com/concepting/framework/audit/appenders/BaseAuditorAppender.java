@@ -89,6 +89,71 @@ public abstract class BaseAuditorAppender extends WriterAppender{
 	}
 	
 	/**
+	 * Retorna o identificador da entidade a ser auditada.
+	 * 
+	 * @param entity Classe que define a entidade a ser auditada.
+	 * @return String contendo o identificador da entidade.
+	 */
+	private String getEntityId(Class entity){
+	    return getEntityId(entity, true);
+	}
+	
+    /**
+     * Retorna o identificador da entidade a ser auditada.
+     * 
+     * @param entity Classe que define a entidade a ser auditada.
+     * @param lastIteration True/False.
+     * @return String contendo o identificador da entidade.
+     */
+	private String getEntityId(Class entity, Boolean lastIteration){
+	    String entityId = "";
+	    
+	    if(entity != null){
+            Auditable annotation = (Auditable)entity.getAnnotation(Auditable.class);
+            
+            if(annotation == null){
+                Class superClasses[] = entity.getInterfaces();
+    
+                if(superClasses != null && superClasses.length > 0){
+                    for(Class superClass : superClasses){
+                        entityId = StringUtil.trim(getEntityId(superClass, false));
+                        
+                        if(entityId.length() > 0)
+                            break;
+                    }
+                }
+            }
+            else
+                entityId = StringUtil.trim(annotation.entityId());
+            
+            if(lastIteration && entityId.length() == 0)
+                entityId = entity.getSimpleName();
+	    }
+
+	    return entityId;
+	}
+	
+    /**
+     * Retorna o identificador do negócio a ser auditado.
+     * 
+     * @param method Classe que define o negócio a ser auditado.
+     * @return String contendo o identificador da entidade.
+     */
+	private String getBusinessId(Method method){
+        Method    business   = auditor.getBusiness();
+        Auditable annotation = (business != null ? business.getAnnotation(Auditable.class) : null);
+        String    businessId = "";
+        
+        if(annotation != null)
+            businessId = annotation.businessId();
+            
+        if(businessId.length() == 0)
+            businessId = business.getName();
+            
+        return businessId;
+	}
+	
+	/**
 	 * Retorna a instância do modelo de dados de auditoria.
 	 * 
 	 * @param event Instância contendo as propriedades do evento a ser auditado.
@@ -107,46 +172,8 @@ public abstract class BaseAuditorAppender extends WriterAppender{
         }
 
         model.setCreateDate(new DateTime());
-
-        Class     entity     = auditor.getEntity();
-        Auditable annotation = (Auditable)entity.getAnnotation(Auditable.class);
-            
-        if(annotation == null){
-            Class superClasses[] = entity.getInterfaces();
-
-            if(superClasses != null && superClasses.length > 0){
-                for(Class superClass : superClasses){
-                    annotation = (Auditable)superClass.getAnnotation(Auditable.class);
-                    
-                    if(annotation != null)
-                        break;
-                }
-            }
-        }
-            
-        String entityId = "";
-        
-        if(annotation != null)
-            entityId = annotation.entityId();
-        
-        if(entityId.length() == 0)
-            entityId = entity.getSimpleName();
-            
-        model.setEntityId(entityId);
-        
-        Method business = auditor.getBusiness();
-    
-        annotation = (business != null ? business.getAnnotation(Auditable.class) : null);
-            
-        String businessId = "";
-        
-        if(annotation != null)
-            businessId = annotation.businessId();
-            
-        if(businessId.length() == 0)
-            businessId = business.getName();
-            
-        model.setBusinessId(businessId);
+        model.setEntityId(getEntityId(auditor.getEntity()));
+        model.setBusinessId(getBusinessId(auditor.getBusiness()));
         model.setBusinessComplement(buildBusinessComplement(model));
         
         LoginSessionModel loginSession = auditor.getLoginSession();
