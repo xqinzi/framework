@@ -10,7 +10,7 @@ import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.persistence.helpers.ModelFilter;
 import br.com.concepting.framework.service.annotations.Service;
-import br.com.concepting.framework.service.types.ServiceTransactionType;
+import br.com.concepting.framework.util.types.TransactionType;
  
 /** 
  * Interface que define a estrutura básica para um serviço.
@@ -42,15 +42,47 @@ public interface IService{
      * @throws InternalErrorException
 	 */
 	public void rollback() throws RemoteException, InternalErrorException;
+	
+    /**
+     * Retorna o tempo do timeout do bloqueio da transação.
+     * 
+     * @return Valor inteiro contendo o timeout do bloqueio.
+     * @throws RemoteException
+     */
+    public Integer getTransactionTimeout() throws RemoteException;
+    
+    /**
+     * Define o tempo do timeout do bloqueio da transação.
+     * 
+     * @param transactionTimeout Valor inteiro contendo o timeout do bloqueio.
+     * @throws RemoteException
+     */
+    public void setTransactionTimeout(Integer transactionTimeout) throws RemoteException;
+	
+    /**
+     * Retorna o tipo de transação.
+     * 
+     * @return Constante que define o tipo de transação.
+     * @throws RemoteException
+     */
+    public TransactionType getTransactionType() throws RemoteException;
+    
+    /**
+     * Define o tipo de transação.
+     * 
+     * @param transactionType Constante que define o tipo de transação.
+     * @throws RemoteException
+     */
+    public void setTransactionType(TransactionType transactionType) throws RemoteException;
 
-	/**
+    /**
 	 * Retorna todos os modelos de dados vinculados a classe de serviço.
 	 *
 	 * @return Lista contendo os modelos de dados.
      * @throws RemoteException
 	 * @throws InternalErrorException
 	 */
-    @Service(transactionType=ServiceTransactionType.READ_ONLY)
+    @Service(transactionType=TransactionType.READ_ONLY)
 	public <C extends Collection> C list() throws InternalErrorException, RemoteException;
 
 	/**
@@ -62,7 +94,7 @@ public interface IService{
      * @throws RemoteException
 	 * @throws InternalErrorException
 	 */
-    @Service(transactionType=ServiceTransactionType.READ_ONLY)
+    @Service(transactionType=TransactionType.READ_ONLY)
 	public <M extends BaseModel, C extends Collection> C search(M model) throws InternalErrorException, RemoteException;
 
 	/**
@@ -75,7 +107,7 @@ public interface IService{
      * @throws RemoteException
 	 * @throws InternalErrorException
 	 */
-    @Service(transactionType=ServiceTransactionType.READ_ONLY)
+    @Service(transactionType=TransactionType.READ_ONLY)
 	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException, RemoteException;
 
 	/**
@@ -87,7 +119,7 @@ public interface IService{
 	 * @throws ItemNotFoundException
 	 * @throws InternalErrorException
 	 */
-    @Service(transactionType=ServiceTransactionType.READ_ONLY)
+    @Service(transactionType=TransactionType.READ_ONLY)
 	public <M extends BaseModel> M find(M model) throws ItemNotFoundException, InternalErrorException, RemoteException;
 
 	/**
@@ -98,7 +130,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void delete(M model) throws InternalErrorException, RemoteException;
 
 	/**
@@ -109,7 +141,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void deleteAll(Collection<M> modelList) throws InternalErrorException, RemoteException;
 
 	/**
@@ -119,7 +151,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void deleteAll() throws InternalErrorException, RemoteException;
 
 	/**
@@ -131,7 +163,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void save(M model) throws ItemAlreadyExistsException, InternalErrorException, RemoteException;
 
 	/**
@@ -143,7 +175,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void saveAll(Collection<M> modelList) throws ItemAlreadyExistsException, InternalErrorException, RemoteException;
 
 	/**
@@ -155,7 +187,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void insert(M model) throws ItemAlreadyExistsException, InternalErrorException, RemoteException;
 
 	/**
@@ -167,7 +199,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void insertAll(Collection<M> modelList) throws ItemAlreadyExistsException, InternalErrorException, RemoteException;
 
 	/**
@@ -179,7 +211,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void update(M model) throws ItemAlreadyExistsException, InternalErrorException, RemoteException;
 
 	/**
@@ -191,7 +223,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void updateAll(Collection<M> modelList) throws ItemAlreadyExistsException, InternalErrorException, RemoteException;
 
 	/**
@@ -203,7 +235,7 @@ public interface IService{
      * @throws RemoteException
 	 * @throws InternalErrorException
 	 */
-    @Service(transactionType=ServiceTransactionType.READ_ONLY)
+    @Service(transactionType=TransactionType.READ_ONLY)
 	public <M extends BaseModel> M loadReference(M model, String referencePropertyId) throws InternalErrorException, RemoteException;
 
 	/**
@@ -215,6 +247,6 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
 	@Auditable
-    @Service(transactionType=ServiceTransactionType.READ_WRITE)
+    @Service(transactionType=TransactionType.READ_WRITE)
 	public <M extends BaseModel> void saveReference(M model, String referencePropertyId) throws InternalErrorException, RemoteException;
 }
