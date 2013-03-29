@@ -21,7 +21,7 @@ public class Cacher implements Serializable{
 	private String                    id          = null;
 	private Map<String, CachedObject> history     = null;
 	private Integer                   timeout     = null;
-	private DateFieldType             timeoutType = Constants.DEFAULT_CACHER_TIMEOUT_TYPE;
+	private DateFieldType             timeoutType = Constants.DEFAULT_TIMEOUT_TYPE;
 
 	/**
 	 * Construtor - Inicializa variáveis e/ou objetos internos.
