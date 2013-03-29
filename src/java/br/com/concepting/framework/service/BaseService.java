@@ -20,6 +20,7 @@ import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceUtil;
+import br.com.concepting.framework.util.types.TransactionType;
  
 /**
  * Classe que define a estrutura básica para uma classe de serviço.
@@ -28,7 +29,9 @@ import br.com.concepting.framework.service.util.ServiceUtil;
  * @since 1.0
  */
 public abstract class BaseService implements IService{
-    private IDAO currentPersistence = null;
+    private IDAO            currentPersistence = null;
+    private TransactionType transactionType    = null;
+    private Integer         transactionTimeout = null;
     
     /**
      * Indica se a classe de serviço irá gerenciar transações.
@@ -55,6 +58,34 @@ public abstract class BaseService implements IService{
 
         return true;
     }
+    
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#getTransactionType()
+     */
+    public TransactionType getTransactionType(){
+        return transactionType;
+    }
+
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#getTransactionTimeout()
+     */
+    public Integer getTransactionTimeout(){
+        return transactionTimeout;
+    }
+
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#setTransactionType(br.com.concepting.framework.util.types.TransactionType)
+     */
+    public void setTransactionType(TransactionType transactionType){
+        this.transactionType = transactionType;
+    }
+
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#setTransactionTimeout(java.lang.Integer)
+     */
+    public void setTransactionTimeout(Integer transactionTimeout){
+        this.transactionTimeout = transactionTimeout;
+    }
 
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#begin()
@@ -67,8 +98,11 @@ public abstract class BaseService implements IService{
 	    catch(Throwable e){
 	    }
 	    
-        if(currentPersistence != null && useTransaction())
+        if(currentPersistence != null && useTransaction()){
+            currentPersistence.setTransactionType(transactionType);
+            currentPersistence.setTransactionTimeout(transactionTimeout);
             currentPersistence.begin();
+        }
     }
 
     /**
