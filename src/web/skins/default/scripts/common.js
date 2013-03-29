@@ -746,14 +746,10 @@ function submitForm(form){
 											}
 		
 		requestHandler.open("POST", submittedForm.attributes["action"].value, true);
-		
-		if(submittedForm.encoding.length == 0)
-			requestHandler.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=" + submittedForm.acceptCharset);
-		else
-			requestHandler.setRequestHeader("Content-type", submittedForm.encoding);
-			
+		requestHandler.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=" + submittedForm.acceptCharset);
 		requestHandler.setRequestHeader("Content-length", formRequest.length); 
 		requestHandler.setRequestHeader("Connection", "close");
+
 		requestHandler.send(formRequest);
 	}
 }
