@@ -77,7 +77,7 @@ public abstract class BaseDAO implements IDAO{
     }
 
 	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTransactionType(br.com.concepting.framework.service.types.TransactionType)
+	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTransactionType(br.com.concepting.framework.util.types.TransactionType)
 	 */
     public void setTransactionType(TransactionType transactionType){
         this.transactionType = transactionType;
