@@ -29,18 +29,6 @@ import br.com.concepting.framework.service.util.ServiceUtil;
  */
 public abstract class BaseService implements IService{
     private IDAO currentPersistence = null;
-
-    /**
-     * @see br.com.concepting.framework.service.interfaces.IService#initialize()
-     */
-    public void initialize(){
-        try{
-            if(currentPersistence != null)
-                currentPersistence = getPersistence(false);
-        }
-        catch(InternalErrorException e){
-        }
-    }
     
     /**
      * Indica se a classe de serviço irá gerenciar transações.
@@ -62,7 +50,7 @@ public abstract class BaseService implements IService{
                 break;
         }
 
-        if(annotation == null || (annotation != null && annotation.type() != ServiceType.CLASS && annotation.type() != ServiceType.WEB_SERVICE))
+        if(annotation != null && annotation.type() != ServiceType.CLASS && annotation.type() != ServiceType.WEB_SERVICE)
             return false;
 
         return true;
@@ -72,7 +60,14 @@ public abstract class BaseService implements IService{
      * @see br.com.concepting.framework.service.interfaces.IService#begin()
      */
 	public void begin() throws InternalErrorException{
-        if(currentPersistence != null)
+	    try{
+	        if(currentPersistence == null)
+	            currentPersistence = getPersistence();
+	    }
+	    catch(Throwable e){
+	    }
+	    
+        if(currentPersistence != null && useTransaction())
             currentPersistence.begin();
     }
 
@@ -80,7 +75,7 @@ public abstract class BaseService implements IService{
 	 * @see br.com.concepting.framework.service.interfaces.IService#commit()
 	 */
 	public void commit() throws InternalErrorException{
-        if(currentPersistence != null)
+        if(currentPersistence != null && useTransaction())
             currentPersistence.commit();
 	}
 
@@ -88,7 +83,7 @@ public abstract class BaseService implements IService{
 	 * @see br.com.concepting.framework.service.interfaces.IService#rollback()
 	 */
 	public void rollback() throws InternalErrorException{
-        if(currentPersistence != null)
+        if(currentPersistence != null && useTransaction())
             currentPersistence.rollback();
 	}
 
@@ -104,27 +99,15 @@ public abstract class BaseService implements IService{
     protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
 		return ServiceUtil.instantiate(modelClass);
 	}
-    
-    /**
-     * Retorna a instância da classe de persistência vinculada a um modelo de dados.
-     *
-     * @param modelClass Classe do modelo de dados desejado.
-     * @return Instância da classe de persistência.
-     * @throws InternalErrorException
-     */
-    protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
-        return getPersistence(modelClass, useTransaction());
-    }
 
 	/**
 	 * Retorna a instância da classe de persistência vinculada a um modelo de dados.
 	 *
 	 * @param modelClass Classe do modelo de dados desejado.
-	 * @param beginTransaction Indica se deve inicializar a transação.
 	 * @return Instância da classe de persistência.
 	 * @throws InternalErrorException
 	 */
-    private <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass, Boolean beginTransaction) throws InternalErrorException{
+    protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
 		try{
             Class<D> persistenceClass    = PersistenceUtil.getPersistenceClassByModel(modelClass);
             D        persistenceInstance = null;
@@ -139,9 +122,6 @@ public abstract class BaseService implements IService{
                 
                 persistenceInstance.setPersistenceResource(persistenceResource);
                 persistenceInstance.openConnection();
-                
-                if(beginTransaction)
-                    persistenceInstance.begin();
             }
             else
                 persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, currentPersistence);
@@ -166,26 +146,15 @@ public abstract class BaseService implements IService{
 	}
 
     /**
-     * Retorna a instância da classe de persistência vinculada a classe de serviço.
-     * 
-     * @return Instância da classe de persistência.
-     * @throws InternalErrorException
-     */
-    protected <D extends IDAO, M extends BaseModel> D getPersistence() throws InternalErrorException{
-        return getPersistence(useTransaction());
-    }
-
-    /**
 	 * Retorna a instância da classe de persistência vinculada a classe de serviço.
 	 * 
 	 * @return Instância da classe de persistência.
-     * @param beginTransaction Indica se deve inicializar a transação.
 	 * @throws InternalErrorException
 	 */
-    private <D extends IDAO, M extends BaseModel> D getPersistence(Boolean beginTransaction) throws InternalErrorException{
+    protected <D extends IDAO, M extends BaseModel> D getPersistence() throws InternalErrorException{
 		try{
 			Class<M> modelClass  = ModelUtil.getModelClassByService(getClass());
-			IDAO     persistence = getPersistence(modelClass, beginTransaction);
+			IDAO     persistence = getPersistence(modelClass);
 
 			return (D)persistence;
 		}
