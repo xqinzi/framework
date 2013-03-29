@@ -20,11 +20,6 @@ import br.com.concepting.framework.service.types.ServiceTransactionType;
  */
 public interface IService{
     /**
-     * Inicia classe de serviço.
-     */
-    public void initialize();
-    
-    /**
      * Inicia a transação.
      * 
      * @throws RemoteException
