@@ -5,9 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.com.concepting.framework.service.types.ServiceTransactionType;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceInterceptor;
+import br.com.concepting.framework.util.types.TransactionType;
 import br.com.concepting.framework.web.types.ScopeType;
  
 /** 
@@ -42,13 +42,6 @@ public @interface Service{
 	String name() default "";
 
 	/**
-	 * Anotação que define o timeout para conexão com o serviço.
-	 *
-	 * @return Valor inteiro contendo o timeout de conexão.
-	 */
-	int timeout() default 0;
-
-	/**
 	 * Anotação que define o identificador das configurações do contexto.
 	 * Somente utilizado quando o tipo de serviço for remoto.
 	 * 
@@ -68,7 +61,14 @@ public @interface Service{
      * 
      * @return Constante que define o tipo da transação.
      */
-    ServiceTransactionType transactionType() default ServiceTransactionType.NONE;
+    TransactionType transactionType() default TransactionType.NONE;
+    
+    /**
+     * Anotação que define o timeout da transação.
+     * 
+     * @return Valor inteiro contendo o timeout.
+     */
+    int transactionTimeout() default 60;
     
     /**
      * Define as exceções que farão com que seja feito o rollback.
