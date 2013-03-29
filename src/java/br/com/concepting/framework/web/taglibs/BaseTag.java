@@ -12,6 +12,7 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
+import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.web.SecurityController;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
@@ -25,26 +26,82 @@ import br.com.concepting.framework.web.SystemController;
  * @since 1.0
  */
 public abstract class BaseTag extends BodyTagSupport implements Cloneable{
-    private   ComponentType      componentType      = null;
-	private   String             name               = "";
-	private   String             styleClass         = "";
-	private   String             style              = "";
-	private   String             onBlur             = "";
-    private   String             onFocus            = "";
-	private   String             onClick            = "";
-	private   String             onMouseOver        = "";
-	private   String             onMouseOut         = "";
-	private   String             width              = "";
-	private   String             height             = "";
-	private   String             tooltip            = null;
-	private   Boolean            enabled            = true;
-	private   String             resourceDir        = "";
-	private   String             resourceId         = "";
-	private   String             resourceKey        = "";
-    protected SystemController   systemController   = null;
-    protected SecurityController securityController = null;
-    protected PrintWriter        out                = null;
+    private   ComponentType      componentType           = null;
+	private   String             name                    = "";
+	private   String             styleClass              = "";
+	private   String             style                   = "";
+	private   String             onBlur                  = "";
+    private   String             onFocus                 = "";
+	private   String             onClick                 = "";
+	private   String             onMouseOver             = "";
+	private   String             onMouseOut              = "";
+	private   String             width                   = "";
+	private   String             height                  = "";
+	private   String             tooltip                 = null;
+	private   Boolean            enabled                 = true;
+	private   String             resourceDir             = "";
+	private   String             resourceId              = "";
+	private   String             resourceKey             = "";
+	private   Boolean            rendered                = true;
+	private   Boolean            renderWhenAuthenticated = false;
+    protected SystemController   systemController        = null;
+    protected SecurityController securityController      = null;
+    protected PrintWriter        out                     = null;
     
+    /**
+     * Indica se o componente será renderizado somente quando um usuário estiver autenticado.
+     * 
+     * @return True/False.
+     */
+    public Boolean isRenderWhenAuthenticated(){
+        return renderWhenAuthenticated;
+    }
+
+    /**
+     * Indica se o componente será renderizado somente quando um usuário estiver autenticado.
+     * 
+     * @return True/False.
+     */
+    public Boolean getRenderWhenAuthenticated(){
+        return isRenderWhenAuthenticated();
+    }
+
+    /**
+     * Define se o componente será renderizado somente quando um usuário estiver autenticado.
+     * 
+     * @param renderWhenAuthenticated True/False.
+     */
+    public void setRenderWhenAuthenticated(Boolean renderWhenAuthenticated){
+        this.renderWhenAuthenticated = renderWhenAuthenticated;
+    }
+
+    /**
+     * Indica se o componente será renderizado.
+     * 
+     * @return True/False.
+     */
+    public Boolean isRendered(){
+        return rendered;
+    }
+
+    /**
+     * Indica se o componente será renderizado.
+     * 
+     * @return True/False.
+     */
+    public Boolean getRendered(){
+        return isRendered();
+    }
+
+    /**
+     * Define se o componente será renderizado.
+     * 
+     * @param rendered True/False.
+     */
+    public void setRendered(Boolean rendered){
+        this.rendered = rendered;
+    }
+
     /**
      * Retorna o tipo do componente.
      * 
@@ -645,9 +702,17 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 	 * @throws Throwable
 	 */
 	protected void render() throws Throwable{
-		renderOpen();
-		renderBody();
-		renderClose();
+	    if(renderWhenAuthenticated){
+	        LoginSessionModel loginSession = securityController.getLoginSession();
+	        
+	        rendered = (loginSession.isAuthenticated());
+	    }
+	    
+	    if(rendered){
+    		renderOpen();
+    		renderBody();
+    		renderClose();
+	    }
 	}
 
 	/**
@@ -708,5 +773,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 		setEnabled(true);
 		setResourceId("");
 		setResourceKey("");
+		setRendered(true);
+		setRenderWhenAuthenticated(false);
 	}
 }
