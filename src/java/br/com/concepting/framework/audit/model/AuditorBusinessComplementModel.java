@@ -75,7 +75,7 @@ public class AuditorBusinessComplementModel extends BaseModel{
     /**
      * Define o identificador da propriedade auditada.
      *
-     * @param id String contendo o identificador da propriedade. 
+     * @param propertyId String contendo o identificador da propriedade. 
      */
 	public void setPropertyId(String propertyId){
     	this.propertyId = propertyId;
@@ -93,7 +93,7 @@ public class AuditorBusinessComplementModel extends BaseModel{
     /**
      * Define o identificador do tipo de dados da propriedade auditada.
      *
-     * @param type String contendo o identificador do tipo de dados. 
+     * @param propertyType String contendo o identificador do tipo de dados. 
      */
 	public void setPropertyType(String propertyType){
     	this.propertyType = propertyType;
@@ -111,7 +111,7 @@ public class AuditorBusinessComplementModel extends BaseModel{
     /**
      * Define o valor da propriedade auditada.
      *
-     * @param value Instância do valor da propriedade. 
+     * @param propertyValue Instância do valor da propriedade. 
      */
 	public <O> void setPropertyValue(O propertyValue){
     	this.propertyValue = propertyValue;
