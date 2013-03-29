@@ -16,7 +16,7 @@ function showHideErrorTraceDetails(name){
 	var messageBoxErrorTrace = document.getElementById(name + ".errorTrace");
 
 	if(messageBox && messageBoxErrorTrace){
-		if(messageBoxErrorTrace.style.display == "NONE")
+		if(messageBoxErrorTrace.style.display.toUpperCase() == "NONE")
 			messageBoxErrorTrace.style.display = "";
 		else
 			messageBoxErrorTrace.style.display = "NONE";
