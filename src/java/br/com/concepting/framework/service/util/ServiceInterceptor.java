@@ -52,15 +52,10 @@ public class ServiceInterceptor extends Interceptor{
             if(auditor != null)
                 auditor.setLoginSession(ServiceUtil.getLoginSession(service));
     		
-    		Method   method            = getMethod();
-    		Service  serviceAnnotation = method.getAnnotation(Service.class);
-    		
-    		if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE){
-    		    service.initialize();
-    		    
-    		    if(serviceAnnotation.transactionType() == ServiceTransactionType.READ_WRITE)
-    		        service.begin();
-    		}
+            Service serviceAnnotation = getMethod().getAnnotation(Service.class);
+            
+            if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE)
+                service.begin();
 		}
 		
 		super.before();
@@ -78,7 +73,10 @@ public class ServiceInterceptor extends Interceptor{
                 if(auditor != null)
                     auditor.setLoginSession(ServiceUtil.getLoginSession(service));
     
-        		service.commit();
+                Service serviceAnnotation = getMethod().getAnnotation(Service.class);
+                
+                if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE)
+                    service.commit();
             }
 	    }
 	    finally{
@@ -98,7 +96,25 @@ public class ServiceInterceptor extends Interceptor{
                 if(auditor != null)
                     auditor.setLoginSession(ServiceUtil.getLoginSession(service));
         		
-    		    service.rollback();
+                Service serviceAnnotation = getMethod().getAnnotation(Service.class);
+                
+                if(serviceAnnotation != null && serviceAnnotation.transactionType() != ServiceTransactionType.NONE){
+                    Class   rollbackFor[] = serviceAnnotation.rollbackFor();
+                    Boolean found         = false;
+                    
+                    for(Class item : rollbackFor){
+                        if(item.getSuperclass().equals(e.getClass())){
+                            service.rollback();
+                            
+                            found = true;
+                            
+                            break;
+                        }
+                    }
+                    
+                    if(!found)
+                        service.commit();
+                }
             }
 	    }
 	    finally{
