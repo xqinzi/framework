@@ -15,6 +15,7 @@ import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
 import br.com.concepting.framework.util.MethodUtil;
+import br.com.concepting.framework.util.types.TransactionType;
 
 /**
  * Classe que define a estrutura básica para as classes de persistência de modelos de dados.
@@ -26,6 +27,8 @@ public abstract class BaseDAO implements IDAO{
     private PersistenceResource persistenceResource = null;
     private Object              connection          = null;
     private Object              transaction         = null;
+    private TransactionType     transactionType     = null;
+    private Integer             transactionTimeout  = null;
 
 	/**
 	 * Construtor - Inicializa a classe de persistência.
@@ -43,14 +46,44 @@ public abstract class BaseDAO implements IDAO{
 	    this();
 	
 	    if(dao != null){
-	        this.connection          = dao.getConnection();
-	        this.persistenceResource = dao.getPersistenceResource();
+	        setConnection(dao.getConnection());
+	        setPersistenceResource(dao.getPersistenceResource());
+	        setTransactionType(dao.getTransactionType());
+	        setTransactionTimeout(dao.getTransactionTimeout());
 	    }
 	    
-	    this.transaction = null;
+	    setTransaction(null);
 	}
-	
+
 	/**
+	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getTransactionTimeout()
+	 */
+    public Integer getTransactionTimeout(){
+        return transactionTimeout;
+    }
+
+    /**
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTransactionTimeout(java.lang.Integer)
+     */
+    public void setTransactionTimeout(Integer transactionTimeout){
+        this.transactionTimeout = transactionTimeout;
+    }
+
+    /**
+	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getTransactionType()
+	 */
+	public TransactionType getTransactionType(){
+	    return transactionType;
+    }
+
+	/**
+	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTransactionType(br.com.concepting.framework.service.types.TransactionType)
+	 */
+    public void setTransactionType(TransactionType transactionType){
+        this.transactionType = transactionType;
+    }
+
+    /**
 	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#setPersistenceResource(br.com.concepting.framework.persistence.resource.PersistenceResource)
 	 */
     public void setPersistenceResource(PersistenceResource persistenceResource){
