@@ -32,6 +32,15 @@ public class LoginSessionModel extends BaseModel{
 	@Property(relationType = RelationType.ONE_TO_ONE)
 	private SystemModuleModel systemModule = null;
 	
+	/**
+	 * Indica se o usuário está autenticado.
+	 * 
+	 * @return True/False.
+	 */
+	public Boolean isAuthenticated(){
+	    return (id != null && id > 0 && user != null && user.getId() != null && user.getId() > 0);
+	}
+	
     /**
      * Retorna a instância do modelo de dados que armazena os dados da sessão do sistema.
      * 
