@@ -36,6 +36,17 @@ public class SecurityController{
         
         this.systemController = systemController;
     }
+    
+    /**
+     * Indica se o usuário está autenticado.
+     * 
+     * @return True/False.
+     */
+    public <L extends LoginSessionModel> Boolean isAuthenticated(){
+        L loginSession = getLoginSession();
+        
+        return (loginSession != null && loginSession.isAuthenticated());
+    }
 
     /**
      * Retorna a instância contendo as propriedades do login atual.
