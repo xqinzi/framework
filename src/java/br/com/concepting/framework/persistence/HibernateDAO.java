@@ -138,7 +138,9 @@ public abstract class HibernateDAO extends BaseDAO{
         try{
             PersistenceResource persistenceRespurce = getPersistenceResource();
             
-            return (C)HibernateUtil.getSession(persistenceRespurce);
+            setConnection(HibernateUtil.getSession(persistenceRespurce));
+            
+            return (C)getConnection();
         }
         catch(Throwable e){
             throw new InternalErrorException(e);
