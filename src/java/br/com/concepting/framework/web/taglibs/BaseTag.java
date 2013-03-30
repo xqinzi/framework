@@ -12,7 +12,6 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
-import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.web.SecurityController;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
@@ -702,11 +701,8 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 	 * @throws Throwable
 	 */
 	protected void render() throws Throwable{
-	    if(renderWhenAuthenticated){
-	        LoginSessionModel loginSession = securityController.getLoginSession();
-	        
-	        rendered = (loginSession.isAuthenticated());
-	    }
+	    if(renderWhenAuthenticated)
+	        rendered = securityController.isAuthenticated();
 	    
 	    if(rendered){
     		renderOpen();

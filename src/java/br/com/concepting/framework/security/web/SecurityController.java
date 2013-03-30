@@ -45,7 +45,7 @@ public class SecurityController{
     public <L extends LoginSessionModel> Boolean isAuthenticated(){
         L loginSession = getLoginSession();
         
-        return (loginSession != null && loginSession.isAuthenticated());
+        return (loginSession != null && loginSession.getId() != null && loginSession.getId() > 0 && loginSession.getUser() != null && loginSession.getUser().getId() != null && loginSession.getUser().getId() > 0);
     }
 
     /**
