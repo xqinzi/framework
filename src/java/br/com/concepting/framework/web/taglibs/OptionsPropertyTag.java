@@ -1,10 +1,13 @@
 package br.com.concepting.framework.web.taglibs;
 
 import java.util.List;
+import java.util.Locale;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
+import br.com.concepting.framework.processors.ExpressionProcessorUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
@@ -16,11 +19,125 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class OptionsPropertyTag extends BaseOptionsPropertyTag{
-	private Integer optionsPerRow         = 0;
-	private String  optionLabelStyle      = "";
-	private String  optionLabelStyleClass = "";
-	private String  optionLabelProperty   = "";
-	private String  onSelect              = "";
+	private Integer optionsPerRow                    = 0;
+	private String  optionLabelStyle                 = "";
+	private String  optionLabelStyleClass            = "";
+	private String  optionLabelProperty              = "";
+	private String  onSelect                         = "";
+    private String  onSelectAction                   = "";
+    private String  onSelectActionForward            = "";
+    private String  onSelectActionForwardOnFail      = "";
+    private String  onSelectActionUpdateViews        = "";
+    private Boolean onSelectActionValidate           = false;
+    private String  onSelectActionValidateProperties = "";
+    
+    /**
+     * Retorna o identificador da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnSelectAction(){
+        return onSelectAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de seleção.
+     * 
+     * @param onSelectAction String contendo o identificador da ação.
+     */
+    public void setOnSelectAction(String onSelectAction){
+        this.onSelectAction = onSelectAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador do redirecionamento da ação.
+     */
+    public String getOnSelectActionForward(){
+        return onSelectActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação do evento de seleção.
+     * 
+     * @param onSelectActionForward String contendo o identificador do redirecionamento da ação.
+     */
+    public void setOnSelectActionForward(String onSelectActionForward){
+        this.onSelectActionForward = onSelectActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento, em caso de falha, da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador do redirecionamento da ação.
+     */
+    public String getOnSelectActionForwardOnFail(){
+        return onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento, em caso de falha, da ação do evento de seleção.
+     * 
+     * @param onSelectActionForwardOnFail String contendo o identificador do redirecionamento da ação.
+     */
+    public void setOnSelectActionForwardOnFail(String onSelectActionForwardOnFail){
+        this.onSelectActionForwardOnFail = onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Retorna o identificador das views a serem atualizadas após a execução da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador das views.
+     */
+    public String getOnSelectActionUpdateViews(){
+        return onSelectActionUpdateViews;
+    }
+
+    /**
+     * Define o identificador das views a serem atualizadas após a execução da ação do evento de seleção.
+     * 
+     * @param onSelectActionUpdateViews String contendo o identificador das views.
+     */
+    public void setOnSelectActionUpdateViews(String onSelectActionUpdateViews){
+        this.onSelectActionUpdateViews = onSelectActionUpdateViews;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de seleção.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnSelectActionValidate(){
+        return onSelectActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de seleção.
+     * 
+     * @param onSelectActionValidate True/False.
+     */
+    public void setOnSelectActionValidate(Boolean onSelectActionValidate){
+        this.onSelectActionValidate = onSelectActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que devem ser validadas na execução da ação do evento de seleção.
+     * 
+     * @return String contendo os identificadores das propriedades do modelo de dados do formulário.
+     */
+    public String getOnSelectActionValidateProperties(){
+        return onSelectActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que devem ser validadas na execução da ação do evento de seleção.
+     * 
+     * @param onSelectActionValidateProperties String contendo os identificadores das propriedades do modelo de dados do formulário.
+     */
+    public void setOnSelectActionValidateProperties(String onSelectActionValidateProperties){
+        this.onSelectActionValidateProperties = onSelectActionValidateProperties;
+    }
 
     /**
 	 * Retorna o número de opções por linha devem ser exibidas.
@@ -81,7 +198,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * 
 	 * @return String contendo a propriedade do modelo de dados.
 	 */
-	public String getOptionLabelName(){
+	public String getOptionLabelProperty(){
 		return optionLabelProperty;
 	}
 
@@ -148,6 +265,88 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 		}
 
 		super.initialize();
+		
+        if(onSelectAction.length() > 0){
+            String actionForm = getActionForm();
+            
+            if(actionForm.length() > 0){
+                StringBuilder onSelectContent = new StringBuilder();
+    
+                if(onSelect.length() > 0){
+                    onSelectContent.append(onSelect);
+                    
+                    if(!onSelect.endsWith(";"))
+                        onSelectContent.append(";");
+                    
+                    onSelectContent.append(" ");
+                }
+                
+                onSelectContent.append("document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(".");
+                
+                if(isForSearch())
+                    onSelectContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onSelectContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onSelectContent.append(".value = ");
+                onSelectContent.append(onSelectActionValidate);
+                onSelectContent.append(";");
+                
+                if(onSelectActionValidateProperties.length() > 0){
+                    onSelectContent.append(" document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionValidateProperties);
+                    onSelectContent.append("'; ");
+                }
+                
+                if(onSelectActionForward.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.FORWARD_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionForward);
+                    onSelectContent.append("; ");
+                }
+                
+                if(onSelectActionForwardOnFail.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionForwardOnFail);
+                    onSelectContent.append("; ");
+                }
+    
+                if(onSelectActionUpdateViews.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionUpdateViews);
+                    onSelectContent.append("; ");
+                }
+    
+                onSelectContent.append("document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(".");
+                onSelectContent.append(AttributeConstants.ACTION_KEY);
+                onSelectContent.append(".value = '");
+                onSelectContent.append(onSelectAction);
+                onSelectContent.append("'; submitForm(document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(");");
+                
+                onSelect = onSelectContent.toString();
+            }
+        }
 	}
 	
 	/**
@@ -321,10 +520,12 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	private void renderOptions(List options) throws Throwable{
+        Locale                currentLanguage     = systemController.getCurrentLanguage();
         PropertyInfo          propertyInfo        = getPropertyInfo();
         String                pattern             = getPattern();
 	    Object                value               = getValue();
 		Object                option              = null;
+		String                optionOnSelect      = "";
 		BaseOptionPropertyTag optionTag           = null;
 		Object                optionTagLabel      = null;
 		OptionStateTag        optionState         = null;
@@ -360,8 +561,8 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 			if(optionState == null || !optionState.remove()){
     			println("<td>");
     
-    			if(getOptionLabelName().length() > 0)
-    				optionTagLabel = PropertyUtil.getProperty(option, getOptionLabelName());
+    			if(getOptionLabelProperty().length() > 0)
+    				optionTagLabel = PropertyUtil.getProperty(option, getOptionLabelProperty());
     			else
     				optionTagLabel = option;
     			
@@ -400,9 +601,18 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                     }
                 }
                 
+                optionOnSelect = PropertyUtil.fillPropertiesInString(option, onSelect, currentLanguage);
+                optionOnSelect = ExpressionProcessorUtil.fillVariablesInString(optionOnSelect, currentLanguage);
+                
                 optionTag.setOptionValue(option);
                 optionTag.setValue(value);
-    			optionTag.setOnClick(PropertyUtil.fillPropertiesInString(option, getOnClick()));
+    			optionTag.setOnClick(onSelect);
+    			optionTag.setOnClickAction(onSelectAction);
+    			optionTag.setOnClickActionForward(onSelectActionForward);
+    			optionTag.setOnClickActionForwardOnFail(onSelectActionForwardOnFail);
+    			optionTag.setOnClickActionUpdateViews(onSelectActionUpdateViews);
+    			optionTag.setOnClickActionValidate(onSelectActionValidate);
+    			optionTag.setOnClickActionValidateProperties(onSelectActionValidateProperties);
     			optionTag.setEnabled(isEnabled());
     			optionTag.setParent(this);
     			optionTag.doStartTag();
@@ -436,5 +646,11 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
         setOptionLabelStyleClass("");
 	    setOptionLabelProperty("");
 	    setOnSelect("");
+        setOnSelectAction("");
+        setOnSelectActionForward("");
+        setOnSelectActionForwardOnFail("");
+        setOnSelectActionUpdateViews("");
+        setOnSelectActionValidate(false);
+        setOnSelectActionValidateProperties("");
     }
 }
