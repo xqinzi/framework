@@ -2,6 +2,7 @@ package br.com.concepting.framework.web.taglibs;
 
 import javax.servlet.jsp.tagext.BodyContent;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
@@ -13,15 +14,129 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 3.0
  */
 public class SectionTag extends BaseActionFormElementTag{
-    private String headerLabelStyleClass = "";
-    private String headerLabelStyle      = "";
-    private String headerStyleClass      = "";
-    private String headerStyle           = "";
-    private String contentStyleClass     = "";
-    private String contentStyle          = "";
-    private String onSelect              = "";
-    private String content               = null;
+    private String  headerLabelStyleClass            = "";
+    private String  headerLabelStyle                 = "";
+    private String  headerStyleClass                 = "";
+    private String  headerStyle                      = "";
+    private String  contentStyleClass                = "";
+    private String  contentStyle                     = "";
+    private String  onSelect                         = "";
+    private String  onSelectAction                   = "";
+    private String  onSelectActionForward            = "";
+    private String  onSelectActionForwardOnFail      = "";
+    private String  onSelectActionUpdateViews        = "";
+    private Boolean onSelectActionValidate           = false;
+    private String  onSelectActionValidateProperties = "";
+    private String  content                          = null;
     
+    /**
+     * Retorna o identificador da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnSelectAction(){
+        return onSelectAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de seleção.
+     * 
+     * @param onSelectAction String contendo o identificador da ação.
+     */
+    public void setOnSelectAction(String onSelectAction){
+        this.onSelectAction = onSelectAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador do redirecionamento da ação.
+     */
+    public String getOnSelectActionForward(){
+        return onSelectActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação do evento de seleção.
+     * 
+     * @param onSelectActionForward String contendo o identificador do redirecionamento da ação.
+     */
+    public void setOnSelectActionForward(String onSelectActionForward){
+        this.onSelectActionForward = onSelectActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento, em caso de falha, da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador do redirecionamento da ação.
+     */
+    public String getOnSelectActionForwardOnFail(){
+        return onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento, em caso de falha, da ação do evento de seleção.
+     * 
+     * @param onSelectActionForwardOnFail String contendo o identificador do redirecionamento da ação.
+     */
+    public void setOnSelectActionForwardOnFail(String onSelectActionForwardOnFail){
+        this.onSelectActionForwardOnFail = onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Retorna o identificador das views a serem atualizadas após a execução da ação do evento de seleção.
+     * 
+     * @return String contendo o identificador das views.
+     */
+    public String getOnSelectActionUpdateViews(){
+        return onSelectActionUpdateViews;
+    }
+
+    /**
+     * Define o identificador das views a serem atualizadas após a execução da ação do evento de seleção.
+     * 
+     * @param onSelectActionUpdateViews String contendo o identificador das views.
+     */
+    public void setOnSelectActionUpdateViews(String onSelectActionUpdateViews){
+        this.onSelectActionUpdateViews = onSelectActionUpdateViews;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de seleção.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnSelectActionValidate(){
+        return onSelectActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de seleção.
+     * 
+     * @param onSelectActionValidate True/False.
+     */
+    public void setOnSelectActionValidate(Boolean onSelectActionValidate){
+        this.onSelectActionValidate = onSelectActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que devem ser validadas na execução da ação do evento de seleção.
+     * 
+     * @return String contendo os identificadores das propriedades do modelo de dados do formulário.
+     */
+    public String getOnSelectActionValidateProperties(){
+        return onSelectActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que devem ser validadas na execução da ação do evento de seleção.
+     * 
+     * @param onSelectActionValidateProperties String contendo os identificadores das propriedades do modelo de dados do formulário.
+     */
+    public void setOnSelectActionValidateProperties(String onSelectActionValidateProperties){
+        this.onSelectActionValidateProperties = onSelectActionValidateProperties;
+    }
+
     /**
      * Retorna o estilo CSS para o label do cabeçalho da seção.
      * 
@@ -195,6 +310,90 @@ public class SectionTag extends BaseActionFormElementTag{
         }
         
         super.initialize();
+    
+        if(onSelectAction.length() > 0){
+            String actionForm = getActionForm();
+            
+            if(actionForm.length() > 0){
+                StringBuilder onSelectContent = new StringBuilder();
+    
+                if(onSelect.length() > 0){
+                    onSelectContent.append(onSelect);
+                    
+                    if(!onSelect.endsWith(";"))
+                        onSelectContent.append(";");
+                    
+                    onSelectContent.append(" ");
+                }
+                
+                onSelectContent.append("document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(".");
+                
+                SearchPropertiesGroupTag searchPropertiesTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
+                
+                if(searchPropertiesTag != null)
+                    onSelectContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onSelectContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onSelectContent.append(".value = ");
+                onSelectContent.append(onSelectActionValidate);
+                onSelectContent.append(";");
+                
+                if(onSelectActionValidateProperties.length() > 0){
+                    onSelectContent.append(" document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionValidateProperties);
+                    onSelectContent.append("'; ");
+                }
+                
+                if(onSelectActionForward.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.FORWARD_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionForward);
+                    onSelectContent.append("; ");
+                }
+                
+                if(onSelectActionForwardOnFail.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionForwardOnFail);
+                    onSelectContent.append("; ");
+                }
+    
+                if(onSelectActionUpdateViews.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionUpdateViews);
+                    onSelectContent.append("; ");
+                }
+    
+                onSelectContent.append("document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(".");
+                onSelectContent.append(AttributeConstants.ACTION_KEY);
+                onSelectContent.append(".value = '");
+                onSelectContent.append(onSelectAction);
+                onSelectContent.append("'; submitForm(document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(");");
+                
+                onSelect = onSelectContent.toString();
+            }
+        }
     }
 
     /**
@@ -233,6 +432,12 @@ public class SectionTag extends BaseActionFormElementTag{
         setContentStyleClass("");
         setContentStyle("");
         setOnSelect("");
+        setOnSelectAction("");
+        setOnSelectActionForward("");
+        setOnSelectActionForwardOnFail("");
+        setOnSelectActionUpdateViews("");
+        setOnSelectActionValidate(false);
+        setOnSelectActionValidateProperties("");
         setContent(null);
     }    
 }
