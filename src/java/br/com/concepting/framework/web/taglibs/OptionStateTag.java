@@ -50,35 +50,35 @@ public class OptionStateTag extends BaseTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-		GridColumnTag gridColumnTag = (GridColumnTag)findAncestorWithClass(this, GridColumnTag.class);
-
-		if(gridColumnTag != null){
-			OptionStateTag optionState = (OptionStateTag)this.clone();
-
-			gridColumnTag.addOptionState(optionState);
-		}
-
-		OptionsPropertyTag optionsPropertyTag = (OptionsPropertyTag)findAncestorWithClass(this, OptionsPropertyTag.class);
-
-		if(optionsPropertyTag != null){
-			OptionStateTag optionState = (OptionStateTag)this.clone();
-
-			optionsPropertyTag.addOptionState(optionState);
-		}
-
-		BaseOptionPropertyTag optionPropertyTag = (BaseOptionPropertyTag)findAncestorWithClass(this, BaseOptionPropertyTag.class);
-
-		if(optionPropertyTag != null){
-			OptionStateTag optionState = (OptionStateTag)this.clone();
-
-			optionPropertyTag.addOptionState(optionState);
-		}
 	}
 
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#render()
 	 */
 	protected void render() throws Throwable{
+        GridColumnTag gridColumnTag = (GridColumnTag)findAncestorWithClass(this, GridColumnTag.class);
+
+        if(gridColumnTag != null){
+            OptionStateTag optionState = (OptionStateTag)this.clone();
+
+            gridColumnTag.addOptionState(optionState);
+        }
+
+        OptionsPropertyTag optionsPropertyTag = (OptionsPropertyTag)findAncestorWithClass(this, OptionsPropertyTag.class);
+
+        if(optionsPropertyTag != null){
+            OptionStateTag optionState = (OptionStateTag)this.clone();
+
+            optionsPropertyTag.addOptionState(optionState);
+        }
+
+        BaseOptionPropertyTag optionPropertyTag = (BaseOptionPropertyTag)findAncestorWithClass(this, BaseOptionPropertyTag.class);
+
+        if(optionPropertyTag != null){
+            OptionStateTag optionState = (OptionStateTag)this.clone();
+
+            optionPropertyTag.addOptionState(optionState);
+        }
 	}
 
 	/**

@@ -51,19 +51,19 @@ public class GridRowStateTag extends OptionStateTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-		GridPropertyTag gridTag = (GridPropertyTag)findAncestorWithClass(this, GridPropertyTag.class);
-
-		if(gridTag != null){
-			GridRowStateTag rowState = (GridRowStateTag)this.clone();
-
-			gridTag.addRowStateTag(rowState);
-		}
 	}
     
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.OptionStateTag#render()
 	 */
     protected void render() throws Throwable{
+        GridPropertyTag gridTag = (GridPropertyTag)findAncestorWithClass(this, GridPropertyTag.class);
+
+        if(gridTag != null){
+            GridRowStateTag rowState = (GridRowStateTag)this.clone();
+
+            gridTag.addRowStateTag(rowState);
+        }
     }
 
     /**

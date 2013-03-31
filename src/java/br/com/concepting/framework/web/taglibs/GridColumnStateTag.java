@@ -34,19 +34,19 @@ public class GridColumnStateTag extends GridColumnTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-		GridColumnTag gridColumnTag = (GridColumnTag)findAncestorWithClass(this, GridColumnTag.class);
-
-		if(gridColumnTag != null){
-			GridColumnStateTag columnStateTag = (GridColumnStateTag)this.clone();
-
-			gridColumnTag.addColumnStateTag(columnStateTag);
-		}
 	}
 	
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.GridColumnTag#render()
 	 */
 	protected void render() throws Throwable{
+        GridColumnTag gridColumnTag = (GridColumnTag)findAncestorWithClass(this, GridColumnTag.class);
+
+        if(gridColumnTag != null){
+            GridColumnStateTag columnStateTag = (GridColumnStateTag)this.clone();
+
+            gridColumnTag.addColumnStateTag(columnStateTag);
+        }
 	}
 
 	/**
