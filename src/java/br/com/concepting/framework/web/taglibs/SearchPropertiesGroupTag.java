@@ -20,7 +20,6 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
     private String             action             = "";
 	private String             forward            = "";
 	private String             forwardOnFail      = "";
-	private String             onSubmit           = "";
     private SearchButtonTag    searchButtonTag    = null;
 	private Collection<String> searchProperties   = null;
 	private String             updateViews        = "";
@@ -149,24 +148,6 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 */
 	public void setForwardOnFail(String forwardOnFail){
 		this.forwardOnFail = forwardOnFail;
-	}
-
-	/**
-	 * Retorna as ações a serem executadas no momento da pesquisa.
-	 * 
-	 * @return String contendo as ações a serem executadas no momento da pesquisa.
-	 */
-	public String getOnSubmit(){
-		return onSubmit;
-	}
-
-	/**
-	 * Define as ações a serem executadas no momento da pesquisa.
-	 * 
-	 * @param onSubmit String contendo as ações a serem executadas no momento da pesquisa.
-	 */
-	public void setOnSubmit(String onSubmit){
-		this.onSubmit = onSubmit;
 	}
 
 	/**
@@ -376,36 +357,32 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 		print(AlignmentType.TOP);
 		print("\" width=\"1\">");
 		
-        if(onSubmit.length() > 0)
-            searchButtonTag.setOnClick(onSubmit);
-        else{
-            if(validate){
-                StringBuilder validatePropertiesContent = new StringBuilder();
-     
-                if(validateProperties.length() > 0){
-                    String validatePropertiesIds[] = StringUtil.split(validateProperties);
-     
-                    for(String validatePropertyId : validatePropertiesIds){
+        if(validate){
+            StringBuilder validatePropertiesContent = new StringBuilder();
+ 
+            if(validateProperties.length() > 0){
+                String validatePropertiesIds[] = StringUtil.split(validateProperties);
+ 
+                for(String validatePropertyId : validatePropertiesIds){
+                    if(validatePropertiesContent.length() > 0)
+                        validatePropertiesContent.append(",");
+ 
+                    validatePropertiesContent.append("search.");
+                    validatePropertiesContent.append(validatePropertyId);
+                }
+            }
+            else{
+                if(searchProperties != null && searchProperties.size() > 0){
+                    for(String searchProperty : searchProperties){
                         if(validatePropertiesContent.length() > 0)
                             validatePropertiesContent.append(",");
-     
-                        validatePropertiesContent.append("search.");
-                        validatePropertiesContent.append(validatePropertyId);
+ 
+                        validatePropertiesContent.append(searchProperty);
                     }
                 }
-                else{
-                    if(searchProperties != null && searchProperties.size() > 0){
-                        for(String searchProperty : searchProperties){
-                            if(validatePropertiesContent.length() > 0)
-                                validatePropertiesContent.append(",");
-     
-                            validatePropertiesContent.append(searchProperty);
-                        }
-                    }
-                }
-
-                searchButtonTag.setValidateProperties(validatePropertiesContent.toString());
             }
+
+            searchButtonTag.setValidateProperties(validatePropertiesContent.toString());
         }
 
         searchButtonTag.doEndTag();
@@ -442,7 +419,6 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	    setForwardOnFail("");
 	    setValidate(false);
 	    setValidateProperties("");
-	    setOnSubmit("");
 	    setSearchProperties(null);
 	    setSearchButtonTag(null);
 	    setUpdateViews("");
