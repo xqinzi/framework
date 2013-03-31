@@ -69,7 +69,9 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         onChange.append(actionForm);
         onChange.append(".enctype = 'multipart/form-data'; document.");
         onChange.append(actionForm);
-        onChange.append(".action.value = '");
+        onChange.append(".");
+        onChange.append(AttributeConstants.ACTION_KEY);
+        onChange.append(".value = '");
         onChange.append(ActionType.UPLOAD.getMethod());
         onChange.append("'; document.");
         onChange.append(actionForm);
