@@ -36,24 +36,156 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 2.0
  */
 public class GridPropertyTag extends BaseOptionsPropertyTag{
-	private String                    onSelect             = "";
-	private Boolean                   showSelection        = true;
-	private String                    selectionColumnLabel = "";
-	private String                    headerLinkStyleClass = "";
-	private String                    headerLinkStyle      = "";
-	private String                    headerStyleClass     = "";
-	private String                    headerStyle          = "";
-	private String                    detailLinkStyleClass = "";
-	private String                    detailLinkStyle      = "";
-    private String                    detailStyleClass     = "";
-    private String                    detailStyle          = "";
-	private String                    aggregateStyleClass  = "";
-	private String                    aggregateStyle       = "";
-	private Collection<GridColumnTag> columnsTags          = null;
-	private PagerTag                  pagerTag             = null;
-	private List<ButtonTag>           buttonsTags          = null;
-	private List<GridRowStateTag>     rowStatesTags        = null;
+	private String                    onSelect                         = "";
+    private String                    onSelectAction                   = "";
+    private String                    onSelectActionForward            = "";
+    private String                    onSelectActionForwardOnFail      = "";
+    private String                    onSelectActionUpdateViews        = "";
+    private Boolean                   onSelectActionValidate           = false;
+    private String                    onSelectActionValidateProperties = "";
+	private Boolean                   showSelection                    = true;
+	private String                    selectionColumnLabel             = "";
+	private String                    headerLinkStyleClass             = "";
+	private String                    headerLinkStyle                  = "";
+	private String                    headerStyleClass                 = "";
+	private String                    headerStyle                      = "";
+	private String                    detailLinkStyleClass             = "";
+	private String                    detailLinkStyle                  = "";
+    private String                    detailStyleClass                 = "";
+    private String                    detailStyle                      = "";
+	private String                    aggregateStyleClass              = "";
+	private String                    aggregateStyle                   = "";
+	private Collection<GridColumnTag> columnsTags                      = null;
+	private PagerTag                  pagerTag                         = null;
+	private List<ButtonTag>           buttonsTags                      = null;
+	private List<GridRowStateTag>     rowStatesTags                    = null;
+
+    /**
+     * Retorna o evento a ser executado quando uma opção de seleção for selecionada.
+     * 
+     * @return String contendo o evento a ser executado.
+     */
+    public String getOnSelect(){
+        return onSelect;
+    }
+
+    /**
+     * Define o evento a ser executado quando uma opção de seleção for selecionada.
+     * 
+     * @param onSelect String contendo o evento a ser executado.
+     */
+    public void setOnSelect(String onSelect){
+        this.onSelect = onSelect;
+    }
 	
+    /**
+     * Retorna o identificador da ação do evento de seleção de um item.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnSelectAction(){
+        return onSelectAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de seleção de um item.
+     * 
+     * @param onSelectAction String contendo o identificador da ação.
+     */
+    public void setOnSelectAction(String onSelectAction){
+        this.onSelectAction = onSelectAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação do evento de seleção de um item.
+     * 
+     * @return String contendo o identificador da redirecionamento.
+     */
+    public String getOnSelectActionForward(){
+        return onSelectActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação do evento de seleção de um item.
+     * 
+     * @param onSelectActionForward String contendo o identificador da redirecionamento.
+     */
+    public void setOnSelectActionForward(String onSelectActionForward){
+        this.onSelectActionForward = onSelectActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha da ação do evento de seleção de um item.
+     * 
+     * @return String contendo o identificador da redirecionamento.
+     */
+    public String getOnSelectActionForwardOnFail(){
+        return onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha da ação do evento de seleção de um item.
+     * 
+     * @param onSelectActionForwardOnFail String contendo o identificador da redirecionamento.
+     */
+    public void setOnSelectActionForwardOnFail(String onSelectActionForwardOnFail){
+        this.onSelectActionForwardOnFail = onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Retorna os identificadores das views que serão atualizadas após a execução da ação de seleção de um item.
+     *  
+     * @return String contendo os identificadores das views.
+     */
+    public String getOnSelectActionUpdateViews(){
+        return onSelectActionUpdateViews;
+    }
+
+    /**
+     * Define os identificadores das views que serão atualizadas após a execução da ação de seleção de um item.
+     *  
+     * @param onSelectActionUpdateViews String contendo os identificadores das views.
+     */
+    public void setOnSelectActionUpdateViews(String onSelectActionUpdateViews){
+        this.onSelectActionUpdateViews = onSelectActionUpdateViews;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação de seleção de um item.
+     *  
+     * @return True/False.
+     */
+    public Boolean getOnSelectActionValidate(){
+        return onSelectActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação de seleção de um item.
+     *  
+     * @param onSelectActionValidate True/False.
+     */
+    public void setOnSelectActionValidate(Boolean onSelectActionValidate){
+        this.onSelectActionValidate = onSelectActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário deve ser validado na execução da ação de seleção de um item.
+     *  
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnSelectActionValidateProperties(){
+        return onSelectActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário deve ser validado na execução da ação de seleção de um item.
+     *  
+     * @param onSelectActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnSelectActionValidateProperties(String onSelectActionValidateProperties){
+        this.onSelectActionValidateProperties = onSelectActionValidateProperties;
+    }
+
     /**
 	 * Retorna o estilo CSS para o agrupamento.
 	 * 
@@ -343,24 +475,6 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	}
 
 	/**
-	 * Retorna o evento a ser executado quando uma opção de seleção for selecionada.
-	 * 
-	 * @return String contendo o evento a ser executado.
-	 */
-	public String getOnSelect(){
-		return onSelect;
-	}
-
-	/**
-	 * Define o evento a ser executado quando uma opção de seleção for selecionada.
-	 * 
-	 * @param onSelect String contendo o evento a ser executado.
-	 */
-	public void setOnSelect(String onSelect){
-		this.onSelect = onSelect;
-	}
-
-	/**
 	 * Define a instância do componente visual de paginação.
 	 * 
 	 * @param pagerTag Instância contendo as propriedades do componente visual de paginação.
@@ -437,7 +551,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	    setComponentType(ComponentType.GRID);
 	    
         super.initialize();
-	}
+    }
 
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderOpen()
@@ -580,7 +694,6 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	private void renderFooter() throws Throwable{
 		println("<tr>");
 		print("<td");
-		
 		
 		if(columnsTags != null && columnsTags.size() > 0){
 		    Integer columnsSize = columnsTags.size();
@@ -900,6 +1013,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         						columnOnSelect = ExpressionProcessorUtil.fillVariablesInString(columnOnSelect, currentLanguage);
         
         						optionTag.setOnClick(columnOnSelect);
+        						optionTag.setOnClickAction(onSelectAction);
+        						optionTag.setOnClickActionForward(onSelectActionForward);
+        						optionTag.setOnClickActionForwardOnFail(onSelectActionForwardOnFail);
+        						optionTag.setOnClickActionUpdateViews(onSelectActionUpdateViews);
+        						optionTag.setOnClickActionValidate(onSelectActionValidate);
+        						optionTag.setOnClickActionValidateProperties(onSelectActionValidateProperties);
         						optionTag.setEnabled(isEnabled());
                                 optionTag.setParent(this);
         						optionTag.doStartTag();
@@ -1249,14 +1368,68 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         										}
 
         										editableDataColumnTag.setOnBlur(columnOnBlur);
+        										editableDataColumnTag.setOnBlurAction(getOnBlurAction());
+        										editableDataColumnTag.setOnBlurActionForward(getOnBlurActionForward());
+        										editableDataColumnTag.setOnBlurActionForwardOnFail(getOnBlurActionForwardOnFail());
+        										editableDataColumnTag.setOnBlurActionUpdateViews(getOnBlurActionUpdateViews());
+        										editableDataColumnTag.setOnBlurActionValidate(getOnBlurActionValidate());
+        										editableDataColumnTag.setOnBlurActionValidateProperties(getOnBlurActionValidateProperties());
         										editableDataColumnTag.setOnChange(columnOnChange);
-        										editableDataColumnTag.setOnClick(columnOnClick);
+                                                editableDataColumnTag.setOnChangeAction(getOnChangeAction());
+                                                editableDataColumnTag.setOnChangeActionForward(getOnChangeActionForward());
+                                                editableDataColumnTag.setOnChangeActionForwardOnFail(getOnChangeActionForwardOnFail());
+                                                editableDataColumnTag.setOnChangeActionUpdateViews(getOnChangeActionUpdateViews());
+                                                editableDataColumnTag.setOnChangeActionValidate(getOnChangeActionValidate());
+                                                editableDataColumnTag.setOnChangeActionValidateProperties(getOnChangeActionValidateProperties());
+        										editableDataColumnTag.setOnClick(columnOnClickContent.toString());
+                                                editableDataColumnTag.setOnClickAction(getOnClickAction());
+                                                editableDataColumnTag.setOnClickActionForward(getOnClickActionForward());
+                                                editableDataColumnTag.setOnClickActionForwardOnFail(getOnClickActionForwardOnFail());
+                                                editableDataColumnTag.setOnClickActionUpdateViews(getOnClickActionUpdateViews());
+                                                editableDataColumnTag.setOnClickActionValidate(getOnClickActionValidate());
+                                                editableDataColumnTag.setOnClickActionValidateProperties(getOnClickActionValidateProperties());
                                                 editableDataColumnTag.setOnFocus(columnOnFocus);
+                                                editableDataColumnTag.setOnFocusAction(getOnFocusAction());
+                                                editableDataColumnTag.setOnFocusActionForward(getOnFocusActionForward());
+                                                editableDataColumnTag.setOnFocusActionForwardOnFail(getOnFocusActionForwardOnFail());
+                                                editableDataColumnTag.setOnFocusActionUpdateViews(getOnFocusActionUpdateViews());
+                                                editableDataColumnTag.setOnFocusActionValidate(getOnFocusActionValidate());
+                                                editableDataColumnTag.setOnFocusActionValidateProperties(getOnFocusActionValidateProperties());
         										editableDataColumnTag.setOnKeyPress(columnOnKeyPress);
+                                                editableDataColumnTag.setOnKeyPressAction(getOnKeyPressAction());
+                                                editableDataColumnTag.setOnKeyPressActionForward(getOnKeyPressActionForward());
+                                                editableDataColumnTag.setOnKeyPressActionForwardOnFail(getOnKeyPressActionForwardOnFail());
+                                                editableDataColumnTag.setOnKeyPressActionUpdateViews(getOnKeyPressActionUpdateViews());
+                                                editableDataColumnTag.setOnKeyPressActionValidate(getOnKeyPressActionValidate());
+                                                editableDataColumnTag.setOnKeyPressActionValidateProperties(getOnKeyPressActionValidateProperties());
         										editableDataColumnTag.setOnKeyUp(columnOnKeyUp);
+                                                editableDataColumnTag.setOnKeyUpAction(getOnKeyUpAction());
+                                                editableDataColumnTag.setOnKeyUpActionForward(getOnKeyUpActionForward());
+                                                editableDataColumnTag.setOnKeyUpActionForwardOnFail(getOnKeyUpActionForwardOnFail());
+                                                editableDataColumnTag.setOnKeyUpActionUpdateViews(getOnKeyUpActionUpdateViews());
+                                                editableDataColumnTag.setOnKeyUpActionValidate(getOnKeyUpActionValidate());
+                                                editableDataColumnTag.setOnKeyUpActionValidateProperties(getOnKeyUpActionValidateProperties());
         										editableDataColumnTag.setOnKeyDown(columnOnKeyDown);
+                                                editableDataColumnTag.setOnKeyDownAction(getOnKeyDownAction());
+                                                editableDataColumnTag.setOnKeyDownActionForward(getOnKeyDownActionForward());
+                                                editableDataColumnTag.setOnKeyDownActionForwardOnFail(getOnKeyDownActionForwardOnFail());
+                                                editableDataColumnTag.setOnKeyDownActionUpdateViews(getOnKeyDownActionUpdateViews());
+                                                editableDataColumnTag.setOnKeyDownActionValidate(getOnKeyDownActionValidate());
+                                                editableDataColumnTag.setOnKeyDownActionValidateProperties(getOnKeyDownActionValidateProperties());
         										editableDataColumnTag.setOnMouseOver(columnOnMouseOver);
+                                                editableDataColumnTag.setOnMouseOverAction(getOnMouseOverAction());
+                                                editableDataColumnTag.setOnMouseOverActionForward(getOnMouseOverActionForward());
+                                                editableDataColumnTag.setOnMouseOverActionForwardOnFail(getOnMouseOverActionForwardOnFail());
+                                                editableDataColumnTag.setOnMouseOverActionUpdateViews(getOnMouseOverActionUpdateViews());
+                                                editableDataColumnTag.setOnMouseOverActionValidate(getOnMouseOverActionValidate());
+                                                editableDataColumnTag.setOnMouseOverActionValidateProperties(getOnMouseOverActionValidateProperties());
         										editableDataColumnTag.setOnMouseOut(columnOnMouseOut);
+                                                editableDataColumnTag.setOnMouseOutAction(getOnMouseOutAction());
+                                                editableDataColumnTag.setOnMouseOutActionForward(getOnMouseOutActionForward());
+                                                editableDataColumnTag.setOnMouseOutActionForwardOnFail(getOnMouseOutActionForwardOnFail());
+                                                editableDataColumnTag.setOnMouseOutActionUpdateViews(getOnMouseOutActionUpdateViews());
+                                                editableDataColumnTag.setOnMouseOutActionValidate(getOnMouseOutActionValidate());
+                                                editableDataColumnTag.setOnMouseOutActionValidateProperties(getOnMouseOutActionValidateProperties());
         										editableDataColumnTag.setTooltip(columnTooltip);
         
         										if(editableDataColumnTag instanceof CheckPropertyTag)
@@ -1342,7 +1515,27 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         										imageTag.setValue(columnValue);
         										imageTag.setWidth(columnTag.getImageWidth());
         										imageTag.setHeight(columnTag.getImageHeight());
-        										imageTag.setOnClick(columnLink);
+        										imageTag.setOnClick(columnOnClick);
+        										imageTag.setOnClickAction(getOnClickAction());
+        										imageTag.setOnClickActionForward(getOnClickActionForward());
+        										imageTag.setOnClickActionForwardOnFail(getOnClickActionForwardOnFail());
+        										imageTag.setOnClickActionUpdateViews(getOnClickActionUpdateViews());
+        										imageTag.setOnClickActionValidate(getOnClickActionValidate());
+        										imageTag.setOnClickActionValidateProperties(getOnClickActionValidateProperties());
+                                                imageTag.setOnMouseOver(columnOnMouseOver);
+                                                imageTag.setOnMouseOverAction(getOnMouseOverAction());
+                                                imageTag.setOnMouseOverActionForward(getOnMouseOverActionForward());
+                                                imageTag.setOnMouseOverActionForwardOnFail(getOnMouseOverActionForwardOnFail());
+                                                imageTag.setOnMouseOverActionUpdateViews(getOnMouseOverActionUpdateViews());
+                                                imageTag.setOnMouseOverActionValidate(getOnMouseOverActionValidate());
+                                                imageTag.setOnMouseOverActionValidateProperties(getOnMouseOverActionValidateProperties());
+                                                imageTag.setOnMouseOut(columnOnMouseOut);
+                                                imageTag.setOnMouseOutAction(getOnMouseOutAction());
+                                                imageTag.setOnMouseOutActionForward(getOnMouseOutActionForward());
+                                                imageTag.setOnMouseOutActionForwardOnFail(getOnMouseOutActionForwardOnFail());
+                                                imageTag.setOnMouseOutActionUpdateViews(getOnMouseOutActionUpdateViews());
+                                                imageTag.setOnMouseOutActionValidate(getOnMouseOutActionValidate());
+                                                imageTag.setOnMouseOutActionValidateProperties(getOnMouseOutActionValidateProperties());
         										imageTag.setTooltip(columnTooltip);
         										imageTag.setShowLabel(false);
         										imageTag.doStartTag();
@@ -1960,6 +2153,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 		super.clearAttributes();
 
 		setOnSelect("");
+		setOnSelectAction("");
+		setOnSelectActionForward("");
+		setOnSelectActionForwardOnFail("");
+		setOnSelectActionUpdateViews("");
+		setOnSelectActionValidate(false);
+		setOnSelectActionValidateProperties("");
 		setShowSelection(true);
 		setSelectionColumnLabel("");
 		setHeaderLinkStyleClass("");
