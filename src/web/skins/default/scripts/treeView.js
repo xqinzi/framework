@@ -15,22 +15,16 @@
  * @param openedNodeIconClass String contendo o identificador do estilo de um nó expandido.
  * @param closedNodeIconClass String contendo o identificador do estilo de um nó não 
  * expandido.
- * @param form Instância contendo as propriedades do formulário.
- * @param onExpandAction String contendo o identificador da ação a ser executada ao expandir 
+ * @param onExpand String contendo o identificador da ação a ser executada ao expandir 
  * um nó.
- * @param actionTarget String contendo o identificador do destino da ação a ser executada.
  */
-function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, openedNodeIconClass, closedNodeIconClass, form, onExpandAction, actionTarget){
+function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, openedNodeIconClass, closedNodeIconClass, onExpand){
 	var node       = document.getElementById(nodeId);
 	var submitFlag = false;
 	
 	if(node){
-		if(node.style.display == "NONE"){
+		if(node.style.display == "NONE")
 			node.style.display = "";
-			
-			if(form && onExpandAction)
-				submitFlag = true;
-		}
 		else
 			node.style.display = "NONE";
 	}
@@ -62,16 +56,12 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
 			nodeExpanded.value = "false";
 	}
 	
-	if(submitFlag){
-		form.action.value = onExpandAction;
-		form.target       = actionTarget;
-			
-		submitForm(form);
-	}
+	if(onExpand)
+		onExpand();
 }
 
 /**
- * Atualiza um nó.
+ * Seleciona/deseleciona um nó.
  * 
  * @param name String contendo o identificador do componente.
  * @param nodeId String contendo o identificador do nó.
@@ -81,7 +71,7 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
  * @param onSelect Função a ser executada no momento da seleção do nó.
  * @param onUnSelect Função a ser executada no momento da deseleção do nó.
  */
-function refreshNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSelect, onUnSelect){
+function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSelect, onUnSelect){
 	var nodeLabel = document.getElementById(nodeId + ".label");
 	
 	if(nodeLabel){	
