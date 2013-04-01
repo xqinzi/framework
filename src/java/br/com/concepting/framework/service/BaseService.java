@@ -39,9 +39,6 @@ public abstract class BaseService implements IService{
      * @return True/False.
      */
     private Boolean useTransaction(){
-        if(this instanceof BaseRemoteService)
-            return false;
-        
         Class   serviceClass = getClass();
         Class   interfaces[] = serviceClass.getInterfaces();
         Service annotation   = null;
