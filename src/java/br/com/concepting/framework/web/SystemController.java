@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.jstl.core.Config;
 
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
@@ -129,17 +130,43 @@ public class SystemController{
      * @param currentLanguage String contendo o identificador do idioma.
      */
 	public void setCurrentLanguage(String currentLanguage){
+	    Locale language = null;
+	    
 	    if(currentLanguage.length() == 0)
-	        currentLanguage = StringUtil.trim(LanguageUtil.getDefaultLanguage());
+	        language = LanguageUtil.getDefaultLanguage();
+	    else
+	        language = LanguageUtil.getLanguageByString(currentLanguage);
 	    
-        LoginSessionModel  loginSession  = securityController.getLoginSession();
-        SystemSessionModel systemSession = loginSession.getSystemSession();
+	    if(language == null)
+	        language = LanguageUtil.getDefaultLanguage();
 	    
-        systemSession.setCurrentLanguage(currentLanguage);
+	    setCurrentLanguage(language);
+	}
+	
+    /**
+     * Define o idioma atual.
+     * 
+     * @param currentLanguage Instância contendo as propriedades do idioma.
+     */
+	public void setCurrentLanguage(Locale currentLanguage){
+	    if(currentLanguage == null)
+	        currentLanguage = LanguageUtil.getDefaultLanguage();
+	    
+        LoginSessionModel loginSession = securityController.getLoginSession();
         
-        securityController.setLoginSession(loginSession);
+        if(loginSession != null){
+            SystemSessionModel systemSession = loginSession.getSystemSession();
+            
+            systemSession.setCurrentLanguage(currentLanguage);
+            
+            securityController.setLoginSession(loginSession);
+        }
         
-        session.setAttribute(SystemConstants.CURRENT_LANGUAGE_KEY, getCurrentLanguage());
+        session.setAttribute(SystemConstants.CURRENT_LANGUAGE_KEY, currentLanguage);
+        
+        Config.set(session, Config.FMT_LOCALE, currentLanguage);
+        
+        addCookie(SystemConstants.CURRENT_LANGUAGE_KEY, currentLanguage.toString(), true);
 	}
 	
 	/**
@@ -148,10 +175,19 @@ public class SystemController{
 	 * @return Instância contendo as propriedades do idioma.
 	 */
     public Locale getCurrentLanguage(){
-        LoginSessionModel  loginSession  = securityController.getLoginSession();
-        SystemSessionModel systemSession = loginSession.getSystemSession();
+        Locale currentLanguage = null;
+        Cookie cookie          = getCookie(SystemConstants.CURRENT_LANGUAGE_KEY);
         
-        return LanguageUtil.getLanguageByString(systemSession.getCurrentLanguage());
+        if(cookie != null)
+            currentLanguage = LanguageUtil.getLanguageByString(cookie.getValue());
+        
+        if(currentLanguage == null){
+            currentLanguage = LanguageUtil.getDefaultLanguage();
+            
+            setCurrentLanguage(currentLanguage);
+        }
+        
+        return currentLanguage;
     }
 
     /**
