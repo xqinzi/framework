@@ -4,18 +4,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.struts.taglib.TagUtils;
-
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.Node;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.web.types.ScopeType;
 
 /**
  * Classe que define o componente visual Treeview (Árvore de visualização).
@@ -24,64 +20,376 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 2.0
  */
 public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
-	private String  nodeIconStyleClass          = "";
-	private String  nodeLabelStyleClass         = "";
-	private String  nodeLabelSelectedStyleClass = "";
-    private String  expandedNodeIconStyleClass  = "";
-	private String  collapsedNodeIconStyleClass = "";
-	private String  openedNodeIconStyleClass    = "";
-	private String  closedNodeIconStyleClass    = "";
-	private String  onSelect                    = "";
-	private String  onUnSelect                  = "";
-	private Integer expandLevel                 = 0;
-	private Boolean processActions              = false;
-	private String  updateViews                 = "";
+	private String  nodeIconStyleClass                 = "";
+	private String  nodeLabelStyleClass                = "";
+	private String  nodeLabelSelectedStyleClass        = "";
+    private String  expandedNodeIconStyleClass         = "";
+	private String  collapsedNodeIconStyleClass        = "";
+	private String  openedNodeIconStyleClass           = "";
+	private String  closedNodeIconStyleClass           = "";
+    private String  onExpand                           = "";
+    private String  onExpandAction                     = "";
+    private String  onExpandActionForward              = "";
+    private String  onExpandActionForwardOnFail        = "";
+    private String  onExpandActionUpdateViews          = "";
+    private Boolean onExpandActionValidate             = false;
+    private String  onExpandActionValidateProperties   = "";
+	private String  onSelect                           = "";
+    private String  onSelectAction                     = "";
+    private String  onSelectActionForward              = "";
+    private String  onSelectActionForwardOnFail        = "";
+    private String  onSelectActionUpdateViews          = "";
+    private Boolean onSelectActionValidate             = false;
+    private String  onSelectActionValidateProperties   = "";
+	private String  onUnSelect                         = "";
+    private String  onUnSelectAction                   = "";
+    private String  onUnSelectActionForward            = "";
+    private String  onUnSelectActionForwardOnFail      = "";
+    private String  onUnSelectActionUpdateViews        = "";
+    private Boolean onUnSelectActionValidate           = false;
+    private String  onUnSelectActionValidateProperties = "";
+	private Integer expandLevel                        = 0;
+	
+	/**
+	 * Retorna o evento a ser executado no momento da expansão do nó.
+	 *  
+	 * @return String contendo o evento a ser executado.
+	 */
+    public String getOnExpand(){
+        return onExpand;
+    }
 
     /**
-     * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
-     * processamento da ação requisitada.
-     * 
+     * Define o evento a ser executado no momento da expansão do nó.
+     *  
+     * @param onExpand String contendo o evento a ser executado.
+     */
+    public void setOnExpand(String onExpand){
+        this.onExpand = onExpand;
+    }
+
+    /**
+     * Retorna o identificador da ação a ser executado no momento da expansão do nó.
+     *  
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnExpandAction(){
+        return onExpandAction;
+    }
+
+    /**
+     * Define o identificador da ação a ser executado no momento da expansão do nó.
+     *  
+     * @param onExpandAction String contendo o identificador da ação.
+     */
+    public void setOnExpandAction(String onExpandAction){
+        this.onExpandAction = onExpandAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação de expansão do nó.
+     *  
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnExpandActionForward(){
+        return onExpandActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação de expansão do nó.
+     *  
+     * @param onExpandActionForward String contendo o identificador do redirecionamento.
+     */
+    public void setOnExpandActionForward(String onExpandActionForward){
+        this.onExpandActionForward = onExpandActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha da ação de expansão do nó.
+     *  
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnExpandActionForwardOnFail(){
+        return onExpandActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha da ação de expansão do nó.
+     *  
+     * @param onExpandActionForwardOnFail String contendo o identificador do redirecionamento.
+     */
+    public void setOnExpandActionForwardOnFail(String onExpandActionForwardOnFail){
+        this.onExpandActionForwardOnFail = onExpandActionForwardOnFail;
+    }
+
+    /**
+     * Retorna os identificadores das views a serem atualizadas após a execução da ação de expansão do nó.
+     *  
      * @return String contendo os identificadores das views.
      */
-    public String getUpdateViews(){
-        return updateViews;
+    public String getOnExpandActionUpdateViews(){
+        return onExpandActionUpdateViews;
     }
 
     /**
-     * Define os identificadores das views (separados por vírgula) a serem atualizadas após o
-     * processamento da ação requisitada.
-     * 
-     * @param updateViews String contendo os identificadores das views.
+     * Define os identificadores das views a serem atualizadas após a execução da ação de expansão do nó.
+     *  
+     * @param onExpandActionUpdateViews String contendo os identificadores das views.
      */
-    public void setUpdateViews(String updateViews){
-        this.updateViews = updateViews;
+    public void setOnExpandActionUpdateViews(String onExpandActionUpdateViews){
+        this.onExpandActionUpdateViews = onExpandActionUpdateViews;
     }
 
     /**
-	 * Indica se as ações devem ser processadas.
-	 * 
-	 * @return True/False.
-	 */
-    public Boolean processActions(){
-        return processActions;
-    }
-
-    /**
-     * Indica se as ações devem ser processadas.
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação de expansão do nó.
      * 
      * @return True/False.
      */
-    public Boolean getProcessActions(){
-        return processActions();
+    public Boolean getOnExpandActionValidate(){
+        return onExpandActionValidate;
     }
 
     /**
-     * Define se as ações devem ser processadas.
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação de expansão do nó.
      * 
-     * @param processActions True/False.
+     * @param onExpandActionValidate True/False.
      */
-    public void setProcessActions(Boolean processActions){
-        this.processActions = processActions;
+    public void setOnExpandActionValidate(Boolean onExpandActionValidate){
+        this.onExpandActionValidate = onExpandActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário deve ser validado na execução da ação de expansão do nó.
+     *  
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnExpandActionValidateProperties(){
+        return onExpandActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário deve ser validado na execução da ação de expansão do nó.
+     *  
+     * @param onExpandActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnExpandActionValidateProperties(String onExpandActionValidateProperties){
+        this.onExpandActionValidateProperties = onExpandActionValidateProperties;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de seleção do nó.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnSelectAction(){
+        return onSelectAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de seleção do nó.
+     * 
+     * @param onSelectAction String contendo o identificador da ação.
+     */
+    public void setOnSelectAction(String onSelectAction){
+        this.onSelectAction = onSelectAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação do evento de seleção do nó.
+     * 
+     * @return String contendo o identificador da redirecionamento.
+     */
+    public String getOnSelectActionForward(){
+        return onSelectActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação do evento de seleção do nó.
+     * 
+     * @param onSelectActionForward String contendo o identificador da redirecionamento.
+     */
+    public void setOnSelectActionForward(String onSelectActionForward){
+        this.onSelectActionForward = onSelectActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha da ação do evento de seleção do nó.
+     * 
+     * @return String contendo o identificador da redirecionamento.
+     */
+    public String getOnSelectActionForwardOnFail(){
+        return onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha da ação do evento de seleção do nó.
+     * 
+     * @param onSelectActionForwardOnFail String contendo o identificador da redirecionamento.
+     */
+    public void setOnSelectActionForwardOnFail(String onSelectActionForwardOnFail){
+        this.onSelectActionForwardOnFail = onSelectActionForwardOnFail;
+    }
+
+    /**
+     * Retorna os identificadores das views que serão atualizadas após a execução da ação de seleção do nó.
+     *  
+     * @return String contendo os identificadores das views.
+     */
+    public String getOnSelectActionUpdateViews(){
+        return onSelectActionUpdateViews;
+    }
+
+    /**
+     * Define os identificadores das views que serão atualizadas após a execução da ação de seleção do nó.
+     *  
+     * @param onSelectActionUpdateViews String contendo os identificadores das views.
+     */
+    public void setOnSelectActionUpdateViews(String onSelectActionUpdateViews){
+        this.onSelectActionUpdateViews = onSelectActionUpdateViews;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação de seleção do nó.
+     *  
+     * @return True/False.
+     */
+    public Boolean getOnSelectActionValidate(){
+        return onSelectActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação de seleção do nó.
+     *  
+     * @param onSelectActionValidate True/False.
+     */
+    public void setOnSelectActionValidate(Boolean onSelectActionValidate){
+        this.onSelectActionValidate = onSelectActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário deve ser validado na execução da ação de seleção do nó.
+     *  
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnSelectActionValidateProperties(){
+        return onSelectActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário deve ser validado na execução da ação de seleção do nó.
+     *  
+     * @param onSelectActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnSelectActionValidateProperties(String onSelectActionValidateProperties){
+        this.onSelectActionValidateProperties = onSelectActionValidateProperties;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de deseleção do nó.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnUnSelectAction(){
+        return onUnSelectAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de deseleção do nó.
+     * 
+     * @param onUnSelectAction String contendo o identificador da ação.
+     */
+    public void setOnUnSelectAction(String onUnSelectAction){
+        this.onUnSelectAction = onUnSelectAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação do evento de deseleção do nó.
+     * 
+     * @return String contendo o identificador da redirecionamento.
+     */
+    public String getOnUnSelectActionForward(){
+        return onUnSelectActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação do evento de deseleção do nó.
+     * 
+     * @param onUnSelectActionForward String contendo o identificador da redirecionamento.
+     */
+    public void setOnUnSelectActionForward(String onUnSelectActionForward){
+        this.onUnSelectActionForward = onUnSelectActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha da ação do evento de deseleção do nó.
+     * 
+     * @return String contendo o identificador da redirecionamento.
+     */
+    public String getOnUnSelectActionForwardOnFail(){
+        return onUnSelectActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha da ação do evento de deseleção do nó.
+     * 
+     * @param onUnSelectActionForwardOnFail String contendo o identificador da redirecionamento.
+     */
+    public void setOnUnSelectActionForwardOnFail(String onUnSelectActionForwardOnFail){
+        this.onUnSelectActionForwardOnFail = onUnSelectActionForwardOnFail;
+    }
+
+    /**
+     * Retorna os identificadores das views que serão atualizadas após a execução da ação de deseleção do nó.
+     *  
+     * @return String contendo os identificadores das views.
+     */
+    public String getOnUnSelectActionUpdateViews(){
+        return onUnSelectActionUpdateViews;
+    }
+
+    /**
+     * Define os identificadores das views que serão atualizadas após a execução da ação de deseleção do nó.
+     *  
+     * @param onUnSelectActionUpdateViews String contendo os identificadores das views.
+     */
+    public void setOnUnSelectActionUpdateViews(String onUnSelectActionUpdateViews){
+        this.onUnSelectActionUpdateViews = onUnSelectActionUpdateViews;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação de deseleção do nó.
+     *  
+     * @return True/False.
+     */
+    public Boolean getOnUnSelectActionValidate(){
+        return onUnSelectActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação de deseleção do nó.
+     *  
+     * @param onUnSelectActionValidate True/False.
+     */
+    public void setOnUnSelectActionValidate(Boolean onUnSelectActionValidate){
+        this.onUnSelectActionValidate = onUnSelectActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário deve ser validado na execução da ação de deseleção do nó.
+     *  
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnUnSelectActionValidateProperties(){
+        return onUnSelectActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário deve ser validado na execução da ação de deseleção do nó.
+     *  
+     * @param onUnSelectActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnUnSelectActionValidateProperties(String onUnSelectActionValidateProperties){
+        this.onUnSelectActionValidateProperties = onUnSelectActionValidateProperties;
     }
 
     /**
@@ -295,6 +603,252 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
             closedNodeIconStyleClass = TaglibConstants.DEFAULT_CLOSED_NODE_ICON_STYLE_CLASS;
 
         super.initialize();
+        
+        if(onSelectAction.length() > 0){
+            String actionForm = getActionForm();
+            
+            if(actionForm.length() > 0){
+                StringBuilder onSelectContent = new StringBuilder();
+    
+                if(onSelect.length() > 0){
+                    onSelectContent.append(onSelect);
+                    
+                    if(!onSelect.endsWith(";"))
+                        onSelectContent.append(";");
+                    
+                    onSelectContent.append(" ");
+                }
+                
+                onSelectContent.append("document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(".");
+                
+                if(isForSearch())
+                    onSelectContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onSelectContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onSelectContent.append(".value = ");
+                onSelectContent.append(onSelectActionValidate);
+                onSelectContent.append(";");
+                
+                if(onSelectActionValidateProperties.length() > 0){
+                    onSelectContent.append(" document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionValidateProperties);
+                    onSelectContent.append("'; ");
+                }
+                
+                if(onSelectActionForward.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.FORWARD_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionForward);
+                    onSelectContent.append("; ");
+                }
+                
+                if(onSelectActionForwardOnFail.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionForwardOnFail);
+                    onSelectContent.append("; ");
+                }
+    
+                if(onSelectActionUpdateViews.length() > 0){
+                    onSelectContent.append("document.");
+                    onSelectContent.append(actionForm);
+                    onSelectContent.append(".");
+                    onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onSelectContent.append(".value = '");
+                    onSelectContent.append(onSelectActionUpdateViews);
+                    onSelectContent.append("; ");
+                }
+    
+                onSelectContent.append("document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(".");
+                onSelectContent.append(AttributeConstants.ACTION_KEY);
+                onSelectContent.append(".value = '");
+                onSelectContent.append(onSelectAction);
+                onSelectContent.append("'; submitForm(document.");
+                onSelectContent.append(actionForm);
+                onSelectContent.append(");");
+                
+                onSelect = onSelectContent.toString();
+            }
+        }
+        
+        if(onUnSelectAction.length() > 0){
+            String actionForm = getActionForm();
+            
+            if(actionForm.length() > 0){
+                StringBuilder onUnSelectContent = new StringBuilder();
+    
+                if(onUnSelect.length() > 0){
+                    onUnSelectContent.append(onUnSelect);
+                    
+                    if(!onUnSelect.endsWith(";"))
+                        onUnSelectContent.append(";");
+                    
+                    onUnSelectContent.append(" ");
+                }
+                
+                onUnSelectContent.append("document.");
+                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(".");
+                
+                if(isForSearch())
+                    onUnSelectContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onUnSelectContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onUnSelectContent.append(".value = ");
+                onUnSelectContent.append(onUnSelectActionValidate);
+                onUnSelectContent.append(";");
+                
+                if(onUnSelectActionValidateProperties.length() > 0){
+                    onUnSelectContent.append(" document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionValidateProperties);
+                    onUnSelectContent.append("'; ");
+                }
+                
+                if(onUnSelectActionForward.length() > 0){
+                    onUnSelectContent.append("document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.FORWARD_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionForward);
+                    onUnSelectContent.append("; ");
+                }
+                
+                if(onUnSelectActionForwardOnFail.length() > 0){
+                    onUnSelectContent.append("document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionForwardOnFail);
+                    onUnSelectContent.append("; ");
+                }
+    
+                if(onUnSelectActionUpdateViews.length() > 0){
+                    onUnSelectContent.append("document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionUpdateViews);
+                    onUnSelectContent.append("; ");
+                }
+    
+                onUnSelectContent.append("document.");
+                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(".");
+                onUnSelectContent.append(AttributeConstants.ACTION_KEY);
+                onUnSelectContent.append(".value = '");
+                onUnSelectContent.append(onUnSelectAction);
+                onUnSelectContent.append("'; submitForm(document.");
+                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(");");
+                
+                onUnSelect = onUnSelectContent.toString();
+            }
+        }
+
+        if(onExpandAction.length() > 0){
+            String actionForm = getActionForm();
+            
+            if(actionForm.length() > 0){
+                StringBuilder onExpandContent = new StringBuilder();
+    
+                if(onExpand.length() > 0){
+                    onExpandContent.append(onExpand);
+                    
+                    if(!onExpand.endsWith(";"))
+                        onExpandContent.append(";");
+                    
+                    onExpandContent.append(" ");
+                }
+                
+                onExpandContent.append("document.");
+                onExpandContent.append(actionForm);
+                onExpandContent.append(".");
+                
+                if(isForSearch())
+                    onExpandContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onExpandContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onExpandContent.append(".value = ");
+                onExpandContent.append(onExpandActionValidate);
+                onExpandContent.append(";");
+                
+                if(onExpandActionValidateProperties.length() > 0){
+                    onExpandContent.append(" document.");
+                    onExpandContent.append(actionForm);
+                    onExpandContent.append(".");
+                    onExpandContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onExpandContent.append(".value = '");
+                    onExpandContent.append(onExpandActionValidateProperties);
+                    onExpandContent.append("'; ");
+                }
+                
+                if(onExpandActionForward.length() > 0){
+                    onExpandContent.append("document.");
+                    onExpandContent.append(actionForm);
+                    onExpandContent.append(".");
+                    onExpandContent.append(AttributeConstants.FORWARD_KEY);
+                    onExpandContent.append(".value = '");
+                    onExpandContent.append(onExpandActionForward);
+                    onExpandContent.append("; ");
+                }
+                
+                if(onExpandActionForwardOnFail.length() > 0){
+                    onExpandContent.append("document.");
+                    onExpandContent.append(actionForm);
+                    onExpandContent.append(".");
+                    onExpandContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onExpandContent.append(".value = '");
+                    onExpandContent.append(onExpandActionForwardOnFail);
+                    onExpandContent.append("; ");
+                }
+    
+                if(onExpandActionUpdateViews.length() > 0){
+                    onExpandContent.append("document.");
+                    onExpandContent.append(actionForm);
+                    onExpandContent.append(".");
+                    onExpandContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onExpandContent.append(".value = '");
+                    onExpandContent.append(onExpandActionUpdateViews);
+                    onExpandContent.append("; ");
+                }
+    
+                onExpandContent.append("document.");
+                onExpandContent.append(actionForm);
+                onExpandContent.append(".");
+                onExpandContent.append(AttributeConstants.ACTION_KEY);
+                onExpandContent.append(".value = '");
+                onExpandContent.append(onExpandAction);
+                onExpandContent.append("'; submitForm(document.");
+                onExpandContent.append(actionForm);
+                onExpandContent.append(");");
+                
+                onExpand = onExpandContent.toString();
+            }
+        }
 	}
 
 	/**
@@ -470,21 +1024,12 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	private void renderNodes(List<Node> nodes, Node parent, String index, Integer level) throws Throwable{
         PropertyInfo      propertyInfo          = getPropertyInfo();
         String            propertyId            = propertyInfo.getId();
-        String            actionForm            = getActionForm();
-        String            action                = getActionFormTag().getAction();
-        String            target                = StringUtil.trim(getActionFormTag().getTarget());
         String            name                  = getName();
         Object            value                 = getValue();
 		Node              node                  = null;
         List<Node>        nodeChilds            = null;             
 		StringBuilder     nodeIndex             = null;
 		StringBuilder     nodeId                = null;
-		StringBuilder     nodeIconId            = null;
-		String            nodeIconUrl           = "";
-		byte              nodeIconData[]        = null;
-		String            nodeIconWidth         = "";
-		String            nodeIconHeight        = "";
-		String            nodeLabelName         = "";
 		Object            nodeValue             = null;
 		String            nodeValueLabel        = "";
 		StringBuilder     nodeValueBuffer       = null;
@@ -493,12 +1038,6 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		String            nodeIsExpandedBuffer  = "";
 		Boolean           nodeIsExpanded        = false;
 		Boolean           nodeIsSelected        = false;
-		String            nodeForward           = "";
-		String            nodeForwardOnFail     = "";
-        String            nodeAction            = "";
-		String            nodeActionTarget      = "";
-		String            nodeOnExpandAction    = "";
-		String            nodeOnSelectAction    = "";
 		StringBuilder     parentNodeId          = null;
 		String            onSelectContent       = "";
 		String            onUnSelectContent     = "";
@@ -508,26 +1047,9 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
         ScriptTag         scriptTag             = null;
 		
 		for(Integer cont = 0 ; cont < nodes.size() ; cont++){
-			node               = nodes.get(cont);
-			nodeLabelName      = node.getLabelName();
-            onSelectContent    = PropertyUtil.fillPropertiesInString(node, onSelect, currentLanguage);
-            onUnSelectContent  = PropertyUtil.fillPropertiesInString(node, onUnSelect, currentLanguage);
-            nodeOnExpandAction = node.getOnExpandAction();
-            nodeOnExpandAction = PropertyUtil.fillPropertiesInString(node, nodeOnExpandAction, currentLanguage);
-            nodeOnSelectAction = node.getOnSelectAction();
-            nodeOnSelectAction = PropertyUtil.fillPropertiesInString(node, nodeOnSelectAction, currentLanguage);
-            nodeAction         = node.getAction();
-            nodeAction         = PropertyUtil.fillPropertiesInString(node, nodeAction, currentLanguage);
-            nodeActionTarget   = node.getActionTarget();
-            nodeActionTarget   = PropertyUtil.fillPropertiesInString(node, nodeActionTarget, currentLanguage);
-            nodeForward        = node.getForward();
-            nodeForward        = PropertyUtil.fillPropertiesInString(node, nodeForward, currentLanguage);
-            nodeForwardOnFail  = node.getForwardOnFail();
-            nodeForwardOnFail  = PropertyUtil.fillPropertiesInString(node, nodeForwardOnFail, currentLanguage);
-            nodeIconWidth      = node.getIconWidth();
-            nodeIconHeight     = node.getIconHeight();
-            nodeIconUrl        = node.getIconUrl();
-            nodeIconData       = node.getIconData();
+			node              = nodes.get(cont);
+            onSelectContent   = PropertyUtil.fillPropertiesInString(node, onSelect, currentLanguage);
+            onUnSelectContent = PropertyUtil.fillPropertiesInString(node, onUnSelect, currentLanguage);
             
 			if(nodeIndex == null)
 			    nodeIndex = new StringBuilder();
@@ -597,61 +1119,14 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
 				println(StringUtil.replicate(trace.toString(), level));
 
-				if(!node.hasChildNodes() && nodeOnExpandAction.length() == 0){
+				if(!node.hasChildNodes() && onExpand.length() == 0){
 					print("<td class=\"");
 					print(TaglibConstants.DEFAULT_TRACE_STYLE_CLASS);
 					println("\"></td>");
 					
-					print("<td");
-					
-					if(nodeIconUrl.length() > 0 || nodeIconData != null){
-						println(" width=\"1\">");
-						print("<img src=\"");
-						print(systemController.getContextPath());
-						print("/");
-						
-						if(nodeIconData != null){
-						    if(nodeIconId == null)
-						        nodeIconId = new StringBuilder();
-						    else
-								nodeIconId.delete(0, nodeIconId.length());
-							
-							nodeIconId.append(AttributeConstants.NODE_ICON_KEY);
-							nodeIconId.append(nodeIndex.toString().hashCode());
-							
-							systemController.setAttribute(nodeIconId.toString(), nodeIconData, ScopeType.SESSION);
-							
-							print("contentLoaderServlet?contentData=");
-							print(nodeIconId);
-							print("&contentType=");
-							println(ImageUtil.getImageFormat(nodeIconData));
-						}
-						else
-							print(nodeIconUrl);
-							
-						print("\"");
-
-						if(nodeIconWidth.length() > 0){
-							print(" width=\"");
-							print(nodeIconWidth);
-							print("\"");
-						}
-
-						if(nodeIconHeight.length() > 0){
-							print(" height=\"");
-							print(nodeIconHeight);
-							print("\"");
-						}
-
-						println(">");
-					}
-					else{
-						print(" class=\"");
-						print(nodeIconStyleClass);
-						println("\">");
-					}
-
-					println("</td>");
+					print("<td class=\"");
+					print(nodeIconStyleClass);
+					println("\"></td>");
 				}
 				else{
 				    if(nodeExpandedId == null)
@@ -687,7 +1162,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
 					print("\" onClick=\"");
 					
-					if(nodeOnExpandAction.length() > 0){
+					if(onExpandAction.length() > 0){
 						print("selectNode('");
     					print(name);
     					print("', '");
@@ -709,78 +1184,30 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					print(openedNodeIconStyleClass);
 					print("', '");
 					print(closedNodeIconStyleClass);
-					print("'");
+					print("', ");
 					
-					if(nodeOnExpandAction.length() > 0){
-						print(", document.");
-						print(actionForm);
-						print(", '");
-						print(nodeOnExpandAction);
-						print("', '");
-						print(nodeActionTarget);
-						print("'");
+					if(onExpand.length() > 0){
+                        print("function() {");
+    					print(onExpand);
+    					print("}");
 					}
+					else
+					    print("null");
 					
 					println(");\"></td>");
-					print("<td");
+					
+					print("<td id=\"");
+					print(nodeId);
+					print(".");
+					print(AttributeConstants.NODE_ICON_KEY);
+					print("\" class=\"");
 
-					if(nodeIconUrl.length() > 0 || nodeIconData != null){
-						println(" width=\"1\">");
-						print("<img src=\"");
-						print(systemController.getContextPath());
-						print("/");
-						
-						if(nodeIconData != null){
-						    if(nodeIconId == null)
-						        nodeIconId = new StringBuilder();
-						    else
-								nodeIconId.delete(0, nodeIconId.length());
-							
-							nodeIconId.append(AttributeConstants.NODE_ICON_KEY);
-							nodeIconId.append(nodeIndex.toString().hashCode());
-							
-							systemController.setAttribute(nodeIconId.toString(), nodeIconData, ScopeType.SESSION);
-							
-							print("contentLoaderServlet?contentData=");
-							print(nodeIconId);
-							print("&contentType=");
-							print(ImageUtil.getImageFormat(nodeIconData));
-						}
-						else
-							print(nodeIconUrl);
-							
-						print("\"");
+					if(!nodeIsExpanded)
+						print(closedNodeIconStyleClass);
+					else
+						print(openedNodeIconStyleClass);
 
-						if(nodeIconWidth.length() > 0){
-							print(" width=\"");
-							print(nodeIconWidth);
-							print("\"");
-						}
-
-						if(nodeIconHeight.length() > 0){
-							print(" height=\"");
-							print(nodeIconHeight);
-							print("\"");
-						}
-
-						println(">");
-					}
-					else{
-						print(" id=\"");
-						print(nodeId);
-						print(".");
-						print(AttributeConstants.NODE_ICON_KEY);
-						print("\" class=\"");
-
-						if(!nodeIsExpanded)
-							print(closedNodeIconStyleClass);
-						else
-							print(openedNodeIconStyleClass);
-
-						println("\">");
-					}
-
-					println("</td>");
+					println("\"></td>");
 				}
 
 				print("<td id=\"");
@@ -824,7 +1251,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				}
 
 				if(isEnabled()){
-					print(" onClick=\"refreshNode('");
+					print(" onClick=\"selectUnSelectNode('");
 					print(name);
 					print("', '");
 					print(nodeId);
@@ -856,97 +1283,12 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 							print("null");
 					}
 
-					print(");");
-		
- 					if(processActions() && (nodeAction.length() > 0 || nodeOnSelectAction.length() > 0)){
- 					    if(updateViews.length() > 0){
- 	                        print(" document.");
- 	                        print(actionForm);
-                            print("updateViews.value = '");
-                            print(updateViews);
-                            print("';");
- 					    }
- 					    
- 						print(" document.");
- 						print(actionForm);
- 						
- 						if(nodeAction.length() > 0){
- 							print(".attributes['");
- 							print(AttributeConstants.ACTION_KEY);
- 							print("'].value = '");
- 							print(systemController.getContextPath());
- 							print("/");
- 							print(nodeAction);
- 						}
- 						else{
- 							print(".");
- 							print(AttributeConstants.ACTION_KEY);
- 							print(".value = '");
- 							print(nodeOnSelectAction);
- 						}
-
- 						print("';");
- 						
- 						if(nodeActionTarget.length() > 0){
- 						    print(" document.");
- 						    print(actionForm);
- 						    print(".target = '");
- 						    print(nodeActionTarget);
- 						    print("';");
- 						}
- 						    
-                        print(" document.");
-                        print(actionForm);
- 						print(".");
- 						print(AttributeConstants.FORWARD_KEY);
- 						print(".value = '");
- 						print(nodeForward);
- 						print("'; document.");
- 						print(actionForm);
- 						print(".");
- 						print(AttributeConstants.FORWARD_ON_FAIL_KEY);
- 						print(".value = '");
- 						print(nodeForwardOnFail);
-						print("'; submitForm(document.");
- 						print(actionForm);
- 						print("); document.");
- 						print(actionForm);
-						print(".attributes['");
-						print(AttributeConstants.ACTION_KEY);
-						print("'].value = '");
-						print(TagUtils.getInstance().getActionMappingURL(action, this.pageContext));
-                        print("';");
-                        
-                        if(nodeActionTarget.length() > 0){
-                            print(" document.");
-                            print(actionForm);
-                            print(".target = '");
-                            print(target);
-                            print(";");
-                        }
-                        
-						print(" document.");
- 						print(actionForm);
-						print(".");
-						print(AttributeConstants.FORWARD_KEY);
-						print(".value = ''; document.");
- 						print(actionForm);
-						print(".");
-						print(AttributeConstants.FORWARD_ON_FAIL_KEY);
-						print(".value = '';");
- 					}
-
- 					print("\"");
+					print(");\"");
 				}
 
 				print(">");
 				print("&nbsp;");
-				
-				if(nodeLabelName.length() > 0)
-					print(StringUtil.trim(PropertyUtil.getProperty(node, nodeLabelName)));
-				else
-					print(node);
-				
+				print(node);
 				println("&nbsp;</td>");
 				println("</tr>");
 				println("</table>");
@@ -984,7 +1326,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
 				println(">");
 
-				if(node.hasChildNodes() || nodeOnExpandAction.length() > 0){
+				if(node.hasChildNodes() || onExpand.length() > 0){
 					nodeExpandedTag = new HiddenPropertyTag();
 					nodeExpandedTag.setPageContext(pageContext);
 					nodeExpandedTag.setName(nodeExpandedId.toString());
@@ -1030,9 +1372,27 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	    setCollapsedNodeIconStyleClass("");
 	    setOpenedNodeIconStyleClass("");
 	    setClosedNodeIconStyleClass("");
-	    setOnSelect("");
-	    setOnUnSelect("");
+        setOnSelect("");
+        setOnSelectAction("");
+        setOnSelectActionForward("");
+        setOnSelectActionForwardOnFail("");
+        setOnSelectActionUpdateViews("");
+        setOnSelectActionValidate(false);
+        setOnSelectActionValidateProperties("");
+        setOnUnSelect("");
+        setOnUnSelectAction("");
+        setOnUnSelectActionForward("");
+        setOnUnSelectActionForwardOnFail("");
+        setOnUnSelectActionUpdateViews("");
+        setOnUnSelectActionValidate(false);
+        setOnUnSelectActionValidateProperties("");
+        setOnExpand("");
+        setOnExpandAction("");
+        setOnExpandActionForward("");
+        setOnExpandActionForwardOnFail("");
+        setOnExpandActionUpdateViews("");
+        setOnExpandActionValidate(false);
+        setOnExpandActionValidateProperties("");
 	    setExpandLevel(0);
-	    setUpdateViews("");
     }
 }
