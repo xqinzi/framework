@@ -366,14 +366,38 @@ public class SystemController{
 	 * @param maxAge Valor inteiro em segundos contendo o tempo de persistência do cookie.
 	 */
 	public void addCookie(String name, String value, Integer maxAge){
-		Cookie cookie = new Cookie(name, value);
-		
-		cookie.setPath("/");
+	    HttpServletResponse response = getResponse();
+	    
+	    if(response != null){
+	        Boolean found     = false;  
+	        Cookie  cookies[] = getCookies();
+	        
+	        if(cookies != null && cookies.length > 0){
+	            for(Cookie cookie : cookies){
+	                if(cookie.getName().equals(name)){
+	                    cookie.setMaxAge(maxAge);
+	                    cookie.setValue(value);
+	                    
+	                    response.addCookie(cookie);
 
-		if(maxAge > 0)
-			cookie.setMaxAge(maxAge);
-		
-		getResponse().addCookie(cookie);
+	                    found = true;
+	                    
+	                    break;
+	                }
+	            }
+	        }
+	        
+	        if(!found){
+        		Cookie cookie = new Cookie(name, value);
+        		
+        		cookie.setPath("/");
+        
+        		if(maxAge > 0)
+        			cookie.setMaxAge(maxAge);
+        		
+        		response.addCookie(cookie);
+	        }
+	    }
 	}
 
 	/**

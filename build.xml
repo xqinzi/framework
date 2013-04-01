@@ -295,8 +295,7 @@
 
 		<echo message="${generate.documentation.message}" taskname="generate.documentation"/>
 
-		<javadoc packagenames="br.com.concepting.framework.*"
-			     destdir="docs/api" 
+		<javadoc destdir="docs/api" 
 				 public="true"
 			     author="true"
 			     version="true"

@@ -443,11 +443,11 @@ public abstract class BaseActionForm extends ActionForm{
 	/**
 	 * Popula o formulário.
 	 * 
-	 * @param requestController Instância do controlador dos dados da requisição.
+	 * @param systemController Instância do controlador dos dados da requisição.
 	 * @throws Throwable
 	 */
-	private void populate(SystemController requestController) throws Throwable{
-		ActionFormPopulator populator = new ActionFormPopulator(this, requestController);
+	private void populate(SystemController systemController) throws Throwable{
+		ActionFormPopulator populator = new ActionFormPopulator(this, systemController);
 		
 		populator.populate();
 	}
