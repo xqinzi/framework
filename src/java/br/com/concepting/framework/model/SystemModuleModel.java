@@ -2,8 +2,6 @@ package br.com.concepting.framework.model;
 
 import java.util.List;
 
-import org.hibernate.collection.PersistentCollection;
-
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.types.ConditionType;
@@ -149,7 +147,7 @@ public class SystemModuleModel extends BaseModel{
 	 * @return Instância contendo as propriedades de um formulário.
 	 */
     public <F extends FormModel> F getForm(String formName){
-		if(forms != null && !(forms instanceof PersistentCollection))
+		if(forms != null)
 			for(FormModel form : forms)
 				if(form.getName().equals(formName))
 					return (F)form;
