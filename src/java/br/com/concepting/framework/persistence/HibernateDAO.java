@@ -1388,7 +1388,7 @@ public abstract class HibernateDAO extends BaseDAO{
 				return model;
 			
             reattachModel(model);
-
+            
 			Class     modelClass = model.getClass();
 			ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);
 
@@ -1401,30 +1401,15 @@ public abstract class HibernateDAO extends BaseDAO{
 				return model;
 
 			Object referenceProperty = PropertyUtil.getProperty(model, referencePropertyId);
-
+			
 			if(propertyInfo.hasModel()){
-				modelInfo = ModelUtil.getModelInfo(modelClass);
+				List<M> modelList = (List<M>)referenceProperty;
 				
-				if(modelInfo != null){
-					propertyInfo = modelInfo.getPropertyInfo(referencePropertyId);
-					
-					if(propertyInfo != null){
-						List<M> modelList = (List<M>)referenceProperty;
-				
-						if(modelList != null){
-							List<M> modelListBuffer = new LinkedList<M>();
-							
-							for(Integer cont = 0 ; cont < modelList.size() ; cont++)
-								modelListBuffer.add(modelList.get(cont));
-							
-							modelList         = modelListBuffer;
-	                        referenceProperty = modelList;
-						}
-					}
+				if(modelList != null){
+					for(Integer cont = 0 ; cont < modelList.size() ; cont++)
+						modelList.get(cont);
 				}
 			}
-
-			PropertyUtil.setProperty(model, referencePropertyId, referenceProperty);
 
 			return model;
 		}
