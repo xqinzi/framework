@@ -18,7 +18,27 @@ import br.com.concepting.framework.util.types.ComponentType;
  * @since 1.0
  */
 public class ListPropertyTag extends OptionsPropertyTag{
-	private Integer size = 0;
+	private Integer size                   = 0;
+	private Boolean showFirstOption        = true;
+	private String  firstOptionResourceKey = "";
+
+    /**
+     * Retorna o identificador da propriedade da opção de informe de seleção armazenada no arquivo de recursos.
+     *
+     * @return String contendo o identificador da propriedade.
+     */
+    public String getFirstOptionResourceKey(){
+        return firstOptionResourceKey;
+    }
+
+    /**
+     * Define o identificador da propriedade da opção de informe de seleção armazenada no arquivo de recursos.
+     *
+     * @param firstOptionResourceKey String contendo o identificador da propriedade.
+     */
+    public void setFirstOptionResourceKey(String firstOptionResourceKey){
+        this.firstOptionResourceKey = firstOptionResourceKey;
+    }
 
     /**
 	 * Retorna o número de opções visíveis.
@@ -39,6 +59,33 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	}
 	
 	/**
+	 * Indica se a opção de informe de seleção deve ser exibida.
+	 * 
+	 * @return True/False.
+	 */
+    public Boolean isShowFirstOption(){
+        return showFirstOption;
+    }
+
+    /**
+     * Indica se a opção de informe de seleção deve ser exibida.
+     * 
+     * @return True/False.
+     */
+    public Boolean getShowFirstOption(){
+        return isShowFirstOption();
+    }
+
+    /**
+     * Define se a opção de informe de seleção deve ser exibida.
+     * 
+     * @param showFirstOption True/False.
+     */
+    public void setShowFirstOption(Boolean showFirstOption){
+        this.showFirstOption = showFirstOption;
+    }
+
+    /**
 	 * @see br.com.concepting.framework.web.taglibs.OptionsPropertyTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
@@ -88,26 +135,36 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	 */
 	protected void renderBody() throws Throwable{
 		String       firstOptionTagLabel = "";
-		PropertyInfo propertyInfo        = getPropertyInfo();
+        PropertyInfo propertyInfo        = getPropertyInfo();
 		
-		if(propertyInfo != null){
-		    Integer size         = getSize();
-		    Boolean isCollection = propertyInfo.isCollection();
-		    
-			if(!isCollection && size == 0){
-     			PropertiesResource resources = getDefaultI18nResource();
-     
-     			firstOptionTagLabel = StringUtil.trim(resources.getProperty(AttributeConstants.SELECT_AN_ITEM_KEY));
-			}
-			else{
-		        List dataValues = getDataValues();
-		        
-		        if(dataValues == null || dataValues.size() == 0)
-	                firstOptionTagLabel = getDataIsEmptyMessage();
-			}
+		if(showFirstOption){
+    		if(propertyInfo != null){
+    		    Integer size         = getSize();
+    		    Boolean isCollection = propertyInfo.isCollection();
+    		    
+    			if(!isCollection && size == 0){
+         			PropertiesResource resources   = getI18nResource();
+         			String             resourceKey = "";
+         			
+         			if(firstOptionResourceKey.length() > 0){
+         			    resources   = getI18nResource();
+         			    resourceKey = firstOptionResourceKey;
+         			}
+         			else
+         			    resourceKey = AttributeConstants.SELECT_AN_ITEM_KEY;
+         
+         			firstOptionTagLabel = StringUtil.trim(resources.getProperty(resourceKey));
+    			}
+    			else{
+    		        List dataValues = getDataValues();
+    		        
+    		        if(dataValues == null || dataValues.size() == 0)
+    	                firstOptionTagLabel = getDataIsEmptyMessage();
+    			}
+    		}
+    		else
+    		    firstOptionTagLabel = getInvalidPropertyMessage();
 		}
-		else
-		    firstOptionTagLabel = getInvalidPropertyMessage();
 		    
 		if(firstOptionTagLabel.length() > 0){
      		ListOptionPropertyTag firstOptionTag = new ListOptionPropertyTag();
@@ -192,8 +249,8 @@ public class ListPropertyTag extends OptionsPropertyTag{
 			
 			if(optionState == null || !optionState.remove()){
     			if(!(option instanceof Node) || ((parent == null && ((Node)option).getParent() == null) || (parent != null && parent.equals(((Node)option).getParent())))){
-    				if(getOptionLabelName().length() > 0)
-    					optionTagLabel = PropertyUtil.getProperty(option, getOptionLabelName());
+    				if(getOptionLabelProperty().length() > 0)
+    					optionTagLabel = PropertyUtil.getProperty(option, getOptionLabelProperty());
     				else
     					optionTagLabel = option;
     
@@ -268,5 +325,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	    super.clearAttributes();
 	     
 	    setSize(0);
+	    setShowFirstOption(true);
+	    setFirstOptionResourceKey("");
     }
 }
