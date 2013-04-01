@@ -47,6 +47,7 @@ public class SystemController{
 	private PageContext                 pageContext                 = null;
 	private HttpServletRequest          request                     = null;
 	private HttpServletResponse         response                    = null;
+	private List<Cookie>                cookies                     = null;
 	private HttpSession                 session                     = null;
 	private Boolean                     hasForwardOrRedirect        = false;
 	private Boolean                     hasOutputContent            = false;
@@ -283,6 +284,14 @@ public class SystemController{
 	 */
 	private void setRequest(HttpServletRequest request){
 		this.request = request;
+		
+		Cookie cookies[] = this.request.getCookies();
+		
+		this.cookies = new LinkedList<Cookie>();
+		
+		if(cookies != null && cookies.length > 0)
+		    for(Cookie cookie : cookies)
+		        this.cookies.add(cookie);
 	}
 
 	/**
@@ -326,12 +335,21 @@ public class SystemController{
 	
 
 	/**
-	 * Retorna um array contendo as propriedades dos cookies armazenados.
+	 * Retorna uma lista contendo as propriedades dos cookies armazenados.
 	 *
-	 * @return Array contendo as propriedades dos cookies.
+	 * @return Lista contendo as propriedades dos cookies.
 	 */
-	public Cookie[] getCookies(){
-		return getRequest().getCookies();
+	public List<Cookie> getCookies(){
+	    return cookies;
+	}
+	
+    /**
+     * Define um array contendo as propriedades dos cookies armazenados.
+     *
+     * @param cookies Lista contendo as propriedades dos cookies.
+     */
+	public void setCookies(List<Cookie> cookies){
+	    this.cookies = cookies;
 	}
 	
 	/**
@@ -369,33 +387,27 @@ public class SystemController{
 	    HttpServletResponse response = getResponse();
 	    
 	    if(response != null){
-	        Boolean found     = false;  
-	        Cookie  cookies[] = getCookies();
+	        Cookie cookie = getCookie(name);
 	        
-	        if(cookies != null && cookies.length > 0){
-	            for(Cookie cookie : cookies){
-	                if(cookie.getName().equals(name)){
-	                    cookie.setMaxAge(maxAge);
-	                    cookie.setValue(value);
-	                    
-	                    response.addCookie(cookie);
+	        if(cookie != null){
+                cookie.setPath("/");
+                cookie.setMaxAge(maxAge);
+                cookie.setValue(value);
+                
+                cookies.add(cookie);
 
-	                    found = true;
-	                    
-	                    break;
-	                }
-	            }
+                response.addCookie(cookie);
 	        }
-	        
-	        if(!found){
-        		Cookie cookie = new Cookie(name, value);
-        		
+	        else{
+        		cookie = new Cookie(name, value);
         		cookie.setPath("/");
         
         		if(maxAge > 0)
         			cookie.setMaxAge(maxAge);
         		
-        		response.addCookie(cookie);
+                cookies.add(cookie);
+
+                response.addCookie(cookie);
 	        }
 	    }
 	}
@@ -407,8 +419,6 @@ public class SystemController{
 	 * @return Instância contendo as propriedades do cookie desejado.
 	 */
 	public Cookie getCookie(String name){
-		Cookie cookies[] = getCookies();
-
 		if(cookies != null)
 			for(Cookie cookie : cookies)
 				if(cookie.getName().equals(name)) 
