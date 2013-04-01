@@ -40,7 +40,7 @@ public abstract class LanguageUtil{
     public static Locale getDefaultLanguage(){
         try{
             SystemResourceLoader loader   = new SystemResourceLoader();
-            SystemResource       resource = loader.get();
+            SystemResource       resource = loader.getDefault();
             Locale               language = resource.getDefaultLanguage();
             
             if(language == null)
