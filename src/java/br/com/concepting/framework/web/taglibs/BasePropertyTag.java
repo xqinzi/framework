@@ -37,24 +37,670 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 1.0
  */
 public abstract class BasePropertyTag extends BaseActionFormElementTag{
-    private String                   valueMap                 = "";
-    private String                   valueMapScope            = null;
-    private Map                      valueMapInstance         = null;
-	private String                   onChange                 = "";
-	private String                   onKeyPress               = "";
-	private String                   onKeyUp                  = "";
-	private String                   onKeyDown                = "";
-    private Boolean                  focus                    = false;
-	private String                   pattern                  = "";
-	private Object                   value                    = null;
-	private String                   validationStyle          = "";
-	private String                   validationStyleClass     = "";
-	private SearchPropertiesGroupTag searchPropertiesGroupTag = null;
-	private String                   invalidPropertyMessage   = "";
-    private String                   dataIsEmptyMessage       = "";
-	private Boolean                  showValidationMessages   = false;
-    private PropertyInfo             propertyInfo             = null;
+    private String                   valueMap                            = "";
+    private String                   valueMapScope                       = null;
+    private Map                      valueMapInstance                    = null;
+    private Boolean                  onBlurActionValidate                = false;
+    private String                   onBlurActionValidateProperties      = "";
+    private Boolean                  onFocusActionValidate               = false;
+    private String                   onFocusActionValidateProperties     = "";
+    private Boolean                  onClickActionValidate               = false;
+    private String                   onClickActionValidateProperties     = "";
+    private Boolean                  onMouseOverActionValidate           = false;
+    private String                   onMouseOverActionValidateProperties = "";
+    private Boolean                  onMouseOutActionValidate            = false;
+    private String                   onMouseOutActionValidateProperties  = "";
+	private String                   onChange                            = "";
+	private String                   onChangeAction                      = "";
+	private String                   onChangeActionForward               = "";
+	private String                   onChangeActionForwardOnFail         = "";
+	private String                   onChangeActionUpdateViews           = "";
+	private Boolean                  onChangeActionValidate              = false;
+	private String                   onChangeActionValidateProperties    = "";
+	private String                   onKeyPress                          = "";
+	private String                   onKeyPressAction                    = "";
+	private String                   onKeyPressActionForward             = "";
+	private String                   onKeyPressActionForwardOnFail       = "";
+	private String                   onKeyPressActionUpdateViews         = "";
+	private Boolean                  onKeyPressActionValidate            = false;
+	private String                   onKeyPressActionValidateProperties  = "";
+	private String                   onKeyUp                             = "";
+	private String                   onKeyUpAction                       = "";
+    private String                   onKeyUpActionForward                = "";
+    private String                   onKeyUpActionForwardOnFail          = "";
+    private String                   onKeyUpActionUpdateViews            = "";
+    private Boolean                  onKeyUpActionValidate               = false;
+    private String                   onKeyUpActionValidateProperties     = "";
+	private String                   onKeyDown                           = "";
+	private String                   onKeyDownAction                     = "";
+    private String                   onKeyDownActionForward              = "";
+    private String                   onKeyDownActionForwardOnFail        = "";
+    private String                   onKeyDownActionUpdateViews          = "";
+    private Boolean                  onKeyDownActionValidate             = false;
+    private String                   onKeyDownActionValidateProperties   = "";
+    private Boolean                  focus                               = false;
+	private String                   pattern                             = "";
+	private Object                   value                               = null;
+	private String                   validationStyle                     = "";
+	private String                   validationStyleClass                = "";
+	private SearchPropertiesGroupTag searchPropertiesGroupTag            = null;
+	private String                   invalidPropertyMessage              = "";
+    private String                   dataIsEmptyMessage                  = "";
+	private Boolean                  showValidationMessages              = false;
+    private PropertyInfo             propertyInfo                        = null;
     
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de mudança de valor.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnChangeActionValidate(){
+        return onChangeActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de mudança de valor.
+     * 
+     * @param onChangeActionValidate True/False.
+     */
+    public void setOnChangeActionValidate(Boolean onChangeActionValidate){
+        this.onChangeActionValidate = onChangeActionValidate;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de digitação.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnKeyPressActionValidate(){
+        return onKeyPressActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de digitação.
+     * 
+     * @param onKeyPressActionValidate True/False.
+     */
+    public void setOnKeyPressActionValidate(Boolean onKeyPressActionValidate){
+        this.onKeyPressActionValidate = onKeyPressActionValidate;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de soltar uma tecla.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnKeyUpActionValidate(){
+        return onKeyUpActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de soltar uma tecla.
+     * 
+     * @param onKeyUpActionValidate True/False.
+     */
+    public void setOnKeyUpActionValidate(Boolean onKeyUpActionValidate){
+        this.onKeyUpActionValidate = onKeyUpActionValidate;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de apertar uma tecla.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnKeyDownActionValidate(){
+        return onKeyDownActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de apertar uma tecla.
+     * 
+     * @param onKeyDownActionValidate True/False.
+     */
+    public void setOnKeyDownActionValidate(Boolean onKeyDownActionValidate){
+        this.onKeyDownActionValidate = onKeyDownActionValidate;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de tirar o foco.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnBlurActionValidate(){
+        return onBlurActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de tirar o foco.
+     * 
+     * @param onBlurActionValidate True/False.
+     */
+    public void setOnBlurActionValidate(Boolean onBlurActionValidate){
+        this.onBlurActionValidate = onBlurActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de tirar o foco.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnBlurActionValidateProperties(){
+        return onBlurActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de tirar o foco.
+     * 
+     * @param onBlurActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnBlurActionValidateProperties(String onBlurActionValidateProperties){
+        this.onBlurActionValidateProperties = onBlurActionValidateProperties;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de colocar o foco.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnFocusActionValidate(){
+        return onFocusActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de colocar o foco.
+     * 
+     * @param onFocusActionValidate True/False.
+     */
+    public void setOnFocusActionValidate(Boolean onFocusActionValidate){
+        this.onFocusActionValidate = onFocusActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de colocar o foco.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnFocusActionValidateProperties(){
+        return onFocusActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de colocar o foco.
+     * 
+     * @param onFocusActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnFocusActionValidateProperties(String onFocusActionValidateProperties){
+        this.onFocusActionValidateProperties = onFocusActionValidateProperties;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de clique.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnClickActionValidate(){
+        return onClickActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de clique.
+     * 
+     * @param onClickActionValidate True/False.
+     */
+    public void setOnClickActionValidate(Boolean onClickActionValidate){
+        this.onClickActionValidate = onClickActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de clique.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnClickActionValidateProperties(){
+        return onClickActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de clique.
+     * 
+     * @param onClickActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnClickActionValidateProperties(String onClickActionValidateProperties){
+        this.onClickActionValidateProperties = onClickActionValidateProperties;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de passar o mouse.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnMouseOverActionValidate(){
+        return onMouseOverActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de passar o mouse.
+     * 
+     * @param onMouseOverActionValidate String contendo os identificadores das propriedades.
+     */
+    public void setOnMouseOverActionValidate(Boolean onMouseOverActionValidate){
+        this.onMouseOverActionValidate = onMouseOverActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de passar o mouse.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnMouseOverActionValidateProperties(){
+        return onMouseOverActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de passar o mouse.
+     * 
+     * @param onMouseOverActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnMouseOverActionValidateProperties(String onMouseOverActionValidateProperties){
+        this.onMouseOverActionValidateProperties = onMouseOverActionValidateProperties;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de tirar o mouse.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnMouseOutActionValidate(){
+        return onMouseOutActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de tirar o mouse.
+     * 
+     * @param onMouseOutActionValidate True/False.
+     */
+    public void setOnMouseOutActionValidate(Boolean onMouseOutActionValidate){
+        this.onMouseOutActionValidate = onMouseOutActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de tirar o mouse.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnMouseOutActionValidateProperties(){
+        return onMouseOutActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de tirar o mouse.
+     * 
+     * @param onMouseOutActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnMouseOutActionValidateProperties(String onMouseOutActionValidateProperties){
+        this.onMouseOutActionValidateProperties = onMouseOutActionValidateProperties;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de mudança de valor.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnChangeActionValidateProperties(){
+        return onChangeActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de mudança de valor.
+     * 
+     * @param onChangeActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnChangeActionValidateProperties(String onChangeActionValidateProperties){
+        this.onChangeActionValidateProperties = onChangeActionValidateProperties;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de digitação.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnKeyPressActionValidateProperties(){
+        return onKeyPressActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de digitação.
+     * 
+     * @param onKeyPressActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnKeyPressActionValidateProperties(String onKeyPressActionValidateProperties){
+        this.onKeyPressActionValidateProperties = onKeyPressActionValidateProperties;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de soltar uma tecla.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnKeyUpActionValidateProperties(){
+        return onKeyUpActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de soltar uma tecla.
+     * 
+     * @param onKeyUpActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnKeyUpActionValidateProperties(String onKeyUpActionValidateProperties){
+        this.onKeyUpActionValidateProperties = onKeyUpActionValidateProperties;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de apertar uma tecla.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
+    public String getOnKeyDownActionValidateProperties(){
+        return onKeyDownActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação do evento de apertar uma tecla.
+     * 
+     * @param onKeyDownActionValidateProperties String contendo os identificadores das propriedades.
+     */
+    public void setOnKeyDownActionValidateProperties(String onKeyDownActionValidateProperties){
+        this.onKeyDownActionValidateProperties = onKeyDownActionValidateProperties;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento após a execução da ação do evento de mudança de valor.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnChangeActionForward(){
+        return onChangeActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento após a execução da ação do evento de mudança de valor.
+     * 
+     * @param onChangeActionForward String contendo o identificador do redirecionamento.
+     */
+    public void setOnChangeActionForward(String onChangeActionForward){
+        this.onChangeActionForward = onChangeActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha após a execução da ação do evento de mudança de valor.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnChangeActionForwardOnFail(){
+        return onChangeActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha após a execução da ação do evento de mudança de valor.
+     * 
+     * @param onChangeActionForwardOnFail String contendo o identificador do redirecionamento.
+     */
+    public void setOnChangeActionForwardOnFail(String onChangeActionForwardOnFail){
+        this.onChangeActionForwardOnFail = onChangeActionForwardOnFail;
+    }
+
+    /**
+     * Retorna os identificadores das views a serem atualizadas após a execução da ação do evento de mudança de valor.
+     * 
+     * @return String contendo os identificadores das views.
+     */
+    public String getOnChangeActionUpdateViews(){
+        return onChangeActionUpdateViews;
+    }
+
+    /**
+     * Define os identificadores das views a serem atualizadas após a execução da ação do evento de mudança de valor.
+     * 
+     * @param onChangeActionUpdateViews String contendo os identificadores das views.
+     */
+    public void setOnChangeActionUpdateViews(String onChangeActionUpdateViews){
+        this.onChangeActionUpdateViews = onChangeActionUpdateViews;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento após a execução da ação do evento de digitação.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnKeyPressActionForward(){
+        return onKeyPressActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento após a execução da ação do evento de digitação.
+     * 
+     * @param onKeyPressActionForward String contendo o identificador do redirecionamento.
+     */
+    public void setOnKeyPressActionForward(String onKeyPressActionForward){
+        this.onKeyPressActionForward = onKeyPressActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha após a execução da ação do evento de digitação.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnKeyPressActionForwardOnFail(){
+        return onKeyPressActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha após a execução da ação do evento de digitação.
+     * 
+     * @param onKeyPressActionForwardOnFail String contendo o identificador do redirecionamento.
+     */
+    public void setOnKeyPressActionForwardOnFail(String onKeyPressActionForwardOnFail){
+        this.onKeyPressActionForwardOnFail = onKeyPressActionForwardOnFail;
+    }
+
+    /**
+     * Retorna o identificador das views a serem atualizadas após a execução da ação do evento de digitação.
+     * 
+     * @return String contendo o identificador das views.
+     */
+    public String getOnKeyPressActionUpdateViews(){
+        return onKeyPressActionUpdateViews;
+    }
+
+    /**
+     * Define o identificador das views a serem atualizadas após a execução da ação do evento de digitação.
+     * 
+     * @param onKeyPressActionUpdateViews String contendo o identificador das views.
+     */
+    public void setOnKeyPressActionUpdateViews(String onKeyPressActionUpdateViews){
+        this.onKeyPressActionUpdateViews = onKeyPressActionUpdateViews;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento após a execução da ação do evento de soltar uma tecla.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnKeyUpActionForward(){
+        return onKeyUpActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento após a execução da ação do evento de soltar uma tecla.
+     * 
+     * @param onKeyUpActionForward String contendo o identificador do redirecionamento.
+     */
+    public void setOnKeyUpActionForward(String onKeyUpActionForward){
+        this.onKeyUpActionForward = onKeyUpActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha após a execução da ação do evento de soltar uma tecla.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnKeyUpActionForwardOnFail(){
+        return onKeyUpActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha após a execução da ação do evento de soltar uma tecla.
+     * 
+     * @param onKeyUpActionForwardOnFail String contendo o identificador do redirecionamento.
+     */
+    public void setOnKeyUpActionForwardOnFail(String onKeyUpActionForwardOnFail){
+        this.onKeyUpActionForwardOnFail = onKeyUpActionForwardOnFail;
+    }
+
+    /**
+     * Retorna o identificador das views a serem atualizadas após a execução da ação do evento de soltar uma tecla.
+     * 
+     * @return String contendo o identificador das views.
+     */
+    public String getOnKeyUpActionUpdateViews(){
+        return onKeyUpActionUpdateViews;
+    }
+
+    /**
+     * Define o identificador das views a serem atualizadas após a execução da ação do evento de soltar uma tecla.
+     * 
+     * @param onKeyUpActionUpdateViews String contendo o identificador das views.
+     */
+    public void setOnKeyUpActionUpdateViews(String onKeyUpActionUpdateViews){
+        this.onKeyUpActionUpdateViews = onKeyUpActionUpdateViews;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento após a execução da ação do evento de apertar uma tecla.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnKeyDownActionForward(){
+        return onKeyDownActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento após a execução da ação do evento de apertar uma tecla.
+     * 
+     * @param onKeyDownActionForward String contendo o identificador do redirecionamento.
+     */
+    public void setOnKeyDownActionForward(String onKeyDownActionForward){
+        this.onKeyDownActionForward = onKeyDownActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha após a execução da ação do evento de apertar uma tecla.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
+    public String getOnKeyDownActionForwardOnFail(){
+        return onKeyDownActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento em caso de falha após a execução da ação do evento de apertar uma tecla.
+     * 
+     * @param onKeyDownActionForwardOnFail String contendo o identificador do redirecionamento.
+     */
+    public void setOnKeyDownActionForwardOnFail(String onKeyDownActionForwardOnFail){
+        this.onKeyDownActionForwardOnFail = onKeyDownActionForwardOnFail;
+    }
+
+    /**
+     * Retorna o identificador das views a serem atualizadas após a execução da ação do evento de apertar uma tecla.
+     * 
+     * @return String contendo o identificador das views.
+     */
+    public String getOnKeyDownActionUpdateViews(){
+        return onKeyDownActionUpdateViews;
+    }
+
+    /**
+     * Define o identificador das views a serem atualizadas após a execução da ação do evento de apertar uma tecla.
+     * 
+     * @param onKeyDownActionUpdateViews String contendo o identificador das views.
+     */
+    public void setOnKeyDownActionUpdateViews(String onKeyDownActionUpdateViews){
+        this.onKeyDownActionUpdateViews = onKeyDownActionUpdateViews;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de mudança de valor.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnChangeAction(){
+        return onChangeAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de mudança de valor.
+     * 
+     * @param onChangeAction String contendo o identificador da ação.
+     */
+    public void setOnChangeAction(String onChangeAction){
+        this.onChangeAction = onChangeAction;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de pressionar uma techa.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnKeyPressAction(){
+        return onKeyPressAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de soltar uma techa.
+     * 
+     * @param onKeyPressAction String contendo o identificador da ação.
+     */
+    public void setOnKeyPressAction(String onKeyPressAction){
+        this.onKeyPressAction = onKeyPressAction;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de soltar uma techa.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnKeyUpAction(){
+        return onKeyUpAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de soltar uma techa.
+     * 
+     * @param onKeyUpAction String contendo o identificador da ação.
+     */
+    public void setOnKeyUpAction(String onKeyUpAction){
+        this.onKeyUpAction = onKeyUpAction;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de apertar uma techa.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnKeyDownAction(){
+        return onKeyDownAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de apertar uma techa.
+     * 
+     * @param onKeyDownAction String contendo o identificador da ação.
+     */
+    public void setOnKeyDownAction(String onKeyDownAction){
+        this.onKeyDownAction = onKeyDownAction;
+    }
+
     /**
      * Retorna o identificador do mapa de valores das opções de seleção.
      *
@@ -76,15 +722,10 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     /**
      * Retorna o escopo de armazenamento do mapa de valores das opções de seleção.
      *
-     * @return Constante que define o escopo de armazenamento.
+     * @return String que define o escopo de armazenamento.
      */
-    public ScopeType getValueMapScopeType(){
-        try{
-            return ScopeType.valueOf(valueMapScope);
-        }
-        catch(Throwable e){
-            return null;
-        }
+    public String getValueMapScope(){
+        return valueMapScope;
     }
 
     /**
@@ -94,6 +735,20 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
      */
     public void setValueMapScope(String valueMapScope){
         this.valueMapScope = StringUtil.trim(valueMapScope).toUpperCase();
+    }
+
+    /**
+     * Retorna o escopo de armazenamento do mapa de valores das opções de seleção.
+     *
+     * @return Constante que define o escopo de armazenamento.
+     */
+    protected ScopeType getValueMapScopeType(){
+        try{
+            return ScopeType.valueOf(valueMapScope);
+        }
+        catch(Throwable e){
+            return null;
+        }
     }
 
     /**
@@ -545,11 +1200,17 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
         String         actionForm = getActionForm();
         BaseActionForm form       = systemController.getActionForm(actionForm);
         
-        if(valueMap.length() > 0 && valueMapScope != null){
+        if(valueMap.length() > 0){
             ScopeType valueMapScope = getValueMapScopeType();
+            
+            if(valueMapScope == null){
+                valueMapScope = ScopeType.FORM;
+                
+                setValueMapScopeType(valueMapScope);
+            }
 
             if(!valueMap.startsWith(actionForm)){
-                StringBuilder propertyId    = new StringBuilder();
+                StringBuilder propertyId = new StringBuilder();
 
                 if(valueMapScope == ScopeType.FORM || valueMapScope == ScopeType.MODEL){
                     propertyId.append(actionForm);
@@ -626,7 +1287,6 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 			
 			String onBlur          = getOnBlur();
 			String onFocus         = getOnFocus();
-			String onChange        = getOnChange();
 			String onClick         = getOnClick();
 			String onMouseOut      = getOnMouseOut();
 			String onMouseOver     = getOnMouseOver();
@@ -657,37 +1317,527 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             styleClass  = ExpressionProcessorUtil.fillVariablesInString(styleClass, currentLanguage);
             style       = ExpressionProcessorUtil.fillVariablesInString(style, currentLanguage);
             
+            if(getOnBlurAction().length() > 0){
+                StringBuilder onBlurContent = new StringBuilder();
+
+                onBlurContent.append(" document.");
+                onBlurContent.append(actionForm);
+                onBlurContent.append(".");
+                
+                if(isForSearch())
+                    onBlurContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onBlurContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onBlurContent.append(".value = ");
+                onBlurContent.append(onBlurActionValidate);
+                onBlurContent.append(";");
+                
+                if(onBlurActionValidateProperties.length() > 0){
+                    onBlurContent.append(" document.");
+                    onBlurContent.append(actionForm);
+                    onBlurContent.append(".");
+                    onBlurContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onBlurContent.append(".value = '");
+                    onBlurContent.append(onBlurActionValidateProperties);
+                    onBlurContent.append("';");
+                }
+                
+                if(onBlur.length() > 0){
+                    onBlurContent.append(" ");
+                    onBlurContent.append(onBlur);
+                }
+                
+                onBlur = onBlurContent.toString();
+            }
+            
+            if(getOnFocusAction().length() > 0){
+                StringBuilder onFocusContent = new StringBuilder();
+
+                onFocusContent.append(" document.");
+                onFocusContent.append(actionForm);
+                onFocusContent.append(".");
+                
+                if(isForSearch())
+                    onFocusContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onFocusContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onFocusContent.append(".value = ");
+                onFocusContent.append(onFocusActionValidate);
+                onFocusContent.append(";");
+                
+                if(onFocusActionValidateProperties.length() > 0){
+                    onFocusContent.append(" document.");
+                    onFocusContent.append(actionForm);
+                    onFocusContent.append(".");
+                    onFocusContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onFocusContent.append(".value = '");
+                    onFocusContent.append(onFocusActionValidateProperties);
+                    onFocusContent.append("';");
+                }
+                
+                if(onFocus.length() > 0){
+                    onFocusContent.append(" ");
+                    onFocusContent.append(onFocus);
+                }
+                
+                onFocus = onFocusContent.toString();
+            }
+
+            if(getOnClickAction().length() > 0){
+                StringBuilder onClickContent = new StringBuilder();
+
+                onClickContent.append(" document.");
+                onClickContent.append(actionForm);
+                onClickContent.append(".");
+                
+                if(isForSearch())
+                    onClickContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onClickContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onClickContent.append(".value =");
+                onClickContent.append(onClickActionValidate);
+                onClickContent.append(";");
+                
+                if(onClickActionValidateProperties.length() > 0){
+                    onClickContent.append(" document.");
+                    onClickContent.append(actionForm);
+                    onClickContent.append(".");
+                    onClickContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onClickContent.append(".value = '");
+                    onClickContent.append(onClickActionValidateProperties);
+                    onClickContent.append("';");
+                }
+                
+                if(onClick.length() > 0){
+                    onClickContent.append(" ");
+                    onClickContent.append(onClick);
+                }
+                
+                onClick = onClickContent.toString();
+            }
+
+            if(getOnMouseOverAction().length() > 0){
+                StringBuilder onMouseOverContent = new StringBuilder();
+
+                onMouseOverContent.append(" document.");
+                onMouseOverContent.append(actionForm);
+                onMouseOverContent.append(".");
+                
+                if(isForSearch())
+                    onMouseOverContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onMouseOverContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onMouseOverContent.append(".value = ");
+                onMouseOverContent.append(onMouseOverActionValidate);
+                onMouseOverContent.append(";");
+                
+                if(onMouseOverActionValidateProperties.length() > 0){
+                    onMouseOverContent.append(" document.");
+                    onMouseOverContent.append(actionForm);
+                    onMouseOverContent.append(".");
+                    onMouseOverContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onMouseOverContent.append(".value = '");
+                    onMouseOverContent.append(onMouseOverActionValidateProperties);
+                    onMouseOverContent.append("';");
+                }
+                
+                if(onMouseOver.length() > 0){
+                    onMouseOverContent.append(" ");
+                    onMouseOverContent.append(onMouseOver);
+                }
+                
+                onMouseOver = onMouseOverContent.toString();
+            }
+
+            if(getOnMouseOutAction().length() > 0){
+                StringBuilder onMouseOutContent = new StringBuilder();
+    
+                onMouseOutContent.append(" document.");
+                onMouseOutContent.append(actionForm);
+                onMouseOutContent.append(".");
+                
+                if(isForSearch())
+                    onMouseOutContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onMouseOutContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onMouseOutContent.append(".value = ");
+                onMouseOutContent.append(onMouseOutActionValidate);
+                onMouseOutContent.append(";");
+                
+                if(onMouseOutActionValidateProperties.length() > 0){
+                    onMouseOutContent.append(" document.");
+                    onMouseOutContent.append(actionForm);
+                    onMouseOutContent.append(".");
+                    onMouseOutContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onMouseOutContent.append(".value = '");
+                    onMouseOutContent.append(onMouseOutActionValidateProperties);
+                    onMouseOutContent.append("';");
+                }
+                
+                if(onMouseOut.length() > 0){
+                    onMouseOutContent.append(" ");
+                    onMouseOutContent.append(onMouseOut);
+                }
+                
+                onMouseOut = onMouseOutContent.toString();
+            }
+
+            if(onChangeAction.length() > 0){
+                StringBuilder onChangeContent = new StringBuilder();
+
+                if(onChange.length() > 0){
+                    onChangeContent.append(onChange);
+                    
+                    if(!onChange.endsWith(";"))
+                        onChangeContent.append(";");
+                    
+                    onChangeContent.append(" ");
+                }
+                
+                onChangeContent.append("document.");
+                onChangeContent.append(actionForm);
+                onChangeContent.append(".");
+                
+                if(isForSearch())
+                    onChangeContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onChangeContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onChangeContent.append(".value = ");
+                onChangeContent.append(onChangeActionValidate);
+                onChangeContent.append(";");
+                
+                if(onChangeActionValidateProperties.length() > 0){
+                    onChangeContent.append(" document.");
+                    onChangeContent.append(actionForm);
+                    onChangeContent.append(".");
+                    onChangeContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onChangeContent.append(".value = '");
+                    onChangeContent.append(onChangeActionValidateProperties);
+                    onChangeContent.append("'; ");
+                }
+                
+                if(onChangeActionForward.length() > 0){
+                    onChangeContent.append("document.");
+                    onChangeContent.append(actionForm);
+                    onChangeContent.append(".");
+                    onChangeContent.append(AttributeConstants.FORWARD_KEY);
+                    onChangeContent.append(".value = '");
+                    onChangeContent.append(onChangeActionForward);
+                    onChangeContent.append("; ");
+                }
+                
+                if(onChangeActionForwardOnFail.length() > 0){
+                    onChangeContent.append("document.");
+                    onChangeContent.append(actionForm);
+                    onChangeContent.append(".");
+                    onChangeContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onChangeContent.append(".value = '");
+                    onChangeContent.append(onChangeActionForwardOnFail);
+                    onChangeContent.append("; ");
+                }
+
+                if(onChangeActionUpdateViews.length() > 0){
+                    onChangeContent.append("document.");
+                    onChangeContent.append(actionForm);
+                    onChangeContent.append(".");
+                    onChangeContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onChangeContent.append(".value = '");
+                    onChangeContent.append(onChangeActionUpdateViews);
+                    onChangeContent.append("; ");
+                }
+
+                onChangeContent.append("document.");
+                onChangeContent.append(actionForm);
+                onChangeContent.append(".");
+                onChangeContent.append(AttributeConstants.ACTION_KEY);
+                onChangeContent.append(".value = '");
+                onChangeContent.append(onChangeAction);
+                onChangeContent.append("'; submitForm(document.");
+                onChangeContent.append(actionForm);
+                onChangeContent.append(");");
+                
+                onChange = onChangeContent.toString();
+            }
+            
+            if(onKeyUpAction.length() > 0){
+                StringBuilder onKeyUpContent = new StringBuilder();
+
+                if(onKeyUp.length() > 0){
+                    onKeyUpContent.append(onKeyUp);
+                    
+                    if(!onKeyUp.endsWith(";"))
+                        onKeyUpContent.append(";");
+                    
+                    onKeyUpContent.append(" ");
+                }
+                
+                onKeyUpContent.append("document.");
+                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(".");
+                
+                if(isForSearch())
+                    onKeyUpContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onKeyUpContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onKeyUpContent.append(".value = ");
+                onKeyUpContent.append(onKeyUpActionValidate);
+                onKeyUpContent.append(";");
+                
+                if(onKeyUpActionValidateProperties.length() > 0){
+                    onKeyUpContent.append(" document.");
+                    onKeyUpContent.append(actionForm);
+                    onKeyUpContent.append(".");
+                    onKeyUpContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onKeyUpContent.append(".value = '");
+                    onKeyUpContent.append(onKeyUpActionValidateProperties);
+                    onKeyUpContent.append("'; ");
+                }
+
+                if(onKeyUpActionForward.length() > 0){
+                    onKeyUpContent.append("document.");
+                    onKeyUpContent.append(actionForm);
+                    onKeyUpContent.append(".");
+                    onKeyUpContent.append(AttributeConstants.FORWARD_KEY);
+                    onKeyUpContent.append(".value = '");
+                    onKeyUpContent.append(onKeyUpActionForward);
+                    onKeyUpContent.append("; ");
+                }
+                
+                if(onKeyUpActionForwardOnFail.length() > 0){
+                    onKeyUpContent.append("document.");
+                    onKeyUpContent.append(actionForm);
+                    onKeyUpContent.append(".");
+                    onKeyUpContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onKeyUpContent.append(".value = '");
+                    onKeyUpContent.append(onKeyUpActionForwardOnFail);
+                    onKeyUpContent.append("; ");
+                }
+
+                if(onKeyUpActionUpdateViews.length() > 0){
+                    onKeyUpContent.append("document.");
+                    onKeyUpContent.append(actionForm);
+                    onKeyUpContent.append(".");
+                    onKeyUpContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onKeyUpContent.append(".value = '");
+                    onKeyUpContent.append(onKeyUpActionUpdateViews);
+                    onKeyUpContent.append("; ");
+                }
+
+                onKeyUpContent.append("document.");
+                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(".");
+                onKeyUpContent.append(AttributeConstants.ACTION_KEY);
+                onKeyUpContent.append(".value = '");
+                onKeyUpContent.append(onKeyUpAction);
+                onKeyUpContent.append("'; submitForm(document.");
+                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(");");
+                
+                onKeyUp = onKeyUpContent.toString();
+            }
+            
+            if(onKeyDownAction.length() > 0){
+                StringBuilder onKeyDownContent = new StringBuilder();
+
+                if(onKeyDown.length() > 0){
+                    onKeyDownContent.append(onKeyDown);
+                    
+                    if(!onKeyDown.endsWith(";"))
+                        onKeyDownContent.append(";");
+                    
+                    onKeyDownContent.append(" ");
+                }
+                
+                onKeyDownContent.append("document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(".");
+                
+                if(isForSearch())
+                    onKeyDownContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onKeyDownContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onKeyDownContent.append(".value = ");
+                onKeyDownContent.append(onKeyDownActionValidate);
+                onKeyDownContent.append(";");
+                
+                if(onKeyDownActionValidateProperties.length() > 0){
+                    onKeyDownContent.append(" document.");
+                    onKeyDownContent.append(actionForm);
+                    onKeyDownContent.append(".");
+                    onKeyDownContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onKeyDownContent.append(".value = '");
+                    onKeyDownContent.append(onKeyDownActionValidateProperties);
+                    onKeyDownContent.append("'; ");
+                }
+                
+                if(onKeyDownActionForward.length() > 0){
+                    onKeyDownContent.append("document.");
+                    onKeyDownContent.append(actionForm);
+                    onKeyDownContent.append(".");
+                    onKeyDownContent.append(AttributeConstants.FORWARD_KEY);
+                    onKeyDownContent.append(".value = '");
+                    onKeyDownContent.append(onKeyDownActionForward);
+                    onKeyDownContent.append("; ");
+                }
+                
+                if(onKeyDownActionForwardOnFail.length() > 0){
+                    onKeyDownContent.append("document.");
+                    onKeyDownContent.append(actionForm);
+                    onKeyDownContent.append(".");
+                    onKeyDownContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onKeyDownContent.append(".value = '");
+                    onKeyDownContent.append(onKeyDownActionForwardOnFail);
+                    onKeyDownContent.append("; ");
+                }
+
+                if(onKeyDownActionUpdateViews.length() > 0){
+                    onKeyDownContent.append("document.");
+                    onKeyDownContent.append(actionForm);
+                    onKeyDownContent.append(".");
+                    onKeyDownContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onKeyDownContent.append(".value = '");
+                    onKeyDownContent.append(onKeyDownActionUpdateViews);
+                    onKeyDownContent.append("; ");
+                }
+
+                onKeyDownContent.append("document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(".");
+                onKeyDownContent.append(AttributeConstants.ACTION_KEY);
+                onKeyDownContent.append(".value = '");
+                onKeyDownContent.append(onKeyDownAction);
+                onKeyDownContent.append("'; submitForm(document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(");");
+                
+                onKeyDown = onKeyDownContent.toString();
+            }
+
+            if(onKeyPressAction.length() > 0){
+                StringBuilder onKeyPressContent = new StringBuilder();
+
+                if(onKeyPress.length() > 0){
+                    onKeyPressContent.append(onKeyPress);
+                    
+                    if(!onKeyPress.endsWith(";"))
+                        onKeyPressContent.append(";");
+                    
+                    onKeyPressContent.append(" ");
+                }
+                
+                onKeyPressContent.append("document.");
+                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(".");
+                
+                if(isForSearch())
+                    onKeyPressContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onKeyPressContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onKeyPressContent.append(".value = ");
+                onKeyPressContent.append(onKeyPressActionValidate);
+                onKeyPressContent.append(";");
+                
+                if(onKeyPressActionValidateProperties.length() > 0){
+                    onKeyPressContent.append(" document.");
+                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(".");
+                    onKeyPressContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onKeyPressContent.append(".value = '");
+                    onKeyPressContent.append(onKeyPressActionValidateProperties);
+                    onKeyPressContent.append("'; ");
+                }
+
+                if(onKeyPressActionForward.length() > 0){
+                    onKeyPressContent.append("document.");
+                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(".");
+                    onKeyPressContent.append(AttributeConstants.FORWARD_KEY);
+                    onKeyPressContent.append(".value = '");
+                    onKeyPressContent.append(onKeyPressActionForward);
+                    onKeyPressContent.append("; ");
+                }
+                
+                if(onKeyPressActionForwardOnFail.length() > 0){
+                    onKeyPressContent.append("document.");
+                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(".");
+                    onKeyPressContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onKeyPressContent.append(".value = '");
+                    onKeyPressContent.append(onKeyPressActionForwardOnFail);
+                    onKeyPressContent.append("; ");
+                }
+
+                if(onKeyPressActionUpdateViews.length() > 0){
+                    onKeyPressContent.append("document.");
+                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(".");
+                    onKeyPressContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onKeyPressContent.append(".value = '");
+                    onKeyPressContent.append(onKeyPressActionUpdateViews);
+                    onKeyPressContent.append("; ");
+                }
+                
+                if(isForSearch()){
+                    if(!name.startsWith("search.")){
+                        name = "search.".concat(name);
+        
+                        setName(name);
+                    }
+                    
+                    if(searchPropertiesGroupTag != null){
+                        onKeyPressContent = new StringBuilder(onKeyPress);
+                        onKeyPressContent.append("if(getKeyPressed(event) == 13) ");
+                        onKeyPressContent.append("document.getElementById('");
+                        onKeyPressContent.append(searchPropertiesGroupTag.getSearchButtonTag().getName());
+                        onKeyPressContent.append("').click();");
+            
+                        onKeyPress = onKeyPressContent.toString();
+                    }
+                    else{
+                        onKeyPressContent.append("document.");
+                        onKeyPressContent.append(actionForm);
+                        onKeyPressContent.append(".");
+                        onKeyPressContent.append(AttributeConstants.ACTION_KEY);
+                        onKeyPressContent.append(".value = '");
+                        onKeyPressContent.append(onKeyPressAction);
+                        onKeyPressContent.append("'; submitForm(document.");
+                        onKeyPressContent.append(actionForm);
+                        onKeyPressContent.append(");");
+                        
+                        onKeyPress = onKeyPressContent.toString();
+                    }
+                }
+                else{
+                    onKeyPressContent.append("document.");
+                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(".");
+                    onKeyPressContent.append(AttributeConstants.ACTION_KEY);
+                    onKeyPressContent.append(".value = '");
+                    onKeyPressContent.append(onKeyPressAction);
+                    onKeyPressContent.append("'; submitForm(document.");
+                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(");");
+                    
+                    onKeyPress = onKeyPressContent.toString();
+                }
+            }
+
             setOnBlur(onBlur);
             setOnFocus(onFocus);
-            setOnChange(onChange);
             setOnClick(onClick);
-            setOnKeyDown(onKeyDown);
-            setOnKeyPress(onKeyPress);
             setOnMouseOut(onMouseOut);
             setOnMouseOver(onMouseOver);
             setStyleClass(styleClass);
             setStyle(style);
-
-    		if(isForSearch()){
-    		    if(!name.startsWith("search.")){
-        		    name = "search.".concat(name);
-    
-        		    setName(name);
-    		    }
-    		    
-    		    if(searchPropertiesGroupTag != null){
-    		        searchPropertiesGroupTag.addSearchProperty(name);
-    		    
-                    StringBuilder onKeyPressContent = new StringBuilder(onKeyPress);
-                
-                    onKeyPressContent.append("if(getKeyPressed(event) == 13) ");
-                    onKeyPressContent.append("document.getElementById('");
-                    onKeyPressContent.append(searchPropertiesGroupTag.getSearchButtonTag().getName());
-                    onKeyPressContent.append("').click();");
-        
-                    setOnKeyPress(onKeyPressContent.toString());
-    		    }
-    		}
 		}
 	}
 	
@@ -920,10 +2070,41 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
         setValueMap("");
         setValueMapScope("");
         setValueMapInstance(null);
+        setOnBlurActionValidate(false);
+        setOnBlurActionValidateProperties("");
+        setOnFocusActionValidate(false);
+        setOnFocusActionValidateProperties("");
+        setOnClickActionValidate(false);
+        setOnClickActionValidateProperties("");
+        setOnMouseOverActionValidate(false);
+        setOnMouseOverActionValidateProperties("");
+        setOnMouseOutActionValidate(false);
+        setOnMouseOutActionValidateProperties("");
 		setOnChange("");
+		setOnChangeAction("");
+		setOnChangeActionForward("");
+		setOnChangeActionForwardOnFail("");
+		setOnChangeActionUpdateViews("");
+		setOnChangeActionValidate(false);
+		setOnChangeActionValidateProperties("");
 		setOnKeyPress("");
+        setOnKeyPressActionForward("");
+        setOnKeyPressActionForwardOnFail("");
+        setOnKeyPressActionUpdateViews("");
+        setOnKeyPressActionValidate(false);
+        setOnKeyPressActionValidateProperties("");
 		setOnKeyDown("");
+        setOnKeyDownActionForward("");
+        setOnKeyDownActionForwardOnFail("");
+        setOnKeyDownActionUpdateViews("");
+        setOnKeyDownActionValidate(false);
+        setOnKeyDownActionValidateProperties("");
 		setOnKeyUp("");
+        setOnKeyUpActionForward("");
+        setOnKeyUpActionForwardOnFail("");
+        setOnKeyUpActionUpdateViews("");
+        setOnKeyUpActionValidate(false);
+        setOnKeyUpActionValidateProperties("");
 		setPattern("");
 		setFocus(false);
 		setValue(null);
