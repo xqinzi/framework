@@ -91,16 +91,13 @@ public abstract class BaseService implements IService{
      * @see br.com.concepting.framework.service.interfaces.IService#begin()
      */
 	public void begin() throws InternalErrorException{
-	    try{
-	        if(currentPersistence == null)
-	            currentPersistence = getPersistence();
-	    }
-	    catch(Throwable e){
-	    }
+        if(currentPersistence == null)
+            currentPersistence = getPersistence();
 	    
         if(currentPersistence != null && useTransaction()){
             currentPersistence.setTransactionType(transactionType);
             currentPersistence.setTransactionTimeout(transactionTimeout);
+            currentPersistence.openConnection();
             currentPersistence.begin();
         }
     }
@@ -155,7 +152,6 @@ public abstract class BaseService implements IService{
                 persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, null);
                 
                 persistenceInstance.setPersistenceResource(persistenceResource);
-                persistenceInstance.openConnection();
             }
             else
                 persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, currentPersistence);
