@@ -49,7 +49,7 @@ public class SecurityFilter implements Filter{
         try{
             SecurityResourceLoader loader = new SecurityResourceLoader();
             
-            securityResource = loader.get();
+            securityResource = loader.getDefault();
         }
         catch(Throwable e){
             throw new ServletException(e);
