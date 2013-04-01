@@ -63,13 +63,13 @@ public class SystemTag extends BaseTag{
         if(systemResource == null){
             SystemResourceLoader loader = new SystemResourceLoader();
             
-            systemResource = loader.get();
+            systemResource = loader.getDefault();
         }
         
         if(securityResource == null){
             SecurityResourceLoader loader = new SecurityResourceLoader();
             
-            securityResource = loader.get();
+            securityResource = loader.getDefault();
         }
     }
     
