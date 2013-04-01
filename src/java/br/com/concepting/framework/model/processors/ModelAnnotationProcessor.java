@@ -1477,7 +1477,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
      */
     public void generateWebPageI18nResource() throws Throwable{
         SystemResourceLoader loader                      = new SystemResourceLoader(getAnnotationProcessorFactory().getProjectResourcesDir(), SystemConstants.DEFAULT_RESOURCE_ID);
-        SystemResource       resource                    = loader.get();
+        SystemResource       resource                    = loader.getDefault();
         List<Locale>         languages                   = resource.getLanguages();
         String               actionFormUrl               = ActionFormUtil.getActionFormUrlByModel(getDeclaration());
         StringBuilder        webPageI18nResourceFileName = new StringBuilder();
