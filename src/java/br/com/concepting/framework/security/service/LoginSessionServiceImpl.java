@@ -194,6 +194,8 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                 catch(ItemAlreadyExistsException e){
                     throw new UserAlreadyLoggedInException();
                 }
+                
+                user.setLastUpdateDate(new DateTime());
 
                 if(expiredPassword){
                     user.setChangePassword(true);
