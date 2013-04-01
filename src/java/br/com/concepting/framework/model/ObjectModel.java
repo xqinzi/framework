@@ -45,12 +45,96 @@ public class ObjectModel extends BaseModel{
 	private String description = "";
 	
 	@Property
+	private String iconUrl = "";
+	
+    @Property
+	private byte iconData[] = null;
+	
+    @Property
+	private String iconWidth = "";
+	
+    @Property
+	private String iconHeight = "";
+	
+	@Property
 	private Long sequence = 0l;
 	
 	@Property(relationType = RelationType.MANY_TO_MANY)
 	private List<GroupModel> groups = null;
-	
+
 	/**
+	 * Retorna a URL que armazena o ícone do objeto.
+	 * 
+	 * @return String contendo a URL.
+	 */
+	public String getIconUrl(){
+        return iconUrl;
+    }
+
+    /**
+     * Define a URL que armazena o ícone do objeto.
+     * 
+     * @param iconUrl String contendo a URL.
+     */
+    public void setIconUrl(String iconUrl){
+        this.iconUrl = iconUrl;
+    }
+
+    /**
+     * Retorna os dados que definem o ícone do objeto.
+     * 
+     * @return Array de bytes contendo os dados que definem o ícone.
+     */
+    public byte[] getIconData(){
+        return iconData;
+    }
+
+    /**
+     * Define os dados que definem o ícone do objeto.
+     * 
+     * @param iconData Array de bytes contendo os dados que definem o ícone.
+     */
+    public void setIconData(byte[] iconData){
+        this.iconData = iconData;
+    }
+
+    /**
+     * Retorna a largura do ícone.
+     * 
+     * @return String contendo a largura do ícone.
+     */
+    public String getIconWidth(){
+        return iconWidth;
+    }
+
+    /**
+     * Define a largura do ícone.
+     * 
+     * @param iconWidth String contendo a largura do ícone.
+     */
+    public void setIconWidth(String iconWidth){
+        this.iconWidth = iconWidth;
+    }
+
+    /**
+     * Retorna a altura do ícone.
+     * 
+     * @return String contendo a altura do ícone.
+     */
+    public String getIconHeight(){
+        return iconHeight;
+    }
+
+    /**
+     * Define a altura do ícone.
+     * 
+     * @param iconHeight String contendo a altura do ícone.
+     */
+    public void setIconHeight(String iconHeight){
+        this.iconHeight = iconHeight;
+    }
+
+    /**
 	 * Retorna a lista de grupos vinculados ao objeto.
 	 * 
 	 * @return Lista contendo a lista de grupos.
