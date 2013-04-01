@@ -152,7 +152,7 @@ public abstract class BaseAction extends DispatchAction{
 	    BaseActionForm       actionForm        = getActionForm();
 	    Collection<String>   languages         = null;
         SystemResourceLoader loader            = new SystemResourceLoader();
-        SystemResource       resource          = loader.get();
+        SystemResource       resource          = loader.getDefault();
         Collection<Locale>   resourceLanguages = resource.getLanguages();
         
         if(resourceLanguages != null && resourceLanguages.size() > 0){
@@ -173,7 +173,7 @@ public abstract class BaseAction extends DispatchAction{
 	protected void loadSkins() throws Throwable{
 	    BaseActionForm       actionForm = getActionForm();
         SystemResourceLoader loader     = new SystemResourceLoader();
-        SystemResource       resource   = loader.get();
+        SystemResource       resource   = loader.getDefault();
 
         actionForm.setSkins(resource.getSkins());
 	}
