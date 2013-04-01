@@ -187,7 +187,7 @@ public abstract class BaseAction extends DispatchAction{
         Locale              languages[] = Locale.getAvailableLocales();
             
         for(Locale language : languages)
-            languageMap.put(language.toString(), language.getDisplayLanguage(systemController.getCurrentLanguage()));
+            languageMap.put(language.toString(), StringUtil.capitalize(language.getDisplayName(systemController.getCurrentLanguage())));
         
         actionForm.setLanguageMap(languageMap);
 	}
