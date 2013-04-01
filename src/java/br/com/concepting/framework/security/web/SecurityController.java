@@ -101,7 +101,7 @@ public class SecurityController{
                     systemSession.setId(systemController.getSession().getId());
                     
                     SystemResourceLoader systemResourceLoader = new SystemResourceLoader();
-                    SystemResource       systemResource       = systemResourceLoader.get();
+                    SystemResource       systemResource       = systemResourceLoader.getDefault();
                             
                     systemSession.setCurrentSkin(systemResource.getDefaultSkin());
                     systemSession.setCurrentLanguage(systemResource.getDefaultLanguage());
