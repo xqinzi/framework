@@ -293,6 +293,12 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     		if(data.length() > 0 && dataScope != null){
     		    ScopeType dataScope = getDataScopeType();
     		    
+    		    if(dataScope == null){
+    		        dataScope = ScopeType.FORM;
+    		        
+    		        setDataScopeType(dataScope);
+    		    }
+    		    
     			if(!data.startsWith(actionForm)){
         			StringBuilder propertyId = new StringBuilder();
         			
