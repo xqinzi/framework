@@ -25,7 +25,7 @@ import br.com.concepting.framework.web.types.VisibilityType;
  * @since 1.0
  */
 public class MenuBarTag extends BaseOptionsPropertyTag{
-	private Boolean isStatic                      = false;     
+	private Boolean fixed                         = false;     
 	private String  menuItemStyleClass            = "";
 	private String  menuItemSelectedStyleClass    = "";
 	private String  menuBarItemStyleClass         = "";
@@ -106,30 +106,30 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
     }
 
     /**
-	 * Indica se a barra de menus deve ter uma posição estática.
+	 * Indica se a barra de menus deve ter uma posição fixa.
 	 * 
 	 * @return True/False.
 	 */
-	public Boolean isStatic(){
-    	return isStatic;
+	public Boolean isFixed(){
+    	return fixed;
     }
 
 	/**
-	 * Indica se a barra de menus deve ter uma posição estática.
+	 * Indica se a barra de menus deve ter uma posição fixa.
 	 * 
 	 * @return True/False.
 	 */
-	public Boolean getIsStatic(){
-    	return isStatic();
+	public Boolean getFixed(){
+    	return isFixed();
     }
 
 	/**
-	 * Define se a barra de menus deve ter uma posição estática.
+	 * Define se a barra de menus deve ter uma posição fixa.
 	 * 
-	 * @param isStatic True/False.
+	 * @param fixed True/False.
 	 */
-	public void setIsStatic(Boolean isStatic){
-    	this.isStatic = isStatic;
+	public void setFixed(Boolean fixed){
+    	this.fixed = fixed;
     }
 	
     /**
@@ -234,6 +234,12 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	    }
 	}
 	
+	/**
+	 * Renderiza um item de menu.
+	 * 
+	 * @param menuItem Instância contendo as propriedades do item de menu.
+	 * @throws Throwable
+	 */
 	private void renderMenuItemIcon(ObjectModel menuItem) throws Throwable{
         String        menuItemIconUrl    = menuItem.getIconUrl();
         byte[]        menuItemIconData   = menuItem.getIconData();
@@ -551,12 +557,19 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	protected void renderClose() throws Throwable{
 		println("</div>");
 		
-		if(isStatic){
-			println("<script language=\"javascript\">");
-			print("renderStaticMenu(\"");
-			print(getName());
-			println("\");");
-			println("</script>");
+		if(fixed){
+		    StringBuilder content = new StringBuilder();
+		    
+            content.append("renderFixedMenu(\"");
+            content.append(getName());
+            content.append("\");");
+
+            ScriptTag scriptTag = new ScriptTag();
+
+            scriptTag.setPageContext(pageContext);
+            scriptTag.setContent(content.toString());
+            scriptTag.doStartTag();
+            scriptTag.doEndTag();
 		}
 	}
 
@@ -568,6 +581,6 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	     
 	    setMenuItemStyleClass("");
 	    setMenuItemSelectedStyleClass("");
-	    setIsStatic(false);
+	    setFixed(false);
     }
 }
