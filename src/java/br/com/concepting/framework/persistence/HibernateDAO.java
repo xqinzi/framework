@@ -124,7 +124,7 @@ public abstract class HibernateDAO extends BaseDAO{
      */
 	public void begin() throws InternalErrorException{
 	    try{
-    	    Session     connection  = getConnection();
+    	    Session     connection  = openConnection();
     	    Transaction transaction = connection.getTransaction();
     	    
     	    if(transaction != null){
@@ -187,12 +187,18 @@ public abstract class HibernateDAO extends BaseDAO{
      * @see br.com.concepting.framework.persistence.interfaces.IDAO#openConnection()
      */
     public <C> C openConnection() throws InternalErrorException{
+        Session connection = getConnection();
+        
         try{
-            PersistenceResource persistenceRespurce = getPersistenceResource();
+            if(connection == null || !connection.isOpen()){
+                PersistenceResource persistenceRespurce = getPersistenceResource();
+                
+                connection = HibernateUtil.getSession(persistenceRespurce);
+                
+                setConnection(connection);
+            }
             
-            setConnection(HibernateUtil.getSession(persistenceRespurce));
-            
-            return (C)getConnection();
+            return (C)connection;
         }
         catch(Throwable e){
             throw new InternalErrorException(e);
