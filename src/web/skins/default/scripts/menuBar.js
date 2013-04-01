@@ -147,15 +147,15 @@ function hideAllParentMenus(){
 }
 
 /**
- * Mantém o componente visual estático (posição fixa).
+ * Mantém o componente com posição fixa.
  * 
  * @param name String contendo o identificador do componente.
  */
-function renderStaticMenu(name){
+function renderFixedMenu(name){
 	var object = document.getElementById(name + ".menuBar");
 	
 	if(object)
 		object.style.top = document.body.scrollTop + "px";
 
-	setTimeout("renderStaticMenu(\"" + name + "\")", 0);
+	setTimeout("renderFixedMenu(\"" + name + "\")", 0);
 }
