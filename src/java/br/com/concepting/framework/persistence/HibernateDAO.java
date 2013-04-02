@@ -201,6 +201,7 @@ public abstract class HibernateDAO extends BaseDAO{
             return (C)connection;
         }
         catch(Throwable e){
+            e.printStackTrace();
             throw new InternalErrorException(e);
         }
     }
@@ -1414,6 +1415,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			return model;
 		}
 		catch(Throwable e){
+		    e.printStackTrace();
         }
 		
 		return model;

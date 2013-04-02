@@ -28,6 +28,7 @@ import org.hibernate.type.ByteType;
 import org.hibernate.type.CurrencyType;
 import org.hibernate.type.DateType;
 import org.hibernate.type.DoubleType;
+import org.hibernate.type.EnumType;
 import org.hibernate.type.FloatType;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
@@ -1123,7 +1124,7 @@ public abstract class PropertyUtil extends PropertyUtils{
 		
         if(propertyInfo.getMappedPropertyType().length() == 0){
             if(isEnum(propertyClass))
-                propertyInfo.setMappedPropertyType(StringType.INSTANCE.getName());
+                propertyInfo.setMappedPropertyType(EnumType.class.getName());
             else if(isBoolean(propertyClass))
                 propertyInfo.setMappedPropertyType(BooleanType.INSTANCE.getName());
             else if(isByteArray(propertyClass))

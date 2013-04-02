@@ -24,7 +24,7 @@ public class ObjectModel extends BaseModel{
 	private Long id = 0l; 
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
-	private String type = "";
+	private ComponentType type = null;
 
 	@Property(relationType = RelationType.ONE_TO_ONE, isForSearch = true, relationJoinType = RelationJoinType.INNER_JOIN, validations = ValidationType.REQUIRED)
 	private FormModel form = null;
@@ -187,18 +187,6 @@ public class ObjectModel extends BaseModel{
 	public void setId(Long id){
 		this.id = id;
 	}
-
-	/**
-	 * Retorna o tipo do objeto.
-	 * 
-	 * @return Instância que define a constante do tipo do objeto.
-	 */
-	public ComponentType getObjectType(){
-	    if(type.length() == 0)
-	        return null;
-	    
-		return ComponentType.valueOf(type.toUpperCase());
-	}
 	
 	/**
 	 * Define o tipo do objeto.
@@ -206,28 +194,16 @@ public class ObjectModel extends BaseModel{
 	 * @param type Instância que define a constante do tipo do objeto.
 	 */
 	public void setType(ComponentType type){
-	    if(type == null)
-	        this.type = "";
-	    else
-	        this.type = type.toString();
+        this.type = type;
 	}
 
 	/**
 	 * Retorna o tipo do objeto.
 	 * 
-	 * @return String contendo o tipo do objeto.
+	 * @return Constante que define o tipo do objeto.
 	 */
-	public String getType(){
+	public ComponentType getType(){
 		return type;
-	}
-
-	/**
-	 * Define o tipo do objeto.
-	 * 
-	 * @param type String contendo o tipo do objeto.
-	 */
-	public void setType(String type){
-		this.type = type;
 	}
 
 	/**

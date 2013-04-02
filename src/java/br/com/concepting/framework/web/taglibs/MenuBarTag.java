@@ -355,7 +355,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 
 				if(hasPermission){
                     hasSubmenuItems = menuItem.hasChildNodes();
-				    menuItemType    = menuItem.getObjectType();
+				    menuItemType    = menuItem.getType();
 				    
      				if(menuItemType == ComponentType.MENU_ITEM_SEPARATOR){
      					if(parentMenu != null){
