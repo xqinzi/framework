@@ -48,15 +48,31 @@
 				<if expr="@{identityPropertiesInfoSize} > 0">
 					<iterate var="identityPropertyInfo" values="@{modelInfo.identityPropertiesInfo}">
 						<if expr="@{identityPropertyInfo.mappedPropertyId} != ''">
-							<id name="@{identityPropertyInfo.id}" type="@{identityPropertyInfo.mappedPropertyType}" column="@{identityPropertyInfo.mappedPropertyId}">
-							    <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
-									<generator class="native"/>
-								</if>
-								<if expr="!@{identityPropertyInfo.autoGenerateIdentity}">
-							    	<generator class="assigned"/>
-								</if>
-								<evaluate expr="@{mappedPropertiesControl}.add(@{identityPropertyInfo.mappedPropertyId})"/>
-							</id>
+                            <if expr="!@{identityPropertyInfo.isEnum}">
+    							<id name="@{identityPropertyInfo.id}" type="@{identityPropertyInfo.mappedPropertyType}" column="@{identityPropertyInfo.mappedPropertyId}">
+    							    <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
+    									<generator class="native"/>
+    								</if>
+    								<if expr="!@{identityPropertyInfo.autoGenerateIdentity}">
+    							    	<generator class="assigned"/>
+    								</if>
+    								<evaluate expr="@{mappedPropertiesControl}.add(@{identityPropertyInfo.mappedPropertyId})"/>
+    							</id>
+                            </if>
+                            <if expr="@{identityPropertyInfo.isEnum}">
+                                <id name="@{identityPropertyInfo.id}" column="@{identityPropertyInfo.mappedPropertyId}">
+                                    <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
+                                        <generator class="native"/>
+                                    </if>
+                                    <if expr="!@{identityPropertyInfo.autoGenerateIdentity}">
+                                        <generator class="assigned"/>
+                                    </if>
+                                    <type name="@{identityPropertyInfo.mappedPropertyType}">
+                                        <param name="enumClass">@{identityPropertyInfo.clazz.name}</param>
+                                    </type>
+                                    <evaluate expr="@{mappedPropertiesControl}.add(@{identityPropertyInfo.mappedPropertyId})"/>
+                                </id>
+                            </if>
 						</if>
 					</iterate>
 				</if>
@@ -90,10 +106,30 @@
 												<if expr="@{mappedPropertyId} != ''">
 													<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{mappedPropertyId})"/>
 													<if expr="@{alreadyMapped}">
-														<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{componentPropertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
+                                                        <if expr="!@{componentPropertyInfo.isEnum}">
+                                                            <property name="@{propertyId}" column="@{mappedPropertyId}" type="@{componentPropertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
+                                                        </if>
+                                                        <if expr="@{componentPropertyInfo.isEnum}">
+                                                            <property name="@{propertyId}" column="@{mappedPropertyId}" insert="false" update="false" not-null="@{nullable}">
+                                                                <type name="@{componentPropertyInfo.mappedPropertyType}">
+                                                                    <param name="enumClass">@{componentPropertyInfo.clazz.name}</param>
+                                                                    <param name="type">12</param>
+                                                                </type>
+                                                            </property>
+                                                        </if>
 													</if>
 													<if expr="!@{alreadyMapped}">
-														<property name="@{propertyId}" column="@{mappedPropertyId}" type="@{componentPropertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
+                                                        <if expr="!@{componentPropertyInfo.isEnum}"> 
+														    <property name="@{propertyId}" column="@{mappedPropertyId}" type="@{componentPropertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
+                                                        </if>
+                                                        <if expr="@{componentPropertyInfo.isEnum}">
+                                                            <property name="@{propertyId}" column="@{mappedPropertyId}" not-null="@{nullable}">
+                                                                <type name="@{componentPropertyInfo.mappedPropertyType}">
+                                                                    <param name="enumClass">@{componentPropertyInfo.clazz.name}</param>
+                                                                    <param name="type">12</param>
+                                                                </type>
+                                                            </property>
+                                                        </if>
 														<evaluate expr="@{mappedPropertiesControl}.add(@{mappedPropertyId})"/>
 													</if>
 												</if>
@@ -113,55 +149,152 @@
 							</if>
 						</if>
 						<if expr="!@{propertyInfo.isModel}">
-							<if expr="@{propertyInfo.mappedPropertyId} != ''">
-								<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{propertyInfo.mappedPropertyId})"/>
-								<if expr="@{alreadyMapped}">
-									<if expr="@{propertyInfo.keyId} == ''">
-										<if expr="!@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
-										</if>
-										<if expr="@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" unique="true" not-null="@{nullable}"/>
-										</if>
-									</if>
-									<if expr="@{propertyInfo.keyId} != ''">
-										<if expr="!@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-										</if>
-										<if expr="@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-										</if>
-									</if>
-								</if>
-								<if expr="!@{alreadyMapped}">
-									<if expr="@{propertyInfo.keyId} == ''">
-										<if expr="!@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
-										</if>
-										<if expr="@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" unique="true" not-null="@{nullable}"/>
-										</if>
-									</if>
-									<if expr="@{propertyInfo.keyId} != ''">
-										<if expr="!@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-										</if>
-										<if expr="@{propertyInfo.isUnique}">
-											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
-										</if>
-									</if>
-									<evaluate expr="@{mappedPropertiesControl}.add(@{propertyInfo.mappedPropertyId})"/>
-								</if>
-							</if>
-							<if expr="@{propertyInfo.mappedPropertyId} == ''">
-								<if expr="@{propertyInfo.formula} != ''">
-									<property name="@{propertyInfo.id}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}">
-										<formula>
-											@{propertyInfo.formula}
-										</formula>
-									</property>
-								</if>
-							</if>
+                            <if expr="!@{propertyInfo.isEnum}">
+    							<if expr="@{propertyInfo.mappedPropertyId} != ''">
+    								<set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{propertyInfo.mappedPropertyId})"/>
+    								<if expr="@{alreadyMapped}">
+    									<if expr="@{propertyInfo.keyId} == ''">
+    										<if expr="!@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" not-null="@{nullable}"/>
+    										</if>
+    										<if expr="@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" unique="true" not-null="@{nullable}"/>
+    										</if>
+    									</if>
+    									<if expr="@{propertyInfo.keyId} != ''">
+    										<if expr="!@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+    										</if>
+    										<if expr="@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+    										</if>
+    									</if>
+    								</if>
+    								<if expr="!@{alreadyMapped}">
+    									<if expr="@{propertyInfo.keyId} == ''">
+    										<if expr="!@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}"/>
+    										</if>
+    										<if expr="@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" unique="true" not-null="@{nullable}"/>
+    										</if>
+    									</if>
+    									<if expr="@{propertyInfo.keyId} != ''">
+    										<if expr="!@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" index="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+    										</if>
+    										<if expr="@{propertyInfo.isUnique}">
+    											<property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" type="@{propertyInfo.mappedPropertyType}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}"/>
+    										</if>
+    									</if>
+    									<evaluate expr="@{mappedPropertiesControl}.add(@{propertyInfo.mappedPropertyId})"/>
+    								</if>
+    							</if>
+    							<if expr="@{propertyInfo.mappedPropertyId} == ''">
+    								<if expr="@{propertyInfo.formula} != ''">
+    									<property name="@{propertyInfo.id}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}">
+    										<formula>
+    											@{propertyInfo.formula}
+    										</formula>
+    									</property>
+    								</if>
+    							</if>
+                            </if>
+                            <if expr="@{propertyInfo.isEnum}">
+                                <if expr="@{propertyInfo.mappedPropertyId} != ''">
+                                    <set var="alreadyMapped" value="@{mappedPropertiesControl}.contains(@{propertyInfo.mappedPropertyId})"/>
+                                    <if expr="@{alreadyMapped}">
+                                        <if expr="@{propertyInfo.keyId} == ''">
+                                            <if expr="!@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                            <if expr="@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique="true" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                        </if>
+                                        <if expr="@{propertyInfo.keyId} != ''">
+                                            <if expr="!@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" index="@{propertyInfo.keyId}" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                            <if expr="@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" insert="false" update="false" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                        </if>
+                                    </if>
+                                    <if expr="!@{alreadyMapped}">
+                                        <if expr="@{propertyInfo.keyId} == ''">
+                                            <if expr="!@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                            <if expr="@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique="true" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                        </if>
+                                        <if expr="@{propertyInfo.keyId} != ''">
+                                            <if expr="!@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" index="@{propertyInfo.keyId}" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                            <if expr="@{propertyInfo.isUnique}">
+                                                <property name="@{propertyInfo.id}" column="@{propertyInfo.mappedPropertyId}" unique-key="@{propertyInfo.keyId}" not-null="@{nullable}">
+                                                    <type name="@{propertyInfo.mappedPropertyType}">
+                                                        <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                        <param name="type">12</param>
+                                                    </type>
+                                                </property>
+                                            </if>
+                                        </if>
+                                        <evaluate expr="@{mappedPropertiesControl}.add(@{propertyInfo.mappedPropertyId})"/>
+                                    </if>
+                                </if>
+                                <if expr="@{propertyInfo.mappedPropertyId} == ''">
+                                    <if expr="@{propertyInfo.formula} != ''">
+                                        <property name="@{propertyInfo.id}" not-null="@{nullable}">
+                                            <formula>
+                                                @{propertyInfo.formula}
+                                            </formula>
+                                            <type name="@{propertyInfo.mappedPropertyType}">
+                                                <param name="enumClass">@{propertyInfo.clazz.name}</param>
+                                                <param name="type">12</param>
+                                            </type>
+                                        </property>
+                                    </if>
+                                </if>
+                            </if>
 						</if>
 					</if>
 					<if expr="@{propertyInfo.relationType} == 'ONE_TO_ONE'">
