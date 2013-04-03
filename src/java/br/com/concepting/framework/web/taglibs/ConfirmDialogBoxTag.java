@@ -9,28 +9,52 @@ import br.com.concepting.framework.web.action.types.ActionType;
  * @since 3.0
  */
 public class ConfirmDialogBoxTag extends MessageBoxTag{
-    private String onConfirmAction = "";
-    private String onConfirm       = "";
-    private String updateViews     = "";
+    private String  onConfirmActionUpdateViews        = "";
+    private String  onConfirmActionValidateProperties = "";
+    private Boolean onConfirmActionValidate           = false;
+    private String  onConfirmActionForwardOnFail      = "";
+    private String  onConfirmActionForward            = "";
+    private String  onConfirmAction                   = "";
+    private String  onConfirm                         = "";
     
-    /**
-     * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
-     * processamento da ação requisitada.
-     * 
-     * @return String contendo os identificadores das views.
-     */
-    public String getUpdateViews(){
-        return updateViews;
+    public String getOnConfirmActionUpdateViews(){
+        return onConfirmActionUpdateViews;
     }
 
-    /**
-     * Define os identificadores das views (separados por vírgula) a serem atualizadas após o
-     * processamento da ação requisitada.
-     * 
-     * @param updateViews String contendo os identificadores das views.
-     */
-    public void setUpdateViews(String updateViews){
-        this.updateViews = updateViews;
+    public void setOnConfirmActionUpdateViews(String onConfirmActionUpdateViews){
+        this.onConfirmActionUpdateViews = onConfirmActionUpdateViews;
+    }
+
+    public String getOnConfirmActionValidateProperties(){
+        return onConfirmActionValidateProperties;
+    }
+
+    public void setOnConfirmActionValidateProperties(String onConfirmActionValidateProperties){
+        this.onConfirmActionValidateProperties = onConfirmActionValidateProperties;
+    }
+
+    public Boolean getOnConfirmActionValidate(){
+        return onConfirmActionValidate;
+    }
+
+    public void setOnConfirmActionValidate(Boolean onConfirmActionValidate){
+        this.onConfirmActionValidate = onConfirmActionValidate;
+    }
+
+    public String getOnConfirmActionForwardOnFail(){
+        return onConfirmActionForwardOnFail;
+    }
+
+    public void setOnConfirmActionForwardOnFail(String onConfirmActionForwardOnFail){
+        this.onConfirmActionForwardOnFail = onConfirmActionForwardOnFail;
+    }
+
+    public String getOnConfirmActionForward(){
+        return onConfirmActionForward;
+    }
+
+    public void setOnConfirmActionForward(String onConfirmActionForward){
+        this.onConfirmActionForward = onConfirmActionForward;
     }
 
     /**
@@ -106,7 +130,7 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
             confirmContent.append(onConfirm);
             
             if(!onConfirm.endsWith(";"))
-                confirmContent.append(";");
+                confirmContent.append("; ");
         }
 
         ConfirmButtonTag confirmButtonTag = new ConfirmButtonTag();
@@ -114,13 +138,18 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
         confirmButtonTag.setPageContext(pageContext);
         confirmButtonTag.setOnClick(confirmContent.toString());
         confirmButtonTag.setAction(onConfirmAction);
-        confirmButtonTag.setUpdateViews(updateViews);
+        confirmButtonTag.setForward(onConfirmActionForward);
+        confirmButtonTag.setForwardOnFail(onConfirmActionForwardOnFail);
+        confirmButtonTag.setValidate(onConfirmActionValidate);
+        confirmButtonTag.setValidateProperties(onConfirmActionValidateProperties);
+        confirmButtonTag.setUpdateViews(onConfirmActionUpdateViews);
         confirmButtonTag.doStartTag();
         confirmButtonTag.doEndTag();
 
         CloseButtonTag closeButtonTag = new CloseButtonTag();
 
         closeButtonTag.setPageContext(pageContext);
+        closeButtonTag.setParent(this);
         closeButtonTag.doStartTag();
         closeButtonTag.doEndTag();
     }
@@ -131,8 +160,12 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
     protected void clearAttributes(){
         super.clearAttributes();
         
+        setOnConfirmActionValidateProperties("");
+        setOnConfirmActionValidate(false);
+        setOnConfirmActionUpdateViews("");
+        setOnConfirmActionForwardOnFail("");
+        setOnConfirmActionForward("");
         setOnConfirmAction("");
         setOnConfirm("");
-        setUpdateViews("");
     }
 }

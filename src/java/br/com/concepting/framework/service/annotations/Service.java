@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceInterceptor;
-import br.com.concepting.framework.util.types.TransactionType;
 import br.com.concepting.framework.web.types.ScopeType;
  
 /** 
@@ -55,25 +54,4 @@ public @interface Service{
      * @return Classe interceptadora.
      */
     Class interceptor() default ServiceInterceptor.class;
-    
-    /**
-     * Anotação que define o tipo da transação.
-     * 
-     * @return Constante que define o tipo da transação.
-     */
-    TransactionType transactionType() default TransactionType.NONE;
-    
-    /**
-     * Anotação que define o timeout da transação.
-     * 
-     * @return Valor inteiro contendo o timeout.
-     */
-    int transactionTimeout() default 60;
-    
-    /**
-     * Define as exceções que farão com que seja feito o rollback.
-     *  
-     * @return Array contendo as exceções.
-     */
-    Class[] rollbackFor() default {Throwable.class, Exception.class};
 }

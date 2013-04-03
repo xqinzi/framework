@@ -54,6 +54,8 @@ public class LoginSessionAction extends BaseAction{
         UserModel              user         = loginSession.getUser();
 
         user.setChangePassword(true);
+        user.setNewPassword("");
+        user.setConfirmPassword("");
         
         loginSession.setUser(user);
 

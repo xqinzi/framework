@@ -44,7 +44,6 @@ import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.PhoneticUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.SortOrderType;
-import br.com.concepting.framework.util.types.TransactionType;
 
 /**
  * Classe que define a estrutura básica para as classes de persistência de modelos de dados 
@@ -86,36 +85,6 @@ public abstract class HibernateDAO extends BaseDAO{
             connection.buildLockRequest(LockOptions.NONE).lock(model);
         }
         catch(Throwable e){
-        }
-    }
-    
-    /**
-     * @see br.com.concepting.framework.persistence.interfaces.IDAO#doTransactionLock(java.lang.Object)
-     */
-    public <O> void doTransactionLock(O object){
-        TransactionType transactionType = getTransactionType();
-
-        if(object instanceof BaseModel){
-            Session connection = getConnection();
-            
-            try{
-                if(transactionType == TransactionType.READ_WRITE)
-                    connection.buildLockRequest(LockOptions.UPGRADE).lock(object);
-                else if(transactionType == TransactionType.READ_ONLY)
-                    connection.buildLockRequest(LockOptions.READ).lock(object);
-                else if(transactionType == TransactionType.NONE)
-                    connection.buildLockRequest(LockOptions.NONE).lock(object);
-            }
-            catch(Throwable e){
-            }
-        }
-        else if(object instanceof Query){
-            if(transactionType == TransactionType.READ_WRITE)
-                ((Query)object).setLockOptions(LockOptions.UPGRADE);
-            else if(transactionType == TransactionType.READ_ONLY)
-                ((Query)object).setLockOptions(LockOptions.READ);
-            else if(transactionType == TransactionType.NONE)
-                ((Query)object).setLockOptions(LockOptions.NONE);
         }
     }
     
@@ -236,8 +205,6 @@ public abstract class HibernateDAO extends BaseDAO{
     		Query               query            = (queryType != QueryType.LOAD_REFERENCE ? connection.createQuery(queryString) : connection.createFilter(referenceProperty, queryString));
     
     		query.setComment(statementId);
-    		
-    		doTransactionLock(query);
     		
     		if(modelFilter != null && modelFilter.getReturnProperties() != null && modelFilter.getReturnProperties().size() > 0)
     			query.setResultTransformer(Transformers.aliasToBean(model.getClass()));
@@ -1236,8 +1203,6 @@ public abstract class HibernateDAO extends BaseDAO{
 		Session connection = getConnection();
 
 		try{
-		    doTransactionLock(model);
-		    
 			connection.delete(model);
 		}
 		catch(ObjectNotFoundException e){
@@ -1442,7 +1407,6 @@ public abstract class HibernateDAO extends BaseDAO{
 			Object referencePropertyValueBuffer = PropertyUtil.getProperty(model, referencePropertyId);
 
 			reattachModel(model);
-			doTransactionLock(model);
 			
 			if(propertyInfo.getRelationType() != RelationType.ONE_TO_ONE)
 			    PropertyUtil.setProperty(model, referencePropertyId, null);
@@ -1470,8 +1434,6 @@ public abstract class HibernateDAO extends BaseDAO{
     		while(iterator.hasNext()){
     			model = iterator.next();
     			
-                doTransactionLock(model);
-
     			connection.delete(model);
     		}
 		}
@@ -1500,9 +1462,6 @@ public abstract class HibernateDAO extends BaseDAO{
 		Session connection = getConnection();
 
 		try{
-		    reattachModel(model);
-		    doTransactionLock(model);
-
 			connection.saveOrUpdate(model);
 		}
 		catch(NonUniqueObjectException e){
@@ -1557,10 +1516,7 @@ public abstract class HibernateDAO extends BaseDAO{
 		Session connection = getConnection();
 
 		try{
-            reattachModel(model);
-            doTransactionLock(model);
-
-            connection.update(model);
+            connection.merge(model);
 		}
 		catch(NonUniqueObjectException e){
 		}
@@ -1592,9 +1548,6 @@ public abstract class HibernateDAO extends BaseDAO{
 			while(iterator.hasNext()){
 				model = iterator.next();
 				
-				reattachModel(model);
-				doTransactionLock(model);
-
 				connection.saveOrUpdate(model);
 			}
 		}
@@ -1669,10 +1622,7 @@ public abstract class HibernateDAO extends BaseDAO{
     		while(iterator.hasNext()){
     			model = iterator.next();
     			
-    			reattachModel(model);
-    			doTransactionLock(model);
-
-    			connection.update(model);
+    			connection.merge(model);
     		}
 		}
 		catch(NonUniqueObjectException e){

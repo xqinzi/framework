@@ -16,7 +16,10 @@ public class CloseButtonTag extends ButtonTag{
         
         if(getParent() instanceof DialogBoxTag){
             onClickContent.append("hideDialogBox('");
-            onClickContent.append(getName());
+            
+            DialogBoxTag dialogBox = (DialogBoxTag) getParent();
+            
+            onClickContent.append(dialogBox.getName());
             onClickContent.append("');");
         }    
         

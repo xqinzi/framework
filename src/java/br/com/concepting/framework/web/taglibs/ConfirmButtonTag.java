@@ -118,6 +118,12 @@ public class ConfirmButtonTag extends ButtonTag{
 
             confirmDialogBoxTag.setOnConfirm(getOnClick());
             confirmDialogBoxTag.setOnConfirmAction(getAction());
+            confirmDialogBoxTag.setOnConfirmActionForward(getForward());
+            confirmDialogBoxTag.setOnConfirmActionForwardOnFail(getForwardOnFail());
+            confirmDialogBoxTag.setOnConfirmActionUpdateViews(getUpdateViews());
+            confirmDialogBoxTag.setOnConfirmActionValidate(getValidate());
+            confirmDialogBoxTag.setOnConfirmActionValidateProperties(getValidateProperties());
+            confirmDialogBoxTag.setParent(getParent());
             confirmDialogBoxTag.doEndTag();
         }
 	    

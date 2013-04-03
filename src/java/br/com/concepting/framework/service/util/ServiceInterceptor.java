@@ -15,11 +15,11 @@ import br.com.concepting.framework.context.types.ContextFactoryType;
 import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.service.annotations.Service;
+import br.com.concepting.framework.service.annotations.ServiceTransaction;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.util.Interceptor;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.types.TransactionType;
 import br.com.concepting.framework.web.constants.SystemConstants;
 
 /**
@@ -52,13 +52,12 @@ public class ServiceInterceptor extends Interceptor{
             if(auditor != null)
                 auditor.setLoginSession(ServiceUtil.getLoginSession(service));
     		
-            Service serviceAnnotation = getMethod().getAnnotation(Service.class);
+            ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
             
-            if(serviceAnnotation != null && serviceAnnotation.transactionType() != TransactionType.NONE){
-                service.setTransactionType(serviceAnnotation.transactionType());
-                service.setTransactionTimeout(serviceAnnotation.transactionTimeout());
-                service.begin();
-            }
+            if(serviceTransaction != null)
+                service.setTransactionTimeout(serviceTransaction.transactionTimeout());
+            
+            service.begin();
 		}
 		
 		super.before();
@@ -76,10 +75,7 @@ public class ServiceInterceptor extends Interceptor{
                 if(auditor != null)
                     auditor.setLoginSession(ServiceUtil.getLoginSession(service));
     
-                Service serviceAnnotation = getMethod().getAnnotation(Service.class);
-                
-                if(serviceAnnotation != null && serviceAnnotation.transactionType() != TransactionType.NONE)
-                    service.commit();
+                service.commit();
             }
 	    }
 	    finally{
@@ -99,10 +95,10 @@ public class ServiceInterceptor extends Interceptor{
                 if(auditor != null)
                     auditor.setLoginSession(ServiceUtil.getLoginSession(service));
         		
-                Service serviceAnnotation = getMethod().getAnnotation(Service.class);
+                ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
                 
-                if(serviceAnnotation != null && serviceAnnotation.transactionType() != TransactionType.NONE){
-                    Class   rollbackFor[] = serviceAnnotation.rollbackFor();
+                if(serviceTransaction != null){
+                    Class   rollbackFor[] = serviceTransaction.rollbackFor();
                     Boolean found         = false;
                     
                     for(Class item : rollbackFor){
