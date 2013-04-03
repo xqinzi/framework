@@ -53,6 +53,11 @@ public enum ComponentType{
      * Constante que define um campo de senha.
      */
     PASSWORD,
+    
+    /**
+     * Constante que define um link.
+     */
+    LINK,
 
     /**
      * Constante que define um botão comum.
