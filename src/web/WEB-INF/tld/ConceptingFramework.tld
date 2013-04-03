@@ -474,7 +474,7 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>isStatic</name>
+            <name>isFixed</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -503,6 +503,10 @@
         </attribute>
         <attribute>
             <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>resourceId</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>

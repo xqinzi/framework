@@ -26,7 +26,7 @@ import br.com.concepting.framework.web.types.VisibilityType;
  * @since 1.0
  */
 public class MenuBarTag extends BaseOptionsPropertyTag{
-	private Boolean fixed                         = false;     
+	private Boolean isFixed                       = false;     
 	private String  menuItemStyleClass            = "";
 	private String  menuItemSelectedStyleClass    = "";
 	private String  menuBarItemStyleClass         = "";
@@ -112,7 +112,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	 * @return True/False.
 	 */
 	public Boolean isFixed(){
-    	return fixed;
+    	return isFixed;
     }
 
 	/**
@@ -120,17 +120,17 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	 * 
 	 * @return True/False.
 	 */
-	public Boolean getFixed(){
+	public Boolean getIsFixed(){
     	return isFixed();
     }
 
 	/**
 	 * Define se a barra de menus deve ter uma posição fixa.
 	 * 
-	 * @param fixed True/False.
+	 * @param isFixed True/False.
 	 */
-	public void setFixed(Boolean fixed){
-    	this.fixed = fixed;
+	public void setIsFixed(Boolean isFixed){
+    	this.isFixed = isFixed;
     }
 	
     /**
@@ -602,7 +602,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	protected void renderClose() throws Throwable{
 		println("</div>");
 		
-		if(fixed){
+		if(isFixed){
 		    StringBuilder content = new StringBuilder();
 		    
             content.append("renderFixedMenu(\"");
@@ -626,6 +626,6 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	     
 	    setMenuItemStyleClass("");
 	    setMenuItemSelectedStyleClass("");
-	    setFixed(false);
+	    setIsFixed(false);
     }
 }
