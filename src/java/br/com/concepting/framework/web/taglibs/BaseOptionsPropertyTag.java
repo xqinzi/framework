@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import org.hibernate.collection.AbstractPersistentCollection;
-
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.processors.ExpressionProcessor;
@@ -176,9 +174,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	 * @return Instância contendo a lista de opções.
 	 */
     protected <O> List<O> getDataValues(){
-	    if(dataValues instanceof AbstractPersistentCollection)
-	        return null;
-	    
     	return dataValues;
     }
 

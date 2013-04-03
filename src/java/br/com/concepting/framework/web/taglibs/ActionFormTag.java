@@ -238,7 +238,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         out.println(";\">");
         
         PropertiesResource resource = getDefaultI18nResource();
-        String             message  = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_INFO_MESSAGE_KEY));
+        String             message  = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_BOX_INFO_KEY));
 
         out.print("<span id=\"");
         out.print(getBeanName());
@@ -254,9 +254,9 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         out.print("<td align=\"");
         out.print(AlignmentType.CENTER);
         out.println("\">");
-        out.print("<span class=\"");
+        out.print("<div class=\"");
         out.print(TaglibConstants.DEFAULT_LOADING_BOX_ICON_STYLE_CLASS);
-        out.println("\"></span>");
+        out.println("\"></div>");
         out.println("</td>");
         out.println("</tr>");
         
@@ -272,7 +272,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         
         out.println("</span>");
 
-        message = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_ERROR_MESSAGE_KEY));
+        message = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_BOX_ERROR_KEY));
         
         out.print("<span id=\"");
         out.print(getBeanName());

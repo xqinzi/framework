@@ -224,14 +224,10 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	protected void renderMenuItems() throws Throwable{
-	    try{
-    		List<ObjectModel> dataValues = getDataValues();
-    		
-    		if(dataValues != null && dataValues.size() > 0)
-    		    renderMenuItems(dataValues, null);
-	    }
-	    catch(Throwable e){
-	    }
+		List<ObjectModel> dataValues = getDataValues();
+		
+		if(dataValues != null && dataValues.size() > 0)
+		    renderMenuItems(dataValues, null);
 	}
 	
 	/**
@@ -461,7 +457,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                         if(parentMenuItem == null)
      					    renderMenuItemIcon(menuItem);
      					
-     					menuItemLabel = StringUtil.trim(menuItem.getTitle());
+     					menuItemLabel = StringUtil.trim(menuItem.getLabel());
 
      					if(menuItemLabel.length() > 0)
      						print(menuItemLabel);

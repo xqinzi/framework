@@ -20,6 +20,7 @@ import org.hibernate.Session;
 import org.hibernate.StaleStateException;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.transform.Transformers;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
@@ -38,7 +39,6 @@ import br.com.concepting.framework.persistence.types.QueryType;
 import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.persistence.types.RelationType;
 import br.com.concepting.framework.persistence.util.HibernateUtil;
-import br.com.concepting.framework.persistence.util.ModelTransformer;
 import br.com.concepting.framework.util.MethodUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.PhoneticUtil;
@@ -241,7 +241,7 @@ public abstract class HibernateDAO extends BaseDAO{
     		doTransactionLock(query);
     		
     		if(modelFilter != null && modelFilter.getReturnProperties() != null && modelFilter.getReturnProperties().size() > 0)
-    			query.setResultTransformer(new ModelTransformer(model.getClass()));
+    			query.setResultTransformer(Transformers.aliasToBean(model.getClass()));
     
     		Object clauseParameterValue = null;
     

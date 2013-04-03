@@ -7,14 +7,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ExceptionHandler;
 import org.apache.struts.config.ExceptionConfig;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.ExceptionUtil;
-import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.form.ActionFormMessageController;
 import br.com.concepting.framework.web.form.BaseActionForm;
+import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 
 /**
  * Classe responsável por interceptar os erros gerados no processamento de uma
@@ -28,50 +29,72 @@ public class ActionExceptionHandler extends ExceptionHandler{
     private ActionFormMessageController actionFormMessageController = null;
 	private BaseActionForm              actionForm                  = null;
 	private ActionMapping               actionMapping               = null;
-	
-	/**
-	 * Retorna a instância do redirecionamento do tratamento da exceção.
-	 * 
-	 * @return Instância contendo as propriedades do redirecionamento.
-	 */
-	private ActionForward findForward(){
-        actionForm.setAction(actionForm.getLastAction());
 
-        String forward = actionForm.getForwardOnFail();
-		
-		if(forward.length() == 0)
-		    forward = actionForm.getForward();
+    /**
+     * Encontra a instância do redirecionamento desejado.
+     * 
+     * @return Instância contendo as propriedades do redirecionamento.
+     */
+    protected ActionForward findForward(){
+        ActionMessages messages = actionFormMessageController.getMessages(ActionFormMessageType.ERROR);
+        String         forward  = "";
 
-		ActionForward actionForward = actionMapping.findForward(forward);
+        if(messages != null && messages.size() > 0){
+            forward = actionForm.getForwardOnFail();
+            
+            if(forward.length() == 0)
+                forward = actionForm.getForward();
 
-		if(actionForward == null || actionForward.getPath() == null || actionForward.getPath().length() == 0) 
-			actionForward = actionMapping.getInputForward();
-
-		return actionForward;
-	}
-	
-	/**
-	 * Efetua o processamento do redirecionamento do tratamento da exceção.
-	 * 
-	 * @return Instância contendo as propriedades do redirecionamento.
-	 */
-	private ActionForward processForward(){
-        ActionForward forward    = findForward();
-        String        action     = actionForm.getAction();
-        ActionType    actionType = null;
-        
-        try{
-            actionType = ActionType.valueOf(action.toUpperCase());
+            actionForm.setAction(actionForm.getLastAction());
         }
-        catch(Throwable e){
-            actionType = null;
+        else{
+            messages = actionFormMessageController.getMessages(ActionFormMessageType.WARNING);
+            
+            if(messages != null && messages.size() > 0){
+                forward = actionForm.getForwardOnFail();
+
+                if(forward.length() == 0)
+                    forward = actionForm.getForward();
+
+                actionForm.setAction(actionForm.getLastAction());
+            }
+            else{
+                messages = actionFormMessageController.getMessages(ActionFormMessageType.VALIDATION);
+                
+                if(messages != null && messages.size() > 0){
+                    forward = actionForm.getForwardOnFail();
+                    
+                   if(forward.length() == 0)
+                        forward = actionForm.getForward();
+
+                    actionForm.setAction(actionForm.getLastAction());
+                }
+                else
+                    forward = actionForm.getForward();
+            }
         }
 
-        if(actionType != ActionType.REFRESH)
-            actionForm.setLastAction(action);
+        ActionForward actionForward = actionMapping.findForward(forward);
 
-        return forward;
-	}
+        if(actionForward == null || actionForward.getPath() == null || actionForward.getPath().length() == 0)
+            actionForward = actionMapping.getInputForward();
+
+        return actionForward;
+    }
+
+    /**
+     * Efetua o redirecionamento após a execução da ação.
+     * 
+     * @return Instância contendo as propriedades do redirecionamento.
+     */
+    protected ActionForward processForward(){
+        ActionForward forward = findForward();
+
+        if(!systemController.hasForwardOrRedirect() && !systemController.hasOutputContent())
+            return forward;
+
+        return null;
+    }
 
 	/**
 	 * @see org.apache.struts.action.ExceptionHandler#execute(java.lang.Exception, org.apache.struts.config.ExceptionConfig, org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
@@ -86,6 +109,8 @@ public class ActionExceptionHandler extends ExceptionHandler{
 		
 		if(ExceptionUtil.isExpectedException(e)){
 		    actionFormMessageController.addMessage(e);
+		    
+		    actionForm.setAction(actionForm.getLastAction());
 
 			return processForward();
 		}

@@ -333,7 +333,7 @@ public abstract class BaseAction extends DispatchAction{
 		    actionType = null;
 		}
 
-		if(actionType != null && actionType != ActionType.REFRESH)
+		if(actionType != ActionType.REFRESH)
 			actionForm.setLastAction(action);
 
 		if(!systemController.hasForwardOrRedirect() && !systemController.hasOutputContent())

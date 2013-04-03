@@ -1096,12 +1096,12 @@ public abstract class BaseActionFormElementTag extends BaseTag{
     
     			if(object != null){
     			    if(label == null)
-    			        label = object.getTitle();
+    			        label = object.getLabel();
     			    
     			    String tooltip = getTooltip(); 
     
     			    if(tooltip == null){
-    			        tooltip = object.getDescription();
+    			        tooltip = object.getTooltip();
     			        
     					setTooltip(tooltip);
     			    }

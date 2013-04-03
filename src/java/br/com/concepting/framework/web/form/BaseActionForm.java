@@ -497,6 +497,9 @@ public abstract class BaseActionForm extends ActionForm{
 		actionErrors.add(actionFormMessageController.getMessages(ActionFormMessageType.ERROR));
 		actionErrors.add(actionFormMessageController.getMessages(ActionFormMessageType.VALIDATION));
 		
+		if(actionErrors.size() > 0)
+		    setAction(getLastAction());
+		
 		return actionErrors;
 	}
 }

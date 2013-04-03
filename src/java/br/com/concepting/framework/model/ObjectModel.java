@@ -33,7 +33,7 @@ public class ObjectModel extends BaseModel{
 	private String name = "";
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
-	private String title = "";
+	private String label = "";
 
 	@Property
 	private String action = "";
@@ -42,7 +42,7 @@ public class ObjectModel extends BaseModel{
 	private String actionTarget = "";
 
 	@Property
-	private String description = "";
+	private String tooltip = "";
 	
 	@Property
 	private String iconUrl = "";
@@ -191,7 +191,7 @@ public class ObjectModel extends BaseModel{
 	/**
 	 * Define o tipo do objeto.
 	 * 
-	 * @param type Instância que define a constante do tipo do objeto.
+	 * @param type Constante que define do tipo do objeto.
 	 */
 	public void setType(ComponentType type){
         this.type = type;
@@ -206,7 +206,7 @@ public class ObjectModel extends BaseModel{
 		return type;
 	}
 
-	/**
+    /**
 	 * Retorna a instância do formulário vinculado ao formulário.
 	 * 
 	 * @return Instância contendo os dados do formulário.
@@ -279,38 +279,38 @@ public class ObjectModel extends BaseModel{
 	}
 
 	/**
-	 * Retorna o título do objeto.
+	 * Retorna o label do objeto.
 	 *  
-	 * @return String contendo o título.
+	 * @return String contendo o label.
 	 */
-	public String getTitle(){
-		return title;
+	public String getLabel(){
+		return label;
 	}
 
 	/**
-	 * Define o título do objeto.
+	 * Define o label do objeto.
 	 *  
-	 * @param title String contendo o título.
+	 * @param label String contendo o label.
 	 */
-	public void setTitle(String title){
-		this.title = title;
+	public void setLabel(String label){
+		this.label = label;
 	}
 
 	/**
-	 * Retorna a descrição do objeto.
+	 * Retorna a dica de exibição do objeto.
 	 * 
-	 * @return String contendo a descrição do objeto.
+	 * @return String contendo a dica de exibição.
 	 */
-	public String getDescription(){
-		return description;
+	public String getTooltip(){
+		return tooltip;
 	}
 
 	/**
 	 * Define a dica de exibição do objeto.
 	 * 
-	 * @param description String contendo a descrição do objeto.
+	 * @param tooltip String contendo a dica de exibição.
 	 */
-	public void setDescription(String description){
-		this.description = description;
+	public void setTooltip(String tooltip){
+		this.tooltip = tooltip;
 	}
 }
