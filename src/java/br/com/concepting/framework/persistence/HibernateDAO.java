@@ -201,7 +201,6 @@ public abstract class HibernateDAO extends BaseDAO{
             return (C)connection;
         }
         catch(Throwable e){
-            e.printStackTrace();
             throw new InternalErrorException(e);
         }
     }
@@ -1384,40 +1383,40 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#loadReference(br.com.concepting.framework.model.BaseModel, java.lang.String)
 	 */	
 	public <M extends BaseModel> M loadReference(M model, String referencePropertyId) throws InternalErrorException{
-		try{
-			if(model == null)
-				return model;
-			
-            reattachModel(model);
-            
-			Class     modelClass = model.getClass();
-			ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);
-
-			if(modelInfo == null)
-				return model;
-
-			PropertyInfo propertyInfo = modelInfo.getPropertyInfo(referencePropertyId);
-
-			if(propertyInfo == null || propertyInfo.getRelationType() == RelationType.NONE)
-				return model;
-
-			Object referenceProperty = PropertyUtil.getProperty(model, referencePropertyId);
-			
-			if(propertyInfo.hasModel()){
-				List<M> modelList = (List<M>)referenceProperty;
-				
-				if(modelList != null){
-					for(Integer cont = 0 ; cont < modelList.size() ; cont++)
-						modelList.get(cont);
-				}
-			}
-
+		if(model == null)
 			return model;
-		}
-		catch(Throwable e){
-		    e.printStackTrace();
+		
+        reattachModel(model);
+        
+		Class     modelClass = model.getClass();
+		ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);
+
+		if(modelInfo == null)
+			return model;
+
+		PropertyInfo propertyInfo = modelInfo.getPropertyInfo(referencePropertyId);
+
+		if(propertyInfo == null || propertyInfo.getRelationType() == RelationType.NONE)
+			return model;
+
+		Object referenceProperty = null;
+		
+        try{
+            referenceProperty = PropertyUtil.getProperty(model, referencePropertyId);
+        }
+        catch(Throwable e){
+            throw new InternalErrorException(e);
         }
 		
+		if(propertyInfo.hasModel()){
+			List<M> modelList = (List<M>)referenceProperty;
+			
+			if(modelList != null){
+				for(Integer cont = 0 ; cont < modelList.size() ; cont++)
+					modelList.get(cont);
+			}
+		}
+
 		return model;
 	}
 

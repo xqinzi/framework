@@ -7,6 +7,7 @@ import br.com.concepting.framework.model.FormModel;
 import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.util.ModelUtil;
+import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.util.ImageUtil;
@@ -318,13 +319,17 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 		if(menuItems != null && menuItems.size() > 0)
 			ModelUtil.sort(menuItems, "sequence", SortOrderType.ASCEND);
 		
-		ObjectModel   parentMenuItem       = null;
-        String        menuItemName         = ""; 
-        String        menuItemLabel        = "";
-        String        menuItemAction       = "";
-        String        menuItemActionTarget = "";
-        Boolean       hasSubmenuItems      = false;
-		ComponentType menuItemType         = null;
+		ObjectModel        parentMenuItem       = null;
+        String             menuItemName         = ""; 
+        String             menuItemLabel        = "";
+        String             menuItemTooltip      = "";
+        String             menuItemAction       = "";
+        String             menuItemActionTarget = "";
+        Boolean            hasSubmenuItems      = false;
+		ComponentType      menuItemType         = null;
+		StringBuilder      resourceProperty     = null;
+		PropertiesResource resources            = getI18nResource();
+		PropertiesResource defaultResources     = getDefaultI18nResource();
 
 		for(ObjectModel menuItem : menuItems){
 		    menuItemName   = menuItem.getName();
@@ -452,15 +457,59 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                         else
                             print(menuBarItemStyleClass);
 
-     					print("');\">");
+     					print("');\"");
+     					
+                        menuItemTooltip = StringUtil.trim(menuItem.getTooltip());
+
+                        if(menuItemTooltip.length() == 0){
+                            if(resourceProperty == null)
+                                resourceProperty = new StringBuilder();
+                            else
+                                resourceProperty.delete(0, resourceProperty.length());
+                            
+                            resourceProperty.append(menuItem.getName());
+                            resourceProperty.append(".");
+                            resourceProperty.append(AttributeConstants.TOOLTIP_KEY);
+                            
+                            menuItemTooltip = StringUtil.trim(resources.getProperty(resourceProperty.toString(), false));
+                            
+                            if(menuItemTooltip.length() == 0)
+                                menuItemTooltip = StringUtil.trim(defaultResources.getProperty(resourceProperty.toString(), false));
+                        }
+                        
+                        if(menuItemTooltip.length() > 0){
+                            print(" title=\"");
+                            print(menuItemTooltip);
+                            print("\"");
+                        }
+     					
+                        print(">");
      					
                         if(parentMenuItem == null)
      					    renderMenuItemIcon(menuItem);
      					
      					menuItemLabel = StringUtil.trim(menuItem.getLabel());
 
-     					if(menuItemLabel.length() > 0)
-     						print(menuItemLabel);
+     					if(menuItemLabel.length() == 0){
+     					    if(resourceProperty == null)
+     					        resourceProperty = new StringBuilder();
+     					    else
+     					        resourceProperty.delete(0, resourceProperty.length());
+     					    
+     					    resourceProperty.append(menuItem.getName());
+     					    resourceProperty.append(".");
+     					    resourceProperty.append(AttributeConstants.LABEL_KEY);
+     					    
+     					    menuItemLabel = StringUtil.trim(resources.getProperty(resourceProperty.toString(), false));
+     					    
+     					    if(menuItemLabel.length() == 0)
+     					        menuItemLabel = StringUtil.trim(defaultResources.getProperty(resourceProperty.toString(), false));
+     					    
+     					   if(menuItemLabel.length() == 0)
+     					       menuItemLabel = menuItem.getName();
+     					}
+     					
+     					print(menuItemLabel);
 
                         println("</td>");
      
