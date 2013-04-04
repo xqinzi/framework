@@ -63,9 +63,10 @@ public abstract class BaseAction extends DispatchAction{
 			if(modelClass == null)
 				modelClass = ModelUtil.getModelClassByAction(getClass());
 
-			S service = ServiceUtil.instantiate(modelClass);
+            LoginSessionModel loginSession = securityController.getLoginSession();
+			S                 service      = ServiceUtil.instantiate(modelClass);
 			
-			ServiceUtil.setLoginSession(securityController.getLoginSession(), service);
+			service.setLoginSession(loginSession);
 			
 			return service;
 		}
