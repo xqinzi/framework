@@ -478,6 +478,26 @@ function addResizeEvent(functionId){
 }
 
 /**
+ * Adiciona um novo método ao evento de scrolling da página.
+ * 
+ * @param functionId String contendo a identificação do método.
+ */
+function addScrollEvent(functionId){
+	var scrollHistory = window.onscroll;
+
+	if(typeof scrollHistory != "function")
+		window.onscroll = functionId;
+	else{
+		window.onscroll = function(){
+								if(scrollHistory)
+									scrollHistory();
+		               			
+		               			functionId();
+		                  }
+	}
+}
+
+/**
  * Adiciona um novo método ao evento de click da página.
  * 
  * @param functionId String contendo a identificação do método.

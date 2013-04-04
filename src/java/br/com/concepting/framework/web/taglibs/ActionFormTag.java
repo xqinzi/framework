@@ -220,14 +220,6 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         out.println();
 
         out.print("<div id=\"");
-        out.print(AttributeConstants.SHADE_KEY);
-        out.print("\" class=\"");
-        out.print(TaglibConstants.DEFAULT_SHADE_STYLE_CLASS);
-        out.print("\" style=\"visibility: ");
-        out.print(VisibilityType.HIDDEN);
-        out.println(";\"></div>");
-        
-        out.print("<div id=\"");
         out.print(getBeanName());
         out.print(".");
         out.print(AttributeConstants.LOADING_BOX_KEY);

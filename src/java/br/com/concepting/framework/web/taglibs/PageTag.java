@@ -9,6 +9,7 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.struts.taglib.html.HtmlTag;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.util.ExceptionUtil;
@@ -17,6 +18,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.VisibilityType;
 
 /**
  * Classe que define o componente visual de uma página WEB.
@@ -170,6 +172,14 @@ public class PageTag extends HtmlTag{
 
             	out.println("</head>");
             	out.println("<body>");
+            	
+                out.print("<div id=\"");
+                out.print(AttributeConstants.SHADE_KEY);
+                out.print("\" class=\"");
+                out.print(TaglibConstants.DEFAULT_SHADE_STYLE_CLASS);
+                out.print("\" style=\"visibility: ");
+                out.print(VisibilityType.HIDDEN);
+                out.println(";\"></div>");
     		}
     		catch(Throwable e){
                 if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
@@ -229,6 +239,9 @@ public class PageTag extends HtmlTag{
         content.append(StringUtil.getLineBreak());
 
         content.append("addLoadEvent(hideParentLoadingBox);");
+        content.append(StringUtil.getLineBreak());
+        
+        content.append("addScrollEvent(centralizeDialogBoxes);");
         content.append(StringUtil.getLineBreak());
         
         ScriptTag scriptTag = new ScriptTag();

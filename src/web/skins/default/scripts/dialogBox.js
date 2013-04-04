@@ -60,12 +60,21 @@ function centralizeDialogBoxes(){
     var cont            = 0;
     var dialogBox       = null;
     var dialogBoxId     = "";
-    var windowWidth     = (isIe() ? document.body.offsetWidth - 21: window.innerWidth);
-    var windowHeight    = (isIe() ? document.body.offsetHeight - 4 : window.innerHeight);
+    var windowWidth     = (isIe() ? document.body.offsetWidth - 20: window.innerWidth);
+    var windowHeight    = (isIe() ? document.body.offsetHeight - 5 : window.innerHeight);
     
 	if(actionFormShade){
-		actionFormShade.style.width  = windowWidth;
-		actionFormShade.style.height = windowHeight;
+		if(actionFormShade.style.visibility.toUpperCase() != "HIDDEN"){
+			actionFormShade.style.width  = windowWidth;
+			actionFormShade.style.height = windowHeight;
+			actionFormShade.style.left   = "0px";
+			actionFormShade.style.top    = "0px";
+
+			document.body.scrollLeft = "0px";
+			document.body.scrollTop  = "0px";
+			document.body.offsetLeft = "0px";
+			document.body.offsetTop  = "0px";
+		}
 	}
 
 	for(cont = 0 ; cont < dialogBoxes.length ; cont++){
