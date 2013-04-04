@@ -31,14 +31,14 @@ public class LoginSessionListener implements HttpSessionListener{
      * 
      * @param modelClass Classe que define o modelo de dados.
      * @return Instância da classe de serviço desejada.
-     * @throws InternalErrorException
+     * @throws Throwable
      */
-    private <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+    private <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
         SecurityController  securityController = systemController.getSecurityController();
         LoginSessionModel   loginSession       = securityController.getLoginSession();
         S                   service            = ServiceUtil.instantiate(modelClass);
         
-        ServiceUtil.setLoginSession(loginSession, service);
+        service.setLoginSession(loginSession);
         
         return service; 
     }
