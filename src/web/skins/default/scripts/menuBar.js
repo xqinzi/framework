@@ -156,6 +156,4 @@ function renderFixedMenu(name){
 	
 	if(object)
 		object.style.top = document.body.scrollTop + "px";
-
-	setTimeout("renderFixedMenu(\"" + name + "\")", 0);
 }

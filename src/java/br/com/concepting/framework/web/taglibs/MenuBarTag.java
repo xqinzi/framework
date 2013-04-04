@@ -605,9 +605,9 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 		if(isFixed){
 		    StringBuilder content = new StringBuilder();
 		    
-            content.append("renderFixedMenu(\"");
+            content.append("addScrollEvent(renderFixedMenu(\"");
             content.append(getName());
-            content.append("\");");
+            content.append("\"));");
 
             ScriptTag scriptTag = new ScriptTag();
 
