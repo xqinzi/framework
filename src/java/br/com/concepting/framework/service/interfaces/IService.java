@@ -9,6 +9,7 @@ import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.persistence.helpers.ModelFilter;
+import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.annotations.ServiceTransaction;
  
 /** 
@@ -41,6 +42,22 @@ public interface IService{
      * @throws InternalErrorException
 	 */
 	public void rollback() throws RemoteException, InternalErrorException;
+	
+	/**
+	 * Retorna a instância da sessão de login do usuário.
+	 * 
+	 * @return Instância contendo as propriedades da sessão de login.
+	 * @throws RemoteException
+	 */
+	public <L extends LoginSessionModel> L getLoginSession() throws RemoteException;
+	
+    /**
+     * Define a instância da sessão de login do usuário.
+     * 
+     * @param loginSession Instância contendo as propriedades da sessão de login.
+     * @throws RemoteException
+     */
+	public <L extends LoginSessionModel> void setLoginSession(L loginSession) throws RemoteException;
 	
     /**
      * Retorna o tempo do timeout do bloqueio da transação.
