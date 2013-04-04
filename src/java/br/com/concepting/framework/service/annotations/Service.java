@@ -16,7 +16,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target(ElementType.TYPE)
 public @interface Service{
 	/**
 	 * Anotação que define o tipo de serviço.

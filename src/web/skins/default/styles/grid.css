@@ -38,7 +38,7 @@
 	background : url(../images/gridHeader.gif);
 	color      : #ffffff;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 12px;
+	font-size  : 14px;
 	font-weight: BOLD;
 	padding    : 1px;
 	border     : 1px OUTSET #efefef;
@@ -50,7 +50,7 @@
  */
 .gridHeaderLink{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 12px;
+	font-size      : 14px;
 	text-decoration: NONE;
 	color          : #ffffff;
 	cursor         : POINTER;
@@ -61,7 +61,7 @@
  */
 .gridHeaderLink:hover{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 12px;
+	font-size      : 14px;
 	text-decoration: UNDERLINE;
 	color          : #ffffff;
 }
@@ -71,7 +71,7 @@
  */
 .gridHeaderLink:active{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 12px;
+	font-size      : 14px;
 	text-decoration: NONE;
 	color          : #ffffff;
 }
@@ -81,7 +81,7 @@
  */
 .gridDetailLink{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 12px;
+	font-size      : 14px;
 	text-decoration: NONE;
 	color          : #666666;
 	cursor         : POINTER;
@@ -92,7 +92,7 @@
  */
 .gridDetailLink:hover{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 12px;
+	font-size      : 14px;
 	text-decoration: UNDERLINE;
 	color          : #666666;
 	cursor         : POINTER;
@@ -103,7 +103,7 @@
  */
 .gridDetailLink:active{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 12px;
+	font-size      : 14px;
 	text-decoration: NONE;
 	color          : #666666;
 }
@@ -117,7 +117,7 @@
 	color      : #666666;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-weight: BOLD;
-	font-size  : 12px;
+	font-size  : 14px;
 	border     : 1px OUTSET #fffffa;
 	height     : 25px;
 }
@@ -131,7 +131,7 @@
 	color      : #666666;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-weight: NORMAL;
-	font-size  : 12px;
+	font-size  : 14px;
 	border     : 1px OUTSET #fffffa;
 	height     : 25px;
 }

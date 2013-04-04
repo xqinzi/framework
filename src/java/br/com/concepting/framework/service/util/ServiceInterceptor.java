@@ -18,6 +18,7 @@ import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.annotations.ServiceTransaction;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
+import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.Interceptor;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.constants.SystemConstants;
@@ -98,17 +99,27 @@ public class ServiceInterceptor extends Interceptor{
                 ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
                 
                 if(serviceTransaction != null){
+                    Class   superClass    = ExceptionUtil.getOriginException(e).getClass();
                     Class   rollbackFor[] = serviceTransaction.rollbackFor();
                     Boolean found         = false;
                     
-                    for(Class item : rollbackFor){
-                        if(item.getSuperclass().equals(e.getClass())){
-                            service.rollback();
-                            
-                            found = true;
-                            
-                            break;
+                    while(superClass != null && !superClass.equals(Object.class)){
+                        found = false;
+                        
+                        for(Class item : rollbackFor){
+                            if(item.equals(superClass)){
+                                service.rollback();
+                                
+                                found = true;
+                                
+                                break;
+                            }
                         }
+                        
+                        if(found)
+                            break;
+                        
+                        superClass = superClass.getSuperclass();
                     }
                     
                     if(!found)

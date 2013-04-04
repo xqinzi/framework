@@ -18,7 +18,7 @@
  * Estilo que define o texto do título do componente.
  */
 .dialogBoxTitle{
-	background : url(../images/messageBoxTitle.gif) REPEAT-X;
+	background : url(../images/dialogBoxTitle.gif) REPEAT-X;
 	color      : #666666;
 	height     : 25px;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
@@ -51,7 +51,7 @@
  */
 .dialogBoxText{
 	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size     : 12px;
+	font-size     : 14px;
 	background    : #efefef;
 	color         : #666666;
 	width         : 100%;

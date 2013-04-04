@@ -284,7 +284,8 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
 			dao.delete(loginSession);
 			
 			loginSession.setId(null);
-			loginSession.setUser(null);
+			loginSession.getUser().setId(null);
+			loginSession.getUser().setPassword("");
 		}
 	}
 

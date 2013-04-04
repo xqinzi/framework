@@ -50,7 +50,7 @@ public interface LoginSessionService extends IService{
      * @throws RemoteException
      */
 	@Auditable
-    @ServiceTransaction
+    @ServiceTransaction 
 	public <L extends LoginSessionModel, U extends UserModel, S extends SystemModuleModel, SS extends SystemSessionModel, LP extends LoginParametersModel, A extends AccessListModel, H extends HostModel> void logIn(L loginSession) throws UserAlreadyLoggedInException, UserNotFoundException, UserBlockedException, ExpiredPasswordException, PasswordWillExpireException, InvalidPasswordException, PermissionDeniedException, InternalErrorException, RemoteException;
 	
 	/**
