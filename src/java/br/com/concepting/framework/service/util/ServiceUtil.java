@@ -1,11 +1,7 @@
 package br.com.concepting.framework.service.util;
 
-import br.com.concepting.framework.caching.CachedObject;
-import br.com.concepting.framework.caching.Cacher;
-import br.com.concepting.framework.caching.CacherManager;
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
-import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.util.StringUtil;
  
@@ -16,52 +12,6 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public class ServiceUtil{
-    /**
-     * Retorna a instância da sessão de login referenciada na classe de serviço.
-     * 
-     * @param service Instância da classe de serviço.
-     * @return Instância da sessão de login.
-     */
-    public static <L extends LoginSessionModel, S extends IService> L getLoginSession(S service){
-        try{
-            Cacher       cacher = CacherManager.getInstance().getCacher(ServiceUtil.class.getName());
-            CachedObject object = cacher.get(service.toString());
-            
-            return (L)object.getContent();
-        }
-        catch(Throwable e){
-            return null;
-        }
-    }
-    
-    /**
-     * Define a instância da sessão de login referenciada na classe de serviço.
-     * 
-     * @param loginSession Instância da sessão de login.
-     * @param service Instância da classe de serviço.
-     */
-    public static <L extends LoginSessionModel, S extends IService> void setLoginSession(L loginSession, S service){
-        if(service != null){
-            Cacher       cacher = CacherManager.getInstance().getCacher(ServiceUtil.class.getName());
-            CachedObject object = new CachedObject();
-            
-            object.setId(service.toString());
-            object.setContent(loginSession);
-            
-            try{
-                cacher.remove(object);
-            }
-            catch(Throwable e){
-            }
-            
-            try{
-                cacher.add(object);
-            }
-            catch(Throwable e){
-            }
-        }
-    }
-    
 	/**
 	 * Retorna a instância da classe de uma classe serviço específica.
 	 * 
