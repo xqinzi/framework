@@ -14,6 +14,11 @@ import br.com.concepting.framework.web.action.BaseAction;
  * @since 1.0
  */ 
 public class LoginSessionAction extends BaseAction{
+    /**
+     * Efetua o carregamento da tela de login.
+     * 
+     * @throws Throwable
+     */
     public void init() throws Throwable{
         super.init();
         
