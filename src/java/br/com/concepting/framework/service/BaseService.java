@@ -16,6 +16,7 @@ import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.resource.PersistenceResourceLoader;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
+import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
@@ -28,9 +29,24 @@ import br.com.concepting.framework.service.util.ServiceUtil;
  * @since 1.0
  */
 public abstract class BaseService implements IService{
-    private IDAO    currentPersistence = null;
-    private Integer transactionTimeout = null;
-    
+    private IDAO              currentPersistence = null;
+    private LoginSessionModel loginSession = null;
+    private Integer           transactionTimeout = null;
+
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#getLoginSession()
+     */
+    public LoginSessionModel getLoginSession(){
+        return loginSession;
+    }
+
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#setLoginSession(br.com.concepting.framework.security.model.LoginSessionModel)
+     */
+    public void setLoginSession(LoginSessionModel loginSession){
+        this.loginSession = loginSession;
+    }
+
     /**
      * Indica se a classe de serviço irá gerenciar transações.
      *
