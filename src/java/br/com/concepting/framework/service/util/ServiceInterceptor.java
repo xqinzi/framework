@@ -14,6 +14,7 @@ import br.com.concepting.framework.context.resource.ContextResourceLoader;
 import br.com.concepting.framework.context.types.ContextFactoryType;
 import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.resource.FactoryResource;
+import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.annotations.ServiceTransaction;
 import br.com.concepting.framework.service.interfaces.IService;
@@ -50,8 +51,11 @@ public class ServiceInterceptor extends Interceptor{
     		IService service = getInterceptableInstance();
             Auditor  auditor = getAuditor();
     		
-            if(auditor != null)
-                auditor.setLoginSession(ServiceUtil.getLoginSession(service));
+            if(auditor != null){
+                LoginSessionModel loginSession = service.getLoginSession();
+                
+                auditor.setLoginSession(loginSession);
+            }
     		
             ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
             
@@ -73,8 +77,11 @@ public class ServiceInterceptor extends Interceptor{
                 IService service = getInterceptableInstance();
                 Auditor  auditor = getAuditor();
                 
-                if(auditor != null)
-                    auditor.setLoginSession(ServiceUtil.getLoginSession(service));
+                if(auditor != null){
+                    LoginSessionModel loginSession = service.getLoginSession();
+                    
+                    auditor.setLoginSession(loginSession);
+                }
     
                 service.commit();
             }
@@ -93,8 +100,11 @@ public class ServiceInterceptor extends Interceptor{
                 IService service = getInterceptableInstance();
                 Auditor  auditor = getAuditor();
                 
-                if(auditor != null)
-                    auditor.setLoginSession(ServiceUtil.getLoginSession(service));
+                if(auditor != null){
+                    LoginSessionModel loginSession = service.getLoginSession();
+                    
+                    auditor.setLoginSession(loginSession);
+                }
         		
                 ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
                 
