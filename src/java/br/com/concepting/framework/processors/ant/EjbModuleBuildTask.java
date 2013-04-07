@@ -15,7 +15,7 @@ import org.dom4j.DocumentType;
 import org.dom4j.tree.DefaultDocumentType;
 
 import br.com.concepting.framework.constants.Constants;
-import br.com.concepting.framework.processors.constants.ProjectConstants;
+import br.com.concepting.framework.constants.ProjectConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;

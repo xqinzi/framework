@@ -15,8 +15,8 @@ import org.apache.tools.ant.taskdefs.Delete;
 import org.apache.tools.ant.types.FileSet;
 
 import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.constants.ProjectConstants;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.resource.PropertiesResourceLoader;
 import br.com.concepting.framework.util.StringUtil;

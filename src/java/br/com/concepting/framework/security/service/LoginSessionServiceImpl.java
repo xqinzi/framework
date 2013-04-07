@@ -285,6 +285,7 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
 			
 			loginSession.setId(null);
 			loginSession.getUser().setId(null);
+			loginSession.getUser().setChangePassword(false);
 			loginSession.getUser().setPassword("");
 		}
 	}

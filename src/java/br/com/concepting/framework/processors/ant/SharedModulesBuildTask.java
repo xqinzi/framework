@@ -8,8 +8,8 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Jar;
 import org.apache.tools.ant.types.FileSet;
 
+import br.com.concepting.framework.constants.ProjectConstants;
 import br.com.concepting.framework.processors.AnnotationProcessorFactory;
-import br.com.concepting.framework.processors.constants.ProjectConstants;
 import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Locale;
 
 import br.com.concepting.framework.model.util.PropertyUtil;
+import br.com.concepting.framework.processors.constants.ProcessorConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
@@ -129,7 +130,7 @@ public class BaseProcessor{
 		BaseProcessor    processor        = null;
 		Collection       nodeChilds       = content.getChildNodes();
 		String           nodeBody         = "";
-		StringBuilder    nodeValue        = new StringBuilder();
+		String           nodeValue        = "";
         String           nodeText         = StringUtil.trim(content.getText());
 		XmlNode          node             = null;
 		Integer          cont             = 0;
@@ -140,28 +141,24 @@ public class BaseProcessor{
 				if(node == null)
 					break;
 				
-			    nodeBody = StringUtil.trim(node.getBody());
-			    
-			    if(nodeValue.length() > 0)
-			        nodeValue.delete(0, nodeValue.length());
-			    
                 processor = processorFactory.getProcessor(domain, declaration, node, language);
+			    nodeBody  = StringUtil.trim(node.getBody());
+                nodeValue = StringUtil.trim(processor.process());
 
-                nodeValue.append(StringUtil.trim(processor.process()));
-				
 				if(processor.hasLogic())
-				    nodeText = StringUtil.replaceAll(nodeText, nodeBody, nodeValue.toString());
+				    nodeText = StringUtil.replaceAll(nodeText, nodeBody, nodeValue);
 				else{
 				    nodeBody = StringUtil.trim(node.getText());
 
-				    if(!nodeBody.equals(nodeValue.toString()))
-				        nodeText = StringUtil.replaceAll(nodeText, nodeBody, nodeValue.toString());
+				    if(!nodeBody.equals(nodeValue))
+				        nodeText = StringUtil.replaceAll(nodeText, nodeBody, nodeValue);
 				}
 
 				cont++;
 			}
 		}
 
+		nodeText = StringUtil.replaceAll(nodeText, ProcessorConstants.REMOVE_TAG.concat(StringUtil.getLineBreak()), "");
 		nodeText = StringUtil.trim(nodeText);
 		nodeText = StringUtil.decode(nodeText);
 		nodeText = ExpressionProcessorUtil.fillVariablesInString(domain, nodeText, language);

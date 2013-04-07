@@ -1,6 +1,5 @@
-package br.com.concepting.framework.processors.constants;
+package br.com.concepting.framework.constants;
 
-import br.com.concepting.framework.constants.Constants;
 
 /**
  * Classe que define as constantes utilizada na definição da estrutura dos arquivos de uma

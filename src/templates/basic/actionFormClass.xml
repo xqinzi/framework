@@ -7,6 +7,7 @@
 	<set var="actionFormClassName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
 	<iterate var="propertyInfo" values="#{propertiesInfo}" start="0" end="0">
 		<set var="mainPropertyId" value="@{propertyInfo.id}"/>
+        <set var="mainPropertyClass" value="@{propertyInfo.clazz}"/>
 		<set var="mainPropertyName" value="@{mainPropertyClass.simpleName}"/>
 		<set var="mainPropertyClassName" value="@{mainPropertyClass.name}"/>
 		<set var="mainPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{propertyInfo.clazz})"/>
@@ -21,7 +22,12 @@
 	import @{mainPropertyClassName};
 	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
 		<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
-			<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+            <if expr="@{propertyInfo.isModel}">
+                <set var="propertyClass" value="@{propertyInfo.clazz}"/>
+            </if>
+            <if expr="@{propertyInfo.hasModel}">
+                <set var="propertyClass" value="@{propertyInfo.collectionItemsClass}"/>
+            </if>
 			<set var="propertyClassName" value="@{propertyClass.name}"/>
 			import @{propertyClassName};
 		</if>
@@ -39,35 +45,52 @@
 		<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
 			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
 				<set var="propertyId" value="@{propertyInfo.id}"/>
-				<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+                <if expr="!@{propertyId}.endsWith('s')">
+                    <set var="propertyId" value="@{propertyId}.concat('s')"/>
+                </if>
+                <if expr="@{propertyInfo.isModel}">
+				    <set var="propertyClass" value="@{propertyInfo.clazz}"/>
+                </if>
+                <if expr="@{propertyInfo.hasModel}">
+                    <set var="propertyClass" value="@{propertyInfo.collectionItemsClass}"/>
+                </if>
 				<set var="propertyName" value="@{propertyClass.simpleName}"/>
 				<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
-				private Collection&lt;@{propertyName}&gt; @{propertyId}s = null;
+				private Collection&lt;@{propertyName}&gt; @{propertyId} = null;
 			</if>
 		</iterate>
-		
+        
 		<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
 			<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
 				<set var="propertyId" value="@{propertyInfo.id}"/>
-				<set var="propertyClass" value="@{propertyInfo.clazz}"/>
+                <if expr="!@{propertyId}.endsWith('s')">
+                    <set var="propertyId" value="@{propertyId}.concat('s')"/>
+                </if>
+                <if expr="@{propertyInfo.isModel}">
+				    <set var="propertyClass" value="@{propertyInfo.clazz}"/>
+                </if>
+                <if expr="@{propertyInfo.hasModel}">
+                    <set var="propertyClass" value="@{propertyInfo.collectionItemsClass}"/>
+                </if>
 				<set var="propertyName" value="@{propertyClass.simpleName}"/>
 				<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
-				/**
-				 * TODO: Colocar descrição do método get@{capitalizedPropertyId}s.
+
+                /**
+				 * TODO: Colocar descrição do método get@{capitalizedPropertyId}.
 				 *
 				 * @return TODO: Colocar descrição do retorno.
 				 */
-				public Collection&lt;@{propertyName}&gt; get@{capitalizedPropertyId}s(){
-					return @{propertyId}s;
+				public Collection&lt;@{propertyName}&gt; get@{capitalizedPropertyId}(){
+					return @{propertyId};
 				}
 		
 				/**
-				 * TODO: Colocar descrição do método set@{capitalizedPropertyId}s.
+				 * TODO: Colocar descrição do método set@{capitalizedPropertyId}.
 				 *
-				 * @param @{propertyId}s TODO: Colocar descrição do parâmetro @{propertyId}s.
+				 * @param @{propertyId} TODO: Colocar descrição do parâmetro @{propertyId}.
 				 */
-				public void set@{capitalizedPropertyId}s(Collection&lt;@{propertyName}&gt; @{propertyId}s){
-					this.@{propertyId}s = @{propertyId}s;
+				public void set@{capitalizedPropertyId}(Collection&lt;@{propertyName}&gt; @{propertyId}){
+					this.@{propertyId} = @{propertyId};
 				}
 			</if>
 		</iterate>
