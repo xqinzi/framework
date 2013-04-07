@@ -27,61 +27,69 @@
                             		<concepting:guides name="guides" width="225">
                             			<c:choose>
                             				<c:when test="${@{actionFormObjectId}.action == 'loadForgotPassword'}">
-		                            			<concepting:guide name="forgotPassword">
-		                            				<center>
-			                            				<br/>
-						                            	<concepting:text name="user.email" labelPosition="top"/>
-						                            	<br/>
-			           			                        <concepting:confirmButton action="sendForgottenPassword" forward="index" validate="true"/>
-	           			                        		<concepting:backButton forward="index"/>
-		           			                        </center>
-			                            		</concepting:guide>
+                                                <concepting:guide name="forgotPassword">
+                                                    <center>
+                                                    	<table style="padding: 10px;">
+                                                    		<tr>
+                                                    			<td>
+                                                    				<concepting:label resourceKey="sendForgottenPassword.label"/>
+                                                    			</td>
+                                                    		</tr>
+                                                    	</table>
+                                                        <concepting:text name="user.email" size="50" labelPosition="top"/>
+                                                        <br/>
+                                                        <concepting:confirmButton action="sendForgottenPassword" forward="index" validate="true"/>
+                                                        <concepting:backButton forward="index"/>
+                                                    </center>
+                                                </concepting:guide>
 	                            			</c:when>
                             			    <c:when test="${@{actionFormObjectId}.action == 'loadChangeCurrentLanguage'}">
-		                            			<concepting:guide name="changeLanguage">
-		                            				<center>
-		                            					<br/>
-						                            	<concepting:list name="currentLanguage" labelPosition="top" data="languages" valueMap="languagesMap"/>
-						                            	<br/>
-			           			                        <concepting:confirmButton action="changeCurrentLanguage" forward="index" validate="true"/>
-			           			                        <concepting:cancelButton action="cancelChangeCurrentLanguage" forward="index"/>
-		           			                        </center>
-			                            		</concepting:guide>
+                                                <concepting:guide name="changeLanguage">
+                                                    <center>
+                                                        <br/>
+                                                        <concepting:list name="currentLanguage" labelPosition="top" data="languages" valueMap="languagesMap"/>
+                                                        <br/>
+                                                        <concepting:confirmButton action="changeCurrentLanguage" forward="index" validate="true"/>
+                                                        <concepting:cancelButton action="cancelChangeCurrentLanguage" forward="index"/>
+                                                    </center>
+                                                </concepting:guide>
 	                            			</c:when>
                             				<c:when test="${@{actionFormObjectId}.action == 'loadChangeCurrentSkin'}">
-		                            			<concepting:guide name="changeSkin">
-		                            				<center>
-		                            					<br/>
-						                            	<concepting:list name="currentSkin" labelPosition="top" data="skins"/>
-						                            	<br/>
-			           			                        <concepting:confirmButton action="changeCurrentSkin" forward="index" validate="true"/>
-			           			                        <concepting:cancelButton action="cancelChangeCurrentSkin" forward="index"/>
-		           			                        </center>
-			                            		</concepting:guide>
+                                                <concepting:guide name="changeSkin">
+                                                    <center>
+                                                        <br/>
+                                                        <concepting:list name="currentSkin" labelPosition="top" data="skins"/>
+                                                        <br/>
+                                                        <concepting:confirmButton action="changeCurrentSkin" forward="index" validate="true"/>
+                                                        <concepting:cancelButton action="cancelChangeCurrentSkin" forward="index"/>
+                                                    </center>
+                                                </concepting:guide>
 	                            			</c:when>
 	                            			<c:when test="${@{actionFormObjectId}.action == 'loadChangePassword' || @{actionFormObjectId}.model.user.changePassword}">
-			                            		<concepting:guide name="changePassword">
-			                            			<center>
-			                            				<br/>
-						                            	<concepting:password name="user.newPassword" labelPosition="top"/>
-						                            	<concepting:password name="user.confirmPassword" labelPosition="top"/>
-						                            	<br/>
-			           			                        <concepting:confirmButton action="changePassword" messageKey="confirmMessage" forward="index" validate="true"/>
-			           			                        <concepting:cancelButton action="cancelChangePassword" forward="index"/>
-		           			                        </center>
-			                            		</concepting:guide>
+                                                <concepting:guide name="changePassword">
+                                                    <center>
+                                                        <br/>
+                                                        <concepting:password name="user.newPassword" size="15" labelPosition="top"/>
+                                                        <concepting:password name="user.confirmPassword" size="15" labelPosition="top"/>
+                                                        <br/>
+                                                        <concepting:confirmButton action="changePassword" messageKey="confirmMessage" forward="index" validate="true"/>
+                                                        <concepting:cancelButton action="cancelChangePassword" forward="index"/>
+                                                    </center>
+                                                </concepting:guide>
 	                            			</c:when>
 	                            			<c:otherwise>
-			                            		<concepting:guide name="input">
-			                            			<center>
-			                            				<br/>
-						                            	<concepting:text name="user.name" labelPosition="top"/>
-						                            	<concepting:password name="user.password" labelPosition="top"/>
-						                            	<br/>
-			           			                        <concepting:confirmButton action="logIn" forward="index" validate="true"/>
-	           			                        		<concepting:backButton forward="index"/>
-		           			                        </center>
-			                            		</concepting:guide>
+                                                <concepting:guide name="input">
+                                                    <center>
+                                                        <br/>
+                                                        <concepting:text name="user.name" labelPosition="top"/>
+                                                        <concepting:password name="user.password" size="15" labelPosition="top"/>
+                                                        <br/>
+                                                        <concepting:link name="forgotPassword" onClickAction="loadForgotPassword"/>
+                                                        <br/><br/>
+                                                        <concepting:confirmButton action="logIn" forward="index" validate="true"/>
+                                                        <concepting:undoButton/>
+                                                    </center>
+                                                </concepting:guide>
 	                            			</c:otherwise>
 	                            		</c:choose>
 	                            	</concepting:guides>
