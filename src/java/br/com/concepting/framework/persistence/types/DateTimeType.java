@@ -78,8 +78,6 @@ public class DateTimeType implements UserType{
     public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws HibernateException, SQLException{
         Object timestamp = rs.getObject(names[0]);
         
-        System.out.println(owner);
-        
         if(timestamp != null){
             if(timestamp instanceof Date)
                 return new DateTime(((Date) timestamp).getTime());

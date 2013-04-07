@@ -77,23 +77,29 @@ public class SystemTag extends BaseTag{
      * @see br.com.concepting.framework.web.taglibs.BaseTag#doEndTag()
      */
     public int doEndTag() throws JspException{
-        LoginSessionModel loginSession = securityController.getLoginSession();
+        Throwable currentException = systemController.getCurrentException();
         
-        if(loginSession != null && loginSession.getId() != null && loginSession.getId() > 0){
-            UserModel user = loginSession.getUser();
-           
-            if(user != null && user.changePassword()){
+        if(currentException != null)
+            systemController.forward(currentException);
+        else{
+            LoginSessionModel loginSession = securityController.getLoginSession();
+            
+            if(loginSession != null && loginSession.getId() != null && loginSession.getId() > 0){
+                UserModel user = loginSession.getUser();
+               
+                if(user != null && user.changePassword()){
+                    if(systemResource.getLoginPage().length() > 0)
+                        systemController.forward(systemResource.getLoginPage());
+                }
+                else{
+                    if(systemResource.getMainPage().length() > 0)
+                        systemController.forward(systemResource.getMainPage());
+                }
+            }
+            else{
                 if(systemResource.getLoginPage().length() > 0)
                     systemController.forward(systemResource.getLoginPage());
             }
-            else{
-                if(systemResource.getMainPage().length() > 0)
-                    systemController.forward(systemResource.getMainPage());
-            }
-        }
-        else{
-            if(systemResource.getLoginPage().length() > 0)
-                systemController.forward(systemResource.getLoginPage());
         }
         
         return super.doEndTag();

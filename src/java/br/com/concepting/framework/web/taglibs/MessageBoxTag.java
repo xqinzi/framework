@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspException;
 
 import org.apache.struts.action.ActionMessages;
@@ -179,7 +180,6 @@ public class MessageBoxTag extends DialogBoxTag{
         }
 
         if(showException()){
-			
 			setType(ActionFormMessageType.ERROR);
 
 			if(exception != null){
@@ -187,7 +187,8 @@ public class MessageBoxTag extends DialogBoxTag{
 				
 			    setMessage(message);
 			    
-			    systemController.setCurrentException(null);
+			    if(message.contains(HttpSessionListener.class.getName()))
+			        systemController.setCurrentException(null);
 			}
 		}
 		else{

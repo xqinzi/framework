@@ -718,8 +718,4 @@ public class ModelUtil{
 	    
 	    return node;
 	}
-	
-	public static void main(String args[]){
-	    System.out.println(StringType.INSTANCE.getName());
-	}
 }

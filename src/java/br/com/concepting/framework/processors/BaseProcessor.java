@@ -159,10 +159,11 @@ public class BaseProcessor{
 		}
 
 		nodeText = StringUtil.replaceAll(nodeText, ProcessorConstants.REMOVE_TAG.concat(StringUtil.getLineBreak()), "");
-		nodeText = StringUtil.trim(nodeText);
-		nodeText = StringUtil.decode(nodeText);
+		nodeText = StringUtil.replaceAll(nodeText, ProcessorConstants.REMOVE_TAG, "");
 		nodeText = ExpressionProcessorUtil.fillVariablesInString(domain, nodeText, language);
 		nodeText = PropertyUtil.fillPropertiesInString(declaration, nodeText, language);
+        nodeText = StringUtil.trim(nodeText);
+        nodeText = StringUtil.decode(nodeText);
 
 		return nodeText;
     }

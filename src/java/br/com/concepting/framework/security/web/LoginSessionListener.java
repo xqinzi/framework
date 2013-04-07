@@ -48,7 +48,7 @@ public class LoginSessionListener implements HttpSessionListener{
      */
     public void sessionCreated(HttpSessionEvent event){
         systemController = new SystemController(event.getSession());
-        
+
         try{
             onCreate();
         }
@@ -61,7 +61,7 @@ public class LoginSessionListener implements HttpSessionListener{
                 actionFormMessageController.addMessage(e);
             else if(!ExceptionUtil.isInternalErrorException(e))
                 e = new InternalErrorException(e);
-                
+
             if(ExceptionUtil.isInternalErrorException(e))
                 systemController.setCurrentException(e);
         }
@@ -107,9 +107,9 @@ public class LoginSessionListener implements HttpSessionListener{
                 actionFormMessageController.addMessage(e);
             else if(!ExceptionUtil.isInternalErrorException(e))
                 e = new InternalErrorException(e);
-                
+            
             if(ExceptionUtil.isInternalErrorException(e))
-                systemController.setCurrentException(e);
+                systemController.forward(e);
         }
     }
     
