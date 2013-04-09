@@ -98,6 +98,11 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_DOWNLOAD_BOX_STYLE_CLASS = "downloadBox";
     
     /**
+     * Constante que define o identificador do estilo CSS default para o preview de uma imagem.
+     */
+    public static final String DEFAULT_IMAGE_PREVIEW_STYLE_CLASS = "imagePreview";
+    
+    /**
      * Constante que define o identificador do estilo CSS default do campo detalhes da exceção para o 
      * componente messageBox (caixa de mensagens).
      */
