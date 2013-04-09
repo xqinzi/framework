@@ -69,5 +69,5 @@ public abstract class Constants{
     /**
      * Constante que define a tag de substituição de expressão regular que identifica qualquer caracter.
      */
-    public static final String DEFAULT_REGEX_ANY_TAG = "[any]";
+    public static final String REGEX_ANY_TAG = "[any]";
 }
