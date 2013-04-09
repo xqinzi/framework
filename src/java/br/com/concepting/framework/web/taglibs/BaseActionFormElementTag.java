@@ -777,9 +777,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		AlignmentType labelAlignment = getLabelAlignmentType();
 		
         if(labelAlignment == null){
-            if(labelPosition == PositionType.TOP || labelPosition == PositionType.BOTTOM)
-                labelAlignment = AlignmentType.LEFT;
-            else if(labelPosition == PositionType.LEFT)
+            if(labelPosition == PositionType.LEFT)
                 labelAlignment = AlignmentType.RIGHT;
             else if(labelPosition == PositionType.RIGHT)
                 labelAlignment = AlignmentType.LEFT;
