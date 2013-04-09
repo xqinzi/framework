@@ -1186,16 +1186,19 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
-        String name = getName();
-        
-        setName(StringUtil.replaceAll(name, "search.", ""));
-        
         if(validationStyleClass.length() == 0)
             validationStyleClass = TaglibConstants.DEFAULT_VALIDATION_LABEL_STYLE_CLASS;
 
-        super.initialize();
+        Boolean isForSearch = isForSearch();
+        String  name        = getName();
+        
+        if(isForSearch){
+            name = StringUtil.replaceAll(getName(), "search.", "");
+            
+            setName(name);
+        }
 
-        setName(name);
+        super.initialize();
 
         String         actionForm = getActionForm();
         BaseActionForm form       = systemController.getActionForm(actionForm);
@@ -1217,7 +1220,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                     propertyId.append(".");
     
                     if(valueMapScope == ScopeType.MODEL){
-                        if(isForSearch())
+                        if(isForSearch)
                             propertyId.append("searchModel");
                         else
                             propertyId.append("model");
@@ -1248,7 +1251,6 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     				ModelInfo modelInfo = ModelUtil.getModelInfo(model.getClass());
     				
      				if(modelInfo != null){
-                        name         = StringUtil.replaceAll(name, "search.", "");
     				    propertyInfo = modelInfo.getPropertyInfo(name);
     
     				    if(propertyInfo != null){
@@ -1270,6 +1272,9 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
      			}
     		}
 	    }
+        
+        if(isForSearch())
+            setName("search.".concat(name));
 		
 		if(propertyInfo != null){
 		    AlignmentType alignment = getAlignmentType();
@@ -1277,12 +1282,20 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 			if(alignment == null){
 				if(propertyInfo.isNumber())
 				    alignment = AlignmentType.RIGHT;
-				else if(propertyInfo.isDate() || propertyInfo.isBoolean() || propertyInfo.isByteArray())
+				else if(propertyInfo.isDate() || propertyInfo.isTime() || propertyInfo.isBoolean())
 				    alignment = AlignmentType.CENTER;
 				else
 				    alignment = AlignmentType.LEFT;
 				
 				setAlignmentType(alignment);
+			}
+			
+			AlignmentType labelAlignment = getLabelAlignmentType();
+			
+			if(labelAlignment == null){
+			    labelAlignment = alignment;
+			
+			    setLabelAlignmentType(labelAlignment);
 			}
 			
 			String onBlur          = getOnBlur();
@@ -1786,13 +1799,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                     onKeyPressContent.append("; ");
                 }
                 
-                if(isForSearch()){
-                    if(!name.startsWith("search.")){
-                        name = "search.".concat(name);
-        
-                        setName(name);
-                    }
-                    
+                if(isForSearch){
                     if(searchPropertiesGroupTag != null){
                         onKeyPressContent = new StringBuilder(onKeyPress);
                         onKeyPressContent.append("if(getKeyPressed(event) == 13) ");
