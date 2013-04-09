@@ -65,4 +65,9 @@ public abstract class Constants{
      * Constante que define o número de decimais de precisão default.
      */
     public static final Integer DEFAULT_NUMBER_PRECISION = 2;
+    
+    /**
+     * Constante que define a tag de substituição de expressão regular que identifica qualquer caracter.
+     */
+    public static final String DEFAULT_REGEX_ANY_TAG = "[any]";
 }
