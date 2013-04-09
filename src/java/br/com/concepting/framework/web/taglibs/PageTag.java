@@ -259,7 +259,14 @@ public class PageTag extends HtmlTag{
      * @throws Throwable
      */
     protected static void renderMessageBoxes(SystemController systemController) throws Throwable{
-        PageContext   pageContext       = systemController.getPageContext();
+        PageContext   pageContext        = systemController.getPageContext();
+        MessageBoxTag errorMessageBoxTag = new MessageBoxTag();
+
+        errorMessageBoxTag.setPageContext(pageContext);
+        errorMessageBoxTag.setShowException(true);
+        errorMessageBoxTag.doStartTag();
+        errorMessageBoxTag.doEndTag();
+        
         MessageBoxTag infoMessageBoxTag = new MessageBoxTag();
 
         infoMessageBoxTag.setPageContext(pageContext);
@@ -275,8 +282,7 @@ public class PageTag extends HtmlTag{
         warningMessageBoxTag.doStartTag();
         warningMessageBoxTag.doEndTag();
 
-        MessageBoxTag errorMessageBoxTag = new MessageBoxTag();
-
+        errorMessageBoxTag = new MessageBoxTag();
         errorMessageBoxTag.setPageContext(pageContext);
         errorMessageBoxTag.setType(ActionFormMessageType.ERROR);
         errorMessageBoxTag.doStartTag();
@@ -462,13 +468,10 @@ public class PageTag extends HtmlTag{
                 out.println("</body>");
         	}
     		catch(Throwable e){
-                if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
-                    systemController.forward(new InternalErrorException(e));
-                else
-                    systemController.forward(e);
+    		    systemController.setCurrentException(e);
     		}
     	}
     	
-	    return super.doEndTag();
+	    return EVAL_PAGE;
     }
 }
