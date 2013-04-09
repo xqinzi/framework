@@ -149,8 +149,10 @@ public class TextPropertyTag extends BasePropertyTag{
 				pattern = NumberUtil.normalizePattern(pattern, currentLanguage);
 			
 			if(pattern.length() > 0){
-			    maxlength = pattern.length();
-			    size      = pattern.length() + 2;
+		        maxlength = pattern.length();
+    			    
+			    if(size == 0)
+			        size = pattern.length() + 2;
 			    
 				String        onKeyPress        = getOnKeyPress();
 				StringBuilder onKeyPressContent = new StringBuilder();
