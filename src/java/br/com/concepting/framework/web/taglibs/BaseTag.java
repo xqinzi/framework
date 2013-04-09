@@ -9,11 +9,9 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import br.com.concepting.framework.constants.AttributeConstants;
-import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.security.web.SecurityController;
-import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.SystemController;
@@ -719,12 +717,9 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
     		try{
     			initialize();
     		}
-    		catch(Throwable e){
-                if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
-                    systemController.forward(new InternalErrorException(e));
-                else
-                    systemController.forward(e);
-    		}
+            catch(Throwable e){
+                systemController.setCurrentException(e);
+            }
 		}
 
 		return super.doStartTag();
@@ -739,10 +734,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
     			render();
     		}
     		catch(Throwable e){
-                if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
-                    systemController.forward(new InternalErrorException(e));
-                else
-                    systemController.forward(e);
+    		    systemController.setCurrentException(e);
     		}
     		finally{
     			clearAttributes();
