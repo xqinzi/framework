@@ -20,11 +20,67 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 3.0
  */
 public class DownloadBoxPropertyTag extends BasePropertyTag{
-    private String fileNameProperty    = "";
-    private String contentTypeProperty = "";
-    private String iconWidth           = "";
-    private String iconHeight          = "";
+    private String  fileNameProperty    = "";
+    private String  contentTypeProperty = "";
+    private Boolean showFileName        = true;
+    private Boolean showContentSize     = true;
+    private String  iconWidth           = "";
+    private String  iconHeight          = "";
     
+    /**
+     * Indica se o nome do arquivo deve ser exibido.
+     * 
+     * @return True/False.
+     */
+    public Boolean isShowFileName(){
+        return showFileName;
+    }
+
+    /**
+     * Indica se o nome do arquivo deve ser exibido.
+     * 
+     * @return True/False.
+     */
+    public Boolean getShowFileName(){
+        return isShowFileName();
+    }
+
+    /**
+     * Define se o nome do arquivo deve ser exibido.
+     * 
+     * @param showFileName True/False.
+     */
+    public void setShowFileName(Boolean showFileName){
+        this.showFileName = showFileName;
+    }
+
+    /**
+     * Indica se a quantidade de bytes do conteúdo deve ser exibido.
+     * 
+     * @return True/False.
+     */
+    public Boolean isShowContentSize(){
+        return showContentSize;
+    }
+
+    /**
+     * Indica se a quantidade de bytes do conteúdo deve ser exibido.
+     * 
+     * @return True/False.
+     */
+    public Boolean getShowContentSize(){
+        return isShowContentSize();
+    }
+
+    /**
+     * Define se a quantidade de bytes do conteúdo deve ser exibido.
+     * 
+     * @param showContentSize True/False.
+     */
+    public void setShowContentSize(Boolean showContentSize){
+        this.showContentSize = showContentSize;
+    }
+
     /**
      * Retorna a largura para o ícone do download.
      * 
@@ -176,9 +232,19 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
         PropertyInfo propertyInfo = getPropertyInfo();
         
         if(propertyInfo != null){
-            print("<table class=\"");
+            print("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"");
             print(getStyleClass());
-            println("\">");
+            print("\"");
+            
+            String style = StringUtil.trim(getStyle());
+            
+            if(style.length() > 0){
+                print(" style=\"");
+                print(style);
+                print("\"");
+            }
+            
+            println(">");
             println("<tr>");
             print("<td class=\"");
             print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
@@ -194,7 +260,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                 if(modelInfo != null){
                     byte content[] = (byte[])getValue();
 
-                    if(content != null){
+                    if(content != null && content.length > 0){
                         String       fileName             = "";
                         PropertyInfo fileNamePropertyInfo = modelInfo.getPropertyInfo(fileNameProperty);
                         
@@ -236,6 +302,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                                 imageTag.setName(name);
                                 imageTag.setValue(getValue());
                                 imageTag.setShowLabel(false);
+                                imageTag.setStyleClass(TaglibConstants.DEFAULT_IMAGE_PREVIEW_STYLE_CLASS);
                                 imageTag.setWidth(iconWidth);
                                 imageTag.setHeight(iconHeight);
                                 imageTag.doStartTag();
@@ -247,18 +314,21 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                         
                         println("</td>");
                         
-                        print("<td class=\"");
-                        print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
-                        println("\">");
+                        if(showFileName || showContentSize){
+                            print("<td class=\"");
+                            print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
+                            println("\">");
+    
+                            if(fileName.length() > 0 && showFileName){
+                                println(fileName);
+                                println("<br/>");
+                            }
 
-                        if(fileName.length() > 0){
-                            println(fileName);
-                            println("<br/>");
+                            if(showContentSize)
+                                println(ByteUtil.formatBytes(new Long(content.length), systemController.getCurrentLanguage()));
+                            
+                            println("</td>");
                         }
-                        
-                        println(ByteUtil.formatBytes(new Long(content.length), systemController.getCurrentLanguage()));
-                        
-                        println("</td>");
                     }
                     else
                         println(getDataIsEmptyMessage());
