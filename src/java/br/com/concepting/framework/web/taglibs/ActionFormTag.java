@@ -9,10 +9,8 @@ import javax.servlet.jsp.PageContext;
 import org.apache.struts.taglib.html.HiddenTag;
 
 import br.com.concepting.framework.constants.AttributeConstants;
-import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
-import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.SystemController;
@@ -438,10 +436,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
                 systemController.setAttribute(AttributeConstants.CURRENT_ACTION_FORM_KEY, this, ScopeType.REQUEST);
             }
             catch(Throwable e){
-                if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
-                    systemController.forward(new InternalErrorException(e));
-                else
-                    systemController.forward(e);
+                systemController.setCurrentException(e);
             }
         }
 
@@ -461,10 +456,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
                 super.doEndTag();
             }
             catch(Throwable e){
-                if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
-                    systemController.forward(new InternalErrorException(e));
-                else
-                    systemController.forward(e);
+                systemController.setCurrentException(e);
             }
             finally{
                 clearAttributes();
