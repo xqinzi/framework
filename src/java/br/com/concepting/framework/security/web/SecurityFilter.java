@@ -82,15 +82,8 @@ public class SecurityFilter implements Filter{
                     pattern.append(systemController.getContextPath());
                     pattern.append("\\");
                 }
-
-                if(excludePattern.equals("*"))
-                    excludePattern = ".*";
-                else{
-                    excludePattern = StringUtil.replaceAll(excludePattern, "*.", ".*\\.");
-                    excludePattern = StringUtil.replaceAll(excludePattern, "?", ".");
-                }
                 
-                pattern.append(excludePattern);
+                pattern.append(StringUtil.toRegex(excludePattern));
                 
                 regex   = Pattern.compile(pattern.toString());
                 matcher = regex.matcher(systemController.getRequest().getRequestURI());
@@ -106,9 +99,9 @@ public class SecurityFilter implements Filter{
         Boolean result = true;
         
         if(!excludeUrl){
-            result = (loginSession == null || loginSession.getId() == null && loginSession.getId() == 0);
+            result = securityController.isAuthenticated();
             
-            if(result)
+            if(!result)
                 actionFormMessageController.addMessage(new PermissionDeniedException());
         }
         
