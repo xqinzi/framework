@@ -715,3 +715,10 @@ option:hover{
 	height    : 50px;
 	cursor    : POINTER;
 }
+
+/**
+ * Estilo que define o preview de uma imagem.
+ */
+.imagePreview{
+	border: 1px SOLID #888888;
+}
