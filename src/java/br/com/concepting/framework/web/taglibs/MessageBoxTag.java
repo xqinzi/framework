@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSessionListener;
-import javax.servlet.jsp.JspException;
 
 import org.apache.struts.action.ActionMessages;
 
@@ -187,7 +186,7 @@ public class MessageBoxTag extends DialogBoxTag{
 				
 			    setMessage(message);
 			    
-			    if(message.contains(HttpSessionListener.class.getName()))
+			    if(!message.contains(HttpSessionListener.class.getName()))
 			        systemController.setCurrentException(null);
 			}
 		}
@@ -412,41 +411,6 @@ public class MessageBoxTag extends DialogBoxTag{
 	protected void render() throws Throwable{
 		if((getResourceKey().length() > 0 && getResourceId().length() > 0) || (showException() && exception != null) || (messages != null && messages.size() > 0))
 			super.render();
-	}
-
-	/**
-	 * @see javax.servlet.jsp.tagext.Tag#doStartTag()
-	 */
-	public int doStartTag() throws JspException{
-		if(systemController != null){
-			try{
-				initialize();
-			}
-			catch(Throwable e){
-				throw new JspException(e);
-			}
-		}
-
-		return EVAL_BODY_INCLUDE;
-	}
-
-	/**
-	 * @see javax.servlet.jsp.tagext.Tag#doEndTag()
-	 */
-	public int doEndTag() throws JspException{
-		if(systemController != null){
-			try{
-				render();
-			}
-			catch(Throwable e){
-				throw new JspException(e);
-			}
-			finally{
-				clearAttributes();
-			}
-		}
-
-		return SKIP_BODY;
 	}
 
 	/**
