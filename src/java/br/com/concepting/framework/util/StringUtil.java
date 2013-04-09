@@ -501,4 +501,20 @@ public class StringUtil{
     public static String encode(String value){
         return Translate.encode(value);
     }
+    
+    /**
+     * Transforma uma string contendo máscaras para uma expressão regular.
+     * 
+     * @param expression String desejada.
+     * @return String contendo a expressão regular.
+     */
+    public static String toRegex(String expression){
+        expression = StringUtil.replaceAll(expression, ".*", "\\..".concat(Constants.REGEX_ANY_TAG));
+        expression = StringUtil.replaceAll(expression, "*.", ".".concat(Constants.REGEX_ANY_TAG).concat("\\."));
+        expression = StringUtil.replaceAll(expression, "*", ".".concat(Constants.REGEX_ANY_TAG));
+        expression = StringUtil.replaceAll(expression, "?", ".");
+        expression = StringUtil.replaceAll(expression, Constants.REGEX_ANY_TAG, "*");
+        
+        return expression;
+    }
 }
