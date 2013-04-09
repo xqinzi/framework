@@ -784,56 +784,38 @@ function processFormResponse(requestHandler){
 		if(requestHandler.status == 200){
 			var responseText = requestHandler.responseText;
 			var node         = null;
+			var object       = submittedForm.elements["updateViews"];
 			
-			if(responseText.indexOf(".errorTrace") >= 0){
-				node = document.getElementById("errorPage");
+			if(object){
+				var objectValue = object.value;
 				
-				if(!node){
-					node = document.createElement("div");
+				if(objectValue && objectValue.length > 0){
+					var updateViews = objectValue.split(",");
 					
-					node.id = "errorPage";
-					
-					document.body.appendChild(node);
-				}
-				
-				node.innerHTML = responseText;
-			}
-			else{
-				var object = submittedForm.elements["updateViews"];
-				
-				if(object){
-					var objectValue = object.value;
-					
-					if(objectValue && objectValue.length > 0){
-						var updateViews = objectValue.split(",");
+					if(updateViews.length > 0){
+						var responseDocument = document.createElement("div");
 						
-						if(updateViews.length > 0){
-							var responseDocument = document.createElement("div");
+						responseDocument.innerHTML = requestHandler.responseText;
+						
+						var responseDocumentObjects = responseDocument.getElementsByTagName("div");
+						var responseDocumentObject  = null;
+						var documentObject          = null;
+						var updateView              = "";
+						
+						for(cont1 = 0 ; cont1 < responseDocumentObjects.length ; cont1++){
+							responseDocumentObject = responseDocumentObjects[cont1];
 							
-							responseDocument.innerHTML = requestHandler.responseText;
-							
-							var responseDocumentObjects = responseDocument.getElementsByTagName("div");
-							var responseDocumentObject  = null;
-							var documentObject          = null;
-							var updateView              = "";
-							
-							for(cont1 = 0 ; cont1 < responseDocumentObjects.length ; cont1++){
-								responseDocumentObject = responseDocumentObjects[cont1];
+							for(cont2 = 0 ; cont2 < updateViews.length ; cont2++){
+								updateView = updateViews[cont2];
 								
-								for(cont2 = 0 ; cont2 < updateViews.length ; cont2++){
-									updateView = updateViews[cont2];
+								if(responseDocumentObject.id == updateView){
+									documentObject = document.getElementById(updateView);
 									
-									if(responseDocumentObject.id == updateView){
-										documentObject = document.getElementById(updateView);
-										
-										if(documentObject)
-											documentObject.innerHTML = responseDocumentObject.innerHTML;
-									}
+									if(documentObject)
+										documentObject.innerHTML = responseDocumentObject.innerHTML;
 								}
 							}
 						}
-						else
-							document.body.innerHTML = responseText;
 					}
 					else
 						document.body.innerHTML = responseText;
@@ -841,6 +823,8 @@ function processFormResponse(requestHandler){
 				else
 					document.body.innerHTML = responseText;
 			}
+			else
+				document.body.innerHTML = responseText;
 
 		 	processFormResponseScripts();
 			centralizeDialogBoxes();
