@@ -10,6 +10,8 @@ import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
+import br.com.concepting.framework.security.resource.SecurityResource;
+import br.com.concepting.framework.security.resource.SecurityResourceLoader;
 import br.com.concepting.framework.security.service.interfaces.LoginSessionService;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.util.ServiceUtil;
@@ -48,8 +50,9 @@ public class LoginSessionListener implements HttpSessionListener{
      */
     public void sessionCreated(HttpSessionEvent event){
         systemController = new SystemController(event.getSession());
-
+        
         try{
+            initialize();
             onCreate();
         }
         catch(Throwable e){
@@ -68,11 +71,23 @@ public class LoginSessionListener implements HttpSessionListener{
     }
     
     /**
-     * Executado no momento do instanciamento da sessão HTTP.
+     * Inicializa a sessão.
+     *  
+     * @throws Throwable
+     */
+    protected void initialize() throws Throwable{
+        SecurityResourceLoader securityResourceLoader = new SecurityResourceLoader();
+        SecurityResource       securityResource       = securityResourceLoader.getDefault();
+        
+        systemController.getSession().setMaxInactiveInterval(securityResource.getSessionTimeout());
+    }
+    
+    /**
+     * Executado no momento do instanciamento da sessão.
      * 
      * @throws Throwable
      */
-    public void onCreate() throws Throwable{
+    protected void onCreate() throws Throwable{
         SecurityController            securityController = systemController.getSecurityController();
         LoginSessionModel             loginSession       = securityController.getLoginSession();
         SystemModuleModel             systemModule       = loginSession.getSystemModule();
@@ -114,11 +129,11 @@ public class LoginSessionListener implements HttpSessionListener{
     }
     
     /**
-     * Executado no momento da finalização da sessão HTTP.
+     * Executado no momento da finalização da sessão.
      * 
      * @throws Throwable
      */
-    public void onDestroy() throws Throwable{
+    protected void onDestroy() throws Throwable{
         SecurityController securityController = systemController.getSecurityController();
         LoginSessionModel  loginSession       = securityController.getLoginSession();
         

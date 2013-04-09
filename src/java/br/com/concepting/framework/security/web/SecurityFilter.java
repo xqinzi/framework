@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.concepting.framework.model.SystemSessionModel;
+import br.com.concepting.framework.resource.SystemResource;
+import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.security.exceptions.PermissionDeniedException;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.resource.SecurityResource;
@@ -30,11 +32,11 @@ import br.com.concepting.framework.web.form.ActionFormMessageController;
  * @since 1.0
  */
 public class SecurityFilter implements Filter{
-    private SystemController            systemController            = null;
-    private ActionFormMessageController actionFormMessageController = null;
-    private SecurityController          securityController          = null;
-    private LoginSessionModel           loginSession                = null;
-    private SecurityResource            securityResource            = null;
+    private   SystemResource              systemResource              = null;   
+    private   SecurityResource            securityResource            = null;
+    protected SystemController            systemController            = null;
+    protected ActionFormMessageController actionFormMessageController = null;
+    protected SecurityController          securityController          = null;
     
     /**
      * @see javax.servlet.Filter#destroy()
@@ -47,9 +49,13 @@ public class SecurityFilter implements Filter{
      */
     public void init(FilterConfig filterConfig) throws ServletException{
         try{
-            SecurityResourceLoader loader = new SecurityResourceLoader();
+            SystemResourceLoader systemResourceLoader = new SystemResourceLoader();
             
-            securityResource = loader.getDefault();
+            systemResource = systemResourceLoader.getDefault();
+            
+            SecurityResourceLoader securityLoader = new SecurityResourceLoader();
+            
+            securityResource = securityLoader.getDefault();
         }
         catch(Throwable e){
             throw new ServletException(e);
@@ -113,8 +119,8 @@ public class SecurityFilter implements Filter{
      * 
      * @throws Throwable
      */
-    protected void processFilter() throws Throwable{
-        systemController.forward("/index.jsp");
+    protected void process() throws Throwable{
+        systemController.forward(systemResource.getLoginPage());
     }
     
     /**
@@ -124,7 +130,8 @@ public class SecurityFilter implements Filter{
         systemController            = new SystemController((HttpServletRequest)request, (HttpServletResponse)response);
         actionFormMessageController = systemController.getActionFormMessageController();
         securityController          = systemController.getSecurityController();
-        loginSession                = securityController.getLoginSession();
+        
+        LoginSessionModel loginSession = securityController.getLoginSession();
 
         if(loginSession != null){
             SystemSessionModel systemSession = loginSession.getSystemSession();
@@ -140,7 +147,7 @@ public class SecurityFilter implements Filter{
         
         if(!validate()){
             try{
-                processFilter();
+                process();
                 
                 return;
             }

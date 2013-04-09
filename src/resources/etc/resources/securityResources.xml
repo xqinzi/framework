@@ -4,7 +4,14 @@
                    xsi:noNamespaceSchemaLocation="securityResources.xsd">
 	<filter>
 		<excludePatterns>
-			<pattern>*</pattern>
+			<pattern>*loginSession*</pattern>
+            <pattern>/</pattern>
+            <pattern>/index.jsp</pattern>
+            <pattern>/mainPage.jsp</pattern>
+            <pattern>/loginPage.jsp</pattern>
+            <pattern>/headerPage.jsp</pattern>
+            <pattern>/footerPage.jsp</pattern>
+            <pattern>/errorPage.jsp</pattern>
 		</excludePatterns>
 	</filter>
 	<session>
