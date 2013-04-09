@@ -34,9 +34,14 @@ public class LoginSessionAction extends BaseAction{
 	 * @throws Throwable
 	 */
 	public void logIn() throws Throwable{
-	    LoginSessionActionForm actionForm   = getActionForm();
-	    LoginSessionModel      loginSession = actionForm.getModel();
-        LoginSessionService    service      = getService();
+	    LoginSessionActionForm actionForm          = getActionForm();
+	    LoginSessionModel      currentLoginSession = securityController.getLoginSession();
+	    LoginSessionModel      loginSession        = actionForm.getModel();
+	    
+	    loginSession.setSystemModule(currentLoginSession.getSystemModule());
+	    loginSession.setSystemSession(currentLoginSession.getSystemSession());
+	    
+        LoginSessionService service = getService();
 
         try{
     	    service.logIn(loginSession);
