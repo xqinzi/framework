@@ -2,7 +2,7 @@ package br.com.concepting.framework.processors;
 
 import java.util.Locale;
 
-import br.com.concepting.framework.processors.constants.ProcessorConstants;
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
@@ -57,6 +57,6 @@ public class SetProcessor extends ExpressionProcessor{
 	    else
 	        addVariable(name, super.process());
 
-	    return ProcessorConstants.REMOVE_TAG;
+	    return Constants.REMOVE_TAG;
 	}
 }
