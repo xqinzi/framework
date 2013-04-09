@@ -124,7 +124,7 @@ public abstract class PropertyUtil extends PropertyUtils{
      * @return True/False.
      */
 	public static Boolean isDate(Class clazz){
-	    return clazz.equals(Date.class);
+	    return clazz.equals(Date.class) || clazz.equals(DateTime.class);
 	}
 	
     /**
