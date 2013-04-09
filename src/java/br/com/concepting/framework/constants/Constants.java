@@ -70,4 +70,9 @@ public abstract class Constants{
      * Constante que define a tag de substituição de expressão regular que identifica qualquer caracter.
      */
     public static final String REGEX_ANY_TAG = "[any]";
+    
+    /**
+     * Constante que define a tag de remoção de conteúdo.
+     */
+    public static final String REMOVE_TAG = "[remove]";
 }
