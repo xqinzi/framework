@@ -14,7 +14,6 @@ import java.util.Locale;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.dom4j.DocumentException;
-import org.hibernate.type.StringType;
 
 import br.com.concepting.framework.caching.Cacher;
 import br.com.concepting.framework.caching.CacherManager;
