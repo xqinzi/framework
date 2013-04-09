@@ -282,8 +282,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	protected void initialize() throws Throwable{
 		super.initialize();
 		
-		String actionForm = getActionForm();
-
         if(dataValues == null || dataValues.size() == 0){
     		if(data.length() > 0 && dataScope != null){
     		    ScopeType dataScope = getDataScopeType();
@@ -294,6 +292,8 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     		        setDataScopeType(dataScope);
     		    }
     		    
+    	        String actionForm = getActionForm();
+
     			if(!data.startsWith(actionForm)){
         			StringBuilder propertyId = new StringBuilder();
         			

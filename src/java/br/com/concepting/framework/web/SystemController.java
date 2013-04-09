@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.jstl.core.Config;
 
+import org.apache.struts.Globals;
+
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.SystemSessionModel;
@@ -111,6 +113,8 @@ public class SystemController{
         systemSession.setCurrentSkin(currentSkin);
         
         securityController.setLoginSession(loginSession);
+        
+        addCookie(AttributeConstants.CURRENT_SKIN_KEY, currentSkin.toString(), true);
 	}
 	
     /**
@@ -119,10 +123,19 @@ public class SystemController{
      * @return String contendo o identificador do tema (skin).
      */
 	public String getCurrentSkin(){
-	    LoginSessionModel  loginSession  = securityController.getLoginSession();
-	    SystemSessionModel systemSession = loginSession.getSystemSession();
-	    
-	    return systemSession.getCurrentSkin();
+	    String currentSkin = "";
+        Cookie cookie      = getCookie(AttributeConstants.CURRENT_LANGUAGE_KEY);
+        
+        if(cookie != null)
+            currentSkin = cookie.getValue();
+        
+        if(currentSkin.length() == 0){
+            currentSkin = SystemConstants.DEFAULT_SKIN;
+            
+            setCurrentSkin(currentSkin);
+        }
+        
+        return currentSkin;
 	}
 	
     /**
@@ -163,11 +176,11 @@ public class SystemController{
             securityController.setLoginSession(loginSession);
         }
         
-        session.setAttribute(SystemConstants.CURRENT_LANGUAGE_KEY, currentLanguage);
+        session.setAttribute(Globals.LOCALE_KEY, currentLanguage);
         
         Config.set(session, Config.FMT_LOCALE, currentLanguage);
         
-        addCookie(SystemConstants.CURRENT_LANGUAGE_KEY, currentLanguage.toString(), true);
+        addCookie(AttributeConstants.CURRENT_LANGUAGE_KEY, currentLanguage.toString(), true);
 	}
 	
 	/**
@@ -177,7 +190,7 @@ public class SystemController{
 	 */
     public Locale getCurrentLanguage(){
         Locale currentLanguage = null;
-        Cookie cookie          = getCookie(SystemConstants.CURRENT_LANGUAGE_KEY);
+        Cookie cookie          = getCookie(AttributeConstants.CURRENT_LANGUAGE_KEY);
         
         if(cookie != null)
             currentLanguage = LanguageUtil.getLanguageByString(cookie.getValue());

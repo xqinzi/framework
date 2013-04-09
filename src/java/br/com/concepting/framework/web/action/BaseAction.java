@@ -1,11 +1,5 @@
 package br.com.concepting.framework.web.action;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,8 +19,6 @@ import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.exceptions.ItemNotSelectedException;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.resource.SystemResource;
-import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.web.SecurityController;
 import br.com.concepting.framework.service.interfaces.IService;
@@ -143,55 +135,6 @@ public abstract class BaseAction extends DispatchAction{
 		    }
 		}
 	}
-	
-	/**
-	 * Carrega a lista de idiomas disponíveis.
-	 * 
-	 * @throws Throwable
-	 */
-	protected void loadLanguages() throws Throwable{
-	    BaseActionForm       actionForm        = getActionForm();
-	    Collection<String>   languages         = null;
-        SystemResourceLoader loader            = new SystemResourceLoader();
-        SystemResource       resource          = loader.getDefault();
-        Collection<Locale>   resourceLanguages = resource.getLanguages();
-        
-        if(resourceLanguages != null && resourceLanguages.size() > 0){
-            languages = new LinkedList<String>();
-                    
-            for(Locale resourceLanguage : resourceLanguages)
-                languages.add(StringUtil.trim(resourceLanguage));
-        }
-	    
-	    actionForm.setLanguages(languages);
-	}
-	
-	/**
-	 * Carrega a lista de temas (skins) disponíveis.
-	 * 
-	 * @throws Throwable
-	 */
-	protected void loadSkins() throws Throwable{
-	    BaseActionForm       actionForm = getActionForm();
-        SystemResourceLoader loader     = new SystemResourceLoader();
-        SystemResource       resource   = loader.getDefault();
-
-        actionForm.setSkins(resource.getSkins());
-	}
-	
-	/**
-	 * Carrega o mapa de valores para a lista de idiomas disponíveis,
-	 */
-	protected void loadLanguageMap(){
-        BaseActionForm      actionForm  = getActionForm();
-        Map<String, String> languageMap = new LinkedHashMap<String, String>();
-        Locale              languages[] = Locale.getAvailableLocales();
-            
-        for(Locale language : languages)
-            languageMap.put(language.toString(), StringUtil.capitalize(language.getDisplayName(systemController.getCurrentLanguage())));
-        
-        actionForm.setLanguageMap(languageMap);
-	}
 
 	/**
 	 * Método inicial que define a inicialização do formulário.
@@ -202,35 +145,8 @@ public abstract class BaseAction extends DispatchAction{
 	public void init() throws Throwable{
 		initializeActionForm();
 		
-		loadLanguages();
-		loadLanguageMap();
-		loadSkins();
 		loadActionFormObjects();
 	}
-	
-	/**
-	 * Efetua a mudança do tema (skin) atual.
-	 * 
-	 * @throws Throwable
-	 */
-	public void changeCurrentSkin() throws Throwable{
-        BaseActionForm actionForm = getActionForm();
-        BaseModel      model      = actionForm.getModel();
-        
-        systemController.setCurrentSkin(model.getCurrentSkin());
-	}
-
-    /**
-     * Efetua a mudança do idioma atual.
-     * 
-     * @throws Throwable
-     */
-    public void changeCurrentLanguage() throws Throwable{
-        BaseActionForm actionForm = getActionForm();
-        BaseModel      model      = actionForm.getModel();
-        
-        systemController.setCurrentLanguage(model.getCurrentLanguage());
-    }
 
     /**
 	 * Método executado quando a ação atual foi cancelada.
@@ -308,12 +224,6 @@ public abstract class BaseAction extends DispatchAction{
 		}
 		catch(NoSuchMethodException e){
 			throw new InternalErrorException(e);
-		}
-		finally{
-		    BaseModel model = actionForm.getModel();
-		    
-		    model.setCurrentSkin(systemController.getCurrentSkin());
-		    model.setCurrentLanguage(systemController.getCurrentLanguage());
 		}
 	}
 

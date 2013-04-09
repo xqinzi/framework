@@ -43,28 +43,6 @@
                                                     </center>
                                                 </concepting:guide>
 	                            			</c:when>
-                            			    <c:when test="${@{actionFormObjectId}.action == 'loadChangeCurrentLanguage'}">
-                                                <concepting:guide name="changeLanguage">
-                                                    <center>
-                                                        <br/>
-                                                        <concepting:list name="currentLanguage" labelPosition="top" data="languages" valueMap="languagesMap"/>
-                                                        <br/>
-                                                        <concepting:confirmButton action="changeCurrentLanguage" forward="index" validate="true"/>
-                                                        <concepting:cancelButton action="cancelChangeCurrentLanguage" forward="index"/>
-                                                    </center>
-                                                </concepting:guide>
-	                            			</c:when>
-                            				<c:when test="${@{actionFormObjectId}.action == 'loadChangeCurrentSkin'}">
-                                                <concepting:guide name="changeSkin">
-                                                    <center>
-                                                        <br/>
-                                                        <concepting:list name="currentSkin" labelPosition="top" data="skins"/>
-                                                        <br/>
-                                                        <concepting:confirmButton action="changeCurrentSkin" forward="index" validate="true"/>
-                                                        <concepting:cancelButton action="cancelChangeCurrentSkin" forward="index"/>
-                                                    </center>
-                                                </concepting:guide>
-	                            			</c:when>
 	                            			<c:when test="${@{actionFormObjectId}.action == 'loadChangePassword' || @{actionFormObjectId}.model.user.changePassword}">
                                                 <concepting:guide name="changePassword">
                                                     <center>

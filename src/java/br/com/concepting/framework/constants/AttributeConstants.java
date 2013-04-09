@@ -13,7 +13,9 @@ public abstract class AttributeConstants extends Constants{
     public static final String CONTENT_DATA_KEY                  = "contentData";
     public static final String CONTENT_DATA_SCOPE_KEY            = "contentDataScope";
     public static final String CURRENT_ACTION_FORM_KEY           = "currentActionForm";
+    public static final String CURRENT_LANGUAGE_KEY              = "currentLanguage";
     public static final String CURRENT_EXCEPTION_KEY             = "currentException";
+    public static final String CURRENT_SKIN_KEY                  = "currentSkin";
     public static final String CURRENT_GUIDE_KEY                 = "currentGuide";
     public static final String CURRENT_NODE_KEY                  = "currentNode";
     public static final String CURRENT_SECTION_KEY               = "currentSection";

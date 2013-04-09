@@ -1245,7 +1245,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     		invalidPropertyMessage = StringUtil.trim(resources.getProperty(AttributeConstants.INVALID_PROPERTY_KEY));
         
     		if(actionForm.length() > 0){
-     			BaseModel model = (form != null ? (isForSearch() ? form.getSearchModel() : form.getModel()) : null);
+     			BaseModel model = (form != null ? (isForSearch ? form.getSearchModel() : form.getModel()) : null);
          
      			if(model != null){
     				ModelInfo modelInfo = ModelUtil.getModelInfo(model.getClass());
@@ -1254,7 +1254,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     				    propertyInfo = modelInfo.getPropertyInfo(name);
     
     				    if(propertyInfo != null){
-    						if(!propertyInfo.isForSearch() && isForSearch()){
+    						if(!propertyInfo.isForSearch() && isForSearch){
     						    propertyInfo = null;
     						    value        = null;
     						}
@@ -1273,7 +1273,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     		}
 	    }
         
-        if(isForSearch())
+        if(isForSearch)
             setName("search.".concat(name));
 		
 		if(propertyInfo != null){
@@ -1297,531 +1297,518 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 			
 			    setLabelAlignmentType(labelAlignment);
 			}
+		}
 			
-			String onBlur          = getOnBlur();
-			String onFocus         = getOnFocus();
-			String onClick         = getOnClick();
-			String onMouseOut      = getOnMouseOut();
-			String onMouseOver     = getOnMouseOver();
-			String styleClass      = getStyleClass();
-			String style           = getStyle();
-			Locale currentLanguage = systemController.getCurrentLanguage();
-    
-			onBlur      = PropertyUtil.fillPropertiesInString(value, onBlur, currentLanguage);
-    		onFocus     = PropertyUtil.fillPropertiesInString(value, onFocus, currentLanguage);
-    		onChange    = PropertyUtil.fillPropertiesInString(value, onChange, currentLanguage);
-    		onClick     = PropertyUtil.fillPropertiesInString(value, onClick, currentLanguage);
-    		onKeyDown   = PropertyUtil.fillPropertiesInString(value, onKeyDown, currentLanguage);
-    		onKeyUp     = PropertyUtil.fillPropertiesInString(value, onKeyUp, currentLanguage);
-    		onKeyPress  = PropertyUtil.fillPropertiesInString(value, onKeyPress, currentLanguage);
-    		onMouseOut  = PropertyUtil.fillPropertiesInString(value, onMouseOut, currentLanguage);
-    		onMouseOver = PropertyUtil.fillPropertiesInString(value, onMouseOver, currentLanguage);
-    		styleClass  = PropertyUtil.fillPropertiesInString(value, styleClass, currentLanguage);
-    		style       = PropertyUtil.fillPropertiesInString(value, style, currentLanguage);
-            onBlur      = ExpressionProcessorUtil.fillVariablesInString(onBlur, currentLanguage);
-            onFocus     = ExpressionProcessorUtil.fillVariablesInString(onFocus, currentLanguage);
-            onChange    = ExpressionProcessorUtil.fillVariablesInString(onChange, currentLanguage);
-            onClick     = ExpressionProcessorUtil.fillVariablesInString(onClick, currentLanguage);
-            onKeyDown   = ExpressionProcessorUtil.fillVariablesInString(onKeyDown, currentLanguage);
-            onKeyUp     = ExpressionProcessorUtil.fillVariablesInString(onKeyUp, currentLanguage);
-            onKeyPress  = ExpressionProcessorUtil.fillVariablesInString(onKeyPress, currentLanguage);
-            onMouseOut  = ExpressionProcessorUtil.fillVariablesInString(onMouseOut, currentLanguage);
-            onMouseOver = ExpressionProcessorUtil.fillVariablesInString(onMouseOver, currentLanguage);
-            styleClass  = ExpressionProcessorUtil.fillVariablesInString(styleClass, currentLanguage);
-            style       = ExpressionProcessorUtil.fillVariablesInString(style, currentLanguage);
-            
-            if(getOnBlurAction().length() > 0){
-                StringBuilder onBlurContent = new StringBuilder();
+		String onBlur          = getOnBlur();
+		String onFocus         = getOnFocus();
+		String onClick         = getOnClick();
+		String onMouseOut      = getOnMouseOut();
+		String onMouseOver     = getOnMouseOver();
+		String styleClass      = getStyleClass();
+		String style           = getStyle();
+		Locale currentLanguage = systemController.getCurrentLanguage();
 
+		onBlur      = PropertyUtil.fillPropertiesInString(value, onBlur, currentLanguage);
+		onFocus     = PropertyUtil.fillPropertiesInString(value, onFocus, currentLanguage);
+		onChange    = PropertyUtil.fillPropertiesInString(value, onChange, currentLanguage);
+		onClick     = PropertyUtil.fillPropertiesInString(value, onClick, currentLanguage);
+		onKeyDown   = PropertyUtil.fillPropertiesInString(value, onKeyDown, currentLanguage);
+		onKeyUp     = PropertyUtil.fillPropertiesInString(value, onKeyUp, currentLanguage);
+		onKeyPress  = PropertyUtil.fillPropertiesInString(value, onKeyPress, currentLanguage);
+		onMouseOut  = PropertyUtil.fillPropertiesInString(value, onMouseOut, currentLanguage);
+		onMouseOver = PropertyUtil.fillPropertiesInString(value, onMouseOver, currentLanguage);
+		styleClass  = PropertyUtil.fillPropertiesInString(value, styleClass, currentLanguage);
+		style       = PropertyUtil.fillPropertiesInString(value, style, currentLanguage);
+        onBlur      = ExpressionProcessorUtil.fillVariablesInString(onBlur, currentLanguage);
+        onFocus     = ExpressionProcessorUtil.fillVariablesInString(onFocus, currentLanguage);
+        onChange    = ExpressionProcessorUtil.fillVariablesInString(onChange, currentLanguage);
+        onClick     = ExpressionProcessorUtil.fillVariablesInString(onClick, currentLanguage);
+        onKeyDown   = ExpressionProcessorUtil.fillVariablesInString(onKeyDown, currentLanguage);
+        onKeyUp     = ExpressionProcessorUtil.fillVariablesInString(onKeyUp, currentLanguage);
+        onKeyPress  = ExpressionProcessorUtil.fillVariablesInString(onKeyPress, currentLanguage);
+        onMouseOut  = ExpressionProcessorUtil.fillVariablesInString(onMouseOut, currentLanguage);
+        onMouseOver = ExpressionProcessorUtil.fillVariablesInString(onMouseOver, currentLanguage);
+        styleClass  = ExpressionProcessorUtil.fillVariablesInString(styleClass, currentLanguage);
+        style       = ExpressionProcessorUtil.fillVariablesInString(style, currentLanguage);
+        
+        if(getOnBlurAction().length() > 0){
+            StringBuilder onBlurContent = new StringBuilder();
+
+            onBlurContent.append(" document.");
+            onBlurContent.append(actionForm);
+            onBlurContent.append(".");
+            
+            if(isForSearch)
+                onBlurContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onBlurContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onBlurContent.append(".value = ");
+            onBlurContent.append(onBlurActionValidate);
+            onBlurContent.append(";");
+            
+            if(onBlurActionValidateProperties.length() > 0){
                 onBlurContent.append(" document.");
                 onBlurContent.append(actionForm);
                 onBlurContent.append(".");
-                
-                if(isForSearch())
-                    onBlurContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onBlurContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onBlurContent.append(".value = ");
-                onBlurContent.append(onBlurActionValidate);
-                onBlurContent.append(";");
-                
-                if(onBlurActionValidateProperties.length() > 0){
-                    onBlurContent.append(" document.");
-                    onBlurContent.append(actionForm);
-                    onBlurContent.append(".");
-                    onBlurContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onBlurContent.append(".value = '");
-                    onBlurContent.append(onBlurActionValidateProperties);
-                    onBlurContent.append("';");
-                }
-                
-                if(onBlur.length() > 0){
-                    onBlurContent.append(" ");
-                    onBlurContent.append(onBlur);
-                }
-                
-                onBlur = onBlurContent.toString();
+                onBlurContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onBlurContent.append(".value = '");
+                onBlurContent.append(onBlurActionValidateProperties);
+                onBlurContent.append("';");
             }
             
-            if(getOnFocusAction().length() > 0){
-                StringBuilder onFocusContent = new StringBuilder();
+            if(onBlur.length() > 0){
+                onBlurContent.append(" ");
+                onBlurContent.append(onBlur);
+            }
+            
+            onBlur = onBlurContent.toString();
+        }
+        
+        if(getOnFocusAction().length() > 0){
+            StringBuilder onFocusContent = new StringBuilder();
 
+            onFocusContent.append(" document.");
+            onFocusContent.append(actionForm);
+            onFocusContent.append(".");
+            
+            if(isForSearch)
+                onFocusContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onFocusContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onFocusContent.append(".value = ");
+            onFocusContent.append(onFocusActionValidate);
+            onFocusContent.append(";");
+            
+            if(onFocusActionValidateProperties.length() > 0){
                 onFocusContent.append(" document.");
                 onFocusContent.append(actionForm);
                 onFocusContent.append(".");
-                
-                if(isForSearch())
-                    onFocusContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onFocusContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onFocusContent.append(".value = ");
-                onFocusContent.append(onFocusActionValidate);
-                onFocusContent.append(";");
-                
-                if(onFocusActionValidateProperties.length() > 0){
-                    onFocusContent.append(" document.");
-                    onFocusContent.append(actionForm);
-                    onFocusContent.append(".");
-                    onFocusContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onFocusContent.append(".value = '");
-                    onFocusContent.append(onFocusActionValidateProperties);
-                    onFocusContent.append("';");
-                }
-                
-                if(onFocus.length() > 0){
-                    onFocusContent.append(" ");
-                    onFocusContent.append(onFocus);
-                }
-                
-                onFocus = onFocusContent.toString();
+                onFocusContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onFocusContent.append(".value = '");
+                onFocusContent.append(onFocusActionValidateProperties);
+                onFocusContent.append("';");
             }
+            
+            if(onFocus.length() > 0){
+                onFocusContent.append(" ");
+                onFocusContent.append(onFocus);
+            }
+            
+            onFocus = onFocusContent.toString();
+        }
 
-            if(getOnClickAction().length() > 0){
-                StringBuilder onClickContent = new StringBuilder();
+        if(getOnClickAction().length() > 0){
+            StringBuilder onClickContent = new StringBuilder();
 
+            onClickContent.append(" document.");
+            onClickContent.append(actionForm);
+            onClickContent.append(".");
+            
+            if(isForSearch)
+                onClickContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onClickContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onClickContent.append(".value =");
+            onClickContent.append(onClickActionValidate);
+            onClickContent.append(";");
+            
+            if(onClickActionValidateProperties.length() > 0){
                 onClickContent.append(" document.");
                 onClickContent.append(actionForm);
                 onClickContent.append(".");
-                
-                if(isForSearch())
-                    onClickContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onClickContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onClickContent.append(".value =");
-                onClickContent.append(onClickActionValidate);
-                onClickContent.append(";");
-                
-                if(onClickActionValidateProperties.length() > 0){
-                    onClickContent.append(" document.");
-                    onClickContent.append(actionForm);
-                    onClickContent.append(".");
-                    onClickContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onClickContent.append(".value = '");
-                    onClickContent.append(onClickActionValidateProperties);
-                    onClickContent.append("';");
-                }
-                
-                if(onClick.length() > 0){
-                    onClickContent.append(" ");
-                    onClickContent.append(onClick);
-                }
-                
-                onClick = onClickContent.toString();
+                onClickContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onClickContent.append(".value = '");
+                onClickContent.append(onClickActionValidateProperties);
+                onClickContent.append("';");
             }
+            
+            if(onClick.length() > 0){
+                onClickContent.append(" ");
+                onClickContent.append(onClick);
+            }
+            
+            onClick = onClickContent.toString();
+        }
 
-            if(getOnMouseOverAction().length() > 0){
-                StringBuilder onMouseOverContent = new StringBuilder();
+        if(getOnMouseOverAction().length() > 0){
+            StringBuilder onMouseOverContent = new StringBuilder();
 
+            onMouseOverContent.append(" document.");
+            onMouseOverContent.append(actionForm);
+            onMouseOverContent.append(".");
+            
+            if(isForSearch)
+                onMouseOverContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onMouseOverContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onMouseOverContent.append(".value = ");
+            onMouseOverContent.append(onMouseOverActionValidate);
+            onMouseOverContent.append(";");
+            
+            if(onMouseOverActionValidateProperties.length() > 0){
                 onMouseOverContent.append(" document.");
                 onMouseOverContent.append(actionForm);
                 onMouseOverContent.append(".");
-                
-                if(isForSearch())
-                    onMouseOverContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onMouseOverContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onMouseOverContent.append(".value = ");
-                onMouseOverContent.append(onMouseOverActionValidate);
-                onMouseOverContent.append(";");
-                
-                if(onMouseOverActionValidateProperties.length() > 0){
-                    onMouseOverContent.append(" document.");
-                    onMouseOverContent.append(actionForm);
-                    onMouseOverContent.append(".");
-                    onMouseOverContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onMouseOverContent.append(".value = '");
-                    onMouseOverContent.append(onMouseOverActionValidateProperties);
-                    onMouseOverContent.append("';");
-                }
-                
-                if(onMouseOver.length() > 0){
-                    onMouseOverContent.append(" ");
-                    onMouseOverContent.append(onMouseOver);
-                }
-                
-                onMouseOver = onMouseOverContent.toString();
+                onMouseOverContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onMouseOverContent.append(".value = '");
+                onMouseOverContent.append(onMouseOverActionValidateProperties);
+                onMouseOverContent.append("';");
             }
+            
+            if(onMouseOver.length() > 0){
+                onMouseOverContent.append(" ");
+                onMouseOverContent.append(onMouseOver);
+            }
+            
+            onMouseOver = onMouseOverContent.toString();
+        }
 
-            if(getOnMouseOutAction().length() > 0){
-                StringBuilder onMouseOutContent = new StringBuilder();
-    
+        if(getOnMouseOutAction().length() > 0){
+            StringBuilder onMouseOutContent = new StringBuilder();
+
+            onMouseOutContent.append(" document.");
+            onMouseOutContent.append(actionForm);
+            onMouseOutContent.append(".");
+            
+            if(isForSearch)
+                onMouseOutContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onMouseOutContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onMouseOutContent.append(".value = ");
+            onMouseOutContent.append(onMouseOutActionValidate);
+            onMouseOutContent.append(";");
+            
+            if(onMouseOutActionValidateProperties.length() > 0){
                 onMouseOutContent.append(" document.");
                 onMouseOutContent.append(actionForm);
                 onMouseOutContent.append(".");
-                
-                if(isForSearch())
-                    onMouseOutContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onMouseOutContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onMouseOutContent.append(".value = ");
-                onMouseOutContent.append(onMouseOutActionValidate);
-                onMouseOutContent.append(";");
-                
-                if(onMouseOutActionValidateProperties.length() > 0){
-                    onMouseOutContent.append(" document.");
-                    onMouseOutContent.append(actionForm);
-                    onMouseOutContent.append(".");
-                    onMouseOutContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onMouseOutContent.append(".value = '");
-                    onMouseOutContent.append(onMouseOutActionValidateProperties);
-                    onMouseOutContent.append("';");
-                }
-                
-                if(onMouseOut.length() > 0){
-                    onMouseOutContent.append(" ");
-                    onMouseOutContent.append(onMouseOut);
-                }
-                
-                onMouseOut = onMouseOutContent.toString();
+                onMouseOutContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onMouseOutContent.append(".value = '");
+                onMouseOutContent.append(onMouseOutActionValidateProperties);
+                onMouseOutContent.append("';");
             }
+            
+            if(onMouseOut.length() > 0){
+                onMouseOutContent.append(" ");
+                onMouseOutContent.append(onMouseOut);
+            }
+            
+            onMouseOut = onMouseOutContent.toString();
+        }
 
-            if(onChangeAction.length() > 0){
-                StringBuilder onChangeContent = new StringBuilder();
+        if(onChangeAction.length() > 0){
+            StringBuilder onChangeContent = new StringBuilder();
 
-                if(onChange.length() > 0){
-                    onChangeContent.append(onChange);
-                    
-                    if(!onChange.endsWith(";"))
-                        onChangeContent.append(";");
-                    
-                    onChangeContent.append(" ");
-                }
+            if(onChange.length() > 0){
+                onChangeContent.append(onChange);
                 
-                onChangeContent.append("document.");
+                if(!onChange.endsWith(";"))
+                    onChangeContent.append(";");
+                
+                onChangeContent.append(" ");
+            }
+            
+            onChangeContent.append("document.");
+            onChangeContent.append(actionForm);
+            onChangeContent.append(".");
+            
+            if(isForSearch)
+                onChangeContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onChangeContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onChangeContent.append(".value = ");
+            onChangeContent.append(onChangeActionValidate);
+            onChangeContent.append(";");
+            
+            if(onChangeActionValidateProperties.length() > 0){
+                onChangeContent.append(" document.");
                 onChangeContent.append(actionForm);
                 onChangeContent.append(".");
-                
-                if(isForSearch())
-                    onChangeContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onChangeContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onChangeContent.append(".value = ");
-                onChangeContent.append(onChangeActionValidate);
-                onChangeContent.append(";");
-                
-                if(onChangeActionValidateProperties.length() > 0){
-                    onChangeContent.append(" document.");
-                    onChangeContent.append(actionForm);
-                    onChangeContent.append(".");
-                    onChangeContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onChangeContent.append(".value = '");
-                    onChangeContent.append(onChangeActionValidateProperties);
-                    onChangeContent.append("'; ");
-                }
-                
-                if(onChangeActionForward.length() > 0){
-                    onChangeContent.append("document.");
-                    onChangeContent.append(actionForm);
-                    onChangeContent.append(".");
-                    onChangeContent.append(AttributeConstants.FORWARD_KEY);
-                    onChangeContent.append(".value = '");
-                    onChangeContent.append(onChangeActionForward);
-                    onChangeContent.append("; ");
-                }
-                
-                if(onChangeActionForwardOnFail.length() > 0){
-                    onChangeContent.append("document.");
-                    onChangeContent.append(actionForm);
-                    onChangeContent.append(".");
-                    onChangeContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
-                    onChangeContent.append(".value = '");
-                    onChangeContent.append(onChangeActionForwardOnFail);
-                    onChangeContent.append("; ");
-                }
-
-                if(onChangeActionUpdateViews.length() > 0){
-                    onChangeContent.append("document.");
-                    onChangeContent.append(actionForm);
-                    onChangeContent.append(".");
-                    onChangeContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
-                    onChangeContent.append(".value = '");
-                    onChangeContent.append(onChangeActionUpdateViews);
-                    onChangeContent.append("; ");
-                }
-
-                onChangeContent.append("document.");
-                onChangeContent.append(actionForm);
-                onChangeContent.append(".");
-                onChangeContent.append(AttributeConstants.ACTION_KEY);
+                onChangeContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onChangeContent.append(".value = '");
-                onChangeContent.append(onChangeAction);
-                onChangeContent.append("'; submitForm(document.");
+                onChangeContent.append(onChangeActionValidateProperties);
+                onChangeContent.append("'; ");
+            }
+            
+            if(onChangeActionForward.length() > 0){
+                onChangeContent.append("document.");
                 onChangeContent.append(actionForm);
-                onChangeContent.append(");");
-                
-                onChange = onChangeContent.toString();
+                onChangeContent.append(".");
+                onChangeContent.append(AttributeConstants.FORWARD_KEY);
+                onChangeContent.append(".value = '");
+                onChangeContent.append(onChangeActionForward);
+                onChangeContent.append("; ");
             }
             
-            if(onKeyUpAction.length() > 0){
-                StringBuilder onKeyUpContent = new StringBuilder();
+            if(onChangeActionForwardOnFail.length() > 0){
+                onChangeContent.append("document.");
+                onChangeContent.append(actionForm);
+                onChangeContent.append(".");
+                onChangeContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                onChangeContent.append(".value = '");
+                onChangeContent.append(onChangeActionForwardOnFail);
+                onChangeContent.append("; ");
+            }
 
-                if(onKeyUp.length() > 0){
-                    onKeyUpContent.append(onKeyUp);
-                    
-                    if(!onKeyUp.endsWith(";"))
-                        onKeyUpContent.append(";");
-                    
-                    onKeyUpContent.append(" ");
-                }
+            if(onChangeActionUpdateViews.length() > 0){
+                onChangeContent.append("document.");
+                onChangeContent.append(actionForm);
+                onChangeContent.append(".");
+                onChangeContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                onChangeContent.append(".value = '");
+                onChangeContent.append(onChangeActionUpdateViews);
+                onChangeContent.append("; ");
+            }
+
+            onChangeContent.append("document.");
+            onChangeContent.append(actionForm);
+            onChangeContent.append(".");
+            onChangeContent.append(AttributeConstants.ACTION_KEY);
+            onChangeContent.append(".value = '");
+            onChangeContent.append(onChangeAction);
+            onChangeContent.append("'; submitForm(document.");
+            onChangeContent.append(actionForm);
+            onChangeContent.append(");");
+            
+            onChange = onChangeContent.toString();
+        }
+        
+        if(onKeyUpAction.length() > 0){
+            StringBuilder onKeyUpContent = new StringBuilder();
+
+            if(onKeyUp.length() > 0){
+                onKeyUpContent.append(onKeyUp);
                 
-                onKeyUpContent.append("document.");
+                if(!onKeyUp.endsWith(";"))
+                    onKeyUpContent.append(";");
+                
+                onKeyUpContent.append(" ");
+            }
+            
+            onKeyUpContent.append("document.");
+            onKeyUpContent.append(actionForm);
+            onKeyUpContent.append(".");
+            
+            if(isForSearch)
+                onKeyUpContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onKeyUpContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onKeyUpContent.append(".value = ");
+            onKeyUpContent.append(onKeyUpActionValidate);
+            onKeyUpContent.append(";");
+            
+            if(onKeyUpActionValidateProperties.length() > 0){
+                onKeyUpContent.append(" document.");
                 onKeyUpContent.append(actionForm);
                 onKeyUpContent.append(".");
-                
-                if(isForSearch())
-                    onKeyUpContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onKeyUpContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onKeyUpContent.append(".value = ");
-                onKeyUpContent.append(onKeyUpActionValidate);
-                onKeyUpContent.append(";");
-                
-                if(onKeyUpActionValidateProperties.length() > 0){
-                    onKeyUpContent.append(" document.");
-                    onKeyUpContent.append(actionForm);
-                    onKeyUpContent.append(".");
-                    onKeyUpContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onKeyUpContent.append(".value = '");
-                    onKeyUpContent.append(onKeyUpActionValidateProperties);
-                    onKeyUpContent.append("'; ");
-                }
-
-                if(onKeyUpActionForward.length() > 0){
-                    onKeyUpContent.append("document.");
-                    onKeyUpContent.append(actionForm);
-                    onKeyUpContent.append(".");
-                    onKeyUpContent.append(AttributeConstants.FORWARD_KEY);
-                    onKeyUpContent.append(".value = '");
-                    onKeyUpContent.append(onKeyUpActionForward);
-                    onKeyUpContent.append("; ");
-                }
-                
-                if(onKeyUpActionForwardOnFail.length() > 0){
-                    onKeyUpContent.append("document.");
-                    onKeyUpContent.append(actionForm);
-                    onKeyUpContent.append(".");
-                    onKeyUpContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
-                    onKeyUpContent.append(".value = '");
-                    onKeyUpContent.append(onKeyUpActionForwardOnFail);
-                    onKeyUpContent.append("; ");
-                }
-
-                if(onKeyUpActionUpdateViews.length() > 0){
-                    onKeyUpContent.append("document.");
-                    onKeyUpContent.append(actionForm);
-                    onKeyUpContent.append(".");
-                    onKeyUpContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
-                    onKeyUpContent.append(".value = '");
-                    onKeyUpContent.append(onKeyUpActionUpdateViews);
-                    onKeyUpContent.append("; ");
-                }
-
-                onKeyUpContent.append("document.");
-                onKeyUpContent.append(actionForm);
-                onKeyUpContent.append(".");
-                onKeyUpContent.append(AttributeConstants.ACTION_KEY);
+                onKeyUpContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onKeyUpContent.append(".value = '");
-                onKeyUpContent.append(onKeyUpAction);
-                onKeyUpContent.append("'; submitForm(document.");
+                onKeyUpContent.append(onKeyUpActionValidateProperties);
+                onKeyUpContent.append("'; ");
+            }
+
+            if(onKeyUpActionForward.length() > 0){
+                onKeyUpContent.append("document.");
                 onKeyUpContent.append(actionForm);
-                onKeyUpContent.append(");");
-                
-                onKeyUp = onKeyUpContent.toString();
+                onKeyUpContent.append(".");
+                onKeyUpContent.append(AttributeConstants.FORWARD_KEY);
+                onKeyUpContent.append(".value = '");
+                onKeyUpContent.append(onKeyUpActionForward);
+                onKeyUpContent.append("; ");
             }
             
-            if(onKeyDownAction.length() > 0){
-                StringBuilder onKeyDownContent = new StringBuilder();
-
-                if(onKeyDown.length() > 0){
-                    onKeyDownContent.append(onKeyDown);
-                    
-                    if(!onKeyDown.endsWith(";"))
-                        onKeyDownContent.append(";");
-                    
-                    onKeyDownContent.append(" ");
-                }
-                
-                onKeyDownContent.append("document.");
-                onKeyDownContent.append(actionForm);
-                onKeyDownContent.append(".");
-                
-                if(isForSearch())
-                    onKeyDownContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onKeyDownContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onKeyDownContent.append(".value = ");
-                onKeyDownContent.append(onKeyDownActionValidate);
-                onKeyDownContent.append(";");
-                
-                if(onKeyDownActionValidateProperties.length() > 0){
-                    onKeyDownContent.append(" document.");
-                    onKeyDownContent.append(actionForm);
-                    onKeyDownContent.append(".");
-                    onKeyDownContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onKeyDownContent.append(".value = '");
-                    onKeyDownContent.append(onKeyDownActionValidateProperties);
-                    onKeyDownContent.append("'; ");
-                }
-                
-                if(onKeyDownActionForward.length() > 0){
-                    onKeyDownContent.append("document.");
-                    onKeyDownContent.append(actionForm);
-                    onKeyDownContent.append(".");
-                    onKeyDownContent.append(AttributeConstants.FORWARD_KEY);
-                    onKeyDownContent.append(".value = '");
-                    onKeyDownContent.append(onKeyDownActionForward);
-                    onKeyDownContent.append("; ");
-                }
-                
-                if(onKeyDownActionForwardOnFail.length() > 0){
-                    onKeyDownContent.append("document.");
-                    onKeyDownContent.append(actionForm);
-                    onKeyDownContent.append(".");
-                    onKeyDownContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
-                    onKeyDownContent.append(".value = '");
-                    onKeyDownContent.append(onKeyDownActionForwardOnFail);
-                    onKeyDownContent.append("; ");
-                }
-
-                if(onKeyDownActionUpdateViews.length() > 0){
-                    onKeyDownContent.append("document.");
-                    onKeyDownContent.append(actionForm);
-                    onKeyDownContent.append(".");
-                    onKeyDownContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
-                    onKeyDownContent.append(".value = '");
-                    onKeyDownContent.append(onKeyDownActionUpdateViews);
-                    onKeyDownContent.append("; ");
-                }
-
-                onKeyDownContent.append("document.");
-                onKeyDownContent.append(actionForm);
-                onKeyDownContent.append(".");
-                onKeyDownContent.append(AttributeConstants.ACTION_KEY);
-                onKeyDownContent.append(".value = '");
-                onKeyDownContent.append(onKeyDownAction);
-                onKeyDownContent.append("'; submitForm(document.");
-                onKeyDownContent.append(actionForm);
-                onKeyDownContent.append(");");
-                
-                onKeyDown = onKeyDownContent.toString();
+            if(onKeyUpActionForwardOnFail.length() > 0){
+                onKeyUpContent.append("document.");
+                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(".");
+                onKeyUpContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                onKeyUpContent.append(".value = '");
+                onKeyUpContent.append(onKeyUpActionForwardOnFail);
+                onKeyUpContent.append("; ");
             }
 
-            if(onKeyPressAction.length() > 0){
-                StringBuilder onKeyPressContent = new StringBuilder();
+            if(onKeyUpActionUpdateViews.length() > 0){
+                onKeyUpContent.append("document.");
+                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(".");
+                onKeyUpContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                onKeyUpContent.append(".value = '");
+                onKeyUpContent.append(onKeyUpActionUpdateViews);
+                onKeyUpContent.append("; ");
+            }
 
-                if(onKeyPress.length() > 0){
-                    onKeyPressContent.append(onKeyPress);
-                    
-                    if(!onKeyPress.endsWith(";"))
-                        onKeyPressContent.append(";");
-                    
-                    onKeyPressContent.append(" ");
-                }
+            onKeyUpContent.append("document.");
+            onKeyUpContent.append(actionForm);
+            onKeyUpContent.append(".");
+            onKeyUpContent.append(AttributeConstants.ACTION_KEY);
+            onKeyUpContent.append(".value = '");
+            onKeyUpContent.append(onKeyUpAction);
+            onKeyUpContent.append("'; submitForm(document.");
+            onKeyUpContent.append(actionForm);
+            onKeyUpContent.append(");");
+            
+            onKeyUp = onKeyUpContent.toString();
+        }
+        
+        if(onKeyDownAction.length() > 0){
+            StringBuilder onKeyDownContent = new StringBuilder();
+
+            if(onKeyDown.length() > 0){
+                onKeyDownContent.append(onKeyDown);
                 
+                if(!onKeyDown.endsWith(";"))
+                    onKeyDownContent.append(";");
+                
+                onKeyDownContent.append(" ");
+            }
+            
+            onKeyDownContent.append("document.");
+            onKeyDownContent.append(actionForm);
+            onKeyDownContent.append(".");
+            
+            if(isForSearch)
+                onKeyDownContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onKeyDownContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onKeyDownContent.append(".value = ");
+            onKeyDownContent.append(onKeyDownActionValidate);
+            onKeyDownContent.append(";");
+            
+            if(onKeyDownActionValidateProperties.length() > 0){
+                onKeyDownContent.append(" document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(".");
+                onKeyDownContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onKeyDownContent.append(".value = '");
+                onKeyDownContent.append(onKeyDownActionValidateProperties);
+                onKeyDownContent.append("'; ");
+            }
+            
+            if(onKeyDownActionForward.length() > 0){
+                onKeyDownContent.append("document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(".");
+                onKeyDownContent.append(AttributeConstants.FORWARD_KEY);
+                onKeyDownContent.append(".value = '");
+                onKeyDownContent.append(onKeyDownActionForward);
+                onKeyDownContent.append("; ");
+            }
+            
+            if(onKeyDownActionForwardOnFail.length() > 0){
+                onKeyDownContent.append("document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(".");
+                onKeyDownContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                onKeyDownContent.append(".value = '");
+                onKeyDownContent.append(onKeyDownActionForwardOnFail);
+                onKeyDownContent.append("; ");
+            }
+
+            if(onKeyDownActionUpdateViews.length() > 0){
+                onKeyDownContent.append("document.");
+                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(".");
+                onKeyDownContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                onKeyDownContent.append(".value = '");
+                onKeyDownContent.append(onKeyDownActionUpdateViews);
+                onKeyDownContent.append("; ");
+            }
+
+            onKeyDownContent.append("document.");
+            onKeyDownContent.append(actionForm);
+            onKeyDownContent.append(".");
+            onKeyDownContent.append(AttributeConstants.ACTION_KEY);
+            onKeyDownContent.append(".value = '");
+            onKeyDownContent.append(onKeyDownAction);
+            onKeyDownContent.append("'; submitForm(document.");
+            onKeyDownContent.append(actionForm);
+            onKeyDownContent.append(");");
+            
+            onKeyDown = onKeyDownContent.toString();
+        }
+
+        if(onKeyPressAction.length() > 0){
+            StringBuilder onKeyPressContent = new StringBuilder();
+
+            if(onKeyPress.length() > 0){
+                onKeyPressContent.append(onKeyPress);
+                
+                if(!onKeyPress.endsWith(";"))
+                    onKeyPressContent.append(";");
+                
+                onKeyPressContent.append(" ");
+            }
+            
+            onKeyPressContent.append("document.");
+            onKeyPressContent.append(actionForm);
+            onKeyPressContent.append(".");
+            
+            if(isForSearch)
+                onKeyPressContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+            else
+                onKeyPressContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+            
+            onKeyPressContent.append(".value = ");
+            onKeyPressContent.append(onKeyPressActionValidate);
+            onKeyPressContent.append(";");
+            
+            if(onKeyPressActionValidateProperties.length() > 0){
+                onKeyPressContent.append(" document.");
+                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(".");
+                onKeyPressContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                onKeyPressContent.append(".value = '");
+                onKeyPressContent.append(onKeyPressActionValidateProperties);
+                onKeyPressContent.append("'; ");
+            }
+
+            if(onKeyPressActionForward.length() > 0){
                 onKeyPressContent.append("document.");
                 onKeyPressContent.append(actionForm);
                 onKeyPressContent.append(".");
-                
-                if(isForSearch())
-                    onKeyPressContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
-                else
-                    onKeyPressContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
-                
-                onKeyPressContent.append(".value = ");
-                onKeyPressContent.append(onKeyPressActionValidate);
-                onKeyPressContent.append(";");
-                
-                if(onKeyPressActionValidateProperties.length() > 0){
-                    onKeyPressContent.append(" document.");
-                    onKeyPressContent.append(actionForm);
-                    onKeyPressContent.append(".");
-                    onKeyPressContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
-                    onKeyPressContent.append(".value = '");
-                    onKeyPressContent.append(onKeyPressActionValidateProperties);
-                    onKeyPressContent.append("'; ");
-                }
-
-                if(onKeyPressActionForward.length() > 0){
-                    onKeyPressContent.append("document.");
-                    onKeyPressContent.append(actionForm);
-                    onKeyPressContent.append(".");
-                    onKeyPressContent.append(AttributeConstants.FORWARD_KEY);
-                    onKeyPressContent.append(".value = '");
-                    onKeyPressContent.append(onKeyPressActionForward);
-                    onKeyPressContent.append("; ");
-                }
-                
-                if(onKeyPressActionForwardOnFail.length() > 0){
-                    onKeyPressContent.append("document.");
-                    onKeyPressContent.append(actionForm);
-                    onKeyPressContent.append(".");
-                    onKeyPressContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
-                    onKeyPressContent.append(".value = '");
-                    onKeyPressContent.append(onKeyPressActionForwardOnFail);
-                    onKeyPressContent.append("; ");
-                }
-
-                if(onKeyPressActionUpdateViews.length() > 0){
-                    onKeyPressContent.append("document.");
-                    onKeyPressContent.append(actionForm);
-                    onKeyPressContent.append(".");
-                    onKeyPressContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
-                    onKeyPressContent.append(".value = '");
-                    onKeyPressContent.append(onKeyPressActionUpdateViews);
-                    onKeyPressContent.append("; ");
-                }
-                
-                if(isForSearch){
-                    if(searchPropertiesGroupTag != null){
-                        onKeyPressContent = new StringBuilder(onKeyPress);
-                        onKeyPressContent.append("if(getKeyPressed(event) == 13) ");
-                        onKeyPressContent.append("document.getElementById('");
-                        onKeyPressContent.append(searchPropertiesGroupTag.getSearchButtonTag().getName());
-                        onKeyPressContent.append("').click();");
+                onKeyPressContent.append(AttributeConstants.FORWARD_KEY);
+                onKeyPressContent.append(".value = '");
+                onKeyPressContent.append(onKeyPressActionForward);
+                onKeyPressContent.append("; ");
+            }
             
-                        onKeyPress = onKeyPressContent.toString();
-                    }
-                    else{
-                        onKeyPressContent.append("document.");
-                        onKeyPressContent.append(actionForm);
-                        onKeyPressContent.append(".");
-                        onKeyPressContent.append(AttributeConstants.ACTION_KEY);
-                        onKeyPressContent.append(".value = '");
-                        onKeyPressContent.append(onKeyPressAction);
-                        onKeyPressContent.append("'; submitForm(document.");
-                        onKeyPressContent.append(actionForm);
-                        onKeyPressContent.append(");");
-                        
-                        onKeyPress = onKeyPressContent.toString();
-                    }
+            if(onKeyPressActionForwardOnFail.length() > 0){
+                onKeyPressContent.append("document.");
+                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(".");
+                onKeyPressContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                onKeyPressContent.append(".value = '");
+                onKeyPressContent.append(onKeyPressActionForwardOnFail);
+                onKeyPressContent.append("; ");
+            }
+
+            if(onKeyPressActionUpdateViews.length() > 0){
+                onKeyPressContent.append("document.");
+                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(".");
+                onKeyPressContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                onKeyPressContent.append(".value = '");
+                onKeyPressContent.append(onKeyPressActionUpdateViews);
+                onKeyPressContent.append("; ");
+            }
+            
+            if(isForSearch){
+                if(searchPropertiesGroupTag != null){
+                    onKeyPressContent = new StringBuilder(onKeyPress);
+                    onKeyPressContent.append("if(getKeyPressed(event) == 13) ");
+                    onKeyPressContent.append("document.getElementById('");
+                    onKeyPressContent.append(searchPropertiesGroupTag.getSearchButtonTag().getName());
+                    onKeyPressContent.append("').click();");
+        
+                    onKeyPress = onKeyPressContent.toString();
                 }
                 else{
                     onKeyPressContent.append("document.");
@@ -1837,15 +1824,28 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                     onKeyPress = onKeyPressContent.toString();
                 }
             }
+            else{
+                onKeyPressContent.append("document.");
+                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(".");
+                onKeyPressContent.append(AttributeConstants.ACTION_KEY);
+                onKeyPressContent.append(".value = '");
+                onKeyPressContent.append(onKeyPressAction);
+                onKeyPressContent.append("'; submitForm(document.");
+                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(");");
+                
+                onKeyPress = onKeyPressContent.toString();
+            }
+        }
 
-            setOnBlur(onBlur);
-            setOnFocus(onFocus);
-            setOnClick(onClick);
-            setOnMouseOut(onMouseOut);
-            setOnMouseOver(onMouseOver);
-            setStyleClass(styleClass);
-            setStyle(style);
-		}
+        setOnBlur(onBlur);
+        setOnFocus(onFocus);
+        setOnClick(onClick);
+        setOnMouseOut(onMouseOut);
+        setOnMouseOver(onMouseOver);
+        setStyleClass(styleClass);
+        setStyle(style);
 	}
 	
 	/**

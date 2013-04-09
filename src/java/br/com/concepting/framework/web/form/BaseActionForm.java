@@ -1,8 +1,5 @@
 package br.com.concepting.framework.web.form;
 
-import java.util.Collection;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.ConstructorUtils;
@@ -26,78 +23,21 @@ import br.com.concepting.framework.web.form.util.ActionFormValidator;
  * @since 1.0
  */  
 public abstract class BaseActionForm extends ActionForm{
-	private String              name                      = "";
-	private String              lastAction                = "";
-	private String              action                    = "";
-	private String              forward                   = "";
-	private String              forwardOnFail             = "";
-	private String              updateViews               = "";
-	private Boolean             validateModel             = false;
-	private Boolean             validateSearchModel       = false;
-	private String              validateProperties        = "";
-	private BaseModel           model                     = null;
-	private BaseModel           searchModel               = null;
-	private FormFile            uploadData                = null;
-	private String              uploadDataProperty        = "";
-	private String              uploadFileNameProperty    = "";
-	private String              uploadContentTypeProperty = "";
-	private Collection<String>  languages                 = null;
-	private Map<String, String> languageMap               = null;
-    private Collection<String>  skins                     = null;
-    
-    /**
-     * Retorna o mapa de valores para uma lista de idiomas.
-     * 
-     * @return Instância contendo o mapa de valores.
-     */
-    public Map<String, String> getLanguageMap(){
-        return languageMap;
-    }
-    
-    /**
-     * Define o mapa de valores para uma lista de idiomas.
-     * 
-     * @param languageMap Instância contendo o mapa de valores.
-     */
-    public void setLanguageMap(Map<String, String> languageMap){
-        this.languageMap = languageMap;
-    }
-
-    /**
-     * Retorna a lista de idiomas disponíveis.
-     * 
-     * @return Lista contendo os idiomas.
-     */
-    public Collection<String> getLanguages(){
-        return languages;
-    }
-
-    /**
-     * Define a lista de idiomas disponíveis.
-     * 
-     * @param languages Lista contendo os idiomas.
-     */
-    public void setLanguages(Collection<String> languages){
-        this.languages = languages;
-    }
-
-    /**
-     * Retorna a lista de temas (skins) disponíveis.
-     * 
-     * @return Lista contendo os temas (skins).
-     */
-    public Collection<String> getSkins(){
-        return skins;
-    }
-
-    /**
-     * Define a lista de temas (skins) disponíveis.
-     * 
-     * @param skins Lista contendo os temas (skins).
-     */
-    public void setSkins(Collection<String> skins){
-        this.skins = skins;
-    }
+	private String    name                      = "";
+	private String    lastAction                = "";
+	private String    action                    = "";
+	private String    forward                   = "";
+	private String    forwardOnFail             = "";
+	private String    updateViews               = "";
+	private Boolean   validateModel             = false;
+	private Boolean   validateSearchModel       = false;
+	private String    validateProperties        = "";
+	private BaseModel model                     = null;
+	private BaseModel searchModel               = null;
+	private FormFile  uploadData                = null;
+	private String    uploadDataProperty        = "";
+	private String    uploadFileNameProperty    = "";
+	private String    uploadContentTypeProperty = "";
 
     /**
      * Retorna o identificador da propriedade do modelo de dados 

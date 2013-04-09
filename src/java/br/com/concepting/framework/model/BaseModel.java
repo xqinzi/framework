@@ -1,7 +1,6 @@
 package br.com.concepting.framework.model;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import org.apache.commons.beanutils.MethodUtils;
 
@@ -9,7 +8,6 @@ import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
-import br.com.concepting.framework.model.types.ValidationType;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.util.StringUtil;
@@ -25,58 +23,7 @@ import br.com.concepting.framework.util.helpers.Node;
 public abstract class BaseModel extends Node implements Comparable{
     @Property(useGroupSeparator=true, pattern="0.00")
 	private Double similarityAccuracy = 0.0;
-    
-    @Property(validations=ValidationType.REQUIRED)
-    private String currentSkin = "";
-    
-    @Property(validations=ValidationType.REQUIRED)
-    private String currentLanguage = "";
-	private String sortProperty    = "";
-	
-    /**
-     * Retorna o identificador do tema atual.
-     * 
-     * @return String contendo o identifcador do tema.
-     */
-    public String getCurrentSkin(){
-        return currentSkin;
-    }
-
-    /**
-     * Define o identificador do tema atual.
-     * 
-     * @param currentSkin String contendo o identifcador do tema.
-     */
-    public void setCurrentSkin(String currentSkin){
-        this.currentSkin = currentSkin;
-    }
-
-    /**
-     * Retorna o identificador do idioma atual.
-     * 
-     * @return String contendo o identifcador do idioma.
-     */
-    public String getCurrentLanguage(){
-        return currentLanguage;
-    }
-
-    /**
-     * Define o identificador do idioma atual.
-     * 
-     * @param currentLanguage String contendo o identifcador do idioma.
-     */
-    public void setCurrentLanguage(String currentLanguage){
-        this.currentLanguage = currentLanguage;
-    }
-    
-    /**
-     * Define o idioma atual.
-     * 
-     * @param currentLanguage Instância do idioma desejado.
-     */
-    public void setCurrentLanguage(Locale currentLanguage){
-        this.currentLanguage = currentLanguage.toString();
-    }
+	private String sortProperty       = "";
 
     /**
 	 * Retorna a porcentagem de similaridade do modelo de dados.

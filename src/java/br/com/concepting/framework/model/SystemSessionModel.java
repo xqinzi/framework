@@ -1,5 +1,7 @@
 package br.com.concepting.framework.model;
 
+import java.util.Locale;
+
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.types.ConditionType;
@@ -23,6 +25,28 @@ public class SystemSessionModel extends BaseModel{
     
     @Property(validations=ValidationType.REQUIRED, isForSearch=true, searchCondition=ConditionType.CONTEXT, contextSearchType=ContextSearchType.BOTH, caseSensitiveSearch=false)
     private String hostName = "";
+    
+    @Property(validations=ValidationType.REQUIRED)
+    private String currentSkin = "";
+    
+    @Property(validations=ValidationType.REQUIRED)
+    private Locale currentLanguage = null;
+    
+    public String getCurrentSkin(){
+        return currentSkin;
+    }
+
+    public void setCurrentSkin(String currentSkin){
+        this.currentSkin = currentSkin;
+    }
+
+    public Locale getCurrentLanguage(){
+        return currentLanguage;
+    }
+
+    public void setCurrentLanguage(Locale currentLanguage){
+        this.currentLanguage = currentLanguage;
+    }
 
     /**
      * Retorna o identificador da sessão.
