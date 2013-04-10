@@ -4891,10 +4891,6 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>onChangeAction</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
             <name>onChangeActionForward</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -5141,10 +5137,6 @@
         </attribute>
         <attribute>
             <name>onChange</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>onChangeAction</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>

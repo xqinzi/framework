@@ -147,6 +147,28 @@ public abstract class BaseAction extends DispatchAction{
 		
 		loadActionFormObjects();
 	}
+	
+	/**
+	 * Seleciona o idioma atual.
+	 * 
+	 * @throws Throwable
+	 */
+	public void changeCurrentLanguage() throws Throwable{
+	    String selectedLanguage = StringUtil.trim(systemController.getRequest().getParameter(AttributeConstants.CURRENT_LANGUAGE_KEY));
+	    
+	    systemController.setCurrentLanguage(selectedLanguage);	    
+	}
+
+    /**
+     * Seleciona o tema atual.
+     * 
+     * @throws Throwable
+     */
+    public void changeCurrentSkin() throws Throwable{
+        String selectedSkin = StringUtil.trim(systemController.getRequest().getParameter(AttributeConstants.CURRENT_SKIN_KEY));
+        
+        systemController.setCurrentSkin(selectedSkin);      
+    }
 
     /**
 	 * Método executado quando a ação atual foi cancelada.

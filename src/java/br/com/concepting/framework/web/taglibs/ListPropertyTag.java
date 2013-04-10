@@ -197,10 +197,9 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	protected void renderOptions() throws Throwable{
-	    PropertyInfo propertyInfo = getPropertyInfo();
-		List         dataValues   = getDataValues();
+		List dataValues = getDataValues();
 		
-    	if(propertyInfo != null && dataValues != null && dataValues.size() > 0)
+    	if(dataValues != null && dataValues.size() > 0)
     	    renderOptions(dataValues, null, "", 0);
 	}
 	
@@ -260,7 +259,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
     				optionTagLabelBuffer.append(StringUtil.replicate("-", level * 3));
     				optionTagLabelBuffer.append(" ");
     				
-    				if(!propertyInfo.getClass().equals(optionTagLabel.getClass()))
+    				if(propertyInfo == null || !propertyInfo.getClass().equals(optionTagLabel.getClass()))
     				    pattern = "";
     				else
     				    pattern = getPattern();
@@ -277,27 +276,29 @@ public class ListPropertyTag extends OptionsPropertyTag{
                         optionTag.setStyle(optionState.getStyle());
     				    optionTag.setStyleClass(optionState.getStyleClass());
     				}
-    
-    				if(propertyInfo.isModel() || propertyInfo.hasModel()){
-    					if(optionIndex.length() > 0)
-    						optionIndex.delete(0, optionIndex.length());
-    					
-    					if(index.length() > 0){
-    						optionIndex.append(index);
-    						optionIndex.append("_");
-    					}
-    
-    					optionIndex.append(cont1);
-    
-    					optionTag.setOptionIndex(optionIndex.toString());
+    				
+    				if(propertyInfo != null){
+        				if(propertyInfo.isModel() || propertyInfo.hasModel()){
+        					if(optionIndex.length() > 0)
+        						optionIndex.delete(0, optionIndex.length());
+        					
+        					if(index.length() > 0){
+        						optionIndex.append(index);
+        						optionIndex.append("_");
+        					}
+        
+        					optionIndex.append(cont1);
+        
+        					optionTag.setOptionIndex(optionIndex.toString());
+        				}
+                        else if(!propertyInfo.isEnum() && !propertyInfo.hasEnum()){
+                            try{
+                                option = PropertyUtil.getProperty(option, propertyInfo.getId());
+                            }
+                            catch(Throwable e){
+                            }
+                        }
     				}
-                    else if(!propertyInfo.isEnum() && !propertyInfo.hasEnum()){
-                        try{
-                            option = PropertyUtil.getProperty(option, propertyInfo.getId());
-                        }
-                        catch(Throwable e){
-                        }
-                    }
     				
     				optionTag.setOptionValue(option);
     				optionTag.setValue(value);

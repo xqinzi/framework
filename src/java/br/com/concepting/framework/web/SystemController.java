@@ -124,7 +124,7 @@ public class SystemController{
      */
 	public String getCurrentSkin(){
 	    String currentSkin = "";
-        Cookie cookie      = getCookie(AttributeConstants.CURRENT_LANGUAGE_KEY);
+        Cookie cookie      = getCookie(AttributeConstants.CURRENT_SKIN_KEY);
         
         if(cookie != null)
             currentSkin = cookie.getValue();

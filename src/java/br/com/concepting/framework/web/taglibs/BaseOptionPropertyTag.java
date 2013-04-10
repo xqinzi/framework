@@ -146,13 +146,12 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 		super.initialize();
 
 		PropertyInfo propertyInfo = getPropertyInfo();
-		
-		if(propertyInfo != null){
-            Object value = getValue();
-    
-            if(value != null){
-    	        Object optionValue = getOptionValue();
-    
+        Object       value        = getValue();
+
+        if(value != null){
+	        Object optionValue = getOptionValue();
+
+	        if(propertyInfo != null){
                 if(propertyInfo.isCollection()){
                     if(optionValue != null){
                         Collection values  = (Collection)value;
@@ -178,7 +177,9 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
                 }
     	        else
                     setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
-    		}
+	        }
+	        else
+	            setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
 		}
 	}
 

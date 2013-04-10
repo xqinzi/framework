@@ -79,7 +79,7 @@ public class LoginSessionListener implements HttpSessionListener{
         SecurityResourceLoader securityResourceLoader = new SecurityResourceLoader();
         SecurityResource       securityResource       = securityResourceLoader.getDefault();
         
-        systemController.getSession().setMaxInactiveInterval(securityResource.getSessionTimeout());
+        systemController.getSession().setMaxInactiveInterval(securityResource.getSessionTimeout() * 60);
     }
     
     /**
