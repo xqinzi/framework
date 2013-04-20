@@ -304,7 +304,8 @@ public class SystemController{
 		
 		if(cookies != null && cookies.length > 0)
 		    for(Cookie cookie : cookies)
-		        this.cookies.add(cookie);
+		        if(cookie != null)
+		            this.cookies.add(cookie);
 	}
 
 	/**
@@ -424,6 +425,30 @@ public class SystemController{
 	        }
 	    }
 	}
+	
+	/**
+	 * Remove um cookie.
+	 * 
+	 * @param name String contendo o identificador do cookie.
+	 */
+	public void removeCookie(String name){
+        HttpServletResponse response = getResponse();
+        
+        if(response != null){
+            Cookie cookie = getCookie(name);
+            
+            if(cookie != null){
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                cookie.setValue("");
+                
+                if(cookies != null && cookies.size() > 0)
+                    cookies.remove(cookie);
+                
+                response.addCookie(cookie);
+            }
+        }
+	}
 
 	/**
 	 * Retorna a instância contendo as propriedades de um cookie específico. 
@@ -434,7 +459,7 @@ public class SystemController{
 	public Cookie getCookie(String name){
 		if(cookies != null)
 			for(Cookie cookie : cookies)
-				if(cookie.getName().equals(name)) 
+				if(cookie != null && cookie.getName() != null && cookie.getName().equals(name)) 
 					return cookie;
 
 		return null;
