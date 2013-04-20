@@ -9,7 +9,20 @@ import org.apache.commons.net.util.SubnetUtils.SubnetInfo;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 
+/**
+ * Classe utilitária contendo rotinas para manipulação de serviços de rede.
+ * 
+ * @author fvilarinho
+ * @since 4.0
+ */
 public class NetworkUtil{
+    /**
+     * Indica se um IP está dentro de uma faixa de rede.
+     * 
+     * @param ip String contendo o IP desejado.
+     * @param expression String contendo a faixa de rede desejada..
+     * @return True/False.
+     */
     public static Boolean isIpMatches(String ip, String expression){
         if(expression.contains("/")){
             SubnetInfo info = new SubnetUtils(expression).getInfo();
