@@ -3,7 +3,7 @@ package br.com.concepting.framework.security.model;
 import java.util.List;
 
 import br.com.concepting.framework.model.BaseModel;
-import br.com.concepting.framework.model.HostModel;
+import br.com.concepting.framework.model.ExpressionModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.persistence.types.RelationType;
@@ -23,7 +23,7 @@ public class AccessListModel extends BaseModel{
     private String name = "";
     
     @Property(relationType=RelationType.MANY_TO_MANY, cascadeOnDelete=true, cascadeOnSave=true)
-    private List<HostModel> hosts = null;
+    private List<ExpressionModel> expressions = null;
     
     @Property
     private Boolean whitelist = false;
@@ -92,20 +92,20 @@ public class AccessListModel extends BaseModel{
     }
 
     /**
-     * Retorna a lista de hosts.
+     * Retorna as expressões da lista de acessos.
      * 
-     * @return Lista de hosts.
+     * @return Lista contendo as expressões.
      */
-    public <H extends HostModel> List<H> getHosts(){
-        return (List<H>)hosts;
+    public <E extends ExpressionModel> List<E> getExpressions(){
+        return (List<E>)expressions;
     }
 
     /**
-     * Define a lista de hosts.
+     * Define as expressões da lista de acessos.
      * 
-     * @param hosts Lista de hosts.
+     * @param expressions Lista contendo as expressões.
      */
-    public <H extends HostModel> void setHosts(List<H> hosts){
-        this.hosts = (List)hosts;
+    public <E extends ExpressionModel> void setExpressions(List<E> expressions){
+        this.expressions = (List)expressions;
     }
 }
