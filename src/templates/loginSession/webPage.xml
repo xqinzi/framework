@@ -57,12 +57,16 @@
 	                            			</c:when>
 	                            			<c:otherwise>
                                                 <concepting:guide name="input">
+                                                    <br/>
+                                                    <concepting:text name="user.name" enabled="${!@{actionFormObjectId}.model.rememberUserAndPassword}"/>
+                                                    <concepting:password name="user.password" size="15" enabled="${!@{actionFormObjectId}.model.rememberUserAndPassword}"/>
                                                     <center>
                                                         <br/>
-                                                        <concepting:text name="user.name" labelPosition="top"/>
-                                                        <concepting:password name="user.password" size="15" labelPosition="top"/>
-                                                        <br/>
-                                                        <concepting:link name="forgotPassword" onClickAction="loadForgotPassword"/>
+                                                        <concepting:check name="rememberUserAndPassword" onClickAction="rememberUserAndPassword" labelPosition="right"/>
+                                                        <c:if test="${!@{actionFormObjectId}.model.rememberUserAndPassword}">
+    	                                                    <br/>
+    	                                                    <concepting:link name="forgotPassword" onClickAction="loadForgotPassword"/>
+                                                        </c:if>
                                                         <br/><br/>
                                                         <concepting:confirmButton action="logIn" forward="index" validate="true"/>
                                                         <concepting:undoButton/>
