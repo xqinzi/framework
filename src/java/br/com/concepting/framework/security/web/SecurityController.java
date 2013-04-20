@@ -1,5 +1,7 @@
 package br.com.concepting.framework.security.web;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.beanutils.ConstructorUtils;
 
 import br.com.concepting.framework.model.SystemModuleModel;
@@ -14,6 +16,7 @@ import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.security.resource.SecurityResource;
 import br.com.concepting.framework.security.resource.SecurityResourceLoader;
+import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.types.ScopeType;
 
@@ -125,5 +128,62 @@ public class SecurityController{
      */
     public <L extends LoginSessionModel> void setLoginSession(L loginSession){
         systemController.setAttribute(SecurityConstants.LOGIN_SESSION_KEY, loginSession, ScopeType.SESSION);
+    }
+    
+    /**
+     * Retorna o nome do usuário marcado para ser lembrado.
+     * 
+     * @return String contendo o nome do usuário.
+     */
+    public String getRememberedUser(){
+        Cookie cookie = systemController.getCookie(SecurityConstants.REMEMBER_USER_AND_PASSWORD_KEY);
+        
+        if(cookie != null){
+            String value[] = StringUtil.split(StringUtil.trim(cookie.getValue()), "|");
+            
+            return value[0];
+        }
+        
+        return "";
+    }
+    
+    /**
+     * Retorna a senha do usuário marcado para ser lembrado.
+     * 
+     * @return String contendo a senha do usuário.
+     */
+    public String getRememberedPassword(){
+        Cookie cookie = systemController.getCookie(SecurityConstants.REMEMBER_USER_AND_PASSWORD_KEY);
+        
+        if(cookie != null){
+            String value[] = StringUtil.split(StringUtil.trim(cookie.getValue()), "|");
+            
+            if(value.length > 1)
+                return value[1];
+        }
+        
+        return "";
+    }
+
+    /**
+     * Efetua a marcação para lembrança de nome do usuário e senha.
+     *  
+     * @param user Instância contendo as informações do usuário.
+     */
+    public <U extends UserModel> void rememberUserAndPasword(U user){
+        if(user != null && user.getName().length() > 0){
+            String       userName = user.getName();
+            String       password = user.getPassword();
+            String       value    = userName.concat("|").concat(password);
+                
+            systemController.addCookie(SecurityConstants.REMEMBER_USER_AND_PASSWORD_KEY, value, true);
+        }
+    }
+    
+    /**
+     * Esquece as informações de nome de usuário e senha marcados anteriormente para serem lembrados.
+     */
+    public void forgetUserAndPassword(){
+        systemController.removeCookie(SecurityConstants.REMEMBER_USER_AND_PASSWORD_KEY);
     }
 }
