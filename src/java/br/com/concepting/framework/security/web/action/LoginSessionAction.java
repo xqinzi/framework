@@ -128,7 +128,7 @@ public class LoginSessionAction extends BaseAction{
             UserModel user = loginSession.getUser();
             
             if(user != null && user.getName().length() > 0)
-                securityController.rememberUserAndPasword(loginSession);
+                securityController.rememberUserAndPasword(user);
             else{
                 loginSession.setRememberUserAndPassword(false);
                 
