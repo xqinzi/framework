@@ -11,8 +11,6 @@ import org.apache.struts.taglib.html.HtmlTag;
 
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
-import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.SystemController;
@@ -182,10 +180,7 @@ public class PageTag extends HtmlTag{
                 out.println(";\"></div>");
     		}
     		catch(Throwable e){
-                if(!ExceptionUtil.isExpectedException(e) && !ExceptionUtil.isInternalErrorException(e))
-                    systemController.forward(new InternalErrorException(e));
-                else
-                    systemController.forward(e);
+    		    systemController.setCurrentException(e);
     		}
 		}
 		
