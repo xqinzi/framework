@@ -51,7 +51,7 @@ public class MailMessage extends Message{
 	 */
 	public void setContentType(String contentType){
 		if(contentType.length() > 0)
-			this.contentType = ContentType.valueOf(contentType.toUpperCase());
+	        this.contentType = ContentType.toContentType(contentType);
 		else
 			this.contentType = ContentType.HTML;
 	}
