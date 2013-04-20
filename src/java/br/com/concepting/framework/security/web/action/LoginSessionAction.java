@@ -6,6 +6,7 @@ import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.security.service.interfaces.LoginSessionService;
 import br.com.concepting.framework.security.web.form.LoginSessionActionForm;
 import br.com.concepting.framework.web.action.BaseAction;
+import br.com.concepting.framework.web.helpers.RequestInfo;
 
 /**
  * Classe que define as ações do login de um usuário.
@@ -135,7 +136,10 @@ public class LoginSessionAction extends BaseAction{
                 actionForm.setModel(loginSession);
                 
                 securityController.forgetUserAndPassword();
-                actionFormMessageController.addValidationRequiredMessage("user.name");
+                
+                RequestInfo requestInfo = systemController.getRequestInfo("user.name");
+                
+                actionFormMessageController.addValidationRequiredMessage(requestInfo.getName(), requestInfo.getLabel());
             }
         }
         else
