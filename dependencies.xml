@@ -25,6 +25,7 @@
 	<dependency source="${APACHE_COMMONS_HOME}/lib/commons-javaflow.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${APACHE_COMMONS_HOME}/lib/commons-jexl.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${APACHE_COMMONS_HOME}/lib/commons-logging.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
+    <dependency source="${APACHE_COMMONS_HOME}/lib/commons-net.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${APACHE_COMMONS_HOME}/lib/commons-secondstring.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${APACHE_COMMONS_HOME}/lib/commons-validator.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${APACHE_COMMONS_HOME}/lib/commons-vfs.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
