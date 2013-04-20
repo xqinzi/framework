@@ -9,6 +9,9 @@
 	
 	lastLogin.label=Último login
 	lastLogin.tooltip=
+    
+    rememberUserAndPassword.label=Lembrar senha?
+    rememberUserAndPassword.tooltip=
 	
 	user.name.label=Usuário
 	user.name.tooltip=
