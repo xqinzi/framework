@@ -6,10 +6,11 @@ import java.util.Collection;
 import java.util.List;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.model.HostModel;
+import br.com.concepting.framework.model.ExpressionModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
+import br.com.concepting.framework.network.util.NetworkUtil;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.security.exceptions.ExpiredPasswordException;
 import br.com.concepting.framework.security.exceptions.InvalidPasswordException;
@@ -41,11 +42,11 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
     /**
      * @see br.com.concepting.framework.security.service.interfaces.LoginSessionService#logIn(br.com.concepting.framework.security.model.LoginSessionModel)
      */
-	public <L extends LoginSessionModel, U extends UserModel, S extends SystemModuleModel, SS extends SystemSessionModel, LP extends LoginParametersModel, A extends AccessListModel, H extends HostModel> void logIn(L loginSession) throws UserNotFoundException, UserBlockedException, InvalidPasswordException, InternalErrorException, UserAlreadyLoggedInException, PermissionDeniedException, ExpiredPasswordException, PasswordWillExpireException{
+	public <L extends LoginSessionModel> void logIn(L loginSession) throws UserNotFoundException, UserBlockedException, InvalidPasswordException, InternalErrorException, UserAlreadyLoggedInException, PermissionDeniedException, ExpiredPasswordException, PasswordWillExpireException{
 	    if(loginSession != null){
 	        loginSession.setId(null);
 	        
-	        U user = loginSession.getUser();
+	        UserModel user = loginSession.getUser();
 	        
             user.setId(null);
             user.setActive(null);
@@ -53,7 +54,7 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
             IDAO userDao = getPersistence(user.getClass());
 
             try{
-	            Collection<U> users = userDao.search(user);
+	            Collection<UserModel> users = userDao.search(user);
             
                 if(users == null || users.size() == 0)
                 	throw new UserNotFoundException();
@@ -81,42 +82,42 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
             
                 user = userDao.loadReference(user, "loginParameters");
                 
-                SS      systemSession      = loginSession.getSystemSession();
-                String  ip                 = systemSession.getIp();
-                LP      loginParameters    = user.getLoginParameters();
-                Boolean expiredPassword    = false;
-                Boolean passwordWillExpire = false;
-                Integer daysUntilExpire    = 0;
+                SystemSessionModel   systemSession      = loginSession.getSystemSession();
+                String               ip                 = systemSession.getIp();
+                LoginParametersModel loginParameters    = user.getLoginParameters();
+                Boolean              expiredPassword    = false;
+                Boolean              passwordWillExpire = false;
+                Integer              daysUntilExpire    = 0;
                 
                 if(loginParameters != null){
                     IDAO loginParametersDao = getPersistence(loginParameters.getClass());
                     
                     loginParameters = loginParametersDao.loadReference(loginParameters, "accessLists");
                     
-                    List<A> accessLists = loginParameters.getAccessLists();
+                    List<AccessListModel> accessLists = loginParameters.getAccessLists();
                     
                     if(accessLists != null && accessLists.size() > 0){
-                        IDAO    accessListDao = getPersistence(accessLists.iterator().next().getClass());
-                        List<H> hosts         = null;
-                        Boolean found         = false;
+                        IDAO                  accessListDao = getPersistence(accessLists.iterator().next().getClass());
+                        List<ExpressionModel> expressions   = null;
+                        Boolean               found         = false;
                         
-                        for(A accessList : accessLists){
-                            accessList = accessListDao.loadReference(accessList, "hosts");
-                            hosts      = accessList.getHosts();
-                            found      = true;
+                        for(AccessListModel accessList : accessLists){
+                            accessList  = accessListDao.loadReference(accessList, "hosts");
+                            expressions = accessList.getExpressions();
+                            found       = true;
                             
                             if(!accessList.getWhitelist()){
-                                if(hosts != null && hosts.size() > 0){
-                                    for(H host : hosts){
-                                        if(ip.equals(host.getIp()))
+                                if(expressions != null && expressions.size() > 0){
+                                    for(ExpressionModel expression : expressions){
+                                        if(NetworkUtil.isIpMatches(ip, expression.getValue()))
                                             throw new PermissionDeniedException();
                                     }
                                 }
                             }
                             else{
-                                if(hosts != null && hosts.size() > 0){
-                                    for(H host : hosts){
-                                        if(ip.equals(host.getIp())){
+                                if(expressions != null && expressions.size() > 0){
+                                    for(ExpressionModel expression : expressions){
+                                        if(NetworkUtil.isIpMatches(ip, expression.getValue())){
                                             found = true;
                                             
                                             break;
@@ -182,7 +183,7 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                 loginSession.setUser(user);
 
                 if(!user.isSuperUser()){
-                    S systemModule = loginSession.getSystemModule();
+                    SystemModuleModel systemModule = loginSession.getSystemModule();
             
                     if(!user.hasPermission(systemModule))
                         throw new PermissionDeniedException();
@@ -219,11 +220,11 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
 	/**
 	 * @see br.com.concepting.framework.security.service.interfaces.LoginSessionService#changePassword(br.com.concepting.framework.security.model.LoginSessionModel)
 	 */
-    public <L extends LoginSessionModel, U extends UserModel> void changePassword(L loginSession) throws PasswordsNotMatchException, InternalErrorException{
+    public <L extends LoginSessionModel> void changePassword(L loginSession) throws PasswordsNotMatchException, InternalErrorException{
         if(loginSession != null && loginSession.getId() != null && loginSession.getId() > 0){
-            U      user            = loginSession.getUser();
-            String newPassword     = user.getNewPassword();
-            String confirmPassword = user.getConfirmPassword();
+            UserModel user            = loginSession.getUser();
+            String    newPassword     = user.getNewPassword();
+            String    confirmPassword = user.getConfirmPassword();
             
             user = loginSession.getUser();
             
@@ -293,11 +294,11 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
 	/**
 	 * @see br.com.concepting.framework.security.service.interfaces.LoginSessionService#sendForgottenPassword(br.com.concepting.framework.security.model.LoginSessionModel)
 	 */
-    public <L extends LoginSessionModel, U extends UserModel> void sendForgottenPassword(L loginSession) throws UserNotFoundException, UserBlockedException, InternalErrorException, RemoteException{
+    public <L extends LoginSessionModel> void sendForgottenPassword(L loginSession) throws UserNotFoundException, UserBlockedException, InternalErrorException, RemoteException{
         if(loginSession != null){
-            U       user  = loginSession.getUser();
-            IDAO    dao   = getPersistence(user.getClass());
-            List<U> users = dao.search(user);
+            UserModel       user  = loginSession.getUser();
+            IDAO            dao   = getPersistence(user.getClass());
+            List<UserModel> users = dao.search(user);
             
             if(users == null || users.size() == 0)
                 throw new UserNotFoundException();
