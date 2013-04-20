@@ -24,6 +24,17 @@ public class LoginSessionAction extends BaseAction{
         
         LoginSessionActionForm actionForm   = getActionForm();
         LoginSessionModel      loginSession = securityController.getLoginSession();
+        UserModel              user         = loginSession.getUser();
+        
+        user.setName(securityController.getRememberedUser());
+        user.setPassword(securityController.getRememberedPassword());
+        
+        if(user.getName().length() > 0)
+            loginSession.setRememberUserAndPassword(true);
+        else
+            loginSession.setRememberUserAndPassword(false);
+        
+        loginSession.setUser(user);
         
         actionForm.setModel(loginSession);
     }
@@ -103,7 +114,39 @@ public class LoginSessionAction extends BaseAction{
 
         actionForm.setModel(loginSession);
 	}
+	
+	/**
+	 * Lembra o usuário e senha do usuário.
+	 * 
+	 * @throws Throwable
+	 */
+    public void rememberUserAndPassword() throws Throwable{
+        LoginSessionActionForm actionForm   = getActionForm();
+        LoginSessionModel      loginSession = actionForm.getModel();
+
+        if(loginSession.rememberUserAndPassword()){
+            UserModel user = loginSession.getUser();
+            
+            if(user != null && user.getName().length() > 0)
+                securityController.rememberUserAndPasword(loginSession);
+            else{
+                loginSession.setRememberUserAndPassword(false);
+                
+                actionForm.setModel(loginSession);
+                
+                securityController.forgetUserAndPassword();
+                actionFormMessageController.addValidationRequiredMessage("user.name");
+            }
+        }
+        else
+            securityController.forgetUserAndPassword();
+    }
     
+    /**
+     * Carrega formulário para envio de senha perdida.
+     * 
+     * @throws Throwable
+     */
     public void loadForgotPassword() throws Throwable{
         LoginSessionActionForm actionForm   = getActionForm();
         LoginSessionModel      loginSession = actionForm.getModel();
@@ -116,6 +159,11 @@ public class LoginSessionAction extends BaseAction{
         actionForm.setModel(loginSession);
     }
     
+    /**
+     * Envia para o usuário a sua senha perdida.
+     * 
+     * @throws Throwable
+     */
     public void sendForgottenPassword() throws Throwable{
         LoginSessionActionForm actionForm   = getActionForm();
         LoginSessionModel      loginSession = actionForm.getModel();
