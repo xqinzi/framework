@@ -70,28 +70,64 @@ public enum ContentType{
 	/**
 	 * Constante que define o tipo de conteúdo para imagens no formato GIF.
 	 */
-	GIF("image/gif", "GIF Image", ".gif");
+	GIF("image/gif", "GIF Image", ".gif"),
+	
+    /**
+     * Constante que define o tipo de conteúdo para anexos.
+     */
+	MULTIPART_ALTERNATIVE("multipart/alternative"),
 
-	private String mimeType  = "";
+    /**
+     * Constante que define o tipo de conteúdo para anexos.
+     */
+    MULTIPART_RELATED("multipart/related"),
+	
+    /**
+     * Constante que define o tipo de conteúdo para anexos.
+     */
+	MULTIPART_MIXED("multipart/mixed");
+
+    private String mimeType  = "";
 	private String title     = "";
 	private String extension = "";
 
-	/**
+    /**
+     * Construtor - Define o valor da constante.
+     * 
+     * @param mimeType String contendo o valor desejado.
+     */
+    private ContentType(String mimeType){
+        setMimeType(mimeType);
+    }
+
+    /**
 	 * Construtor - Define o valor da constante.
 	 * 
 	 * @param mimeType String contendo o valor desejado.
+     * @param title Sttring contendo o título.
 	 * @param extension String contendo a extensão.
 	 */
 	private ContentType(String mimeType, String title, String extension){
-		setMimeType(mimeType);
+	    this(mimeType);
+
 		setTitle(title);
 		setExtension(extension);
 	}
 	
+	/**
+	 * Retorna o identificador do mime type.
+	 * 
+	 * @return String contendo o identificador do mime type.
+	 */
 	public String getMimeType(){
         return mimeType;
     }
 
+    /**
+     * Define o identificador do mime type.
+     * 
+     * @param mimeType String contendo o identificador do mime type.
+     */
 	public void setMimeType(String mimeType){
         this.mimeType = mimeType;
     }
@@ -130,5 +166,27 @@ public enum ContentType{
 	 */
 	public void setExtension(String extension){
 		this.extension = extension;
+	}
+	
+	/**
+	 * Retorna a constante do tipo de conteúdo baseado em uma string.
+	 * 
+	 * @param contentType Constante do tipo de conteúdo.
+	 * @return String desejada.
+	 */
+	public static ContentType toContentType(String contentType){
+	    if(contentType == null)
+	        throw new IllegalArgumentException();
+	    
+	    Integer pos = contentType.indexOf(";");
+	    
+	    if(pos >= 0)
+	        contentType = contentType.substring(0, pos);
+	    
+	    for(ContentType constant : values())
+	        if(constant.getMimeType().toLowerCase().equals(contentType.toLowerCase()))
+	            return constant;
+	    
+	    return valueOf(contentType.toUpperCase());
 	}
 }
