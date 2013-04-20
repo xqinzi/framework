@@ -32,6 +32,36 @@ public class LoginSessionModel extends BaseModel{
 	@Property(relationType = RelationType.ONE_TO_ONE)
 	private SystemModuleModel systemModule = null;
 	
+	@Property
+	private Boolean rememberUserAndPassword = false;
+
+	/**
+	 * Indica se o usuário e senha devem ser lembrados no login.
+	 * 
+	 * @return True/False.
+	 */
+    public Boolean rememberUserAndPassword(){
+        return rememberUserAndPassword;
+    }
+
+    /**
+     * Indica se o usuário e senha devem ser lembrados no login.
+     * 
+     * @return True/False.
+     */
+    public Boolean getRememberUserAndPassword(){
+        return rememberUserAndPassword();
+    }
+
+    /**
+     * Define se o usuário e senha deve ser lembrado no login.
+     * 
+     * @param rememberUserAndPassword True/False.
+     */
+    public void setRememberUserAndPassword(Boolean rememberUserAndPassword){
+        this.rememberUserAndPassword = rememberUserAndPassword;
+    }
+
     /**
      * Retorna a instância do modelo de dados que armazena os dados da sessão do sistema.
      * 
