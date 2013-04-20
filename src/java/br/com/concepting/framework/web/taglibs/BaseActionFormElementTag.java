@@ -1205,7 +1205,9 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	protected void renderLabelBody() throws Throwable{
 	    if(label != null && label.length() > 0){
     		print(label);
-    		print(":&nbsp;");
+    		
+    		if(getLabelPositionType() != PositionType.RIGHT)
+    		    print(":&nbsp;");
 	    }
 	}
 
