@@ -4,9 +4,6 @@ import java.rmi.RemoteException;
 
 import br.com.concepting.framework.audit.annotations.Auditable;
 import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.model.HostModel;
-import br.com.concepting.framework.model.SystemModuleModel;
-import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.security.exceptions.ExpiredPasswordException;
 import br.com.concepting.framework.security.exceptions.InvalidPasswordException;
 import br.com.concepting.framework.security.exceptions.PasswordWillExpireException;
@@ -15,10 +12,7 @@ import br.com.concepting.framework.security.exceptions.PermissionDeniedException
 import br.com.concepting.framework.security.exceptions.UserAlreadyLoggedInException;
 import br.com.concepting.framework.security.exceptions.UserBlockedException;
 import br.com.concepting.framework.security.exceptions.UserNotFoundException;
-import br.com.concepting.framework.security.model.AccessListModel;
-import br.com.concepting.framework.security.model.LoginParametersModel;
 import br.com.concepting.framework.security.model.LoginSessionModel;
-import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.service.annotations.ServiceTransaction;
 import br.com.concepting.framework.service.interfaces.IService;
 
@@ -33,7 +27,7 @@ import br.com.concepting.framework.service.interfaces.IService;
 public interface LoginSessionService extends IService{
     @Auditable
     @ServiceTransaction
-    public <L extends LoginSessionModel, U extends UserModel> void sendForgottenPassword(L loginSession) throws UserNotFoundException, UserBlockedException, InternalErrorException, RemoteException;
+    public <L extends LoginSessionModel> void sendForgottenPassword(L loginSession) throws UserNotFoundException, UserBlockedException, InternalErrorException, RemoteException;
     
     /**
      * Efetua o login do usuário.
@@ -51,7 +45,7 @@ public interface LoginSessionService extends IService{
      */
 	@Auditable
     @ServiceTransaction 
-	public <L extends LoginSessionModel, U extends UserModel, S extends SystemModuleModel, SS extends SystemSessionModel, LP extends LoginParametersModel, A extends AccessListModel, H extends HostModel> void logIn(L loginSession) throws UserAlreadyLoggedInException, UserNotFoundException, UserBlockedException, ExpiredPasswordException, PasswordWillExpireException, InvalidPasswordException, PermissionDeniedException, InternalErrorException, RemoteException;
+	public <L extends LoginSessionModel> void logIn(L loginSession) throws UserAlreadyLoggedInException, UserNotFoundException, UserBlockedException, ExpiredPasswordException, PasswordWillExpireException, InvalidPasswordException, PermissionDeniedException, InternalErrorException, RemoteException;
 	
 	/**
 	 * Efetua a mudança de senha do usuário.
@@ -63,7 +57,7 @@ public interface LoginSessionService extends IService{
 	 */
 	@Auditable
     @ServiceTransaction
-	public <L extends LoginSessionModel, U extends UserModel> void changePassword(L loginSession) throws PasswordsNotMatchException, InternalErrorException, RemoteException;
+	public <L extends LoginSessionModel> void changePassword(L loginSession) throws PasswordsNotMatchException, InternalErrorException, RemoteException;
 
 	/**
 	 * Efetua o logout do usuário.
