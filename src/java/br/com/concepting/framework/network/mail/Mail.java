@@ -37,6 +37,7 @@ import br.com.concepting.framework.network.mail.types.MailStorageType;
 import br.com.concepting.framework.network.mail.types.MailTransportType;
 import br.com.concepting.framework.util.ByteUtil;
 import br.com.concepting.framework.util.FileUtil;
+import br.com.concepting.framework.util.StringUtil;
 
 /** 
  * Classe responsável pela envio/recebimento de mensagens de e-Mail.
@@ -77,7 +78,7 @@ public class Mail{
 		Boolean    storageSet   = false;
 
 		if(mailResource.getTransport() == MailTransportType.SMTP){
-			properties.setProperty("mail.transport.protocol", MailTransportType.SMTP.toString());
+			properties.setProperty("mail.transport.protocol", MailTransportType.SMTP.toString().toLowerCase());
 			properties.setProperty("mail.smtp.host", mailResource.getServerName());
 			properties.setProperty("mail.smtp.localhost", mailResource.getServerName());
 			properties.setProperty("mail.smtp.port", String.valueOf(mailResource.getTransportPort()));
@@ -97,7 +98,7 @@ public class Mail{
 		}
 
 		if(mailResource.getStorage() == MailStorageType.POP3){
-			properties.setProperty("mail.store.protocol", MailStorageType.POP3.toString());
+			properties.setProperty("mail.store.protocol", MailStorageType.POP3.toString().toLowerCase());
 			properties.setProperty("mail.pop3.host", mailResource.getServerName());
 			properties.setProperty("mail.pop3.port", String.valueOf(mailResource.getStoragePort()));
 			
@@ -112,7 +113,7 @@ public class Mail{
 			storageSet = true;
 		}
 		else if(mailResource.getStorage() == MailStorageType.IMAP){
-			properties.setProperty("mail.store.protocol", MailStorageType.IMAP.toString());
+			properties.setProperty("mail.store.protocol", MailStorageType.IMAP.toString().toLowerCase());
 			properties.setProperty("mail.imap.host", mailResource.getServerName());
 			properties.setProperty("mail.imap.port", String.valueOf(mailResource.getStoragePort()));
 
@@ -231,7 +232,7 @@ public class Mail{
 
 			for(Map<String, Object> attach : message.getAttachments()){
 				attachPart  = new MimeBodyPart();
-				fileName    = (String)attach.get("fileName");
+				fileName    = StringUtil.trim(attach.get("fileName"));
 				fileContent = attach.get("fileContent");
 				fileBinary  = (Boolean)attach.get("fileBinary");
 
@@ -239,19 +240,24 @@ public class Mail{
 					attachData = fileContent.toString().getBytes();
 				else 
 					attachData = (byte[])fileContent;
-
-				FileUtil.toBinaryFile(fileName, attachData);
-
-				file = new File(fileName);
-				if(file.exists()){
-					handler = new FileDataSource(file);
-
-					attachPart.setDataHandler(new DataHandler(handler));
-					attachPart.setFileName(handler.getName());
-
-					parts.addBodyPart(attachPart);
-
-					attachments.add(file);
+				
+				if(attachData != null && attachData.length > 0){
+    				if(fileName.length() == 0)
+    				    fileName = "attachment";
+    				
+    				FileUtil.toBinaryFile(fileName, attachData);
+    
+    				file = new File(fileName);
+    				if(file.exists()){
+    					handler = new FileDataSource(file);
+    
+    					attachPart.setDataHandler(new DataHandler(handler));
+    					attachPart.setFileName(handler.getName());
+    
+    					parts.addBodyPart(attachPart);
+    
+    					attachments.add(file);
+    				}
 				}
 			}
 		}
@@ -388,6 +394,7 @@ public class Mail{
 				storage.connect(mailResource.getServerName(), mailResource.getUser(), mailResource.getPassword());
 
 			folder = storage.getFolder(folderName);
+
 			folder.open(Folder.READ_ONLY);
 
 			message = folder.getMessage(messageNumber);
@@ -420,14 +427,15 @@ public class Mail{
 			storage.connect(mailResource.getServerName(), mailResource.getUser(), mailResource.getPassword());
 
 			folder = storage.getFolder(folderName);
-			folder.open(Folder.READ_ONLY);
+			
+            folder.open(Folder.READ_ONLY);
 
-			messages = folder.getMessages();
+            messages = folder.getMessages();
 
 			for(Message message : messages){
 				mailMessage = buildMessage(message);
 
-				mailMessages.add(mailMessage);
+                mailMessages.add(mailMessage);
 			}
 
 			return mailMessages;
