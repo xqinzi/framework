@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Locale;
 
 import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
 import br.com.concepting.framework.processors.ExpressionProcessorUtil;
+import br.com.concepting.framework.resource.PropertiesResource;
+import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.helpers.Node;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
@@ -19,6 +23,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class OptionsPropertyTag extends BaseOptionsPropertyTag{
+    private String  optionResourceId                 = "";
 	private Integer optionsPerRow                    = 0;
 	private String  optionLabelStyle                 = "";
 	private String  optionLabelStyleClass            = "";
@@ -31,6 +36,24 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     private Boolean onSelectActionValidate           = false;
     private String  onSelectActionValidateProperties = "";
     
+    /**
+     * Retorna o identificador da propriedade para o label da opção.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
+    public String getOptionResourceId(){
+        return optionResourceId;
+    }
+
+    /**
+     * Define o identificador da propriedade para o label da opção.
+     * 
+     * @param optionResourceId String contendo o identificador da propriedade.
+     */
+    public void setOptionResourceId(String optionResourceId){
+        this.optionResourceId = optionResourceId;
+    }
+
     /**
      * Retorna o identificador da ação do evento de seleção.
      * 
@@ -510,7 +533,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     	List dataValues = getDataValues();
 
         if(dataValues != null && dataValues.size() > 0)
-            renderOptions(dataValues);
+            renderOptions(dataValues, null, "", 0);
 	}
 
 	/**
@@ -519,19 +542,31 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 	 * @param options Lista contendo as instâncias das opções de seleção.
 	 * @throws Throwable
 	 */
-	private void renderOptions(List options) throws Throwable{
-        Locale                currentLanguage     = systemController.getCurrentLanguage();
-        PropertyInfo          propertyInfo        = getPropertyInfo();
-        String                pattern             = getPattern();
-	    Object                value               = getValue();
-		Object                option              = null;
-		String                optionOnSelect      = "";
-		BaseOptionPropertyTag optionTag           = null;
-		Object                optionTagLabel      = null;
-		OptionStateTag        optionState         = null;
-		List<OptionStateTag>  optionsStates       = getOptionStates();
-		Integer               optionsPerRowCont   = 1;
-		String                expression          = "";
+    protected void renderOptions(List options, Object parent, String index, Integer level) throws Throwable{
+        Locale                currentLanguage         = systemController.getCurrentLanguage();
+        PropertyInfo          propertyInfo            = getPropertyInfo();
+	    Object                value                   = getValue();
+		Object                option                  = null;
+		String                optionOnSelect          = "";
+		BaseOptionPropertyTag optionTag               = null;
+		Object                optionTagLabel          = null;
+		StringBuilder         optionTagLabelBuffer    = new StringBuilder();
+        PropertyInfo          optionLabelPropertyInfo = null;
+        StringBuilder         optionIndex             = new StringBuilder();
+		OptionStateTag        optionState             = null;
+		Boolean               optionPerRowReached     = false;
+        List                  optionChilds            = null;
+		List<OptionStateTag>  optionsStates           = getOptionStates();
+		Integer               optionsPerRowCont       = 1;
+        PropertiesResource    resources               = null;
+        
+        if(optionResourceId.length() > 0)
+            resources = getI18nResource(optionResourceId);
+        else
+            resources = getI18nResource();
+        
+        PropertiesResource    defaultResources    = getDefaultI18nResource();
+        String                expression          = "";
 		Boolean               expressionResult    = false;
 		ExpressionProcessor   expressionProcessor = getExpressionProcessor();
 
@@ -561,17 +596,47 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 			if(optionState == null || !optionState.remove()){
     			println("<td>");
     
-    			if(getOptionLabelProperty().length() > 0)
-    				optionTagLabel = PropertyUtil.getProperty(option, getOptionLabelProperty());
-    			else
-    				optionTagLabel = option;
-    			
-                if(!propertyInfo.getClass().equals(optionTagLabel.getClass()))
-                    pattern = "";
-                else
-                    pattern = getPattern();
+                if(optionLabelProperty.length() > 0){
+                    optionLabelPropertyInfo = PropertyUtil.getPropertyInfo(option.getClass(), optionLabelProperty);
+                    
+                    if(optionLabelPropertyInfo != null){
+                        optionTagLabel = PropertyUtil.getProperty(option, optionLabelProperty);
+                        optionTagLabel = PropertyUtil.format(optionTagLabel, getValueMapInstance(), optionLabelPropertyInfo.getPattern(), optionLabelPropertyInfo.useAdditionalFormatting(), optionLabelPropertyInfo.getPrecision(), currentLanguage);
+                    }
+                    else{
+                        if(propertyInfo != null && (propertyInfo.isModel() || propertyInfo.hasModel()))
+                            optionTagLabel = option.toString();
+                        else
+                            optionTagLabel = PropertyUtil.format(option.toString(), getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
+                    }
+                }
+                else{
+                    if(propertyInfo != null && (propertyInfo.isModel() || propertyInfo.hasModel()))
+                        optionTagLabel = option.toString();
+                    else
+                        optionTagLabel = PropertyUtil.format(option.toString(), getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
+                }
                 
-                optionTagLabel = PropertyUtil.format(optionTagLabel, getValueMapInstance(), pattern, useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage());
+                if(option instanceof ObjectModel && StringUtil.trim(optionTagLabel).length() == 0){
+                    if(((ObjectModel)option).getType() == ComponentType.MENU_ITEM_SEPARATOR)
+                        optionTagLabel = "&nbsp;";
+                    else{
+                        optionTagLabel = resources.getProperty(((ObjectModel)option).getName().concat(".").concat(AttributeConstants.LABEL_KEY), false);
+                        
+                        if(optionTagLabel == null)
+                            optionTagLabel = defaultResources.getProperty(((ObjectModel)option).getName().concat(".").concat(AttributeConstants.LABEL_KEY), false);
+                        
+                        if(optionTagLabel == null)
+                            optionTagLabel = ((ObjectModel)option).getName();
+                    }
+                }
+
+                if(optionTagLabelBuffer.length() > 0)
+                    optionTagLabelBuffer.delete(0, optionTagLabelBuffer.length());
+                
+                optionTagLabelBuffer.append(StringUtil.replicate("-", level * 3));
+                optionTagLabelBuffer.append(" ");
+                optionTagLabelBuffer.append(optionTagLabel);
     
     			if(propertyInfo.isCollection())
     				optionTag = new CheckPropertyTag();
@@ -587,17 +652,24 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                     optionTag.setLabelStyle(optionState.getStyle());
                     optionTag.setLabelStyleClass(optionState.getStyleClass());
                 }
-                else
+                else{
                     optionTag.setLabelStyle(optionLabelStyle);
                     optionTag.setLabelStyleClass(optionLabelStyleClass);
+                }
+                    
+                if(propertyInfo != null){
+                    if(propertyInfo.isModel() || propertyInfo.hasModel()){
+                        if(optionIndex.length() > 0)
+                            optionIndex.delete(0, optionIndex.length());
+                        
+                        if(index.length() > 0){
+                            optionIndex.append(index);
+                            optionIndex.append("_");
+                        }
     
-                if(propertyInfo.isModel() || propertyInfo.hasModel())
-                    optionTag.setOptionIndex(cont1);
-                else if(!propertyInfo.isEnum() && !propertyInfo.hasEnum()){
-                    try{
-                        option = PropertyUtil.getProperty(option, propertyInfo.getId());
-                    }
-                    catch(Throwable e){
+                        optionIndex.append(cont1);
+    
+                        optionTag.setOptionIndex(optionIndex.toString());
                     }
                 }
                 
@@ -625,9 +697,31 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     				println("<tr>");
     				
     				optionsPerRowCont = 1;
+    				
+    				optionPerRowReached = true;
     			}
-    			else
+    			else{
     				optionsPerRowCont++;
+    				
+    				optionPerRowReached = false;
+    			}
+    			
+                if(option instanceof Node){
+                    if(((Node)option).hasChildNodes()){
+                        println("<td>");
+                        
+                        optionChilds = ((Node)option).getChildNodes();
+
+                        renderOptions(optionChilds, option, optionIndex.toString(), level + 1);
+                        
+                        println("</td>");
+                        
+                        if(optionPerRowReached){
+                            println("</tr>");
+                            println("<tr>");
+                        }
+                    }
+                }
 			}
 		}
 
@@ -641,6 +735,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     protected void clearAttributes(){
     	super.clearAttributes();
 
+    	setOptionResourceId("");
 	    setOptionsPerRow(0);
 	    setOptionLabelStyle("");
         setOptionLabelStyleClass("");
