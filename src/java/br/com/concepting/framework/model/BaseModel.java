@@ -144,13 +144,19 @@ public abstract class BaseModel extends Node implements Comparable{
      						try{
      							value        = PropertyUtil.getProperty(this, identityInfo.getId());
      							compareValue = PropertyUtil.getProperty(compareModel, identityInfo.getId());
-     
-     							if(value == null && compareValue == null)
-     								compareFlag = true;
-     							else if(value == null && compareValue != null)
-     								compareFlag = false;
-                                else if(value != null && compareValue != null)
-     								compareFlag = value.equals(compareValue);
+
+     							if(value != null && compareValue != null){
+     							    if(identityInfo.isNumber()){
+     							        if(((Number)value).intValue() > 0 || ((Number)compareValue).intValue() > 0)
+     							           compareFlag = value.equals(compareValue);
+     							    }
+ 							        else if(identityInfo.isString()){
+ 							            if(StringUtil.trim(value).length() > 0 || StringUtil.trim(compareValue).length() > 0)
+ 							                compareFlag = value.equals(compareValue);
+ 							        }
+ 							        else
+ 							            compareFlag = value.equals(compareValue);
+     							}
      						}
      						catch(Throwable e){
      							compareFlag = false;
