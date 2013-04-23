@@ -127,6 +127,14 @@
             <name>renderWhenAuthenticated</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <name>showFileName</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>showContentSize</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
     <tag>
         <name>uploadBox</name>
@@ -179,6 +187,14 @@
         </attribute>
         <attribute>
             <name>renderWhenAuthenticated</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>showFileName</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>showContentSize</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
@@ -4463,6 +4479,10 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <name>optionResourceId</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <name>optionLabelProperty</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
@@ -4759,6 +4779,10 @@
         </attribute>
         <attribute>
             <name>optionLabelStyleClass</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>optionResourceId</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -5502,6 +5526,14 @@
         <attribute>
             <name>name</name>
             <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>nodeResourceId</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>nodeLabelProperty</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
