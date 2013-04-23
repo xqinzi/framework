@@ -122,7 +122,7 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 			    else
 			        language = LanguageUtil.getLanguageByString(languageId);
 			    
-                if(!propertyInfo.isModel() && !propertyInfo.hasModel()){
+                if(!propertyInfo.isModel() && !propertyInfo.hasModel() && !propertyInfo.isEnum()){
 		            try{
 		                String propertyId = propertyInfo.getId();
 		            
@@ -147,17 +147,14 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
 
 		PropertyInfo propertyInfo = getPropertyInfo();
         Object       value        = getValue();
+        Object       optionValue  = getOptionValue();
 
-        if(value != null){
-	        Object optionValue = getOptionValue();
-
+        if(value != null && optionValue != null){
 	        if(propertyInfo != null){
                 if(propertyInfo.isCollection()){
-                    if(optionValue != null){
-                        Collection values  = (Collection)value;
-    
-                        setSelected(values.contains(optionValue));
-                    }
+                    Collection values  = (Collection)value;
+
+                    setSelected(values.contains(optionValue));
                 }
                 else if(propertyInfo.isBoolean())
                     setSelected(Boolean.parseBoolean(value.toString()));
@@ -175,11 +172,13 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
                         }
                     }
                 }
+    	        else if(optionValue instanceof BaseModel && value instanceof BaseModel)
+    	            setSelected(value.equals(optionValue));
     	        else
-                    setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
+	                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
 	        }
 	        else
-	            setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
+                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
 		}
 	}
 
