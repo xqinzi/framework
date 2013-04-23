@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Locale;
 
 import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
+import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.Node;
 import br.com.concepting.framework.util.types.ComponentType;
@@ -20,6 +22,8 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 2.0
  */
 public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
+    private String  nodeLabelProperty                  = "";
+    private String  nodeResourceId                     = "";
 	private String  nodeIconStyleClass                 = "";
 	private String  nodeLabelStyleClass                = "";
 	private String  nodeLabelSelectedStyleClass        = "";
@@ -50,7 +54,45 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     private String  onUnSelectActionValidateProperties = "";
 	private Integer expandLevel                        = 0;
 	
-	/**
+    /**
+     * Retorna o identificador do arquivo de recursos que armazena as propriedades para um
+     * nó.
+     * 
+     * @return String contendo o identificador do arquivo de recursos.
+     */
+	public String getNodeResourceId(){
+        return nodeResourceId;
+    }
+
+    /**
+     * Define o identificador do arquivo de recursos que armazena as propriedades para um
+     * nó.
+     * 
+     * @param nodeResourceId String contendo o identificador do arquivo de recursos.
+     */
+    public void setNodeResourceId(String nodeResourceId){
+        this.nodeResourceId = nodeResourceId;
+    }
+
+    /**
+     * Retorna o identificador da propriedade para o label do nó.
+     * 
+     * @return String contendo o identificador da propriedade.
+     */
+    public String getNodeLabelProperty(){
+        return nodeLabelProperty;
+    }
+
+    /**
+     * Define o identificador da propriedade para o label do nó.
+     * 
+     * @param nodeLabelProperty String contendo o identificador da propriedade.
+     */
+    public void setNodeLabelProperty(String nodeLabelProperty){
+        this.nodeLabelProperty = nodeLabelProperty;
+    }
+
+    /**
 	 * Retorna o evento a ser executado no momento da expansão do nó.
 	 *  
 	 * @return String contendo o evento a ser executado.
@@ -1022,30 +1064,38 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	private void renderNodes(List<Node> nodes, Node parent, String index, Integer level) throws Throwable{
-        PropertyInfo      propertyInfo          = getPropertyInfo();
-        String            propertyId            = propertyInfo.getId();
-        String            name                  = getName();
-        Object            value                 = getValue();
-		Node              node                  = null;
-        List<Node>        nodeChilds            = null;             
-		StringBuilder     nodeIndex             = null;
-		StringBuilder     nodeId                = null;
-		Object            nodeValue             = null;
-		String            nodeValueLabel        = "";
-		StringBuilder     nodeValueBuffer       = null;
-		StringBuilder     nodeExpandedId        = null;
-		HiddenPropertyTag nodeExpandedTag       = null;
-		String            nodeIsExpandedBuffer  = "";
-		Boolean           nodeIsExpanded        = false;
-		Boolean           nodeIsSelected        = false;
-		StringBuilder     parentNodeId          = null;
-		String            onSelectContent       = "";
-		String            onUnSelectContent     = "";
-        Locale            currentLanguage       = systemController.getCurrentLanguage();
-        StringBuilder     content               = null;
-        StringBuilder     trace                 = null;
-        ScriptTag         scriptTag             = null;
+        PropertyInfo       propertyInfo               = getPropertyInfo();
+        String             propertyId                 = propertyInfo.getId();
+        String             name                       = getName();
+        Object             value                      = getValue();
+		Node               node                       = null;
+        List<Node>         nodeChilds                 = null;             
+		StringBuilder      nodeIndex                  = null;
+		StringBuilder      nodeId                     = null;
+		Object             nodeValue                  = null;
+		Object             nodeValueLabel             = null;
+		PropertyInfo       nodeValueLabelPropertyInfo = null;
+		StringBuilder      nodeExpandedId             = null;
+		HiddenPropertyTag  nodeExpandedTag            = null;
+		String             nodeIsExpandedBuffer       = "";
+		Boolean            nodeIsExpanded             = false;
+		Boolean            nodeIsSelected             = false;
+		StringBuilder      parentNodeId               = null;
+		PropertiesResource resources                  = null;
 		
+		if(nodeResourceId.length() > 0)
+		    resources = getI18nResource(nodeResourceId);
+		else
+		    resources = getI18nResource();
+		
+        PropertiesResource defaultResources  = getDefaultI18nResource();
+		String             onSelectContent   = "";
+		String             onUnSelectContent = "";
+        Locale             currentLanguage   = systemController.getCurrentLanguage();
+        StringBuilder      content           = null;
+        StringBuilder      trace             = null;
+        ScriptTag          scriptTag         = null;
+        
 		for(Integer cont = 0 ; cont < nodes.size() ; cont++){
 			node              = nodes.get(cont);
             onSelectContent   = PropertyUtil.fillPropertiesInString(node, onSelect, currentLanguage);
@@ -1063,24 +1113,45 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 			
 			nodeIndex.append(cont);
 			
-			if(propertyInfo.isModel() || propertyInfo.hasModel()){
+			if(nodeLabelProperty.length() > 0){
+			    nodeValueLabelPropertyInfo = PropertyUtil.getPropertyInfo(node.getClass(), nodeLabelProperty);
+			    
+			    if(nodeValueLabelPropertyInfo != null){
+			        nodeValueLabel = PropertyUtil.getProperty(node, nodeLabelProperty);
+			        nodeValueLabel = PropertyUtil.format(nodeValueLabel, getValueMapInstance(), nodeValueLabelPropertyInfo.getPattern(), nodeValueLabelPropertyInfo.useAdditionalFormatting(), nodeValueLabelPropertyInfo.getPrecision(), currentLanguage);
+			    }
+			    else{
+			        if(propertyInfo != null && (propertyInfo.isModel() || propertyInfo.hasModel()))
+			            nodeValueLabel = node.toString();
+			        else
+			            nodeValueLabel = PropertyUtil.format(node.toString(), getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
+			    }
+			}
+            else{
+                if(propertyInfo != null && (propertyInfo.isModel() || propertyInfo.hasModel()))
+                    nodeValueLabel = node.toString();
+                else
+                    nodeValueLabel = PropertyUtil.format(node.toString(), getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
+            }
+			
+            if(node instanceof ObjectModel && StringUtil.trim(nodeValueLabel).length() == 0){
+                if(((ObjectModel)node).getType() == ComponentType.MENU_ITEM_SEPARATOR)
+                    nodeValueLabel = "-";
+                else{
+                    nodeValueLabel = resources.getProperty(((ObjectModel)node).getName().concat(".").concat(AttributeConstants.LABEL_KEY), false);
+                    
+                    if(nodeValueLabel == null)
+                        nodeValueLabel = defaultResources.getProperty(((ObjectModel)node).getName().concat(".").concat(AttributeConstants.LABEL_KEY), false);
+                    
+                    if(nodeValueLabel == null)
+                        nodeValueLabel = ((ObjectModel)node).getName();
+                }
+            }
+			
+			if(propertyInfo.isModel() || propertyInfo.hasModel())
 			    nodeValue = node;
-
-			    if(nodeValueBuffer == null)
-			        nodeValueBuffer = new StringBuilder();
-			    else
-	                nodeValueBuffer.delete(0, nodeValueBuffer.length());
-
-	            nodeValueBuffer.append("objectId{");
-    			nodeValueBuffer.append(nodeIndex);
-    			nodeValueBuffer.append("}");
-            
-    			nodeValueLabel = nodeValueBuffer.toString();
-			}
-			else{
-				nodeValue      = PropertyUtil.getProperty(node, propertyId);
-				nodeValueLabel = PropertyUtil.format(nodeValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
-			}
+			else
+			    nodeValue = PropertyUtil.getProperty(node, propertyId);
 			
 			if((parent == null && node.getParent() == null) || (parent != null && parent.equals(node.getParent()))){
 			    if(nodeId == null)
@@ -1241,7 +1312,15 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				}
 
 				print("\" value=\"");
-				print(nodeValueLabel);
+				
+	            if(propertyInfo.isModel() || propertyInfo.hasModel()){
+	                print("objectId{");
+	                print(nodeIndex);
+	                print("}");
+	            }
+	            else
+	                print(PropertyUtil.format(nodeValue, getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage));
+
 				print("\"");
 
 				if(parent != null){
@@ -1288,7 +1367,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
 				print(">");
 				print("&nbsp;");
-				print(node);
+				print(nodeValueLabel);
 				println("&nbsp;</td>");
 				println("</tr>");
 				println("</table>");
@@ -1299,7 +1378,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					    content.append("document.getElementById('");
 					    content.append(name);
 					    content.append("').value = '");
-					    content.append(nodeValueLabel);
+					    content.append(nodeValue);
 					    content.append("'; document.getElementById('");
 					    content.append(name);
 					    content.append(".");
@@ -1368,6 +1447,8 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	    setNodeIconStyleClass("");
 	    setNodeLabelSelectedStyleClass("");
 	    setNodeLabelStyleClass("");
+	    setNodeLabelProperty("");
+	    setNodeResourceId("");
 	    setExpandedNodeIconStyleClass("");
 	    setCollapsedNodeIconStyleClass("");
 	    setOpenedNodeIconStyleClass("");
