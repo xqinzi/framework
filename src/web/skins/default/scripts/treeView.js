@@ -23,7 +23,7 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
 	var submitFlag = false;
 	
 	if(node){
-		if(node.style.display == "NONE")
+		if(node.style.display.toUpperCase() == "NONE")
 			node.style.display = "";
 		else
 			node.style.display = "NONE";
