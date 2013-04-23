@@ -6,7 +6,6 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.FormModel;
 import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.SystemModuleModel;
-import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
@@ -14,7 +13,6 @@ import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
-import br.com.concepting.framework.util.types.SortOrderType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.ScopeType;
 import br.com.concepting.framework.web.types.VisibilityType;
@@ -311,14 +309,10 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 		println("\">");
 		println("<tr>");
 		
-		LoginSessionModel loginSession  = securityController.getLoginSession();
-		UserModel         user          = null;
-		Boolean           hasPermission = true;
-		Boolean           superUser     = false;
-
-		if(menuItems != null && menuItems.size() > 0)
-			ModelUtil.sort(menuItems, "sequence", SortOrderType.ASCEND);
-		
+		LoginSessionModel  loginSession         = securityController.getLoginSession();
+		UserModel          user                 = null;
+		Boolean            hasPermission        = true;
+		Boolean            superUser            = false;
 		ObjectModel        parentMenuItem       = null;
         String             menuItemName         = ""; 
         String             menuItemLabel        = "";
@@ -459,7 +453,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 
      					print("');\"");
      					
-                        menuItemTooltip = StringUtil.trim(menuItem.getTooltip());
+                        menuItemTooltip = StringUtil.trim(menuItem.getDescription());
 
                         if(menuItemTooltip.length() == 0){
                             if(resourceProperty == null)
@@ -488,7 +482,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                         if(parentMenuItem == null)
      					    renderMenuItemIcon(menuItem);
      					
-     					menuItemLabel = StringUtil.trim(menuItem.getLabel());
+     					menuItemLabel = StringUtil.trim(menuItem.getTitle());
 
      					if(menuItemLabel.length() == 0){
      					    if(resourceProperty == null)
