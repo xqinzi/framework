@@ -917,6 +917,15 @@
 								<!-- TODO: O repositório do relacionamento '@{propertyInfo.id}' deve ser definido. -->
 							</if>
 							<if expr="@{mappedRelationRepositoryId} != ''">
+                                <set var="orderBy" value=""/>
+                                <iterate var="relationPropertyInfo" values="@{relationModelInfo.propertiesInfo}">
+                                    <if expr="@{relationPropertyInfo.sortOrder} != 'NONE'">
+                                        <if expr="@{orderBy} != ''">
+                                            <set var="orderBy" value="@{orderBy}.concat(',')"/>
+                                        </if>
+                                        <set var="orderBy" value="@{orderBy}.concat(@{relationPropertyInfo.id}).concat(' ').concat(@{relationPropertyInfo.sortOrder})"/>
+                                    </if>
+                                </iterate>
 								<set var="lazyLoading" value="@{propertyInfo.relationJoinType} == 'NONE'"/>
 								<set var="cascade" value=""/>
 								<if expr="@{propertyInfo.cascadeOnSave}">
@@ -950,7 +959,12 @@
 												</iterate>
 											</key>
 										</if>
-										<one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+                                        <if expr="@{orderBy} != ''">
+										    <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}" order-by="@{orderBy}"/>
+                                        </if>
+                                        <if expr="@{orderBy} == ''">
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+                                        </if>
 									</bag>
 								</if>
 								<if expr="@{cascade} == ''">
@@ -971,7 +985,12 @@
 												</iterate>
 											</key>
 										</if>
-										<one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+                                        <if expr="@{orderBy} != ''">
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}" order-by="@{orderBy}"/>
+                                        </if>
+                                        <if expr="@{orderBy} == ''">
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+                                        </if>
 									</bag>
 								</if>
 							</if>
