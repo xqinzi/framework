@@ -18,7 +18,7 @@ import br.com.concepting.framework.util.types.ComponentType;
  * @author fvilarinho
  * @since 1.0
  */
-@Model(descriptionPattern="#{label}")
+@Model(descriptionPattern="#{title}")
 public class ObjectModel extends BaseModel{
 	@Property(isIdentity = true, isForSearch = true)
 	private Long id = 0l; 
@@ -33,7 +33,7 @@ public class ObjectModel extends BaseModel{
 	private String name = "";
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
-	private String label = "";
+	private String title = "";
 
 	@Property
 	private String action = "";
@@ -42,7 +42,7 @@ public class ObjectModel extends BaseModel{
 	private String actionTarget = "";
 
 	@Property
-	private String tooltip = "";
+	private String description = "";
 	
 	@Property
 	private String iconUrl = "";
@@ -61,8 +61,8 @@ public class ObjectModel extends BaseModel{
 	
 	@Property(relationType = RelationType.MANY_TO_MANY)
 	private List<GroupModel> groups = null;
-
-	/**
+	
+    /**
 	 * Retorna a URL que armazena o ícone do objeto.
 	 * 
 	 * @return String contendo a URL.
@@ -279,38 +279,38 @@ public class ObjectModel extends BaseModel{
 	}
 
 	/**
-	 * Retorna o label do objeto.
+	 * Retorna o título do objeto.
 	 *  
-	 * @return String contendo o label.
+	 * @return String contendo o título.
 	 */
-	public String getLabel(){
-		return label;
+	public String getTitle(){
+		return title;
 	}
 
 	/**
-	 * Define o label do objeto.
+	 * Define o título do objeto.
 	 *  
-	 * @param label String contendo o label.
+	 * @param title String contendo o título.
 	 */
-	public void setLabel(String label){
-		this.label = label;
+	public void setTitle(String title){
+		this.title = title;
 	}
 
 	/**
-	 * Retorna a dica de exibição do objeto.
+	 * Retorna a descrição do objeto.
 	 * 
-	 * @return String contendo a dica de exibição.
+	 * @return String contendo a descrição.
 	 */
-	public String getTooltip(){
-		return tooltip;
+	public String getDescription(){
+		return description;
 	}
 
-	/**
-	 * Define a dica de exibição do objeto.
-	 * 
-	 * @param tooltip String contendo a dica de exibição.
-	 */
-	public void setTooltip(String tooltip){
-		this.tooltip = tooltip;
+    /**
+     * Define a descrição do objeto.
+     * 
+     * @param description String contendo a descrição.
+     */
+	public void setDescription(String description){
+		this.description = description;
 	}
 }
