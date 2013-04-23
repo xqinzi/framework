@@ -917,6 +917,17 @@
 								<!-- TODO: O repositório do relacionamento '@{propertyInfo.id}' deve ser definido. -->
 							</if>
 							<if expr="@{mappedRelationRepositoryId} != ''">
+                                <set var="orderBy" value=""/>
+                                <iterate var="relationPropertyInfo" values="@{relationModelInfo.propertiesInfo}">
+                                    <if expr="@{relationPropertyInfo.sortOrder} != 'NONE'">
+                                        <if expr="@{orderBy} != ''">
+                                            <set var="orderBy" value="@{orderBy}.concat(',')"/>
+                                        </if>
+                                        <set var="orderBy" value="@{orderBy}.concat(@{relationPropertyInfo.id})"/>
+                                        <set var="orderBy" value="@{orderBy}.concat(' ')"/>
+                                        <set var="orderBy" value="@{orderBy}.concat(@{relationPropertyInfo.sortOrder}.getOperator())"/>
+                                    </if>
+                                </iterate>
 								<set var="lazyLoading" value="@{propertyInfo.relationJoinType} == 'NONE'"/>
 								<set var="cascade" value=""/>
 								<if expr="@{propertyInfo.cascadeOnSave}">
@@ -933,46 +944,92 @@
 									</if>
 								</if>
 								<if expr="@{cascade} != ''">
-									<bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000" cascade="@{cascade}">
-										<if expr="@{propertyInfo.foreignKeyId} == ''">
-											<key>
-												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
-													<column name="@{mappedRelationPropertyId}"/>
-													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
-												</iterate>
-											</key>
-										</if>
-										<if expr="@{propertyInfo.foreignKeyId} != ''">
-											<key foreign-key="@{propertyInfo.foreignKeyId}">
-												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
-													<column name="@{mappedRelationPropertyId}"/>
-													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
-												</iterate>
-											</key>
-										</if>
-										<one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
-									</bag>
+                                    <if expr="@{orderBy} != ''">
+    									<bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000" cascade="@{cascade}" order-by="@{orderBy}">
+    										<if expr="@{propertyInfo.foreignKeyId} == ''">
+    											<key>
+    												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+    													<column name="@{mappedRelationPropertyId}"/>
+    													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+    												</iterate>
+    											</key>
+    										</if>
+    										<if expr="@{propertyInfo.foreignKeyId} != ''">
+    											<key foreign-key="@{propertyInfo.foreignKeyId}">
+    												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+    													<column name="@{mappedRelationPropertyId}"/>
+    													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+    												</iterate>
+    											</key>
+    										</if>
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+    									</bag>
+                                    </if>
+                                    <if expr="@{orderBy} == ''">
+                                        <bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000" cascade="@{cascade}">
+                                            <if expr="@{propertyInfo.foreignKeyId} == ''">
+                                                <key>
+                                                    <iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+                                                        <column name="@{mappedRelationPropertyId}"/>
+                                                        <if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+                                                    </iterate>
+                                                </key>
+                                            </if>
+                                            <if expr="@{propertyInfo.foreignKeyId} != ''">
+                                                <key foreign-key="@{propertyInfo.foreignKeyId}">
+                                                    <iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+                                                        <column name="@{mappedRelationPropertyId}"/>
+                                                        <if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+                                                    </iterate>
+                                                </key>
+                                            </if>
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+                                        </bag>
+                                    </if>
 								</if>
 								<if expr="@{cascade} == ''">
-									<bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000">
-										<if expr="@{propertyInfo.foreignKeyId} == ''">
-											<key>
-												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
-													<column name="@{mappedRelationPropertyId}"/>
-													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
-												</iterate>
-											</key>
-										</if>
-										<if expr="@{propertyInfo.foreignKeyId} != ''">
-											<key foreign-key="@{propertyInfo.foreignKeyId}">
-												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
-													<column name="@{mappedRelationPropertyId}"/>
-													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
-												</iterate>
-											</key>
-										</if>
-										<one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
-									</bag>
+                                    <if expr="@{orderBy} != ''">
+    									<bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000" order-by="@{orderBy}">
+    										<if expr="@{propertyInfo.foreignKeyId} == ''">
+    											<key>
+    												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+    													<column name="@{mappedRelationPropertyId}"/>
+    													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+    												</iterate>
+    											</key>
+    										</if>
+    										<if expr="@{propertyInfo.foreignKeyId} != ''">
+    											<key foreign-key="@{propertyInfo.foreignKeyId}">
+    												<iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+    													<column name="@{mappedRelationPropertyId}"/>
+    													<if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+    												</iterate>
+    											</key>
+    										</if>
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+    									</bag>
+                                    </if>
+                                    <if expr="@{orderBy} == ''">
+                                        <bag name="@{propertyInfo.id}" table="@{mappedRelationRepositoryId}" lazy="@{lazyLoading}" batch-size="1000">
+                                            <if expr="@{propertyInfo.foreignKeyId} == ''">
+                                                <key>
+                                                    <iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+                                                        <column name="@{mappedRelationPropertyId}"/>
+                                                        <if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+                                                    </iterate>
+                                                </key>
+                                            </if>
+                                            <if expr="@{propertyInfo.foreignKeyId} != ''">
+                                                <key foreign-key="@{propertyInfo.foreignKeyId}">
+                                                    <iterate var="mappedRelationPropertyId" values="@{mappedRelationPropertiesIds}">
+                                                        <column name="@{mappedRelationPropertyId}"/>
+                                                        <if expr="@{mappedPropertiesControl}.add(@{mappedRelationPropertyId})"/>
+                                                    </iterate>
+                                                </key>
+                                            </if>
+                                            <one-to-many class="@{propertyInfo.collectionItemsClass.name}" not-found="@{constrained}"/>
+                                        </bag>
+                                    </if>
 								</if>
 							</if>
 						</if>
