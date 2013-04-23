@@ -156,7 +156,9 @@ public abstract class BaseAction extends DispatchAction{
 	public void changeCurrentLanguage() throws Throwable{
 	    String selectedLanguage = StringUtil.trim(systemController.getRequest().getParameter(AttributeConstants.CURRENT_LANGUAGE_KEY));
 	    
-	    systemController.setCurrentLanguage(selectedLanguage);	    
+	    systemController.setCurrentLanguage(selectedLanguage);
+	    
+	    actionForm.setAction(actionForm.getLastAction());
 	}
 
     /**
@@ -167,7 +169,9 @@ public abstract class BaseAction extends DispatchAction{
     public void changeCurrentSkin() throws Throwable{
         String selectedSkin = StringUtil.trim(systemController.getRequest().getParameter(AttributeConstants.CURRENT_SKIN_KEY));
         
-        systemController.setCurrentSkin(selectedSkin);      
+        systemController.setCurrentSkin(selectedSkin);
+        
+        actionForm.setAction(actionForm.getLastAction());
     }
 
     /**
