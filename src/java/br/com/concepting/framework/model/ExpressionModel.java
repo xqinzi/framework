@@ -5,12 +5,18 @@ import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.types.ValidationType;
 
+/**
+ * Classe que define a estrutura básica para o modelo de dados para uma expressão.
+ * 
+ * @author fvilarinho
+ * @since 4.0
+ */
 @Model 
 public class ExpressionModel extends BaseModel{
     @Property(isIdentity=true)
     private Integer id = 0;
     
-    @Property(validations=ValidationType.REQUIRED)
+    @Property(validations=ValidationType.REQUIRED, isUnique=true)
     private String value = "";
 
     /**
