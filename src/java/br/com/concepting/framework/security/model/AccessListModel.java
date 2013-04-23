@@ -6,6 +6,9 @@ import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.ExpressionModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
+import br.com.concepting.framework.model.types.ConditionType;
+import br.com.concepting.framework.model.types.ContextSearchType;
+import br.com.concepting.framework.model.types.ValidationType;
 import br.com.concepting.framework.persistence.types.RelationType;
 
 /**
@@ -19,15 +22,36 @@ public class AccessListModel extends BaseModel{
     @Property(isIdentity=true)
     private Integer id = 0;
     
-    @Property(isForSearch=true)
+    @Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
     private String name = "";
-    
-    @Property(relationType=RelationType.MANY_TO_MANY, cascadeOnDelete=true, cascadeOnSave=true)
+
+    @Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH)
+    private String description = "";
+
+    @Property(relationType=RelationType.MANY_TO_MANY, cascadeOnSave=true)
     private List<ExpressionModel> expressions = null;
     
     @Property
-    private Boolean whitelist = false;
+    private Boolean whitelist = true;
     
+    /**
+     * Retorna a descrição da lista de acesso.
+     * 
+     * @return String contendo a descrição.
+     */
+    public String getDescription(){
+        return description;
+    }
+
+    /**
+     * Define a descrição da lista de acesso.
+     * 
+     * @param description String contendo a descrição.
+     */
+    public void setDescription(String description){
+        this.description = description;
+    }
+
     /**
      * Indica se é uma whitelist ou não.
      * 
