@@ -61,7 +61,7 @@ public abstract class AttributeConstants extends Constants{
     public static final String MINIMUM_LENGTH_KEY                = "minimumLength";
     public static final String NAME_KEY                          = "name";
     public static final String NOW_KEY                           = "now";
-    public static final String NODE_KEY                          = "node;";
+    public static final String NODE_KEY                          = "node";
     public static final String NODE_EXPAND_ICON_KEY              = "nodeExpandIcon";
     public static final String NODE_ICON_KEY                     = "nodeIcon";
     public static final String PAGER_ACTION_KEY                  = "pagerAction";
