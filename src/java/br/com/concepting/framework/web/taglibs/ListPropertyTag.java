@@ -1,8 +1,10 @@
 package br.com.concepting.framework.web.taglibs;
 
 import java.util.List;
+import java.util.Locale;
 
 import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
@@ -143,7 +145,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
     		    Boolean isCollection = propertyInfo.isCollection();
     		    
     			if(!isCollection && size == 0){
-         			PropertiesResource resources   = getI18nResource();
+         			PropertiesResource resources   = getDefaultI18nResource();
          			String             resourceKey = "";
          			
          			if(firstOptionResourceKey.length() > 0){
@@ -213,20 +215,31 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	protected void renderOptions(List options, Object parent, String index, Integer level) throws Throwable{
-        PropertyInfo          propertyInfo         = getPropertyInfo();
-        String                pattern              = getPattern();
-	    Object                value                = getValue();
-		Object                option               = null;         
-		ListOptionPropertyTag optionTag            = null;
-		Object                optionTagLabel       = null;
-		StringBuilder         optionTagLabelBuffer = new StringBuilder();
-		StringBuilder         optionIndex          = new StringBuilder();
-		OptionStateTag        optionState          = null;
-        List                  optionChilds         = null;
-		List<OptionStateTag>  optionsStates        = getOptionStates();
-		String                expression           = "";
-		Boolean               expressionResult     = false;
-		ExpressionProcessor   expressionProcessor  = getExpressionProcessor();
+        PropertyInfo          propertyInfo            = getPropertyInfo();
+	    Object                value                   = getValue();
+	    Locale                currentLanguage         = systemController.getCurrentLanguage();
+		Object                option                  = null;      
+		String                optionLabelProperty     = getOptionLabelProperty();
+		PropertyInfo          optionLabelPropertyInfo = null;
+		ListOptionPropertyTag optionTag               = null;
+		Object                optionTagLabel          = null;
+		StringBuilder         optionTagLabelBuffer    = new StringBuilder();
+		StringBuilder         optionIndex             = new StringBuilder();
+		OptionStateTag        optionState             = null;
+        List                  optionChilds            = null;
+        String                optionResourceId        = getOptionResourceId();
+		List<OptionStateTag>  optionsStates           = getOptionStates();
+        PropertiesResource    resources               = null;
+        
+        if(optionResourceId.length() > 0)
+            resources = getI18nResource(optionResourceId);
+        else
+            resources = getI18nResource();
+        
+        PropertiesResource  defaultResources    = getDefaultI18nResource();
+		String              expression          = "";
+		Boolean             expressionResult    = false;
+		ExpressionProcessor expressionProcessor = getExpressionProcessor();
 
 		for(int cont1 = 0 ; cont1 < options.size() ; cont1++){
 			option = options.get(cont1);
@@ -248,24 +261,48 @@ public class ListPropertyTag extends OptionsPropertyTag{
 			
 			if(optionState == null || !optionState.remove()){
     			if(!(option instanceof Node) || ((parent == null && ((Node)option).getParent() == null) || (parent != null && parent.equals(((Node)option).getParent())))){
-    				if(getOptionLabelProperty().length() > 0)
-    					optionTagLabel = PropertyUtil.getProperty(option, getOptionLabelProperty());
-    				else
-    					optionTagLabel = option;
+    	            if(optionLabelProperty.length() > 0){
+    	                optionLabelPropertyInfo = PropertyUtil.getPropertyInfo(option.getClass(), optionLabelProperty);
+    	                
+    	                if(optionLabelPropertyInfo != null){
+    	                    optionTagLabel = PropertyUtil.getProperty(option, optionLabelProperty);
+    	                    optionTagLabel = PropertyUtil.format(optionTagLabel, getValueMapInstance(), optionLabelPropertyInfo.getPattern(), optionLabelPropertyInfo.useAdditionalFormatting(), optionLabelPropertyInfo.getPrecision(), currentLanguage);
+    	                }
+    	                else{
+    	                    if(propertyInfo != null && (propertyInfo.isModel() || propertyInfo.hasModel()))
+    	                        optionTagLabel = option.toString();
+    	                    else
+    	                        optionTagLabel = PropertyUtil.format(option.toString(), getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
+    	                }
+    	            }
+    	            else{
+                        if(propertyInfo != null && (propertyInfo.isModel() || propertyInfo.hasModel()))
+                            optionTagLabel = option.toString();
+                        else
+                            optionTagLabel = PropertyUtil.format(option.toString(), getValueMapInstance(), getPattern(), useAdditionalFormatting(), getPrecision(), currentLanguage);
+    	            }
+    	            
+    	            if(option instanceof ObjectModel && StringUtil.trim(optionTagLabel).length() == 0){
+    	                if(((ObjectModel)option).getType() == ComponentType.MENU_ITEM_SEPARATOR)
+    	                    optionTagLabel = "-";
+    	                else{
+    	                    optionTagLabel = resources.getProperty(((ObjectModel)option).getName().concat(".").concat(AttributeConstants.LABEL_KEY), false);
+    	                    
+    	                    if(optionTagLabel == null)
+    	                        optionTagLabel = defaultResources.getProperty(((ObjectModel)option).getName().concat(".").concat(AttributeConstants.LABEL_KEY), false);
+    	                    
+    	                    if(optionTagLabel == null)
+    	                        optionTagLabel = ((ObjectModel)option).getName();
+    	                }
+    	            }
     
     				if(optionTagLabelBuffer.length() > 0)
     				    optionTagLabelBuffer.delete(0, optionTagLabelBuffer.length());
     				
     				optionTagLabelBuffer.append(StringUtil.replicate("-", level * 3));
     				optionTagLabelBuffer.append(" ");
+    				optionTagLabelBuffer.append(optionTagLabel);
     				
-    				if(propertyInfo == null || !propertyInfo.getClass().equals(optionTagLabel.getClass()))
-    				    pattern = "";
-    				else
-    				    pattern = getPattern();
-    				
-				    optionTagLabelBuffer.append(PropertyUtil.format(optionTagLabel, getValueMapInstance(), pattern, useAdditionalFormatting(), getPrecision(), systemController.getCurrentLanguage()));
-    
     				optionTag = new ListOptionPropertyTag();
     				optionTag.setPageContext(pageContext);
                     optionTag.setPropertyInfo(propertyInfo);
@@ -291,13 +328,6 @@ public class ListPropertyTag extends OptionsPropertyTag{
         
         					optionTag.setOptionIndex(optionIndex.toString());
         				}
-                        else if(!propertyInfo.isEnum() && !propertyInfo.hasEnum()){
-                            try{
-                                option = PropertyUtil.getProperty(option, propertyInfo.getId());
-                            }
-                            catch(Throwable e){
-                            }
-                        }
     				}
     				
     				optionTag.setOptionValue(option);
