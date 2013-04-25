@@ -558,7 +558,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 	protected void render() throws Throwable{
 	    Boolean hasPermission = hasPermission();
 	    
-		if(hasPermission){
+		if(hasPermission && isRendered()){
 			GridPropertyTag gridTag = (GridPropertyTag)findAncestorWithClass(this, GridPropertyTag.class);
 
 			if(gridTag != null){
