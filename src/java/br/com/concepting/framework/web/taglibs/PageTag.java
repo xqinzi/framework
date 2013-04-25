@@ -312,10 +312,6 @@ public class PageTag extends HtmlTag{
         styleTag.setUrl(TaglibConstants.DEFAULT_STYLE_RESOURCE_ID);
         styleTag.doStartTag();
         styleTag.doEndTag();
-
-        scriptTag.setUrl(TaglibConstants.DEFAULT_CALENDAR_SCRIPT_RESOURCE_ID);
-		scriptTag.doStartTag();
-		scriptTag.doEndTag();
 		
         scriptTag.setUrl(TaglibConstants.DEFAULT_PAGE_SCRIPT_RESOURCE_ID);
         scriptTag.doStartTag();
@@ -332,6 +328,10 @@ public class PageTag extends HtmlTag{
         styleTag.setUrl(TaglibConstants.DEFAULT_PAGE_STYLE_RESOURCE_ID.substring(1));
         styleTag.doStartTag();
         styleTag.doEndTag();
+
+        scriptTag.setUrl(TaglibConstants.DEFAULT_CALENDAR_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
 
         StringBuilder content = new StringBuilder();
         
@@ -385,6 +385,14 @@ public class PageTag extends HtmlTag{
 		styleTag.setUrl(TaglibConstants.DEFAULT_CALENDAR_STYLE_RESOURCE_ID);
 		styleTag.doStartTag();
 		styleTag.doEndTag();
+
+        scriptTag.setUrl(TaglibConstants.DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
+
+        styleTag.setUrl(TaglibConstants.DEFAULT_ACCORDION_STYLE_RESOURCE_ID);
+        styleTag.doStartTag();
+        styleTag.doEndTag();
 
         scriptTag.setUrl(TaglibConstants.DEFAULT_DIALOG_BOX_SCRIPT_RESOURCE_ID);
         scriptTag.doStartTag();
