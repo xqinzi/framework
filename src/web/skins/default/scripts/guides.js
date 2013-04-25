@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades para manipulação do componente visual 
- * guides (guias).
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual guides (guias).
  * 
  * @author fvilarinho
  * @version 1.0

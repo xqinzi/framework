@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades para manipulação do componente visual 
- * calendário.
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual calendar (calendário).
  * 
  * @author fvilarinho
  * @version 1.0

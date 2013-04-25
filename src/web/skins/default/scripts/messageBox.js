@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades comuns utilizadas pelo componente visual 
- * messageBox (caixa de diálogo).
+ * Arquivo que contém as funções/propriedades comuns utilizadas pelo componente visual messageBox (caixa de mensagens).
  * 
  * @author fvilarinho
  * @version 1.0

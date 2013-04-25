@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades para manipulação do componente visual 
- * treeView (árvore).
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual treeView (árvore).
  * 
  * @author fvilarinho
  * @version 1.0

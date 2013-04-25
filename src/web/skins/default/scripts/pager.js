@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades para manipulação do componente visual 
- * pager (paginador).
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual pager (paginador).
  * 
  * @author fvilarinho
  * @version 1.0

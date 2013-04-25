@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades comuns utilizadas pelos componentes de caixa de diálogo. 
- * visuais.
+ * Arquivo que contém as funções/propriedades comuns utilizadas pelos componentes dialogBox (caixa de diálogo). 
  * 
  * @author fvilarinho
  * @version 3.0

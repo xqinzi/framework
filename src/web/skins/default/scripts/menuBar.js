@@ -1,6 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades comuns utilizadas pelo componente visual 
- * menuBar (barra de menus).
+ * Arquivo que contém as funções/propriedades comuns utilizadas pelo componente visual menuBar (barra de menus).
  * 
  * @author fvilarinho
  * @version 1.0

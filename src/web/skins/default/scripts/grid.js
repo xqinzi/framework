@@ -1,5 +1,5 @@
 /**
- * Arquivo que contém as funções/propriedades para manipulação do componente visual grid.
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual grid (tabela de dados).
  * 
  * @author fvilarinho
  * @version 1.0
