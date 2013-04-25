@@ -43,6 +43,21 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_CALENDAR_DAYS_STYLE_CLASS = "calendarDays";
     
     /**
+     * Constante que define o identificador do arquivo de internacionalização default para o componente visual accordion (guia de seções).
+     */
+    public static final String DEFAULT_ACCORDION_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("accordion");
+    
+    /**
+     * Constante que define o identificador do arquivo de script default para o componente visual accordion (guia de seções).
+     */
+    public static final String DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("accordion.js");
+    
+    /**
+     * Constante que define o identificador do arquivo de estilos CSS default para o componente visual accordion (guia de seções).
+     */
+    public static final String DEFAULT_ACCORDION_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("accordion.css");
+
+    /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente visual calendar (calendário).
      */
     public static final String DEFAULT_CALENDAR_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("calendar");
@@ -437,11 +452,6 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do estilo CSS default para o componente searchPropertiesGroup (grupo de propriedades de pesquisa). 
      */
     public static final String DEFAULT_SEARCH_PROPERTIES_GROUP_STYLE_CLASS = "group";
-    
-    /**
-     * Constante que define o identificador do estilo CSS default para o label do cabeçalho da seção.
-     */
-    public static final String DEFAULT_SECTION_HEADER_LABEL_STYLE_CLASS = AttributeConstants.SECTION_HEADER_KEY.concat(AttributeConstants.LABEL_KEY);
 
     /**
      * Constante que define o identificador do estilo CSS default para o cabeçalho da seção.
