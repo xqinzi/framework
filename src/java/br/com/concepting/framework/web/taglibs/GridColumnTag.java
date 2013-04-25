@@ -369,7 +369,7 @@ public class GridColumnTag extends BaseOptionsPropertyTag{
 		GridPropertyTag gridTag = (GridPropertyTag)findAncestorWithClass(this, GridPropertyTag.class);
 		
 		if(gridTag != null){
-			if(!(this instanceof GridColumnGroupTag)){
+			if(!(this instanceof GridColumnGroupTag) && isRendered()){
                 GridColumnTag      columnTag      = (GridColumnTag)this.clone();
                 GridColumnGroupTag columnGroupTag = (GridColumnGroupTag)findAncestorWithClass(this, GridColumnGroupTag.class);
 			    

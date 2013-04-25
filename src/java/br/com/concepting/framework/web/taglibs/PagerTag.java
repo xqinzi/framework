@@ -166,6 +166,9 @@ public class PagerTag extends BaseOptionsPropertyTag{
 	 * @return Instância contendo o paginador.
 	 */
 	protected Pager getPager(){
+	    if(!isRendered())
+	        return null;
+	    
 		PropertyInfo propertyInfo = getPropertyInfo();
 	    
 	    if(propertyInfo == null || propertyInfo.isCollection())

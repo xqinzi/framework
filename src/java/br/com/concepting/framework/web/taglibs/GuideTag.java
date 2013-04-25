@@ -303,7 +303,7 @@ public class GuideTag extends BaseActionFormElementTag{
 		GuidesTag guidesTag = (GuidesTag)findAncestorWithClass(this, GuidesTag.class);
 
 		if(guidesTag != null){
-			if(hasPermission()){
+			if(hasPermission() && isRendered()){
 				GuideTag    guideTag     = (GuideTag)this.clone();
 				BodyContent bodyContent  = guideTag.getBodyContent();
 				String      guideContent = guideTag.getContent();

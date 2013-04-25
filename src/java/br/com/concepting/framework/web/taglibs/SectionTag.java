@@ -608,7 +608,7 @@ public class SectionTag extends BaseActionFormElementTag{
         AccordionTag accordionTag = (AccordionTag)findAncestorWithClass(this, AccordionTag.class);
 
         if(accordionTag != null){
-            if(hasPermission()){
+            if(hasPermission() && isRendered()){
                 SectionTag  sectionTag     = (SectionTag)this.clone();
                 BodyContent bodyContent    = sectionTag.getBodyContent();
                 String      sectionContent = sectionTag.getContent();
