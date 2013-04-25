@@ -166,84 +166,85 @@ public class PagerTag extends BaseOptionsPropertyTag{
 	 * @return Instância contendo o paginador.
 	 */
 	protected Pager getPager(){
-	    if(!isRendered())
-	        return null;
-	    
-		PropertyInfo propertyInfo = getPropertyInfo();
-	    
-	    if(propertyInfo == null || propertyInfo.isCollection())
-	    	return null;
-	    
-        RequestInfo  requestInfo = getRequestInfo();
-		String       name        = getName();
-
-		if(pager == null){
-    		Boolean            foundPager  = false;
-    		Map<String, Pager> pagers      = systemController.findAttribute(TaglibConstants.PAGER_MAP_KEY, ScopeType.SESSION);
-    		PagerActionType    pagerAction = requestInfo.getPagerAction();
-    		
-    		if(pagers != null && pagerAction != null){
-    			pager = pagers.get(name);
-    			
-    			if(pager != null)
-    				foundPager = true;
+	    if(isRendered()){
+    		PropertyInfo propertyInfo = getPropertyInfo();
+    	    
+    	    if(propertyInfo == null || propertyInfo.isCollection())
+    	    	return null;
+    	    
+            RequestInfo  requestInfo = getRequestInfo();
+    		String       name        = getName();
+    
+    		if(pager == null){
+        		Boolean            foundPager  = false;
+        		Map<String, Pager> pagers      = systemController.findAttribute(TaglibConstants.PAGER_MAP_KEY, ScopeType.SESSION);
+        		PagerActionType    pagerAction = requestInfo.getPagerAction();
+        		
+        		if(pagers != null && pagerAction != null){
+        			pager = pagers.get(name);
+        			
+        			if(pager != null)
+        				foundPager = true;
+        		}
+        		
+        		if(!foundPager){
+        			pager = new Pager();
+        			
+        			if(pagers == null)
+        				pagers = new LinkedHashMap<String, Pager>();
+        			
+        			pagers.put(name, pager);
+        			
+        			systemController.setAttribute(TaglibConstants.PAGER_MAP_KEY, pagers, ScopeType.SESSION);
+        		}
     		}
     		
-    		if(!foundPager){
-    			pager = new Pager();
+    		Integer itemsPerPage = 0;
+    
+    		if(pagerOnForm)
+    			itemsPerPage = 1;
+    		else{
+    			itemsPerPage = requestInfo.getItemsPerPage();
     			
-    			if(pagers == null)
-    				pagers = new LinkedHashMap<String, Pager>();
+    			String        actionForm = getActionForm();
+    			StringBuilder cookieId   = new StringBuilder();
     			
-    			pagers.put(name, pager);
+    			cookieId.append(actionForm);
+    			cookieId.append(".");
+    			cookieId.append(name);
+    			cookieId.append(".");
+    			cookieId.append(AttributeConstants.ITEMS_PER_PAGE_KEY);
     			
-    			systemController.setAttribute(TaglibConstants.PAGER_MAP_KEY, pagers, ScopeType.SESSION);
+    			Cookie cookie = systemController.getCookie(cookieId.toString());
+    			
+    	    	if(itemsPerPage == 0){
+    	    		if(cookie != null)
+    	    		    itemsPerPage = Integer.parseInt(cookie.getValue());
+    	    		else if(getItemsPerPage() == 0){
+    	    		    itemsPerPage = Constants.DEFAULT_ITEMS_PER_PAGE;
+    	
+    	    			systemController.addCookie(cookieId.toString(), itemsPerPage.toString(), true);
+    	    		}
+    	    		
+    	    		setItemsPerPage(itemsPerPage);
+    	    	}
+    	    	else{
+    	    		setItemsPerPage(itemsPerPage);
+    	
+    				systemController.addCookie(cookieId.toString(), itemsPerPage.toString(), true);
+    			}
     		}
-		}
-		
-		Integer itemsPerPage = 0;
-
-		if(pagerOnForm)
-			itemsPerPage = 1;
-		else{
-			itemsPerPage = requestInfo.getItemsPerPage();
-			
-			String        actionForm = getActionForm();
-			StringBuilder cookieId   = new StringBuilder();
-			
-			cookieId.append(actionForm);
-			cookieId.append(".");
-			cookieId.append(name);
-			cookieId.append(".");
-			cookieId.append(AttributeConstants.ITEMS_PER_PAGE_KEY);
-			
-			Cookie cookie = systemController.getCookie(cookieId.toString());
-			
-	    	if(itemsPerPage == 0){
-	    		if(cookie != null)
-	    		    itemsPerPage = Integer.parseInt(cookie.getValue());
-	    		else if(getItemsPerPage() == 0){
-	    		    itemsPerPage = Constants.DEFAULT_ITEMS_PER_PAGE;
-	
-	    			systemController.addCookie(cookieId.toString(), itemsPerPage.toString(), true);
-	    		}
-	    		
-	    		setItemsPerPage(itemsPerPage);
-	    	}
-	    	else{
-	    		setItemsPerPage(itemsPerPage);
-	
-				systemController.addCookie(cookieId.toString(), itemsPerPage.toString(), true);
-			}
-		}
-
-    	pager.setItemsPerPage(itemsPerPage);
-    	
-    	List dataValues = getDataValues();
-    	
-		pager.setData(dataValues);
-		
-		return pager;
+    
+        	pager.setItemsPerPage(itemsPerPage);
+        	
+        	List dataValues = getDataValues();
+        	
+    		pager.setData(dataValues);
+    		
+    		return pager;
+	    }
+	    
+	    return null;
 	}
 
 	/**
