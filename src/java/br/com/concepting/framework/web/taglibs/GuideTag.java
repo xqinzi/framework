@@ -14,6 +14,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 1.0
  */
 public class GuideTag extends BaseActionFormElementTag{
+    private Boolean focusWhen                        = false;
 	private String  onSelect                         = "";
 	private String  onSelectAction                   = "";
 	private String  onSelectActionForward            = "";
@@ -23,6 +24,33 @@ public class GuideTag extends BaseActionFormElementTag{
 	private String  onSelectActionValidateProperties = "";
 	private String  content                          = null;
 	
+	/**
+	 * Indica quando o componente deve manter o foco.
+	 * 
+	 * @return True/False.
+	 */
+    public Boolean focusWhen(){
+        return focusWhen;
+    }
+
+    /**
+     * Indica quando o componente deve manter o foco.
+     * 
+     * @return True/False.
+     */
+    public Boolean getFocusWhen(){
+        return focusWhen();
+    }
+
+    /**
+     * Define quando o componente deve manter o foco.
+     * 
+     * @param focusWhen True/False.
+     */
+    public void setFocusWhen(Boolean focusWhen){
+        this.focusWhen = focusWhen;
+    }
+
     /**
      * Retorna o identificador da ação do evento de seleção.
      * 
@@ -297,6 +325,7 @@ public class GuideTag extends BaseActionFormElementTag{
 	protected void clearAttributes(){
 		super.clearAttributes();
 
+		setFocusWhen(false);
 		setOnSelect("");
 		setOnSelectAction("");
 		setOnSelectActionForward("");
