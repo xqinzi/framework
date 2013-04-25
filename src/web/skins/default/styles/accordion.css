@@ -1,0 +1,152 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual accordion (guia de seções).
+ * 
+ * @author fvilarinho
+ * @version 4.0
+ */
+
+/**
+ * Estilo que define o componente visual.
+ */
+.accordion{
+	border-spacing: 0px;
+	padding       : 1px;
+}
+
+/**
+ * Estilo que define o cabeçalho da primeira seção.
+ */
+.firstSectionHeader{
+	-webkit-border-top-left-radius : 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft     : 3px;
+	-moz-border-radius-topright    : 3px;
+	border-top-left-radius         : 3px;
+	border-top-right-radius        : 3px;
+	border-top                     : 1px SOLID #888888;
+	border-left                    : 1px SOLID #888888;
+	border-right                   : 1px SOLID #888888;
+	border-bottom                  : 1px SOLID #888888;
+	background                     : url(../images/section.gif) REPEAT-X;
+	background-color               : #efefef;
+	border-spacing                 : 0px;
+	padding                        : 1px;
+	text-align                     : CENTER;
+	font-family                    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size                      : 14px;
+	font-weight                    : BOLD;
+	color                          : #666666;
+	cursor                         : POINTER;
+	width                          : 100%;
+	height                         : 26px;
+}
+
+/**
+ * Estilo que define o cabeçalho de uma seção.
+ */
+.sectionHeader{
+	border-top      : NONE;
+	border-left     : 1px SOLID #888888;
+	border-right    : 1px SOLID #888888;
+	border-bottom   : NONE;
+	background      : url(../images/section.gif) REPEAT-X;
+	background-color: #efefef;
+	border-spacing  : 0px;
+	padding         : 1px;
+	text-align      : CENTER;
+	font-family     : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size       : 14px;
+	font-weight     : BOLD;
+	color           : #666666;
+	cursor          : POINTER;
+	width           : 100%;
+	height          : 26px;
+}
+
+/**
+ * Estilo que define o cabeçalho da última seção.
+ */
+.lastSectionHeader{
+	-webkit-border-bottom-left-radius : 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft     : 3px;
+	-moz-border-radius-bottomright    : 3px;
+	border-bottom-left-radius         : 3px;
+	border-bottom-right-radius        : 3px;
+	border-top                        : NONE;
+	border-left                       : 1px SOLID #888888;
+	border-right                      : 1px SOLID #888888;
+	border-bottom                     : 1px SOLID #888888;
+	background                        : url(../images/section.gif) REPEAT-X;
+	background-color                  : #efefef;
+	border-spacing                    : 0px;
+	padding                           : 1px;
+	text-align                        : CENTER;
+	font-family                       : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size                         : 14px;
+	font-weight                       : BOLD;
+	color                             : #666666;
+	cursor                            : POINTER;
+	width                             : 100%;
+	height                            : 26px;
+}
+
+/**
+ * Estilo que define o conteúdo da primeira seção.
+ */
+.firstSectionContent{
+	border-top    : NONE;
+	border-left   : 1px SOLID #888888;
+	border-right  : 1px SOLID #888888;
+	border-bottom : 1px SOLID #888888;
+	width         : 100%;
+	border-spacing: 0px;
+	padding       : 1px;
+	background    : #fffffa;
+	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size     : 14px;
+	color         : #666666;
+	overflow      : auto; 
+}
+
+/**
+ * Estilo que define o conteúdo de uma seção.
+ */
+.sectionContent{
+	border-top    : 1px SOLID #888888;
+	border-left   : 1px SOLID #888888;
+	border-right  : 1px SOLID #888888;
+	border-bottom : NONE;
+	width         : 100%;
+	border-spacing: 0px;
+	padding       : 1px;
+	background    : #fffffa;
+	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size     : 14px;
+	color         : #666666;
+	overflow      : auto; 
+}
+
+/**
+ * Estilo que define o conteúdo da última seção.
+ */
+.lastSectionContent{
+	-webkit-border-bottom-left-radius : 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft     : 3px;
+	-moz-border-radius-bottomright    : 3px;
+	border-bottom-left-radius         : 3px;
+	border-bottom-right-radius        : 3px;
+	border-top                        : 1px SOLID #888888;
+	border-left                       : 1px SOLID #888888;
+	border-right                      : 1px SOLID #888888;
+	border-bottom                     : 1px SOLID #888888;
+	width                             : 100%;
+	border-spacing                    : 0px;
+	padding                           : 1px;
+	background                        : #fffffa;
+	font-family                       : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size                         : 14px;
+	color                             : #666666;
+	overflow                          : auto; 
+};
