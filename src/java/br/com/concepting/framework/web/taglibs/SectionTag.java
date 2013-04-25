@@ -14,20 +14,161 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 3.0
  */
 public class SectionTag extends BaseActionFormElementTag{
-    private String  headerLabelStyleClass            = "";
-    private String  headerLabelStyle                 = "";
-    private String  headerStyleClass                 = "";
-    private String  headerStyle                      = "";
-    private String  contentStyleClass                = "";
-    private String  contentStyle                     = "";
-    private String  onSelect                         = "";
-    private String  onSelectAction                   = "";
-    private String  onSelectActionForward            = "";
-    private String  onSelectActionForwardOnFail      = "";
-    private String  onSelectActionUpdateViews        = "";
-    private Boolean onSelectActionValidate           = false;
-    private String  onSelectActionValidateProperties = "";
-    private String  content                          = null;
+    private String  headerStyleClass                   = "";
+    private String  headerStyle                        = "";
+    private String  contentStyleClass                  = "";
+    private String  contentStyle                       = "";
+    private Boolean focusWhen                          = false;
+    private String  onSelect                           = "";
+    private String  onSelectAction                     = "";
+    private String  onSelectActionForward              = "";
+    private String  onSelectActionForwardOnFail        = "";
+    private String  onSelectActionUpdateViews          = "";
+    private Boolean onSelectActionValidate             = false;
+    private String  onSelectActionValidateProperties   = "";
+    private String  onUnSelect                         = "";
+    private String  onUnSelectAction                   = "";
+    private String  onUnSelectActionForward            = "";
+    private String  onUnSelectActionForwardOnFail      = "";
+    private String  onUnSelectActionUpdateViews        = "";
+    private Boolean onUnSelectActionValidate           = false;
+    private String  onUnSelectActionValidateProperties = "";
+    private String  content                            = null;
+    
+    /**
+     * Indica quando o componente deve manter o foco.
+     * 
+     * @return True/False.
+     */
+    public Boolean focusWhen(){
+        return focusWhen;
+    }
+
+    /**
+     * Indica quando o componente deve manter o foco.
+     * 
+     * @return True/False.
+     */
+    public Boolean getFocusWhen(){
+        return focusWhen();
+    }
+
+    /**
+     * Define quando o componente deve manter o foco.
+     * 
+     * @param focusWhen True/False.
+     */
+    public void setFocusWhen(Boolean focusWhen){
+        this.focusWhen = focusWhen;
+    }
+
+    /**
+     * Retorna o identificador da ação do evento de deseleção.
+     * 
+     * @return String contendo o identificador da ação.
+     */
+    public String getOnUnSelectAction(){
+        return onUnSelectAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de deseleção.
+     * 
+     * @param onUnSelectAction String contendo o identificador da ação.
+     */
+    public void setOnUnSelectAction(String onUnSelectAction){
+        this.onUnSelectAction = onUnSelectAction;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação do evento de deseleção.
+     * 
+     * @return String contendo o identificador do redirecionamento da ação.
+     */
+    public String getOnUnSelectActionForward(){
+        return onUnSelectActionForward;
+    }
+
+    /**
+     * Define o identificador do redirecionamento da ação do evento de deseleção.
+     * 
+     * @param onUnSelectActionForward String contendo o identificador do redirecionamento da ação.
+     */
+    public void setOnUnSelectActionForward(String onUnSelectActionForward){
+        this.onUnSelectActionForward = onUnSelectActionForward;
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento, em caso de falha, da ação do evento de deseleção.
+     * 
+     * @return String contendo o identificador do redirecionamento da ação.
+     */
+    public String getOnUnSelectActionForwardOnFail(){
+        return onUnSelectActionForwardOnFail;
+    }
+
+    /**
+     * Define o identificador do redirecionamento, em caso de falha, da ação do evento de deseleção.
+     * 
+     * @param onUnSelectActionForwardOnFail String contendo o identificador do redirecionamento da ação.
+     */
+    public void setOnUnSelectActionForwardOnFail(String onUnSelectActionForwardOnFail){
+        this.onUnSelectActionForwardOnFail = onUnSelectActionForwardOnFail;
+    }
+
+    /**
+     * Retorna o identificador das views a serem atualizadas após a execução da ação do evento de deseleção.
+     * 
+     * @return String contendo o identificador das views.
+     */
+    public String getOnUnSelectActionUpdateViews(){
+        return onUnSelectActionUpdateViews;
+    }
+
+    /**
+     * Define o identificador das views a serem atualizadas após a execução da ação do evento de deseleção.
+     * 
+     * @param onUnSelectActionUpdateViews String contendo o identificador das views.
+     */
+    public void setOnUnSelectActionUpdateViews(String onUnSelectActionUpdateViews){
+        this.onUnSelectActionUpdateViews = onUnSelectActionUpdateViews;
+    }
+
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação do evento de deseleção.
+     * 
+     * @return True/False.
+     */
+    public Boolean getOnUnSelectActionValidate(){
+        return onUnSelectActionValidate;
+    }
+
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação do evento de deseleção.
+     * 
+     * @param onUnSelectActionValidate True/False.
+     */
+    public void setOnUnSelectActionValidate(Boolean onUnSelectActionValidate){
+        this.onUnSelectActionValidate = onUnSelectActionValidate;
+    }
+
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que devem ser validadas na execução da ação do evento de deseleção.
+     * 
+     * @return String contendo os identificadores das propriedades do modelo de dados do formulário.
+     */
+    public String getOnUnSelectActionValidateProperties(){
+        return onUnSelectActionValidateProperties;
+    }
+
+    /**
+     * Define as propriedades do modelo de dados do formulário que devem ser validadas na execução da ação do evento de deseleção.
+     * 
+     * @param onUnSelectActionValidateProperties String contendo os identificadores das propriedades do modelo de dados do formulário.
+     */
+    public void setOnUnSelectActionValidateProperties(String onUnSelectActionValidateProperties){
+        this.onUnSelectActionValidateProperties = onUnSelectActionValidateProperties;
+    }
     
     /**
      * Retorna o identificador da ação do evento de seleção.
@@ -135,42 +276,6 @@ public class SectionTag extends BaseActionFormElementTag{
      */
     public void setOnSelectActionValidateProperties(String onSelectActionValidateProperties){
         this.onSelectActionValidateProperties = onSelectActionValidateProperties;
-    }
-
-    /**
-     * Retorna o estilo CSS para o label do cabeçalho da seção.
-     * 
-     * @return String contendo o identificador do estilo CSS.
-     */
-    public String getHeaderLabelStyleClass(){
-        return headerLabelStyleClass;
-    }
-
-    /**
-     * Define o estilo CSS para o label do cabeçalho da seção.
-     * 
-     * @param headerLabelStyleClass String contendo o identificador do estilo CSS.
-     */
-    public void setHeaderLabelStyleClass(String headerLabelStyleClass){
-        this.headerLabelStyleClass = headerLabelStyleClass;
-    }
-
-    /**
-     * Retorna o estilo CSS para o label do cabeçalho da seção.
-     * 
-     * @return String contendo o identificador do estilo CSS.
-     */
-    public String getHeaderLabelStyle(){
-        return headerLabelStyle;
-    }
-
-    /**
-     * Define o estilo CSS para o label do cabeçalho da seção.
-     * 
-     * @param headerLabelStyle String contendo o identificador do estilo CSS.
-     */
-    public void setHeaderLabelStyle(String headerLabelStyle){
-        this.headerLabelStyle = headerLabelStyle;
     }
 
     /**
@@ -282,6 +387,24 @@ public class SectionTag extends BaseActionFormElementTag{
     }
 
     /**
+     * Retorna o evento a ser executado quando a aba for selecionada.
+     * 
+     * @return String contendo o evento a ser executado.
+     */
+    public String getOnUnSelect(){
+        return onUnSelect;
+    }
+
+    /**
+     * Define o evento a ser executado quando a aba for selecionada.
+     * 
+     * @param onUnSelect String contendo o evento a ser executado.
+     */
+    public void setOnUnSelect(String onUnSelect){
+        this.onUnSelect = onUnSelect;
+    }
+
+    /**
      * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#initialize()
      */
     protected void initialize() throws Throwable{
@@ -290,12 +413,6 @@ public class SectionTag extends BaseActionFormElementTag{
         AccordionTag accordionTag = (AccordionTag)findAncestorWithClass(this, AccordionTag.class);
 
         if(accordionTag != null){
-            if(headerLabelStyleClass.length() == 0)
-                headerLabelStyleClass = StringUtil.trim(accordionTag.getSectionHeaderLabelStyleClass());
-            
-            if(headerLabelStyleClass.length() == 0)
-                headerLabelStyleClass = TaglibConstants.DEFAULT_SECTION_HEADER_LABEL_STYLE_CLASS;
-
             if(headerStyleClass.length() == 0)
                 headerStyleClass = StringUtil.trim(accordionTag.getSectionHeaderStyleClass());
             
@@ -307,13 +424,19 @@ public class SectionTag extends BaseActionFormElementTag{
             
             if(contentStyleClass.length() == 0)
                 contentStyleClass = TaglibConstants.DEFAULT_SECTION_CONTENT_STYLE_CLASS;
+            
+            if(StringUtil.trim(accordionTag.getResourceId()).length() > 0 && StringUtil.trim(getResourceId()).length() == 0)
+                setResourceId(accordionTag.getResourceId());
+
+            if(StringUtil.trim(accordionTag.getHeight()).length() > 0 && StringUtil.trim(getHeight()).length() == 0)
+                setHeight(accordionTag.getHeight());
         }
         
         super.initialize();
+
+        String actionForm = getActionForm();
     
         if(onSelectAction.length() > 0){
-            String actionForm = getActionForm();
-            
             if(actionForm.length() > 0){
                 StringBuilder onSelectContent = new StringBuilder();
     
@@ -394,6 +517,88 @@ public class SectionTag extends BaseActionFormElementTag{
                 onSelect = onSelectContent.toString();
             }
         }
+        
+        if(onUnSelectAction.length() > 0){
+            if(actionForm.length() > 0){
+                StringBuilder onUnSelectContent = new StringBuilder();
+    
+                if(onUnSelect.length() > 0){
+                    onUnSelectContent.append(onUnSelect);
+                    
+                    if(!onUnSelect.endsWith(";"))
+                        onUnSelectContent.append(";");
+                    
+                    onUnSelectContent.append(" ");
+                }
+                
+                onUnSelectContent.append("document.");
+                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(".");
+                
+                SearchPropertiesGroupTag searchPropertiesTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
+                
+                if(searchPropertiesTag != null)
+                    onUnSelectContent.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                else
+                    onUnSelectContent.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                
+                onUnSelectContent.append(".value = ");
+                onUnSelectContent.append(onUnSelectActionValidate);
+                onUnSelectContent.append(";");
+                
+                if(onUnSelectActionValidateProperties.length() > 0){
+                    onUnSelectContent.append(" document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionValidateProperties);
+                    onUnSelectContent.append("'; ");
+                }
+                
+                if(onUnSelectActionForward.length() > 0){
+                    onUnSelectContent.append("document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.FORWARD_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionForward);
+                    onUnSelectContent.append("; ");
+                }
+                
+                if(onUnSelectActionForwardOnFail.length() > 0){
+                    onUnSelectContent.append("document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionForwardOnFail);
+                    onUnSelectContent.append("; ");
+                }
+    
+                if(onUnSelectActionUpdateViews.length() > 0){
+                    onUnSelectContent.append("document.");
+                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(".");
+                    onUnSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                    onUnSelectContent.append(".value = '");
+                    onUnSelectContent.append(onUnSelectActionUpdateViews);
+                    onUnSelectContent.append("; ");
+                }
+    
+                onUnSelectContent.append("document.");
+                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(".");
+                onUnSelectContent.append(AttributeConstants.ACTION_KEY);
+                onUnSelectContent.append(".value = '");
+                onUnSelectContent.append(onUnSelectAction);
+                onUnSelectContent.append("'; submitForm(document.");
+                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(");");
+                
+                onUnSelect = onUnSelectContent.toString();
+            }
+        }        
     }
 
     /**
@@ -425,8 +630,7 @@ public class SectionTag extends BaseActionFormElementTag{
     protected void clearAttributes(){
         super.clearAttributes();
 
-        setHeaderLabelStyleClass("");
-        setHeaderLabelStyle("");
+        setFocusWhen(false);
         setHeaderStyleClass("");
         setHeaderStyle("");
         setContentStyleClass("");
@@ -438,6 +642,13 @@ public class SectionTag extends BaseActionFormElementTag{
         setOnSelectActionUpdateViews("");
         setOnSelectActionValidate(false);
         setOnSelectActionValidateProperties("");
+        setOnUnSelect("");
+        setOnUnSelectAction("");
+        setOnUnSelectActionForward("");
+        setOnUnSelectActionForwardOnFail("");
+        setOnUnSelectActionUpdateViews("");
+        setOnUnSelectActionValidate(false);
+        setOnUnSelectActionValidateProperties("");
         setContent(null);
     }    
 }
