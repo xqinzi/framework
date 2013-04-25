@@ -135,11 +135,23 @@ public class GuidesTag extends BaseActionFormElementTag{
 				Boolean found = false;
 
 				for(GuideTag guideTag : guidesTags){
-					if(guideTag.getName().equals(currentGuide)){
-						found = true;
-
-						break;
-					}
+				    if(guideTag.focusWhen()){
+				        found        = true;
+				        currentGuide = guideTag.getName();
+				        
+				        break;
+				    }
+				}
+				
+				if(!found){
+    				for(GuideTag guideTag : guidesTags){
+    					if(guideTag.getName().equals(currentGuide)){
+    						found        = true;
+    						currentGuide = guideTag.getName();
+    						
+    						break;
+    					}
+    				}
 				}
 
 				if(!found){
