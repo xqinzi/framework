@@ -12,6 +12,12 @@ import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 import br.com.concepting.framework.util.StringUtil;
 
+/**
+ * Classe que define o componente visual languageSelector (Seletor de idioma).
+ * 
+ * @author fvilarinho
+ * @since 4.0
+ */
 public class LanguageSelectorTag extends ListPropertyTag{
     /**
      * @see br.com.concepting.framework.web.taglibs.ListPropertyTag#initialize()

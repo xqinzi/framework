@@ -7,6 +7,12 @@ import br.com.concepting.framework.resource.SystemResource;
 import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 
+/**
+ * Classe que define o componente visual skinSelector (Seletor de tema).
+ * 
+ * @author fvilarinho
+ * @since 4.0
+ */
 public class SkinSelectorTag extends ListPropertyTag{
     /**
      * @see br.com.concepting.framework.web.taglibs.ListPropertyTag#initialize()
