@@ -15,49 +15,11 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * @since 3.0
  */
 public class AccordionTag extends BaseActionFormElementTag{
-    private String           sectionHeaderLabelStyleClass = "";
-    private String           sectionHeaderLabelStyle      = "";
-    private String           sectionHeaderStyleClass      = "";
-    private String           sectionHeaderStyle           = "";
-    private String           sectionContentStyleClass     = "";
-    private String           sectionContentStyle          = "";
-    private List<SectionTag> sectionsTags                 = null;
-     
-    /**
-     * Retorna o identificador do estilo CSS que define o label do cabeçalho da seção.
-     * 
-     * @return String contendo o identificador do estilo CSS.
-     */
-    public String getSectionHeaderLabelStyleClass(){
-        return sectionHeaderLabelStyleClass;
-    }
-
-    /**
-     * Define o identificador do estilo CSS que define o label do cabeçalho da seção.
-     * 
-     * @param sectionHeaderLabelStyleClass String contendo o identificador do estilo CSS.
-     */
-    public void setSectionHeaderLabelStyleClass(String sectionHeaderLabelStyleClass){
-        this.sectionHeaderLabelStyleClass = sectionHeaderLabelStyleClass;
-    }
-
-    /**
-     * Retorna o identificador do estilo CSS que define o label do cabeçalho da seção.
-     * 
-     * @return String contendo o identificador do estilo CSS.
-     */
-    public String getSectionHeaderLabelStyle(){
-        return sectionHeaderLabelStyle;
-    }
-
-    /**
-     * Define o identificador do estilo CSS que define o label do cabeçalho da seção.
-     * 
-     * @param sectionHeaderLabelStyle String contendo o identificador do estilo CSS.
-     */
-    public void setSectionHeaderLabelStyle(String sectionHeaderLabelStyle){
-        this.sectionHeaderLabelStyle = sectionHeaderLabelStyle;
-    }
+    private String           sectionHeaderStyleClass  = "";
+    private String           sectionHeaderStyle       = "";
+    private String           sectionContentStyleClass = "";
+    private String           sectionContentStyle      = "";
+    private List<SectionTag> sectionsTags             = null;
 
     /**
      * Retorna o identificador do estilo CSS que define o cabeçalho da seção.
@@ -229,8 +191,13 @@ public class AccordionTag extends BaseActionFormElementTag{
         println("</table>");
     }
     
+    /**
+     * Renderiza as seções do componente.
+     * 
+     * @throws Throwable
+     */
     protected void renderSections() throws Throwable{
-        print("<table class\"");
+        print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
         
@@ -242,8 +209,8 @@ public class AccordionTag extends BaseActionFormElementTag{
             println("<tr>");
             println("<td>");
             
-            renderSectionHeader(sectionTag);
-            renderSectionContent(sectionTag);
+            renderSectionHeader(sectionTag, cont);
+            renderSectionContent(sectionTag, cont);
             
             println("</td>");
             println("</tr>");
@@ -252,13 +219,40 @@ public class AccordionTag extends BaseActionFormElementTag{
         println("</table>");
     }
     
-    protected void renderSectionHeader(SectionTag sectionTag) throws Throwable{
+    /**
+     * Renderiza o cabeçalho da seção.
+     * 
+     * @param sectionTag Instância contendo as propriedades da seção.
+     * @param index Valor inteiro contendo o índice da seção.
+     * @throws Throwable
+     */
+    protected void renderSectionHeader(SectionTag sectionTag, Integer index) throws Throwable{
         print("<div id=\"");
         print(sectionTag.getName());
         print(".");
         print(AttributeConstants.SECTION_HEADER_KEY);
         print("\" class=\"");
-        print(StringUtil.trim(sectionTag.getHeaderStyleClass()));
+        
+        String headerStyleClass = StringUtil.trim(sectionTag.getHeaderStyleClass());
+        
+        if(index == 0){
+            print("first");
+            print(StringUtil.capitalize(headerStyleClass));
+        }
+        else if(index == sectionsTags.size() - 1){
+            String sectionName        = sectionTag.getName();
+            String currentSectionName = getRequestInfo().getCurrentSection();
+            
+            if(!sectionName.equals(currentSectionName)){
+                print("last");
+                print(StringUtil.capitalize(headerStyleClass));
+            }
+            else
+                print(headerStyleClass);
+        }
+        else
+            print(headerStyleClass);
+        
         print("\"");
         
         String style = StringUtil.trim(sectionTag.getHeaderStyle());
@@ -273,31 +267,36 @@ public class AccordionTag extends BaseActionFormElementTag{
             print("\"");
         }
         
-        print(" onClick=\"showHideAccordionSection(this);\" title=\"");
-        print(StringUtil.trim(sectionTag.getTooltip()));
-        println("\">");
-
-        print("<span class=\"");
-        print(StringUtil.trim(sectionTag.getHeaderLabelStyleClass()));
-        print("\"");
+        print(" onClick=\"showHideAccordionSection('");
+        print(getName());
+        print("', this, ");
+        print(index == sectionsTags.size() - 1);
         
-        style = StringUtil.trim(sectionTag.getHeaderLabelStyle());
+        String onSelect   = StringUtil.trim(sectionTag.getOnSelect());
+        String onUnSelect = StringUtil.trim(sectionTag.getOnUnSelect());
         
-        if(style.length() > 0){
-            print(" style=\"");
-            print(style);
-                
-            if(!style.endsWith(";"))
-                print(";");
-            
-            print("\"");
+        if(onSelect.length() > 0){
+            print(", function(){");
+            print(onSelect);
+            print("}");
         }
         
-        println(">");
+        if(onUnSelect.length() > 0){
+            print(", ");
+            
+            if(onSelect.length() == 0)
+                print("null, ");
+            
+            print("function(){");
+            print(onUnSelect);
+            print("}");
+        }
+        
+        print(");\" title=\"");
+        print(StringUtil.trim(sectionTag.getTooltip()));
+        println("\">");
         
         println(StringUtil.trim(sectionTag.getLabel()));
-        
-        println("</span>");
         
         println("</div>");
     }
@@ -306,9 +305,10 @@ public class AccordionTag extends BaseActionFormElementTag{
      * Renderiza o conteúdo da seção.
      * 
      * @param sectionTag Instância da tag contendo as propriedade da seção.
+     * @param index Valor inteiro contendo o índice da seção.
      * @throws Throwable
      */
-    protected void renderSectionContent(SectionTag sectionTag) throws Throwable{
+    protected void renderSectionContent(SectionTag sectionTag, Integer index) throws Throwable{
         String sectionName        = sectionTag.getName();
         String currentSectionName = getRequestInfo().getCurrentSection();
 
@@ -317,15 +317,37 @@ public class AccordionTag extends BaseActionFormElementTag{
         print(".");
         print(AttributeConstants.SECTION_CONTENT_KEY);
         print("\" class=\"");
-        print(StringUtil.trim(sectionTag.getContentStyleClass()));
+        
+        String contentStyleClass = StringUtil.trim(sectionTag.getContentStyleClass());
+        
+        if(index == 0){
+            print("first");
+            print(StringUtil.capitalize(contentStyleClass));
+        }
+        else if(index == sectionsTags.size() - 1){
+            print("last");
+            print(StringUtil.capitalize(contentStyleClass));
+        }
+        else
+            print(contentStyleClass);
+        
         print("\"");
         
         String style  = StringUtil.trim(sectionTag.getContentStyle());
+        String height = StringUtil.trim(sectionTag.getHeight());
         
-        if(style.length() > 0 || !currentSectionName.equals(sectionName)){
+        if(style.length() > 0 || !currentSectionName.equals(sectionName) || height.length() > 0){
             print(" style=\"");
-
-            if(!currentSectionName.equals(sectionName))
+            
+            if(height.length() > 0){
+                print("height: ");
+                print(height);
+                
+                if(!height.endsWith(";"))
+                    print(";");
+            }
+            
+            if(!currentSectionName.equals(sectionName) && !sectionTag.focusWhen())
                 print(" display: NONE;");
             
             if(style.length() > 0){
@@ -366,9 +388,6 @@ public class AccordionTag extends BaseActionFormElementTag{
      */
     protected void initialize() throws Throwable{
         setComponentType(ComponentType.ACCORDION);
-        
-        if(sectionHeaderLabelStyleClass.length() == 0)
-            sectionHeaderLabelStyleClass = TaglibConstants.DEFAULT_SECTION_HEADER_LABEL_STYLE_CLASS;
 
         if(sectionHeaderStyleClass.length() == 0)
             sectionHeaderStyleClass = TaglibConstants.DEFAULT_SECTION_HEADER_STYLE_CLASS;
@@ -385,6 +404,10 @@ public class AccordionTag extends BaseActionFormElementTag{
     protected void clearAttributes(){
         super.clearAttributes();
  
+        setSectionHeaderStyleClass("");
+        setSectionHeaderStyle("");
+        setSectionContentStyleClass("");
+        setSectionContentStyle("");
         setSectionsTags(null);
     }
 }
