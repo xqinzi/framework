@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import org.apache.commons.beanutils.ConstructorUtils;
+
 import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.types.DateFieldType;
 
@@ -140,6 +142,9 @@ public class DateTimeUtil{
 		buffer = calendarBuffer.get(Calendar.MILLISECOND);
 		if(buffer >= 0)
 			result.set(Calendar.MILLISECOND, buffer);
+		
+		if(pattern.contains("HH") || pattern.contains("mm") || pattern.contains("ss"))
+		    return (D)new DateTime(result.getTimeInMillis());
 
 		return (D)result.getTime();
 	}
@@ -160,13 +165,13 @@ public class DateTimeUtil{
      
      		parser.setLenient(false);
      
-     		return (D)parser.parse(value);
+     		return (D)new DateTime(parser.parse(value).getTime());
 		}
 		catch(Throwable e){
 		    if(parser != null){
     			parser.applyPattern(getDefaultDatePattern(language));
     			
-    			return (D) parser.parse(value);
+    			return (D)parser.parse(value);
 		    }
 		    
 		    return null;
@@ -457,8 +462,16 @@ public class DateTimeUtil{
 				break;
 			}
 		}
-
-		return (D)calendar.getTime();
+		
+		if(date.getClass().equals(Date.class))
+		    return (D)calendar.getTime();
+		    
+	    try{
+            return (D)ConstructorUtils.invokeConstructor(date.getClass(), calendar.getTimeInMillis());
+        }
+        catch(Throwable e){
+            return null;
+        }
 	}
 
 	/**
