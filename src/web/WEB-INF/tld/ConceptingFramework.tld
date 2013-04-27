@@ -5512,10 +5512,6 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>labelPosition</name>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
             <name>labelStyle</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
