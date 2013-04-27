@@ -11,6 +11,7 @@ import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.Node;
+import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
@@ -643,6 +644,8 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
         if(closedNodeIconStyleClass.length() == 0)
             closedNodeIconStyleClass = TaglibConstants.DEFAULT_CLOSED_NODE_ICON_STYLE_CLASS;
+        
+        setLabelAlignmentType(AlignmentType.LEFT);
 
         super.initialize();
         
@@ -904,7 +907,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
             renderDataIndexesAttributes();
         }
         
-		println("<table>");
+		println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
 		println("<tr>");
 
 		renderLabel();
