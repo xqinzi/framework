@@ -2,6 +2,7 @@ package br.com.concepting.framework.security.service;
 
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,6 +11,10 @@ import br.com.concepting.framework.model.ExpressionModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
+import br.com.concepting.framework.model.helpers.ModelInfo;
+import br.com.concepting.framework.model.helpers.PropertyInfo;
+import br.com.concepting.framework.model.util.ModelUtil;
+import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.network.util.NetworkUtil;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.security.exceptions.ExpiredPasswordException;
@@ -88,6 +93,9 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                 Boolean              expiredPassword    = false;
                 Boolean              passwordWillExpire = false;
                 Integer              daysUntilExpire    = 0;
+                Integer              hoursUntilExpire   = 0;
+                Integer              minutesUntilExpire = 0;
+                Integer              secondsUntilExpire = 0;
                 
                 if(loginParameters != null){
                     IDAO loginParametersDao = getPersistence(loginParameters.getClass());
@@ -132,7 +140,8 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                     }
                 
                     DateTime expirePasswordDate     = user.getExpirePasswordDate();
-                    DateTime now                    = new DateTime();
+                    Calendar calendar               = Calendar.getInstance();
+                    DateTime now                    = new DateTime(calendar.getTimeInMillis());
                     Integer  expirePasswordInterval = loginParameters.getExpirePasswordInterval();
                     Integer  changePasswordInterval = loginParameters.getChangePasswordInterval();
                 
@@ -145,7 +154,14 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                             loginSession.setUser(user);
                         }
                         
-                        daysUntilExpire = DateTimeUtil.diff(expirePasswordDate, now, DateFieldType.DAY).intValue();
+                        daysUntilExpire    = DateTimeUtil.diff(expirePasswordDate, now, DateFieldType.DAY).intValue();
+                        hoursUntilExpire   = DateTimeUtil.diff(expirePasswordDate, now, DateFieldType.HOURS).intValue() - (daysUntilExpire * 24);
+                        minutesUntilExpire = DateTimeUtil.diff(expirePasswordDate, now, DateFieldType.MINUTES).intValue() - (hoursUntilExpire * 60);
+                        
+                        if(minutesUntilExpire == 0)
+                            secondsUntilExpire = DateTimeUtil.diff(expirePasswordDate, now, DateFieldType.MINUTES).intValue();
+                        else
+                            secondsUntilExpire = 60 - calendar.get(Calendar.SECOND);
 
                         if(changePasswordInterval != null && changePasswordInterval > 0)
                             if(daysUntilExpire <= changePasswordInterval)
@@ -201,17 +217,18 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                 if(expiredPassword){
                     user.setChangePassword(true);
                     user.setNewPassword("");
+                    
+                    userDao.update(user);
             
                     throw new ExpiredPasswordException();
                 }
+                
+                userDao.update(user);
         
                 if(passwordWillExpire)
-                    throw new PasswordWillExpireException(daysUntilExpire);
+                    throw new PasswordWillExpireException(daysUntilExpire, hoursUntilExpire, minutesUntilExpire, secondsUntilExpire);
             }
             finally{
-                if(user.getId() != null && user.getId() > 0)
-                    userDao.update(user);
-                
                 loginSession.setUser(user);
             }
         }
@@ -284,10 +301,29 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
 			
 			dao.delete(loginSession);
 			
+			
 			loginSession.setId(null);
 			loginSession.getUser().setId(null);
 			loginSession.getUser().setChangePassword(false);
 			loginSession.getUser().setPassword("");
+			
+			ModelInfo modelInfo = ModelUtil.getModelInfo(loginSession.getUser().getClass());
+			
+			if(modelInfo != null){
+			    List<PropertyInfo> propertiesInfo = modelInfo.getPropertiesInfo();
+			    
+			    if(propertiesInfo != null && propertiesInfo.size() > 0){
+			        for(PropertyInfo propertyInfo : propertiesInfo){
+			            if(propertyInfo.isForSearch() || propertyInfo.isModel() || propertyInfo.hasModel()){
+			                try{
+			                    PropertyUtil.setProperty(loginSession.getUser(), propertyInfo.getId(), null);
+			                }
+			                catch(Throwable e){
+			                }
+			            }
+			        }
+			    }
+			}
 		}
 	}
 
