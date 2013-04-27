@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.resource.SystemResource;
 import br.com.concepting.framework.resource.SystemResourceLoader;
+import br.com.concepting.framework.security.exceptions.LoginSessionExpiredException;
 import br.com.concepting.framework.security.exceptions.PermissionDeniedException;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.resource.SecurityResource;
@@ -105,10 +106,17 @@ public class SecurityFilter implements Filter{
         Boolean result = true;
         
         if(!excludeUrl){
-            result = securityController.isAuthenticated();
+            if(securityController.isLoginSessionExpired()){
+                result = false;
+                
+                actionFormMessageController.addMessage(new LoginSessionExpiredException());
+            }
             
-            if(!result)
+            if(!securityController.isLoginSessionAuthenticated()){
+                result = false;
+                     
                 actionFormMessageController.addMessage(new PermissionDeniedException());
+            }
         }
         
         return result;
