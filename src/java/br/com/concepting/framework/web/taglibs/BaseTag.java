@@ -700,7 +700,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 	 */
 	protected void render() throws Throwable{
 	    if(renderWhenAuthenticated)
-	        rendered = securityController.isAuthenticated();
+	        rendered = securityController.isLoginSessionAuthenticated();
 	    
 	    if(rendered){
     		renderOpen();
