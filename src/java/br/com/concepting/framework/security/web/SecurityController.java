@@ -41,14 +41,34 @@ public class SecurityController{
     }
     
     /**
-     * Indica se o usuário está autenticado.
+     * Indica se a sessão de login está autenticada.
      * 
      * @return True/False.
      */
-    public <L extends LoginSessionModel> Boolean isAuthenticated(){
+    public <L extends LoginSessionModel> Boolean isLoginSessionAuthenticated(){
         L loginSession = getLoginSession();
         
         return (loginSession != null && loginSession.getId() != null && loginSession.getId() > 0 && loginSession.getUser() != null && loginSession.getUser().getId() != null && loginSession.getUser().getId() > 0);
+    }
+    
+    /**
+     * Indica se a sessão de login expirou.
+     * 
+     * @return True/False.
+     */
+    public Boolean isLoginSessionExpired(){
+        if(!isLoginSessionAuthenticated()){
+            Cookie cookie = systemController.getCookie(SecurityConstants.LOGIN_SESSION_KEY);
+            
+            if(cookie == null)
+                return false;
+            
+            systemController.removeCookie(SecurityConstants.LOGIN_SESSION_KEY);
+            
+            return true;
+        }
+        
+        return false;
     }
 
     /**
@@ -127,6 +147,13 @@ public class SecurityController{
      * @param loginSession Instância contendo as propriedades do login.
      */
     public <L extends LoginSessionModel> void setLoginSession(L loginSession){
+        if(loginSession != null && loginSession.getId() != null && loginSession.getId() > 0){
+            UserModel user = loginSession.getUser();
+            
+            if(user != null && user.getId() != null && user.getId() > 0)
+                systemController.addCookie(SecurityConstants.LOGIN_SESSION_KEY, Boolean.TRUE.toString(), true);
+        }
+        
         systemController.setAttribute(SecurityConstants.LOGIN_SESSION_KEY, loginSession, ScopeType.SESSION);
     }
     
