@@ -9,17 +9,44 @@ import br.com.concepting.framework.exceptions.ExpectedWarningException;
  * @since 1.0
  */
 public class PasswordWillExpireException extends ExpectedWarningException{
-    private Integer daysUntilExpiration = 0;
+    private Integer daysUntilExpiration    = 0;
+    private Integer hoursUntilExpiration   = 0;
+    private Integer minutesUntilExpiration = 0;
+    private Integer secondsUntilExpiration = 0;
     
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
      * @param daysUntilExpiration Valor inteiro contendo o número de dias até a expiração.
+     * @param hoursUntilExpiration Valor inteiro contendo o número de horas até a expiração.
+     * @param minutesUntilExpiration Valor inteiro contendo o número de minutos até a expiração.
+     * @param secondsUntilExpiration Valor inteiro contendo o número de segundos até a expiração.
      */
-    public PasswordWillExpireException(Integer daysUntilExpiration){
+    public PasswordWillExpireException(Integer daysUntilExpiration, Integer hoursUntilExpiration, Integer minutesUntilExpiration, Integer secondsUntilExpiration){
         super();
         
         setDaysUntilExpiration(daysUntilExpiration);
+        setHoursUntilExpiration(hoursUntilExpiration);
+        setMinutesUntilExpiration(minutesUntilExpiration);
+        setSecondsUntilExpiration(secondsUntilExpiration);
+    }
+    
+    /**
+     * Retorna o número de horas até a expiração da senha.
+     * 
+     * @return Valor inteiro contendo o número de horas até a expiração.
+     */
+    public Integer getHoursUntilExpiration(){
+        return hoursUntilExpiration;
+    }
+
+    /**
+     * Define o número de horas até a expiração da senha.
+     * 
+     * @param hoursUntilExpiration Valor inteiro contendo o número de horas até a expiração.
+     */
+    public void setHoursUntilExpiration(Integer hoursUntilExpiration){
+        this.hoursUntilExpiration = hoursUntilExpiration;
     }
 
     /**
@@ -38,5 +65,41 @@ public class PasswordWillExpireException extends ExpectedWarningException{
      */
     public void setDaysUntilExpiration(Integer daysUntilExpiration){
         this.daysUntilExpiration = daysUntilExpiration;
+    }
+
+    /**
+     * Retorna o número de minutos até a expiração da senha.
+     * 
+     * @return Valor inteiro contendo o número de minutos até a expiração.
+     */
+    public Integer getMinutesUntilExpiration(){
+        return minutesUntilExpiration;
+    }
+
+    /**
+     * Define o número de minutos até a expiração da senha.
+     * 
+     * @param minutesUntilExpiration Valor inteiro contendo o número de minutos até a expiração.
+     */
+    public void setMinutesUntilExpiration(Integer minutesUntilExpiration){
+        this.minutesUntilExpiration = minutesUntilExpiration;
+    }
+
+    /**
+     * Retorna o número de segundos até a expiração da senha.
+     * 
+     * @return Valor inteiro contendo o número de segundos até a expiração.
+     */
+    public Integer getSecondsUntilExpiration(){
+        return secondsUntilExpiration;
+    }
+
+    /**
+     * Define o número de segundos até a expiração da senha.
+     * 
+     * @param secondsUntilExpiration Valor inteiro contendo o número de segundos até a expiração.
+     */
+    public void setSecondsUntilExpiration(Integer secondsUntilExpiration){
+        this.secondsUntilExpiration = secondsUntilExpiration;
     }
 }
