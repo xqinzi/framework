@@ -148,9 +148,19 @@ public class MessageBoxTag extends DialogBoxTag{
         String             resourceId       = getResourceId();
         
         if(resourceId.length() == 0){
-            resourceId = TaglibConstants.DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID;
+            ActionFormTag actionFormTag = getActionFormTag();
             
-            setResourceId(resourceId);
+            if(actionFormTag != null){
+                resourceId = actionFormTag.getResourceId();
+                
+                setResourceId(resourceId);
+            }
+            
+            if(resourceId.length() == 0){
+                resourceId = TaglibConstants.DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID;
+                
+                setResourceId(resourceId);
+            }
         }
         
         PropertiesResource resources = getI18nResource();
@@ -267,7 +277,8 @@ public class MessageBoxTag extends DialogBoxTag{
             propertyId.append(".");
             propertyId.append(AttributeConstants.TITLE_KEY);
             
-            title = resources.getProperty(propertyId.toString(), false);
+            resources = getI18nResource(TaglibConstants.DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID);
+            title     = resources.getProperty(propertyId.toString(), false);
                 
             if(title == null)
                 title = StringUtil.trim(defaultResources.getProperty(propertyId.toString()));
