@@ -149,33 +149,38 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
         Object       value        = getValue();
         Object       optionValue  = getOptionValue();
 
-        if(value != null && optionValue != null){
+        if(value != null){
 	        if(propertyInfo != null){
                 if(propertyInfo.isCollection()){
-                    Collection values  = (Collection)value;
-
-                    setSelected(values.contains(optionValue));
+                    if(optionValue != null){
+                        Collection values  = (Collection)value;
+    
+                        setSelected(values.contains(optionValue));
+                    }
                 }
                 else if(propertyInfo.isBoolean())
                     setSelected(Boolean.parseBoolean(value.toString()));
                 else if(optionValue instanceof BaseModel && !(value instanceof BaseModel)){
-                    ModelInfo modelInfo = ModelUtil.getModelInfo(optionValue.getClass());
-                    
-                    if(modelInfo != null){
-                        List<PropertyInfo> identityProperties = modelInfo.getIdentityPropertiesInfo();
+                    if(optionValue != null){
+                        ModelInfo modelInfo = ModelUtil.getModelInfo(optionValue.getClass());
                         
-                        if(identityProperties != null && identityProperties.size() == 1){
-                            PropertyInfo identityPropertyInfo = identityProperties.get(0);
-                            Object       optionValueProperty  = PropertyUtil.getProperty(optionValue, identityPropertyInfo.getId());
+                        if(modelInfo != null){
+                            List<PropertyInfo> identityProperties = modelInfo.getIdentityPropertiesInfo();
                             
-                            setSelected(value.equals(optionValueProperty));
+                            if(identityProperties != null && identityProperties.size() == 1){
+                                PropertyInfo identityPropertyInfo = identityProperties.get(0);
+                                Object       optionValueProperty  = PropertyUtil.getProperty(optionValue, identityPropertyInfo.getId());
+                                
+                                setSelected(value.equals(optionValueProperty));
+                            }
                         }
                     }
                 }
     	        else if(optionValue instanceof BaseModel && value instanceof BaseModel)
     	            setSelected(value.equals(optionValue));
     	        else
-	                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
+    	            if(optionValue != null)
+    	                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
 	        }
 	        else
                 setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
