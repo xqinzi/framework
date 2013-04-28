@@ -1,5 +1,6 @@
 package br.com.concepting.framework.security.web.action;
 
+import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.security.exceptions.LoginSessionExpiredException;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
@@ -191,6 +192,8 @@ public class LoginSessionAction extends BaseAction{
         service.logOut(loginSession);
 
         actionFormMessageController.addMessage(new LoginSessionExpiredException());
+        
+        systemController.removeCookie(SecurityConstants.LOGIN_SESSION_KEY);
 
         init();
     }
