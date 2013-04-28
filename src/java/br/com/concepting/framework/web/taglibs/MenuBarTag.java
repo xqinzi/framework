@@ -365,7 +365,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
      					else{
                             print("<td align=\"");
                             print(AlignmentType.CENTER);
-                            println("\">");
+                            println("\" height=\"20\" width=\"2\">");
                             print("<div class=\"");
                             print(TaglibConstants.DEFAULT_MENU_BAR_SEPARATOR_STYLE_CLASS);
                             println("\"></div>");
@@ -507,25 +507,25 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 
                         println("</td>");
      
- 						print("<td id=\"");
- 						print(menuItemName);
- 						print(".");
- 						print(AttributeConstants.MENU_ITEM_ARROW_KEY);
- 						print("\" class=\"");
-
-                        if(parentMenuItem != null)
-                            print(menuBoxItemStyleClass);
-                        else
-                            print(menuBarItemStyleClass);
-
-                        print("\" align=\"");
-                        print(AlignmentType.RIGHT);
-                        print("\" width=\"1\">");
-
- 						if(hasSubmenuItems && parentMenu != null)
-     						print("&raquo;");
-
- 						println("</td>");
+                        if(parentMenu != null){
+     						print("<td id=\"");
+     						print(menuItemName);
+     						print(".");
+     						print(AttributeConstants.MENU_ITEM_ARROW_KEY);
+     						print("\" class=\"");
+    
+                            if(parentMenuItem != null)
+                                print(menuBoxItemStyleClass);
+                            else
+                                print(menuBarItemStyleClass);
+    
+                            print("\" align=\"");
+                            print(AlignmentType.RIGHT);
+                            print("\" width=\"1\">");
+                            
+                            if(hasSubmenuItems)
+                                println("&raquo;</td>");
+                        }
      				}
      
      				if(parentMenu != null){
