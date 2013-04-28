@@ -570,7 +570,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 		Boolean               expressionResult    = false;
 		ExpressionProcessor   expressionProcessor = getExpressionProcessor();
 
-        print("<table class\"");
+        print("<table class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
 		println("<tr>");
