@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.resource.SystemResource;
 import br.com.concepting.framework.resource.SystemResourceLoader;
+import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.security.exceptions.LoginSessionExpiredException;
 import br.com.concepting.framework.security.exceptions.PermissionDeniedException;
 import br.com.concepting.framework.security.model.LoginSessionModel;
@@ -110,12 +111,15 @@ public class SecurityFilter implements Filter{
                 result = false;
                 
                 actionFormMessageController.addMessage(new LoginSessionExpiredException());
+                
+                systemController.removeCookie(SecurityConstants.LOGIN_SESSION_KEY);
             }
-            
-            if(!securityController.isLoginSessionAuthenticated()){
-                result = false;
-                     
-                actionFormMessageController.addMessage(new PermissionDeniedException());
+            else{
+                if(!securityController.isLoginSessionAuthenticated()){
+                    result = false;
+                         
+                    actionFormMessageController.addMessage(new PermissionDeniedException());
+                }
             }
         }
         
