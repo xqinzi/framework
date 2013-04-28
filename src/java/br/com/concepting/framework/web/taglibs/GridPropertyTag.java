@@ -1670,7 +1670,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 		println("<tr>");
 		println("<td>");
 
-        print("<table class\"");
+        print("<table class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
 		println("<tr>");
