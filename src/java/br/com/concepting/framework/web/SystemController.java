@@ -176,10 +176,6 @@ public class SystemController{
             securityController.setLoginSession(loginSession);
         }
         
-        session.setAttribute(Globals.LOCALE_KEY, currentLanguage);
-        
-        Config.set(session, Config.FMT_LOCALE, currentLanguage);
-        
         addCookie(AttributeConstants.CURRENT_LANGUAGE_KEY, currentLanguage.toString(), true);
 	}
 	
@@ -200,6 +196,10 @@ public class SystemController{
             
             setCurrentLanguage(currentLanguage);
         }
+        
+        session.setAttribute(Globals.LOCALE_KEY, currentLanguage);
+        
+        Config.set(session, Config.FMT_LOCALE, currentLanguage);
         
         return currentLanguage;
     }
