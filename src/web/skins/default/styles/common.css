@@ -56,7 +56,7 @@
 	width                          : 100%;
 	height                         : 7.5%;
 	font-family                    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size                      : 14px;;
+	font-size                      : 14px;
 	font-weight                    : NORMAL;
 	color                          : #666666;
 	text-align                     : CENTER;
@@ -71,7 +71,7 @@
 	border-left   : 1px DOTTED #888888; 
 	border-right  : 1px DOTTED #888888; 
 	font-family   : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size     : 14px;;
+	font-size     : 14px;
 	color         : #666666;
 	padding       : 0px;
 	width         : 100%;
@@ -93,7 +93,7 @@
 	width                             : 100%; 
 	height                            : 5%;
 	font-family                       : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size                         : 14px;;
+	font-size                         : 14px;
 	font-weight                       : NORMAL;
 	color                             : #666666;
 	text-align                        : CENTER;
@@ -124,7 +124,7 @@
  */
 .link{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 14px;; 
+	font-size      : 14px; 
 	color          : #1e8fad;
 	text-decoration: NONE;
 	cursor         : POINTER;
@@ -135,7 +135,7 @@
  */
 .link:hover{
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size      : 14px;; 
+	font-size      : 14px; 
 	color          : #1e8fad;
 	text-decoration: underline;
 }
@@ -185,7 +185,7 @@
  */
 .loadingBoxText{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 14px;;
+	font-size  : 14px;
 	font-weight: BOLD;
 	text-align : CENTER;
 	color      : #666666;
@@ -215,7 +215,7 @@
  */
 .label{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 14px;; 
+	font-size  : 14px; 
 	white-space: NOWRAP;
 	color      : #666666;
 	width      : 120px;
@@ -227,7 +227,7 @@
  */
 .textBox{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size            : 14px;;
+	font-size            : 14px;
 	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
@@ -257,7 +257,7 @@
  */
 .textArea{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size            : 14px;;
+	font-size            : 14px;
 	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
@@ -286,7 +286,7 @@
  */
 .password{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size            : 14px;;
+	font-size            : 14px;
 	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
@@ -316,7 +316,7 @@
  */
 .list{
 	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size            : 14px;;
+	font-size            : 14px;
 	border               : 1px SOLID #888888;
 	color                : #666666;
 	background           : #ffffff;
@@ -362,7 +362,7 @@ option:hover{
  */
 .options{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 14px;;
+	font-size  : 14px;
 }
 
 /**
@@ -380,7 +380,7 @@ option:hover{
  */ 
 .groupLabel{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 14px;;
+	font-size  : 14px;
 	font-weight: BOLD;
 	color      : #666666;
 }
@@ -390,7 +390,7 @@ option:hover{
  */
 .validationLabel{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 14px;;
+	font-size  : 14px;
 	color      : #1e8fad;
 }
 
@@ -402,7 +402,7 @@ option:hover{
 	-webkit-border-radius: 3px;
 	border-radius        : 3px;
 	border               : 1px SOLID #888888;
-	background           : #fefefe;
+	background           : #efefef;
 	-webkit-transition   : all 0.25s ease-in-out;
 	-moz-transition      : all 0.25s ease-in-out;
 	transition           : all 0.25s ease-in-out;
@@ -420,6 +420,7 @@ option:hover{
 	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
 	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
 	border            : 1px SOLID #1e8fad;
+	background        : #fafafa;
 }
 
 /**
@@ -439,7 +440,7 @@ option:hover{
  */
 .buttonLabel{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
-	font-size  : 14px;;
+	font-size  : 14px;
 	color      : #666666;
 	text-align : CENTER;
 	white-space: NOWRAP;
@@ -721,4 +722,71 @@ option:hover{
  */
 .imagePreview{
 	border: 1px SOLID #888888;
+}
+
+.addSpinnerButton{
+	width                : 24px;
+	height               : 24px;
+	-moz-border-radius   : 3px;
+	-webkit-border-radius: 3px;
+	border-radius        : 3px;
+	border               : 1px SOLID #888888;
+	background           : #efefef;
+	-webkit-transition   : all 0.25s ease-in-out;
+	-moz-transition      : all 0.25s ease-in-out;
+	transition           : all 0.25s ease-in-out;
+	cursor               : POINTER;
+	white-space          : NOWRAP;
+}
+
+.addSpinnerButton:hover{
+	width                : 24px;
+	height               : 24px;
+	-moz-border-radius   : 3px;
+	-webkit-border-radius: 3px;
+	border-radius        : 3px;
+	border               : 1px SOLID #888888;
+	background           : #fafafa;
+	-webkit-transition   : all 0.25s ease-in-out;
+	-moz-transition      : all 0.25s ease-in-out;
+	transition           : all 0.25s ease-in-out;
+	cursor               : POINTER;
+	white-space          : NOWRAP;
+}
+
+.subtractSpinnerButton{
+	width                : 24px;
+	height               : 24px;
+	-moz-border-radius   : 3px;
+	-webkit-border-radius: 3px;
+	border-radius        : 3px;
+	border               : 1px SOLID #888888;
+	background           : #efefef;
+	-webkit-transition   : all 0.25s ease-in-out;
+	-moz-transition      : all 0.25s ease-in-out;
+	transition           : all 0.25s ease-in-out;
+	cursor               : POINTER;
+	white-space          : NOWRAP;
+}
+
+.subtractSpinnerButton:hover{
+	width                : 24px;
+	height               : 24px;
+	-moz-border-radius   : 3px;
+	-webkit-border-radius: 3px;
+	border-radius        : 3px;
+	border               : 1px SOLID #888888;
+	background           : #fafafa;
+	-webkit-transition   : all 0.25s ease-in-out;
+	-moz-transition      : all 0.25s ease-in-out;
+	transition           : all 0.25s ease-in-out;
+	cursor               : POINTER;
+	white-space          : NOWRAP;
+}
+
+.spinnerButtonLabel{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 18px;
+	font-weight: BOLD;
+	color      : #666666;
 }
