@@ -18,10 +18,4 @@ public enum QueryType{
 	 * propriedade(s) de pesquisa.
 	 */
 	SEARCH,
-
-	/**
-	 * Constante que define o tipo de query para retornar uma lista de modelos de dados a partir de um 
-	 * relacionamento.
-	 */
-	LOAD_REFERENCE;
 }
