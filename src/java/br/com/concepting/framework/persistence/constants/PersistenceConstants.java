@@ -22,12 +22,6 @@ public abstract class PersistenceConstants extends ResourceConstants{
     public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("persistenceResources.xml");
     
     /**
-     * Constante que define o identificador do alias default de um modelo de dados utilizado 
-     * na HQL/JQL.
-     */
-    public static final String DEFAULT_MODEL_ALIAS = "this";
-    
-    /**
      * Constante que define o identificador da chave que define o atributo de número máximo de 
      * registros que devem retornar em uma query.
      */
