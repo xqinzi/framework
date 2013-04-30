@@ -274,7 +274,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 		if(iconUrl.length() > 0 || iconStyleClass.length() > 0 || iconStyle.length() > 0){
             print("<td align=\"");
             print(AlignmentType.CENTER);
-            println("\">");
+            println("\" width=\"1\">");
 
 			if(iconUrl.length() > 0){
 				print("<img src=\"");
@@ -339,7 +339,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderBody()
 	 */
 	protected void renderBody() throws Throwable{
-        print("<table class=\"");
+        print("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
 		println("<tr>");
