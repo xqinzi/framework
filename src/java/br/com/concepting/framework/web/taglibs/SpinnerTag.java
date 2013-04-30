@@ -23,6 +23,9 @@ public class SpinnerTag extends TextPropertyTag{
         this.minimumValue = minimumValue;
     }
     
+    /**
+     * @see br.com.concepting.framework.web.taglibs.TextPropertyTag#initialize()
+     */
     protected void initialize() throws Throwable{
         super.initialize();
         
@@ -45,7 +48,7 @@ public class SpinnerTag extends TextPropertyTag{
             PropertyInfo propertyInfo = getPropertyInfo();
             
             if(propertyInfo != null && propertyInfo.isNumber()){
-                println("<table border=\"0\" cellpadding=\"0\" cellpadding=\"0\">");
+                println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
                 println("<tr>");
                 println("<td>");
                 
@@ -121,6 +124,9 @@ public class SpinnerTag extends TextPropertyTag{
         }
     }
     
+    /**
+     * @see br.com.concepting.framework.web.taglibs.TextPropertyTag#clearAttributes()
+     */
     protected void clearAttributes(){
         super.clearAttributes();
         
