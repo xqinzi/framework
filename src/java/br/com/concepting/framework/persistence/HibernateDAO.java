@@ -202,7 +202,7 @@ public abstract class HibernateDAO extends BaseDAO{
     		String              statementId      = MethodUtil.getMethodFromStackTrace(2).getName();
     		Map<String, Object> clauseParameters = new LinkedHashMap<String, Object>();
     		String              queryString      = buildQueryString(model, modelFilter, clauseParameters, queryType);
-    		Query               query            = (queryType != QueryType.LOAD_REFERENCE ? connection.createQuery(queryString) : connection.createFilter(referenceProperty, queryString));
+    		Query               query            = connection.createQuery(queryString);
     
     		query.setComment(statementId);
     		
@@ -283,7 +283,7 @@ public abstract class HibernateDAO extends BaseDAO{
 		StringBuilder orderByClause  = new StringBuilder();
 		StringBuilder queryBuffer    = new StringBuilder();
 		Boolean       hasFormula     = false;
-		String        propertyPrefix = (queryType == QueryType.LOAD_REFERENCE ? PersistenceConstants.DEFAULT_MODEL_ALIAS : "");
+		String        propertyPrefix = "";
 
 		buildQueryString(model, propertyPrefix, propertyPrefix, selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, true, hasFormula, queryType, false);
 
@@ -351,18 +351,16 @@ public abstract class HibernateDAO extends BaseDAO{
 			StringBuilder propertyAliasBuffer = null;
 
 			if(fromClause.length() == 0){
-				if(queryType != QueryType.LOAD_REFERENCE){
-					propertyAliasBuffer = new StringBuilder();
-					propertyAliasBuffer.append(modelInfo.getClazz().getSimpleName().toLowerCase());
-					propertyAliasBuffer.append((int)(Math.random() * 1000));
+				propertyAliasBuffer = new StringBuilder();
+				propertyAliasBuffer.append(modelInfo.getClazz().getSimpleName().toLowerCase());
+				propertyAliasBuffer.append((int)(Math.random() * 1000));
 
-					propertyAlias = propertyAliasBuffer.toString();
+				propertyAlias = propertyAliasBuffer.toString();
 
-					fromClause.append("from ");
-					fromClause.append(modelInfo.getClazz().getSimpleName());
-					fromClause.append(" ");
-					fromClause.append(propertyAlias);
-				}
+				fromClause.append("from ");
+				fromClause.append(modelInfo.getClazz().getSimpleName());
+				fromClause.append(" ");
+				fromClause.append(propertyAlias);
 			}
 
 			if(processedRelations == null)
@@ -475,77 +473,76 @@ public abstract class HibernateDAO extends BaseDAO{
 					orderByClause.append(propertySortOrder.getOperator());
 				}
 
-				if(queryType != QueryType.LOAD_REFERENCE){
-					if((propertyInfo.getRelationJoinType() != RelationJoinType.NONE && propertyInfo.hasModel()) || propertyInfo.isModel()){
-						relationModel = null;
-						propertyValue = null;
-						processModel  = !processedRelations.contains(propertyPrefixBuffer.toString()) && !propertyPrefixBuffer.toString().contains("parent.parent");
-						
-						if(processModel){
-							if(propertyInfo.hasModel()){
-								modelInfo     = ModelUtil.getModelInfo(propertyInfo.getCollectionItemsClass());
-								relationModel = (M)ConstructorUtils.invokeConstructor(propertyInfo.getCollectionItemsClass(), null);
-							}
-							else{
-								modelInfo         = ModelUtil.getModelInfo(propertyInfo.getClazz());
-								propertyCondition = (propertyConditions != null ? propertyConditions.get(propertyPrefixBuffer.toString()) : null);
-								
-								if(propertyCondition == null)
-									propertyCondition = propertyInfo.getSearchCondition();
-
-								try{
-    								propertyValue = (propertyValues != null ? propertyValues.get(propertyPrefixBuffer.toString()) : PropertyUtil.getProperty(model, propertyInfo.getId()));
-    
-    								if(propertyValue == null)
-    									propertyValue = PropertyUtil.getProperty(model, propertyInfo.getId());
-    								
-    								if(propertyValue instanceof BaseModel)
-    									relationModel = (M)propertyValue;
-    								else if(propertyValue instanceof Collection)
-                                        relationModel = (M)ConstructorUtils.invokeConstructor(propertyInfo.getClazz(), null);
-								}
-								catch(Throwable e){
-								}
-							}
-							
-    						if(modelInfo != null && (propertyValue != null || relationModel != null)){
-    							processedRelations.add(propertyPrefixBuffer.toString());
-    
-                                if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE || (propertyInfo.isModel() && propertyInfo.isIdentity())){
-        							if(propertyAliasBuffer == null)
-        								propertyAliasBuffer = new StringBuilder();
-        							else
-        								propertyAliasBuffer.delete(0, propertyAliasBuffer.length());
-        
-        							if(propertyInfo.hasModel())
-        								propertyAliasBuffer.append(propertyInfo.getCollectionItemsClass().getSimpleName().toLowerCase());
-        							else
-        								propertyAliasBuffer.append(propertyInfo.getClazz().getSimpleName().toLowerCase());
-        							
-        							propertyAliasBuffer.append((int)(Math.random() * 1000));
-    							
-                                    if(joinClause.length() > 0)
-                                        joinClause.append(" ");
-    
-                                    if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE)
-                                        joinClause.append(propertyInfo.getRelationJoinType().getOperator());
-                                    else
-                                        joinClause.append(RelationJoinType.INNER_JOIN.getOperator());
-
-                                    joinClause.append(" ");
-                                    joinClause.append(propertyIdBuffer);
-                                    joinClause.append(" ");
-                                    joinClause.append(propertyAliasBuffer);
-
-                                    buildQueryString(relationModel, propertyPrefixBuffer.toString(), propertyAliasBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions, hasFormula, queryType, false);
-                                }
-                                else
-                                    buildQueryString(relationModel, propertyPrefixBuffer.toString(), propertyIdBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions, hasFormula, queryType, true, propertyInfo.getPropertiesIds());
-    						}
+				if((propertyInfo.getRelationJoinType() != RelationJoinType.NONE && propertyInfo.hasModel()) || propertyInfo.isModel()){
+					relationModel = null;
+					propertyValue = null;
+					processModel  = !processedRelations.contains(propertyPrefixBuffer.toString()) && !propertyPrefixBuffer.toString().contains("parent.parent");
+					
+					if(processModel){
+						if(propertyInfo.hasModel()){
+							modelInfo     = ModelUtil.getModelInfo(propertyInfo.getCollectionItemsClass());
+							relationModel = (M)ConstructorUtils.invokeConstructor(propertyInfo.getCollectionItemsClass(), null);
 						}
+						else{
+							modelInfo         = ModelUtil.getModelInfo(propertyInfo.getClazz());
+							propertyCondition = (propertyConditions != null ? propertyConditions.get(propertyPrefixBuffer.toString()) : null);
+							
+							if(propertyCondition == null)
+								propertyCondition = propertyInfo.getSearchCondition();
 
-						continue;
+							try{
+								propertyValue = (propertyValues != null ? propertyValues.get(propertyPrefixBuffer.toString()) : PropertyUtil.getProperty(model, propertyInfo.getId()));
+
+								if(propertyValue == null)
+									propertyValue = PropertyUtil.getProperty(model, propertyInfo.getId());
+								
+								if(propertyValue instanceof BaseModel)
+									relationModel = (M)propertyValue;
+								else if(propertyValue instanceof Collection)
+                                    relationModel = (M)ConstructorUtils.invokeConstructor(propertyInfo.getClazz(), null);
+							}
+							catch(Throwable e){
+							}
+						}
+						
+						if(modelInfo != null && (propertyValue != null || relationModel != null)){
+							processedRelations.add(propertyPrefixBuffer.toString());
+
+                            if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE || (propertyInfo.isModel() && propertyInfo.isIdentity())){
+    							if(propertyAliasBuffer == null)
+    								propertyAliasBuffer = new StringBuilder();
+    							else
+    								propertyAliasBuffer.delete(0, propertyAliasBuffer.length());
+    
+    							if(propertyInfo.hasModel())
+    								propertyAliasBuffer.append(propertyInfo.getCollectionItemsClass().getSimpleName().toLowerCase());
+    							else
+    								propertyAliasBuffer.append(propertyInfo.getClazz().getSimpleName().toLowerCase());
+    							
+    							propertyAliasBuffer.append((int)(Math.random() * 1000));
+							
+                                if(joinClause.length() > 0)
+                                    joinClause.append(" ");
+
+                                if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE)
+                                    joinClause.append(propertyInfo.getRelationJoinType().getOperator());
+                                else
+                                    joinClause.append(RelationJoinType.INNER_JOIN.getOperator());
+
+                                joinClause.append(" ");
+                                joinClause.append(propertyIdBuffer);
+                                joinClause.append(" ");
+                                joinClause.append(propertyAliasBuffer);
+
+                                if(queryType == QueryType.SEARCH || (propertyInfo.isModel() && propertyInfo.isIdentity()))
+                                    buildQueryString(relationModel, propertyPrefixBuffer.toString(), propertyAliasBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions, hasFormula, queryType, false);
+                            }
+                            else
+                                buildQueryString(relationModel, propertyPrefixBuffer.toString(), propertyIdBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions, hasFormula, queryType, true, propertyInfo.getPropertiesIds());
+						}
 					}
+
+					continue;
 				}
 
 				if((propertyInfo.isIdentity() || propertyInfo.isForSearch()) && ((parentIsComponent && foundParentComponentProperty) || propertyInfo.getMappedPropertyId().length() > 0 || propertyInfo.getMappedPropertiesIds().length > 0 || propertyInfo.getMappedRelationPropertiesIds().length > 0)){
