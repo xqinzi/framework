@@ -99,8 +99,12 @@ public abstract class HibernateDAO extends BaseDAO{
     	    if(transaction != null){
     	        Integer transactionTimeout = getTransactionTimeout();
     	        
-    	        if(transactionTimeout != null && transactionTimeout > 0)
-    	            transaction.setTimeout(getTransactionTimeout());
+    	        try{
+        	        if(transactionTimeout != null && transactionTimeout > 0)
+        	            transaction.setTimeout(getTransactionTimeout());
+    	        }
+    	        catch(Throwable e){
+    	        }
     	        
     	        transaction.begin();
     	    
