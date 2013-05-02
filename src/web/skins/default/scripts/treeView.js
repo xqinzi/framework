@@ -71,6 +71,30 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
  * @param onUnSelect Função a ser executada no momento da deseleção do nó.
  */
 function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSelect, onUnSelect){
+	if(onSelect || onUnSelect){
+		var pos        = name.indexOf(".");
+		var parentName = name;
+		var complement = ""
+		
+		if(pos >= 0){
+			parentName = parentName.substring(0, pos);
+			complement = parentName.substring(pos);
+		}
+		
+		var object = null;
+		
+		if(complement.length > 0){
+			object = document.getElementById(parentName + ".parent" + complement);
+	
+			if(object)
+				object.disabled = true;
+		}
+	
+		object = document.getElementById(parentName + ".parent");
+		if(object)
+			object.disabled = true;
+	}
+	
 	var nodeLabel = document.getElementById(nodeId + ".label");
 	
 	if(nodeLabel){	
