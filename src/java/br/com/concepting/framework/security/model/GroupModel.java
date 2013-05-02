@@ -25,7 +25,7 @@ public class GroupModel extends BaseModel{
 	private Integer id = 0;
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
-	private String name = "";
+	private String title = "";
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH)
 	private String description = "";
@@ -73,21 +73,21 @@ public class GroupModel extends BaseModel{
 	}
 
 	/**
-	 * Retorna o nome do grupo.
+	 * Retorna o título do grupo.
 	 * 
-	 * @return String contendo o nome do grupo.
+	 * @return String contendo o título do grupo.
 	 */
-	public String getName(){
-		return name;
+	public String getTitle(){
+		return title;
 	}
 
 	/**
-	 * Define o nome do grupo.
+	 * Define o título do grupo.
 	 * 
-	 * @param name String contendo o nome do grupo.
+	 * @param title String contendo o título do grupo.
 	 */
-	public void setName(String name){
-		this.name = name;
+	public void setTitle(String title){
+		this.title = title;
 	}
 	
 	/**

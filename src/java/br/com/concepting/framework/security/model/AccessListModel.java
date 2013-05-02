@@ -23,7 +23,7 @@ public class AccessListModel extends BaseModel{
     private Integer id = 0;
     
     @Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
-    private String name = "";
+    private String title = "";
 
     @Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH)
     private String description = "";
@@ -98,21 +98,21 @@ public class AccessListModel extends BaseModel{
     }
 
     /**
-     * Retorna o nome da lista.
+     * Retorna o título da lista.
      * 
-     * @return String contendo o nome da lista.
+     * @return String contendo o título da lista.
      */
-    public String getName(){
-        return name;
+    public String getTitle(){
+        return title;
     }
 
     /**
-     * Define o nome da lista.
+     * Define o título da lista.
      * 
-     * @param name String contendo o nome da lista.
+     * @param name String contendo o título da lista.
      */
-    public void setName(String name){
-        this.name = name;
+    public void setTitle(String title){
+        this.title = title;
     }
 
     /**
