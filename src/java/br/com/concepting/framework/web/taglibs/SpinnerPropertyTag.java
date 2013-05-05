@@ -3,7 +3,7 @@ package br.com.concepting.framework.web.taglibs;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.NumberUtil;
 
-public class SpinnerTag extends TextPropertyTag{
+public class SpinnerPropertyTag extends TextPropertyTag{
     private Long maximumValue = null;
     private Long minimumValue = null;
     
