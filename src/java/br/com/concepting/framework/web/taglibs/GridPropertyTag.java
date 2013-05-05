@@ -18,6 +18,7 @@ import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
 import br.com.concepting.framework.processors.ExpressionProcessorUtil;
 import br.com.concepting.framework.security.constants.SecurityConstants;
+import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.Pager;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
@@ -830,7 +831,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     
     			ExpressionProcessorUtil.addVariable(SecurityConstants.LOGIN_SESSION_KEY, securityController.getLoginSession());
     			
-    			for(Integer cont1 = dataStartIndex ; cont1 < dataEndIndex ; cont1++){
+    			for(Integer cont1 = dataStartIndex ; cont1 <= dataEndIndex ; cont1++){
     				ExpressionProcessorUtil.addVariable(AttributeConstants.ROW_NUMBER_KEY, cont1);
     
     				currentModel = (BaseModel)(cont1 < dataValues.size() ? dataValues.get(cont1) : null);
@@ -879,6 +880,9 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
             							
             							if(columnPattern.length() == 0)
             							    columnPattern = columnPropertyInfo.getPattern();
+            							
+                                        if(columnPattern.length() == 0)
+                                            columnPattern = NumberUtil.getDefaultPattern(columnPropertyInfo.getClazz(), columnUseAdditionalFormatting, columnPrecision);
         						    }
         						    catch(Throwable e){
         						        columnPropertyInfo            = null;
@@ -1054,12 +1058,25 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                                 columnStyleClass       = "";
                                 columnStyle            = "";
                                 
+                                try{
+                                    columnPropertyInfo = PropertyUtil.getPropertyInfo(currentModel, columnName);
+                                }
+                                catch(Throwable e){
+                                    columnPropertyInfo = null;                                  
+                                }
+
                                 if(columnPattern.length() == 0)
                                     if(columnPropertyInfo != null)
                                         columnPattern = columnPropertyInfo.getPattern();
                                 
                                 if(columnPropertyInfo != null)
                                     columnUseAdditionalFormatting = columnPropertyInfo.useAdditionalFormatting();
+
+                                if(columnPropertyInfo != null)
+                                    columnPrecision = columnPropertyInfo.getPrecision();
+
+                                if(columnPattern.length() == 0)
+                                    columnPattern = NumberUtil.getDefaultPattern(columnPropertyInfo.getClazz(), columnUseAdditionalFormatting, columnPrecision);
 
                                 if(columnTag.isEditable() != null)
                                     columnEditable = columnTag.isEditable();
@@ -1068,13 +1085,6 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                                     columnHasMultipleLines = columnTag.hasMultipleLines();
 
                                 columnValue = columnTag.getValue();
-                                
-                                try{
-                                    columnPropertyInfo = PropertyUtil.getPropertyInfo(currentModel, columnName);
-                                }
-                                catch(Throwable e){
-                                    columnPropertyInfo = null;                                  
-                                }
 
                                 try{
                                     if(columnValue == null)
@@ -1368,68 +1378,14 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         										}
 
         										editableDataColumnTag.setOnBlur(columnOnBlur);
-        										editableDataColumnTag.setOnBlurAction(getOnBlurAction());
-        										editableDataColumnTag.setOnBlurActionForward(getOnBlurActionForward());
-        										editableDataColumnTag.setOnBlurActionForwardOnFail(getOnBlurActionForwardOnFail());
-        										editableDataColumnTag.setOnBlurActionUpdateViews(getOnBlurActionUpdateViews());
-        										editableDataColumnTag.setOnBlurActionValidate(getOnBlurActionValidate());
-        										editableDataColumnTag.setOnBlurActionValidateProperties(getOnBlurActionValidateProperties());
         										editableDataColumnTag.setOnChange(columnOnChange);
-                                                editableDataColumnTag.setOnChangeAction(getOnChangeAction());
-                                                editableDataColumnTag.setOnChangeActionForward(getOnChangeActionForward());
-                                                editableDataColumnTag.setOnChangeActionForwardOnFail(getOnChangeActionForwardOnFail());
-                                                editableDataColumnTag.setOnChangeActionUpdateViews(getOnChangeActionUpdateViews());
-                                                editableDataColumnTag.setOnChangeActionValidate(getOnChangeActionValidate());
-                                                editableDataColumnTag.setOnChangeActionValidateProperties(getOnChangeActionValidateProperties());
         										editableDataColumnTag.setOnClick(columnOnClickContent.toString());
-                                                editableDataColumnTag.setOnClickAction(getOnClickAction());
-                                                editableDataColumnTag.setOnClickActionForward(getOnClickActionForward());
-                                                editableDataColumnTag.setOnClickActionForwardOnFail(getOnClickActionForwardOnFail());
-                                                editableDataColumnTag.setOnClickActionUpdateViews(getOnClickActionUpdateViews());
-                                                editableDataColumnTag.setOnClickActionValidate(getOnClickActionValidate());
-                                                editableDataColumnTag.setOnClickActionValidateProperties(getOnClickActionValidateProperties());
                                                 editableDataColumnTag.setOnFocus(columnOnFocus);
-                                                editableDataColumnTag.setOnFocusAction(getOnFocusAction());
-                                                editableDataColumnTag.setOnFocusActionForward(getOnFocusActionForward());
-                                                editableDataColumnTag.setOnFocusActionForwardOnFail(getOnFocusActionForwardOnFail());
-                                                editableDataColumnTag.setOnFocusActionUpdateViews(getOnFocusActionUpdateViews());
-                                                editableDataColumnTag.setOnFocusActionValidate(getOnFocusActionValidate());
-                                                editableDataColumnTag.setOnFocusActionValidateProperties(getOnFocusActionValidateProperties());
         										editableDataColumnTag.setOnKeyPress(columnOnKeyPress);
-                                                editableDataColumnTag.setOnKeyPressAction(getOnKeyPressAction());
-                                                editableDataColumnTag.setOnKeyPressActionForward(getOnKeyPressActionForward());
-                                                editableDataColumnTag.setOnKeyPressActionForwardOnFail(getOnKeyPressActionForwardOnFail());
-                                                editableDataColumnTag.setOnKeyPressActionUpdateViews(getOnKeyPressActionUpdateViews());
-                                                editableDataColumnTag.setOnKeyPressActionValidate(getOnKeyPressActionValidate());
-                                                editableDataColumnTag.setOnKeyPressActionValidateProperties(getOnKeyPressActionValidateProperties());
         										editableDataColumnTag.setOnKeyUp(columnOnKeyUp);
-                                                editableDataColumnTag.setOnKeyUpAction(getOnKeyUpAction());
-                                                editableDataColumnTag.setOnKeyUpActionForward(getOnKeyUpActionForward());
-                                                editableDataColumnTag.setOnKeyUpActionForwardOnFail(getOnKeyUpActionForwardOnFail());
-                                                editableDataColumnTag.setOnKeyUpActionUpdateViews(getOnKeyUpActionUpdateViews());
-                                                editableDataColumnTag.setOnKeyUpActionValidate(getOnKeyUpActionValidate());
-                                                editableDataColumnTag.setOnKeyUpActionValidateProperties(getOnKeyUpActionValidateProperties());
         										editableDataColumnTag.setOnKeyDown(columnOnKeyDown);
-                                                editableDataColumnTag.setOnKeyDownAction(getOnKeyDownAction());
-                                                editableDataColumnTag.setOnKeyDownActionForward(getOnKeyDownActionForward());
-                                                editableDataColumnTag.setOnKeyDownActionForwardOnFail(getOnKeyDownActionForwardOnFail());
-                                                editableDataColumnTag.setOnKeyDownActionUpdateViews(getOnKeyDownActionUpdateViews());
-                                                editableDataColumnTag.setOnKeyDownActionValidate(getOnKeyDownActionValidate());
-                                                editableDataColumnTag.setOnKeyDownActionValidateProperties(getOnKeyDownActionValidateProperties());
         										editableDataColumnTag.setOnMouseOver(columnOnMouseOver);
-                                                editableDataColumnTag.setOnMouseOverAction(getOnMouseOverAction());
-                                                editableDataColumnTag.setOnMouseOverActionForward(getOnMouseOverActionForward());
-                                                editableDataColumnTag.setOnMouseOverActionForwardOnFail(getOnMouseOverActionForwardOnFail());
-                                                editableDataColumnTag.setOnMouseOverActionUpdateViews(getOnMouseOverActionUpdateViews());
-                                                editableDataColumnTag.setOnMouseOverActionValidate(getOnMouseOverActionValidate());
-                                                editableDataColumnTag.setOnMouseOverActionValidateProperties(getOnMouseOverActionValidateProperties());
         										editableDataColumnTag.setOnMouseOut(columnOnMouseOut);
-                                                editableDataColumnTag.setOnMouseOutAction(getOnMouseOutAction());
-                                                editableDataColumnTag.setOnMouseOutActionForward(getOnMouseOutActionForward());
-                                                editableDataColumnTag.setOnMouseOutActionForwardOnFail(getOnMouseOutActionForwardOnFail());
-                                                editableDataColumnTag.setOnMouseOutActionUpdateViews(getOnMouseOutActionUpdateViews());
-                                                editableDataColumnTag.setOnMouseOutActionValidate(getOnMouseOutActionValidate());
-                                                editableDataColumnTag.setOnMouseOutActionValidateProperties(getOnMouseOutActionValidateProperties());
         										editableDataColumnTag.setTooltip(columnTooltip);
         
         										if(editableDataColumnTag instanceof CheckPropertyTag)
