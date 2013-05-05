@@ -396,8 +396,24 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 			print("<fieldset");
 
 	        renderTooltip();
+	        
+	        String style = getStyle();
 
-			println(">");
+	        if(style.length() > 0){
+	            print(" style=\"");
+	            print(style);
+	            print(";\"");
+	        }
+	        
+	        String styleClass = getStyleClass();
+
+	        if(styleClass.length() > 0){
+	            print(" class=\"");
+	            print(styleClass);
+	            print("\"");
+	        }
+
+	        println(">");
 
 			if(labelPosition == PositionType.TOP && showLabel){
 				renderLabelOpen();
