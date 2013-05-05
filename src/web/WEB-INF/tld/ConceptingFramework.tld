@@ -3060,8 +3060,21 @@
         </attribute>
     </tag>
     <tag>
+        <name>slider</name>
+        <tag-class>br.com.concepting.framework.web.taglibs.SliderPropertyTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>name</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>width</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>    
+    <tag>
         <name>spinner</name>
-        <tag-class>br.com.concepting.framework.web.taglibs.SpinnerTag</tag-class>
+        <tag-class>br.com.concepting.framework.web.taglibs.SpinnerPropertyTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>minimumValue</name>
