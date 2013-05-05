@@ -166,6 +166,16 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_GRID_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("grid.js");
 
     /**
+     * Constante que define o identificador do estilo CSS default para o componente visual options (opções de seleção).
+     */
+    public static final String DEFAULT_OPTIONS_STYLE_CLASS = "group";
+
+    /**
+     * Constante que define o identificador do estilo CSS default para o label do componente visual options (opções de seleção).
+     */
+    public static final String DEFAULT_OPTIONS_LABEL_STYLE_CLASS = "groupLabel";
+
+    /**
      * Constante que define o identificador do estilo CSS default para o componente visual guides (guias).
      */
     public static final String DEFAULT_GUIDES_STYLE_CLASS = "guides";
@@ -322,11 +332,6 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do arquivo de estilos (CSS) default para o componente messageBox (caixa de mensagens).
      */
     public static final String DEFAULT_MESSAGE_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("messageBox.css");
-    
-    /**
-     * Constante que define o identificador do estilo CSS default do label do componente options (opções de seleção).
-     */
-    public static final String DEFAULT_OPTIONS_LABEL_STYLE_CLASS = "groupLabel";
     
     /**
      * Constante que define o número de opções por linha do componente options (opções de seleção).
