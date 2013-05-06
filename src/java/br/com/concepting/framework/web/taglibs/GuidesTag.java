@@ -114,7 +114,10 @@ public class GuidesTag extends BaseActionFormElementTag{
 	 */
 	protected void renderBody() throws Throwable{
 	    RequestInfo requestInfo  = getRequestInfo();
-	    String      currentGuide = requestInfo.getCurrentGuide();
+	    String      currentGuide = "";
+	    
+	    if(requestInfo != null)
+	        currentGuide = requestInfo.getCurrentGuide();
 	    
 		if(guidesTags.size() == 1){
 			Iterator<GuideTag> iterator = guidesTags.iterator();
