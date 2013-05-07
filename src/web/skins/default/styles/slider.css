@@ -1,0 +1,25 @@
+.leftSliderBar{
+	background: url(../images/leftSliderBar.png) no-repeat;
+	width     : 2px;
+	height    : 5px;
+}
+
+.sliderBar{
+	background: url(../images/sliderBar.png) repeat-x;
+	height    : 5px;
+}
+
+.sliderBarControl{
+	position  : relative;
+	left      : 0px;
+	top       : 0px;
+	background: url(../images/sliderBarControl.png) repeat-x;
+	width     : 17px;
+	height    : 19px;
+}
+
+.rightSliderBar{
+	background: url(../images/rightSliderBar.png) no-repeat;
+	width     : 2px;
+	height    : 5px;
+}

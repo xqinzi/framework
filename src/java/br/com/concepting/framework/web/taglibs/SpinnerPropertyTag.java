@@ -2,6 +2,7 @@ package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.NumberUtil;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 public class SpinnerPropertyTag extends TextPropertyTag{
     private Long maximumValue = null;
@@ -28,6 +29,8 @@ public class SpinnerPropertyTag extends TextPropertyTag{
      */
     protected void initialize() throws Throwable{
         super.initialize();
+        
+        setReadOnly(true);
         
         PropertyInfo propertyInfo = getPropertyInfo();
         
@@ -60,26 +63,17 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 ButtonTag addButtonTag = new ButtonTag();
                 
                 addButtonTag.setPageContext(pageContext);
-                addButtonTag.setStyleClass("addSpinnerButton");
+                addButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
+                addButtonTag.setName("addSpinnerButton");
                 addButtonTag.setLabelStyleClass("spinnerButtonLabel");
-                addButtonTag.setLabel("+");
                 
                 StringBuilder onClick = new StringBuilder();
                 
-                onClick.append("if(Number(document.getElementById('");
+                onClick.append("addSpinnerValue('");
                 onClick.append(getName());
-                onClick.append("').value) < ");
+                onClick.append("', ");
                 onClick.append(maximumValue);
-                onClick.append(") { ");
-                onClick.append("document.getElementById('");
-                onClick.append(getName());
-                onClick.append("').value = ");
-                onClick.append("document.getElementById('");
-                onClick.append(getName());
-                onClick.append("').value = Number(");
-                onClick.append("document.getElementById('");
-                onClick.append(getName());
-                onClick.append("').value) + 1; }");
+                onClick.append(");");
                 
                 addButtonTag.setOnClick(onClick.toString());
                 addButtonTag.doStartTag();
@@ -91,27 +85,18 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 ButtonTag subtractButtonTag = new ButtonTag();
                 
                 subtractButtonTag.setPageContext(pageContext);
-                subtractButtonTag.setStyleClass("subtractSpinnerButton");
+                subtractButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
+                subtractButtonTag.setName("subtractSpinnerButton");
                 subtractButtonTag.setLabelStyleClass("spinnerButtonLabel");
                 
                 onClick = new StringBuilder();
-                onClick.append("if(Number(document.getElementById('");
+                onClick.append("subtractSpinnerValue('");
                 onClick.append(getName());
-                onClick.append("').value) > ");
+                onClick.append("', ");
                 onClick.append(minimumValue);
-                onClick.append(") { ");
-                onClick.append("document.getElementById('");
-                onClick.append(getName());
-                onClick.append("').value = ");
-                onClick.append("document.getElementById('");
-                onClick.append(getName());
-                onClick.append("').value = Number(");
-                onClick.append("document.getElementById('");
-                onClick.append(getName());
-                onClick.append("').value) - 1; }");
+                onClick.append(");");
 
                 subtractButtonTag.setOnClick(onClick.toString());
-                subtractButtonTag.setLabel("-");
                 subtractButtonTag.doStartTag();
                 subtractButtonTag.doEndTag();
                 

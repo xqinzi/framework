@@ -10,21 +10,21 @@ public class SliderPropertyTag extends BasePropertyTag{
         String name  = StringUtil.trim(getName());
         String width = StringUtil.trim(getWidth());
         
-        println("<div style=\"border: 1px solid black\">");
+        println("<div>");
         
         print("<div id=\"");
         print(name);
-        println(".sliderBarControl\" class=\"sliderBarControl\"></span>");
+        println(".sliderBarControl\" class=\"sliderBarControl\"></div>");
+        
+        print("<div id=\"");
+        print(name);
+        println(".sliderBarContent\" class=\"sliderBarContent\" onmouseover=\"slideIt(this);\">");
         
         print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"");
         print(width);
-        
-        if(!width.endsWith(";"))
-            print(";");
-        
         println("\">");
         println("<tr>");
-        println("<td class=\"leftSliderbar\"></td>");
+        println("<td class=\"leftSliderBar\"></td>");
         println("<td class=\"sliderBar\"></td>");
         println("<td class=\"rightSliderBar\"></td>");
         println("</tr>");

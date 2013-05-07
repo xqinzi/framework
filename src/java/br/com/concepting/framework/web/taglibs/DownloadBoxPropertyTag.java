@@ -302,7 +302,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                                 imageTag.setName(name);
                                 imageTag.setValue(getValue());
                                 imageTag.setShowLabel(false);
-                                imageTag.setStyleClass(TaglibConstants.DEFAULT_IMAGE_PREVIEW_STYLE_CLASS);
+                                imageTag.setStyleClass(TaglibConstants.DEFAULT_IMAGE_THUMBNAIL_STYLE_CLASS);
                                 imageTag.setWidth(iconWidth);
                                 imageTag.setHeight(iconHeight);
                                 imageTag.doStartTag();

@@ -28,6 +28,11 @@ public enum SortOrderType{
      * @return String contendo o operador.
      */
     public String getOperator(){
-        return toString().toLowerCase().substring(0, 3);
+        if(this == ASCEND)
+            return toString().toLowerCase().substring(0, 3);
+        else if(this == DESCEND)
+            return toString().toLowerCase().substring(0, 4);
+        
+        return "";
     }
 }

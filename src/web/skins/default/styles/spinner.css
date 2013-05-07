@@ -1,0 +1,114 @@
+.addSpinnerButton{
+	-webkit-border-top-left-radius    : 3px;
+	-webkit-border-top-right-radius   : 0px;
+	-moz-border-radius-topleft        : 3px;
+	-moz-border-radius-topright       : 0px;
+	border-top-left-radius            : 3px;
+	border-top-right-radius           : 0px;
+	-webkit-border-bottom-left-radius : 3px;
+	-webkit-border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft     : 3px;
+	-moz-border-radius-bottomright    : 0px;
+	border-bottom-left-radius         : 3px;
+	border-bottom-right-radius        : 0px;
+    border-top                        : 1px SOLID #888888;
+	border-left                       : 1px SOLID #888888;
+	border-right                      : 1px SOLID #888888;
+	border-bottom                     : 1px SOLID #888888;
+	width                             : 24px;
+	height                            : 24px;
+	background                        : #efefef;
+	-webkit-transition                : all 0.25s ease-in-out;
+	-moz-transition                   : all 0.25s ease-in-out;
+	transition                        : all 0.25s ease-in-out;
+	cursor                            : POINTER;
+	white-space                       : NOWRAP;
+}
+
+.addSpinnerButton:hover{
+	-webkit-border-top-left-radius    : 3px;
+	-webkit-border-top-right-radius   : 0px;
+	-moz-border-radius-topleft        : 3px;
+	-moz-border-radius-topright       : 0px;
+	border-top-left-radius            : 3px;
+	border-top-right-radius           : 0px;
+	-webkit-border-bottom-left-radius : 3px;
+	-webkit-border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft     : 3px;
+	-moz-border-radius-bottomright    : 0px;
+	border-bottom-left-radius         : 3px;
+	border-bottom-right-radius        : 0px;
+    border-top                        : 1px SOLID #888888;
+	border-left                       : 1px SOLID #888888;
+	border-right                      : 1px SOLID #888888;
+	border-bottom                     : 1px SOLID #888888;
+	width                             : 24px;
+	height                            : 24px;
+	background                        : #fafafa;
+	-webkit-transition                : all 0.25s ease-in-out;
+	-moz-transition                   : all 0.25s ease-in-out;
+	transition                        : all 0.25s ease-in-out;
+	cursor                            : POINTER;
+	white-space                       : NOWRAP;
+}
+
+.subtractSpinnerButton{
+	-webkit-border-top-left-radius    : 0px;
+	-webkit-border-top-right-radius   : 3px;
+	-moz-border-radius-topleft        : 0px;
+	-moz-border-radius-topright       : 3px;
+	border-top-left-radius            : 0px;
+	border-top-right-radius           : 3px;
+	-webkit-border-bottom-left-radius : 0px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft     : 0px;
+	-moz-border-radius-bottomright    : 3px;
+	border-bottom-left-radius         : 0px;
+	border-bottom-right-radius        : 3px;
+    border-top                        : 1px SOLID #888888;
+	border-left                       : NONE;
+	border-right                      : 1px SOLID #888888;
+	border-bottom                     : 1px SOLID #888888;
+	width                             : 24px;
+	height                            : 24px;
+	background                        : #efefef;
+	-webkit-transition                : all 0.25s ease-in-out;
+	-moz-transition                   : all 0.25s ease-in-out;
+	transition                        : all 0.25s ease-in-out;
+	cursor                            : POINTER;
+	white-space                       : NOWRAP;
+}
+
+.subtractSpinnerButton:hover{
+	-webkit-border-top-left-radius    : 0px;
+	-webkit-border-top-right-radius   : 3px;
+	-moz-border-radius-topleft        : 0px;
+	-moz-border-radius-topright       : 3px;
+	border-top-left-radius            : 0px;
+	border-top-right-radius           : 3px;
+	-webkit-border-bottom-left-radius : 0px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft     : 0px;
+	-moz-border-radius-bottomright    : 3px;
+	border-bottom-left-radius         : 0px;
+	border-bottom-right-radius        : 3px;
+    border-top                        : 1px SOLID #888888;
+	border-left                       : NONE;
+	border-right                      : 1px SOLID #888888;
+	border-bottom                     : 1px SOLID #888888;
+	width                             : 24px;
+	height                            : 24px;
+	background                        : #fafafa;
+	-webkit-transition                : all 0.25s ease-in-out;
+	-moz-transition                   : all 0.25s ease-in-out;
+	transition                        : all 0.25s ease-in-out;
+	cursor                            : POINTER;
+	white-space                       : NOWRAP;
+}
+
+.spinnerButtonLabel{
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size  : 18px;
+	font-weight: BOLD;
+	color      : #666666;
+}

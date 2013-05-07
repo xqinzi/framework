@@ -113,11 +113,6 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_DOWNLOAD_BOX_STYLE_CLASS = "downloadBox";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o preview de uma imagem.
-     */
-    public static final String DEFAULT_IMAGE_PREVIEW_STYLE_CLASS = "imagePreview";
-    
-    /**
      * Constante que define o identificador do estilo CSS default do campo detalhes da exceção para o 
      * componente messageBox (caixa de mensagens).
      */
@@ -164,16 +159,11 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador para o arquivo de script default para o componente visual grid (tabela de dados).
      */
     public static final String DEFAULT_GRID_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("grid.js");
-
+    
     /**
-     * Constante que define o identificador do estilo CSS default para o componente visual options (opções de seleção).
+     * Constante que define o identificador do estilo CSS default para a pré-visualização pequena de uma imagem.
      */
-    public static final String DEFAULT_OPTIONS_STYLE_CLASS = "group";
-
-    /**
-     * Constante que define o identificador do estilo CSS default para o label do componente visual options (opções de seleção).
-     */
-    public static final String DEFAULT_OPTIONS_LABEL_STYLE_CLASS = "groupLabel";
+    public static final String DEFAULT_IMAGE_THUMBNAIL_STYLE_CLASS = "imageThumbnail";
 
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual guides (guias).
@@ -332,11 +322,21 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do arquivo de estilos (CSS) default para o componente messageBox (caixa de mensagens).
      */
     public static final String DEFAULT_MESSAGE_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("messageBox.css");
-    
+
+    /**
+     * Constante que define o identificador do estilo CSS default para o label do componente visual options (opções de seleção).
+     */
+    public static final String DEFAULT_OPTIONS_LABEL_STYLE_CLASS = "groupLabel";
+
     /**
      * Constante que define o número de opções por linha do componente options (opções de seleção).
      */
     public static final Integer DEFAULT_OPTIONS_PER_ROW = 1;
+    
+    /**
+     * Constante que define o identificador do estilo CSS default para o componente visual options (opções de seleção).
+     */
+    public static final String DEFAULT_OPTIONS_STYLE_CLASS = "group";
     
     /**
      * Constante que define o identificador do estilo CSS para o componente visual pager (paginador).
@@ -473,6 +473,16 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_SHADE_STYLE_CLASS = "shade";
     
+    public static final String DEFAULT_SPINNER_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("spinner");
+    
+    public static final String DEFAULT_SPINNER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("spinner.js");
+    
+    public static final String DEFAULT_SPINNER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("spinner.css");
+    
+    public static final String DEFAULT_SLIDER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("slider.js");
+    
+    public static final String DEFAULT_SLIDER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
+
     /**
      * Constante que define o estilo CSS default para um tracejado.
      */

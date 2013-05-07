@@ -106,7 +106,7 @@ public class TextPropertyTag extends BasePropertyTag{
 		Boolean isReadOnly = isReadOnly();
 		
 		if(isReadOnly)
-			print(" readoOnly");
+			print(" readOnly");
 	}
 	
 	/**
