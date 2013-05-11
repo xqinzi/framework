@@ -1,4 +1,4 @@
-function addSpinnerValue(name, maximumValue){
+function addSpinnerValue(name, maximumValue, step){
 	var object = document.getElementById(name);
 	
 	if(object){
@@ -12,11 +12,11 @@ function addSpinnerValue(name, maximumValue){
 			}
 		}
 		
-		object.value = currentValue + 1;
+		object.value = currentValue + step;
 	}
 }
 
-function subtractSpinnerValue(name, minimumValue){
+function subtractSpinnerValue(name, minimumValue, step){
 	var object = document.getElementById(name);
 	
 	if(object){
@@ -30,6 +30,6 @@ function subtractSpinnerValue(name, minimumValue){
 			}
 		}
 		
-		object.value = currentValue - 1;
+		object.value = currentValue - step;
 	}
 }

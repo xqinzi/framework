@@ -7,7 +7,16 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 public class SpinnerPropertyTag extends TextPropertyTag{
     private Long maximumValue = null;
     private Long minimumValue = null;
+    private Long step         = 1l;
     
+    public Long getStep(){
+        return step;
+    }
+
+    public void setStep(Long step){
+        this.step = step;
+    }
+
     public Long getMaximumValue(){
         return maximumValue;
     }
@@ -73,6 +82,8 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 onClick.append(getName());
                 onClick.append("', ");
                 onClick.append(maximumValue);
+                onClick.append(", ");
+                onClick.append(step);
                 onClick.append(");");
                 
                 addButtonTag.setOnClick(onClick.toString());
@@ -94,6 +105,8 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 onClick.append(getName());
                 onClick.append("', ");
                 onClick.append(minimumValue);
+                onClick.append(", ");
+                onClick.append(step);
                 onClick.append(");");
 
                 subtractButtonTag.setOnClick(onClick.toString());
@@ -117,5 +130,6 @@ public class SpinnerPropertyTag extends TextPropertyTag{
         
         setMaximumValue(null);
         setMinimumValue(null);
+        setStep(1l);
     }
 }

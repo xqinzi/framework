@@ -239,6 +239,9 @@ public class PageTag extends HtmlTag{
         content.append("addScrollEvent(centralizeDialogBoxes);");
         content.append(StringUtil.getLineBreak());
         
+        content.append("addMouseMoveEvent(slideIt);");
+        content.append(StringUtil.getLineBreak());
+        
         ScriptTag scriptTag = new ScriptTag();
         
         scriptTag.setPageContext(systemController.getPageContext());

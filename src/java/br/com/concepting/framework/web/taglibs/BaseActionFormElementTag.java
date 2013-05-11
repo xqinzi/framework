@@ -798,7 +798,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             }
         }
         
-        if(actionForm.length() > 0 && name.length() > 0){
+        if(actionForm.length() > 0){
             StringBuilder onBlurContent = new StringBuilder();
             
             if(onBlurAction.length() > 0){
@@ -1083,49 +1083,49 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 setOnMouseOut(onMouseOutContent.toString());
             }
+        }
 
-            Boolean hasPermission = true;
-		    
-            try{
-    			LoginSessionModel loginSession = securityController.getLoginSession();
-    			SystemModuleModel systemModule = (loginSession != null ? loginSession.getSystemModule() : null);
-    			FormModel         form         = (systemModule != null ? systemModule.getForm(actionForm) : null);
-    			ObjectModel       object       = (form != null ? form.getObject(name) : null);
-    
-    			if(object != null){
-    			    if(label == null)
-    			        label = object.getTitle();
-    			    
-    			    String tooltip = getTooltip(); 
-    
-    			    if(tooltip == null){
-    			        tooltip = object.getDescription();
-    			        
-    					setTooltip(tooltip);
-    			    }
+        Boolean hasPermission = true;
+	    
+        try{
+			LoginSessionModel loginSession = securityController.getLoginSession();
+			SystemModuleModel systemModule = (loginSession != null ? loginSession.getSystemModule() : null);
+			FormModel         form         = (systemModule != null ? systemModule.getForm(actionForm) : null);
+			ObjectModel       object       = (form != null ? form.getObject(name) : null);
 
-                    hasPermission = (loginSession != null && loginSession.getId() != null && loginSession.getId() > 0);
+			if(object != null){
+			    if(label == null)
+			        label = object.getTitle();
+			    
+			    String tooltip = getTooltip(); 
+
+			    if(tooltip == null){
+			        tooltip = object.getDescription();
+			        
+					setTooltip(tooltip);
+			    }
+
+                hasPermission = (loginSession != null && loginSession.getId() != null && loginSession.getId() > 0);
+                
+                if(hasPermission){
+                    UserModel user = loginSession.getUser();
                     
-                    if(hasPermission){
-                        UserModel user = loginSession.getUser();
+                    hasPermission = (user != null && user.getId() != null && user.getId() > 0 && !user.changePassword()); 
                         
-                        hasPermission = (user != null && user.getId() != null && user.getId() > 0 && !user.changePassword()); 
-                            
-                        if(hasPermission){
-                            if(user.isSuperUser())
-                                hasPermission = true;
-                            else
-                                hasPermission = user.hasPermission(object);
-                        }
+                    if(hasPermission){
+                        if(user.isSuperUser())
+                            hasPermission = true;
+                        else
+                            hasPermission = user.hasPermission(object);
                     }
-    			}
-    		}
-    		catch(Throwable e){
-    		    hasPermission = false;
-    		}
-
-            setHasPermission(hasPermission);
+                }
+			}
 		}
+		catch(Throwable e){
+		    hasPermission = false;
+		}
+
+        setHasPermission(hasPermission);
 
 		if(labelStyleClass.length() == 0)
 		    labelStyleClass = TaglibConstants.DEFAULT_LABEL_STYLE_CLASS;
