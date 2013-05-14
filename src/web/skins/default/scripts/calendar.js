@@ -314,7 +314,7 @@ function showHideCalendar(name){
 	var calendar = document.getElementById(name + ".calendar");
 	
 	if(calendar){
-		if(calendar.style.visibility == "HIDDEN"){
+		if(calendar.style.visibility.toUpperCase() == "HIDDEN"){
 			renderCalendar(name);
 	
 			calendar.style.visibility = "VISIBLE";
