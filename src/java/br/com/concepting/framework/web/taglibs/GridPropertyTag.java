@@ -1367,16 +1367,13 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         										else
         											columnOnClickContent.delete(0, columnOnClickContent.length());
         										
-        										columnOnClickContent.append(columnOnClick);
-            										
                                                 if(optionTagId != null){
-                                                    if(columnOnClick.length() > 0 && !columnOnClick.endsWith(";"))
-                                                        columnOnClickContent.append("; ");
-            										
                                                     columnOnClickContent.append("document.getElementById('");
-            										columnOnClickContent.append(optionTagId.toString());
-            										columnOnClickContent.append("').click();");
-        										}
+                                                    columnOnClickContent.append(optionTagId.toString());
+                                                    columnOnClickContent.append("').click(); ");
+                                                }
+
+                                                columnOnClickContent.append(columnOnClick);
 
         										editableDataColumnTag.setOnBlur(columnOnBlur);
         										editableDataColumnTag.setOnChange(columnOnChange);
