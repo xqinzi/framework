@@ -1016,6 +1016,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         						columnOnSelect = PropertyUtil.fillPropertiesInString(currentModel, onSelect, currentLanguage);
         						columnOnSelect = ExpressionProcessorUtil.fillVariablesInString(columnOnSelect, currentLanguage);
         
+        						optionTag.setMultipleSelection(hasMultipleSelection());
         						optionTag.setOnClick(columnOnSelect);
         						optionTag.setOnClickAction(onSelectAction);
         						optionTag.setOnClickActionForward(onSelectActionForward);

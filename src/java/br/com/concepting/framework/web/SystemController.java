@@ -869,14 +869,25 @@ public class SystemController{
      * 
      * @param name String contendo o identificador do componente.
      */
-    private String getRequestInfoCurrentSection(String name){
+    private <O> O getRequestInfoCurrentSection(String name){
         StringBuilder key = new StringBuilder();
 
         key.append(name);
         key.append(".");
         key.append(AttributeConstants.CURRENT_SECTION_KEY);
+        
+        if(hasRequestInfoMultipleSelection(name)){
+            String       values[] = getRequestInfoValues(key.toString());
+            List<String> result   = new LinkedList<String>();
+            
+            if(values != null && values.length > 0)
+                for(String value : values)
+                    result.add(value);
+            
+            return (O)result;
+        }
 
-        return StringUtil.trim(getRequest().getParameter(key.toString()));
+        return (O)getRequest().getParameter(key.toString());
     }
 
     /**

@@ -102,9 +102,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
 	protected void renderAttributes() throws Throwable{
 		super.renderAttributes();
 		
-		PropertyInfo propertyInfo = getPropertyInfo();
-
-		if(propertyInfo != null && propertyInfo.isCollection())
+		if(hasMultipleSelection())
 			print(" multiple");
 		
 		if(!isEnabled())
@@ -175,6 +173,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
      		firstOptionTag.setPropertyInfo(propertyInfo);
      		firstOptionTag.setName(getName());
      		firstOptionTag.setLabel(firstOptionTagLabel);
+     		firstOptionTag.setMultipleSelection(hasMultipleSelection());
      		firstOptionTag.setValue("");
      		firstOptionTag.setParent(this);
      		firstOptionTag.doStartTag();
@@ -306,6 +305,7 @@ public class ListPropertyTag extends OptionsPropertyTag{
     				optionTag = new ListOptionPropertyTag();
     				optionTag.setPageContext(pageContext);
                     optionTag.setPropertyInfo(propertyInfo);
+                    optionTag.setMultipleSelection(hasMultipleSelection());
     				optionTag.setName(getName());
     				optionTag.setLabel(optionTagLabelBuffer.toString());
     				

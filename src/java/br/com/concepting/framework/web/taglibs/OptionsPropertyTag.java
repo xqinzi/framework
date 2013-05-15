@@ -663,6 +663,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     			optionTag.setName(getName());
     			optionTag.setLabel(optionTagLabel.toString());
                 optionTag.setLabelPositionType(PositionType.RIGHT);
+                optionTag.setMultipleSelection(hasMultipleSelection());
                 
                 if(optionState != null){
                     optionTag.setLabelStyle(optionState.getStyle());

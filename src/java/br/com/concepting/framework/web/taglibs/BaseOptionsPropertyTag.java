@@ -17,6 +17,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 1.0
  */
 public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
+    private Boolean              multipleSelection   = null;
     private String               data                = "";
 	private String               dataScope           = "";
 	private List                 dataValues          = null;
@@ -24,6 +25,18 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	private Integer              dataEndIndex        = 0;
 	private List<OptionStateTag> optionStates        = null;
 	private ExpressionProcessor  expressionProcessor = null;
+    
+    public Boolean hasMultipleSelection(){
+        return multipleSelection;
+    }
+
+    public Boolean getMultipleSelection(){
+        return hasMultipleSelection();
+    }
+
+    public void setMultipleSelection(Boolean multipleSelection){
+        this.multipleSelection = multipleSelection;
+    }
 
     /**
      * Retorna o índice inicial dos dados.
@@ -282,6 +295,11 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	protected void initialize() throws Throwable{
 		super.initialize();
 		
+        PropertyInfo propertyInfo = getPropertyInfo();
+
+        if(multipleSelection == null)
+            multipleSelection = (propertyInfo != null && propertyInfo.isCollection());
+		
         if(dataValues == null || dataValues.size() == 0){
     		if(data.length() > 0 && dataScope != null){
     		    ScopeType dataScope = getDataScopeType();
@@ -332,5 +350,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 		setDataValues(null);
         setDataIsEmptyMessage("");
 		setOptionStates(null);
+		setMultipleSelection(null);
 	}
 }

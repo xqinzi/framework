@@ -20,6 +20,19 @@ public class AccordionTag extends BaseActionFormElementTag{
     private String           sectionContentStyleClass = "";
     private String           sectionContentStyle      = "";
     private List<SectionTag> sectionsTags             = null;
+    private Boolean          multipleSelection        = false;
+    
+    public Boolean hasMultipleSelection(){
+        return multipleSelection;
+    }
+
+    public Boolean getMultipleSelection(){
+        return hasMultipleSelection();
+    }
+
+    public void setMultipleSelection(Boolean multipleSelection){
+        this.multipleSelection = multipleSelection;
+    }
 
     /**
      * Retorna o identificador do estilo CSS que define o cabeçalho da seção.
@@ -127,20 +140,6 @@ public class AccordionTag extends BaseActionFormElementTag{
      * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderOpen()
      */
     protected void renderOpen() throws Throwable{
-        StringBuilder currentSectionTagName = new StringBuilder();
-        
-        currentSectionTagName.append(getName());
-        currentSectionTagName.append(".");
-        currentSectionTagName.append(AttributeConstants.CURRENT_SECTION_KEY);
-
-        HiddenPropertyTag currentSectionTag = new HiddenPropertyTag();
-        
-        currentSectionTag.setPageContext(pageContext);
-        currentSectionTag.setName(currentSectionTagName.toString());
-        currentSectionTag.setValue(getRequestInfo().getCurrentSection());
-        currentSectionTag.doStartTag();
-        currentSectionTag.doEndTag();
-        
         print("<table class=\"");
         print(StringUtil.trim(getStyleClass()));
         print("\"");
@@ -189,6 +188,56 @@ public class AccordionTag extends BaseActionFormElementTag{
         println("</td>");
         println("</tr>");
         println("</table>");
+        
+        StringBuilder hasMultipleSelectionTagName = new StringBuilder();
+        
+        hasMultipleSelectionTagName.append(getName());
+        hasMultipleSelectionTagName.append(".");
+        hasMultipleSelectionTagName.append(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY);
+        
+        HiddenPropertyTag hasMultipleSelectionTag = new HiddenPropertyTag();
+        
+        hasMultipleSelectionTag.setPageContext(pageContext);
+        hasMultipleSelectionTag.setName(hasMultipleSelectionTagName.toString());
+        hasMultipleSelectionTag.setValue(hasMultipleSelection());
+        hasMultipleSelectionTag.doStartTag();
+        hasMultipleSelectionTag.doEndTag();
+        
+        StringBuilder currentSectionTagName = new StringBuilder();
+        
+        currentSectionTagName.append(getName());
+        currentSectionTagName.append(".");
+        currentSectionTagName.append(AttributeConstants.CURRENT_SECTION_KEY);
+
+        if(hasMultipleSelection()){
+            List<String> sections = new LinkedList<String>();
+            
+            if(sectionsTags != null && sectionsTags.size() > 0)
+                for(SectionTag sectionTag : sectionsTags)
+                    sections.add(sectionTag.getName());
+            
+            ListPropertyTag currentSectionTag = new ListPropertyTag();
+            
+            currentSectionTag.setPageContext(pageContext);
+            currentSectionTag.setName(currentSectionTagName.toString());
+            currentSectionTag.setValue(getRequestInfo().getCurrentSection());
+            currentSectionTag.setStyle("display: NONE;");
+            currentSectionTag.setDataValues(sections);
+            currentSectionTag.setMultipleSelection(multipleSelection);
+            currentSectionTag.setShowFirstOption(false);
+            currentSectionTag.setShowLabel(false);
+            currentSectionTag.doStartTag();
+            currentSectionTag.doEndTag();
+        }
+        else{
+            HiddenPropertyTag currentSectionTag = new HiddenPropertyTag();
+            
+            currentSectionTag.setPageContext(pageContext);
+            currentSectionTag.setName(currentSectionTagName.toString());
+            currentSectionTag.setValue(getRequestInfo().getCurrentSection());
+            currentSectionTag.doStartTag();
+            currentSectionTag.doEndTag();
+        }
     }
     
     /**
@@ -240,10 +289,22 @@ public class AccordionTag extends BaseActionFormElementTag{
             print(StringUtil.capitalize(headerStyleClass));
         }
         else if(index == sectionsTags.size() - 1){
-            String sectionName        = sectionTag.getName();
-            String currentSectionName = getRequestInfo().getCurrentSection();
+            String  sectionName      = sectionTag.getName();
+            Boolean isCurrentSection = false;
             
-            if(!sectionName.equals(currentSectionName)){
+            if(hasMultipleSelection()){
+                Object currentSectionsNames = getRequestInfo().getCurrentSection();
+                
+                if(currentSectionsNames != null && (currentSectionsNames instanceof List) && ((List)currentSectionsNames).size() > 0)
+                    isCurrentSection = ((List)currentSectionsNames).contains(sectionName);
+            }
+            else{
+                String currentSectionName = StringUtil.trim(getRequestInfo().getCurrentSection());
+                
+                isCurrentSection = sectionName.equals(currentSectionName);
+            }
+            
+            if(!isCurrentSection){
                 print("last");
                 print(StringUtil.capitalize(headerStyleClass));
             }
@@ -309,8 +370,7 @@ public class AccordionTag extends BaseActionFormElementTag{
      * @throws Throwable
      */
     protected void renderSectionContent(SectionTag sectionTag, Integer index) throws Throwable{
-        String sectionName        = sectionTag.getName();
-        String currentSectionName = getRequestInfo().getCurrentSection();
+        String sectionName = sectionTag.getName();
 
         print("<div id=\"");
         print(sectionName);
@@ -336,7 +396,21 @@ public class AccordionTag extends BaseActionFormElementTag{
         String style  = StringUtil.trim(sectionTag.getContentStyle());
         String height = StringUtil.trim(sectionTag.getHeight());
         
-        if(style.length() > 0 || !currentSectionName.equals(sectionName) || height.length() > 0){
+        Boolean isCurrentSection = false;
+        
+        if(hasMultipleSelection()){
+            Object currentSectionsNames = getRequestInfo().getCurrentSection();
+            
+            if(currentSectionsNames != null && (currentSectionsNames instanceof List) && ((List)currentSectionsNames).size() > 0)
+                isCurrentSection = ((List)currentSectionsNames).contains(sectionName);
+        }
+        else{
+            String currentSectionName = StringUtil.trim(getRequestInfo().getCurrentSection());
+            
+            isCurrentSection = sectionName.equals(currentSectionName);
+        }
+        
+        if(style.length() > 0 || !isCurrentSection || height.length() > 0){
             print(" style=\"");
             
             if(height.length() > 0){
@@ -347,11 +421,11 @@ public class AccordionTag extends BaseActionFormElementTag{
                     print(";");
             }
             
-            if(!currentSectionName.equals(sectionName) && !sectionTag.focusWhen())
+            if(!isCurrentSection && !sectionTag.focusWhen())
                 print(" display: NONE;");
             
             if(style.length() > 0){
-                if(!currentSectionName.equals(sectionName))
+                if(!isCurrentSection)
                     print(" ");
                 
                 print(style);
@@ -409,5 +483,6 @@ public class AccordionTag extends BaseActionFormElementTag{
         setSectionContentStyleClass("");
         setSectionContentStyle("");
         setSectionsTags(null);
+        setMultipleSelection(false);
     }
 }

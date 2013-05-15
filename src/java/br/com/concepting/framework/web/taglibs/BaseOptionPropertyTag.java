@@ -19,11 +19,11 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
-	private Boolean selected    = false;
-	private Object  optionValue = null;
-	private String  optionIndex = "";
+	private Boolean selected          = false;
+	private Object  optionValue       = null;
+	private String  optionIndex       = "";
 
-	/**
+    /**
 	 * Retorna a instância contendo o valor da opção.
 	 * 
 	 * @return Instância contendo o valor da opção.
@@ -150,40 +150,36 @@ public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
         Object       optionValue  = getOptionValue();
 
         if(value != null){
-	        if(propertyInfo != null){
-                if(propertyInfo.isCollection()){
-                    if(optionValue != null){
-                        Collection values  = (Collection)value;
-    
-                        setSelected(values.contains(optionValue));
-                    }
+            if((propertyInfo != null && propertyInfo.isCollection()) || hasMultipleSelection()){
+                if(optionValue != null){
+                    Collection values  = (Collection)value;
+
+                    setSelected(values.contains(optionValue));
                 }
-                else if(propertyInfo.isBoolean())
-                    setSelected(Boolean.parseBoolean(value.toString()));
-                else if(optionValue instanceof BaseModel && !(value instanceof BaseModel)){
-                    if(optionValue != null){
-                        ModelInfo modelInfo = ModelUtil.getModelInfo(optionValue.getClass());
+            }
+            else if(propertyInfo != null && propertyInfo.isBoolean())
+                setSelected(Boolean.parseBoolean(value.toString()));
+            else if(optionValue instanceof BaseModel && !(value instanceof BaseModel)){
+                if(optionValue != null){
+                    ModelInfo modelInfo = ModelUtil.getModelInfo(optionValue.getClass());
+                    
+                    if(modelInfo != null){
+                        List<PropertyInfo> identityProperties = modelInfo.getIdentityPropertiesInfo();
                         
-                        if(modelInfo != null){
-                            List<PropertyInfo> identityProperties = modelInfo.getIdentityPropertiesInfo();
+                        if(identityProperties != null && identityProperties.size() == 1){
+                            PropertyInfo identityPropertyInfo = identityProperties.get(0);
+                            Object       optionValueProperty  = PropertyUtil.getProperty(optionValue, identityPropertyInfo.getId());
                             
-                            if(identityProperties != null && identityProperties.size() == 1){
-                                PropertyInfo identityPropertyInfo = identityProperties.get(0);
-                                Object       optionValueProperty  = PropertyUtil.getProperty(optionValue, identityPropertyInfo.getId());
-                                
-                                setSelected(value.equals(optionValueProperty));
-                            }
+                            setSelected(value.equals(optionValueProperty));
                         }
                     }
                 }
-    	        else if(optionValue instanceof BaseModel && value instanceof BaseModel)
-    	            setSelected(value.equals(optionValue));
-    	        else
-    	            if(optionValue != null)
-    	                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
-	        }
+            }
+	        else if(optionValue instanceof BaseModel && value instanceof BaseModel)
+	            setSelected(value.equals(optionValue));
 	        else
-                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
+	            if(optionValue != null)
+	                setSelected(StringUtil.trim(value).equals(StringUtil.trim(optionValue)));
 		}
 	}
 

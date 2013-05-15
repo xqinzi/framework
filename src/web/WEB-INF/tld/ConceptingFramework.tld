@@ -7213,6 +7213,10 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
+            <name>multipleSelection</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
             <name>actionForm</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>

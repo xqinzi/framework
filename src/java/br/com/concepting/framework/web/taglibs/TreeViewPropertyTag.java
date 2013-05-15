@@ -1025,6 +1025,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     			selectionTag.setData(getData());
     			selectionTag.setDataScope(getDataScope());
     			selectionTag.setShowLabel(false);
+    			selectionTag.setShowFirstOption(false);
     			selectionTag.setValue(getValue());
     			selectionTag.doStartTag();
     			selectionTag.doEndTag();

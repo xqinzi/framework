@@ -13,7 +13,7 @@ import br.com.concepting.framework.web.types.ScopeType;
 public class RequestInfo{
     private String          currentGuide         = "";
     private String          currentNode          = "";
-    private String          currentSection       = "";
+    private Object          currentSection       = null;
     private String          data                 = "";
     private ScopeType       dataScope            = null;
     private Integer         dataStartIndex       = 0;
@@ -32,21 +32,11 @@ public class RequestInfo{
     private String          value                = "";
     private String          values[]             = null;
     
-    /**
-     * Retorna o identificador da seção atual.
-     * 
-     * @return String contendo o identificador da seção atual.
-     */
-    public String getCurrentSection(){
-        return currentSection;
+    public <O> O getCurrentSection(){
+        return (O)currentSection;
     }
 
-    /**
-     * Define o identificador da seção atual.
-     * 
-     * @param currentSection String contendo o identificador da seção atual.
-     */
-    public void setCurrentSection(String currentSection){
+    public <O> void setCurrentSection(O currentSection){
         this.currentSection = currentSection;
     }
 
