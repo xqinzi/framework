@@ -475,6 +475,21 @@ function addResizeEvent(functionId){
 		               			functionId();
 		                  }
 	}
+} 
+
+function addMouseMoveEvent(functionId){
+	var mouseMoveHistory = window.onmousemove;
+
+	if(typeof mouseMoveHistory != "function")
+		window.onmousemove = functionId;
+	else{
+		window.onmousemove = function(){
+							 	if(mouseMoveHistory)
+							 		mouseMoveHistory();
+		               			
+		               			functionId();
+		                  	 }
+	}
 }
 
 /**
