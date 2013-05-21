@@ -48,8 +48,10 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
             
             if(modelInfo != null){
                 try{
-                    IService service = ServiceUtil.instantiate(model.getClass());         
+                    Auditor  auditor = getAuditor();
+                    IService service = ServiceUtil.getService(model.getClass());         
         
+                    service.setLoginSession(auditor.getLoginSession());
                     service.save(model);
                     
                     PropertyInfo propertyInfo = modelInfo.getPropertyInfo("businessComplement");
@@ -59,8 +61,9 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
                         
                         if(auditorInfoComplement != null && auditorInfoComplement.size() > 0){
                             try{
-                                service = ServiceUtil.instantiate(propertyInfo.getCollectionItemsClass());
+                                service = ServiceUtil.getService(propertyInfo.getCollectionItemsClass());
                                 
+                                service.setLoginSession(auditor.getLoginSession());
                                 service.saveAll(auditorInfoComplement);
                             }
                             catch(Throwable e){
