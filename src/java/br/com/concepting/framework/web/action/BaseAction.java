@@ -48,32 +48,27 @@ public abstract class BaseAction extends DispatchAction{
 	 * 
 	 * @param modelClass Instância contendo o modelo de dados.
 	 * @return Instância da classe de serviço.
-	 * @throws InternalErrorException
+	 * @throws Throwable
 	 */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
-		try{
-			if(modelClass == null)
-				modelClass = ModelUtil.getModelClassByAction(getClass());
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
+		if(modelClass == null)
+			modelClass = ModelUtil.getModelClassByAction(getClass());
 
-            LoginSessionModel loginSession = securityController.getLoginSession();
-			S                 service      = ServiceUtil.getService(modelClass);
-			
-			service.setLoginSession(loginSession);
-			
-			return service;
-		}
-		catch(Throwable e){
-			throw new InternalErrorException(e);
-		}
+        LoginSessionModel loginSession = securityController.getLoginSession();
+		S                 service      = ServiceUtil.getService(modelClass);
+		
+		service.setLoginSession(loginSession);
+		
+		return service;
 	}
 
 	/**
 	 * Retorna a instância da classe de serviço vinculada a ação.
 	 * 
 	 * @return Instância da classe de serviço.
-	 * @throws InternalErrorException
+	 * @throws Throwable
 	 */
-    protected <S extends IService> S getService() throws InternalErrorException{
+    protected <S extends IService> S getService() throws Throwable{
 		return getService(null);
 	}
 
