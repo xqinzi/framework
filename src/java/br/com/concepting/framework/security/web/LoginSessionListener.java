@@ -38,7 +38,7 @@ public class LoginSessionListener implements HttpSessionListener{
     private <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
         SecurityController  securityController = systemController.getSecurityController();
         LoginSessionModel   loginSession       = securityController.getLoginSession();
-        S                   service            = ServiceUtil.instantiate(modelClass);
+        S                   service            = ServiceUtil.getService(modelClass);
         
         service.setLoginSession(loginSession);
         
