@@ -67,11 +67,13 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
                                 service.saveAll(auditorInfoComplement);
                             }
                             catch(Throwable e){
+                                e.printStackTrace();
                             }
                         }
                     }
                 }
                 catch(Throwable e){
+                    e.printStackTrace();
                 }
 	        }
 		}
