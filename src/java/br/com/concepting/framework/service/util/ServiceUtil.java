@@ -19,7 +19,7 @@ public class ServiceUtil{
 	 * @return Instância da classe de serviço.
 	 * @throws InternalErrorException
 	 */
-	public static <S extends IService, M extends BaseModel> S instantiate(Class<M> modelClass) throws InternalErrorException{
+	public static <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
 	    ServiceLocator serviceLocator = new ServiceLocator(modelClass);
 	    
 	    return serviceLocator.lookup();
