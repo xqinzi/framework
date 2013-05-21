@@ -36,14 +36,14 @@ public abstract class BaseService implements IService{
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#getLoginSession()
      */
-    public LoginSessionModel getLoginSession(){
-        return loginSession;
+    public <L extends LoginSessionModel> L getLoginSession(){
+        return (L)loginSession;
     }
 
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#setLoginSession(br.com.concepting.framework.security.model.LoginSessionModel)
      */
-    public void setLoginSession(LoginSessionModel loginSession){
+    public <L extends LoginSessionModel> void setLoginSession(L loginSession){
         this.loginSession = loginSession;
     }
 
