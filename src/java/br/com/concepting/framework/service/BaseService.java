@@ -30,7 +30,7 @@ import br.com.concepting.framework.service.util.ServiceUtil;
  */
 public abstract class BaseService implements IService{
     private IDAO              currentPersistence = null;
-    private LoginSessionModel loginSession = null;
+    private LoginSessionModel loginSession       = null;
     private Integer           transactionTimeout = null;
 
     /**
