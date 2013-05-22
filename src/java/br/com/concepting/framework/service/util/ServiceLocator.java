@@ -35,18 +35,20 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public class ServiceLocator{
-	private Cacher contextInstances = CacherManager.getInstance().getCacher(getClass());
-    private Class  modelClass       = null;
+	private Cacher  contextInstances = CacherManager.getInstance().getCacher(getClass());
+    private Class   modelClass       = null;
+    private Boolean auditable        = true;
     
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
      * @param modelClass Classe do modelo de dados desejado.
      */
-	public <M extends BaseModel> ServiceLocator(Class<M> modelClass){
+	public <M extends BaseModel> ServiceLocator(Class<M> modelClass, Boolean auditable){
 		super();
 		
 		this.modelClass = modelClass;
+		this.auditable  = auditable;
 	}
 
 	/**
@@ -154,7 +156,7 @@ public class ServiceLocator{
             }
 
             if(serviceInterceptorClass != null)
-                serviceInstance = (S)Observer.getInstance(lookupObject, serviceInterfaceClass, serviceInterceptorClass);
+                serviceInstance = (S)Observer.getInstance(lookupObject, serviceInterfaceClass, serviceInterceptorClass, auditable);
             
             return serviceInstance;
 	    }
