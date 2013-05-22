@@ -2,6 +2,7 @@ package br.com.concepting.framework.audit.appenders;
 
 import java.util.Collection;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.spi.LoggingEvent;
 
 import br.com.concepting.framework.audit.Auditor;
@@ -23,6 +24,8 @@ import br.com.concepting.framework.service.util.ServiceUtil;
  * @since 1.0
  */
 public class PersistentAuditorAppender extends BaseAuditorAppender{
+	private static final Logger logger = Logger.getLogger(PersistentAuditorAppender.class);
+	
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
@@ -99,13 +102,13 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
                                 service.saveAll(auditorInfoComplement);
                             }
                             catch(Throwable e){
-                                e.printStackTrace();
+                                logger.error(e);
                             }
                         }
                     }
                 }
                 catch(Throwable e){
-                    e.printStackTrace();
+                    logger.error(e);
                 }
 	        }
 		}
