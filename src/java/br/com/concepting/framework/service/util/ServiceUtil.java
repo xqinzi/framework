@@ -12,15 +12,27 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public class ServiceUtil{
-	/**
+    /**
+     * Retorna a instância da classe de uma classe serviço específica.
+     * 
+     * @param modelClass Classe do modelo de dados vinculado à classe de serviço desejada.
+     * @return Instância da classe de serviço.
+     * @throws InternalErrorException
+     */
+    public static <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+        return getService(modelClass, true);
+    }
+
+    /**
 	 * Retorna a instância da classe de uma classe serviço específica.
 	 * 
 	 * @param modelClass Classe do modelo de dados vinculado à classe de serviço desejada.
+	 * @param auditable
 	 * @return Instância da classe de serviço.
 	 * @throws InternalErrorException
 	 */
-	public static <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
-	    ServiceLocator serviceLocator = new ServiceLocator(modelClass);
+	public static <S extends IService, M extends BaseModel> S getService(Class<M> modelClass, Boolean auditable) throws InternalErrorException{
+	    ServiceLocator serviceLocator = new ServiceLocator(modelClass, auditable);
 	    
 	    return serviceLocator.lookup();
 	}
