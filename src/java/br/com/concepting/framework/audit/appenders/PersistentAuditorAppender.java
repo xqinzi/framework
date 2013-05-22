@@ -7,9 +7,11 @@ import org.apache.log4j.spi.LoggingEvent;
 import br.com.concepting.framework.audit.Auditor;
 import br.com.concepting.framework.audit.model.AuditorBusinessComplementModel;
 import br.com.concepting.framework.audit.model.AuditorModel;
+import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
+import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.util.ServiceUtil;
 
@@ -36,7 +38,40 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
 	public boolean requiresLayout(){
 		return false;
 	}
-
+	
+    /**
+     * Retorna a instância da classe de serviço vinculada a um modelo de dados.
+     * Esta instância irá utilizar a transação já iniciada, caso houve, senão irá criar uma nova 
+     * transação caso a classe de serviço gerencie transações.
+     * 
+     * @param modelClass Classe do modelo de dados desejado.
+     * @param auditable
+     * @return Instância da classe de serviço.
+     * @throws Throwable
+     */
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass, Boolean auditable) throws Throwable{
+        S                 service      = ServiceUtil.getService(modelClass, auditable);
+        Auditor           auditor      = getAuditor();
+        LoginSessionModel loginSession = auditor.getLoginSession();
+        
+        service.setLoginSession(loginSession);
+        
+        return service;
+    }
+    
+    /**
+     * Retorna a instância da classe de serviço vinculada a um modelo de dados.
+     * Esta instância irá utilizar a transação já iniciada, caso houve, senão irá criar uma nova 
+     * transação caso a classe de serviço gerencie transações.
+     * 
+     * @param modelClass Classe do modelo de dados desejado.
+     * @return Instância da classe de serviço.
+     * @throws Throwable
+     */
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
+        return getService(modelClass, true);
+    }
+    
 	/**
 	 * @see org.apache.log4j.AppenderSkeleton#append(org.apache.log4j.spi.LoggingEvent)
 	 */
@@ -48,10 +83,8 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
             
             if(modelInfo != null){
                 try{
-                    Auditor  auditor = getAuditor();
-                    IService service = ServiceUtil.getService(model.getClass());         
+                    IService service = getService(model.getClass(), false);         
         
-                    service.setLoginSession(auditor.getLoginSession());
                     service.save(model);
                     
                     PropertyInfo propertyInfo = modelInfo.getPropertyInfo("businessComplement");
@@ -61,9 +94,8 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
                         
                         if(auditorInfoComplement != null && auditorInfoComplement.size() > 0){
                             try{
-                                service = ServiceUtil.getService(propertyInfo.getCollectionItemsClass());
+                                service = getService(propertyInfo.getCollectionItemsClass(), false);
                                 
-                                service.setLoginSession(auditor.getLoginSession());
                                 service.saveAll(auditorInfoComplement);
                             }
                             catch(Throwable e){
