@@ -35,7 +35,7 @@ public class LoginSessionListener implements HttpSessionListener{
      * @return Instância da classe de serviço desejada.
      * @throws Throwable
      */
-    private <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
         SecurityController  securityController = systemController.getSecurityController();
         LoginSessionModel   loginSession       = securityController.getLoginSession();
         S                   service            = ServiceUtil.getService(modelClass);
