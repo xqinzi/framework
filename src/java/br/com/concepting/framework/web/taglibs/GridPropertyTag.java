@@ -1077,7 +1077,8 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                                     columnPrecision = columnPropertyInfo.getPrecision();
 
                                 if(columnPattern.length() == 0)
-                                    columnPattern = NumberUtil.getDefaultPattern(columnPropertyInfo.getClazz(), columnUseAdditionalFormatting, columnPrecision);
+                                    if(columnPropertyInfo != null)
+                                        columnPattern = NumberUtil.getDefaultPattern(columnPropertyInfo.getClazz(), columnUseAdditionalFormatting, columnPrecision);
 
                                 if(columnTag.isEditable() != null)
                                     columnEditable = columnTag.isEditable();

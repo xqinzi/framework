@@ -48,7 +48,7 @@
 	border-top      : NONE;
 	border-left     : 1px SOLID #888888;
 	border-right    : 1px SOLID #888888;
-	border-bottom   : NONE;
+	border-bottom   : 1px SOLID #888888;
 	background      : url(../images/section.gif) REPEAT-X;
 	background-color: #efefef;
 	border-spacing  : 0px;
@@ -113,10 +113,10 @@
  * Estilo que define o conteúdo de uma seção.
  */
 .sectionContent{
-	border-top    : 1px SOLID #888888;
+	border-top    : NONE;
 	border-left   : 1px SOLID #888888;
 	border-right  : 1px SOLID #888888;
-	border-bottom : NONE;
+	border-bottom : 1px SOLID #888888;
 	width         : 100%;
 	border-spacing: 0px;
 	padding       : 1px;
@@ -137,7 +137,7 @@
 	-moz-border-radius-bottomright    : 3px;
 	border-bottom-left-radius         : 3px;
 	border-bottom-right-radius        : 3px;
-	border-top                        : 1px SOLID #888888;
+	border-top                        : NONE;
 	border-left                       : 1px SOLID #888888;
 	border-right                      : 1px SOLID #888888;
 	border-bottom                     : 1px SOLID #888888;
