@@ -38,9 +38,10 @@ public class ServiceInterceptor extends Interceptor{
 	 * @param interceptableInterfaceClass Interface da classe de serviço. 
 	 * @param method Instância contendo as propriedades do método a ser interceptado.
 	 * @param methodArguments Array contendo os parâmetros do método a ser interceptado.
+	 * @param auditable
 	 */
-	public <I> ServiceInterceptor(I interceptableInstance, Class interceptableInterfaceClass, Method method, Object methodArguments[]){
-		super(interceptableInstance, interceptableInterfaceClass, method, methodArguments);
+	public <I> ServiceInterceptor(I interceptableInstance, Class interceptableInterfaceClass, Method method, Object methodArguments[], Boolean auditable){
+		super(interceptableInstance, interceptableInterfaceClass, method, methodArguments, auditable);
 	}
 
 	/**
