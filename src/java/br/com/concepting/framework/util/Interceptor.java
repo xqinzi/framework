@@ -18,6 +18,7 @@ public class Interceptor{
 	private Method  method                      = null;
 	private Object  methodArguments[]           = null;
 	private Auditor auditor                     = null;
+	private Boolean auditable                   = true;
 
 	/**
 	 * Construtor - Define as propriedades da classe e do método interceptável. 
@@ -26,17 +27,27 @@ public class Interceptor{
 	 * @param interceptableInterfaceClass Interface da classe interceptada.
 	 * @param method Instância contendo as propriedades do método interceptável.
 	 * @param methodArguments Array contendo os argumentos do método interceptável.
+	 * @param auditable
 	 */
-	public Interceptor(Object interceptableInstance, Class interceptableInterfaceClass, Method method, Object methodArguments[]){
+	public Interceptor(Object interceptableInstance, Class interceptableInterfaceClass, Method method, Object methodArguments[], Boolean auditable){
 		super();
 
 		setInterceptableInstance(interceptableInstance);
 		setInterceptableInterfaceClass(interceptableInterfaceClass);
 		setMethod(method);
 		setMethodArguments(methodArguments);
+		setAuditable(auditable);
 	}
+	
+	public Boolean getAuditable(){
+        return auditable;
+    }
 
-	/**
+    public void setAuditable(Boolean auditable){
+        this.auditable = auditable;
+    }
+
+    /**
 	 * Retorna a instância contendo as propriedade da classe interceptável.
 	 * 
 	 * @return Instância da classe interceptável.
@@ -114,40 +125,44 @@ public class Interceptor{
 	 * @return Instância contendo as propriedades da auditoria.
 	 */
     protected Auditor getAuditor(){
- 		Method    method          = getMethod();
- 		Object[]  methodArguments = getMethodArguments();
- 		Auditable annotation      = (Auditable)interceptableInterfaceClass.getAnnotation(Auditable.class);
- 		
- 		if(annotation == null){
- 	        Class superClasses[] = interceptableInterfaceClass.getInterfaces();
-
- 	        if(superClasses != null && superClasses.length > 0){
-     		    for(Class superClass : superClasses){
-     	            annotation = (Auditable)superClass.getAnnotation(Auditable.class);
-     	            
-     	            if(annotation != null)
-     	                break;
-     		    }
+        if(auditable){
+     		Method    method          = getMethod();
+     		Object[]  methodArguments = getMethodArguments();
+     		Auditable annotation      = (Auditable)interceptableInterfaceClass.getAnnotation(Auditable.class);
+     		
+     		if(annotation == null){
+     	        Class superClasses[] = interceptableInterfaceClass.getInterfaces();
+    
+     	        if(superClasses != null && superClasses.length > 0){
+         		    for(Class superClass : superClasses){
+         	            annotation = (Auditable)superClass.getAnnotation(Auditable.class);
+         	            
+         	            if(annotation != null)
+         	                break;
+         		    }
+         		}
      		}
- 		}
- 		
- 		if(annotation != null){
- 			annotation = (Auditable)method.getAnnotation(Auditable.class);
- 			
- 			if(annotation != null){
-              	if(auditor == null)
-              		auditor = new Auditor(interceptableInterfaceClass, method, methodArguments);
-              	else{
-                  	auditor.setEntity(interceptableInterfaceClass);
-                  	auditor.setBusiness(method);
-                  	auditor.setBusinessArgumentsValues(methodArguments);
-              	}
- 			}
- 			else
- 				auditor = null;
- 		}
- 		else
- 			auditor = null;
+     		
+     		if(annotation != null){
+     			annotation = (Auditable)method.getAnnotation(Auditable.class);
+     			
+     			if(annotation != null){
+                  	if(auditor == null)
+                  		auditor = new Auditor(interceptableInterfaceClass, method, methodArguments);
+                  	else{
+                      	auditor.setEntity(interceptableInterfaceClass);
+                      	auditor.setBusiness(method);
+                      	auditor.setBusinessArgumentsValues(methodArguments);
+                  	}
+     			}
+     			else
+     				auditor = null;
+     		}
+     		else
+     			auditor = null;
+        }
+        else
+            auditor = null;
 		
 		return auditor;
      }
