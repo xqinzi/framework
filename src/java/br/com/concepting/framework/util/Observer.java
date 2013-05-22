@@ -22,25 +22,13 @@ public class Observer implements InvocationHandler{
 	private Class       interceptableInterfaceClass = null;
 	private Class       interceptorClass            = null;
 	private Interceptor interceptor                 = null;
+	private Boolean     auditable                   = true;
 
-	/**
-	 * Retorna a instância do proxy contendo o objeto a ser interceptado.
-	 *
-	 * @param interceptableInstance Instância da classe a ser interceptada.
-	 * @param interceptableInterfaceClass Interface da classe a ser interceptada. 
-	 */
-	public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass){
-		return getInstance(interceptableInstance, interceptableInterfaceClass, null);
+	public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Boolean audit){
+		return getInstance(interceptableInstance, interceptableInterfaceClass, null, audit);
 	}
 	
-	/**
-	 * Retorna a instância do proxy contendo o objeto a ser interceptado.
-	 *
-	 * @param interceptableInstance Instância da classe a ser interceptada.
-	 * @param interceptableInterfaceClass Interface da classe a ser interceptada. 
-	 * @param interceptorClass Classe do interceptador.
-	 */
-    public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Class interceptorClass){
+    public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Class interceptorClass, Boolean audit){
 		if(interceptableInstance == null || interceptableInterfaceClass == null)
 			return interceptableInstance;
 		
@@ -59,7 +47,7 @@ public class Observer implements InvocationHandler{
 		else
 		    interceptableClass = interceptableInstance.getClass();
 
-        return (I)Proxy.newProxyInstance(interceptableClass.getClassLoader(), interceptableInstanceInterfaces, new Observer(interceptableInstance, interceptableInterfaceClass, interceptorClass));
+        return (I)Proxy.newProxyInstance(interceptableClass.getClassLoader(), interceptableInstanceInterfaces, new Observer(interceptableInstance, interceptableInterfaceClass, interceptorClass, audit));
 	}
 	
     /**
@@ -129,11 +117,13 @@ public class Observer implements InvocationHandler{
 	 * @param interceptableInstance Instância da classe a ser interceptada.
 	 * @param interceptableInterfaceClass Classe a ser interceptada. 
 	 * @param interceptorClass Classe do interceptador.
+	 * @param auditable 
 	 */
-	private <I> Observer(I interceptableInstance, Class interceptableClass, Class interceptorClass){
+	private <I> Observer(I interceptableInstance, Class interceptableClass, Class interceptorClass, Boolean auditable){
 		this.interceptableInstance       = interceptableInstance;
 		this.interceptableInterfaceClass = interceptableClass;
 		this.interceptorClass            = interceptorClass;
+		this.auditable                   = auditable;
 	}
 
 	/**
@@ -142,10 +132,10 @@ public class Observer implements InvocationHandler{
 	public Object invoke(Object proxy, Method method, Object[] methodArguments) throws Throwable{
 	    if(interceptor == null){
     		try{
-    			interceptor = (Interceptor)ConstructorUtils.invokeConstructor(interceptorClass, new Object[]{interceptableInstance, interceptableInterfaceClass, method, (methodArguments == null ? new Object[0] : methodArguments)});
+    			interceptor = (Interceptor)ConstructorUtils.invokeConstructor(interceptorClass, new Object[]{interceptableInstance, interceptableInterfaceClass, method, (methodArguments == null ? new Object[0] : methodArguments), auditable});
     		}
     		catch(Throwable e){
-    			interceptor = new Interceptor(interceptableInstance, interceptableInterfaceClass, method, methodArguments);
+    			interceptor = new Interceptor(interceptableInstance, interceptableInterfaceClass, method, methodArguments, auditable);
     		}
 	    }
 	    else{
@@ -153,6 +143,7 @@ public class Observer implements InvocationHandler{
 	        interceptor.setInterceptableInterfaceClass(interceptableInterfaceClass);
 	        interceptor.setMethod(method);
 	        interceptor.setMethodArguments(methodArguments);
+	        interceptor.setAuditable(auditable);
 	    }
 
 		interceptor.before();
