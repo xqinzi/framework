@@ -136,6 +136,8 @@ public class ServiceInterceptor extends Interceptor{
                     if(!found)
                         service.commit();
                 }
+                else
+                    service.rollback();
             }
 	    }
 	    finally{

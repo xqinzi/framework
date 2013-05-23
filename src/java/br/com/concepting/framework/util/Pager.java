@@ -184,7 +184,7 @@ public class Pager implements java.io.Serializable{
 
 		if(data != null)
 			if(index > data.size())
-				index = data.size();
+				index = data.size() - 1;
 
 		return index;
 	}

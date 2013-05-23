@@ -17,16 +17,6 @@ public abstract class Constants{
     public static final Integer DEFAULT_BUFFER_SIZE = 4096;
     
     /**
-     * Constante que define o tipo de timeout de operaçòes.
-     */
-    public static final Integer DEFAULT_TIMEOUT = 60;
-    
-    /**
-     * Constante que define o tipo de timeout de operações.
-     */
-    public static final DateFieldType DEFAULT_TIMEOUT_TYPE = DateFieldType.SECONDS;
-    
-    /**
      * Constante que define a codificação default.
      */
     public static final String DEFAULT_ENCODING = "iso-8859-1";
@@ -75,4 +65,14 @@ public abstract class Constants{
      * Constante que define a tag de remoção de conteúdo.
      */
     public static final String REMOVE_TAG = "[remove]";
+    
+    /**
+     * Constante que define o tipo de timeout de operaçòes.
+     */
+    public static final Integer DEFAULT_TIMEOUT = 300;
+    
+    /**
+     * Constante que define o tipo de timeout de operações.
+     */
+    public static final DateFieldType DEFAULT_TIMEOUT_TYPE = DateFieldType.SECONDS;
 }

@@ -78,6 +78,9 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                 }
                         
                 user = users.iterator().next();
+                
+                if(user.getSystem())
+                    throw new UserNotFoundException();
                     
                 if(!password.equals(user.getPassword()))
                 	throw new InvalidPasswordException();

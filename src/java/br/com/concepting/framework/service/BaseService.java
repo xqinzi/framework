@@ -88,15 +88,21 @@ public abstract class BaseService implements IService{
      * @see br.com.concepting.framework.service.interfaces.IService#begin()
      */
 	public void begin() throws InternalErrorException{
-        if(currentPersistence == null)
-            currentPersistence = getPersistence();
+	    try{
+            if(currentPersistence == null)
+                currentPersistence = getPersistence();
+	    }
+	    catch(Throwable e){
+	    }
 	    
-        currentPersistence.openConnection();
-
-        if(currentPersistence != null && useTransaction()){
-            currentPersistence.setTransactionTimeout(transactionTimeout);
-            currentPersistence.begin();
-        }
+	    if(currentPersistence != null){
+            currentPersistence.openConnection();
+    
+            if(currentPersistence != null && useTransaction()){
+                currentPersistence.setTransactionTimeout(transactionTimeout);
+                currentPersistence.begin();
+            }
+	    }
     }
 
     /**

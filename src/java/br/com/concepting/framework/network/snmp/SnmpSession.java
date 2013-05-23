@@ -37,7 +37,6 @@ import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.Opaque;
 import org.snmp4j.smi.SMIConstants;
 import org.snmp4j.smi.TimeTicks;
-import org.snmp4j.smi.UnsignedInteger32;
 import org.snmp4j.smi.Variable;
 import org.snmp4j.smi.VariableBinding;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
@@ -455,9 +454,7 @@ public class SnmpSession{
 		for(SnmpData item : data){
 			variable = new VariableBinding(new OID(item.getRequest().getOid()));
 
-			if(item.getType() == SMIConstants.SYNTAX_UNSIGNED_INTEGER32)
-				value = new UnsignedInteger32((Long)item.getValue());
-			else if(variable.getSyntax() == SMIConstants.SYNTAX_TIMETICKS)
+			if(variable.getSyntax() == SMIConstants.SYNTAX_TIMETICKS)
 				value = new TimeTicks(((Date)item.getValue()).getTime());
 			else if(variable.getSyntax() == SMIConstants.SYNTAX_OCTET_STRING)
 				value = new OctetString((String)item.getValue());
@@ -514,7 +511,7 @@ public class SnmpSession{
     		String                  oid                 = "";
     		String                  instance            = "";
     		Boolean                 found               = false;
-    		String                  expression        = "";
+    		String                  expression          = "";
     		String                  formula             = "";
     		ExpressionProcessor     expressionProcessor = null; 
     		
@@ -532,7 +529,7 @@ public class SnmpSession{
     					result.setRequest(item);
     
     					expression = StringUtil.trim(item.getExpression());
-    					formula      = StringUtil.trim(item.getFormula());
+    					formula    = StringUtil.trim(item.getFormula());
     					
     					if(expression.length() > 0 || formula.length() > 0)
     						if(expressionProcessor == null)
@@ -935,5 +932,32 @@ public class SnmpSession{
 		 * @param result Lista contendo o resultado das requisições.
 		 */
         public abstract void onResponse(Collection<SnmpData> result);
+	}
+	
+	public static void main(String args[]) throws Throwable{
+	    SnmpSession session = SnmpSession.getInstance("192.168.0.26", 161);
+	    
+	    session.setReadCommunity("public");
+	    session.setWriteCommunity("private");
+	    session.setVersion(1);
+	    
+	    SnmpRequest request = new SnmpRequest();
+	    
+	    request.setOid("1.3.6.1.4.1.905.1.1.1");
+	    
+	    SnmpData data = new SnmpData();
+	    
+	    data.setType(SMIConstants.SYNTAX_GAUGE32);
+	    data.setValue(10);
+	    data.setRequest(request);
+	    
+	    session.set(Arrays.asList(data));
+	    
+	    Collection<SnmpData> items = session.get("1.3.6.1.4.1.905.1.1.1");
+	    
+	    for(SnmpData item : items){
+	        System.out.println(item.getType());
+	        System.out.println(item.getValue());
+	    }
 	}
 }

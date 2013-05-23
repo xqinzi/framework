@@ -43,7 +43,10 @@ public class UserModel extends BaseModel{
 	@Property(isForSearch = true)
 	private Boolean active = true;
 
-	@Property(isForSearch=true)
+    @Property
+    private Boolean system = true;
+
+    @Property(isForSearch=true)
 	private String email = "";
 
 	@Property
@@ -75,8 +78,16 @@ public class UserModel extends BaseModel{
 
 	@Property(relationType = RelationType.MANY_TO_MANY)
 	private List<GroupModel> groups = null;
- 
-	/**
+	
+	public Boolean getSystem(){
+        return system;
+    }
+
+    public void setSystem(Boolean system){
+        this.system = system;
+    }
+
+    /**
 	 * Retorna o nome do arquivo do logo.
 	 * 
 	 * @return String contendo o nome do arquivo do logo.
