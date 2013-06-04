@@ -3,7 +3,8 @@ package br.com.concepting.framework.web.taglibs;
 import br.com.concepting.framework.util.StringUtil;
 
 public class TimerTag extends BaseActionFormElementTag{
-    private Integer milliseconds       = 0;
+    private Integer seconds            = 0;
+    private Boolean showCountdown      = true;
     private String  action             = "";
     private String  forward            = "";
     private String  forwardOnFail      = "";
@@ -11,14 +12,22 @@ public class TimerTag extends BaseActionFormElementTag{
     private Boolean validate           = false;
     private String  validateProperties = "";
     
-    public Integer getMilliseconds(){
-        return milliseconds;
+    public Boolean getShowCountdown(){
+        return showCountdown;
     }
-    
-    public void setMilliseconds(Integer milliseconds){
-        this.milliseconds = milliseconds;
+
+    public void setShowCountdown(Boolean showCountdown){
+        this.showCountdown = showCountdown;
     }
-    
+
+    public Integer getSeconds(){
+        return seconds;
+    }
+
+    public void setSeconds(Integer seconds){
+        this.seconds = seconds;
+    }
+
     public String getAction(){
         return action;
     }
@@ -68,13 +77,37 @@ public class TimerTag extends BaseActionFormElementTag{
     }
     
     public void render() throws Throwable{
+        String name = getName();
+
+        if(showCountdown){
+            println("<table>");
+            println("<tr>");
+            print("<td id=\"");
+            print(name);
+            println(".timer\">");
+            println(seconds);
+            println("</td>");
+            println("</tr>");
+            println("</table>");
+        }
+        
         ScriptTag scriptTag = new ScriptTag();
         
         scriptTag.setPageContext(pageContext);
         
-        String        name    = getName();
         StringBuilder content = new StringBuilder();
         
+        content.append("function ");
+        content.append(name);
+        content.append("TimerDisplay(){");
+        content.append("var countdownObject = document.getElementById('");
+        content.append(name);
+        content.append("');");
+        content.append(StringUtil.getLineBreak());
+        content.append(StringUtil.getLineBreak());
+        content.append("if(countdownObject) countdownObject.innerHTML = parseInt(countdownObject.innerHTML) - 1;");
+        content.append("};");
+        content.append(StringUtil.getLineBreak());
         content.append("function ");
         content.append(name);
         content.append("TimerAction(){");
@@ -151,7 +184,13 @@ public class TimerTag extends BaseActionFormElementTag{
         content.append("setInterval(");
         content.append(name);
         content.append("TimerAction, ");
-        content.append(milliseconds);
+        content.append(seconds * 1000);
+        content.append(");");
+        content.append(StringUtil.getLineBreak());
+        content.append("setInterval(");
+        content.append(name);
+        content.append("TimerDisplay, ");
+        content.append(1000);
         content.append(");");
         content.append(StringUtil.getLineBreak());
 
@@ -172,6 +211,7 @@ public class TimerTag extends BaseActionFormElementTag{
         setUpdateViews("");
         setValidate(false);
         setValidateProperties("");
-        setMilliseconds(0);
+        setSeconds(0);
+        setShowCountdown(true);
     }
 }
