@@ -1209,7 +1209,7 @@ public class SystemController{
                !requestInfoName.equals(AttributeConstants.UPDATE_VIEWS_KEY) &&
                !requestInfoName.equals(AttributeConstants.UPLOAD_DATA_KEY) &&
                !requestInfoName.equals(AttributeConstants.UPLOAD_DATA_PROPERTY_KEY) &&
-               !requestInfoName.equals(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY) &&
+               !requestInfoName.equals(AttributeConstants.UPLOAD_FILENAME_PROPERTY_KEY) &&
                !requestInfoName.equals(AttributeConstants.UPLOAD_CONTENT_TYPE_PROPERTY_KEY) &&
  			   !requestInfoName.equals(AttributeConstants.VALIDATE_MODEL_KEY) &&
                !requestInfoName.equals(AttributeConstants.VALIDATE_PROPERTIES_KEY) &&

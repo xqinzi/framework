@@ -85,7 +85,7 @@ public abstract class AttributeConstants extends Constants{
     public static final String UPLOAD_CONTENT_TYPE_PROPERTY_KEY  = "uploadContentTypeProperty";
     public static final String UPLOAD_DATA_KEY                   = "uploadData";
     public static final String UPLOAD_DATA_PROPERTY_KEY          = "uploadDataProperty";
-    public static final String UPLOAD_FILENAME_TYPE_PROPERTY_KEY = "uploadFileNameProperty";
+    public static final String UPLOAD_FILENAME_PROPERTY_KEY      = "uploadFileNameProperty";
     public static final String VALIDATE_MODEL_KEY                = "validateModel";
     public static final String VALIDATE_PROPERTIES_KEY           = "validateProperties";
     public static final String VALIDATE_SEARCH_MODEL_KEY         = "validateSearchModel";

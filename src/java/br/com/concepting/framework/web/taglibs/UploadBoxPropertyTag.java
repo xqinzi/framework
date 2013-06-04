@@ -35,13 +35,13 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         tagId.delete(0, tagId.length());
         tagId.append(name);
         tagId.append(".");
-        tagId.append(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
+        tagId.append(AttributeConstants.UPLOAD_FILENAME_PROPERTY_KEY);
 
         HiddenPropertyTag uploadFileNamePropertyTag = new HiddenPropertyTag();
         
         uploadFileNamePropertyTag.setPageContext(pageContext);
         uploadFileNamePropertyTag.setId(tagId.toString());
-        uploadFileNamePropertyTag.setName(AttributeConstants.UPLOAD_FILENAME_TYPE_PROPERTY_KEY);
+        uploadFileNamePropertyTag.setName(AttributeConstants.UPLOAD_FILENAME_PROPERTY_KEY);
         uploadFileNamePropertyTag.setValue(getFileNameProperty());
         uploadFileNamePropertyTag.doStartTag();
         uploadFileNamePropertyTag.doEndTag();
