@@ -137,6 +137,7 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
             auditorResource = auditorResourceLoader.get(AuditorConstants.DEFAULT_GENERATE_CODE_RESOURCE_KEY);
         }
         catch(Throwable e){
+            this.environment.getMessager().printMessage(Kind.ERROR, e.getMessage());
         }
     }
 	
@@ -146,6 +147,7 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment environment){
         Set<? extends Element> declarations        = null;
         IAnnotationProcessor   annotationProcessor = null;
+        Class                  declarationClass    = null;
         
         if(annotations != null && annotations.size() > 0){
             for(TypeElement annotation : annotations){
@@ -154,8 +156,9 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
                 if(declarations != null && declarations.size() > 0){
                     for(Element declaration : declarations){
                         try{
-                            annotationProcessor = getAnnotationProcessor(Class.forName(declaration.toString()));
-                                
+                            declarationClass    = Class.forName(declaration.toString());
+                            annotationProcessor = getAnnotationProcessor(declarationClass);
+
                             if(annotationProcessor != null)
                                 annotationProcessor.process();
                         }

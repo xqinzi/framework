@@ -83,7 +83,7 @@ public class Auditor{
 
 		logger = Logger.getLogger(entity);
 		
-		logger.removeAllAppenders();
+		Logger.getRootLogger().removeAllAppenders();
 
 		loadAuditorResource();
 		loadLevel();

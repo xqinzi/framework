@@ -1396,7 +1396,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         											((ListPropertyTag)editableDataColumnTag).setValueMapInstance(columnValueMapInstance);
         										}
         										else if(editableDataColumnTag instanceof TextPropertyTag){
-    												((TextPropertyTag)editableDataColumnTag).setAlignment(columnAlignment.toString());
+    												((TextPropertyTag)editableDataColumnTag).setAlignmentType(columnAlignment);
         											((TextPropertyTag)editableDataColumnTag).setSize(columnSize);
         										}
 
