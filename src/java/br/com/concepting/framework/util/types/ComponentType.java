@@ -137,7 +137,9 @@ public enum ComponentType{
 	/**
 	 * Constante que define uma barra de progressão.
 	 */
-	PROGRESS_BAR;
+	PROGRESS_BAR,
+	
+	TIMER;
 	
 	/**
 	 * Retorna o identificador do componente.

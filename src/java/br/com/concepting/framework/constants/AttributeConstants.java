@@ -77,6 +77,7 @@ public abstract class AttributeConstants extends Constants{
     public static final String START_RANGE_KEY                   = "startRange";
     public static final String SECTION_CONTENT_KEY               = "sectionContent";
     public static final String SECTION_HEADER_KEY                = "sectionHeader";
+    public static final String TIMER_KEY                         = "timer";
     public static final String TITLE_KEY                         = "title";
     public static final String TOOLTIP_KEY                       = "tooltip";
     public static final String TREE_VIEW_KEY                     = "treeView";

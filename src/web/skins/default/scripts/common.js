@@ -8,6 +8,16 @@
 var clockTimer     = null;
 var requestHandler = null;
 var submittedForm  = null;
+var timers         = [];
+
+function clearAllTimers(){
+	if(timers){
+		for(cont = 0 ; cont < timers.length ; cont++){
+			clearInterval(timers[cont]);
+			clearTimeout(timers[cont]);
+		}
+	}
+}
 
 /**
  * Indica se o browser é o Internet Explorer.

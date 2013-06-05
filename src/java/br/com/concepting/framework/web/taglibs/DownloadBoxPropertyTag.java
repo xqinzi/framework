@@ -258,7 +258,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                 ModelInfo modelInfo = ModelUtil.getModelInfo(model.getClass());
                 
                 if(modelInfo != null){
-                    byte content[] = (byte[])getValue();
+                    byte content[] = getValue();
 
                     if(content != null && content.length > 0){
                         String       fileName             = "";

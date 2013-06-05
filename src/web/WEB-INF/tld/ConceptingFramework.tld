@@ -7396,8 +7396,15 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
-            <name>milliseconds</name>
-            <required>true</required>
+            <name>showCountdown</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>styleClass</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>style</name>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>    

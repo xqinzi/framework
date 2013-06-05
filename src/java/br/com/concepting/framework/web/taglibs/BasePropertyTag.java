@@ -973,8 +973,8 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	 * 
 	 * @return Instância contendo o valor do componente.
 	 */
-	public Object getValue(){
-		return value;
+	public <O> O getValue(){
+		return (O)value;
 	}
 
 	/**
@@ -982,7 +982,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	 * 
 	 * @param value Instância contendo o valor do componente.
 	 */
-	public void setValue(Object value){
+	public <O> void setValue(O value){
 		this.value = value;
 	}
 
