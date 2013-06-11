@@ -3,7 +3,7 @@
 <networkResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:noNamespaceSchemaLocation="networkResources.xsd">
 	<mailResources>
-		<mail id="localhost" default="true"/>
+		<mail id="gmail" default="true"/>
 	</mailResources>
 	<ldapResources>
 		<ldap id="localhost" default="true"/>

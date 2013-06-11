@@ -15,20 +15,19 @@
                     					<xs:element type="xs:boolean" name="useSsl" minOccurs="0" maxOccurs="1"/>
                    						<xs:element name="transport" minOccurs="0" maxOccurs="1">
                      						<xs:complexType>
-                       							<xs:simpleContent>
-                         							<xs:extension base="xs:string">
-	                           							<xs:attribute name="type" use="required">
-								                  			<xs:simpleType>
-														    	<xs:restriction base="xs:string">
-														        	<xs:enumeration value="SMTP"/>
-														        	<xs:enumeration value="ESMTP"/>
-														    	</xs:restriction>
-															</xs:simpleType>
-	                           							</xs:attribute>
-	                           							<xs:attribute type="xs:short" name="port" use="optional"/>
-                         							</xs:extension>
-                       							</xs:simpleContent>
-                     						</xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element type="xs:string" name="serverName" minOccurs="0" maxOccurs="1"/>
+                                                </xs:sequence>
+                                                <xs:attribute name="type" use="required">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="SMTP"/>
+                                                            <xs:enumeration value="ESMTP"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                                <xs:attribute type="xs:short" name="port" use="optional"/>
+                                            <xs:sequence>
                    						</xs:element>
                    						<xs:element name="storage" minOccurs="0" maxOccurs="1">
                      						<xs:complexType>

@@ -971,6 +971,11 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 
                                 if(columnStyle.length() == 0)
                                     columnStyle = detailStyle;
+                                
+                                columnLinkStyleClass = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyleClass);
+                                columnLinkStyle      = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyle);
+                                columnStyleClass     = PropertyUtil.fillPropertiesInString(currentModel, columnStyleClass);
+                                columnStyle          = PropertyUtil.fillPropertiesInString(currentModel, columnStyle);
 
                                 print("<td class=\"");
     						    print(columnStyleClass);

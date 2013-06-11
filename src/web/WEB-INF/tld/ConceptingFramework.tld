@@ -85,7 +85,6 @@
         </attribute>
         <attribute>
             <name>showLabel</name>
-            <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
@@ -152,7 +151,6 @@
         </attribute>
         <attribute>
             <name>showLabel</name>
-            <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
