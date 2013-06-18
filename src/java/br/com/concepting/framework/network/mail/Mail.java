@@ -299,10 +299,12 @@ public class Mail{
 				buildHeader(message, sendMessage);
 				buildBody(message, sendMessage);
 
-				if(mailResource.getTransportUser().length() > 0) 
-					transport.connect(mailResource.getTransportServerName(), mailResource.getTransportUser(), mailResource.getTransportPassword());
-				else 
-					transport.connect();
+				if(!transport.isConnected()){
+    				if(mailResource.getTransportUser().length() > 0) 
+    					transport.connect(mailResource.getTransportServerName(), mailResource.getTransportUser(), mailResource.getTransportPassword());
+    				else 
+    					transport.connect();
+				}
 
 				transport.sendMessage(sendMessage, sendMessage.getAllRecipients());
 			}
@@ -332,7 +334,8 @@ public class Mail{
 			Folder rootFolder = null;
 
 			try{
-				storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
+			    if(!storage.isConnected())
+			        storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
 
 				rootFolder = storage.getDefaultFolder();
 				folders    = Arrays.asList(rootFolder.list());
@@ -439,7 +442,8 @@ public class Mail{
         Store                   storage      = session.getStore();
 
 		try{
-			storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
+		    if(!storage.isConnected())
+		        storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
 
 			folder = storage.getFolder(folderName);
 			
