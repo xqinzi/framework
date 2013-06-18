@@ -861,8 +861,26 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     					if(!expressionResult)
     					    rowStateTag = null;
     					
-    					if(rowStateTag != null)
-    					    rowRemove = rowStateTag.remove();
+                        columnLinkStyleClass = "";
+                        columnLinkStyle      = "";
+                        columnStyleClass     = "";
+                        columnStyle          = "";
+
+                        if(rowStateTag != null){
+    					    rowRemove            = rowStateTag.remove();
+                            columnLinkStyleClass = rowStateTag.getLinkStyleClass();
+                            columnLinkStyle      = rowStateTag.getLinkStyle();
+                            columnStyleClass     = rowStateTag.getStyleClass();
+                            columnStyle          = rowStateTag.getStyle();
+                            columnLinkStyleClass = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyleClass);
+                            columnLinkStyle      = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyle);
+                            columnStyleClass     = PropertyUtil.fillPropertiesInString(currentModel, columnStyleClass);
+                            columnStyle          = PropertyUtil.fillPropertiesInString(currentModel, columnStyle);
+                            columnLinkStyleClass = ExpressionProcessorUtil.fillVariablesInString(columnLinkStyleClass);
+                            columnLinkStyle      = ExpressionProcessorUtil.fillVariablesInString(columnLinkStyle);
+                            columnStyleClass     = ExpressionProcessorUtil.fillVariablesInString(columnStyleClass);
+                            columnStyle          = ExpressionProcessorUtil.fillVariablesInString(columnStyle);
+    					}
     					
                         if(!rowRemove){
         					if(aggregates != null && aggregates.length > 0){
@@ -952,17 +970,8 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         
         					println("<tr>");
     
-                            columnLinkStyleClass = "";
-                            columnLinkStyle      = "";
-                            columnStyleClass     = "";
-                            columnStyle          = "";
 
                             if(showSelection()){
-        					    if(rowStateTag != null){
-        					        columnStyleClass = rowStateTag.getStyleClass();
-        					        columnStyle      = rowStateTag.getStyle();
-        					    }
-        					    
                                 if(columnStyleClass.length() == 0)
                                     columnStyleClass = detailStyleClass;
                                 
@@ -972,11 +981,6 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                                 if(columnStyle.length() == 0)
                                     columnStyle = detailStyle;
                                 
-                                columnLinkStyleClass = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyleClass);
-                                columnLinkStyle      = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyle);
-                                columnStyleClass     = PropertyUtil.fillPropertiesInString(currentModel, columnStyleClass);
-                                columnStyle          = PropertyUtil.fillPropertiesInString(currentModel, columnStyle);
-
                                 print("<td class=\"");
     						    print(columnStyleClass);
        							print("\"");
@@ -1059,10 +1063,6 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
                                 columnPattern          = columnTag.getPattern();
                                 columnEditable         = false;
                                 columnHasMultipleLines = false;
-                                columnLinkStyleClass   = "";
-                                columnLinkStyle        = "";
-                                columnStyleClass       = "";
-                                columnStyle            = "";
                                 
                                 try{
                                     columnPropertyInfo = PropertyUtil.getPropertyInfo(currentModel, columnName);
@@ -1201,20 +1201,6 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         							    columnStyle          = columnStateTag.getStyle();
         							}
         							
-        							if(rowStateTag != null){
-        							    if(columnLinkStyleClass.length() == 0)
-        							        columnLinkStyleClass = rowStateTag.getLinkStyleClass();
-
-                                        if(columnLinkStyle.length() == 0)
-                                            columnLinkStyle = rowStateTag.getLinkStyle();
-
-                                        if(columnStyleClass.length() == 0)
-                                            columnStyleClass = rowStateTag.getStyleClass();
-
-                                        if(columnStyle.length() == 0)
-                                            columnStyle = rowStateTag.getStyle();
-        							}
-        							
         							if(columnLinkStyleClass.length() == 0)
         							    columnLinkStyleClass = columnTag.getLinkStyleClass();
 
@@ -1244,6 +1230,15 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 
                                     if(columnStyleClass.length() == 0)
                                         columnStyleClass = TaglibConstants.DEFAULT_GRID_DETAIL_STYLE_CLASS;
+                                    
+                                    columnLinkStyleClass = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyleClass, currentLanguage);
+                                    columnLinkStyle      = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyle, currentLanguage);
+                                    columnStyleClass     = PropertyUtil.fillPropertiesInString(currentModel, columnStyleClass, currentLanguage);
+                                    columnStyle          = PropertyUtil.fillPropertiesInString(currentModel, columnStyle, currentLanguage);
+                                    columnLinkStyleClass = ExpressionProcessorUtil.fillVariablesInString(columnLinkStyleClass, currentLanguage);
+                                    columnLinkStyle      = ExpressionProcessorUtil.fillVariablesInString(columnLinkStyle, currentLanguage);
+                                    columnStyleClass     = ExpressionProcessorUtil.fillVariablesInString(columnStyleClass, currentLanguage);
+                                    columnStyle          = ExpressionProcessorUtil.fillVariablesInString(columnStyle, currentLanguage);
         							
                                     print("<td class=\"");
     								print(columnStyleClass);
@@ -1277,36 +1272,28 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
             								print("\"");
             							}
             							
-        								columnLink           = PropertyUtil.fillPropertiesInString(currentModel, columnLink, currentLanguage);
-        								columnTooltip        = PropertyUtil.fillPropertiesInString(currentModel, columnTooltip, currentLanguage);
-        								columnOnBlur         = PropertyUtil.fillPropertiesInString(currentModel, columnOnBlur, currentLanguage);
-        								columnOnFocus        = PropertyUtil.fillPropertiesInString(currentModel, columnOnFocus, currentLanguage);
-        								columnOnChange       = PropertyUtil.fillPropertiesInString(currentModel, columnOnChange, currentLanguage);
-        								columnOnClick        = PropertyUtil.fillPropertiesInString(currentModel, columnOnClick, currentLanguage);
-        								columnOnKeyPress     = PropertyUtil.fillPropertiesInString(currentModel, columnOnKeyPress, currentLanguage);
-        								columnOnKeyUp        = PropertyUtil.fillPropertiesInString(currentModel, columnOnKeyUp, currentLanguage);
-        								columnOnKeyDown      = PropertyUtil.fillPropertiesInString(currentModel, columnOnKeyDown, currentLanguage);
-        								columnOnMouseOver    = PropertyUtil.fillPropertiesInString(currentModel, columnOnMouseOver, currentLanguage);
-        								columnOnMouseOut     = PropertyUtil.fillPropertiesInString(currentModel, columnOnMouseOut, currentLanguage);
-        								columnLinkStyleClass = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyleClass, currentLanguage);
-        								columnLinkStyle      = PropertyUtil.fillPropertiesInString(currentModel, columnLinkStyle, currentLanguage);
-                                        columnStyleClass     = PropertyUtil.fillPropertiesInString(currentModel, columnStyleClass, currentLanguage);
-                                        columnStyle          = PropertyUtil.fillPropertiesInString(currentModel, columnStyle, currentLanguage);
-        								columnLink           = ExpressionProcessorUtil.fillVariablesInString(columnLink, currentLanguage);
-        								columnTooltip        = ExpressionProcessorUtil.fillVariablesInString(columnTooltip, currentLanguage);
-        								columnOnBlur         = ExpressionProcessorUtil.fillVariablesInString(columnOnBlur, currentLanguage);
-        								columnOnFocus        = ExpressionProcessorUtil.fillVariablesInString(columnOnFocus, currentLanguage);
-        								columnOnChange       = ExpressionProcessorUtil.fillVariablesInString(columnOnChange, currentLanguage);
-        								columnOnClick        = ExpressionProcessorUtil.fillVariablesInString(columnOnClick, currentLanguage);
-        								columnOnKeyPress     = ExpressionProcessorUtil.fillVariablesInString(columnOnKeyPress, currentLanguage);
-        								columnOnKeyUp        = ExpressionProcessorUtil.fillVariablesInString(columnOnKeyUp, currentLanguage);
-        								columnOnKeyDown      = ExpressionProcessorUtil.fillVariablesInString(columnOnKeyDown, currentLanguage);
-        								columnOnMouseOver    = ExpressionProcessorUtil.fillVariablesInString(columnOnMouseOver, currentLanguage);
-        								columnOnMouseOut     = ExpressionProcessorUtil.fillVariablesInString(columnOnMouseOut, currentLanguage);
-                                        columnLinkStyleClass = ExpressionProcessorUtil.fillVariablesInString(columnLinkStyleClass, currentLanguage);
-                                        columnLinkStyle      = ExpressionProcessorUtil.fillVariablesInString(columnLinkStyle, currentLanguage);
-                                        columnStyleClass     = ExpressionProcessorUtil.fillVariablesInString(columnStyleClass, currentLanguage);
-                                        columnStyle          = ExpressionProcessorUtil.fillVariablesInString(columnStyle, currentLanguage);
+        								columnLink        = PropertyUtil.fillPropertiesInString(currentModel, columnLink, currentLanguage);
+        								columnTooltip     = PropertyUtil.fillPropertiesInString(currentModel, columnTooltip, currentLanguage);
+        								columnOnBlur      = PropertyUtil.fillPropertiesInString(currentModel, columnOnBlur, currentLanguage);
+        								columnOnFocus     = PropertyUtil.fillPropertiesInString(currentModel, columnOnFocus, currentLanguage);
+        								columnOnChange    = PropertyUtil.fillPropertiesInString(currentModel, columnOnChange, currentLanguage);
+        								columnOnClick     = PropertyUtil.fillPropertiesInString(currentModel, columnOnClick, currentLanguage);
+        								columnOnKeyPress  = PropertyUtil.fillPropertiesInString(currentModel, columnOnKeyPress, currentLanguage);
+        								columnOnKeyUp     = PropertyUtil.fillPropertiesInString(currentModel, columnOnKeyUp, currentLanguage);
+        								columnOnKeyDown   = PropertyUtil.fillPropertiesInString(currentModel, columnOnKeyDown, currentLanguage);
+        								columnOnMouseOver = PropertyUtil.fillPropertiesInString(currentModel, columnOnMouseOver, currentLanguage);
+        								columnOnMouseOut  = PropertyUtil.fillPropertiesInString(currentModel, columnOnMouseOut, currentLanguage);
+        								columnLink        = ExpressionProcessorUtil.fillVariablesInString(columnLink, currentLanguage);
+        								columnTooltip     = ExpressionProcessorUtil.fillVariablesInString(columnTooltip, currentLanguage);
+        								columnOnBlur      = ExpressionProcessorUtil.fillVariablesInString(columnOnBlur, currentLanguage);
+        								columnOnFocus     = ExpressionProcessorUtil.fillVariablesInString(columnOnFocus, currentLanguage);
+        								columnOnChange    = ExpressionProcessorUtil.fillVariablesInString(columnOnChange, currentLanguage);
+        								columnOnClick     = ExpressionProcessorUtil.fillVariablesInString(columnOnClick, currentLanguage);
+        								columnOnKeyPress  = ExpressionProcessorUtil.fillVariablesInString(columnOnKeyPress, currentLanguage);
+        								columnOnKeyUp     = ExpressionProcessorUtil.fillVariablesInString(columnOnKeyUp, currentLanguage);
+        								columnOnKeyDown   = ExpressionProcessorUtil.fillVariablesInString(columnOnKeyDown, currentLanguage);
+        								columnOnMouseOver = ExpressionProcessorUtil.fillVariablesInString(columnOnMouseOver, currentLanguage);
+        								columnOnMouseOut  = ExpressionProcessorUtil.fillVariablesInString(columnOnMouseOut, currentLanguage);
         								
         								println(">");
         								
