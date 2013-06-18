@@ -5,51 +5,53 @@
         		<xs:element name="mailResources" minOccurs="1" maxOccurs="1">
           			<xs:complexType>
             			<xs:sequence>
-              				<xs:element name="mail" minOccurs="1" maxOccurs="unbounded">
-                				<xs:complexType>
-                  					<xs:sequence>
-                    					<xs:element type="xs:string" name="serverName" minOccurs="0" maxOccurs="1"/>
-                    					<xs:element type="xs:string" name="user" minOccurs="0" maxOccurs="1"/>
-                    					<xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
-                    					<xs:element type="xs:boolean" name="useTls" minOccurs="0" maxOccurs="1"/>
-                    					<xs:element type="xs:boolean" name="useSsl" minOccurs="0" maxOccurs="1"/>
-                   						<xs:element name="transport" minOccurs="0" maxOccurs="1">
-                     						<xs:complexType>
+                            <xs:element name="mail" minOccurs="1" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="transport" minOccurs="0" maxOccurs="1">
+                                            <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element type="xs:string" name="serverName" minOccurs="0" maxOccurs="1"/>
+                                                    <xs:element type="xs:string" name="serverName" minOccurs="1" maxOccurs="1"/>
+                                                    <xs:element type="xs:byte" name="serverPort" minOccurs="1" maxOccurs="1"/>
+                                                    <xs:element type="xs:string" name="user" minOccurs="0" maxOccurs="1"/>
+                                                    <xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
                                                 </xs:sequence>
-                                                <xs:attribute name="type" use="required">
+                                                <xs:attribute type="xs:string" name="type" use="required">
                                                     <xs:simpleType>
                                                         <xs:restriction base="xs:string">
-                                                            <xs:enumeration value="SMTP"/>
                                                             <xs:enumeration value="ESMTP"/>
+                                                            <xs:enumeration value="SMTP"/>
                                                         </xs:restriction>
                                                     </xs:simpleType>
                                                 </xs:attribute>
-                                                <xs:attribute type="xs:short" name="port" use="optional"/>
-                                            <xs:sequence>
-                   						</xs:element>
-                   						<xs:element name="storage" minOccurs="0" maxOccurs="1">
-                     						<xs:complexType>
-                       							<xs:simpleContent>
-                         							<xs:extension base="xs:string">
-	                           							<xs:attribute name="type" use="required">
-								                  			<xs:simpleType>
-														    	<xs:restriction base="xs:string">
-														        	<xs:enumeration value="POP3"/>
-														        	<xs:enumeration value="IMAP"/>
-														    	</xs:restriction>
-															</xs:simpleType>
-	                           							</xs:attribute>
-	                           							<xs:attribute type="xs:short" name="port" use="optional"/>
-                         							</xs:extension>
-                       							</xs:simpleContent>
-                     						</xs:complexType>
-                   						</xs:element>
-                  					</xs:sequence>
-                 					<xs:attribute type="xs:string" name="id" use="required"/>
-                 					<xs:attribute type="xs:boolean" name="default" use="optional"/>
-               					</xs:complexType>
+                                                <xs:attribute type="xs:boolean" name="useSsl"/>
+                                                <xs:attribute type="xs:boolean" name="useTls"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="storage" minOccurs="0" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element type="xs:string" name="serverName" minOccurs="1" maxOccurs="1"/>
+                                                    <xs:element type="xs:byte" name="serverPort" minOccurs="1" maxOccurs="1"/>
+                                                    <xs:element type="xs:string" name="user" minOccurs="0" maxOccurs="1"/>
+                                                    <xs:element type="xs:string" name="password" minOccurs="0" maxOccurs="1"/>
+                                                </xs:sequence>
+                                                <xs:attribute type="xs:string" name="type" use="required">
+                                                    <xs:simpleType>
+                                                        <xs:restriction base="xs:string">
+                                                            <xs:enumeration value="POP3"/>
+                                                            <xs:enumeration value="IMAP"/>
+                                                        </xs:restriction>
+                                                    </xs:simpleType>
+                                                </xs:attribute>
+                                                <xs:attribute type="xs:boolean" name="useSsl"/>
+                                                <xs:attribute type="xs:boolean" name="useTls"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute type="xs:string" name="id"/>
+                                    <xs:attribute type="xs:boolean" name="default"/>
+                                </xs:complexType>                        
              				</xs:element>
            				</xs:sequence>
          			</xs:complexType>
