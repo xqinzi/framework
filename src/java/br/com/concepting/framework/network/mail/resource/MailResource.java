@@ -13,15 +13,20 @@ import br.com.concepting.framework.resource.BaseResource;
  * @since 1.0
  */
 public class MailResource extends BaseResource{
-	private String            serverName    = "";
-	private MailTransportType transport     = NetworkConstants.DEFAULT_MAIL_TRANSPORT;
-	private Integer           transportPort = NetworkConstants.DEFAULT_MAIL_TRANSPORT_PORT;
-	private MailStorageType   storage       = NetworkConstants.DEFAULT_MAIL_STORAGE;
-	private Integer           storagePort   = NetworkConstants.DEFAULT_MAIL_STORAGE_PORT;
-	private String            user          = "";
-	private String            password      = "";
-	private Boolean           useSsl        = false;
-	private Boolean           useTls        = false;
+	private MailTransportType transport           = NetworkConstants.DEFAULT_MAIL_TRANSPORT;
+    private MailStorageType   storage             = NetworkConstants.DEFAULT_MAIL_STORAGE;
+	private String            transportServerName = NetworkConstants.LOCALHOST_ID;
+	private Integer           transportServerPort = NetworkConstants.DEFAULT_MAIL_TRANSPORT_PORT;
+	private String            transportUser       = "";
+	private String            transportPassword   = "";
+	private Boolean           transportUseSsl     = false;
+	private Boolean           transportUseTls     = false;
+    private String            storageServerName   = NetworkConstants.LOCALHOST_ID;
+    private Integer           storageServerPort   = NetworkConstants.DEFAULT_MAIL_STORAGE_PORT;
+    private String            storageUser         = "";
+    private String            storagePassword     = "";
+	private Boolean           storageUseSsl       = false;
+	private Boolean           storageUseTls       = false;
 	
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -30,183 +35,115 @@ public class MailResource extends BaseResource{
 		super();
 	}
 
-	/**
-	 * Indica se a conexão com o servidor de e-Mail deve utilizar SSL.
-	 *  
-	 * @return True/False.
-	 */
-	public Boolean useSsl(){
-    	return useSsl;
-    }
-	
-	/**
-	 * Indica se a conexão com o servidor de e-Mail deve utilizar SSL.
-	 *  
-	 * @return True/False.
-	 */
-	public Boolean getUseSsl(){
-		return useSsl();
-	}
-
-	/**
-	 * Define se a conexão com o servidor de e-Mail deve utilizar SSL.
-	 *  
-	 * @param useSsl True/False.
-	 */
-	public void setUseSsl(Boolean useSsl){
-    	this.useSsl = useSsl;
-    }
-	 
-	/**
-	 * Indica se a conexão com o servidor de e-Mail deve utilizar TLS.
-	 *  
-	 * @return True/False.
-	 */
-	public Boolean useTls(){
-		return useTls;
-	}
-
-	/**
-	 * Indica se a conexão com o servidor de e-Mail deve utilizar TLS.
-	 *  
-	 * @return True/False.
-	 */
-	public Boolean getUseTls(){
-    	return useTls();
+    public MailTransportType getTransport(){
+        return transport;
     }
 
-	/**
-	 * Define se a conexão com o servidor de e-Mail deve utilizar SSL.
-	 *  
-	 * @param useTls True/False.
-	 */
-	public void setUseTls(Boolean useTls){
-    	this.useTls = useTls;
+    public void setTransport(MailTransportType transport){
+        this.transport = transport;
     }
 
-	/**
-	 * Retorna o nome/IP do servidor de e-Mail.
-	 * 
-	 * @return String contendo o nome/IP do servidor.
-	 */
-	public String getServerName(){
-		return serverName;
-	}
+    public MailStorageType getStorage(){
+        return storage;
+    }
 
-	/**
-	 * Define o nome/IP do servidor de e-Mail.
-	 * 
-	 * @param serverName String contendo o nome/IP do servidor.
-	 */
-	public void setServerName(String serverName){
-		this.serverName = serverName;
-	}
+    public void setStorage(MailStorageType storage){
+        this.storage = storage;
+    }
 
-	/**
-	 * Retorna o protocolo de transporte das mensagens.
-	 * 
-	 * @return Instância da constante do protocolo de transporte das mensagens.
-	 */
-	public MailTransportType getTransport(){
-		return transport;
-	}
+    public String getTransportServerName(){
+        return transportServerName;
+    }
 
-	/**
-	 * Define o protocolo de transporte das mensagens.
-	 * 
-	 * @param transport Instância da constante do protocolo de transporte das mensagens.
-	 */
-	public void setTransport(MailTransportType transport){
-		this.transport = transport;
-	}
+    public void setTransportServerName(String transportServerName){
+        this.transportServerName = transportServerName;
+    }
 
-	/**
-	 * Retorna a porta utilizada pelo protocolo de transporte das mensagens.
-	 * 
-	 * @return Valor inteiro contendo a porta utilizada pelo protocolo de transporte.
-	 */
-	public Integer getTransportPort(){
-		return transportPort;
-	}
+    public Integer getTransportServerPort(){
+        return transportServerPort;
+    }
 
-	/**
-	 * Define a porta utilizada pelo protocolo de transporte das mensagens.
-	 * 
-	 * @param transportPort Valor inteiro contendo a porta utilizada pelo protocolo de transporte.
-	 */
-	public void setTransportPort(Integer transportPort){
-		this.transportPort = transportPort;
-	}
+    public void setTransportServerPort(Integer transportServerPort){
+        this.transportServerPort = transportServerPort;
+    }
 
-	/**
-	 * Retorna o protocolo de armazenamento das mensagens.
-	 * 
-	 * @return Instância da constante do protocolo de armazenamento das mensagens.
-	 */
-	public MailStorageType getStorage(){
-		return storage;
-	}
+    public String getTransportUser(){
+        return transportUser;
+    }
 
-	/**
-	 * Define o protocolo de armazenamento das mensagens.
-	 * 
-	 * @param storage Instância da constante do protocolo de armazenamento das mensagens.
-	 */
-	public void setStorage(MailStorageType storage){
-		this.storage = storage;
-	}
+    public void setTransportUser(String transportUser){
+        this.transportUser = transportUser;
+    }
 
-	/**
-	 * Retorna a porta utilizada pelo protocolo de armazenamento das mensagens.
-	 * 
-	 * @return Valor inteiro contendo a porta utilizada pelo protocolo de armazenamento.
-	 */
-	public Integer getStoragePort(){
-		return storagePort;
-	}
+    public String getTransportPassword(){
+        return transportPassword;
+    }
 
-	/**
-	 * Define a porta utilizada pelo protocolo de armazenamento das mensagens.
-	 * 
-	 * @param storagePort Valor inteiro contendo a porta utilizada pelo protocolo de armazenamento.
-	 */
-	public void setStoragePort(Integer storagePort){
-		this.storagePort = storagePort;
-	}
+    public void setTransportPassword(String transportPassword){
+        this.transportPassword = transportPassword;
+    }
 
-	/**
-	 * Retorna o nome do usuário para conexão com o servidor de e-Mail.
-	 * 
-	 * @return String contendo o nome do usuário.
-	 */
-	public String getUser(){
-		return user;
-	}
+    public Boolean getTransportUseSsl(){
+        return transportUseSsl;
+    }
 
-	/**
-	 * Define o nome do usuário para conexão com o servidor de e-Mail.
-	 * 
-	 * @param user String contendo o nome do usuário.
-	 */
-	public void setUser(String user){
-		this.user = user;
-	}
+    public void setTransportUseSsl(Boolean transportUseSsl){
+        this.transportUseSsl = transportUseSsl;
+    }
 
-	/**
-	 * Retorna a senha para conexão com o servidor de e-Mail.
-	 * 
-	 * @return String contendo a senha.
-	 */
-	public String getPassword(){
-		return password;
-	}
+    public Boolean getTransportUseTls(){
+        return transportUseTls;
+    }
 
-	/**
-	 * Define a senha para conexão com o servidor de e-Mail.
-	 * 
-	 * @param password String contendo a senha.
-	 */
-	public void setPassword(String password){
-		this.password = password;
-	}
+    public void setTransportUseTls(Boolean transportUseTls){
+        this.transportUseTls = transportUseTls;
+    }
+
+    public String getStorageServerName(){
+        return storageServerName;
+    }
+
+    public void setStorageServerName(String storageServerName){
+        this.storageServerName = storageServerName;
+    }
+
+    public Integer getStorageServerPort(){
+        return storageServerPort;
+    }
+
+    public void setStorageServerPort(Integer storageServerPort){
+        this.storageServerPort = storageServerPort;
+    }
+
+    public String getStorageUser(){
+        return storageUser;
+    }
+
+    public void setStorageUser(String storageUser){
+        this.storageUser = storageUser;
+    }
+
+    public String getStoragePassword(){
+        return storagePassword;
+    }
+
+    public void setStoragePassword(String storagePassword){
+        this.storagePassword = storagePassword;
+    }
+
+    public Boolean getStorageUseSsl(){
+        return storageUseSsl;
+    }
+
+    public void setStorageUseSsl(Boolean storageUseSsl){
+        this.storageUseSsl = storageUseSsl;
+    }
+
+    public Boolean getStorageUseTls(){
+        return storageUseTls;
+    }
+
+    public void setStorageUseTls(Boolean storageUseTls){
+        this.storageUseTls = storageUseTls;
+    }
 }
