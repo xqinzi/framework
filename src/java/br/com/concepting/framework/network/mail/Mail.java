@@ -46,11 +46,9 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public class Mail{
-	private Session          session      = null;
-	private Transport        transport    = null;
-	private Store            storage      = null;
-	private MailResource     mailResource = null;
-	private Collection<File> attachments  = null;
+    private Properties       mailProperties = null;
+	private MailResource     mailResource   = null;
+	private Collection<File> attachments    = null;
 
 	/**
 	 * Construtor - Inicializa o ambiente para envio/recebimento de mensagens de e-Mail a partir 
@@ -73,76 +71,52 @@ public class Mail{
 	 * @throws NoSuchProviderException
 	 */
 	private void initialize() throws NoSuchProviderException{
-		Properties properties   = new Properties();
-		Boolean    transportSet = false;
-		Boolean    storageSet   = false;
+	    mailProperties = new Properties();
 
 		if(mailResource.getTransport() == MailTransportType.SMTP){
-			properties.setProperty("mail.transport.protocol", MailTransportType.SMTP.toString().toLowerCase());
-			properties.setProperty("mail.smtp.host", mailResource.getServerName());
-			properties.setProperty("mail.smtp.localhost", mailResource.getServerName());
-			properties.setProperty("mail.smtp.port", String.valueOf(mailResource.getTransportPort()));
+		    mailProperties.setProperty("mail.transport.protocol", MailTransportType.SMTP.toString().toLowerCase());
+		    mailProperties.setProperty("mail.smtp.host", mailResource.getTransportServerName());
+		    mailProperties.setProperty("mail.smtp.localhost", mailResource.getTransportServerName());
+		    mailProperties.setProperty("mail.smtp.port", String.valueOf(mailResource.getTransportServerPort()));
 
-			if(mailResource.getUser().length() > 0) 
-				properties.setProperty("mail.smtp.auth", "true");
+			if(mailResource.getTransportUser().length() > 0) 
+			    mailProperties.setProperty("mail.smtp.auth", "true");
 			
-			if(mailResource.useTls())
-				properties.put("mail.smtp.starttls.enable", "true");
+			if(mailResource.getTransportUseTls())
+			    mailProperties.put("mail.smtp.starttls.enable", "true");
 
-			if(mailResource.useSsl()){
-				properties.put("mail.smtp.socketFactory.class", SSLSocketFactory.class.getName());
-				properties.put("mail.smtp.socketFactory.port", String.valueOf(mailResource.getTransportPort()));
+            if(mailResource.getTransportUseSsl()){
+                mailProperties.put("mail.smtp.socketFactory.class", SSLSocketFactory.class.getName());
+                mailProperties.put("mail.smtp.socketFactory.port", String.valueOf(mailResource.getTransportServerPort()));
 			}
-			
-			transportSet = true;
 		}
 
 		if(mailResource.getStorage() == MailStorageType.POP3){
-			properties.setProperty("mail.store.protocol", MailStorageType.POP3.toString().toLowerCase());
-			properties.setProperty("mail.pop3.host", mailResource.getServerName());
-			properties.setProperty("mail.pop3.port", String.valueOf(mailResource.getStoragePort()));
+		    mailProperties.setProperty("mail.store.protocol", MailStorageType.POP3.toString().toLowerCase());
+		    mailProperties.setProperty("mail.pop3.host", mailResource.getStorageServerName());
+		    mailProperties.setProperty("mail.pop3.port", String.valueOf(mailResource.getStorageServerPort()));
 			
-			if(mailResource.useTls())
-				properties.put("mail.pop3.starttls.enable", "true");
+			if(mailResource.getStorageUseTls())
+			    mailProperties.put("mail.pop3.starttls.enable", "true");
 
-			if(mailResource.useSsl()){
-				properties.put("mail.pop3.socketFactory.class", SSLSocketFactory.class.getName());
-				properties.put("mail.pop3.socketFactory.port", String.valueOf(mailResource.getStoragePort()));
+			if(mailResource.getStorageUseSsl()){
+			    mailProperties.put("mail.pop3.socketFactory.class", SSLSocketFactory.class.getName());
+			    mailProperties.put("mail.pop3.socketFactory.port", String.valueOf(mailResource.getStorageServerPort()));
 			}
-
-			storageSet = true;
 		}
 		else if(mailResource.getStorage() == MailStorageType.IMAP){
-			properties.setProperty("mail.store.protocol", MailStorageType.IMAP.toString().toLowerCase());
-			properties.setProperty("mail.imap.host", mailResource.getServerName());
-			properties.setProperty("mail.imap.port", String.valueOf(mailResource.getStoragePort()));
+		    mailProperties.setProperty("mail.store.protocol", MailStorageType.IMAP.toString().toLowerCase());
+		    mailProperties.setProperty("mail.imap.host", mailResource.getStorageServerName());
+		    mailProperties.setProperty("mail.imap.port", String.valueOf(mailResource.getStorageServerPort()));
 
-			if(mailResource.useTls())
-				properties.put("mail.imap.starttls.enable", "true");
+			if(mailResource.getStorageUseTls())
+			    mailProperties.put("mail.imap.starttls.enable", "true");
 			
-			if(mailResource.useSsl()){
-				properties.put("mail.imap.socketFactory.class", SSLSocketFactory.class.getName());
-				properties.put("mail.imap.socketFactory.port", String.valueOf(mailResource.getStoragePort()));
+			if(mailResource.getStorageUseSsl()){
+			    mailProperties.put("mail.imap.socketFactory.class", SSLSocketFactory.class.getName());
+				mailProperties.put("mail.imap.socketFactory.port", String.valueOf(mailResource.getStorageServerPort()));
 			}
-
-			storageSet = true;
 		}
-		
-		if(mailResource.useSsl()){
-			session = Session.getDefaultInstance(properties, new Authenticator(){
-                protected PasswordAuthentication getPasswordAuthentication(){
-	                return new PasswordAuthentication(mailResource.getUser(), mailResource.getPassword());
-                }
-			});
-		}
-		else
-			session = Session.getDefaultInstance(properties, null);
-
-		if(transportSet) 
-			transport = session.getTransport();
-
-		if(storageSet) 
-			storage = session.getStore();
 	}
 
 	/**
@@ -273,8 +247,40 @@ public class Mail{
 			for(File file : attachments)
 				file.delete();
 	}
+	
+	private Session getTransportSession() throws NoSuchProviderException{
+	    Session session = null;
+	    
+        if(mailResource.getTransportUseSsl()){
+            session = Session.getDefaultInstance(mailProperties, new Authenticator(){
+                protected PasswordAuthentication getPasswordAuthentication(){
+                    return new PasswordAuthentication(mailResource.getTransportUser(), mailResource.getTransportPassword());
+                }
+            });
+        }
+        else
+            session = Session.getDefaultInstance(mailProperties, null);
 
-	/**
+        return session;
+	}
+
+    private Session getStorageSession() throws NoSuchProviderException{
+        Session session = null;
+        
+        if(mailResource.getTransportUseSsl()){
+            session = Session.getDefaultInstance(mailProperties, new Authenticator(){
+                protected PasswordAuthentication getPasswordAuthentication(){
+                    return new PasswordAuthentication(mailResource.getStorageUser(), mailResource.getStoragePassword());
+                }
+            });
+        }
+        else
+            session = Session.getDefaultInstance(mailProperties, null);
+
+        return session;
+    }
+
+    /**
 	 * Envia uma mensagem de e-Mail.
 	 * 
 	 * @param message Instância contendo os dados da mensagem.
@@ -283,6 +289,9 @@ public class Mail{
 	 * @throws IOException
 	 */
 	public void send(MailMessage message) throws AddressException, MessagingException, IOException{
+	    Session   session   = getTransportSession();
+	    Transport transport = session.getTransport();
+	    
 		if(transport != null){
 			Message sendMessage = new MimeMessage(session);
 
@@ -290,8 +299,8 @@ public class Mail{
 				buildHeader(message, sendMessage);
 				buildBody(message, sendMessage);
 
-				if(mailResource.getUser().length() > 0) 
-					transport.connect(mailResource.getServerName(), mailResource.getUser(), mailResource.getPassword());
+				if(mailResource.getTransportUser().length() > 0) 
+					transport.connect(mailResource.getTransportServerName(), mailResource.getTransportUser(), mailResource.getTransportPassword());
 				else 
 					transport.connect();
 
@@ -316,12 +325,14 @@ public class Mail{
 	 */
 	public Collection getFolders() throws MessagingException{
 		Collection<Folder> folders = null;
+        Session            session = getStorageSession();
+        Store              storage = session.getStore();
 
 		if(storage != null){
 			Folder rootFolder = null;
 
 			try{
-				storage.connect(mailResource.getServerName(), mailResource.getUser(), mailResource.getPassword());
+				storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
 
 				rootFolder = storage.getDefaultFolder();
 				folders    = Arrays.asList(rootFolder.list());
@@ -388,10 +399,12 @@ public class Mail{
 	public MailMessage retrieve(String folderName, Integer messageNumber) throws MessagingException, IOException{
 		Folder  folder  = null;
 		Message message = null;
+        Session session = getStorageSession();
+        Store   storage = session.getStore();
 
 		try{
 			if(!storage.isConnected()) 
-				storage.connect(mailResource.getServerName(), mailResource.getUser(), mailResource.getPassword());
+				storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
 
 			folder = storage.getFolder(folderName);
 
@@ -422,9 +435,11 @@ public class Mail{
 		Message                 messages[]   = null;
 		Collection<MailMessage> mailMessages = new LinkedList<MailMessage>();
 		MailMessage             mailMessage  = null;
+        Session                 session      = getStorageSession();
+        Store                   storage      = session.getStore();
 
 		try{
-			storage.connect(mailResource.getServerName(), mailResource.getUser(), mailResource.getPassword());
+			storage.connect(mailResource.getStorageServerName(), mailResource.getStorageUser(), mailResource.getStoragePassword());
 
 			folder = storage.getFolder(folderName);
 			
