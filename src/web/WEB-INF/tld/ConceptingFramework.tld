@@ -9,201 +9,243 @@
         <name>view</name>
         <tag-class>br.com.concepting.framework.web.taglibs.ViewTag</tag-class>
         <body-content>JSP</body-content>
+        <description>Componente que delimita/identifica uma região da página renderizada.</description>
         <attribute>
             <name>name</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do componente.</description>
         </attribute>
     </tag>
     <tag>
         <name>page</name>
         <tag-class>br.com.concepting.framework.web.taglibs.PageTag</tag-class>
         <body-content>JSP</body-content>
+        <description>Componente que define a página a ser renderizada.</description>
         <attribute>
             <name>title</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o título da página.</description>
         </attribute>
         <attribute>
             <name>encoding</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a codificação da página.</description>
         </attribute>
         <attribute>
             <name>language</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o idioma da página.</description>
         </attribute>
         <attribute>
             <name>resourceId</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Identificador do arquivo de internacionalização (i18n) a ser usado.</description>
         </attribute>
     </tag>
     <tag>
         <name>form</name>
         <tag-class>br.com.concepting.framework.web.taglibs.ActionFormTag</tag-class>
         <body-content>JSP</body-content>
+        <description>Componente que define um formulário em uma página.</description>
         <attribute>
             <name>action</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da URL de processamento do formulário.</description>
         </attribute>
         <attribute>
             <name>language</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o idioma do formulário.</description>
         </attribute>
         <attribute>
             <name>resourceId</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Identificador do arquivo de internacionalização (i18n) a ser usado.</description>
         </attribute>
         <attribute>
             <name>encoding</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a codificação do formulário.</description>
         </attribute>
         <attribute>
             <name>focus</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade que terá o foco definido no momento do carregamento da página.</description>
         </attribute>
         <attribute>
             <name>focusIndex</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o índice da propriedade que terá o foco definido no momento do carregamento da página.</description>
         </attribute>
         <attribute>
             <name>method</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o tipo de método (GET/POST) a ser utilizado no processamento do formulário.</description>
         </attribute>
         <attribute>
             <name>target</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da janela onde acontecerá o processamento do formulário.</description>
         </attribute>
     </tag>
     <tag>
         <name>downloadBox</name>
         <tag-class>br.com.concepting.framework.web.taglibs.DownloadBoxPropertyTag</tag-class>
         <body-content>JSP</body-content>
+        <description>Componente que define o download de um conteúdo qualquer.</description>
         <attribute>
             <name>name</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade do modelo de dados onde o conteúdo está armazenado.</description>
         </attribute>
         <attribute>
             <name>showLabel</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o label deve ser exibido (True/False).</description>
         </attribute>
         <attribute>
             <name>label</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o label do componente.</description>
         </attribute>
         <attribute>
             <name>labelPosition</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a posição (TOP, LEFT, RIGHT, BOTTOM) do label.</description>
         </attribute>
         <attribute>
             <name>style</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS do componente.</description>
         </attribute>
         <attribute>
             <name>styleClass</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS do componente.</description>
         </attribute>
         <attribute>
             <name>fileNameProperty</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade onde o nome do arquivo está armazenado.</description>
         </attribute>
         <attribute>
             <name>contentTypeProperty</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade onde o formato do arquivo (Mime Type) está armazenado.</description>
         </attribute>
         <attribute>
             <name>actionForm</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do formulário vinculado ao componente.</description>
         </attribute>
         <attribute>
             <name>iconWidth</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a largura para o ícone do conteúdo.</description>
         </attribute>
         <attribute>
             <name>iconHeight</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a altura para o ícone do conteúdo.</description>
         </attribute>
         <attribute>
             <name>rendered</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o componente deve ser renderizado (True/False).</description>
         </attribute>
         <attribute>
             <name>renderWhenAuthenticated</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o componente deve ser renderizado quando o usuário estiver autenticado (True/False).</description>
         </attribute>
         <attribute>
             <name>showFileName</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o nome do arquivo deve ser exibido (True/False).</description>
         </attribute>
         <attribute>
             <name>showContentSize</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o tamanho do arquivo deve ser exibido (True/False).</description>
         </attribute>
     </tag>
     <tag>
         <name>uploadBox</name>
         <tag-class>br.com.concepting.framework.web.taglibs.UploadBoxPropertyTag</tag-class>
         <body-content>JSP</body-content>
-        <attribute>
-            <name>name</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
+        <description>Componente que define o upload de um conteúdo qualquer.</description>
         <attribute>
             <name>showLabel</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o label deve ser exibido (True/False).</description>
         </attribute>
         <attribute>
             <name>label</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o label do componente.</description>
         </attribute>
         <attribute>
             <name>labelPosition</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a posição (TOP, LEFT, RIGHT, BOTTOM) do label.</description>
         </attribute>
         <attribute>
             <name>style</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS do componente.</description>
         </attribute>
         <attribute>
             <name>styleClass</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS do componente.</description>
         </attribute>
         <attribute>
             <name>fileNameProperty</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade onde o nome do arquivo será armazenado.</description>
         </attribute>
         <attribute>
             <name>contentTypeProperty</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade onde o formato do arquivo (Mime Type) será armazenado.</description>
         </attribute>
         <attribute>
             <name>actionForm</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do formulário vinculado ao componente.</description>
         </attribute>
         <attribute>
             <name>iconWidth</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a largura para o ícone do conteúdo.</description>
         </attribute>
         <attribute>
             <name>iconHeight</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a altura para o ícone do conteúdo.</description>
         </attribute>
         <attribute>
             <name>rendered</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o componente deve ser renderizado (True/False).</description>
         </attribute>
         <attribute>
             <name>renderWhenAuthenticated</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o componente deve ser renderizado quando o usuário estiver autenticado (True/False).</description>
         </attribute>
         <attribute>
             <name>showFileName</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o nome do arquivo deve ser exibido (True/False).</description>
         </attribute>
         <attribute>
             <name>showContentSize</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indice se o tamanho do arquivo deve ser exibido (True/False).</description>
         </attribute>
     </tag>
     <tag>
@@ -7249,114 +7291,142 @@
         <name>section</name>
         <tag-class>br.com.concepting.framework.web.taglibs.SectionTag</tag-class>
         <body-content>JSP</body-content>
+        <description>Componente que define uma seção de conteúdo.</description>
         <attribute>
             <name>name</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <description>Identificador do componente.</description>
         </attribute>
         <attribute>
             <name>label</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o label do componente.</description>
         </attribute>
         <attribute>
             <name>headerStyleClass</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS para o cabeçalho da seção.</description>
         </attribute>
         <attribute>
             <name>headerStyle</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS para o cabeçalho da seção.</description>
         </attribute>
         <attribute>
             <name>contentStyleClass</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS para o conteúdo da seção.</description>
         </attribute>
         <attribute>
             <name>contentStyle</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS para o conteúdo da seção.</description>
         </attribute>
         <attribute>
             <name>focusWhen</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define uma expressão (JSTL ou JEXL) que fará com que o foco do componente seja aplicado.</description>
         </attribute>
         <attribute>
             <name>onSelect</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o script a ser executado na seleção.</description>
         </attribute>
         <attribute>
             <name>onSelectAction</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da ação de seleção.</description>
         </attribute>
         <attribute>
             <name>onSelectActionForward</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do redirecionamento a ser processado após execução da ação de seleção.</description>
         </attribute>
         <attribute>
             <name>onSelectActionForwardOnFail</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do redirecionamento a ser processado em caso de falha na execução da ação de seleção.</description>
         </attribute>
         <attribute>
             <name>onSelectActionUpdateViews</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define os identificadores das views que serão atualizadas na renderização da página após a execução da ação de seleção.</description>
         </attribute>
         <attribute>
             <name>onSelectActionValidate</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indica se o modelo de dados deve ser validado na ação de seleção.</description>
         </attribute>
         <attribute>
             <name>onSelectActionValidateProperties</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define as identificadores das propriedades do modelo de dados que deverão ser validadas na ação de seleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelect</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o script a ser executado na deseleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelectAction</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da ação de deseleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelectActionForward</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do redirecionamento a ser processado após execução da ação de deseleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelectActionForwardOnFail</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do redirecionamento a ser processado em caso de falha na execução da ação de deseleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelectActionUpdateViews</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define os identificadores das views que serão atualizadas na renderização da página após a execução da ação de deseleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelectActionValidate</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indica se o modelo de dados deve ser validado na ação de deseleção.</description>
         </attribute>
         <attribute>
             <name>onUnSelectActionValidateProperties</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define as identificadores das propriedades do modelo de dados que deverão ser validadas na ação de deseleção.</description>
         </attribute>
         <attribute>
             <name>height</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a altura do componente.</description>
         </attribute>
         <attribute>
             <name>tooltip</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define a dica do componente a ser exibida ao passar o mouse sobre.</description>
         </attribute>
         <attribute>
             <name>resourceId</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do arquivo de internacionalização (i18n) a ser usado na página.</description>
         </attribute>
         <attribute>
             <name>resourceKey</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade de internacionalização (i18n) a ser utilizada.</description>
         </attribute>
         <attribute>
             <name>rendered</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indica se o componente será renderizado.</description>
         </attribute>
         <attribute>
             <name>renderWhenAuthenticated</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indica se o componente será renderizado quando o usuário estiver autenticado.</description>
         </attribute>
     </tag>
     <tag>
@@ -7367,43 +7437,53 @@
             <name>name</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da propriedade onde está armazenada o tempo para o contador.</description>
         </attribute>
         <attribute>
             <name>action</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador da ação a ser processada.</description>
         </attribute>
         <attribute>
             <name>forward</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do redirecionamento a ser processado após execução da ação.</description>
         </attribute>
         <attribute>
             <name>forwardOnFail</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o identificador do redirecionamento a ser processado em caso de falha na execução da ação.</description>
         </attribute>
         <attribute>
             <name>updateViews</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define os identificadores das views que serão atualizadas na renderização da página.</description>
         </attribute>
         <attribute>
             <name>validate</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indica se o modelo de dados deve ser validado.</description>
         </attribute>
         <attribute>
             <name>validateProperties</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define as propriedades do modelo de dados a serem validadas após a execução da ação.</description>
         </attribute>
         <attribute>
             <name>showCountdown</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Indica se o contador deve ser exibido.</description>
         </attribute>
         <attribute>
             <name>styleClass</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS do componente.</description>
         </attribute>
         <attribute>
             <name>style</name>
             <rtexprvalue>true</rtexprvalue>
+            <description>Define o estilo CSS do componente.</description>
         </attribute>
     </tag>    
 </taglib>
