@@ -1,5 +1,6 @@
 package br.com.concepting.framework.audit.appenders;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
 
 import org.apache.log4j.spi.LoggingEvent;
@@ -7,6 +8,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import br.com.concepting.framework.audit.Auditor;
 import br.com.concepting.framework.audit.model.AuditorBusinessComplementModel;
 import br.com.concepting.framework.audit.model.AuditorModel;
+import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -47,14 +49,18 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
      * @param modelClass Classe do modelo de dados desejado.
      * @param auditable
      * @return Instância da classe de serviço.
-     * @throws Throwable
+     * @throws InternalErrorException
      */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass, Boolean auditable) throws Throwable{
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass, Boolean auditable) throws InternalErrorException{
         S                 service      = ServiceUtil.getService(modelClass, auditable);
         Auditor           auditor      = getAuditor();
         LoginSessionModel loginSession = auditor.getLoginSession();
         
-        service.setLoginSession(loginSession);
+        try{
+            service.setLoginSession(loginSession);
+        }
+        catch(RemoteException e){
+        }
         
         return service;
     }
@@ -66,9 +72,9 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
      * 
      * @param modelClass Classe do modelo de dados desejado.
      * @return Instância da classe de serviço.
-     * @throws Throwable
+     * @throws InternalErrorException
      */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
         return getService(modelClass, true);
     }
     
