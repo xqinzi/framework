@@ -1,6 +1,7 @@
 package br.com.concepting.framework.service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.rmi.RemoteException;
 import java.util.Collection;
 
 import org.apache.commons.beanutils.ConstructorUtils;
@@ -128,13 +129,17 @@ public abstract class BaseService implements IService{
 	 * 
 	 * @param modelClass Classe do modelo de dados desejado.
 	 * @return Instância da classe de serviço.
-	 * @throws Throwable
+	 * @throws InternalErrorException
 	 */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
         S                 service      = ServiceUtil.getService(modelClass);
         LoginSessionModel loginSession = getLoginSession();
         
-        service.setLoginSession(loginSession);
+        try{
+            service.setLoginSession(loginSession);
+        }
+        catch(RemoteException e){
+        }
         
         return service;
 	}
