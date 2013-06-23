@@ -422,34 +422,28 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 			}
 		}
 	}
-	
-	/**
-	 * @see br.com.concepting.framework.web.taglibs.BaseOptionsPropertyTag#renderDataAttributes()
-	 */
-	protected void renderDataAttributes() throws Throwable{
-		super.renderDataAttributes();
-		
-		ComponentType componentType = getComponentType();
-		PropertyInfo  propertyInfo  = getPropertyInfo();
-		
-		if(propertyInfo != null && propertyInfo.isCollection() && componentType != ComponentType.LIST){
-			HiddenPropertyTag noItemSelectedTag = new HiddenPropertyTag();
-
-			noItemSelectedTag.setPageContext(pageContext);
-			noItemSelectedTag.setId(getId());
-			noItemSelectedTag.setName(getName());
-            noItemSelectedTag.setValue(getValue());
-			noItemSelectedTag.doStartTag();
-			noItemSelectedTag.doEndTag();
-		}
-	}
 
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderClose()
 	 */
 	protected void renderClose() throws Throwable{
-		if(getComponentType() != ComponentType.LIST)
+	    ComponentType componentType = getComponentType();
+	    
+		if(componentType != ComponentType.LIST)
 			println("</fieldset>");
+
+		PropertyInfo  propertyInfo  = getPropertyInfo();
+        
+        if(propertyInfo != null && componentType != ComponentType.LIST){
+            HiddenPropertyTag noItemSelectedTag = new HiddenPropertyTag();
+
+            noItemSelectedTag.setPageContext(pageContext);
+            noItemSelectedTag.setId(getId());
+            noItemSelectedTag.setName(getName());
+            noItemSelectedTag.setValue(getValue());
+            noItemSelectedTag.doStartTag();
+            noItemSelectedTag.doEndTag();
+        }
 
 		super.renderClose();
 	}
