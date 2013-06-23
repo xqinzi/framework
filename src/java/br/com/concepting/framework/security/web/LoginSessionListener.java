@@ -1,5 +1,6 @@
 package br.com.concepting.framework.security.web;
 
+import java.rmi.RemoteException;
 import java.util.Collection;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -33,14 +34,18 @@ public class LoginSessionListener implements HttpSessionListener{
      * 
      * @param modelClass Classe que define o modelo de dados.
      * @return Instância da classe de serviço desejada.
-     * @throws Throwable
+     * @throws InternalErrorException
      */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
         SecurityController  securityController = systemController.getSecurityController();
         LoginSessionModel   loginSession       = securityController.getLoginSession();
         S                   service            = ServiceUtil.getService(modelClass);
         
-        service.setLoginSession(loginSession);
+        try{
+            service.setLoginSession(loginSession);
+        }
+        catch(RemoteException e){
+        }
         
         return service; 
     }
