@@ -70,11 +70,12 @@ public abstract class PropertyUtil extends PropertyUtils{
 		if(instance == null)
 			return;
 		
-		Class clazz    = instance.getClass();
-		Field fields[] = null;
+		Class superClass = instance.getClass();
+		Class clazz      = null;
+		Field fields[]   = null;
 		
-		while(clazz != null){
-			fields = clazz.getDeclaredFields();
+		while(superClass != null){
+			fields = superClass.getDeclaredFields();
 			
      		for(Field fieldItem : fields){
      		    clazz = fieldItem.getType();
@@ -93,7 +94,7 @@ public abstract class PropertyUtil extends PropertyUtils{
      			}
      		}
      		
-     		clazz = clazz.getSuperclass();
+     		superClass = superClass.getSuperclass();
 		}
 	}
 
