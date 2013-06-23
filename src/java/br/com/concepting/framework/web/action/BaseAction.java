@@ -1,5 +1,7 @@
 package br.com.concepting.framework.web.action;
 
+import java.rmi.RemoteException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,16 +50,26 @@ public abstract class BaseAction extends DispatchAction{
 	 * 
 	 * @param modelClass Instância contendo o modelo de dados.
 	 * @return Instância da classe de serviço.
-	 * @throws Throwable
+	 * @throws InternalErrorException
 	 */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws Throwable{
-		if(modelClass == null)
-			modelClass = ModelUtil.getModelClassByAction(getClass());
+    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+		if(modelClass == null){
+		    try{
+		        modelClass = ModelUtil.getModelClassByAction(getClass());
+		    }
+		    catch(ClassNotFoundException e){
+		        throw new InternalErrorException(e);
+		    }
+		}
 
         LoginSessionModel loginSession = securityController.getLoginSession();
 		S                 service      = ServiceUtil.getService(modelClass);
 		
-		service.setLoginSession(loginSession);
+		try{
+            service.setLoginSession(loginSession);
+        }
+        catch(RemoteException e){
+        }
 		
 		return service;
 	}
@@ -66,9 +78,9 @@ public abstract class BaseAction extends DispatchAction{
 	 * Retorna a instância da classe de serviço vinculada a ação.
 	 * 
 	 * @return Instância da classe de serviço.
-	 * @throws Throwable
+	 * @throws InternalErrorException
 	 */
-    protected <S extends IService> S getService() throws Throwable{
+    protected <S extends IService> S getService() throws InternalErrorException{
 		return getService(null);
 	}
 
