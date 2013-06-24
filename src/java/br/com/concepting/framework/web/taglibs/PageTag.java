@@ -14,7 +14,6 @@ import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.web.SystemController;
-import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.VisibilityType;
 
@@ -206,15 +205,6 @@ public class PageTag extends HtmlTag{
 	    renderEvents(systemController);
 	}
 	
-	/**
-	 * Renderiza as caixas de mensagem da página.
-	 * 
-	 * @throws Throwable
-	 */
-	private void renderMessageBoxes() throws Throwable{
-	    renderMessageBoxes(systemController);
-	}
-	
     /**
      * Renderiza as eventos da página.
      * 
@@ -248,50 +238,6 @@ public class PageTag extends HtmlTag{
         scriptTag.setContent(content.toString());
         scriptTag.doStartTag();
         scriptTag.doEndTag();
-    }
-
-    /**
-     * Renderiza as caixas de mensagens da página.
-     * 
-     * @param systemController Instância da classe de controle de requisições.
-     * @throws Throwable
-     */
-    protected static void renderMessageBoxes(SystemController systemController) throws Throwable{
-        PageContext   pageContext        = systemController.getPageContext();
-        MessageBoxTag errorMessageBoxTag = new MessageBoxTag();
-
-        errorMessageBoxTag.setPageContext(pageContext);
-        errorMessageBoxTag.setShowException(true);
-        errorMessageBoxTag.doStartTag();
-        errorMessageBoxTag.doEndTag();
-        
-        MessageBoxTag infoMessageBoxTag = new MessageBoxTag();
-
-        infoMessageBoxTag.setPageContext(pageContext);
-        infoMessageBoxTag.setType(ActionFormMessageType.INFO);
-        infoMessageBoxTag.doStartTag();
-        infoMessageBoxTag.doEndTag();
-
-        MessageBoxTag warningMessageBoxTag = new MessageBoxTag();
-
-        warningMessageBoxTag.setPageContext(pageContext);
-        warningMessageBoxTag.setType(ActionFormMessageType.WARNING);
-        warningMessageBoxTag.setShowOnLoad(true);
-        warningMessageBoxTag.doStartTag();
-        warningMessageBoxTag.doEndTag();
-
-        errorMessageBoxTag = new MessageBoxTag();
-        errorMessageBoxTag.setPageContext(pageContext);
-        errorMessageBoxTag.setType(ActionFormMessageType.ERROR);
-        errorMessageBoxTag.doStartTag();
-        errorMessageBoxTag.doEndTag();
-
-        MessageBoxTag validationMessageBoxTag = new MessageBoxTag();
-
-        validationMessageBoxTag.setPageContext(pageContext);
-        validationMessageBoxTag.setType(ActionFormMessageType.VALIDATION);
-        validationMessageBoxTag.doStartTag();
-        validationMessageBoxTag.doEndTag();
     }
 	
 	/**
@@ -484,7 +430,6 @@ public class PageTag extends HtmlTag{
     public int doEndTag() throws JspException{
     	if(systemController != null){
         	try{
-        	    renderMessageBoxes();
         	    renderEvents();
         	    
                 out.println("</body>");

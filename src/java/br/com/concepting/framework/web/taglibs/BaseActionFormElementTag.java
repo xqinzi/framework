@@ -1208,6 +1208,8 @@ public abstract class BaseActionFormElementTag extends BaseTag{
     		
     		if(getLabelPositionType() != PositionType.RIGHT)
     		    print(":&nbsp;");
+    		
+    		println();
 	    }
 	}
 

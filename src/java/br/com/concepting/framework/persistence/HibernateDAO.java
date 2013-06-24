@@ -286,10 +286,9 @@ public abstract class HibernateDAO extends BaseDAO{
 		StringBuilder groupByClause  = new StringBuilder();
 		StringBuilder orderByClause  = new StringBuilder();
 		StringBuilder queryBuffer    = new StringBuilder();
-		Boolean       hasFormula     = false;
 		String        propertyPrefix = "";
 
-		buildQueryString(queryType, model, propertyPrefix, propertyPrefix, selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, true);
+		buildQueryString(queryType, model, propertyPrefix, propertyPrefix, selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, true, true);
 
 		if(selectClause.length() > 0){
 			queryBuffer.append(StringUtil.trim(selectClause));
@@ -308,7 +307,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			queryBuffer.append(StringUtil.trim(whereClause));
 		}
 
-		if(hasFormula && groupByClause.length() > 0){
+		if(groupByClause.length() > 0){
 			queryBuffer.append(" ");
 			queryBuffer.append(StringUtil.trim(groupByClause));
 		}
@@ -343,7 +342,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @throws InvocationTargetException
 	 * @throws InstantiationException
 	 */
-    private <M extends BaseModel> void buildQueryString(QueryType queryType, M model, String propertyPrefix, String propertyAlias, StringBuilder selectClause, StringBuilder fromClause, StringBuilder joinClause, StringBuilder whereClause, StringBuilder groupByClause, StringBuilder orderByClause, Map<String, Object> whereClauseParameters, ModelFilter modelFilter, Boolean considerConditions) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
+    private <M extends BaseModel> void buildQueryString(QueryType queryType, M model, String propertyPrefix, String propertyAlias, StringBuilder selectClause, StringBuilder fromClause, StringBuilder joinClause, StringBuilder whereClause, StringBuilder groupByClause, StringBuilder orderByClause, Map<String, Object> whereClauseParameters, ModelFilter modelFilter, Boolean considerConditions, Boolean needToGroupBy) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
 		Boolean   modelIsNull = (model == null);
 		Class     modelClass  = (modelIsNull ? ModelUtil.getModelClassByPersistence(getClass()) : model.getClass());
 		ModelInfo modelInfo   = ModelUtil.getModelInfo(modelClass);
@@ -389,16 +388,19 @@ public abstract class HibernateDAO extends BaseDAO{
 			RelationJoinType           relationJoinType               = null;
 			Boolean                    processRelation                = false;
 			Boolean                    processCondition               = false;
+			Boolean                    needToGroupByBuffer            = needToGroupBy;
 
 			for(PropertyInfo propertyInfo : propertiesInfo){
-                if(groupByClause.length() == 0)
-                    groupByClause.append("group by ");
-                else
-                    groupByClause.append(", ");
-                    
-                groupByClause.append(propertyAlias);
-                groupByClause.append(".");
-                groupByClause.append(propertyInfo.getId());
+			    if(needToGroupBy && propertyInfo.getMappedPropertyId().length() > 0){
+                    if(groupByClause.length() == 0)
+                        groupByClause.append("group by ");
+                    else
+                        groupByClause.append(", ");
+                        
+                    groupByClause.append(propertyAlias);
+                    groupByClause.append(".");
+                    groupByClause.append(propertyInfo.getId());
+			    }
 			    
 				if(propertyPrefixBuffer == null)
 					propertyPrefixBuffer = new StringBuilder();
@@ -469,17 +471,22 @@ public abstract class HibernateDAO extends BaseDAO{
 						
 						if(relationModelInfo != null){
                             if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE){
-                                relationModel    = (M)ConstructorUtils.invokeConstructor(relationModelInfo.getClazz(), null);
+                                if(propertyInfo.isModel())
+                                    relationModel = (M)PropertyUtil.getProperty(model, propertyInfo.getId());
+                                else if(propertyInfo.hasModel())
+                                    relationModel = (M)ConstructorUtils.invokeConstructor(relationModelInfo.getClazz(), null);
+                                
                                 relationJoinType = propertyInfo.getRelationJoinType();
                             }
                             else if(propertyInfo.isForSearch()){
                                 if(propertyInfo.getSearchPropertyId().length() > 0){
-    						        PropertyInfo relationSearchPropertyInfo = relationModelInfo.getPropertyInfo(propertyInfo.getSearchPropertyId());
+    						        PropertyInfo relationSearchPropertyInfo = modelInfo.getPropertyInfo(propertyInfo.getSearchPropertyId());
     						        
     						        if(relationSearchPropertyInfo != null){
     						            if(relationSearchPropertyInfo.isModel()){
-    						                relationModel    = (M)PropertyUtil.getProperty(model, propertyInfo.getSearchPropertyId());
-    						                relationJoinType = RelationJoinType.INNER_JOIN;
+    						                relationModel       = (M)PropertyUtil.getProperty(model, propertyInfo.getSearchPropertyId());
+    						                relationJoinType    = RelationJoinType.INNER_JOIN;
+    						                needToGroupByBuffer = false;
     						            }
     						        }
                                 }
@@ -510,7 +517,7 @@ public abstract class HibernateDAO extends BaseDAO{
                                 joinClause.append(propertyAliasBuffer);
 							}
     
-                            buildQueryString(queryType, relationModel, propertyPrefixBuffer.toString(), propertyAliasBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions);
+                            buildQueryString(queryType, relationModel, propertyPrefixBuffer.toString(), propertyAliasBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions, needToGroupByBuffer);
 						}
 					}
 

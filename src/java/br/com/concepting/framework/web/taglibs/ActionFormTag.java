@@ -14,6 +14,7 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.SystemController;
+import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.ScopeType;
 import br.com.concepting.framework.web.types.VisibilityType;
@@ -310,11 +311,65 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
      * @throws Throwable
      */
 	protected void renderClose() throws Throwable{
-        if(findAncestorWithClass(this, PageTag.class) == null){
-            PageTag.renderMessageBoxes(systemController);
+        renderMessageBoxes(systemController);
+        
+        if(findAncestorWithClass(this, PageTag.class) == null)
             PageTag.renderEvents(systemController);
-        }
 	}
+	
+
+    /**
+     * Renderiza as caixas de mensagens da página.
+     * 
+     * @param systemController Instância da classe de controle de requisições.
+     * @throws Throwable
+     */
+    protected void renderMessageBoxes(SystemController systemController) throws Throwable{
+        PageContext   pageContext        = systemController.getPageContext();
+        MessageBoxTag errorMessageBoxTag = new MessageBoxTag();
+
+        errorMessageBoxTag.setPageContext(pageContext);
+        errorMessageBoxTag.setShowException(true);
+        errorMessageBoxTag.setActionFormTag(this);
+        errorMessageBoxTag.setShowOnLoad(true);
+        errorMessageBoxTag.doStartTag();
+        errorMessageBoxTag.doEndTag();
+        
+        MessageBoxTag infoMessageBoxTag = new MessageBoxTag();
+
+        infoMessageBoxTag.setPageContext(pageContext);
+        infoMessageBoxTag.setType(ActionFormMessageType.INFO);
+        infoMessageBoxTag.setActionFormTag(this);
+        infoMessageBoxTag.setShowOnLoad(true);
+        infoMessageBoxTag.doStartTag();
+        infoMessageBoxTag.doEndTag();
+
+        MessageBoxTag warningMessageBoxTag = new MessageBoxTag();
+
+        warningMessageBoxTag.setPageContext(pageContext);
+        warningMessageBoxTag.setType(ActionFormMessageType.WARNING);
+        warningMessageBoxTag.setActionFormTag(this);
+        warningMessageBoxTag.setShowOnLoad(true);
+        warningMessageBoxTag.doStartTag();
+        warningMessageBoxTag.doEndTag();
+
+        errorMessageBoxTag = new MessageBoxTag();
+        errorMessageBoxTag.setPageContext(pageContext);
+        errorMessageBoxTag.setType(ActionFormMessageType.ERROR);
+        errorMessageBoxTag.setActionFormTag(this);
+        errorMessageBoxTag.setShowOnLoad(true);
+        errorMessageBoxTag.doStartTag();
+        errorMessageBoxTag.doEndTag();
+
+        MessageBoxTag validationMessageBoxTag = new MessageBoxTag();
+
+        validationMessageBoxTag.setPageContext(pageContext);
+        validationMessageBoxTag.setType(ActionFormMessageType.VALIDATION);
+        validationMessageBoxTag.setActionFormTag(this);
+        validationMessageBoxTag.setShowOnLoad(true);
+        validationMessageBoxTag.doStartTag();
+        validationMessageBoxTag.doEndTag();
+    }
 
 	/**
 	 * Renderiza os atributos do componente.
