@@ -18,7 +18,7 @@ function selectDeselectAllGridRows(name, startIndex, endIndex){
 	var selectState = false;
 	
 	for(cont = startIndex ; cont <= endIndex ; cont++){
-		object = document.getElementById(name + "" + cont);
+		object = getObject(name + "" + cont);
 		
 		if(object){
 			if(!object.checked){
@@ -30,7 +30,7 @@ function selectDeselectAllGridRows(name, startIndex, endIndex){
 	}
 
 	for(cont = startIndex ; cont <= endIndex ; cont++){
-		object = document.getElementById(name + "" + cont);
+		object = getObject(name + "" + cont);
 		
 		if(object)
 			if(object.checked != selectState)
