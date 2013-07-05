@@ -12,8 +12,8 @@
  * @param modal Indica se a caixa deve ser carregada no modo modal.
  */
 function showDialogBox(name, modal){
-	var dialogBoxObject = document.getElementById(name + ".dialogBox");
-	var actionFormShade = document.getElementById("shade");
+	var dialogBoxObject = getObject(name + ".dialogBox");
+	var actionFormShade = getObject("shade");
 	var windowWidth     = 0;
 	var windowHeight    = 0;
 	
@@ -39,8 +39,8 @@ function showDialogBox(name, modal){
  * @param name String contendo o identificador da caixa de diálogo.
  */
 function hideDialogBox(name){
-	var dialogBoxObject = document.getElementById(name + ".dialogBox");
-	var actionFormShade = document.getElementById("shade");
+	var dialogBoxObject = getObject(name + ".dialogBox");
+	var actionFormShade = getObject("shade");
 	
 	if(dialogBoxObject){
 		dialogBoxObject.style.visibility = "HIDDEN";
@@ -54,7 +54,7 @@ function hideDialogBox(name){
  * Centraliza todas as caixas de diálogo da página.
  */
 function centralizeDialogBoxes(){
-	var actionFormShade = document.getElementById("shade");
+	var actionFormShade = getObject("shade");
 	var dialogBoxes     = document.getElementsByTagName("div"); 
     var cont            = 0;
     var dialogBox       = null;
