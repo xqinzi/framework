@@ -11,8 +11,8 @@
  * @param name Instância do objeto que define a caixa de diálogo.
  */
 function showHideErrorTraceDetails(name){
-	var messageBox           = document.getElementById(name + ".dialogBox");
-	var messageBoxErrorTrace = document.getElementById(name + ".errorTrace");
+	var messageBox           = getObject(name + ".dialogBox");
+	var messageBoxErrorTrace = getObject(name + ".errorTrace");
 
 	if(messageBox && messageBoxErrorTrace){
 		if(messageBoxErrorTrace.style.display.toUpperCase() == "NONE")
