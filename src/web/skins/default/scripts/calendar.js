@@ -27,12 +27,12 @@ function initializeCalendarWeekNames(){
  * @param name String contendo o identificador do componente.
  */
 function moveToNextMonth(name){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(currentDate){
 		currentDate.setMonth(currentDate.getMonth() + 1);
 		
-		updateDateProperty(name, currentDate);
+		updateCalendar(name, currentDate);
 		
 		renderCalendar(name);
 	}
@@ -44,7 +44,7 @@ function moveToNextMonth(name){
  * @param name String contendo o identificador do componente.
  */
 function moveToNextYear(name){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(currentDate){
 		if(currentDate.getFullYear() < 1900)
@@ -52,7 +52,7 @@ function moveToNextYear(name){
 		else
 			currentDate.setYear((currentDate.getFullYear() + 1));
 
-		updateDateProperty(name, currentDate);
+		updateCalendar(name, currentDate);
 		
 		renderCalendar(name);
 	}
@@ -64,12 +64,12 @@ function moveToNextYear(name){
  * @param name String contendo o identificador do componente.
  */
 function moveToPreviousMonth(name){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(currentDate){
 		currentDate.setMonth(currentDate.getMonth() - 1);
 		
-		updateDateProperty(name, currentDate);
+		updateCalendar(name, currentDate);
 		
 		renderCalendar(name);
 	}
@@ -81,7 +81,7 @@ function moveToPreviousMonth(name){
  * @param name String contendo o identificador do componente.
  */
 function moveToPreviousYear(name){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(currentDate){
 		if(currentDate.getFullYear() < 1900)
@@ -89,7 +89,7 @@ function moveToPreviousYear(name){
 		else
 			currentDate.setYear((currentDate.getFullYear() - 1));
  
-		updateDateProperty(name, currentDate);
+		updateCalendar(name, currentDate);
 		
 		renderCalendar(name);
 	}
@@ -101,9 +101,9 @@ function moveToPreviousYear(name){
  * @param name String contendo o identificador do componente.
  * @returns Instância do objeto de data/hora desejado.
  */
-function parseDateProperty(name){
-	var property        = document.getElementById(name);
-	var propertyPattern = document.getElementById(name + ".pattern");
+function parseCalendar(name){
+	var property        = getObject(name);
+	var propertyPattern = getObject(name + ".pattern");
 	
 	if(property && propertyPattern){
 		var value       = property.value;
@@ -205,12 +205,12 @@ function parseDateProperty(name){
  * @param name String contendo o identificador do componente.
  */
 function renderCalendar(name){
-	var calendar        = document.getElementById(name + ".calendar");
-	var calendarDays    = document.getElementById(name + ".calendarDays");
-	var calendarDisplay = document.getElementById(name + ".calendarDisplay");
-	var currentDate     = parseDateProperty(name);
+	var calendar        = getObject(name + ".calendar");
+	var calendarDays    = getObject(name + ".calendarDays");
+	var calendarDisplay = getObject(name + ".calendarDisplay");
+	var currentDate     = parseCalendar(name);
 	
-	updateDateProperty(name, currentDate);
+	updateCalendar(name, currentDate);
 	
 	var firstDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 	
@@ -298,11 +298,11 @@ function renderCalendar(name){
  * @param calendarDay Objeto que define o dia desejado.
  */
 function selectCalendarDay(name, calendarDay){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(calendarDay.innerHTML != currentDate.getDate())
 		if(calendarDay)
-			changeStyle(calendarDay, "calendarSelectedDay");
+			calendarDay.className = "calendarSelectedDay";
 }
 
 /**
@@ -311,7 +311,7 @@ function selectCalendarDay(name, calendarDay){
  * @param name String contendo o identificador do componente.
  */
 function showHideCalendar(name){
-	var calendar = document.getElementById(name + ".calendar");
+	var calendar = getObject(name + ".calendar");
 	
 	if(calendar){
 		if(calendar.style.visibility.toUpperCase() == "HIDDEN"){
@@ -331,11 +331,11 @@ function showHideCalendar(name){
  * @param calendarDay Objeto que define o dia desejado.
  */
 function unselectCalendarDay(name, calendarDay){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(calendarDay.innerHTML != currentDate.getDate())
 		if(calendarDay)
-			changeStyle(calendarDay, "calendarDay");
+			calendarDay.className = "calendarDay";
 }
 
 /**
@@ -345,23 +345,23 @@ function unselectCalendarDay(name, calendarDay){
  * @param day Objeto que define o dia desejado.
  */
 function updateCurrentCalendarDay(name, day){
-	var currentDate = parseDateProperty(name);
+	var currentDate = parseCalendar(name);
 	
 	if(currentDate){
 		var dayValue  = day.innerHTML;
-		var dayObject = document.getElementById("day" + currentDate.getDate());
+		var dayObject = getObject("day" + currentDate.getDate());
 	
 		if(dayObject && currentDate){
-			changeStyle(dayObject, "calendarDay");
+			dayObject.className = "calendarDay";
 	
 			currentDate.setDate(dayValue);
 	
-			dayObject = document.getElementById("day" + dayValue);
+			dayObject = getObject("day" + dayValue);
 			
 			if(dayObject){
-				changeStyle(dayObject, "currentCalendarDay");
+				dayObject.className = "currentCalendarDay";
 	
-				updateDateProperty(name, currentDate);
+				updateCalendar(name, currentDate);
 				
 				showHideCalendar(name);
 			}
@@ -375,9 +375,9 @@ function updateCurrentCalendarDay(name, day){
  * @param name String contendo o identificador do componente.
  * @param currentDate Instância do objeto de data/hora desejado. 
  */
-function updateDateProperty(name, currentDate){
-	var property        = document.getElementById(name);
-	var propertyPattern = document.getElementById(name + ".pattern");
+function updateCalendar(name, currentDate){
+	var property        = getObject(name);
+	var propertyPattern = getObject(name + ".pattern");
 	
 	if(property && propertyPattern){
 		var date          = "" + currentDate.getDate();
