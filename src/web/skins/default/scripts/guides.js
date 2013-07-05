@@ -14,7 +14,7 @@
  */
 function setCurrentGuide(guideName, guidesName, guideOnSelect){
 	var currentGuideName = "";
-	var currentGuide     = document.getElementById(guidesName + ".currentGuide");
+	var currentGuide     = getObject(guidesName + ".currentGuide");
 	
 	if(currentGuide){
 		currentGuideName = currentGuide.value;
@@ -22,10 +22,10 @@ function setCurrentGuide(guideName, guidesName, guideOnSelect){
 		currentGuide.value = guideName;
 	}
 	
-	var currentGuideDefinition = document.getElementById(guidesName + "." + currentGuideName + ".guideDefinition");
-	var currentGuideContent    = document.getElementById(guidesName + "." + currentGuideName + ".guideContent");
-	var guideDefinition        = document.getElementById(guidesName + "." + guideName + ".guideDefinition");
-	var guideContent           = document.getElementById(guidesName + "." + guideName + ".guideContent");
+	var currentGuideDefinition = getObject(guidesName + "." + currentGuideName + ".guideDefinition");
+	var currentGuideContent    = getObject(guidesName + "." + currentGuideName + ".guideContent");
+	var guideDefinition        = getObject(guidesName + "." + guideName + ".guideDefinition");
+	var guideContent           = getObject(guidesName + "." + guideName + ".guideContent");
 	
 	if(currentGuideDefinition && currentGuideContent){
 		changeStyle(currentGuideDefinition, "guide");
