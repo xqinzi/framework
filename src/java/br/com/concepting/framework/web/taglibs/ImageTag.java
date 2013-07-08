@@ -4,6 +4,7 @@ import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.ScopeType;
 
 /**
@@ -71,7 +72,7 @@ public class ImageTag extends BaseOptionsPropertyTag{
 	                
 	        if(url.startsWith("/")){
 	            print(systemController.getContextPath());
-	            print("/skins/");
+	            print(TaglibConstants.DEFAULT_SKINS_RESOURCES_DIR);
 	            print(skin);
 	        }
 	            
