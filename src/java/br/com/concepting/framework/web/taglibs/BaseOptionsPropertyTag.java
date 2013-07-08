@@ -25,7 +25,7 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	private Integer              dataEndIndex        = 0;
 	private List<OptionStateTag> optionStates        = null;
 	private ExpressionProcessor  expressionProcessor = null;
-    
+     
     public Boolean hasMultipleSelection(){
         return multipleSelection;
     }
@@ -273,19 +273,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 			endIndexTag.setValue(dataEndIndex);
     		endIndexTag.doStartTag();
     		endIndexTag.doEndTag();
-
-		    tagName.delete(0, tagName.length());
-            tagName.append(getName());
-            tagName.append(".");
-            tagName.append(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY);
-    
-            HiddenPropertyTag hasMultipleSelectionTag = new HiddenPropertyTag();
-    
-            hasMultipleSelectionTag.setPageContext(pageContext);
-            hasMultipleSelectionTag.setName(tagName.toString());
-            hasMultipleSelectionTag.setValue(propertyInfo.isCollection());
-            hasMultipleSelectionTag.doStartTag();
-            hasMultipleSelectionTag.doEndTag();
 		}
 	}
 
