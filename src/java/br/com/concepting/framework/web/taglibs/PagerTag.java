@@ -724,7 +724,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
             onKeyPressContent.append(updateViews);
 			onKeyPressContent.append("', '");
             onKeyPressContent.append(pagerTag.getActionForm());
-            onKeyPressContent.append("'); } else { formatNumberProperty(this, '###', event); }");
+            onKeyPressContent.append("'); } else { formatNumberObject(this, '###', event); }");
 			
 			this.setOnKeyPress(onKeyPressContent.toString());
     	}
