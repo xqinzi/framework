@@ -117,7 +117,7 @@ public class ClockTag extends BaseTag{
         
         StringBuilder content = new StringBuilder();
         
-        content.append("addLoadEvent(showClock);");
+        content.append("addLoadEvent(showClockObject);");
         content.append(StringUtil.getLineBreak());
         
         scriptTag.setContent(content.toString());
