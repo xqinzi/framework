@@ -1,5 +1,6 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -18,7 +19,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  * 
  * @author fvilarinho
  * @since 3.0
- */
+ */ 
 public class DownloadBoxPropertyTag extends BasePropertyTag{
     private String  fileNameProperty    = "";
     private String  contentTypeProperty = "";
@@ -181,7 +182,8 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
     private void renderDownloadIcon(String fileName, ContentType contentType) throws Throwable{
         print("<div class=\"");
         print(contentType.getExtension().substring(1).toLowerCase());
-        print("Icon\"");
+        print(StringUtil.capitalize(AttributeConstants.ICON_KEY));
+        print("\"");
         
         if(iconWidth.length() > 0 || iconHeight.length() > 0){
             print(" style=\"");
@@ -210,15 +212,19 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
         print("/contentLoaderServlet?");
         
         if(fileName.length() > 0){
-            print("contentId=");
+            print(AttributeConstants.CONTENT_ID_KEY);
+            print("=");
             print(fileName);
             print("&");
         }
         
-        print("contentType=");
+        print(AttributeConstants.CONTENT_TYPE_KEY);
+        print("=");
         print(contentType.getMimeType());
-        print("&contentData=");
-        print(getActionForm());
+        print("&");
+        print(AttributeConstants.CONTENT_DATA_KEY);
+        print("=");
+        print(getActionFormName());
         print(".");
         print((isForSearch() ? "searchModel" : "model"));
         print(".");
@@ -252,7 +258,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
             print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
             println("\" width=\"1\">");
     
-            String         actionFormName = getActionForm();
+            String         actionFormName = getActionFormName();
             BaseActionForm actionForm     = systemController.findAttribute(actionFormName, ScopeType.SESSION);
             BaseModel      model          = (actionForm != null ? actionForm.getModel() : null);
             
@@ -299,7 +305,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
                                 ImageTag imageTag = new ImageTag();
                                 
                                 imageTag.setPageContext(pageContext);
-                                imageTag.setActionForm(actionFormName);
+                                imageTag.setActionFormName(actionFormName);
                                 imageTag.setPropertyInfo(propertyInfo);
                                 imageTag.setName(name);
                                 imageTag.setValue(getValue());
