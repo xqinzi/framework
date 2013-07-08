@@ -18,7 +18,7 @@ import br.com.concepting.framework.util.types.ComponentType;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class ListPropertyTag extends OptionsPropertyTag{
 	private Integer size                   = 0;
 	private Boolean showFirstOption        = true;
@@ -105,8 +105,10 @@ public class ListPropertyTag extends OptionsPropertyTag{
 		if(hasMultipleSelection())
 			print(" multiple");
 		
-		if(!isEnabled())
-			print(" disabled");
+		if(!isEnabled()){
+			print(" ");
+			print(AttributeConstants.DISABLED_KEY);
+		}
 
 		Integer size = getSize();
 		
