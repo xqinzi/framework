@@ -23,7 +23,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  * 
  * @author fvilarinho
  * @since 3.0
- */
+ */ 
 public class PagerTag extends BaseOptionsPropertyTag{
 	private Pager   pager                 = null;
 	private Boolean showItemsPerPage      = true;
@@ -206,10 +206,9 @@ public class PagerTag extends BaseOptionsPropertyTag{
     		else{
     			itemsPerPage = requestInfo.getItemsPerPage();
     			
-    			String        actionForm = getActionForm();
-    			StringBuilder cookieId   = new StringBuilder();
+    			StringBuilder cookieId = new StringBuilder();
     			
-    			cookieId.append(actionForm);
+    			cookieId.append(getActionFormName());
     			cookieId.append(".");
     			cookieId.append(name);
     			cookieId.append(".");
@@ -536,7 +535,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
                 onClickContent.append("', '");
                 onClickContent.append(updateViews);
                 onClickContent.append("', '");
-                onClickContent.append(pagerTag.getActionForm());
+                onClickContent.append(pagerTag.getActionFormName());
                 onClickContent.append("');");
     			
     			setOnClick(onClickContent.toString());
@@ -575,7 +574,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
                 onClickContent.append("', '");
                 onClickContent.append(updateViews);
                 onClickContent.append("', '");
-                onClickContent.append(pagerTag.getActionForm());
+                onClickContent.append(pagerTag.getActionFormName());
                 onClickContent.append("');");
                 
                 setOnClick(onClickContent.toString());
@@ -614,7 +613,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
                 onClickContent.append("', '");
                 onClickContent.append(updateViews);
                 onClickContent.append("', '");
-                onClickContent.append(pagerTag.getActionForm());
+                onClickContent.append(pagerTag.getActionFormName());
                 onClickContent.append("');");
                 
                 setOnClick(onClickContent.toString());
@@ -653,7 +652,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
                 onClickContent.append("', '");
                 onClickContent.append(updateViews);
                 onClickContent.append("', '");
-                onClickContent.append(pagerTag.getActionForm());
+                onClickContent.append(pagerTag.getActionFormName());
                 onClickContent.append("');");
                 
                 setOnClick(onClickContent.toString());
@@ -723,7 +722,7 @@ public class PagerTag extends BaseOptionsPropertyTag{
             onKeyPressContent.append("', '");
             onKeyPressContent.append(updateViews);
 			onKeyPressContent.append("', '");
-            onKeyPressContent.append(pagerTag.getActionForm());
+            onKeyPressContent.append(pagerTag.getActionFormName());
             onKeyPressContent.append("'); } else { formatNumberObject(this, '###', event); }");
 			
 			this.setOnKeyPress(onKeyPressContent.toString());
