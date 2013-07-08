@@ -11,7 +11,7 @@ import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.helpers.RequestInfo;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
-/**
+/** 
  * Classe que define o componente visual para um conjunto de guias de navegação.
  * 
  * @author fvilarinho
@@ -236,13 +236,13 @@ public class GuidesTag extends BaseActionFormElementTag{
 			print(".");
 			print(guideName);
             print(".");
-            print(AttributeConstants.GUIDE_DEFINITION_KEY);
+            print(AttributeConstants.GUIDE_KEY);
             print("\" class=\"");
 
 			if(guideName.equals(currentGuide))
-				print("currentGuide");
+				print(AttributeConstants.CURRENT_GUIDE_KEY);
 			else
-				print("guide");
+				print(AttributeConstants.GUIDE_KEY);
 
 			print("\"");
 			
