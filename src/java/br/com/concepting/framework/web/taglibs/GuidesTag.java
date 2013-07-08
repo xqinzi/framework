@@ -104,9 +104,7 @@ public class GuidesTag extends BaseActionFormElementTag{
         
         println(">");
         println("<tr>");
-        print("<td class=\"");
-        print(TaglibConstants.DEFAULT_GUIDES_DEFINITION_STYLE_CLASS);
-        println("\">");
+        print("<td>");
 	}
 	
 	/**
@@ -212,9 +210,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 			guideName  = guideTag.getName();
 			guideWidth = guideTag.getWidth();
 
-		    print("<td class=\"");
-		    print(TaglibConstants.DEFAULT_GUIDE_DEFINITION_STYLE_CLASS);
-            print("\" valign=\"");
+		    print("<td valign=\"");
             print(AlignmentType.BOTTOM);
             print("\" width=\"");
 
@@ -318,9 +314,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 		println("</tr>");
 		
 		println("<tr>");
-		print("<td class=\"");
-		print(TaglibConstants.DEFAULT_GUIDE_DEFINITION_STYLE_CLASS);
-		println("\">");
+		print("<td>");
 
 		Integer                cont                   = 0;
 		NextGuideButtonTag     nextGuideButtonTag     = null;
