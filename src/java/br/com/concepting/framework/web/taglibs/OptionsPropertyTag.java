@@ -21,7 +21,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     private String  optionResourceId                 = "";
 	private Integer optionsPerRow                    = 0;
@@ -290,9 +290,9 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
 		super.initialize();
 		
         if(onSelectAction.length() > 0){
-            String actionForm = getActionForm();
+            String actionFormName = getActionFormName();
             
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onSelectContent = new StringBuilder();
     
                 if(onSelect.length() > 0){
@@ -305,7 +305,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                 }
                 
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 
                 if(isForSearch())
@@ -319,7 +319,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onSelectActionValidateProperties.length() > 0){
                     onSelectContent.append(" document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onSelectContent.append(".value = '");
@@ -329,7 +329,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onSelectActionForward.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_KEY);
                     onSelectContent.append(".value = '");
@@ -339,7 +339,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onSelectActionForwardOnFail.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onSelectContent.append(".value = '");
@@ -349,7 +349,7 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
     
                 if(onSelectActionUpdateViews.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onSelectContent.append(".value = '");
@@ -358,13 +358,13 @@ public class OptionsPropertyTag extends BaseOptionsPropertyTag{
                 }
     
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 onSelectContent.append(AttributeConstants.ACTION_KEY);
                 onSelectContent.append(".value = '");
                 onSelectContent.append(onSelectAction);
                 onSelectContent.append("'; submitForm(document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(");");
                 
                 onSelect = onSelectContent.toString();
