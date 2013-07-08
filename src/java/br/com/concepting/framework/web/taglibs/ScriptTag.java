@@ -3,6 +3,7 @@ package br.com.concepting.framework.web.taglibs;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
  * Classe que declara a utilização de um conteúdo contendo javascripts.
@@ -71,7 +72,7 @@ public class ScriptTag extends BaseTag{
 
 			if(url.startsWith("/")){
 				print(systemController.getContextPath());
-				print("/skins/");
+				print(TaglibConstants.DEFAULT_SKINS_RESOURCES_DIR);
 				print(skin);
 			}
 
