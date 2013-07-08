@@ -33,7 +33,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	private   String                      labelVerticalAlignment         = "";
 	private   String                      labelPosition                  = "";
 	private   Boolean                     showLabel                      = true;
-	private   String                      actionForm                     = "";
+	private   String                      actionFormName                 = "";
     private   ActionFormTag               actionFormTag                  = null;
 	private   Boolean                     hasPermission                  = true;
     private   RequestInfo                 requestInfo                    = null;
@@ -584,17 +584,17 @@ public abstract class BaseActionFormElementTag extends BaseTag{
      * 
      * @return String contendo o identificador do formulário.
      */
-    public String getActionForm(){
-        return actionForm;
+    public String getActionFormName(){
+        return actionFormName;
     }
 
     /**
      * Define o identificador do formulário onde o componente está localizado.
      * 
-     * @param actionForm String contendo o identificador do formulário.
+     * @param actionFormName String contendo o identificador do formulário.
      */
-    public void setActionForm(String actionForm){
-        this.actionForm = actionForm;
+    public void setActionFormName(String actionFormName){
+        this.actionFormName = actionFormName;
     }
     
     /**
@@ -609,8 +609,8 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             if(actionFormTag == null)
                 actionFormTag =  systemController.findAttribute(AttributeConstants.CURRENT_ACTION_FORM_KEY, ScopeType.REQUEST);
             
-            if(actionFormTag != null && StringUtil.trim(actionForm).length() == 0)
-                actionForm = StringUtil.trim(actionFormTag.getBeanName());
+            if(actionFormTag != null && StringUtil.trim(actionFormName).length() == 0)
+                actionFormName = StringUtil.trim(actionFormTag.getBeanName());
         }
 
         return actionFormTag;
@@ -625,7 +625,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
         this.actionFormTag = actionFormTag;
         
         if(actionFormTag != null)
-            this.actionForm = actionFormTag.getBeanName();
+            this.actionFormName = actionFormTag.getBeanName();
     }
 
     /**
@@ -785,10 +785,10 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             setLabelAlignmentType(labelAlignment);
         }
         
-        ActionFormTag actionFormTag = getActionFormTag();
-        String        actionForm    = getActionForm();
-        String        name          = getName();
-        String        resourceId    = getResourceId();
+        ActionFormTag actionFormTag  = getActionFormTag();
+        String        actionFormName = getActionFormName();
+        String        name           = getName();
+        String        resourceId     = getResourceId();
 
         if(actionFormTag != null){
             if(resourceId.length() == 0){
@@ -798,7 +798,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             }
         }
         
-        if(actionForm.length() > 0){
+        if(actionFormName.length() > 0){
             StringBuilder onBlurContent = new StringBuilder();
             
             if(onBlurAction.length() > 0){
@@ -815,7 +815,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onBlurActionForward.length() > 0){
                     onBlurContent.append("document.");
-                    onBlurContent.append(actionForm);
+                    onBlurContent.append(actionFormName);
                     onBlurContent.append(".");
                     onBlurContent.append(AttributeConstants.FORWARD_KEY);
                     onBlurContent.append(".value = '");
@@ -825,7 +825,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onBlurActionForwardOnFail.length() > 0){
                     onBlurContent.append("document.");
-                    onBlurContent.append(actionForm);
+                    onBlurContent.append(actionFormName);
                     onBlurContent.append(".");
                     onBlurContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onBlurContent.append(".value = '");
@@ -835,7 +835,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
                 if(onBlurActionUpdateViews.length() > 0){
                     onBlurContent.append("document.");
-                    onBlurContent.append(actionForm);
+                    onBlurContent.append(actionFormName);
                     onBlurContent.append(".");
                     onBlurContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onBlurContent.append(".value = '");
@@ -844,13 +844,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 }
 
                 onBlurContent.append("document.");
-                onBlurContent.append(actionForm);
+                onBlurContent.append(actionFormName);
                 onBlurContent.append(".");
                 onBlurContent.append(AttributeConstants.ACTION_KEY);
                 onBlurContent.append(".value = '");
                 onBlurContent.append(onClickAction);
                 onBlurContent.append("'; submitForm(document.");
-                onBlurContent.append(actionForm);
+                onBlurContent.append(actionFormName);
                 onBlurContent.append(");");
                 
                 setOnBlur(onBlurContent.toString());
@@ -872,7 +872,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onFocusActionForward.length() > 0){
                     onFocusContent.append("document.");
-                    onFocusContent.append(actionForm);
+                    onFocusContent.append(actionFormName);
                     onFocusContent.append(".");
                     onFocusContent.append(AttributeConstants.FORWARD_KEY);
                     onFocusContent.append(".value = '");
@@ -882,7 +882,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onFocusActionForwardOnFail.length() > 0){
                     onFocusContent.append("document.");
-                    onFocusContent.append(actionForm);
+                    onFocusContent.append(actionFormName);
                     onFocusContent.append(".");
                     onFocusContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onFocusContent.append(".value = '");
@@ -892,7 +892,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
                 if(onFocusActionUpdateViews.length() > 0){
                     onFocusContent.append("document.");
-                    onFocusContent.append(actionForm);
+                    onFocusContent.append(actionFormName);
                     onFocusContent.append(".");
                     onFocusContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onFocusContent.append(".value = '");
@@ -901,13 +901,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 }
                 
                 onFocusContent.append("document.");
-                onFocusContent.append(actionForm);
+                onFocusContent.append(actionFormName);
                 onFocusContent.append(".");
                 onFocusContent.append(AttributeConstants.ACTION_KEY);
                 onFocusContent.append(".value = '");
                 onFocusContent.append(onClickAction);
                 onFocusContent.append("'; submitForm(document.");
-                onFocusContent.append(actionForm);
+                onFocusContent.append(actionFormName);
                 onFocusContent.append(");");
                 
                 setOnFocus(onFocusContent.toString());
@@ -929,7 +929,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onClickActionForward.length() > 0){
                     onClickContent.append("document.");
-                    onClickContent.append(actionForm);
+                    onClickContent.append(actionFormName);
                     onClickContent.append(".");
                     onClickContent.append(AttributeConstants.FORWARD_KEY);
                     onClickContent.append(".value = '");
@@ -939,7 +939,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onClickActionForwardOnFail.length() > 0){
                     onClickContent.append("document.");
-                    onClickContent.append(actionForm);
+                    onClickContent.append(actionFormName);
                     onClickContent.append(".");
                     onClickContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onClickContent.append(".value = '");
@@ -949,7 +949,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
                 if(onClickActionUpdateViews.length() > 0){
                     onClickContent.append("document.");
-                    onClickContent.append(actionForm);
+                    onClickContent.append(actionFormName);
                     onClickContent.append(".");
                     onClickContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onClickContent.append(".value = '");
@@ -958,13 +958,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 }
 
                 onClickContent.append("document.");
-                onClickContent.append(actionForm);
+                onClickContent.append(actionFormName);
                 onClickContent.append(".");
                 onClickContent.append(AttributeConstants.ACTION_KEY);
                 onClickContent.append(".value = '");
                 onClickContent.append(onClickAction);
                 onClickContent.append("'; submitForm(document.");
-                onClickContent.append(actionForm);
+                onClickContent.append(actionFormName);
                 onClickContent.append(");");
                 
                 setOnClick(onClickContent.toString());
@@ -986,7 +986,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onMouseOverActionForward.length() > 0){
                     onMouseOverContent.append("document.");
-                    onMouseOverContent.append(actionForm);
+                    onMouseOverContent.append(actionFormName);
                     onMouseOverContent.append(".");
                     onMouseOverContent.append(AttributeConstants.FORWARD_KEY);
                     onMouseOverContent.append(".value = '");
@@ -996,7 +996,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onMouseOverActionForwardOnFail.length() > 0){
                     onMouseOverContent.append("document.");
-                    onMouseOverContent.append(actionForm);
+                    onMouseOverContent.append(actionFormName);
                     onMouseOverContent.append(".");
                     onMouseOverContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onMouseOverContent.append(".value = '");
@@ -1006,7 +1006,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
                 if(onMouseOverActionUpdateViews.length() > 0){
                     onMouseOverContent.append("document.");
-                    onMouseOverContent.append(actionForm);
+                    onMouseOverContent.append(actionFormName);
                     onMouseOverContent.append(".");
                     onMouseOverContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onMouseOverContent.append(".value = '");
@@ -1015,13 +1015,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 }
 
                 onMouseOverContent.append("document.");
-                onMouseOverContent.append(actionForm);
+                onMouseOverContent.append(actionFormName);
                 onMouseOverContent.append(".");
                 onMouseOverContent.append(AttributeConstants.ACTION_KEY);
                 onMouseOverContent.append(".value = '");
                 onMouseOverContent.append(onMouseOverAction);
                 onMouseOverContent.append("'; submitForm(document.");
-                onMouseOverContent.append(actionForm);
+                onMouseOverContent.append(actionFormName);
                 onMouseOverContent.append(");");
                 
                 setOnMouseOver(onMouseOverContent.toString());
@@ -1043,7 +1043,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onMouseOutActionForward.length() > 0){
                     onMouseOutContent.append("document.");
-                    onMouseOutContent.append(actionForm);
+                    onMouseOutContent.append(actionFormName);
                     onMouseOutContent.append(".");
                     onMouseOutContent.append(AttributeConstants.FORWARD_KEY);
                     onMouseOutContent.append(".value = '");
@@ -1053,7 +1053,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 
                 if(onMouseOutActionForwardOnFail.length() > 0){
                     onMouseOutContent.append("document.");
-                    onMouseOutContent.append(actionForm);
+                    onMouseOutContent.append(actionFormName);
                     onMouseOutContent.append(".");
                     onMouseOutContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onMouseOutContent.append(".value = '");
@@ -1063,7 +1063,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
                 if(onMouseOutActionUpdateViews.length() > 0){
                     onMouseOutContent.append("document.");
-                    onMouseOutContent.append(actionForm);
+                    onMouseOutContent.append(actionFormName);
                     onMouseOutContent.append(".");
                     onMouseOutContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onMouseOutContent.append(".value = '");
@@ -1072,13 +1072,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 }
 
                 onMouseOutContent.append("document.");
-                onMouseOutContent.append(actionForm);
+                onMouseOutContent.append(actionFormName);
                 onMouseOutContent.append(".");
                 onMouseOutContent.append(AttributeConstants.ACTION_KEY);
                 onMouseOutContent.append(".value = '");
                 onMouseOutContent.append(onMouseOutAction);
                 onMouseOutContent.append("'; submitForm(document.");
-                onMouseOutContent.append(actionForm);
+                onMouseOutContent.append(actionFormName);
                 onMouseOutContent.append(");");
                 
                 setOnMouseOut(onMouseOutContent.toString());
@@ -1090,7 +1090,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
         try{
 			LoginSessionModel loginSession = securityController.getLoginSession();
 			SystemModuleModel systemModule = (loginSession != null ? loginSession.getSystemModule() : null);
-			FormModel         form         = (systemModule != null ? systemModule.getForm(actionForm) : null);
+			FormModel         form         = (systemModule != null ? systemModule.getForm(actionFormName) : null);
 			ObjectModel       object       = (form != null ? form.getObject(name) : null);
 
 			if(object != null){
@@ -1251,8 +1251,10 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
 		super.renderAttributes();
 
-		if(!isEnabled())
-			print(" disabled");
+		if(!isEnabled()){
+			print(" ");
+			print(AttributeConstants.DISABLED_KEY);
+		}
 	}
 	
 	/**
@@ -1374,7 +1376,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		setLabelAlignment("");
 		setLabelVerticalAlignment("");
 		setShowLabel(true);
-		setActionForm("");
+		setActionFormName("");
 		setActionFormTag(null);
 		setHasPermission(true);
 		setRequestInfo(null);
