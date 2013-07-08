@@ -9,7 +9,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class ProgressBarTag extends BasePropertyTag{
 	private Double maximumValue  = 0d;;
 	private Double warningValue  = 0d;
@@ -88,7 +88,7 @@ public class ProgressBarTag extends BasePropertyTag{
 		if(getPropertyInfo() != null)
 			super.renderOpen();
 		
-        print("<table class=\"");
+        print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
 		println("<tr>");
