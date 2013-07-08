@@ -12,7 +12,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class GuideTag extends BaseActionFormElementTag{
     private Boolean focusWhen                        = false;
 	private String  onSelect                         = "";
@@ -212,9 +212,9 @@ public class GuideTag extends BaseActionFormElementTag{
 		super.initialize();
 		
         if(onSelectAction.length() > 0){
-            String actionForm = getActionForm();
+            String actionFormName = getActionFormName();
             
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onSelectContent = new StringBuilder();
     
                 if(onSelect.length() > 0){
@@ -227,7 +227,7 @@ public class GuideTag extends BaseActionFormElementTag{
                 }
                 
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 
                 SearchPropertiesGroupTag searchPropertiesTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
@@ -243,7 +243,7 @@ public class GuideTag extends BaseActionFormElementTag{
                 
                 if(onSelectActionValidateProperties.length() > 0){
                     onSelectContent.append(" document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onSelectContent.append(".value = '");
@@ -253,7 +253,7 @@ public class GuideTag extends BaseActionFormElementTag{
                 
                 if(onSelectActionForward.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_KEY);
                     onSelectContent.append(".value = '");
@@ -263,7 +263,7 @@ public class GuideTag extends BaseActionFormElementTag{
                 
                 if(onSelectActionForwardOnFail.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onSelectContent.append(".value = '");
@@ -273,7 +273,7 @@ public class GuideTag extends BaseActionFormElementTag{
     
                 if(onSelectActionUpdateViews.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onSelectContent.append(".value = '");
@@ -282,13 +282,13 @@ public class GuideTag extends BaseActionFormElementTag{
                 }
     
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 onSelectContent.append(AttributeConstants.ACTION_KEY);
                 onSelectContent.append(".value = '");
                 onSelectContent.append(onSelectAction);
                 onSelectContent.append("'; submitForm(document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(");");
                 
                 onSelect = onSelectContent.toString();
