@@ -7,7 +7,7 @@ import br.com.concepting.framework.web.action.types.ActionType;
  * 
  * @author fvilarinho
  * @since 3.0
- */
+ */ 
 public class ConfirmDialogBoxTag extends MessageBoxTag{
     private String  onConfirmActionUpdateViews        = "";
     private String  onConfirmActionValidateProperties = "";
@@ -17,42 +17,92 @@ public class ConfirmDialogBoxTag extends MessageBoxTag{
     private String  onConfirmAction                   = "";
     private String  onConfirm                         = "";
     
+    /**
+     * Retorna os identificadores das views que serão atualizadas após o processamento da ação de confirmação.
+     * 
+     * @return String contendo os identificadores das views.
+     */
     public String getOnConfirmActionUpdateViews(){
         return onConfirmActionUpdateViews;
     }
 
+    /**
+     * Define os identificadores das views que serão atualizadas após o processamento da ação de confirmação.
+     * 
+     * @param onConfirmActionUpdateViews String contendo os identificadores das views.
+     */
     public void setOnConfirmActionUpdateViews(String onConfirmActionUpdateViews){
         this.onConfirmActionUpdateViews = onConfirmActionUpdateViews;
     }
 
+    /**
+     * Retorna as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação de confirmação.
+     * 
+     * @return String contendo os identificadores das propriedades.
+     */
     public String getOnConfirmActionValidateProperties(){
         return onConfirmActionValidateProperties;
     }
 
+    /**
+     * Define as propriedades do modelo de dados do formulário que deverão ser validadas na execução da ação de confirmação.
+     * 
+     * @param onConfirmActionValidateProperties String contendo os identificadores das propriedades.
+     */
     public void setOnConfirmActionValidateProperties(String onConfirmActionValidateProperties){
         this.onConfirmActionValidateProperties = onConfirmActionValidateProperties;
     }
 
+    /**
+     * Indica se o modelo de dados do formulário deve ser validado na execução da ação de confirmação.
+     * 
+     * @return True/False.
+     */
     public Boolean getOnConfirmActionValidate(){
         return onConfirmActionValidate;
     }
 
+    /**
+     * Define se o modelo de dados do formulário deve ser validado na execução da ação de confirmação.
+     * 
+     * @param onConfirmActionValidate True/False.
+     */
     public void setOnConfirmActionValidate(Boolean onConfirmActionValidate){
         this.onConfirmActionValidate = onConfirmActionValidate;
     }
 
+    /**
+     * Retorna o identificador do redirecionamento em caso de falha após a execução da ação de confirmação.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
     public String getOnConfirmActionForwardOnFail(){
         return onConfirmActionForwardOnFail;
     }
 
+    /**
+     * Define o identificador do redirecionamento em caso de falha após a execução da ação de confirmação.
+     * 
+     * @param onConfirmActionForwardOnFail String contendo o identificador do redirecionamento.
+     */
     public void setOnConfirmActionForwardOnFail(String onConfirmActionForwardOnFail){
         this.onConfirmActionForwardOnFail = onConfirmActionForwardOnFail;
     }
 
+    /**
+     * Retorna o identificador do redirecionamento após a execução da ação de confirmação.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
     public String getOnConfirmActionForward(){
         return onConfirmActionForward;
     }
 
+    /**
+     * Define o identificador do redirecionamento após a execução da ação de confirmação.
+     * 
+     * @param onConfirmActionForward String contendo o identificador do redirecionamento.
+     */
     public void setOnConfirmActionForward(String onConfirmActionForward){
         this.onConfirmActionForward = onConfirmActionForward;
     }
