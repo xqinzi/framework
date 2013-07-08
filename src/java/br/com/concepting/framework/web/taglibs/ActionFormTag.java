@@ -378,50 +378,6 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
 	 */
 	protected void renderAttributes() throws Throwable{
 	    out.println();
-	    
-        HiddenTag autoCompleteTag = new HiddenTag();
-        
-        autoCompleteTag.setPageContext(pageContext);
-        autoCompleteTag.setName(getBeanName());
-        autoCompleteTag.setProperty(AttributeConstants.AUTO_COMPLETE_KEY);
-        autoCompleteTag.setValue(Boolean.FALSE.toString());
-        autoCompleteTag.doStartTag();
-        autoCompleteTag.doEndTag();
-
-        out.println();
-
-        HiddenTag autoCompleteDataTag = new HiddenTag();
-        
-        autoCompleteDataTag.setPageContext(pageContext);
-        autoCompleteDataTag.setName(getBeanName());
-        autoCompleteDataTag.setProperty(AttributeConstants.AUTO_COMPLETE_DATA_KEY);
-        autoCompleteDataTag.setValue("");
-        autoCompleteDataTag.doStartTag();
-        autoCompleteDataTag.doEndTag();
-
-        out.println();
-
-        HiddenTag autoCompleteDataScopeTag = new HiddenTag();
-        
-        autoCompleteDataScopeTag.setPageContext(pageContext);
-        autoCompleteDataScopeTag.setName(getBeanName());
-        autoCompleteDataScopeTag.setProperty(AttributeConstants.AUTO_COMPLETE_DATA_SCOPE_KEY);
-        autoCompleteDataScopeTag.setValue("");
-        autoCompleteDataScopeTag.doStartTag();
-        autoCompleteDataScopeTag.doEndTag();
-
-        out.println();
-
-        HiddenTag autoCompleteLabelPropertyTag = new HiddenTag();
-        
-        autoCompleteLabelPropertyTag.setPageContext(pageContext);
-        autoCompleteLabelPropertyTag.setName(getBeanName());
-        autoCompleteLabelPropertyTag.setProperty(AttributeConstants.AUTO_COMPLETE_LABEL_PROPERTY_KEY);
-        autoCompleteLabelPropertyTag.setValue("");
-        autoCompleteLabelPropertyTag.doStartTag();
-        autoCompleteLabelPropertyTag.doEndTag();
-
-        out.println();
 
         HiddenTag actionTag = new HiddenTag();
         
