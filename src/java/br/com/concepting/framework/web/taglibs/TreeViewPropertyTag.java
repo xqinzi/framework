@@ -649,10 +649,10 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 
         super.initialize();
         
+        String actionFormName = getActionFormName();
+
         if(onSelectAction.length() > 0){
-            String actionForm = getActionForm();
-            
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onSelectContent = new StringBuilder();
     
                 if(onSelect.length() > 0){
@@ -665,7 +665,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 }
                 
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 
                 if(isForSearch())
@@ -679,7 +679,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onSelectActionValidateProperties.length() > 0){
                     onSelectContent.append(" document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onSelectContent.append(".value = '");
@@ -689,7 +689,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onSelectActionForward.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_KEY);
                     onSelectContent.append(".value = '");
@@ -699,7 +699,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onSelectActionForwardOnFail.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onSelectContent.append(".value = '");
@@ -709,7 +709,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     
                 if(onSelectActionUpdateViews.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onSelectContent.append(".value = '");
@@ -718,13 +718,13 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 }
     
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 onSelectContent.append(AttributeConstants.ACTION_KEY);
                 onSelectContent.append(".value = '");
                 onSelectContent.append(onSelectAction);
                 onSelectContent.append("'; submitForm(document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(");");
                 
                 onSelect = onSelectContent.toString();
@@ -732,9 +732,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
         }
         
         if(onUnSelectAction.length() > 0){
-            String actionForm = getActionForm();
-            
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onUnSelectContent = new StringBuilder();
     
                 if(onUnSelect.length() > 0){
@@ -747,7 +745,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 }
                 
                 onUnSelectContent.append("document.");
-                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(actionFormName);
                 onUnSelectContent.append(".");
                 
                 if(isForSearch())
@@ -761,7 +759,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onUnSelectActionValidateProperties.length() > 0){
                     onUnSelectContent.append(" document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onUnSelectContent.append(".value = '");
@@ -771,7 +769,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onUnSelectActionForward.length() > 0){
                     onUnSelectContent.append("document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.FORWARD_KEY);
                     onUnSelectContent.append(".value = '");
@@ -781,7 +779,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onUnSelectActionForwardOnFail.length() > 0){
                     onUnSelectContent.append("document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onUnSelectContent.append(".value = '");
@@ -791,7 +789,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     
                 if(onUnSelectActionUpdateViews.length() > 0){
                     onUnSelectContent.append("document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onUnSelectContent.append(".value = '");
@@ -800,13 +798,13 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 }
     
                 onUnSelectContent.append("document.");
-                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(actionFormName);
                 onUnSelectContent.append(".");
                 onUnSelectContent.append(AttributeConstants.ACTION_KEY);
                 onUnSelectContent.append(".value = '");
                 onUnSelectContent.append(onUnSelectAction);
                 onUnSelectContent.append("'; submitForm(document.");
-                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(actionFormName);
                 onUnSelectContent.append(");");
                 
                 onUnSelect = onUnSelectContent.toString();
@@ -814,9 +812,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
         }
 
         if(onExpandAction.length() > 0){
-            String actionForm = getActionForm();
-            
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onExpandContent = new StringBuilder();
     
                 if(onExpand.length() > 0){
@@ -829,7 +825,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 }
                 
                 onExpandContent.append("document.");
-                onExpandContent.append(actionForm);
+                onExpandContent.append(actionFormName);
                 onExpandContent.append(".");
                 
                 if(isForSearch())
@@ -843,7 +839,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onExpandActionValidateProperties.length() > 0){
                     onExpandContent.append(" document.");
-                    onExpandContent.append(actionForm);
+                    onExpandContent.append(actionFormName);
                     onExpandContent.append(".");
                     onExpandContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onExpandContent.append(".value = '");
@@ -853,7 +849,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onExpandActionForward.length() > 0){
                     onExpandContent.append("document.");
-                    onExpandContent.append(actionForm);
+                    onExpandContent.append(actionFormName);
                     onExpandContent.append(".");
                     onExpandContent.append(AttributeConstants.FORWARD_KEY);
                     onExpandContent.append(".value = '");
@@ -863,7 +859,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 
                 if(onExpandActionForwardOnFail.length() > 0){
                     onExpandContent.append("document.");
-                    onExpandContent.append(actionForm);
+                    onExpandContent.append(actionFormName);
                     onExpandContent.append(".");
                     onExpandContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onExpandContent.append(".value = '");
@@ -873,7 +869,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     
                 if(onExpandActionUpdateViews.length() > 0){
                     onExpandContent.append("document.");
-                    onExpandContent.append(actionForm);
+                    onExpandContent.append(actionFormName);
                     onExpandContent.append(".");
                     onExpandContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onExpandContent.append(".value = '");
@@ -882,13 +878,13 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
                 }
     
                 onExpandContent.append("document.");
-                onExpandContent.append(actionForm);
+                onExpandContent.append(actionFormName);
                 onExpandContent.append(".");
                 onExpandContent.append(AttributeConstants.ACTION_KEY);
                 onExpandContent.append(".value = '");
                 onExpandContent.append(onExpandAction);
                 onExpandContent.append("'; submitForm(document.");
-                onExpandContent.append(actionForm);
+                onExpandContent.append(actionFormName);
                 onExpandContent.append(");");
                 
                 onExpand = onExpandContent.toString();
