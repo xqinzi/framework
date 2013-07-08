@@ -25,7 +25,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class MessageBoxTag extends DialogBoxTag{
     private String             type          = "";
     private Boolean            showException = false;
@@ -304,7 +304,8 @@ public class MessageBoxTag extends DialogBoxTag{
 		print("\">");
 		print("<div class=\"");
 		print(type.toString().toLowerCase());
-		println("Icon\"></div>");
+		print(StringUtil.capitalize(AttributeConstants.ICON_KEY));
+		println("\"></div>");
 		println("</td>");
 		
 		print("<td align=\"");
@@ -405,6 +406,7 @@ public class MessageBoxTag extends DialogBoxTag{
         
         content.append("addLoadEvent(centralizeDialogBoxes);");
         content.append(StringUtil.getLineBreak());
+        
         content.append("addResizeEvent(centralizeDialogBoxes);");
         content.append(StringUtil.getLineBreak());
         
