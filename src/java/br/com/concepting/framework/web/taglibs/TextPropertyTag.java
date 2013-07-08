@@ -1,11 +1,19 @@
 package br.com.concepting.framework.web.taglibs;
 
+import java.util.List;
 import java.util.Locale;
 
+import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
+import br.com.concepting.framework.model.util.ModelUtil;
+import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.util.NumberUtil;
+import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
+import br.com.concepting.framework.web.form.BaseActionForm;
+import br.com.concepting.framework.web.types.ScopeType;
 
 /**
  * Classe que define o componente visual para entrada de texto com ou sem mascaramento.
@@ -14,11 +22,92 @@ import br.com.concepting.framework.util.types.ComponentType;
  * @since 1.0
  */
 public class TextPropertyTag extends BasePropertyTag{
-	private Integer size      = 0;
-	private Integer maxlength = 0;
-	private Boolean readOnly  = false;
+	private Integer size                                 = 0;
+	private Integer maxlength                            = 0;
+	private Boolean readOnly                             = false;
+	private Boolean autoComplete                         = false;
+	private String  autoCompleteLabelProperty            = "";
+	private String  autoCompleteData                     = "";
+	private String  autoCompleteDataScope                = "";
+	private String  autoCompleteAction                   = "";
+	private String  autoCompleteActionUpdateViews        = "";
+	private Boolean autoCompleteActionValidate           = false;
+	private String  autoCompleteActionValidateProperties = "";
+	
+	public String getAutoCompleteLabelProperty(){
+        return autoCompleteLabelProperty;
+    }
 
-	/**
+    public void setAutoCompleteLabelProperty(String autoCompleteLabelProperty){
+        this.autoCompleteLabelProperty = autoCompleteLabelProperty;
+    }
+
+    public String getAutoCompleteData(){
+        return autoCompleteData;
+    }
+
+    public void setAutoCompleteData(String autoCompleteData){
+        this.autoCompleteData = autoCompleteData;
+    }
+
+    public String getAutoCompleteDataScope(){
+        return autoCompleteDataScope;
+    }
+
+    public void setAutoCompleteDataScope(String autoCompleteDataScope){
+        this.autoCompleteDataScope = autoCompleteDataScope;
+    }
+
+    protected ScopeType getAutoCompleteDataScopeType(){
+        try{
+            return ScopeType.valueOf(autoCompleteDataScope);
+        }
+        catch(Throwable e){
+            return null;
+        }
+    }        
+
+    public Boolean getAutoComplete(){
+        return autoComplete;
+    }
+
+    public void setAutoComplete(Boolean autoComplete){
+        this.autoComplete = autoComplete;
+    }
+
+    public String getAutoCompleteAction(){
+        return autoCompleteAction;
+    }
+
+    public void setAutoCompleteAction(String autoCompleteAction){
+        this.autoCompleteAction = autoCompleteAction;
+    }
+
+    public String getAutoCompleteActionUpdateViews(){
+        return autoCompleteActionUpdateViews;
+    }
+
+    public void setAutoCompleteActionUpdateViews(String autoCompleteActionUpdateViews){
+        this.autoCompleteActionUpdateViews = autoCompleteActionUpdateViews;
+    }
+
+    public Boolean getAutoCompleteActionValidate(){
+        return autoCompleteActionValidate;
+    }
+
+    public void setAutoCompleteActionValidate(Boolean autoCompleteActionValidate){
+        this.autoCompleteActionValidate = autoCompleteActionValidate;
+    }
+
+    public String getAutoCompleteActionValidateProperties(){
+        return autoCompleteActionValidateProperties;
+    }
+
+    public void setAutoCompleteActionValidateProperties(String autoCompleteActionValidateProperties){
+        this.autoCompleteActionValidateProperties = autoCompleteActionValidateProperties;
+    }
+
+    /**
 	 * Indica se o campo é de somente leitura.
 	 * 
 	 * @return True/False.
@@ -162,7 +251,7 @@ public class TextPropertyTag extends BasePropertyTag{
 				if(propertyInfo.isNumber())
 					onKeyPressContent.append("Number");
 				
-				onKeyPressContent.append("Property(this, '");
+				onKeyPressContent.append("Object(this, '");
 				onKeyPressContent.append(pattern);
 				onKeyPressContent.append("', event); ");
 				onKeyPressContent.append(onKeyPress);
@@ -175,6 +264,147 @@ public class TextPropertyTag extends BasePropertyTag{
             
             if(size > 0)
                 setSize(size);
+            
+            if(autoComplete){
+                String        name       = StringUtil.replaceAll(getName(), ".", "_");
+                String        actionForm = getActionForm();
+                StringBuilder content    = new StringBuilder();
+                
+                content.append("var ");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append(" = null;");
+                content.append(StringUtil.getLineBreak());
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("function ");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append("Stop(){");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\tif(");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append(")");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\t\tclearTimeout(");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append(");");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("}");
+                content.append(StringUtil.getLineBreak());
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("function ");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append("Start(){");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\tif(!");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append("){");
+                content.append(StringUtil.getLineBreak());
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\t\tdocument.");
+                content.append(actionForm);
+                content.append(".");
+                content.append(AttributeConstants.ACTION_KEY);
+                content.append(".value = '");
+                content.append(autoCompleteAction);
+                content.append("';");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\t\tdocument.");
+                content.append(actionForm);
+                content.append(".");
+                content.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                content.append(".value = '");
+                content.append(autoCompleteActionUpdateViews);
+                content.append("';");
+                content.append(StringUtil.getLineBreak());
+                
+                if(autoCompleteActionValidate){
+                    content.append("\t\tdocument.");
+                    content.append(actionForm);
+                    content.append(".");
+                    
+                    if(isForSearch())
+                        content.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                    else
+                        content.append(AttributeConstants.VALIDATE_MODEL_KEY);
+                    
+                    content.append(".value = '");
+                    content.append(autoCompleteActionValidate);
+                    content.append("';");
+                    content.append(StringUtil.getLineBreak());
+                    
+                    if(autoCompleteActionValidateProperties.length() > 0){
+                        content.append("\t\tdocument.");
+                        content.append(actionForm);
+                        content.append(".");
+                        content.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                        content.append(".value = '");
+                        content.append(autoCompleteActionValidateProperties);
+                        content.append("';");
+                        content.append(StringUtil.getLineBreak());
+                    }
+                }
+                
+                content.append("\t\t");
+                content.append(name);
+                content.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                content.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                content.append("Stop();");
+                content.append(StringUtil.getLineBreak());
+
+                content.append("\t\tsubmitForm(document.");
+                content.append(actionForm);
+                content.append(");");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\t\t}");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("\t}");
+                content.append(StringUtil.getLineBreak());
+                
+                content.append("}");
+                
+                ScriptTag scriptTag = new ScriptTag();
+                
+                scriptTag.setPageContext(pageContext);
+                scriptTag.setContent(content.toString());
+                scriptTag.doStartTag();
+                scriptTag.doEndTag();
+                
+                String        onKeyPress        = getOnKeyPress();
+                StringBuilder onKeyPressContent = new StringBuilder();
+                
+                onKeyPressContent.append(name);
+                onKeyPressContent.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                onKeyPressContent.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                onKeyPressContent.append("Stop(); ");
+                onKeyPressContent.append(name);
+                onKeyPressContent.append(StringUtil.capitalize(AttributeConstants.AUTO_COMPLETE_KEY));
+                onKeyPressContent.append(StringUtil.capitalize(AttributeConstants.TIMER_KEY));
+                onKeyPressContent.append("Start(); ");
+                onKeyPressContent.append(onKeyPress);
+                
+                setOnKeyPress(onKeyPressContent.toString());
+            }
 		}
 		
 		AlignmentType alignment    = getAlignmentType();
@@ -195,6 +425,76 @@ public class TextPropertyTag extends BasePropertyTag{
 		}
 	}
 	
+	protected void renderBody() throws Throwable{
+	    super.renderBody();
+	    
+	    if(autoComplete){
+	        String         actionFormName = getActionForm();
+	        BaseActionForm actionForm     = systemController.getActionForm(actionFormName);
+	        
+	        if(autoCompleteAction.equals(actionForm.getAction())){
+        	    print("<div id=\"");
+        	    print(getName());
+        	    print(".");
+        	    print(AttributeConstants.AUTO_COMPLETE_KEY);
+        	    print("\" class=\"");
+        	    print(AttributeConstants.AUTO_COMPLETE_KEY);
+        	    println("\">");
+    
+        	    ScopeType autoCompleteDataScope = getAutoCompleteDataScopeType();
+        	    
+        	    if(autoCompleteDataScope != null){
+        	        List autoCompleteDataValues = systemController.findAttribute(autoCompleteData, autoCompleteDataScope);
+        	        
+        	        if(autoCompleteDataValues != null && autoCompleteDataValues.size() > 0){
+                        println("<table class=\"panel\">");
+                        
+                        ModelInfo    autoCompleteModelInfo    = null; 
+                        PropertyInfo autoCompletePropertyInfo = null;
+                        Object       autoCompleteValue        = null;
+                        
+                        for(Object autoCompleteDataValue : autoCompleteDataValues){
+                            autoCompleteModelInfo = ModelUtil.getModelInfo(autoCompleteDataValue.getClass());
+                            
+                            if(autoCompleteModelInfo != null){
+                                autoCompletePropertyInfo = autoCompleteModelInfo.getPropertyInfo(autoCompleteLabelProperty);
+                                
+                                if(autoCompletePropertyInfo != null){
+                                    autoCompleteValue = PropertyUtil.getProperty(autoCompleteDataValue, autoCompletePropertyInfo.getId());
+                                    autoCompleteValue = PropertyUtil.format(autoCompleteValue, null, autoCompletePropertyInfo.getPattern(), autoCompletePropertyInfo.useAdditionalFormatting(), autoCompletePropertyInfo.getPrecision(), systemController.getCurrentLanguage());
+                                }
+                                else
+                                    autoCompleteValue = autoCompleteDataValue;
+                            }
+                            else
+                                autoCompleteValue = autoCompleteDataValue;
+    
+                            println("<tr>");
+                            print("<td class=\"");
+                            print(AttributeConstants.AUTO_COMPLETE_KEY);
+                            print("Item");
+                            print("\" onClick=\"setObject('");
+                            print(getName());
+                            print("', '");
+                            print(autoCompleteValue);
+                            println("');\">");
+                            
+                            println(autoCompleteValue);
+                            
+                            println("</td>");
+                            println("</tr>");
+                        }
+        	            
+                        println("</table>");
+        	        }
+        	    }
+        	    
+        	    println("</div>");
+            }
+	    }
+	}
+	
+	
 	/**
 	 * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#clearAttributes()
 	 */
@@ -205,5 +505,12 @@ public class TextPropertyTag extends BasePropertyTag{
 		setSize(0);
 		setMaxlength(0);
 		setReadOnly(false);
+		setAutoCompleteLabelProperty("");
+		setAutoCompleteData("");
+		setAutoCompleteDataScope("");
+		setAutoCompleteAction("");
+		setAutoCompleteActionUpdateViews("");
+		setAutoCompleteActionValidate(false);
+		setAutoCompleteActionValidateProperties("");
 	}
 }
