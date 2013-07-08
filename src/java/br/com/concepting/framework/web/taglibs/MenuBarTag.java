@@ -22,7 +22,7 @@ import br.com.concepting.framework.web.types.VisibilityType;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class MenuBarTag extends BaseOptionsPropertyTag{
 	private Boolean isFixed                       = false;     
 	private String  menuItemStyleClass            = "";
@@ -193,12 +193,12 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 	    
 		super.initialize();
 		
-        String actionForm = getActionForm();
+        String actionFormName = getActionFormName();
 		
-		if(getData().length() == 0 && actionForm.length() > 0){
+		if(getData().length() == 0 && actionFormName.length() > 0){
 			LoginSessionModel loginSession = securityController.getLoginSession();
 			SystemModuleModel systemModule = (loginSession != null ? loginSession.getSystemModule() : null);
-			FormModel         form         = (systemModule != null ? systemModule.getForm(actionForm) : null);
+			FormModel         form         = (systemModule != null ? systemModule.getForm(actionFormName) : null);
 			List<ObjectModel> objects      = null;
 			
 			if(form != null)
@@ -253,16 +253,20 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                 
                 systemController.setAttribute(menuItemIconId.toString(), menuItemIconData, ScopeType.SESSION);
                 
-                print("contentLoaderServlet?contentData=");
+                print("contentLoaderServlet?");
+                print(AttributeConstants.CONTENT_DATA_KEY);
+                print("=");
                 print(menuItemIconId);
-                print("&contentType=");
+                print("&");
+                print(AttributeConstants.CONTENT_TYPE_KEY);
+                print("=");
                 println(ImageUtil.getImageFormat(menuItemIconData));
             }
             else{
                 String skin = systemController.getCurrentSkin();
                         
                 if(menuItemIconUrl.startsWith("/")){
-                    print("skins/");
+                    print(TaglibConstants.DEFAULT_SKINS_RESOURCES_DIR);
                     print(skin);
                 }
                 
