@@ -14,7 +14,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * 
  * @author fvilarinho
  * @since 2.0
- */
+ */ 
 public class ClockTag extends BaseTag{
     private String           pattern   = "";
     private SimpleDateFormat formatter = null;
@@ -117,7 +117,7 @@ public class ClockTag extends BaseTag{
         
         StringBuilder content = new StringBuilder();
         
-        content.append("addLoadEvent(showClockObject);");
+        content.append("addLoadEvent(showClock);");
         content.append(StringUtil.getLineBreak());
         
         scriptTag.setContent(content.toString());
