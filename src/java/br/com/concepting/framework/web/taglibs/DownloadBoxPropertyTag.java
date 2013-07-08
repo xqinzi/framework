@@ -219,7 +219,9 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
         print(contentType.getMimeType());
         print("&contentData=");
         print(getActionForm());
-        print((isForSearch() ? ".searchModel." : ".model."));
+        print(".");
+        print((isForSearch() ? "searchModel" : "model"));
+        print(".");
         print(getName());
         println("', 'downloadWindow');\"></div>");
     }
