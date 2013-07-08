@@ -26,14 +26,29 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	private List<OptionStateTag> optionStates        = null;
 	private ExpressionProcessor  expressionProcessor = null;
      
+	/**
+	 * Indica se o componente terá múltipla seleção.
+	 * 
+	 * @return True/False.
+	 */
     public Boolean hasMultipleSelection(){
         return multipleSelection;
     }
 
+    /**
+     * Indica se o componente terá múltipla seleção.
+     * 
+     * @return True/False.
+     */
     public Boolean getMultipleSelection(){
         return hasMultipleSelection();
     }
 
+    /**
+     * Define se o componente terá múltipla seleção.
+     * 
+     * @param multipleSelection True/False.
+     */
     public void setMultipleSelection(Boolean multipleSelection){
         this.multipleSelection = multipleSelection;
     }
@@ -297,20 +312,20 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
     		        setDataScopeType(dataScope);
     		    }
     		    
-    	        String actionForm = getActionForm();
+    	        String actionFormName = getActionFormName();
 
-    			if(!data.startsWith(actionForm)){
+    			if(!data.startsWith(actionFormName)){
         			StringBuilder propertyId = new StringBuilder();
         			
         			if(dataScope == ScopeType.FORM || dataScope == ScopeType.MODEL){
-        				propertyId.append(actionForm);
+        				propertyId.append(actionFormName);
         				propertyId.append(".");
         				
         				if(dataScope == ScopeType.MODEL){
         				    if(isForSearch())
-        				        propertyId.append("searchModel");
+        				        propertyId.append(AttributeConstants.SEARCH_MODEL_KEY);
         				    else
-        				        propertyId.append("model");
+        				        propertyId.append(AttributeConstants.MODEL_KEY);
         				    
         				    propertyId.append(".");
         				}
