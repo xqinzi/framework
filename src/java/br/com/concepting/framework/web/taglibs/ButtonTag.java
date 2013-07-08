@@ -409,7 +409,7 @@ public class ButtonTag extends BaseActionFormElementTag{
 			styleClassContent.append(name);
 
 			if(!isEnabled)
-				styleClassContent.append("Disabled");
+				styleClassContent.append(StringUtil.capitalize(AttributeConstants.DISABLED_KEY));
 
 			setStyleClass(styleClassContent.toString());
 		}
@@ -420,10 +420,10 @@ public class ButtonTag extends BaseActionFormElementTag{
             StringBuilder iconStyleClassContent = new StringBuilder();
 			
 			iconStyleClassContent.append(name);
-			iconStyleClassContent.append("Icon");
-
+			iconStyleClassContent.append(StringUtil.capitalize(AttributeConstants.ICON_KEY));
+ 
 			if(!isEnabled)
-				iconStyleClassContent.append("Disabled");
+				iconStyleClassContent.append(StringUtil.capitalize(AttributeConstants.DISABLED_KEY));
 
 			setIconStyleClass(iconStyleClassContent.toString());
 		}
@@ -434,10 +434,10 @@ public class ButtonTag extends BaseActionFormElementTag{
             StringBuilder labelStyleClassContent = new StringBuilder();
             
 			labelStyleClassContent.append(name);
-			labelStyleClassContent.append("Label");
+			labelStyleClassContent.append(StringUtil.capitalize(AttributeConstants.LABEL_KEY));
 			
 			if(!isEnabled)
-				labelStyleClassContent.append("Disabled");
+				labelStyleClassContent.append(StringUtil.capitalize(AttributeConstants.DISABLED_KEY));
 			
 			setLabelStyleClass(labelStyleClassContent.toString());
 		}
