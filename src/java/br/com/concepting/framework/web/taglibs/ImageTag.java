@@ -1,5 +1,6 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;
@@ -12,7 +13,7 @@ import br.com.concepting.framework.web.types.ScopeType;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class ImageTag extends BaseOptionsPropertyTag{
     /**
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderAttributes()
@@ -28,24 +29,27 @@ public class ImageTag extends BaseOptionsPropertyTag{
 		if(value instanceof byte[] || (propertyInfo != null && propertyInfo.isByteArray())){
 			print(systemController.getContextPath());
 			print("/");
-			print("contentLoaderServlet?contentData=");
+			print("contentLoaderServlet?");
+			print(AttributeConstants.CONTENT_DATA_KEY);
+			print("=");
 			
-			ScopeType scopeType = ScopeType.SESSION;
+			String    actionFormName = getActionFormName();
+			ScopeType scopeType      = ScopeType.SESSION;
 			
 			if(propertyInfo != null){
-    			print(getActionForm());
+    			print(actionFormName);
     			
     			if(isForSearch())
-    				print(".search.");
+    			    print(AttributeConstants.SEARCH_MODEL_KEY);
     			else
-    				print(".model.");
+                    print(AttributeConstants.MODEL_KEY);
     			
     			print(getName());
 			}
 			else{
 				StringBuilder contentId = new StringBuilder();
 				
-				contentId.append("image");
+				contentId.append(AttributeConstants.IMAGE_KEY);
 				contentId.append((int)(Math.random() * 9999));
 				
 				systemController.setAttribute(contentId.toString(), value, scopeType);
@@ -53,17 +57,23 @@ public class ImageTag extends BaseOptionsPropertyTag{
 				print(contentId.toString());
 			}
 			
-			print("&contentDataScope=");
+			print("&");
+			print(AttributeConstants.CONTENT_DATA_SCOPE_KEY);
+			print("=");
 			print(scopeType);
 			
 			try{
-    			print("&contentType=");
+    			print("&");
+    			print(AttributeConstants.CONTENT_TYPE_KEY);
+    			print("=");
     			print(ImageUtil.getImageFormat((byte[])value));
 			}
 			catch(Throwable e){
 			}
 			
-			print("&refresh=");
+			print("&");
+			print(AttributeConstants.REFRESH_KEY);
+			print("=");
 			print((int)(Math.random() * 9999));
 		}
 		else{
