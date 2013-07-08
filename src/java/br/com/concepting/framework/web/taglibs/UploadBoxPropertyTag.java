@@ -1,6 +1,7 @@
 package br.com.concepting.framework.web.taglibs;
 
 import br.com.concepting.framework.constants.AttributeConstants;
+import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
@@ -82,7 +83,9 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         tagId.append(".");
         tagId.append(AttributeConstants.UPLOAD_DATA_KEY);
 
-        print("<input type=\"FILE\" id=\"");
+        print("<input type=\"");
+        print(ComponentType.UPLOAD);
+        print("\" id=\"");
         print(tagId);
         print("\" name=\"");
         print(AttributeConstants.UPLOAD_DATA_KEY);
