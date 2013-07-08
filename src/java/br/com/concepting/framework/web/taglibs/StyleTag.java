@@ -1,5 +1,6 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
  * Classe que declara a utilização de um arquivo CSS (Cascade Style Sheet).
@@ -46,7 +47,7 @@ public class StyleTag extends BaseTag{
 		        
 		if(url.startsWith("/")){
 			print(systemController.getContextPath());
-			print("/skins/");
+			print(TaglibConstants.DEFAULT_SKINS_RESOURCES_DIR);
 			print(skin);
 		}
 			
