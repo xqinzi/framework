@@ -40,6 +40,7 @@ public class LanguageSelectorTag extends ListPropertyTag{
         if(availableLanguages != null && availableLanguages.size() > 0){
             for(Locale availableLanguage : availableLanguages){
                 languages.add(availableLanguage.toString());
+                
                 languagesMap.put(availableLanguage.toString(), StringUtil.capitalize(availableLanguage.getDisplayName(currentLanguage)));
             }
         }
