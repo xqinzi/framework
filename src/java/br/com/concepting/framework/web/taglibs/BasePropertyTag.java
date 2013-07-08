@@ -466,7 +466,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
     public void setOnChangeActionUpdateViews(String onChangeActionUpdateViews){
         this.onChangeActionUpdateViews = onChangeActionUpdateViews;
     }
-
+ 
     /**
      * Retorna o identificador do redirecionamento após a execução da ação do evento de digitação.
      * 
@@ -1127,9 +1127,9 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                 String languagePropertyId = propertyInfo.getLanguagePropertyId();
                 
                 if(languagePropertyId.length() > 0){
-                    String         actionForm = getActionForm();
-                    BaseActionForm form       = systemController.getActionForm(actionForm);
-                    BaseModel      model      = (form != null ? (isForSearch() ? form.getSearchModel() : form.getModel()) : null);
+                    String         actionFormName = getActionFormName();
+                    BaseActionForm actionForm     = systemController.getActionForm(actionFormName);
+                    BaseModel      model          = (actionForm != null ? (isForSearch() ? actionForm.getSearchModel() : actionForm.getModel()) : null);
                     
                     if(model != null){
                         try{
@@ -1193,15 +1193,15 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
         String  name        = getName();
         
         if(isForSearch){
-            name = StringUtil.replaceAll(getName(), "search.", "");
+            name = StringUtil.replaceAll(getName(), AttributeConstants.SEARCH_KEY.concat("."), "");
             
             setName(name);
         }
 
         super.initialize();
 
-        String         actionForm = getActionForm();
-        BaseActionForm form       = systemController.getActionForm(actionForm);
+        String         actionFormName = getActionFormName();
+        BaseActionForm actionForm     = systemController.getActionForm(actionFormName);
         
         if(valueMap.length() > 0){
             ScopeType valueMapScope = getValueMapScopeType();
@@ -1212,18 +1212,18 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                 setValueMapScopeType(valueMapScope);
             }
 
-            if(!valueMap.startsWith(actionForm)){
+            if(!valueMap.startsWith(actionFormName)){
                 StringBuilder propertyId = new StringBuilder();
 
                 if(valueMapScope == ScopeType.FORM || valueMapScope == ScopeType.MODEL){
-                    propertyId.append(actionForm);
+                    propertyId.append(actionFormName);
                     propertyId.append(".");
     
                     if(valueMapScope == ScopeType.MODEL){
                         if(isForSearch)
-                            propertyId.append("searchModel");
+                            propertyId.append(AttributeConstants.SEARCH_MODEL_KEY);
                         else
-                            propertyId.append("model");
+                            propertyId.append(AttributeConstants.MODEL_KEY);
                         
                         propertyId.append(".");
                     }
@@ -1244,8 +1244,8 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
         if(propertyInfo == null){
     		invalidPropertyMessage = StringUtil.trim(resources.getProperty(AttributeConstants.INVALID_PROPERTY_KEY));
         
-    		if(actionForm.length() > 0){
-     			BaseModel model = (form != null ? (isForSearch ? form.getSearchModel() : form.getModel()) : null);
+    		if(actionFormName.length() > 0){
+     			BaseModel model = (actionForm != null ? (isForSearch ? actionForm.getSearchModel() : actionForm.getModel()) : null);
          
      			if(model != null){
     				ModelInfo modelInfo = ModelUtil.getModelInfo(model.getClass());
@@ -1274,7 +1274,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	    }
         
         if(isForSearch)
-            setName("search.".concat(name));
+            setName(AttributeConstants.SEARCH_KEY.concat(".").concat(name));
 		
 		if(propertyInfo != null){
 		    AlignmentType alignment = getAlignmentType();
@@ -1335,7 +1335,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             StringBuilder onBlurContent = new StringBuilder();
 
             onBlurContent.append(" document.");
-            onBlurContent.append(actionForm);
+            onBlurContent.append(actionFormName);
             onBlurContent.append(".");
             
             if(isForSearch)
@@ -1349,7 +1349,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onBlurActionValidateProperties.length() > 0){
                 onBlurContent.append(" document.");
-                onBlurContent.append(actionForm);
+                onBlurContent.append(actionFormName);
                 onBlurContent.append(".");
                 onBlurContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onBlurContent.append(".value = '");
@@ -1369,7 +1369,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             StringBuilder onFocusContent = new StringBuilder();
 
             onFocusContent.append(" document.");
-            onFocusContent.append(actionForm);
+            onFocusContent.append(actionFormName);
             onFocusContent.append(".");
             
             if(isForSearch)
@@ -1383,7 +1383,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onFocusActionValidateProperties.length() > 0){
                 onFocusContent.append(" document.");
-                onFocusContent.append(actionForm);
+                onFocusContent.append(actionFormName);
                 onFocusContent.append(".");
                 onFocusContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onFocusContent.append(".value = '");
@@ -1403,7 +1403,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             StringBuilder onClickContent = new StringBuilder();
 
             onClickContent.append(" document.");
-            onClickContent.append(actionForm);
+            onClickContent.append(actionFormName);
             onClickContent.append(".");
             
             if(isForSearch)
@@ -1417,7 +1417,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onClickActionValidateProperties.length() > 0){
                 onClickContent.append(" document.");
-                onClickContent.append(actionForm);
+                onClickContent.append(actionFormName);
                 onClickContent.append(".");
                 onClickContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onClickContent.append(".value = '");
@@ -1437,7 +1437,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             StringBuilder onMouseOverContent = new StringBuilder();
 
             onMouseOverContent.append(" document.");
-            onMouseOverContent.append(actionForm);
+            onMouseOverContent.append(actionFormName);
             onMouseOverContent.append(".");
             
             if(isForSearch)
@@ -1451,7 +1451,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onMouseOverActionValidateProperties.length() > 0){
                 onMouseOverContent.append(" document.");
-                onMouseOverContent.append(actionForm);
+                onMouseOverContent.append(actionFormName);
                 onMouseOverContent.append(".");
                 onMouseOverContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onMouseOverContent.append(".value = '");
@@ -1471,7 +1471,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             StringBuilder onMouseOutContent = new StringBuilder();
 
             onMouseOutContent.append(" document.");
-            onMouseOutContent.append(actionForm);
+            onMouseOutContent.append(actionFormName);
             onMouseOutContent.append(".");
             
             if(isForSearch)
@@ -1485,7 +1485,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onMouseOutActionValidateProperties.length() > 0){
                 onMouseOutContent.append(" document.");
-                onMouseOutContent.append(actionForm);
+                onMouseOutContent.append(actionFormName);
                 onMouseOutContent.append(".");
                 onMouseOutContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onMouseOutContent.append(".value = '");
@@ -1514,7 +1514,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
             
             onChangeContent.append("document.");
-            onChangeContent.append(actionForm);
+            onChangeContent.append(actionFormName);
             onChangeContent.append(".");
             
             if(isForSearch)
@@ -1528,7 +1528,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onChangeActionValidateProperties.length() > 0){
                 onChangeContent.append(" document.");
-                onChangeContent.append(actionForm);
+                onChangeContent.append(actionFormName);
                 onChangeContent.append(".");
                 onChangeContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onChangeContent.append(".value = '");
@@ -1538,7 +1538,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onChangeActionForward.length() > 0){
                 onChangeContent.append("document.");
-                onChangeContent.append(actionForm);
+                onChangeContent.append(actionFormName);
                 onChangeContent.append(".");
                 onChangeContent.append(AttributeConstants.FORWARD_KEY);
                 onChangeContent.append(".value = '");
@@ -1548,7 +1548,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onChangeActionForwardOnFail.length() > 0){
                 onChangeContent.append("document.");
-                onChangeContent.append(actionForm);
+                onChangeContent.append(actionFormName);
                 onChangeContent.append(".");
                 onChangeContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                 onChangeContent.append(".value = '");
@@ -1558,7 +1558,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
             if(onChangeActionUpdateViews.length() > 0){
                 onChangeContent.append("document.");
-                onChangeContent.append(actionForm);
+                onChangeContent.append(actionFormName);
                 onChangeContent.append(".");
                 onChangeContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                 onChangeContent.append(".value = '");
@@ -1567,13 +1567,13 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
 
             onChangeContent.append("document.");
-            onChangeContent.append(actionForm);
+            onChangeContent.append(actionFormName);
             onChangeContent.append(".");
             onChangeContent.append(AttributeConstants.ACTION_KEY);
             onChangeContent.append(".value = '");
             onChangeContent.append(onChangeAction);
             onChangeContent.append("'; submitForm(document.");
-            onChangeContent.append(actionForm);
+            onChangeContent.append(actionFormName);
             onChangeContent.append(");");
             
             onChange = onChangeContent.toString();
@@ -1592,7 +1592,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
             
             onKeyUpContent.append("document.");
-            onKeyUpContent.append(actionForm);
+            onKeyUpContent.append(actionFormName);
             onKeyUpContent.append(".");
             
             if(isForSearch)
@@ -1606,7 +1606,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyUpActionValidateProperties.length() > 0){
                 onKeyUpContent.append(" document.");
-                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(actionFormName);
                 onKeyUpContent.append(".");
                 onKeyUpContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onKeyUpContent.append(".value = '");
@@ -1616,7 +1616,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
             if(onKeyUpActionForward.length() > 0){
                 onKeyUpContent.append("document.");
-                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(actionFormName);
                 onKeyUpContent.append(".");
                 onKeyUpContent.append(AttributeConstants.FORWARD_KEY);
                 onKeyUpContent.append(".value = '");
@@ -1626,7 +1626,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyUpActionForwardOnFail.length() > 0){
                 onKeyUpContent.append("document.");
-                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(actionFormName);
                 onKeyUpContent.append(".");
                 onKeyUpContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                 onKeyUpContent.append(".value = '");
@@ -1636,7 +1636,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
             if(onKeyUpActionUpdateViews.length() > 0){
                 onKeyUpContent.append("document.");
-                onKeyUpContent.append(actionForm);
+                onKeyUpContent.append(actionFormName);
                 onKeyUpContent.append(".");
                 onKeyUpContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                 onKeyUpContent.append(".value = '");
@@ -1645,13 +1645,13 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
 
             onKeyUpContent.append("document.");
-            onKeyUpContent.append(actionForm);
+            onKeyUpContent.append(actionFormName);
             onKeyUpContent.append(".");
             onKeyUpContent.append(AttributeConstants.ACTION_KEY);
             onKeyUpContent.append(".value = '");
             onKeyUpContent.append(onKeyUpAction);
             onKeyUpContent.append("'; submitForm(document.");
-            onKeyUpContent.append(actionForm);
+            onKeyUpContent.append(actionFormName);
             onKeyUpContent.append(");");
             
             onKeyUp = onKeyUpContent.toString();
@@ -1670,7 +1670,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
             
             onKeyDownContent.append("document.");
-            onKeyDownContent.append(actionForm);
+            onKeyDownContent.append(actionFormName);
             onKeyDownContent.append(".");
             
             if(isForSearch)
@@ -1684,7 +1684,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyDownActionValidateProperties.length() > 0){
                 onKeyDownContent.append(" document.");
-                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(actionFormName);
                 onKeyDownContent.append(".");
                 onKeyDownContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onKeyDownContent.append(".value = '");
@@ -1694,7 +1694,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyDownActionForward.length() > 0){
                 onKeyDownContent.append("document.");
-                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(actionFormName);
                 onKeyDownContent.append(".");
                 onKeyDownContent.append(AttributeConstants.FORWARD_KEY);
                 onKeyDownContent.append(".value = '");
@@ -1704,7 +1704,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyDownActionForwardOnFail.length() > 0){
                 onKeyDownContent.append("document.");
-                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(actionFormName);
                 onKeyDownContent.append(".");
                 onKeyDownContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                 onKeyDownContent.append(".value = '");
@@ -1714,7 +1714,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
             if(onKeyDownActionUpdateViews.length() > 0){
                 onKeyDownContent.append("document.");
-                onKeyDownContent.append(actionForm);
+                onKeyDownContent.append(actionFormName);
                 onKeyDownContent.append(".");
                 onKeyDownContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                 onKeyDownContent.append(".value = '");
@@ -1723,13 +1723,13 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
 
             onKeyDownContent.append("document.");
-            onKeyDownContent.append(actionForm);
+            onKeyDownContent.append(actionFormName);
             onKeyDownContent.append(".");
             onKeyDownContent.append(AttributeConstants.ACTION_KEY);
             onKeyDownContent.append(".value = '");
             onKeyDownContent.append(onKeyDownAction);
             onKeyDownContent.append("'; submitForm(document.");
-            onKeyDownContent.append(actionForm);
+            onKeyDownContent.append(actionFormName);
             onKeyDownContent.append(");");
             
             onKeyDown = onKeyDownContent.toString();
@@ -1748,7 +1748,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
             
             onKeyPressContent.append("document.");
-            onKeyPressContent.append(actionForm);
+            onKeyPressContent.append(actionFormName);
             onKeyPressContent.append(".");
             
             if(isForSearch)
@@ -1762,7 +1762,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyPressActionValidateProperties.length() > 0){
                 onKeyPressContent.append(" document.");
-                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(actionFormName);
                 onKeyPressContent.append(".");
                 onKeyPressContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                 onKeyPressContent.append(".value = '");
@@ -1772,7 +1772,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
             if(onKeyPressActionForward.length() > 0){
                 onKeyPressContent.append("document.");
-                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(actionFormName);
                 onKeyPressContent.append(".");
                 onKeyPressContent.append(AttributeConstants.FORWARD_KEY);
                 onKeyPressContent.append(".value = '");
@@ -1782,7 +1782,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             
             if(onKeyPressActionForwardOnFail.length() > 0){
                 onKeyPressContent.append("document.");
-                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(actionFormName);
                 onKeyPressContent.append(".");
                 onKeyPressContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                 onKeyPressContent.append(".value = '");
@@ -1792,7 +1792,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 
             if(onKeyPressActionUpdateViews.length() > 0){
                 onKeyPressContent.append("document.");
-                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(actionFormName);
                 onKeyPressContent.append(".");
                 onKeyPressContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                 onKeyPressContent.append(".value = '");
@@ -1812,13 +1812,13 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                 }
                 else{
                     onKeyPressContent.append("document.");
-                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(actionFormName);
                     onKeyPressContent.append(".");
                     onKeyPressContent.append(AttributeConstants.ACTION_KEY);
                     onKeyPressContent.append(".value = '");
                     onKeyPressContent.append(onKeyPressAction);
                     onKeyPressContent.append("'; submitForm(document.");
-                    onKeyPressContent.append(actionForm);
+                    onKeyPressContent.append(actionFormName);
                     onKeyPressContent.append(");");
                     
                     onKeyPress = onKeyPressContent.toString();
@@ -1826,13 +1826,13 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
             }
             else{
                 onKeyPressContent.append("document.");
-                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(actionFormName);
                 onKeyPressContent.append(".");
                 onKeyPressContent.append(AttributeConstants.ACTION_KEY);
                 onKeyPressContent.append(".value = '");
                 onKeyPressContent.append(onKeyPressAction);
                 onKeyPressContent.append("'; submitForm(document.");
-                onKeyPressContent.append(actionForm);
+                onKeyPressContent.append(actionFormName);
                 onKeyPressContent.append(");");
                 
                 onKeyPress = onKeyPressContent.toString();
