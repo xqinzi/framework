@@ -434,10 +434,10 @@ public class SectionTag extends BaseActionFormElementTag{
         
         super.initialize();
 
-        String actionForm = getActionForm();
+        String actionFormName = getActionFormName();
     
         if(onSelectAction.length() > 0){
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onSelectContent = new StringBuilder();
     
                 if(onSelect.length() > 0){
@@ -450,7 +450,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 }
                 
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 
                 SearchPropertiesGroupTag searchPropertiesTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
@@ -466,7 +466,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 
                 if(onSelectActionValidateProperties.length() > 0){
                     onSelectContent.append(" document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onSelectContent.append(".value = '");
@@ -476,7 +476,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 
                 if(onSelectActionForward.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_KEY);
                     onSelectContent.append(".value = '");
@@ -486,7 +486,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 
                 if(onSelectActionForwardOnFail.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onSelectContent.append(".value = '");
@@ -496,7 +496,7 @@ public class SectionTag extends BaseActionFormElementTag{
     
                 if(onSelectActionUpdateViews.length() > 0){
                     onSelectContent.append("document.");
-                    onSelectContent.append(actionForm);
+                    onSelectContent.append(actionFormName);
                     onSelectContent.append(".");
                     onSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onSelectContent.append(".value = '");
@@ -505,13 +505,13 @@ public class SectionTag extends BaseActionFormElementTag{
                 }
     
                 onSelectContent.append("document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(".");
                 onSelectContent.append(AttributeConstants.ACTION_KEY);
                 onSelectContent.append(".value = '");
                 onSelectContent.append(onSelectAction);
                 onSelectContent.append("'; submitForm(document.");
-                onSelectContent.append(actionForm);
+                onSelectContent.append(actionFormName);
                 onSelectContent.append(");");
                 
                 onSelect = onSelectContent.toString();
@@ -519,7 +519,7 @@ public class SectionTag extends BaseActionFormElementTag{
         }
         
         if(onUnSelectAction.length() > 0){
-            if(actionForm.length() > 0){
+            if(actionFormName.length() > 0){
                 StringBuilder onUnSelectContent = new StringBuilder();
     
                 if(onUnSelect.length() > 0){
@@ -532,7 +532,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 }
                 
                 onUnSelectContent.append("document.");
-                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(actionFormName);
                 onUnSelectContent.append(".");
                 
                 SearchPropertiesGroupTag searchPropertiesTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
@@ -548,7 +548,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 
                 if(onUnSelectActionValidateProperties.length() > 0){
                     onUnSelectContent.append(" document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                     onUnSelectContent.append(".value = '");
@@ -558,7 +558,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 
                 if(onUnSelectActionForward.length() > 0){
                     onUnSelectContent.append("document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.FORWARD_KEY);
                     onUnSelectContent.append(".value = '");
@@ -568,7 +568,7 @@ public class SectionTag extends BaseActionFormElementTag{
                 
                 if(onUnSelectActionForwardOnFail.length() > 0){
                     onUnSelectContent.append("document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onUnSelectContent.append(".value = '");
@@ -578,7 +578,7 @@ public class SectionTag extends BaseActionFormElementTag{
     
                 if(onUnSelectActionUpdateViews.length() > 0){
                     onUnSelectContent.append("document.");
-                    onUnSelectContent.append(actionForm);
+                    onUnSelectContent.append(actionFormName);
                     onUnSelectContent.append(".");
                     onUnSelectContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                     onUnSelectContent.append(".value = '");
@@ -587,13 +587,13 @@ public class SectionTag extends BaseActionFormElementTag{
                 }
     
                 onUnSelectContent.append("document.");
-                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(actionFormName);
                 onUnSelectContent.append(".");
                 onUnSelectContent.append(AttributeConstants.ACTION_KEY);
                 onUnSelectContent.append(".value = '");
                 onUnSelectContent.append(onUnSelectAction);
                 onUnSelectContent.append("'; submitForm(document.");
-                onUnSelectContent.append(actionForm);
+                onUnSelectContent.append(actionFormName);
                 onUnSelectContent.append(");");
                 
                 onUnSelect = onUnSelectContent.toString();
