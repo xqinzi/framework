@@ -1,5 +1,6 @@
 package br.com.concepting.framework.web.taglibs;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.web.taglibs.helpers.DynamicGridColumn;
 import br.com.concepting.framework.web.types.ScopeType;
@@ -12,7 +13,7 @@ import java.util.List;
  * 
  * @author fvilarinho
  * @since 3.0
- */
+ */ 
 public class DynamicGridPropertyTag extends GridPropertyTag{
     private String    columnsData      = "";
     private ScopeType columnsDataScope = null;
@@ -71,20 +72,20 @@ public class DynamicGridPropertyTag extends GridPropertyTag{
     protected void initialize() throws Throwable{
 		super.initialize();
 		
-        String actionForm = getActionForm();
+        String actionFormName = getActionFormName();
 
-        if(columnsData.length() > 0 && actionForm.length() > 0){
+        if(columnsData.length() > 0 && actionFormName.length() > 0){
             StringBuilder propertyId = new StringBuilder();
             
             if(columnsDataScope == ScopeType.FORM || columnsDataScope == ScopeType.MODEL){
-                propertyId.append(actionForm);
+                propertyId.append(actionFormName);
                 propertyId.append(".");
                 
                 if(columnsDataScope == ScopeType.MODEL){
                     if(isForSearch())
-                        propertyId.append("searchModel");
+                        propertyId.append(AttributeConstants.SEARCH_MODEL_KEY);
                     else
-                        propertyId.append("model");
+                        propertyId.append(AttributeConstants.MODEL_KEY);
                     
                     propertyId.append(".");
                 }
