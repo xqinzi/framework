@@ -15,7 +15,7 @@ import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
  * 
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
     private String             action             = "";
 	private String             forward            = "";
@@ -330,7 +330,7 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 	 * @see br.com.concepting.framework.web.taglibs.BaseTag#renderBody()
 	 */
 	protected void renderBody() throws Throwable{
-		print("<table class=\"");
+		print("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"");
 		print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
 		println("\">");
 		
