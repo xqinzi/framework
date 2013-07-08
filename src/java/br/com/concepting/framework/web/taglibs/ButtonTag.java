@@ -455,13 +455,13 @@ public class ButtonTag extends BaseActionFormElementTag{
 			setName(buffer.toString());
 		}
 
-		String                   actionForm          = getActionForm();
+		String                   actionFormName      = getActionFormName();
 		GridPropertyTag          gridTag             = (GridPropertyTag)findAncestorWithClass(this, GridPropertyTag.class);
 		SearchPropertiesGroupTag searchPropertiesTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
 		StringBuilder            onClickContent      = null;
 		String                   onClick             = getOnClick();
 
-		if(actionForm.length() > 0){
+		if(actionFormName.length() > 0){
             onClickContent = new StringBuilder();
             onClickContent.append(onClick);
             
@@ -470,7 +470,7 @@ public class ButtonTag extends BaseActionFormElementTag{
             
 		    if(action.length() > 0){
      			onClickContent.append("document.");
-     			onClickContent.append(actionForm);
+     			onClickContent.append(actionFormName);
      			onClickContent.append(".");
      			
      			if(searchPropertiesTag != null)
@@ -484,7 +484,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      			
      			if(validateProperties.length() > 0){
      				onClickContent.append(" document.");
-     				onClickContent.append(actionForm);
+     				onClickContent.append(actionFormName);
      				onClickContent.append(".");
      				onClickContent.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
      				onClickContent.append(".value = '");
@@ -493,7 +493,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      			}
      			
      			onClickContent.append(" document.");
-     			onClickContent.append(actionForm);
+     			onClickContent.append(actionFormName);
                 onClickContent.append(".");
                 onClickContent.append(AttributeConstants.ACTION_KEY);
      			onClickContent.append(".value = '");
@@ -502,7 +502,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      			
      			if(forward.length() > 0){
      				onClickContent.append(" document.");
-     				onClickContent.append(actionForm);
+     				onClickContent.append(actionFormName);
      				onClickContent.append(".");
      				onClickContent.append(AttributeConstants.FORWARD_KEY);
      				onClickContent.append(".value = '");
@@ -512,7 +512,7 @@ public class ButtonTag extends BaseActionFormElementTag{
      			
      			if(forwardOnFail.length() > 0){
      				onClickContent.append(" document.");
-     				onClickContent.append(actionForm);
+     				onClickContent.append(actionFormName);
                     onClickContent.append(".");
                     onClickContent.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
                     onClickContent.append(".value = '");
@@ -528,13 +528,13 @@ public class ButtonTag extends BaseActionFormElementTag{
                     onClickContent.append("', '");
                     onClickContent.append(updateViews);
                     onClickContent.append("', '");
-                    onClickContent.append(actionForm);
+                    onClickContent.append(actionFormName);
                     onClickContent.append("');");
                 }
                 else{
                     if(updateViews.length() > 0){
                         onClickContent.append(" document.");
-                        onClickContent.append(actionForm);
+                        onClickContent.append(actionFormName);
                         onClickContent.append(".");
                         onClickContent.append(AttributeConstants.UPDATE_VIEWS_KEY);
                         onClickContent.append(".value = '");
@@ -543,7 +543,7 @@ public class ButtonTag extends BaseActionFormElementTag{
                     }
 
                     onClickContent.append(" submitForm(document.");
-         			onClickContent.append(actionForm);
+         			onClickContent.append(actionFormName);
          			onClickContent.append(");");
                 }
                 
