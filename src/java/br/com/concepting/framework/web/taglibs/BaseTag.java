@@ -7,6 +7,7 @@ import java.util.Locale;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
+import javax.servlet.jsp.tagext.Tag;
 
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.resource.I18nResourceLoader;
@@ -210,7 +211,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 		StringBuilder componentId = new StringBuilder();
 		String        buffer      = getClass().getSimpleName();
 
-		buffer = StringUtil.replaceLast(buffer, "Tag", "");
+		buffer = StringUtil.replaceLast(buffer, Tag.class.getSimpleName(), "");
 
 		componentId.append(buffer.substring(0, 1).toLowerCase());
 		componentId.append(buffer.substring(1));
@@ -591,7 +592,7 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 	 * @throws Throwable
 	 */
 	protected PropertiesResource getI18nResource(String resourceId) throws Throwable{
-		return getI18nResource("", resourceId);
+		return getI18nResource(resourceDir, resourceId);
 	}
 
 	/**
