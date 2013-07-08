@@ -16,9 +16,9 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
      * @see br.com.concepting.framework.web.taglibs.DownloadBoxPropertyTag#renderBody()
      */
     protected void renderBody() throws Throwable{
-        String        actionForm = getActionForm();
-        String        name       = getName();
-        StringBuilder tagId      = new StringBuilder();
+        String        actionFormName = getActionFormName();
+        String        name           = getName();
+        StringBuilder tagId          = new StringBuilder();
         
         tagId.append(name);
         tagId.append(".");
@@ -65,17 +65,17 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         
         onChange.append("showLoadingBox(");
         onChange.append("document.");
-        onChange.append(actionForm);
+        onChange.append(actionFormName);
         onChange.append("); document.");
-        onChange.append(actionForm);
+        onChange.append(actionFormName);
         onChange.append(".enctype = 'multipart/form-data'; document.");
-        onChange.append(actionForm);
+        onChange.append(actionFormName);
         onChange.append(".");
         onChange.append(AttributeConstants.ACTION_KEY);
         onChange.append(".value = '");
         onChange.append(ActionType.UPLOAD.getMethod());
         onChange.append("'; document.");
-        onChange.append(actionForm);
+        onChange.append(actionFormName);
         onChange.append(".submit();");
         
         tagId.delete(0, tagId.length());
