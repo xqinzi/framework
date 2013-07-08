@@ -22,16 +22,37 @@ import br.com.concepting.framework.web.types.VisibilityType;
  *
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class PageTag extends HtmlTag{
     private   String           title            = "";
     private   String           encoding         = "";
 	private   String           language         = "";
+	private   String           resourceDir      = "";
 	private   String           resourceId       = "";
     protected SystemController systemController = null;
     protected PrintWriter      out              = null;
+    
+    /**
+     * Retorna o diretório do arquivo de propriedades a ser utilizado pelos componentes 
+     * da página.
+     * 
+     * @return String contendo o diretório do arquivo de propriedades.
+     */
+	public String getResourceDir(){
+        return resourceDir;
+    }
 
-	/**
+    /**
+     * Define o diretório do arquivo de propriedades a ser utilizado pelos componentes 
+     * da página.
+     * 
+     * @param resourceDir String contendo o diretório do arquivo de propriedades.
+     */
+    public void setResourceDir(String resourceDir){
+        this.resourceDir = resourceDir;
+    }
+
+    /**
 	 * Retorna o título da página.
 	 *
 	 * @return String contendo o título da página.
