@@ -22,14 +22,29 @@ public class AccordionTag extends BaseActionFormElementTag{
     private List<SectionTag> sectionsTags             = null;
     private Boolean          multipleSelection        = false;
     
+    /**
+     * Indica se será usado seleção múltipla.
+     * 
+     * @return True/False.
+     */
     public Boolean hasMultipleSelection(){
         return multipleSelection;
     }
 
+    /**
+     * Indica se será usado seleção múltipla.
+     * 
+     * @return True/False.
+     */
     public Boolean getMultipleSelection(){
         return hasMultipleSelection();
     }
 
+    /**
+     * Define se será usado seleção múltipla.
+     * 
+     * @param multipleSelection True/False.
+     */
     public void setMultipleSelection(Boolean multipleSelection){
         this.multipleSelection = multipleSelection;
     }
@@ -189,20 +204,6 @@ public class AccordionTag extends BaseActionFormElementTag{
         println("</tr>");
         println("</table>");
         
-        StringBuilder hasMultipleSelectionTagName = new StringBuilder();
-        
-        hasMultipleSelectionTagName.append(getName());
-        hasMultipleSelectionTagName.append(".");
-        hasMultipleSelectionTagName.append(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY);
-        
-        HiddenPropertyTag hasMultipleSelectionTag = new HiddenPropertyTag();
-        
-        hasMultipleSelectionTag.setPageContext(pageContext);
-        hasMultipleSelectionTag.setName(hasMultipleSelectionTagName.toString());
-        hasMultipleSelectionTag.setValue(hasMultipleSelection());
-        hasMultipleSelectionTag.doStartTag();
-        hasMultipleSelectionTag.doEndTag();
-        
         StringBuilder currentSectionTagName = new StringBuilder();
         
         currentSectionTagName.append(getName());
@@ -331,7 +332,9 @@ public class AccordionTag extends BaseActionFormElementTag{
         print(" onClick=\"showHideAccordionSection('");
         print(getName());
         print("', this, ");
-        print(index == sectionsTags.size() - 1);
+        print(index == (sectionsTags.size() - 1));
+        print(", ");
+        print(hasMultipleSelection());
         
         String onSelect   = StringUtil.trim(sectionTag.getOnSelect());
         String onUnSelect = StringUtil.trim(sectionTag.getOnUnSelect());
