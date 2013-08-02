@@ -17,7 +17,6 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @since 1.0
  */
 public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
-    private Boolean              multipleSelection   = null;
     private String               data                = "";
 	private String               dataScope           = "";
 	private List                 dataValues          = null;
@@ -25,33 +24,6 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 	private Integer              dataEndIndex        = 0;
 	private List<OptionStateTag> optionStates        = null;
 	private ExpressionProcessor  expressionProcessor = null;
-     
-	/**
-	 * Indica se o componente terá múltipla seleção.
-	 * 
-	 * @return True/False.
-	 */
-    public Boolean hasMultipleSelection(){
-        return multipleSelection;
-    }
-
-    /**
-     * Indica se o componente terá múltipla seleção.
-     * 
-     * @return True/False.
-     */
-    public Boolean getMultipleSelection(){
-        return hasMultipleSelection();
-    }
-
-    /**
-     * Define se o componente terá múltipla seleção.
-     * 
-     * @param multipleSelection True/False.
-     */
-    public void setMultipleSelection(Boolean multipleSelection){
-        this.multipleSelection = multipleSelection;
-    }
 
     /**
      * Retorna o índice inicial dos dados.
@@ -299,8 +271,8 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 		
         PropertyInfo propertyInfo = getPropertyInfo();
 
-        if(multipleSelection == null)
-            multipleSelection = (propertyInfo != null && propertyInfo.isCollection());
+        if(hasMultipleSelection() == null)
+            setMultipleSelection(propertyInfo != null && propertyInfo.isCollection());
 		
         if(dataValues == null || dataValues.size() == 0){
     		if(data.length() > 0 && dataScope != null){
@@ -352,6 +324,5 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
 		setDataValues(null);
         setDataIsEmptyMessage("");
 		setOptionStates(null);
-		setMultipleSelection(null);
 	}
 }
