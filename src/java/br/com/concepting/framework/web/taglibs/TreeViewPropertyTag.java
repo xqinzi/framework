@@ -646,7 +646,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
             closedNodeIconStyleClass = TaglibConstants.DEFAULT_CLOSED_NODE_ICON_STYLE_CLASS;
         
         setLabelAlignmentType(AlignmentType.LEFT);
-
+        
         super.initialize();
         
         String actionFormName = getActionFormName();
@@ -1338,7 +1338,8 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 					print(nodeLabelStyleClass);
 					print("', '");
 					print(nodeLabelSelectedStyleClass);
-					print("'");
+					print("', ");
+					print(hasMultipleSelection());
 
 					if(onSelectContent.length() > 0 || onUnSelectContent.length() > 0){
 						print(", ");
