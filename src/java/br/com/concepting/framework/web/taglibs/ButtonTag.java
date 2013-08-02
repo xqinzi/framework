@@ -320,6 +320,9 @@ public class ButtonTag extends BaseActionFormElementTag{
 		}
 	}
 	
+	/**
+	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#renderLabelBody()
+	 */
 	protected void renderLabelBody() throws Throwable{
 	    println(getLabel());
 	}
