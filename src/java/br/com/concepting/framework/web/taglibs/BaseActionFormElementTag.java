@@ -33,6 +33,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	private   String                      labelVerticalAlignment         = "";
 	private   String                      labelPosition                  = "";
 	private   Boolean                     showLabel                      = true;
+    private   Boolean                     multipleSelection              = null;
 	private   String                      actionFormName                 = "";
     private   ActionFormTag               actionFormTag                  = null;
 	private   Boolean                     hasPermission                  = true;
@@ -59,7 +60,34 @@ public abstract class BaseActionFormElementTag extends BaseTag{
     private   String                      onMouseOutActionUpdateViews    = "";
     protected ActionFormMessageController actionFormMessageController    = null;
     
-    /**
+   /**
+    * Indica se o componente terá múltipla seleção.
+    * 
+    * @return True/False.
+    */
+   public Boolean hasMultipleSelection(){
+       return multipleSelection;
+   }
+
+   /**
+    * Indica se o componente terá múltipla seleção.
+    * 
+    * @return True/False.
+    */
+   public Boolean getMultipleSelection(){
+       return hasMultipleSelection();
+   }
+
+   /**
+    * Define se o componente terá múltipla seleção.
+    * 
+    * @param multipleSelection True/False.
+    */
+   public void setMultipleSelection(Boolean multipleSelection){
+       this.multipleSelection = multipleSelection;
+   }
+
+   /**
      * Retorna o identificador das views a serem atualizadas após a execução a ação de tirar o foco.
      * 
      * @return String contendo o identificador das views.
@@ -1379,6 +1407,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		setActionFormName("");
 		setActionFormTag(null);
 		setHasPermission(true);
+		setMultipleSelection(null);
 		setRequestInfo(null);
 		setOnBlurAction("");
 		setOnBlurActionForward("");
