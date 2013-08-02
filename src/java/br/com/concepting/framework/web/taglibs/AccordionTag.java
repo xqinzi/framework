@@ -20,35 +20,7 @@ public class AccordionTag extends BaseActionFormElementTag{
     private String           sectionContentStyleClass = "";
     private String           sectionContentStyle      = "";
     private List<SectionTag> sectionsTags             = null;
-    private Boolean          multipleSelection        = false;
     
-    /**
-     * Indica se será usado seleção múltipla.
-     * 
-     * @return True/False.
-     */
-    public Boolean hasMultipleSelection(){
-        return multipleSelection;
-    }
-
-    /**
-     * Indica se será usado seleção múltipla.
-     * 
-     * @return True/False.
-     */
-    public Boolean getMultipleSelection(){
-        return hasMultipleSelection();
-    }
-
-    /**
-     * Define se será usado seleção múltipla.
-     * 
-     * @param multipleSelection True/False.
-     */
-    public void setMultipleSelection(Boolean multipleSelection){
-        this.multipleSelection = multipleSelection;
-    }
-
     /**
      * Retorna o identificador do estilo CSS que define o cabeçalho da seção.
      * 
@@ -224,7 +196,7 @@ public class AccordionTag extends BaseActionFormElementTag{
             currentSectionTag.setValue(getRequestInfo().getCurrentSection());
             currentSectionTag.setStyle("display: NONE;");
             currentSectionTag.setDataValues(sections);
-            currentSectionTag.setMultipleSelection(multipleSelection);
+            currentSectionTag.setMultipleSelection(hasMultipleSelection());
             currentSectionTag.setShowFirstOption(false);
             currentSectionTag.setShowLabel(false);
             currentSectionTag.doStartTag();
@@ -486,6 +458,5 @@ public class AccordionTag extends BaseActionFormElementTag{
         setSectionContentStyleClass("");
         setSectionContentStyle("");
         setSectionsTags(null);
-        setMultipleSelection(false);
     }
 }
