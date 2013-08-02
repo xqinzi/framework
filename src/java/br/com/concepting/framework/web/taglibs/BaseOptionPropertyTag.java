@@ -19,9 +19,9 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public abstract class BaseOptionPropertyTag extends BaseOptionsPropertyTag{
-	private Boolean selected          = false;
-	private Object  optionValue       = null;
-	private String  optionIndex       = "";
+	private Boolean selected    = false;
+	private Object  optionValue = null;
+	private String  optionIndex = "";
 
     /**
 	 * Retorna a instância contendo o valor da opção.
