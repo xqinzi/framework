@@ -1066,7 +1066,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	protected Boolean isForSearch(){
 		searchPropertiesGroupTag = (SearchPropertiesGroupTag)findAncestorWithClass(this, SearchPropertiesGroupTag.class);
 		
-		return (searchPropertiesGroupTag != null || getName().indexOf("search.") >= 0);
+		return (searchPropertiesGroupTag != null || getName().startsWith(AttributeConstants.SEARCH_KEY));
 	}
 	
 	/**
