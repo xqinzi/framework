@@ -28,9 +28,9 @@ public class CheckPropertyTag extends BaseOptionPropertyTag{
         if(propertyInfo != null && propertyInfo.isBoolean()){
             StringBuilder onClickContent = new StringBuilder();
             
-            onClickContent.append("document.getElementById('");
+            onClickContent.append("setObject('");
             onClickContent.append(tagId);
-            onClickContent.append("').value = this.checked;");
+            onClickContent.append("', this.checked);");
         
             String onClick = getOnClick();
             
