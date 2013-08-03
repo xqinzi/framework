@@ -20,7 +20,6 @@ public class RequestInfo{
     private Integer         dataEndIndex         = 0;
     private String          editableData         = "";
     private ScopeType       editableDataScope    = null;
-    private Boolean         hasMultipleSelection = false;
     private Boolean         isEditable           = false;
     private Integer         itemsPerPage         = 0;
     private String          label                = "";
@@ -374,32 +373,5 @@ public class RequestInfo{
      */
     public void setCurrentNode(String currentNode){
         this.currentNode = currentNode;
-    }
-
-    /**
-     * Indica se o componente aceita múltipla seleção.
-     * 
-     * @return True/False.
-     */
-    public Boolean hasMultipleSelection(){
-        return hasMultipleSelection;
-    }
-
-    /**
-     * Indica se o componente aceita múltipla seleção.
-     * 
-     * @return True/False.
-     */
-    public Boolean getHasMultipleSelection(){
-        return hasMultipleSelection();
-    }
-
-    /**
-     * Define se o componente aceita múltipla seleção.
-     * 
-     * @param hasMultipleSelection True/False.
-     */
-    public void setHasMultipleSelection(Boolean hasMultipleSelection){
-        this.hasMultipleSelection = hasMultipleSelection;
     }
 }
