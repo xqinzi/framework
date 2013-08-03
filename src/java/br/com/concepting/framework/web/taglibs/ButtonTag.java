@@ -248,7 +248,8 @@ public class ButtonTag extends BaseActionFormElementTag{
 	}
 
 	/**
-	 * Retorna uma string delimitada contendo as propriedades a serem validadas.
+	 * Retorna uma string delimitada contendo as propriedades a serem validadas no
+	 * processamento da ação.
 	 * 
 	 * @return String contendo as propriedades a serem validadas.
 	 */
@@ -257,7 +258,8 @@ public class ButtonTag extends BaseActionFormElementTag{
 	}
 
 	/**
-	 * Defime uma string delimitada contendo as propriedades a serem validadas.
+	 * Defime uma string delimitada contendo as propriedades a serem validadas no
+	 * processamento da ação.
 	 * 
 	 * @param validateProperties String contendo as propriedades a serem validadas.
 	 */
