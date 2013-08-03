@@ -7,6 +7,7 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.DisplayType;
 
 /**
  * Classe que define o componente visual para um conjunto de seções.
@@ -194,14 +195,14 @@ public class AccordionTag extends BaseActionFormElementTag{
             currentSectionTag.setPageContext(pageContext);
             currentSectionTag.setName(currentSectionTagName.toString());
             currentSectionTag.setValue(getRequestInfo().getCurrentSection());
-            currentSectionTag.setStyle("display: NONE;");
+            currentSectionTag.setStyle("display: ".concat(DisplayType.NONE.toString()).concat(";"));
             currentSectionTag.setDataValues(sections);
             currentSectionTag.setMultipleSelection(hasMultipleSelection());
             currentSectionTag.setShowFirstOption(false);
             currentSectionTag.setShowLabel(false);
             currentSectionTag.doStartTag();
             currentSectionTag.doEndTag();
-        }
+        } 
         else{
             HiddenPropertyTag currentSectionTag = new HiddenPropertyTag();
             
@@ -396,8 +397,11 @@ public class AccordionTag extends BaseActionFormElementTag{
                     print(";");
             }
             
-            if(!isCurrentSection && !sectionTag.focusWhen())
-                print(" display: NONE;");
+            if(!isCurrentSection && !sectionTag.focusWhen()){
+                print(" display: ");
+                print(DisplayType.NONE);
+                print(";");
+            }
             
             if(style.length() > 0){
                 if(!isCurrentSection)
