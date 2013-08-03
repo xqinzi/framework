@@ -226,12 +226,14 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
         print("=");
         print(getActionFormName());
         print(".");
-        print((isForSearch() ? "searchModel" : "model"));
+        print((isForSearch() ? AttributeConstants.SEARCH_MODEL_KEY : AttributeConstants.MODEL_KEY));
         print(".");
         print(getName());
-        println("', 'downloadWindow');\"></div>");
+        print("', '_");
+        print((int)(Math.random() * 9999));
+        print("');\"></div>");
     }
-
+ 
     /**
      * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#renderBody()
      */
