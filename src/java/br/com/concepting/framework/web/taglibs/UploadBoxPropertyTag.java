@@ -96,7 +96,7 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         print(onChange);
         println("\">");
 
-        print("<table class=\"");
+        print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
         print(TaglibConstants.DEFAULT_UPLOAD_BOX_STYLE_CLASS);
         println("\">");
         println("<tr>");
