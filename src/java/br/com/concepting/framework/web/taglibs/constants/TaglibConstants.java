@@ -42,7 +42,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador da caixa de autocomplete.
      */
-    public static final String AUTO_COMPLETE_BOX_KEY = "autoComplete";
+    public static final String AUTO_COMPLETE_BOX_KEY = "autoCompleteBox";
 
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual calendar (calendário).
