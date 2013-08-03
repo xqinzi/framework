@@ -10,6 +10,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.helpers.RequestInfo;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.DisplayType;
 
 /** 
  * Classe que define o componente visual para um conjunto de guias de navegação.
@@ -337,8 +338,11 @@ public class GuidesTag extends BaseActionFormElementTag{
 			print(AttributeConstants.GUIDE_CONTENT_KEY);
 			print("\"");
 
-			if(!guideName.equals(currentGuide))
-				print(" style=\"display: NONE;\"");
+			if(!guideName.equals(currentGuide)){
+				print(" style=\"display: ");
+				print(DisplayType.NONE);
+				print(";\"");
+			}
 
 			println(">");
 			
