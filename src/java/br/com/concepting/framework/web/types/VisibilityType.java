@@ -8,7 +8,7 @@ package br.com.concepting.framework.web.types;
  */
 public enum VisibilityType{
     /**
-     * Constante que define que o objeto/componente está escondido (não visível).
+     * Constante que define que o objeto/componente está escondido.
      */
     HIDDEN,
     
