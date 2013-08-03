@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import javax.servlet.jsp.tagext.BodyContent;
 
+import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.action.types.ActionType;
@@ -367,7 +368,8 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
                     if(validatePropertiesContent.length() > 0)
                         validatePropertiesContent.append(",");
  
-                    validatePropertiesContent.append("search.");
+                    validatePropertiesContent.append(AttributeConstants.SEARCH_KEY);
+                    validatePropertiesContent.append(".");
                     validatePropertiesContent.append(validatePropertyId);
                 }
             }
