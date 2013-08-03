@@ -222,7 +222,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         out.print("<div id=\"");
         out.print(getBeanName());
         out.print(".");
-        out.print(AttributeConstants.LOADING_BOX_KEY);
+        out.print(TaglibConstants.LOADING_BOX_KEY);
         out.print("\" class=\"");
         out.print(TaglibConstants.DEFAULT_LOADING_BOX_STYLE_CLASS);
         out.print("\" style=\"visibility: ");
@@ -230,12 +230,12 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         out.println(";\">");
         
         PropertiesResource resource = getDefaultI18nResource();
-        String             message  = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_BOX_INFO_KEY));
+        String             message  = StringUtil.trim(resource.getProperty(TaglibConstants.LOADING_BOX_INFO_KEY));
  
         out.print("<span id=\"");
         out.print(getBeanName());
         out.print(".");
-        out.print(AttributeConstants.LOADING_BOX_INFO_KEY);
+        out.print(TaglibConstants.LOADING_BOX_INFO_KEY);
         out.print("\" class=\"");
         out.print(TaglibConstants.DEFAULT_LOADING_BOX_INFO_STYLE_CLASS);
         out.println("\">");
@@ -264,12 +264,12 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         
         out.println("</span>");
 
-        message = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_BOX_ERROR_KEY));
+        message = StringUtil.trim(resource.getProperty(TaglibConstants.LOADING_BOX_ERROR_KEY));
         
         out.print("<span id=\"");
         out.print(getBeanName());
         out.print(".");
-        out.print(AttributeConstants.LOADING_BOX_ERROR_KEY);
+        out.print(TaglibConstants.LOADING_BOX_ERROR_KEY);
         out.println("\" class=\"");
         out.print(TaglibConstants.DEFAULT_LOADING_BOX_TEXT_STYLE_CLASS);
         out.print("\" style=\"display: ");
