@@ -6,6 +6,7 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.resource.SystemResource;
 import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
+import br.com.concepting.framework.web.action.types.ActionType;
 
 /**
  * Classe que define o componente visual skinSelector (Seletor de tema).
@@ -24,7 +25,7 @@ public class SkinSelectorTag extends ListPropertyTag{
         setName(AttributeConstants.CURRENT_SKIN_KEY);
         setValue(currentSkin);
         setShowFirstOption(false);
-        setOnChangeAction("changeCurrentSkin");
+        setOnChangeActionType(ActionType.CHANGE_CURRENT_SKIN);
         
         SystemResourceLoader systemResourceLoader = new SystemResourceLoader();
         SystemResource       systemResource       = systemResourceLoader.getDefault();
