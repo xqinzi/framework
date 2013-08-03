@@ -19,6 +19,7 @@ import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.form.util.ActionFormMessageUtil;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.DisplayType;
 
 /**
  * Classe que define o componente visual para uma caixa de mensagem.
@@ -43,7 +44,7 @@ public class MessageBoxTag extends DialogBoxTag{
             return ActionFormMessageType.valueOf(type);
         }
         catch(Throwable e){
-            return null;
+            return ActionFormMessageType.INFO;
         }
     }
 
@@ -56,7 +57,7 @@ public class MessageBoxTag extends DialogBoxTag{
         if(type != null)
             this.type = type.toString();
         else
-            this.type = "";
+            this.type = ActionFormMessageType.INFO.toString();
     }
   
     /**
@@ -173,7 +174,7 @@ public class MessageBoxTag extends DialogBoxTag{
         if(getName().length() == 0){
             propertyId = new StringBuilder();
             propertyId.append(getTagId());
-            propertyId.append((int)(Math.random() * 1000));
+            propertyId.append((int)(Math.random() * 9999));
             
             setName(propertyId.toString());
         }
@@ -359,7 +360,7 @@ public class MessageBoxTag extends DialogBoxTag{
  			errorTraceTag.setResourceId(TaglibConstants.DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID);
  			errorTraceTag.setResourceKey(AttributeConstants.ERROR_TRACE_KEY);
 			errorTraceTag.setStyleClass(TaglibConstants.DEFAULT_ERROR_TRACE_STYLE_CLASS);
-			errorTraceTag.setStyle("display: NONE;");
+			errorTraceTag.setStyle("display: ".concat(DisplayType.NONE.toString()).concat(";"));
 			errorTraceTag.setReadOnly(true);
 			errorTraceTag.doStartTag();
 			errorTraceTag.doEndTag();
@@ -367,7 +368,9 @@ public class MessageBoxTag extends DialogBoxTag{
 			println("</td>");
 		}
 		else{
-			println("<td style=\"white-space: NOWRAP;\">");
+			print("<td style=\"white-space: ");
+			print(DisplayType.NOWRAP);
+			println(";\">");
 
 			if(getResourceKey().length() == 0){
 				if(messages != null && messages.size() > 0){
