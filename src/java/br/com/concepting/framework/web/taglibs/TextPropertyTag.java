@@ -13,8 +13,9 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.form.BaseActionForm;
+import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.ScopeType;
-
+ 
 /**
  * Classe que define o componente visual para entrada de texto com ou sem mascaramento.
  * 
@@ -34,30 +35,65 @@ public class TextPropertyTag extends BasePropertyTag{
 	private Boolean autoCompleteActionValidate           = false;
 	private String  autoCompleteActionValidateProperties = "";
 	
+	/**
+	 * Retorna o identificador da propriedade do label do item de autocomplete.
+	 * 
+	 * @return String contendo o identificador da propriedade.
+	 */
 	public String getAutoCompleteLabelProperty(){
         return autoCompleteLabelProperty;
     }
 
+    /**
+     * Define o identificador da propriedade do label do item de autocomplete.
+     * 
+     * @param autoCompleteLabelProperty String contendo o identificador da propriedade.
+     */
     public void setAutoCompleteLabelProperty(String autoCompleteLabelProperty){
         this.autoCompleteLabelProperty = autoCompleteLabelProperty;
     }
 
+    /**
+     * Retorna o identificador onde os dados do autocomplete estão armazenados.
+     * 
+     * @return String contendo o identificador dos dados do autocomplete.
+     */
     public String getAutoCompleteData(){
         return autoCompleteData;
     }
 
+    /**
+     * Define o identificador onde os dados do autocomplete estão armazenados.
+     * 
+     * @param autoCompleteData String contendo o identificador dos dados do autocomplete.
+     */
     public void setAutoCompleteData(String autoCompleteData){
         this.autoCompleteData = autoCompleteData;
     }
 
+    /**
+     * Retorna o escopo de armazenamento dos dados do autocomplete.
+     * 
+     * @return String contendo o escopo de armazenamento.
+     */
     public String getAutoCompleteDataScope(){
         return autoCompleteDataScope;
     }
 
+    /**
+     * Define o escopo de armazenamento dos dados do autocomplete.
+     * 
+     * @param autoCompleteDataScope String contendo o escopo de armazenamento.
+     */
     public void setAutoCompleteDataScope(String autoCompleteDataScope){
         this.autoCompleteDataScope = autoCompleteDataScope;
     }
 
+    /**
+     * Retorna o escopo de armazenamento dos dados do autocomplete.
+     * 
+     * @return Constante que define o escopo de armazenamento.
+     */
     protected ScopeType getAutoCompleteDataScopeType(){
         try{
             return ScopeType.valueOf(autoCompleteDataScope);
@@ -67,42 +103,105 @@ public class TextPropertyTag extends BasePropertyTag{
         }
     }        
 
-    public Boolean getAutoComplete(){
+    /**
+     * Indica se o recurso de autocomplete está habilitado.
+     * 
+     * @return True/False.
+     */
+    public Boolean autoComplete(){
         return autoComplete;
     }
 
+    /**
+     * Indica se o recurso de autocomplete está habilitado.
+     * 
+     * @return True/False.
+     */
+    public Boolean getAutoComplete(){
+        return autoComplete();
+    }
+
+    /**
+     * Define se o recurso de autocomplete está habilitado.
+     * 
+     * @param autoComplete True/False.
+     */
     public void setAutoComplete(Boolean autoComplete){
         this.autoComplete = autoComplete;
     }
 
+    /**
+     * Retorna a ação de autocomplete a ser executada.
+     * 
+     * @return String que define a ação.
+     */
     public String getAutoCompleteAction(){
         return autoCompleteAction;
     }
 
+    /**
+     * Define a ação de autocomplete a ser executada.
+     * 
+     * @param autoCompleteAction String que define a ação.
+     */
     public void setAutoCompleteAction(String autoCompleteAction){
         this.autoCompleteAction = autoCompleteAction;
     }
 
+    /**
+     * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
+     * processamento da ação do autocomplete.
+     * 
+     * @return String contendo os identificadores das views.
+     */
     public String getAutoCompleteActionUpdateViews(){
         return autoCompleteActionUpdateViews;
     }
 
+    /**
+     * Define os identificadores das views (separados por vírgula) a serem atualizadas após o
+     * processamento da ação do autocomplete.
+     * 
+     * @param autoCompleteActionUpdateViews String contendo os identificadores das views.
+     */
     public void setAutoCompleteActionUpdateViews(String autoCompleteActionUpdateViews){
         this.autoCompleteActionUpdateViews = autoCompleteActionUpdateViews;
     }
 
+    /**
+     * Indica se a ação de autocomplete deve executar a validação dos dados do formulário.
+     * 
+     * @return True/False.
+     */
     public Boolean getAutoCompleteActionValidate(){
         return autoCompleteActionValidate;
     }
 
+    /**
+     * Define se a ação de autocomplete deve executar a validação dos dados do formulário.
+     * 
+     * @param autoCompleteActionValidate True/False.
+     */
     public void setAutoCompleteActionValidate(Boolean autoCompleteActionValidate){
         this.autoCompleteActionValidate = autoCompleteActionValidate;
     }
 
+    /**
+     * Retorna uma string delimitada contendo as propriedades a serem validadas no processamento
+     * da ação do autocomplete.
+     * 
+     * @return String contendo as propriedades a serem validadas.
+     */
     public String getAutoCompleteActionValidateProperties(){
         return autoCompleteActionValidateProperties;
     }
 
+    /**
+     * Define uma string delimitada contendo as propriedades a serem validadas no processamento
+     * da ação do autocomplete.
+     * 
+     * @param autoCompleteActionValidateProperties String contendo as propriedades a serem validadas.
+     */
     public void setAutoCompleteActionValidateProperties(String autoCompleteActionValidateProperties){
         this.autoCompleteActionValidateProperties = autoCompleteActionValidateProperties;
     }
@@ -266,9 +365,9 @@ public class TextPropertyTag extends BasePropertyTag{
                 setSize(size);
             
             if(autoComplete){
-                String        name       = StringUtil.replaceAll(getName(), ".", "_");
-                String        actionForm = getActionForm();
-                StringBuilder content    = new StringBuilder();
+                String        name           = StringUtil.replaceAll(getName(), ".", "_");
+                String        actionFormName = getActionFormName();
+                StringBuilder content        = new StringBuilder();
                 
                 content.append("var ");
                 content.append(name);
@@ -319,7 +418,7 @@ public class TextPropertyTag extends BasePropertyTag{
                 content.append(StringUtil.getLineBreak());
                 
                 content.append("\t\tdocument.");
-                content.append(actionForm);
+                content.append(actionFormName);
                 content.append(".");
                 content.append(AttributeConstants.ACTION_KEY);
                 content.append(".value = '");
@@ -328,7 +427,7 @@ public class TextPropertyTag extends BasePropertyTag{
                 content.append(StringUtil.getLineBreak());
                 
                 content.append("\t\tdocument.");
-                content.append(actionForm);
+                content.append(actionFormName);
                 content.append(".");
                 content.append(AttributeConstants.UPDATE_VIEWS_KEY);
                 content.append(".value = '");
@@ -338,7 +437,7 @@ public class TextPropertyTag extends BasePropertyTag{
                 
                 if(autoCompleteActionValidate){
                     content.append("\t\tdocument.");
-                    content.append(actionForm);
+                    content.append(actionFormName);
                     content.append(".");
                     
                     if(isForSearch())
@@ -353,7 +452,7 @@ public class TextPropertyTag extends BasePropertyTag{
                     
                     if(autoCompleteActionValidateProperties.length() > 0){
                         content.append("\t\tdocument.");
-                        content.append(actionForm);
+                        content.append(actionFormName);
                         content.append(".");
                         content.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
                         content.append(".value = '");
@@ -371,7 +470,7 @@ public class TextPropertyTag extends BasePropertyTag{
                 content.append(StringUtil.getLineBreak());
 
                 content.append("\t\tsubmitForm(document.");
-                content.append(actionForm);
+                content.append(actionFormName);
                 content.append(");");
                 content.append(StringUtil.getLineBreak());
                 
@@ -429,8 +528,7 @@ public class TextPropertyTag extends BasePropertyTag{
 	    super.renderBody();
 	    
 	    if(autoComplete){
-	        String         actionFormName = getActionForm();
-	        BaseActionForm actionForm     = systemController.getActionForm(actionFormName);
+	        BaseActionForm actionForm = systemController.getActionForm(getActionFormName());
 	        
 	        if(autoCompleteAction.equals(actionForm.getAction())){
         	    print("<div id=\"");
@@ -438,7 +536,7 @@ public class TextPropertyTag extends BasePropertyTag{
         	    print(".");
         	    print(AttributeConstants.AUTO_COMPLETE_KEY);
         	    print("\" class=\"");
-        	    print(AttributeConstants.AUTO_COMPLETE_KEY);
+        	    print(TaglibConstants.DEFAULT_AUTO_COMPLETE_STYLE_CLASS);
         	    println("\">");
     
         	    ScopeType autoCompleteDataScope = getAutoCompleteDataScopeType();
@@ -447,7 +545,9 @@ public class TextPropertyTag extends BasePropertyTag{
         	        List autoCompleteDataValues = systemController.findAttribute(autoCompleteData, autoCompleteDataScope);
         	        
         	        if(autoCompleteDataValues != null && autoCompleteDataValues.size() > 0){
-                        println("<table class=\"panel\">");
+                        print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
+                        print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
+                        println("\">");
                         
                         ModelInfo    autoCompleteModelInfo    = null; 
                         PropertyInfo autoCompletePropertyInfo = null;
@@ -471,8 +571,7 @@ public class TextPropertyTag extends BasePropertyTag{
     
                             println("<tr>");
                             print("<td class=\"");
-                            print(AttributeConstants.AUTO_COMPLETE_KEY);
-                            print("Item");
+                            print(TaglibConstants.DEFAULT_AUTO_COMPLETE_ITEM_STYLE_CLASS);
                             print("\" onClick=\"setObject('");
                             print(getName());
                             print("', '");
