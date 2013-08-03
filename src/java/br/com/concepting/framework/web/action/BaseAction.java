@@ -253,7 +253,7 @@ public abstract class BaseAction extends DispatchAction{
 		try{
 			MethodUtils.invokeMethod(this, action, null);
 			
-			return processForward();
+		    return processForward();
 		}
 		catch(NoSuchMethodException e){
 			throw new InternalErrorException(e);
