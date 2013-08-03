@@ -270,20 +270,16 @@ public class TimerTag extends BasePropertyTag{
                 content.append(name);
                 content.append("TimerDisplay(){");
                 content.append(StringUtil.getLineBreak());
-                content.append("\tvar timerObject     = document.getElementById(\"");
+                content.append("\tsetObject(\"");
                 content.append(name);
-                content.append("\");");
+                content.append("\", (parseInt(timerObject.value) - 1));");
                 content.append(StringUtil.getLineBreak());
-                content.append("\tvar countdownObject = document.getElementById(\"");
+                content.append(StringUtil.getLineBreak());
+                content.append("\tvar countdownObject = getObject(\"");
                 content.append(name);
                 content.append(".");
                 content.append(AttributeConstants.TIMER_KEY);
                 content.append("\");");
-                content.append(StringUtil.getLineBreak());
-                content.append(StringUtil.getLineBreak());
-                content.append("\tif(timerObject)");
-                content.append(StringUtil.getLineBreak());
-                content.append("\t\ttimerObject.value = parseInt(timerObject.value) - 1;");
                 content.append(StringUtil.getLineBreak());
                 content.append(StringUtil.getLineBreak());
                 content.append("\tif(countdownObject)");
@@ -308,19 +304,16 @@ public class TimerTag extends BasePropertyTag{
                         content.append(";");
                 }
                 else{
-                    content.append("var timerObject = document.getElementById(\"");
+                    content.append("setObject(\"");
                     content.append(name);
-                    content.append("\");");
-                    content.append(StringUtil.getLineBreak());
-                    content.append(StringUtil.getLineBreak());
-                    content.append("\tif(timerObject)");
-                    content.append(StringUtil.getLineBreak());
-                    content.append("\t\ttimerObject.value = parseInt(timerObject.value) - 1;");
+                    content.append("\", (parseInt(timerObject.value) - 1));");
                     content.append(StringUtil.getLineBreak());
                     content.append(StringUtil.getLineBreak());
                     content.append("\tdocument.");
                     content.append(actionFormName);
-                    content.append(".action.value = '");
+                    content.append(".");
+                    content.append(AttributeConstants.ACTION_KEY);
+                    content.append(".value = '");
                     content.append(action);
                     content.append("';");
                     content.append(StringUtil.getLineBreak());
@@ -328,7 +321,9 @@ public class TimerTag extends BasePropertyTag{
                     if(forward.length() > 0){
                         content.append("\tdocument.");
                         content.append(actionFormName);
-                        content.append(".forward.value = '");
+                        content.append(".");
+                        content.append(AttributeConstants.FORWARD_KEY);
+                        content.append(".value = '");
                         content.append(forward);
                         content.append("';");
                         content.append(StringUtil.getLineBreak());
@@ -337,7 +332,9 @@ public class TimerTag extends BasePropertyTag{
                     if(forwardOnFail.length() > 0){
                         content.append("\tdocument.");
                         content.append(actionFormName);
-                        content.append(".forwardOnFail.value = '");
+                        content.append(".");
+                        content.append(AttributeConstants.FORWARD_ON_FAIL_KEY);
+                        content.append(".value = '");
                         content.append(forwardOnFail);
                         content.append("';");
                         content.append(StringUtil.getLineBreak());
@@ -346,7 +343,9 @@ public class TimerTag extends BasePropertyTag{
                     if(updateViews.length() > 0){
                         content.append("\tdocument.");
                         content.append(actionFormName);
-                        content.append(".updateViews.value = '");
+                        content.append(".");
+                        content.append(AttributeConstants.UPDATE_VIEWS_KEY);
+                        content.append(".value = '");
                         content.append(updateViews);
                         content.append("';");
                         content.append(StringUtil.getLineBreak());
@@ -354,12 +353,14 @@ public class TimerTag extends BasePropertyTag{
                     
                     content.append("\tdocument.");
                     content.append(actionFormName);
-                    content.append(".validate");
+                    content.append(".");
                     
                     if(isForSearch())
-                        content.append("Search");
+                        content.append(AttributeConstants.VALIDATE_SEARCH_MODEL_KEY);
+                    else
+                        content.append(AttributeConstants.VALIDATE_MODEL_KEY);
                     
-                    content.append("Model.value = ");
+                    content.append(".value = ");
                     content.append(validate);
                     content.append(";");
                     content.append(StringUtil.getLineBreak());
@@ -367,7 +368,9 @@ public class TimerTag extends BasePropertyTag{
                     if(validateProperties.length() > 0){
                         content.append("\tdocument.");
                         content.append(actionFormName);
-                        content.append(".validateProperties.value = '");
+                        content.append(".");
+                        content.append(AttributeConstants.VALIDATE_PROPERTIES_KEY);
+                        content.append(" = '");
                         content.append(validateProperties);
                         content.append("';");
                         content.append(StringUtil.getLineBreak());
