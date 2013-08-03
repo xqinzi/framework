@@ -22,6 +22,7 @@ import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.PositionType;
+import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.form.BaseActionForm;
 import br.com.concepting.framework.web.form.helpers.ActionFormMessage;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
@@ -645,6 +646,18 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
      */
     public void setOnChangeAction(String onChangeAction){
         this.onChangeAction = onChangeAction;
+    }
+
+    /**
+     * Define o identificador da ação do evento de mudança de valor.
+     * 
+     * @param onChangeAction String contendo o identificador da ação.
+     */
+    protected void setOnChangeActionType(ActionType onChangeActionType){
+        if(onChangeActionType != null)
+            this.onChangeAction = onChangeActionType.getMethod();
+        else
+        	this.onChangeAction = "";
     }
 
     /**
