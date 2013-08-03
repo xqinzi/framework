@@ -914,7 +914,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		println("<td>");
 
 		print("<div id=\"");
-		print(AttributeConstants.TREE_VIEW_KEY);
+		print(TaglibConstants.TREE_VIEW_KEY);
 		print("\" class=\"");
 		print(TaglibConstants.DEFAULT_TREE_VIEW_STYLE_CLASS);
 		print("\" style=\"overflow: AUTO;");
@@ -944,7 +944,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 */
 	protected void renderBody() throws Throwable{
 		println("<div id=\"");
-		print(AttributeConstants.TREE_VIEW_CONTENT_KEY);
+		print(TaglibConstants.TREE_VIEW_CONTENT_KEY);
 		print("\" class=\"");
 		print(TaglibConstants.DEFAULT_TREE_VIEW_CONTENT_STYLE_CLASS);
 		println("\">");
