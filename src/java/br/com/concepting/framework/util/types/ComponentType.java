@@ -67,7 +67,7 @@ public enum ComponentType{
     /**
      * Constante que define um botão de descartar alterações (Undo).
      */
-    UNDO_BUTTON,
+    UNDO_BUTTON("RESET"),
 
     /**
      * Constante que define uma lista de seleção.
@@ -139,25 +139,56 @@ public enum ComponentType{
 	 */
 	PROGRESS_BAR,
 	
-	TIMER;
+	/**
+	 * Constante que define um componente de upload.
+	 */
+	UPLOAD("FILE"),
 	
 	/**
-	 * Retorna o identificador do componente.
-	 * 
-	 * @return String contendo o identificador do componente.
+	 * Constante que define um timer.
 	 */
+	TIMER;
+	
+	private String id   = "";
+	private String type = "";
+	
+	private ComponentType(){
+        String        parts[]     = StringUtil.split(toString(), "_");
+        StringBuilder componentId = new StringBuilder();
+        
+        for(int cont = 0 ; cont < parts.length ; cont++){
+            if(cont == 0)
+                componentId.append(parts[cont].toLowerCase());
+            else
+                componentId.append(StringUtil.capitalize(parts[cont]));
+        }
+        
+        setId(componentId.toString());
+        setType(StringUtil.replaceAll(toString(), "_", ""));
+        
+	}
+	
+	private ComponentType(String type){
+	    setId(toString());
+	    setType(type);
+	}
+	
+    /**
+     * Retorna o identificador do componente.
+     * 
+     * @return String contendo o identificador do componente.
+     */
 	public String getId(){
-	    String        parts[]     = StringUtil.split(toString(), "_");
-	    StringBuilder componentId = new StringBuilder();
-	    
-	    for(int cont = 0 ; cont < parts.length ; cont++){
-	        if(cont == 0)
-	            componentId.append(parts[cont].toLowerCase());
-	        else
-	            componentId.append(StringUtil.capitalize(parts[cont]));
-	    }
-	    
-	    return componentId.toString();
+	    return id;
+	}
+	
+    /**
+     * Define o identificador do componente.
+     * 
+     * @param id String contendo o identificador do componente.
+     */
+	public void setId(String id){
+	    this.id = id;
 	}
 	
     /**
@@ -166,9 +197,15 @@ public enum ComponentType{
      * @return String contendo o identificador do tipo do componente.
      */
 	public String getType(){
-        if(this == UNDO_BUTTON)
-            return "RESET";
-
-        return StringUtil.replaceAll(toString(), "_", "");
+	    return type;
 	}
+	
+    /**
+     * Define o identificador do tipo do componente.
+     * 
+     * @param type String contendo o identificador do tipo do componente.
+     */
+	public void setType(String type){
+        this.type = type;
+    }
 }
