@@ -102,7 +102,7 @@ function reverse(value){
  * @param object Objeto que define o campo texto.
  * @return Valor numérico contendo a posição do cursor.
  */
-function getCursorPosition(object){
+function getObjectCursorPosition(object){
 	var range;
 	
 	if(typeof object.selectionStart == "number")
@@ -141,8 +141,8 @@ function getKeyPressed(event){
  * @param pattern String contendo a máscara de formatação.
  * @param event Objeto que define o evento ocorrido.
  */
-function formatProperty(object, pattern, event){
-	var caretPos = getCursorPosition(object);
+function formatObject(object, pattern, event){
+	var caretPos = getObjectCursorPosition(object);
 	
 	if(caretPos < object.value.length)
 		return;
@@ -249,8 +249,8 @@ function formatProperty(object, pattern, event){
  * @param pattern String contendo a máscara de formatação.
  * @param event Objeto que define o evento ocorrido.
  */
-function formatNumberProperty(object, pattern, event){
-	var caretPos = getCursorPosition(object);
+function formatNumberObject(object, pattern, event){
+	var caretPos = getObjectCursorPosition(object);
 	
 	if(caretPos < object.value.length)
 		return;
@@ -387,6 +387,33 @@ function formatNumberProperty(object, pattern, event){
   	object.value = objectValue;
 }
 
+function getObject(name, target){
+	var object = null;
+	
+	if(target)
+		object = target.document.getElementById(name);
+	else
+		object = document.getElementById(name);
+	
+	return object;
+}
+
+function getObjectValue(name){
+	var object = getObject(name);
+	
+	if(object)
+		return object.value;
+	
+	return null;
+}
+
+function setObjectValue(name, value){
+	var object = getObject(name);
+	
+	if(object)
+		object.value = value;
+}
+
 /**
  * Coloca o foco em um objeto.
  * 
@@ -394,7 +421,7 @@ function formatNumberProperty(object, pattern, event){
  */
 function focusObject(name){
 	try{
-		var object = document.getElementById(name);
+		var object = getObject(name);
 		
 		if(object){
 			object.focus();
@@ -434,17 +461,6 @@ function centralizeObject(object, target){
 
 	object.style.left = (windowWidth - objectWidth) / 2;
 	object.style.top  = objectTop + (windowHeight - objectHeight) / 2;
-}
-
-/**
- * Muda o estilo CSS de um objeto.
- * 
- * @param object Objeto desejado.
- * @param styleName String contendo o nome do estilo CSS.
- */
-function changeStyle(object, styleName){
-	if(object)
-		object.className = styleName;
 }
 
 /**
@@ -542,64 +558,6 @@ function addClickEvent(functionId){
 	}
 }
 
-
-/**
- * Retorna a posição X de um objeto.
- * 
- * @param object Objeto desejado.
- * @return Valor numérico contendo a posição X.
- */
-function getLeftPos(object){
-	var curleft = 0;
-	
-	if(object.offsetParent){
-		while (object.offsetParent){
-			curleft += object.offsetLeft;
-			
-			object = object.offsetParent;
-		}
-	}
-	else if(object.x)
-		curleft += object.x;
-	
-	return curleft;
-}
-
-/**
- * Retorna a posição Y de um objeto.
- * 
- * @param object Objeto desejado.
- * @return Valor numérico contendo a posição Y.
- */
-function getTopPos(object){
-	var curtop = 0;
-	
-	if(object.offsetParent){
-		while (object.offsetParent){
-			curtop += object.offsetTop;
-			
-			object = object.offsetParent;
-		}
-	}
-	else if(object.y)
-		curtop += object.y;
-	
-	return curtop;
-}
-
-/**
- * Carrega uma URL.
- * 
- * @param url URL desejada.
- * @param target Objeto
- */
-function openUrl(url, target){
-	if(target)
-		document.getElementById(target).src = url;
-	else
-		top.location.href = url;
-}
-
 /**
  * Carrega o box de carregamento de um formulário.
  * 
@@ -616,9 +574,9 @@ function showLoadingBox(form){
 
 	var targetObject          = ((target && target.length > 0) ? top.frames[target] : null);
 	var loadingBoxObjectId    = (targetObject ? targetObject.document.forms[0].name + ".loadingBox" : submittedForm.name + ".loadingBox");
-	var loadingBoxObject      = (targetObject ? targetObject.document.getElementById(loadingBoxObjectId) : document.getElementById(loadingBoxObjectId));
-	var loadingBoxObjectInfo  = (targetObject ? targetObject.document.getElementById(loadingBoxObjectId + "Info") : document.getElementById(loadingBoxObjectId + "Info"));
-	var loadingBoxObjectError = (targetObject ? targetObject.document.getElementById(loadingBoxObjectId + "Error") : document.getElementById(loadingBoxObjectId + "Error"));
+	var loadingBoxObject      = (targetObject ? getObject(loadingBoxObjectId, targetObject) : getObject(loadingBoxObjectId));
+	var loadingBoxObjectInfo  = (targetObject ? getObject(loadingBoxObjectId + "Info", targetObject) : getObject(loadingBoxObjectId + "Info"));
+	var loadingBoxObjectError = (targetObject ? getObject(loadingBoxObjectId + "Error", targetObject) : getObject(loadingBoxObjectId + "Error"));
 	
 	if(loadingBoxObject && loadingBoxObjectInfo && loadingBoxObjectError){
 		loadingBoxObject.style.visibility   = "VISIBLE";
@@ -657,7 +615,7 @@ function hideParentLoadingBox(){
 function hideLoadingBox(){
 	if(submittedForm){
 		var loadingBoxObjectId = submittedForm.name + ".loadingBox";
-		var loadingBoxObject   = document.getElementById(loadingBoxObjectId);
+		var loadingBoxObject   = getObject(loadingBoxObjectId);
 		
 		if(loadingBoxObject)
 			loadingBoxObject.style.visibility = "hidden";
@@ -834,7 +792,7 @@ function processFormResponse(requestHandler){
 								updateView = updateViews[cont2];
 								
 								if(responseDocumentObject.id == updateView){
-									documentObject = document.getElementById(updateView);
+									documentObject = getObject(updateView);
 									
 									if(documentObject)
 										documentObject.innerHTML = responseDocumentObject.innerHTML;
@@ -858,9 +816,9 @@ function processFormResponse(requestHandler){
 		}
 		else{
 			var loadingBoxObjectId    = submittedForm.name + ".loadingBox";
-			var loadingBoxObject      = document.getElementById(loadingBoxObjectId);
-			var loadingBoxObjectInfo  = document.getElementById(loadingBoxObjectId + "Info");
-			var loadingBoxObjectError = document.getElementById(loadingBoxObjectId + "Error");
+			var loadingBoxObject      = getObject(loadingBoxObjectId);
+			var loadingBoxObjectInfo  = getObject(loadingBoxObjectId + "Info");
+			var loadingBoxObjectError = getObject(loadingBoxObjectId + "Error");
 			
 			if(loadingBoxObject && loadingBoxObjectInfo && loadingBoxObjectError){
 				loadingBoxObjectInfo.style.display  = "NONE";
@@ -893,12 +851,12 @@ function processFormResponseScripts(){
 /**
  * Exibe o componente de relógio na página.
  */
-function showClock(){
+function showClockObject(){
 	if(clockTimer)
 		clearTimeout(clockTimer);
 
-	var clockObject  = document.getElementById("clock");
-	var clockPattern = document.getElementById("clock.pattern");
+	var clockObject  = getObject("clock");
+	var clockPattern = getObject("clock.pattern");
 
 	if(clockObject && clockPattern){
 		var pattern      = clockPattern.value;
@@ -920,7 +878,7 @@ function showClock(){
 
 		clockObject.innerHTML = pattern;
 
-		clockTimer = setTimeout("showClock()", 1000);
+		clockTimer = setTimeout("showClockObject()", 1000);
 	}
 }
 

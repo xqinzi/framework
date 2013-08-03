@@ -7,7 +7,7 @@ import br.com.concepting.framework.processors.interfaces.IAnnotationProcessor;
  * Classe que define a estrutura básica para os processadores de anotação.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public class BaseAnnotationProcessor implements IAnnotationProcessor{
     private Class<BaseModel>           declaration                = null;

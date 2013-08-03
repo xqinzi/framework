@@ -13,7 +13,7 @@ import br.com.concepting.framework.util.StringUtil;
  * Classe utilitária contendo rotinas para manipulação de serviços de rede.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public class NetworkUtil{
     /**

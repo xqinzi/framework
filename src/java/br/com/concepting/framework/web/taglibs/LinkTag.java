@@ -6,7 +6,7 @@ import br.com.concepting.framework.util.types.ComponentType;
  * Classe que define o componente visual para um link.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public class LinkTag extends BaseActionFormElementTag{
     /**

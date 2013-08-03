@@ -18,7 +18,7 @@
  * um nó.
  */
 function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, openedNodeIconClass, closedNodeIconClass, onExpand){
-	var node       = document.getElementById(nodeId);
+	var node       = getObject(nodeId);
 	var submitFlag = false;
 	
 	if(node){
@@ -28,7 +28,7 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
 			node.style.display = "NONE";
 	}
 	
-	var nodeExpandIcon = document.getElementById(nodeId + ".nodeExpandIcon");
+	var nodeExpandIcon = getObject(nodeId + ".nodeExpandIcon");
 	
 	if(nodeExpandIcon){ 
 		if(nodeExpandIcon.className == collapsedNodeIconClass)
@@ -37,7 +37,7 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
 			nodeExpandIcon.className = collapsedNodeIconClass;
 	} 
  
-	var nodeIcon = document.getElementById(nodeId + ".nodeIcon");
+	var nodeIcon = getObject(nodeId + ".nodeIcon");
 	
 	if(nodeIcon){
 		if(nodeIcon.className == closedNodeIconClass)
@@ -46,7 +46,7 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
 			nodeIcon.className = closedNodeIconClass;
 	}
 	
-	var nodeExpanded = document.getElementById(nodeId + ".isNodeExpanded");
+	var nodeExpanded = getObject(nodeId + ".isNodeExpanded");
 	
 	if(nodeExpanded){
 		if(nodeExpanded.value == "false")
@@ -67,10 +67,11 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
  * @param nodeLabelClass String contendo o identificador do label do nó.
  * @param nodeLabelSelectedClass String contendo o identificador do label do nó, quando 
  * selecionado.
+ * @param hasMultipleSelection Indica se a seleção deve ser múltipla.
  * @param onSelect Função a ser executada no momento da seleção do nó.
  * @param onUnSelect Função a ser executada no momento da deseleção do nó.
  */
-function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSelect, onUnSelect){
+function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, hasMultipleSelection, onSelect, onUnSelect){
 	if(onSelect || onUnSelect){
 		var pos        = name.indexOf(".");
 		var parentName = name;
@@ -84,24 +85,25 @@ function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass
 		var object = null;
 		
 		if(complement.length > 0){
-			object = document.getElementById(parentName + ".parent" + complement);
+			object = getObject(parentName + ".parent" + complement);
 	
 			if(object)
 				object.disabled = true;
 		}
 	
-		object = document.getElementById(parentName + ".parent");
+		object = getObject(parentName + ".parent");
+		
 		if(object)
 			object.disabled = true;
 	}
 	
-	var nodeLabel = document.getElementById(nodeId + ".label");
+	var nodeLabel = getObject(nodeId + ".label");
 	
 	if(nodeLabel){	
 		if(nodeLabel.className == nodeLabelClass)
-			selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSelect);
+			selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, hasMultipleSelection, onSelect);
 		else
-			unselectNode(name, nodeId, nodeLabelClass, onUnSelect);
+			unselectNode(name, nodeId, nodeLabelClass, hasMultipleSelection, onUnSelect);
 	}
 }
 
@@ -111,20 +113,20 @@ function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass
  * @param name String contendo o identificador do componente.
  * @param nodeId String contendo o identificador do nó.
  * @param nodeLabelClass String contendo o identificador do label do nó.
+ * @param hasMultipleSelection Indica se a seleção deve ser múltipla.
  * @param onUnSelect Função a ser executada no momento da deseleção do nó.
  */
-function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
-	var nodeLabel            = document.getElementById(nodeId + ".label");
-	var hasMultipleSelection = document.getElementById(name + ".hasMultipleSelection");
-	var currentNode          = document.getElementById(name + ".currentNode");
+function unselectNode(name, nodeId, nodeLabelClass, hasMultipleSelection, onUnSelect){
+	var nodeLabel   = getObject(nodeId + ".label");
+	var currentNode = getObject(name + ".currentNode");
 		
-	if(hasMultipleSelection && nodeLabel){
+	if(nodeLabel){
 		nodeLabel.className = nodeLabelClass;
 		
 		var nodeValue = nodeLabel.getAttribute("value");
 		
-		if(hasMultipleSelection.value == "true"){
-			var options = document.getElementById(name).options;
+		if(hasMultipleSelection){
+			var options = getObject(name).options;
 			var cont    = 0;
 			
 			for(cont = 0 ; cont < options.length ; cont++)
@@ -135,7 +137,8 @@ function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
 			var node              = null;
 			
 			if(parentNodeLabelId){
-				node = document.getElementById(parentNodeLabelId);
+				node = getObject(parentNodeLabelId);
+				
 				if(node){
 					var childs         = node.childNodes;
 					var child          = null;
@@ -148,7 +151,7 @@ function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
 						
 						if(childId){
 							if(childId.indexOf("node") >= 0){
-								child = document.getElementById(childId + ".label");
+								child = getObject(childId + ".label");
 
 								if(child){
 									if(nodeLabel.className != child.className){
@@ -166,7 +169,8 @@ function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
 				}
 			}
 			
-			node = document.getElementById(nodeId);
+			node = getObject(nodeId);
+			
 			if(node){
 				var childs  = node.childNodes;
 				var child   = null;
@@ -178,7 +182,7 @@ function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
 					
 					if(childId){
 						if(childId.indexOf("node") >= 0){
-							child = document.getElementById(childId + ".label");
+							child = getObject(childId + ".label");
 
 							if(child)
 								if(nodeLabel.className != child.className)
@@ -191,7 +195,7 @@ function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
 		else{
 			currentNode.value = "";	
 
-			var option = document.getElementById(name);
+			var option = getObject(name);
 			
 			if(option)
 				option.value = "";
@@ -210,22 +214,22 @@ function unselectNode(name, nodeId, nodeLabelClass, onUnSelect){
  * @param nodeLabelClass String contendo o identificador do label do nó.
  * @param nodeLabelSelectedClass String contendo o identificador do label do nó, quando 
  * selecionado.
+ * @param hasMultipleSelection Indica se a seleção deve ser múltipla.
  * @param onSelect Função a ser executada no momento da seleção do nó.
  * @param donSelectChilds Indica se ao selecionar o nó, os seus filhos também devem ser 
  * selecionados.
  */
-function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSelect, dontSelectChilds){
-	var nodeLabel            = document.getElementById(nodeId + ".label");
-	var hasMultipleSelection = document.getElementById(name + ".hasMultipleSelection");
-	var currentNode          = document.getElementById(name + ".currentNode");
+function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, hasMultipleSelection, onSelect, dontSelectChilds){
+	var nodeLabel   = getObject(nodeId + ".label");
+	var currentNode = getObject(name + ".currentNode");
 	
-	if(currentNode && hasMultipleSelection && nodeLabel){
+	if(currentNode && nodeLabel){
 		nodeLabel.className = nodeLabelSelectedClass;
 		
 		var nodeValue = nodeLabel.getAttribute("value");
 		
-		if(hasMultipleSelection.value == "true"){
-			var options = document.getElementById(name).options;
+		if(hasMultipleSelection){
+			var options = getObject(name).options;
 			var cont    = 0;
 			
 			for(cont = 0 ; cont < options.length ; cont++)
@@ -238,7 +242,7 @@ function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSele
 				selectNode(name, parentNodeLabelId, nodeLabelClass, nodeLabelSelectedClass, null, true);
 			
 			if(!dontSelectChilds){
-				var node = document.getElementById(nodeId);
+				var node = getObject(nodeId);
 				
 				if(node){
 					var childs  = node.childNodes;
@@ -251,7 +255,7 @@ function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSele
 						
 						if(childId){
 							if(childId.indexOf("node") >= 0){
-								child = document.getElementById(childId + ".label");
+								child = getObject(childId + ".label");
 	
 								if(child)
 									if(nodeLabel.className != child.className)
@@ -263,7 +267,7 @@ function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSele
 			}
 		}
 		else{
-			var nodeLabel = document.getElementById(currentNode.value + ".label");
+			var nodeLabel = getObject(currentNode.value + ".label");
 			
 			if(nodeLabel)
 				if(currentNode.value != nodeId)
@@ -271,7 +275,7 @@ function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, onSele
 	
 			currentNode.value = nodeId;	
 
-			var option = document.getElementById(name);
+			var option = getObject(name);
 			
 			if(option)
 				option.value = nodeValue;

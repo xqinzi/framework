@@ -18,7 +18,7 @@ import br.com.concepting.framework.util.helpers.DateTime;
  * Classe que define o mapeamento da classe DateTime no repositório de persistência.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public class DateTimeType implements UserType{
     /**

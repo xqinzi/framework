@@ -4,7 +4,7 @@ package br.com.concepting.framework.processors.interfaces;
  * Classe que define a interface dos processadores de anotação.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public interface IAnnotationProcessor{
     /**

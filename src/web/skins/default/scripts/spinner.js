@@ -1,5 +1,5 @@
 function addSpinnerValue(name, maximumValue, step){
-	var object = document.getElementById(name);
+	var object = getObject(name);
 	
 	if(object){
 		var currentValue = Number(object.value);
@@ -17,7 +17,7 @@ function addSpinnerValue(name, maximumValue, step){
 }
 
 function subtractSpinnerValue(name, minimumValue, step){
-	var object = document.getElementById(name);
+	var object = getObject(name);
 	
 	if(object){
 		var currentValue = Number(object.value);

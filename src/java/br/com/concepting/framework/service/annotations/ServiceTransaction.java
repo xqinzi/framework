@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Classe que define as anotações para uma transação das classes de serviço.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

@@ -12,7 +12,7 @@ import br.com.concepting.framework.web.action.types.ActionType;
  * Classe que define o componente visual skinSelector (Seletor de tema).
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public class SkinSelectorTag extends ListPropertyTag{
     /**

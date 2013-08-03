@@ -9,7 +9,7 @@ import br.com.concepting.framework.model.types.ValidationType;
  * Classe que define a estrutura básica para o modelo de dados para uma expressão.
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 @Model 
 public class ExpressionModel extends BaseModel{

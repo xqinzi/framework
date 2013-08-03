@@ -17,7 +17,7 @@ import br.com.concepting.framework.web.action.types.ActionType;
  * Classe que define o componente visual languageSelector (Seletor de idioma).
  * 
  * @author fvilarinho
- * @since 4.0
+ * @since 3.0
  */
 public class LanguageSelectorTag extends ListPropertyTag{
     /**

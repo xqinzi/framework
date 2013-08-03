@@ -2,7 +2,7 @@
  * Arquivo que contém as funções/propriedades para manipulação do componente visual accordion (guia de seções).
  * 
  * @author fvilarinho
- * @version 4.0
+ * @version 3.0
  */
 
 /**
@@ -11,20 +11,20 @@
  * @param accordion Identificador do componente.
  * @param section Instância da seção
  * @param last Indica se é a última seção.
+ * @param hasMultipleSelection Indica se a seleção será múltipla.
  * @param onSelect Função a ser executada na seleção da seção.
  * @param onUnSelect Função a ser executada na deseleção da seção.
  */
-function showHideAccordionSection(accordion, section, last, onSelect, onUnSelect){
-	var sectionName          = replaceAll(section.id, ".sectionHeader", "");
-	var currentSection       = document.getElementById(accordion + ".currentSection");
-	var hasMultipleSelection = document.getElementById(accordion + ".hasMultipleSelection");
-	var sectionContent       = null;
+function showHideAccordionSection(accordion, section, last, hasMultipleSelection, onSelect, onUnSelect){
+	var sectionName    = replaceAll(section.id, ".sectionHeader", "");
+	var currentSection = getObject(accordion + ".currentSection");
+	var sectionContent = null;
 	
-	if(currentSection && hasMultipleSelection){
-		if(hasMultipleSelection.value == "false"){
+	if(currentSection){
+		if(!hasMultipleSelection){
 			if(currentSection.value != "" && currentSection.value != sectionName){
-				sectionHeader  = document.getElementById(currentSection.value + ".sectionHeader");
-				sectionContent = document.getElementById(currentSection.value + ".sectionContent");
+				sectionHeader  = getObject(currentSection.value + ".sectionHeader");
+				sectionContent = getObject(currentSection.value + ".sectionContent");
 				
 				if(sectionHeader && sectionContent){
 					if(sectionContent.className == "lastSectionContent")
@@ -52,7 +52,7 @@ function showHideAccordionSection(accordion, section, last, onSelect, onUnSelect
 		}
 	}
 	
-	sectionContent = document.getElementById(sectionName + ".sectionContent");
+	sectionContent = getObject(sectionName + ".sectionContent");
 	
 	if(sectionContent){
 		if(sectionContent.style.display.toUpperCase() == "NONE"){
@@ -61,7 +61,7 @@ function showHideAccordionSection(accordion, section, last, onSelect, onUnSelect
 			if(last)
 				section.className = "sectionHeader";
 			
-			if(hasMultipleSelection && hasMultipleSelection.value == "false")
+			if(!hasMultipleSelection)
 				currentSection.value = sectionName;
 			
 			if(onSelect)
@@ -73,7 +73,7 @@ function showHideAccordionSection(accordion, section, last, onSelect, onUnSelect
 			if(last)
 				section.className = "lastSectionHeader";
 			
-			if(hasMultipleSelection && hasMultipleSelection.value == "false")
+			if(!hasMultipleSelection)
 				currentSection.value = "";
 
 			if(onUnSelect)

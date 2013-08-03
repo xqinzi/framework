@@ -44,7 +44,7 @@ function selectMenuItem(menuItem, menuItemClass){
 		var currentMenuId = "";
        	var parentMenu    = findAncestorMenu(menuItem);
        	var parentMenuId  = parentMenu.id;
-       	var menu          = document.getElementById(menuItemId + ".menuBox");
+       	var menu          = getObject(menuItemId + ".menuBox");
 
        	if(parentMenuId.indexOf(".menuBar") < 0)
 	     	changeStyle(menuItem.parentNode, menuItemClass);
@@ -151,7 +151,7 @@ function hideAllParentMenus(){
  * @param name String contendo o identificador do componente.
  */
 function renderFixedMenu(name){
-	var object = document.getElementById(name + ".menuBar");
+	var object = getObject(name + ".menuBar");
 	
 	if(object)
 		object.style.top = document.body.scrollTop + "px";

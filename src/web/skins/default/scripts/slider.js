@@ -23,7 +23,7 @@ function dropSliderBarControl(object, event){
 
 function slideIt(event){
 	if(sliderBarControl != null && sliderBarControlStartPos != null){
-		var sliderBarContent = document.getElementById(sliderBarControlName + ".sliderBarContent");
+		var sliderBarContent = getObject(sliderBarControlName + ".sliderBarContent");
 		var width            = sliderBarContent.offsetWidth - sliderBarControl.offsetWidth;
 		var pos              = (sliderBarControlCurrentPos + event.clientX - sliderBarControlStartPos);
 		

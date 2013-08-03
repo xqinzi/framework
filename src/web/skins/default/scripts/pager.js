@@ -17,7 +17,7 @@ function pagerAction(name, action, updateViews, form){
 	if(!form)
 		return;
 
-	var object = document.getElementById(name + ".pagerAction");
+	var object = getObject(name + ".pagerAction");
 	
 	if(object)
 		object.value = action;
@@ -59,7 +59,7 @@ function moveToFirstPage(name, updateViews, form){
 	var pagerOnForm = usePagerOnForm(name);
 	
 	if(pagerOnForm){
-		var object = document.getElementById(name);
+		var object = getObject(name);
 		
 		if(object)
 			object.value = "objectId{0}"; 
@@ -83,7 +83,7 @@ function moveToPreviousPage(name, updateViews, form){
 	
 	if(pagerOnForm){
 		var pagerIndex = getPagerIndex(name);
-		var object     = document.getElementById(name);
+		var object     = getObject(name);
 			
 		if(object)
 			object.value = ("objectId{" + (pagerIndex - 1) + "}"); 
@@ -107,7 +107,7 @@ function moveToNextPage(name, updateViews, form){
 	
 	if(pagerOnForm){
 		var pagerIndex = getPagerIndex(name);
-		var object     = document.getElementById(name);
+		var object     = getObject(name);
 			
 		if(object)
 			object.value = ("objectId{" + (pagerIndex + 1) + "}");
@@ -130,11 +130,11 @@ function moveToLastPage(name, updateViews, form){
 	var pagerOnForm = usePagerOnForm(name);
 	
 	if(pagerOnForm){
-		var object = document.getElementById(name + ".dataValuesEndIndex");
+		var object = getObject(name + ".dataValuesEndIndex");
 		
 		if(object){
 			var pagerEndIndex = parseInt(object.value); 
-			var object        = document.getElementById(name);
+			var object        = getObject(name);
 			
 			if(object)
 				object.value = ("objectId{" + pagerEndIndex + "}"); 
@@ -151,7 +151,7 @@ function moveToLastPage(name, updateViews, form){
  * @return True/False.
  */
 function usePagerOnForm(name){
-	var object = document.getElementById(name + ".pagerOnForm");
+	var object = getObject(name + ".pagerOnForm");
 	
 	if(object)
 		if(object.value == "true")
@@ -167,7 +167,7 @@ function usePagerOnForm(name){
  * @return Valor numérico contendo o índice de paginação.
  */
 function getPagerIndex(name){
-	var object = document.getElementById(name);
+	var object = getObject(name);
 	
 	if(object){
 		var objectValue = object.value;
