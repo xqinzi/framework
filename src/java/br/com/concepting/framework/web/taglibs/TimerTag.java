@@ -6,8 +6,15 @@ import br.com.concepting.framework.util.MethodUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
+import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
-
+ 
+/**
+ * Classe que define o componente visual para um timer de página.
+ * 
+ * @author fvilarinho
+ * @since 3.0
+ */
 public class TimerTag extends BasePropertyTag{
     private Boolean showCountdown      = true;
     private String  action             = "";
@@ -16,63 +23,168 @@ public class TimerTag extends BasePropertyTag{
     private String  updateViews        = "";
     private Boolean validate           = false;
     private String  validateProperties = "";
-    
-    public Boolean getShowCountdown(){
+
+    /**
+     * Indica se deve ser exibido a contagem regressiva do timer.
+     * 
+     * @return True/False.
+     */
+    public Boolean showCountdown(){
         return showCountdown;
     }
 
+    /**
+     * Indica se deve ser exibido a contagem regressiva do timer.
+     * 
+     * @return True/False.
+     */
+    public Boolean getShowCountdown(){
+        return showCountdown();
+    }
+
+    /**
+     * Define se deve ser exibido a contagem regressiva do timer.
+     * 
+     * @param showCountdown True/False.
+     */
     public void setShowCountdown(Boolean showCountdown){
         this.showCountdown = showCountdown;
     }
 
+    /**
+     * Retorna a ação a ser executada.
+     * 
+     * @return String que define a ação.
+     */
     public String getAction(){
         return action;
     }
-    
+
+    /**
+     * Define a ação a ser executada.
+     * 
+     * @param action String que define a ação.
+     */
     public void setAction(String action){
         this.action = action;
     }
     
+    /**
+     * Define a ação a ser executada.
+     * 
+     * @param action Constante que define a ação.
+     */
+    protected void setAction(ActionType action){
+        if(action != null)
+            this.action = action.getMethod();
+        else
+            this.action = "";
+    }
+
+    /**
+     * Retorna o identificador do redirecionamento da ação.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
     public String getForward(){
         return forward;
     }
-    
+
+    /**
+     * Define o identificador do redirecionamento da ação.
+     * 
+     * @param forward String contendo o identificador do redirecionamento.
+     */
     public void setForward(String forward){
         this.forward = forward;
     }
-    
+
+    /**
+     * Retorna o identificador do redirecionamento da ação quando ocorrer erros.
+     * 
+     * @return String contendo o identificador do redirecionamento.
+     */
     public String getForwardOnFail(){
         return forwardOnFail;
     }
-    
+
+    /**
+     * Define o identificador do redirecionamento da ação quando ocorrer erros.
+     * 
+     * @param forwardOnFail String contendo o identificador do redirecionamento.
+     */
     public void setForwardOnFail(String forwardOnFail){
         this.forwardOnFail = forwardOnFail;
     }
     
+    /**
+     * Retorna os identificadores das views (separados por vírgula) a serem atualizadas após o
+     * processamento da ação requisitada.
+     * 
+     * @return String contendo os identificadores das views.
+     */
     public String getUpdateViews(){
         return updateViews;
     }
-    
+
+    /**
+     * Define os identificadores das views (separados por vírgula) a serem atualizadas após o
+     * processamento da ação requisitada.
+     * 
+     * @param updateViews String contendo os identificadores das views.
+     */
     public void setUpdateViews(String updateViews){
         this.updateViews = updateViews;
     }
     
-    public Boolean getValidate(){
+    /**
+     * Indica se a ação deve executar a validação dos dados do formulário.
+     * 
+     * @return True/False.
+     */
+    public Boolean validate(){
         return validate;
     }
     
+    /**
+     * Indica se a ação deve executar a validação dos dados do formulário.
+     * 
+     * @return True/False.
+     */
+    public Boolean getValidate(){
+        return validate();
+    }
+
+    /**
+     * Define se a ação deve executar a validação dos dados do formulário.
+     * 
+     * @param validate True/False.
+     */
     public void setValidate(Boolean validate){
         this.validate = validate;
     }
     
+    /**
+     * Retorna uma string delimitada contendo as propriedades a serem validadas.
+     * 
+     * @return String contendo as propriedades a serem validadas.
+     */
     public String getValidateProperties(){
         return validateProperties;
     }
 
+    /**
+     * Defime uma string delimitada contendo as propriedades a serem validadas.
+     * 
+     * @param validateProperties String contendo as propriedades a serem validadas.
+     */
     public void setValidateProperties(String validateProperties){
         this.validateProperties = validateProperties;
     }
     
+    /**
+     * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#initialize()
+     */
     protected void initialize() throws Throwable{
         setComponentType(ComponentType.TIMER);
         
@@ -87,6 +199,9 @@ public class TimerTag extends BasePropertyTag{
             setValue(0);
     }
     
+    /**
+     * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#renderOpen()
+     */
     protected void renderOpen() throws Throwable{
         super.renderOpen();
         
@@ -100,6 +215,9 @@ public class TimerTag extends BasePropertyTag{
         propertyTag.doEndTag();
     }
     
+    /**
+     * @see br.com.concepting.framework.web.taglibs.BasePropertyTag#renderBody()
+     */
     protected void renderBody() throws Throwable{
         PropertyInfo propertyInfo = getPropertyInfo();
         
@@ -181,9 +299,9 @@ public class TimerTag extends BasePropertyTag{
                 content.append(StringUtil.getLineBreak());
                 content.append("\t");
                 
-                String actionForm = getActionForm();
+                String actionFormName = getActionFormName();
                         
-                if(actionForm.length() == 0){
+                if(actionFormName.length() == 0){
                     content.append(action);
                     
                     if(!action.endsWith(";"))
@@ -201,7 +319,7 @@ public class TimerTag extends BasePropertyTag{
                     content.append(StringUtil.getLineBreak());
                     content.append(StringUtil.getLineBreak());
                     content.append("\tdocument.");
-                    content.append(actionForm);
+                    content.append(actionFormName);
                     content.append(".action.value = '");
                     content.append(action);
                     content.append("';");
@@ -209,7 +327,7 @@ public class TimerTag extends BasePropertyTag{
                     
                     if(forward.length() > 0){
                         content.append("\tdocument.");
-                        content.append(actionForm);
+                        content.append(actionFormName);
                         content.append(".forward.value = '");
                         content.append(forward);
                         content.append("';");
@@ -218,7 +336,7 @@ public class TimerTag extends BasePropertyTag{
         
                     if(forwardOnFail.length() > 0){
                         content.append("\tdocument.");
-                        content.append(actionForm);
+                        content.append(actionFormName);
                         content.append(".forwardOnFail.value = '");
                         content.append(forwardOnFail);
                         content.append("';");
@@ -227,7 +345,7 @@ public class TimerTag extends BasePropertyTag{
                     
                     if(updateViews.length() > 0){
                         content.append("\tdocument.");
-                        content.append(actionForm);
+                        content.append(actionFormName);
                         content.append(".updateViews.value = '");
                         content.append(updateViews);
                         content.append("';");
@@ -235,7 +353,7 @@ public class TimerTag extends BasePropertyTag{
                     }
                     
                     content.append("\tdocument.");
-                    content.append(actionForm);
+                    content.append(actionFormName);
                     content.append(".validate");
                     
                     if(isForSearch())
@@ -248,7 +366,7 @@ public class TimerTag extends BasePropertyTag{
                     
                     if(validateProperties.length() > 0){
                         content.append("\tdocument.");
-                        content.append(actionForm);
+                        content.append(actionFormName);
                         content.append(".validateProperties.value = '");
                         content.append(validateProperties);
                         content.append("';");
@@ -256,7 +374,7 @@ public class TimerTag extends BasePropertyTag{
                     }
                     
                     content.append("\tsubmitForm(document.");
-                    content.append(actionForm);
+                    content.append(actionFormName);
                     content.append(");");
                     content.append(StringUtil.getLineBreak());
                 }
