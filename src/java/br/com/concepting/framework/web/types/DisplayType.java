@@ -11,4 +11,9 @@ public enum DisplayType{
      * Constante que define que o objeto/componente não está renderizado.
      */
     NONE,
+    
+    /**
+     * Constante que define que o objeto/componente será renderizado sem quebra de linha..
+     */
+    NOWRAP;
 }
