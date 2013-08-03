@@ -534,9 +534,9 @@ public class TextPropertyTag extends BasePropertyTag{
         	    print("<div id=\"");
         	    print(getName());
         	    print(".");
-        	    print(AttributeConstants.AUTO_COMPLETE_KEY);
+        	    print(TaglibConstants.AUTO_COMPLETE_BOX_KEY);
         	    print("\" class=\"");
-        	    print(TaglibConstants.DEFAULT_AUTO_COMPLETE_STYLE_CLASS);
+        	    print(TaglibConstants.DEFAULT_AUTO_COMPLETE_BOX_STYLE_CLASS);
         	    println("\">");
     
         	    ScopeType autoCompleteDataScope = getAutoCompleteDataScopeType();
@@ -571,7 +571,7 @@ public class TextPropertyTag extends BasePropertyTag{
     
                             println("<tr>");
                             print("<td class=\"");
-                            print(TaglibConstants.DEFAULT_AUTO_COMPLETE_ITEM_STYLE_CLASS);
+                            print(TaglibConstants.DEFAULT_AUTO_COMPLETE_BOX_ITEM_STYLE_CLASS);
                             print("\" onClick=\"setObject('");
                             print(getName());
                             print("', '");
