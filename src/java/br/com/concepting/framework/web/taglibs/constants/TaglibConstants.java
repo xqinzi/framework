@@ -30,6 +30,21 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_ACCORDION_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("accordion.css");
 
     /**
+     * Constante que define o estilo CSS default para a caixa de autocomplete.
+     */
+    public static final String DEFAULT_AUTO_COMPLETE_BOX_STYLE_CLASS = "autoCompleteBox";
+    
+    /**
+     * Constante que define o estilo CSS default para um item da caixa de autocomplete.
+     */
+    public static final String DEFAULT_AUTO_COMPLETE_BOX_ITEM_STYLE_CLASS = "autoCompleteBoxItem";
+
+    /**
+     * Constante que define o identificador da caixa de autocomplete.
+     */
+    public static final String AUTO_COMPLETE_BOX_KEY = "autoComplete";
+
+    /**
      * Constante que define o identificador do estilo CSS default para o componente visual calendar (calendário).
      */
     public static final String DEFAULT_CALENDAR_STYLE_CLASS = "calendar";
