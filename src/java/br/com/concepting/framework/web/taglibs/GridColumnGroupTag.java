@@ -10,7 +10,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
  */
 public class GridColumnGroupTag extends GridColumnTag{
 	private Boolean aggregate = false;
-	
+	 
 	/**
 	 * Indica que a coluna deverá ser agrupada.
 	 * 
@@ -34,7 +34,7 @@ public class GridColumnGroupTag extends GridColumnTag{
 	 */
 	protected void initialize() throws Throwable{
 	    if(getAlignment() == null)
-	        setAlignment(AlignmentType.CENTER.toString());
+	        setAlignmentType(AlignmentType.CENTER);
 	    
 	    super.initialize();
 	}
