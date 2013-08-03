@@ -1318,7 +1318,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
 		GridColumnTag columnTag = (GridColumnTag)findAncestorWithClass(this, GridColumnTag.class);
 		
-		print("<table");
+		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"");
 		
         if(columnTag != null){
             print(" class=\"");
