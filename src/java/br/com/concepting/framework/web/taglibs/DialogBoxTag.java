@@ -156,7 +156,7 @@ public class DialogBoxTag extends BaseActionFormElementTag{
         print("<div id=\"");
         print(getName());
         print(".");
-        print(AttributeConstants.DIALOG_BOX_KEY);
+        print(TaglibConstants.DIALOG_BOX_KEY);
         print("\" class=\"");
         print(TaglibConstants.DEFAULT_DIALOG_BOX_STYLE_CLASS);
         print("\" style=\"visibility: ");
