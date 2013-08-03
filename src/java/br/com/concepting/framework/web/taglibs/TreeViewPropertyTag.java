@@ -1377,17 +1377,17 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				if(!propertyInfo.isCollection()){
 					if(nodeIsSelected){
 					    content = new StringBuilder();
-					    content.append("document.getElementById('");
+					    content.append("setObject('");
 					    content.append(name);
-					    content.append("').value = '");
+					    content.append("', '");
 					    content.append(nodeValue);
-					    content.append("'; document.getElementById('");
+					    content.append("'); setObject('");
 					    content.append(name);
 					    content.append(".");
 					    content.append(AttributeConstants.CURRENT_NODE_KEY);
-					    content.append("').value = '");
+					    content.append("', '");
 					    content.append(nodeId);
-					    content.append("';");
+					    content.append("');");
 					    content.append(StringUtil.getLineBreak());
 					    
 					    scriptTag = new ScriptTag();
