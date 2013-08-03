@@ -756,7 +756,6 @@ public class SystemController{
         requestInfo.setDataEndIndex(getRequestInfoDataEndIndex(name));
         requestInfo.setEditableData(getRequestInfoData(name, true));
         requestInfo.setEditableDataScope(getRequestInfoDataScope(name, true));
-        requestInfo.setHasMultipleSelection(hasRequestInfoMultipleSelection(name));
         requestInfo.setIsEditable(isRequestInfoEditable(name));
         requestInfo.setItemsPerPage(getRequestInfoItemsPerPage(name));
 		requestInfo.setName(name);
@@ -876,18 +875,14 @@ public class SystemController{
         key.append(".");
         key.append(AttributeConstants.CURRENT_SECTION_KEY);
         
-        if(hasRequestInfoMultipleSelection(name)){
-            String       values[] = getRequestInfoValues(key.toString());
-            List<String> result   = new LinkedList<String>();
-            
-            if(values != null && values.length > 0)
-                for(String value : values)
-                    result.add(value);
-            
-            return (O)result;
-        }
-
-        return (O)getRequest().getParameter(key.toString());
+        String       values[] = getRequestInfoValues(key.toString());
+        List<String> result   = new LinkedList<String>();
+        
+        if(values != null && values.length > 0)
+            for(String value : values)
+                result.add(value);
+        
+        return (O)result;
     }
 
     /**
@@ -972,27 +967,6 @@ public class SystemController{
 		}
 		catch(Throwable e){
 			return PagerActionType.REFRESH_PAGE;
-		}
-    }
-
-    /**
-     * Indica se a propriedade do modelo de dados permite múltipla seleção.
-     * 
-     * @param name String contendo o nome da propriedade.
-     * @return True/False.
-     */
-    private Boolean hasRequestInfoMultipleSelection(String name){
-    	StringBuilder key = new StringBuilder();
-
-		key.append(name);
-		key.append(".");
-		key.append(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY);
-		
-		try{
-			return Boolean.parseBoolean(StringUtil.trim(getRequest().getParameter(key.toString())));
-		}
-		catch(Throwable e){
-			return false;
 		}
     }
 
@@ -1195,7 +1169,6 @@ public class SystemController{
                !requestInfoName.endsWith(".".concat(AttributeConstants.ERROR_TRACE_KEY)) &&
                !requestInfoName.equals(AttributeConstants.FORWARD_KEY) && 
                !requestInfoName.equals(AttributeConstants.FORWARD_ON_FAIL_KEY) && 
-               !requestInfoName.endsWith(".".concat(AttributeConstants.HAS_MULTIPLE_SELECTION_KEY)) &&
  			   !requestInfoName.endsWith(".".concat(AttributeConstants.IS_NODE_EXPANDED_KEY)) &&
  	 		   !requestInfoName.endsWith(".".concat(AttributeConstants.ITEMS_PER_PAGE_KEY)) &&
  	 		   !requestInfoName.endsWith(".".concat(AttributeConstants.LABEL_KEY)) &&
@@ -1234,7 +1207,12 @@ public class SystemController{
      * @return String contendo o caminho raiz.
      */
     public String getContextPath(){
-        return StringUtil.trim(getSession().getServletContext().getContextPath());
+        String path = StringUtil.trim(getSession().getServletContext().getContextPath());
+        
+        if(!path.endsWith("/"))
+            path = path.concat("/");
+        
+        return path;
     }
     
     /**
