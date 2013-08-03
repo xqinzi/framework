@@ -67,7 +67,17 @@ public enum ActionType{
 	/**
 	 * Constante que define a ação para upload de arquivo.
 	 */
-	UPLOAD;
+	UPLOAD,
+	
+	/**
+	 * Constante que define a ação para mudança do tema.
+	 */
+	CHANGE_CURRENT_SKIN,
+	
+    /**
+     * Constante que define a ação para mudança do idioma.
+     */
+	CHANGE_CURRENT_LANGUAGE;
 	
 	/**
 	 * Retorna o identificador do método da ação.
