@@ -11,6 +11,7 @@ import br.com.concepting.framework.resource.SystemResource;
 import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.web.action.types.ActionType;
 
 /**
  * Classe que define o componente visual languageSelector (Seletor de idioma).
@@ -29,7 +30,7 @@ public class LanguageSelectorTag extends ListPropertyTag{
         setName(AttributeConstants.CURRENT_LANGUAGE_KEY);
         setValue(currentLanguage.toString());
         setShowFirstOption(false);
-        setOnChangeAction("changeCurrentLanguage");
+        setOnChangeActionType(ActionType.CHANGE_CURRENT_LANGUAGE);
         
         SystemResourceLoader systemResourceLoader = new SystemResourceLoader();
         SystemResource       systemResource       = systemResourceLoader.getDefault();
