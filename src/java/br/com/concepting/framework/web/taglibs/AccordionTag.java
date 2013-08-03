@@ -253,7 +253,7 @@ public class AccordionTag extends BaseActionFormElementTag{
         print("<div id=\"");
         print(sectionTag.getName());
         print(".");
-        print(TaglibConstants.DEFAULT_SECTION_HEADER_STYLE_CLASS);
+        print(TaglibConstants.SECTION_HEADER_KEY);
         print("\" class=\"");
         
         String headerStyleClass = StringUtil.trim(sectionTag.getHeaderStyleClass());
@@ -351,7 +351,7 @@ public class AccordionTag extends BaseActionFormElementTag{
         print("<div id=\"");
         print(sectionName);
         print(".");
-        print(TaglibConstants.DEFAULT_SECTION_HEADER_STYLE_CLASS);
+        print(TaglibConstants.SECTION_CONTENT_KEY);
         print("\" class=\"");
         
         String contentStyleClass = StringUtil.trim(sectionTag.getContentStyleClass());
