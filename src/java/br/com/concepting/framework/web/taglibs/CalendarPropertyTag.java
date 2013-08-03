@@ -58,7 +58,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
             print(VisibilityType.HIDDEN);
             println(";\">");
 
-            print("<table class=\"");
+            print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
             print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
             println("\">");
 			println("<tr>");
