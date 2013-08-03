@@ -428,11 +428,11 @@ public class PageTag extends HtmlTag{
         styleTag.doStartTag();
         styleTag.doEndTag();
 
-        scriptTag.setUrl(TaglibConstants.DEFAULT_SLIDER_SCRIPT_RESOURCE_ID);
+        scriptTag.setUrl(TaglibConstants.DEFAULT_SLIDER_BAR_SCRIPT_RESOURCE_ID);
         scriptTag.doStartTag();
         scriptTag.doEndTag();
 
-        styleTag.setUrl(TaglibConstants.DEFAULT_SLIDER_STYLE_RESOURCE_ID);
+        styleTag.setUrl(TaglibConstants.DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID);
         styleTag.doStartTag();
         styleTag.doEndTag();
 
