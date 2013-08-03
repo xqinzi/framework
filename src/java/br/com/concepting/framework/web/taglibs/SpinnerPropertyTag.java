@@ -5,7 +5,7 @@ import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
- * Classe que define o componente visual spinner (controle de valores númericos). 
+ * Classe que define o componente visual spinner (Controle de valores númericos). 
  * 
  * @author fvilarinho
  * @since 3.0
