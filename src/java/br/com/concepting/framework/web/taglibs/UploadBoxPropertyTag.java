@@ -4,6 +4,7 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.web.action.types.ActionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.VisibilityType;
 
 /**
  * Classe que define o componente visual para uma caixa de upload.
@@ -82,14 +83,16 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         tagId.append(name);
         tagId.append(".");
         tagId.append(AttributeConstants.UPLOAD_DATA_KEY);
-
+ 
         print("<input type=\"");
         print(ComponentType.UPLOAD);
         print("\" id=\"");
         print(tagId);
         print("\" name=\"");
         print(AttributeConstants.UPLOAD_DATA_KEY);
-        print("\" style=\"display: NONE;\" onChange=\"");
+        print("\" style=\"display: ");
+        print(VisibilityType.NONE);
+        print(";\" onChange=\"");
         print(onChange);
         println("\">");
 
