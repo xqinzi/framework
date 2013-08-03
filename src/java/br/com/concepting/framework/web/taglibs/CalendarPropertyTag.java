@@ -1,6 +1,5 @@
 package br.com.concepting.framework.web.taglibs;
 
-import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.web.types.VisibilityType;
@@ -51,7 +50,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
             print("<div id=\"");
             print(name);
             print(".");
-            print(AttributeConstants.CALENDAR_KEY);
+            print(TaglibConstants.CALENDAR_KEY);
             print("\" class=\"");
             print(TaglibConstants.DEFAULT_CALENDAR_STYLE_CLASS);
             print("\" style=\"visibility: ");
@@ -85,7 +84,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
 			print("<span id=\"");
 			print(name);
 			print(".");
-			print(AttributeConstants.CALENDAR_DISPLAY_KEY);
+			print(TaglibConstants.CALENDAR_DISPLAY_KEY);
 			print("\" class=\"");
 			print(TaglibConstants.DEFAULT_CALENDAR_DISPLAY_STYLE_CLASS);
 			println("\"></span>");
@@ -113,7 +112,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
             print("<span id=\"");
             print(name);
             print(".");
-            print(AttributeConstants.CALENDAR_DAYS_KEY);
+            print(TaglibConstants.CALENDAR_DAYS_KEY);
             print("\" class=\"");
             print(TaglibConstants.DEFAULT_CALENDAR_DAYS_STYLE_CLASS);
             println("\"></span>");
