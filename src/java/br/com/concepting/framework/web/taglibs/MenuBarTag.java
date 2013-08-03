@@ -381,7 +381,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                             print("<td id=\"");
                             print(menuItemName);
                             print(".");
-                            print(AttributeConstants.MENU_ITEM_ICON_KEY);
+                            print(TaglibConstants.MENU_ITEM_ICON_KEY);
                             print("\" class=\"");
                             print(menuBoxItemStyleClass);
                             print("\" align=\"");
@@ -396,7 +396,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
                         print("<td id=\"");
      					print(menuItemName);
      					print(".");
-     					print(AttributeConstants.MENU_ITEM_KEY);
+     					print(TaglibConstants.MENU_ITEM_KEY);
      					print("\" class=\"");
      					
      					if(parentMenuItem != null)
@@ -515,7 +515,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
      						print("<td id=\"");
      						print(menuItemName);
      						print(".");
-     						print(AttributeConstants.MENU_ITEM_ARROW_KEY);
+     						print(TaglibConstants.MENU_ITEM_ARROW_KEY);
      						print("\" class=\"");
     
                             if(parentMenuItem != null)
@@ -559,7 +559,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 					print("<div id=\"");
 					print(menuItemName);
 					print(".");
-					print(AttributeConstants.MENU_BOX_KEY);
+					print(TaglibConstants.MENU_BOX_KEY);
 					print("\" class=\"");
 					print(TaglibConstants.DEFAULT_MENU_BOX_STYLE_CLASS);
 					print("\" style=\"visibility: ");
@@ -581,7 +581,7 @@ public class MenuBarTag extends BaseOptionsPropertyTag{
 		print("<div id=\"");
 		print(getName());
 		print(".");
-		print(AttributeConstants.MENU_BAR_KEY);
+		print(TaglibConstants.MENU_BAR_KEY);
 		print("\" class=\"");
 		print(TaglibConstants.DEFAULT_MENU_BAR_STYLE_CLASS);
 		println("\">");
