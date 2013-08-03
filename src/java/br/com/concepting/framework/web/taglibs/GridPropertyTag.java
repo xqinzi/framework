@@ -1595,12 +1595,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 	 * @throws Throwable
 	 */
 	private void renderHeader() throws Throwable{
-        RequestInfo  requestInfo  = getRequestInfo();
-	    PropertyInfo propertyInfo = getPropertyInfo();
-	    String       name         = getName();
-	    String       actionForm   = getActionForm();
-        String       width        = getWidth();
-	    List         dataValues   = getDataValues();
+        RequestInfo  requestInfo    = getRequestInfo();
+	    PropertyInfo propertyInfo   = getPropertyInfo();
+	    String       name           = getName();
+	    String       actionFormName = getActionFormName();
+        String       width          = getWidth();
+	    List         dataValues     = getDataValues();
 
         print("<table");
 
@@ -1617,7 +1617,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 		println("<tr>");
 		println("<td>");
 
-        print("<table class=\"");
+        print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
         print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
         println("\">");
 		println("<tr>");
@@ -1916,7 +1916,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     
     				println(">");
     
-                    print("<table class=\"");
+                    print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"");
                     print(TaglibConstants.DEFAULT_PANEL_STYLE_CLASS);
                     println("\">");
     				println("<tr>");
@@ -1983,13 +1983,13 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         				}
         				
             			print(" document.");
-        				print(actionForm);
+        				print(actionFormName);
         				print(".");
         				print(AttributeConstants.ACTION_KEY);
         				print(".value = '");
         				print(ActionType.REFRESH.getMethod());
         				print("'; submitForm(document.");
-        				print(actionForm);
+        				print(actionFormName);
         				print(");\"");
     				}
     				
