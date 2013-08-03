@@ -109,7 +109,7 @@ public class UploadBoxPropertyTag extends DownloadBoxPropertyTag{
         
         StringBuilder onClick = new StringBuilder();
         
-        onClick.append("document.getElementById('");
+        onClick.append("getObject('");
         onClick.append(name);
         onClick.append(".");
         onClick.append(AttributeConstants.UPLOAD_DATA_KEY);
