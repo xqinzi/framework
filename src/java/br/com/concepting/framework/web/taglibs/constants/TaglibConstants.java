@@ -16,6 +16,21 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_ACCORDION_STYLE_CLASS = "accordion";
     
     /**
+     * Constante que define o identificador do arquivo de internacionalização default para o componente visual accordion (guia de seções).
+     */
+    public static final String DEFAULT_ACCORDION_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("accordion");
+    
+    /**
+     * Constante que define o identificador do arquivo de script default para o componente visual accordion (guia de seções).
+     */
+    public static final String DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("accordion.js");
+    
+    /**
+     * Constante que define o identificador do arquivo de estilos CSS default para o componente visual accordion (guia de seções).
+     */
+    public static final String DEFAULT_ACCORDION_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("accordion.css");
+
+    /**
      * Constante que define o identificador do estilo CSS default para o componente visual calendar (calendário).
      */
     public static final String DEFAULT_CALENDAR_STYLE_CLASS = "calendar";
@@ -42,21 +57,6 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_CALENDAR_DAYS_STYLE_CLASS = "calendarDays";
     
-    /**
-     * Constante que define o identificador do arquivo de internacionalização default para o componente visual accordion (guia de seções).
-     */
-    public static final String DEFAULT_ACCORDION_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("accordion");
-    
-    /**
-     * Constante que define o identificador do arquivo de script default para o componente visual accordion (guia de seções).
-     */
-    public static final String DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("accordion.js");
-    
-    /**
-     * Constante que define o identificador do arquivo de estilos CSS default para o componente visual accordion (guia de seções).
-     */
-    public static final String DEFAULT_ACCORDION_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("accordion.css");
-
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente visual calendar (calendário).
      */
@@ -161,19 +161,9 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_GRID_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("grid.js");
     
     /**
-     * Constante que define o identificador do estilo CSS default para a pré-visualização pequena de uma imagem.
-     */
-    public static final String DEFAULT_IMAGE_THUMBNAIL_STYLE_CLASS = "imageThumbnail";
-
-    /**
      * Constante que define o identificador do estilo CSS default para o componente visual guides (guias).
      */
     public static final String DEFAULT_GUIDES_STYLE_CLASS = "guides";
-    
-    /**
-     * Constante que define o identificador do estilo CSS default para a definição do componente visual guides (guias).
-     */
-    public static final String DEFAULT_GUIDES_DEFINITION_STYLE_CLASS = "guidesDefinition";
 
     /**
      * Constante que define o identificador do estilo CSS default para a definição dos botões 
@@ -185,11 +175,6 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do estilo CSS default para o conteúdo do componente visual guide (guia).
      */
     public static final String DEFAULT_GUIDE_CONTENT_STYLE_CLASS = "guideContent";
-    
-    /**
-     * Constante que define o identificador do estilo CSS default para a definição do componente visual guide (guia).
-     */
-    public static final String DEFAULT_GUIDE_DEFINITION_STYLE_CLASS = "guideDefinition";
     
     /**
      * Constante que define o identificador do estilo CSS default para os labels de um guide (guia) do 
@@ -212,6 +197,11 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_GUIDES_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("guides.css");
     
+    /**
+     * Constante que define o identificador do estilo CSS default para a pré-visualização pequena de uma imagem.
+     */
+    public static final String DEFAULT_IMAGE_THUMBNAIL_STYLE_CLASS = "imageThumbnail";
+
     /**
      * Constante que define o identificador do estilo CSS default para os labels dos componentes visuais.
      */
@@ -304,7 +294,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_MENU_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("menuBar.js");
     
     /**
-     * Constante que define o identificador do arquivo de estilos default (CSS) para o componente visual menuBar (barra de menus).
+     * Constante que define o identificador do arquivo de estilos CSS default para o componente visual menuBar (barra de menus).
      */
     public static final String DEFAULT_MENU_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("menuBar.css");
     
@@ -319,7 +309,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_MESSAGE_BOX_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("messageBox.js");
 
     /**
-     * Constante que define o identificador do arquivo de estilos (CSS) default para o componente messageBox (caixa de mensagens).
+     * Constante que define o identificador do arquivo de estilos CSS default para o componente messageBox (caixa de mensagens).
      */
     public static final String DEFAULT_MESSAGE_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("messageBox.css");
 
@@ -375,7 +365,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_PAGER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("pager.js");
     
     /**
-     * Constante que define o identificador do arquivo de estilos (CSS) default para o componente pager (paginador).
+     * Constante que define o identificador do arquivo de estilos CSS default para o componente pager (paginador).
      */
     public static final String DEFAULT_PAGER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("pager.css");
     
@@ -444,7 +434,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_PROGRESS_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("progressBar.js");
     
     /**
-     * Constante que define o identificador o arquivo de estilos (CSS) default para o componente progressBar (barra de progresso).
+     * Constante que define o identificador o arquivo de estilos CSS default para o componente progressBar (barra de progresso).
      */
     public static final String DEFAULT_PROGRESS_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("progressBar.css");
 
@@ -473,15 +463,75 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_SHADE_STYLE_CLASS = "shade";
     
+    /**
+     * Constante que define o identificador do diretório de armazenamento dos skins (temas).
+     */
+    public static final String DEFAULT_SKINS_RESOURCES_DIR = "skins/";
+
+    /**
+     * Constante que define o identificador o arquivo de internacionalização default para o componente spinner (Controle de valores numéricos).
+     */
     public static final String DEFAULT_SPINNER_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("spinner");
     
+    /**
+     * Constante que define o identificador o arquivo de script de página default para o componente spinner (Controle de valores numéricos).
+     */
     public static final String DEFAULT_SPINNER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("spinner.js");
     
+    /**
+     * Constante que define o identificador o arquivo de estilos CSS default para o componente spinner (Controle de valores numéricos).
+     */
     public static final String DEFAULT_SPINNER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("spinner.css");
     
-    public static final String DEFAULT_SLIDER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("slider.js");
+    /**
+     * Constante que define o identificador do estilo CSS default para o botão de acréscimo do componente spinner (Controle de valores numéricos).
+     */
+    public static final String DEFAULT_ADD_SPINNER_BUTTON = "addSpinnerButton";
     
-    public static final String DEFAULT_SLIDER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
+    /**
+     * Constante que define o identificador do estilo CSS default para o botão de decréscimo do componente spinner (Controle de valores numéricos).
+     */
+    public static final String DEFAULT_SUBTRACT_SPINNER_BUTTON = "subtractSpinnerButton";
+    
+    /**
+     * Constante que define o identificador do estilo CSS default para o label dos botões do componente spinner (Controle de valores numéricos).
+     */
+    public static final String DEFAULT_SPINNER_BUTTON_LABEL = "spinnerButtonLabel";
+    
+    /**
+     * Constante que define o identificador do estilo CSS default para o componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_SLIDER_BAR_STYLE_CLASS = "sliderBar";
+    
+    /**
+     * Constante que define o identificador do estilo CSS default para a barra de controle do componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_SLIDER_BAR_CONTROL_STYLE_CLASS = "sliderBarControl";
+    
+    /**
+     * Constante que define o identificador do estilo CSS default para o lado esquerdo do componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_LEFT_SLIDER_BAR_STYLE_CLASS = "leftSliderBar";
+    
+    /**
+     * Constante que define o identificador do estilo CSS default para o corpo do componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_SLIDER_BAR_BODY_STYLE_CLASS = "sliderBarBody";
+
+    /**
+     * Constante que define o identificador do estilo CSS default para o lado direito do componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_RIGHT_SLIDER_BAR_STYLE_CLASS = "rightSliderBar";
+
+    /**
+     * Constante que define o identificador o arquivo de script de página default para o componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_SLIDER_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("slider.js");
+    
+    /**
+     * Constante que define o identificador o arquivo de estilos CSS default para o componente slider (Barra de deslize).
+     */
+    public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
 
     /**
      * Constante que define o estilo CSS default para um tracejado.
@@ -539,7 +589,7 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_TREE_VIEW_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("treeView.js");
     
     /**
-     * Constante que define o identificador do arquivo de estilos default (CSS) para o componente treeView (árvore).
+     * Constante que define o identificador do arquivo de estilos CSS default para o componente treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("treeView.css");
     
