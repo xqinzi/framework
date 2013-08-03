@@ -16,6 +16,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.web.SystemController;
 import br.com.concepting.framework.web.form.types.ActionFormMessageType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.DisplayType;
 import br.com.concepting.framework.web.types.ScopeType;
 import br.com.concepting.framework.web.types.VisibilityType;
  
@@ -230,7 +231,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         
         PropertiesResource resource = getDefaultI18nResource();
         String             message  = StringUtil.trim(resource.getProperty(AttributeConstants.LOADING_BOX_INFO_KEY));
-
+ 
         out.print("<span id=\"");
         out.print(getBeanName());
         out.print(".");
@@ -271,7 +272,9 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
         out.print(AttributeConstants.LOADING_BOX_ERROR_KEY);
         out.println("\" class=\"");
         out.print(TaglibConstants.DEFAULT_LOADING_BOX_TEXT_STYLE_CLASS);
-        out.println("\" style=\"display: NONE;\">");
+        out.print("\" style=\"display: ");
+        out.print(DisplayType.NONE);
+        out.println(";\">");
         
         out.println("<table>");
         
