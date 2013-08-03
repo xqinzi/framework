@@ -1,6 +1,5 @@
 package br.com.concepting.framework.web.taglibs.constants;
 
-import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.web.constants.SystemConstants;
 
 /**
@@ -73,6 +72,26 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_CALENDAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("calendar.css");
     
     /**
+     * Constante que define o identificador do componente visual calendar (calendário).
+     */
+    public static final String CALENDAR_KEY = "calendar";
+    
+    /**
+     * Constante que define o identificador do display do componente visual calendar (calendário).
+     */
+    public static final String CALENDAR_DISPLAY_KEY = "calendarDisplay";
+    
+    /**
+     * Constante que define o identificador para os dias do componente visual calendar (calendário).
+     */
+    public static final String CALENDAR_DAYS_KEY = "calendarDays";
+
+    /**
+     * Constante que define o identificador do estilo CSS default para o componente visual clock (relógio).
+     */
+    public static final String DEFAULT_CLOCK_STYLE_CLASS = "clock";
+    
+    /**
      * Constante que define o identificador do estilo CSS default para o componente visual dialogBox (caixa de diálogos).
      */
     public static final String DEFAULT_DIALOG_BOX_STYLE_CLASS = "dialogBox";
@@ -103,10 +122,10 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_DIALOG_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("dialogBox.css");
 
     /**
-     * Constante que define o identificador do estilo CSS default para o componente visual clock (relógio).
+     * Constante que define o identificador do componente visual dialogBox (caixa de diálogo).
      */
-    public static final String DEFAULT_CLOCK_STYLE_CLASS = "clock";
-    
+    public static final String DIALOG_BOX_KEY = "dialogBox";
+
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual downloadBox (caixa de download de arquivo).
      */
@@ -198,6 +217,11 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_GUIDES_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("guides.css");
     
     /**
+     * Constante que define o identificador para o conteúdo do componente visual guides (guias).
+     */
+    public static final String GUIDE_CONTENT_KEY = "guideContent";
+
+    /**
      * Constante que define o identificador do estilo CSS default para a pré-visualização pequena de uma imagem.
      */
     public static final String DEFAULT_IMAGE_THUMBNAIL_STYLE_CLASS = "imageThumbnail";
@@ -218,14 +242,14 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_LOADING_BOX_STYLE_CLASS = "loadingBox";
     
     /**
-     * Constante que define o identificador do estilo CSS default para a mensagem de carregamento com
-     * sucesso da caixa de carregamento da página.
+     * Constante que define o identificador do estilo CSS default para a mensagem de sucesso da 
+     * caixa de carregamento da página.
      */
     public static final String DEFAULT_LOADING_BOX_INFO_STYLE_CLASS = "loadingBoxInfo";
     
     /**
-     * Constante que define o identificador do estilo CSS default para a mensagem de carregamento com
-     * erro da caixa de carregamento da página.
+     * Constante que define o identificador do estilo CSS default para a mensagem de erro da caixa de 
+     * carregamento da página.
      */
     public static final String DEFAULT_LOADING_BOX_ICON_STYLE_CLASS = "loadingBoxIcon";
 
@@ -234,6 +258,21 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_LOADING_BOX_TEXT_STYLE_CLASS = "loadingBoxText";
     
+    /**
+     * Constante que define o identificador para a caixa de carregamento da página.
+     */
+    public static final String LOADING_BOX_KEY = "loadingBox";
+    
+    /**
+     * Constante que define o identificador da propriedade da mensagem de sucesso da caixa de carregamento da página.
+     */
+    public static final String LOADING_BOX_INFO_KEY = "loadingBoxInfo";
+
+    /**
+     * Constante que define o identificador da propriedade da mensagem de erro da caixa de carregamento da página.
+     */
+    public static final String LOADING_BOX_ERROR_KEY = "loadingBoxError";
+
     /**
      * Constante que define o identificador do estilo CSS default do componente visual menuBar (barra de menus).
      */
@@ -298,6 +337,12 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_MENU_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("menuBar.css");
     
+    public static final String MENU_BAR_KEY                      = "menuBar";
+    public static final String MENU_BOX_KEY                      = "menuBox";
+    public static final String MENU_ITEM_KEY                     = "menuItem";
+    public static final String MENU_ITEM_ARROW_KEY               = "menuItemArrow";
+    public static final String MENU_ITEM_ICON_KEY                = "menuItemIcon";
+
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente messageBox (caixa de mensagens).
      */
@@ -451,13 +496,23 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do estilo CSS default para o cabeçalho da seção.
      */
-    public static final String DEFAULT_SECTION_HEADER_STYLE_CLASS = AttributeConstants.SECTION_HEADER_KEY;
+    public static final String DEFAULT_SECTION_HEADER_STYLE_CLASS = "sectionHeader";
     
     /**
      * Constante que define o identificador do estilo CSS default para o conteúdo da seção.
      */
-    public static final String DEFAULT_SECTION_CONTENT_STYLE_CLASS = AttributeConstants.SECTION_CONTENT_KEY;
+    public static final String DEFAULT_SECTION_CONTENT_STYLE_CLASS = "sectionContent";
+
+    /**
+     * Constante que define o identificador do estilo CSS default para o cabeçalho da seção.
+     */
+    public static final String SECTION_HEADER_KEY = "sectionHeader";
     
+    /**
+     * Constante que define o identificador do estilo CSS default para o conteúdo da seção.
+     */
+    public static final String SECTION_CONTENT_KEY = "sectionContent";
+
     /**
      * Constante que define o estilo CSS default para uma sombra a ser carregada ao carregar uma modal.
      */
@@ -469,67 +524,67 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_SKINS_RESOURCES_DIR = "skins/";
 
     /**
-     * Constante que define o identificador o arquivo de internacionalização default para o componente spinner (Controle de valores numéricos).
+     * Constante que define o identificador o arquivo de internacionalização default para o componente spinner (controle de valores numéricos).
      */
     public static final String DEFAULT_SPINNER_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("spinner");
     
     /**
-     * Constante que define o identificador o arquivo de script de página default para o componente spinner (Controle de valores numéricos).
+     * Constante que define o identificador o arquivo de script de página default para o componente spinner (controle de valores numéricos).
      */
     public static final String DEFAULT_SPINNER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("spinner.js");
     
     /**
-     * Constante que define o identificador o arquivo de estilos CSS default para o componente spinner (Controle de valores numéricos).
+     * Constante que define o identificador o arquivo de estilos CSS default para o componente spinner (controle de valores numéricos).
      */
     public static final String DEFAULT_SPINNER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("spinner.css");
     
     /**
-     * Constante que define o identificador do estilo CSS default para o botão de acréscimo do componente spinner (Controle de valores numéricos).
+     * Constante que define o identificador do estilo CSS default para o botão de acréscimo do componente spinner (controle de valores numéricos).
      */
     public static final String DEFAULT_ADD_SPINNER_BUTTON = "addSpinnerButton";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o botão de decréscimo do componente spinner (Controle de valores numéricos).
+     * Constante que define o identificador do estilo CSS default para o botão de decréscimo do componente spinner (controle de valores numéricos).
      */
     public static final String DEFAULT_SUBTRACT_SPINNER_BUTTON = "subtractSpinnerButton";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o label dos botões do componente spinner (Controle de valores numéricos).
+     * Constante que define o identificador do estilo CSS default para o label dos botões do componente spinner (controle de valores numéricos).
      */
     public static final String DEFAULT_SPINNER_BUTTON_LABEL = "spinnerButtonLabel";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o componente slider (Barra de deslize).
+     * Constante que define o identificador do estilo CSS default para o componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_STYLE_CLASS = "sliderBar";
     
     /**
-     * Constante que define o identificador do estilo CSS default para a barra de controle do componente slider (Barra de deslize).
+     * Constante que define o identificador do estilo CSS default para a barra de controle do componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_CONTROL_STYLE_CLASS = "sliderBarControl";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o lado esquerdo do componente slider (Barra de deslize).
+     * Constante que define o identificador do estilo CSS default para o lado esquerdo do componente slider (barra de deslize).
      */
     public static final String DEFAULT_LEFT_SLIDER_BAR_STYLE_CLASS = "leftSliderBar";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o corpo do componente slider (Barra de deslize).
+     * Constante que define o identificador do estilo CSS default para o corpo do componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_BODY_STYLE_CLASS = "sliderBarBody";
 
     /**
-     * Constante que define o identificador do estilo CSS default para o lado direito do componente slider (Barra de deslize).
+     * Constante que define o identificador do estilo CSS default para o lado direito do componente slider (barra de deslize).
      */
     public static final String DEFAULT_RIGHT_SLIDER_BAR_STYLE_CLASS = "rightSliderBar";
 
     /**
-     * Constante que define o identificador o arquivo de script de página default para o componente slider (Barra de deslize).
+     * Constante que define o identificador o arquivo de script de página default para o componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("slider.js");
     
     /**
-     * Constante que define o identificador o arquivo de estilos CSS default para o componente slider (Barra de deslize).
+     * Constante que define o identificador o arquivo de estilos CSS default para o componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
 
@@ -548,6 +603,10 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_TREE_VIEW_CONTENT_STYLE_CLASS = "treeViewContent";
     
+    public static final String TREE_VIEW_KEY = "treeView";
+
+    public static final String TREE_VIEW_CONTENT_KEY = "treeViewContent";
+
     /**
      * Constante que define o estilo CSS default para um nó sem filhos do componente visual treeView (árvore).
      */
