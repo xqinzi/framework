@@ -15,6 +15,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.web.types.DisplayType;
 
 /**
  * Classe que define o componente visual Treeview (Árvore de visualização).
@@ -1017,7 +1018,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
     			selectionTag.setName(getName());
     			selectionTag.setResourceDir(getResourceDir());
     			selectionTag.setResourceId(getResourceId());
-    			selectionTag.setStyle("display: NONE;");
+    			selectionTag.setStyle("display: ".concat(DisplayType.NONE.toString()).concat(";"));
     			selectionTag.setData(getData());
     			selectionTag.setDataScope(getDataScope());
     			selectionTag.setShowLabel(false);
@@ -1401,8 +1402,11 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				print(nodeId);
 				print("\"");
 
-				if(!nodeIsExpanded)
-					print(" style=\"display: NONE;\"");
+				if(!nodeIsExpanded){
+					print(" style=\"display: ");
+					print(DisplayType.NONE);
+					print(";\"");
+				}
 
 				println(">");
 
