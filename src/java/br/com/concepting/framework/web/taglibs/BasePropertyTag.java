@@ -1817,7 +1817,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
                 if(searchPropertiesGroupTag != null){
                     onKeyPressContent = new StringBuilder(onKeyPress);
                     onKeyPressContent.append("if(getKeyPressed(event) == 13) ");
-                    onKeyPressContent.append("document.getElementById('");
+                    onKeyPressContent.append("getObject('");
                     onKeyPressContent.append(searchPropertiesGroupTag.getSearchButtonTag().getName());
                     onKeyPressContent.append("').click();");
         
