@@ -1361,7 +1361,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         											columnOnClickContent.delete(0, columnOnClickContent.length());
         										
                                                 if(optionTagId != null){
-                                                    columnOnClickContent.append("document.getElementById('");
+                                                    columnOnClickContent.append("getObject('");
                                                     columnOnClickContent.append(optionTagId.toString());
                                                     columnOnClickContent.append("').click(); ");
                                                 }
@@ -1949,17 +1949,17 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     				}
     
     				if(columnName.length() > 0){
-        				print(" href=\"javascript: document.getElementById('");
+        				print(" href=\"javascript: setObject('");
         				print(name);
         				print(".");
         				print(AttributeConstants.SORT_PROPERTY_KEY);
-        				print("').value = '");
+        				print("', '");
         				print(columnName);
-        				print("'; document.getElementById('");
+        				print("'); setObject('");
         				print(name);
         				print(".");
         				print(AttributeConstants.SORT_ORDER_KEY);
-        				print("').value = '");
+        				print("', '");
     
         				if(columnName.equals(requestInfo.getSortProperty())){
         					if(requestInfo.getSortOrder() == SortOrderType.ASCEND)
@@ -1970,16 +1970,16 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         				else
         					print(SortOrderType.ASCEND);
         				
-        				print("';");
+        				print("');");
 
         				if(pagerTag != null){
-            				print(" document.getElementById('");
+            				print(" setObject('");
             				print(name);
             				print(".");
             				print(AttributeConstants.PAGER_ACTION_KEY);
-            				print("').value = '");
+            				print("', '");
             				print(PagerActionType.REFRESH_PAGE);
-            				print("';");
+            				print("');");
         				}
         				
             			print(" document.");
