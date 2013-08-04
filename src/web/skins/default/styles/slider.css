@@ -1,14 +1,30 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual slider (barra de deslize).
+ * 
+ * @author fvilarinho
+ * @version 3.0
+ */
+
+/**
+ * Estilo que define o lado esquerdo do componente.
+ */
 .leftSliderBar{
 	background: url(../images/leftSliderBar.png) no-repeat;
 	width     : 2px;
 	height    : 5px;
 }
-
-.sliderBar{
-	background: url(../images/sliderBar.png) repeat-x;
+ 
+/**
+ * Estilo que define o corpo do componente.
+ */
+.sliderBarBody{
+	background: url(../images/sliderBarBody.png) repeat-x;
 	height    : 5px;
 }
 
+/**
+ * Estilo que define o controle de deslize do componente.
+ */
 .sliderBarControl{
 	position  : relative;
 	left      : 0px;
@@ -18,6 +34,9 @@
 	height    : 19px;
 }
 
+/**
+ * Estilo que define o lado esquerdo do componente.
+ */
 .rightSliderBar{
 	background: url(../images/rightSliderBar.png) no-repeat;
 	width     : 2px;
