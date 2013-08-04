@@ -27,9 +27,9 @@ public class RadioPropertyTag extends BaseOptionPropertyTag{
             String        onClick        = getOnClick();
             StringBuilder onClickContent = new StringBuilder();
 
-            onClickContent.append("if(this.checked) { setObject('");
+            onClickContent.append("if(this.checked) { setObjectValue('");
             onClickContent.append(name);
-            onClickContent.append("', this.value); } else { setObject('");
+            onClickContent.append("', this.value); } else { setObjectValue('");
             onClickContent.append(name);
             onClickContent.append("', ''); }");
             onClickContent.append(onClick);
