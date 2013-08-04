@@ -5,7 +5,7 @@
  * @version 1.0
  */
 var currentMenu = null;
-
+ 
 /**
  * Encontra qual é o item de menu pai a partir de um item de menu específico.
  * 
