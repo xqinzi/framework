@@ -572,7 +572,7 @@ public class TextPropertyTag extends BasePropertyTag{
                             println("<tr>");
                             print("<td class=\"");
                             print(TaglibConstants.DEFAULT_AUTO_COMPLETE_BOX_ITEM_STYLE_CLASS);
-                            print("\" onClick=\"setObject('");
+                            print("\" onClick=\"setObjectValue('");
                             print(getName());
                             print("', '");
                             print(autoCompleteValue);
