@@ -17,12 +17,9 @@ function pagerAction(name, action, updateViews, form){
 	if(!form)
 		return;
 
-	var object = getObject(name + ".pagerAction");
+	setObject(name + ".pagerAction", action);
 	
-	if(object)
-		object.value = action;
-	
-	object = document.forms[form].elements["updateViews"];
+	var object = document.forms[form].elements["updateViews"];
 	
 	if(object)
 		object.value = updateViews;
@@ -56,14 +53,8 @@ function moveToFirstPage(name, updateViews, form){
 	if(form)
 		document.forms[form].action.value = "refresh";
 	
-	var pagerOnForm = usePagerOnForm(name);
-	
-	if(pagerOnForm){
-		var object = getObject(name);
-		
-		if(object)
-			object.value = "objectId{0}"; 
-	}
+	if(usePagerOnForm(name))
+		setObjectValue(name, "objectId{0}"); 
 	
 	pagerAction(name, "FIRST_PAGE", updateViews, form);
 }
@@ -79,14 +70,10 @@ function moveToPreviousPage(name, updateViews, form){
 	if(form)
 		document.forms[form].action.value = "refresh";
 
-	var pagerOnForm = usePagerOnForm(name);
-	
-	if(pagerOnForm){
+	if(usePagerOnForm(name)){
 		var pagerIndex = getPagerIndex(name);
-		var object     = getObject(name);
-			
-		if(object)
-			object.value = ("objectId{" + (pagerIndex - 1) + "}"); 
+		
+		setObjectValue(name, "objectId{" + (pagerIndex - 1) + "}"); 
 	}
 
 	pagerAction(name, "PREVIOUS_PAGE", updateViews, form);
@@ -103,14 +90,10 @@ function moveToNextPage(name, updateViews, form){
 	if(form)
 		document.forms[form].action.value = "refresh";
 
-	var pagerOnForm = usePagerOnForm(name);
-	
-	if(pagerOnForm){
+	if(usePagerOnForm(name)){
 		var pagerIndex = getPagerIndex(name);
-		var object     = getObject(name);
-			
-		if(object)
-			object.value = ("objectId{" + (pagerIndex + 1) + "}");
+
+		setObjectValue(name, "objectId{" + (pagerIndex + 1) + "}");
 	}
 
 	pagerAction(name, "NEXT_PAGE", updateViews, form);
@@ -127,18 +110,10 @@ function moveToLastPage(name, updateViews, form){
 	if(form)
 		document.forms[form].action.value = "refresh";
 
-	var pagerOnForm = usePagerOnForm(name);
-	
-	if(pagerOnForm){
-		var object = getObject(name + ".dataValuesEndIndex");
+	if(usePagerOnForm(name)){
+		var pagerEndIndex = parseInt(getObjectValue(name + ".dataValuesEndIndex"));
 		
-		if(object){
-			var pagerEndIndex = parseInt(object.value); 
-			var object        = getObject(name);
-			
-			if(object)
-				object.value = ("objectId{" + pagerEndIndex + "}"); 
-		}
+		setObjectValue(name, "objectId{" + pagerEndIndex + "}"); 
 	}
 
 	pagerAction(name, "LAST_PAGE", updateViews, form);
