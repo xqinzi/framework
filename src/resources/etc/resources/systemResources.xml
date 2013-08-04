@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-
+ 
 <systemResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:noNamespaceSchemaLocation="systemResources.xsd">
-	<mainPage>/mainPage.jsp</mainPage>
-	<loginPage>/loginPage.jsp</loginPage>
-	<languages>
-		<language id="pt_BR" default="true"/>
-		<language id="en_US"/>
-		<language id="es"/>
+    <mainPage>/mainPage.jsp</mainPage>
+    <loginPage>/loginPage.jsp</loginPage>
+    <languages>
+        <language id="pt_BR" default="true"/>
+        <language id="en_US"/>
+        <language id="es"/>
 	</languages>
 	<skins>
 		<skin id="default" default="true"/>
