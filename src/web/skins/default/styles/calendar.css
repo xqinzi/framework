@@ -12,7 +12,7 @@
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 11px;
 	font-weight: BOLD;
-	color      : #ffffff;
+	color      : WHITE;
 	width      : 25px;
 	height     : 20px;
 	text-align : CENTER;
@@ -50,7 +50,7 @@
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
-	background           : #ffffff;
+	background           : WHITE;
 	text-align           : CENTER;
 	width                : 200px;
 	visibility           : HIDDEN;
@@ -67,7 +67,7 @@
 	height     : 20px;
 	text-align : CENTER;
 	border     : 1px SOLID #888888;
-	background : #ffffff;
+	background : WHITE;
 	cursor     : POINTER;
 }
 
@@ -93,7 +93,7 @@
 	height     : 20px;
 	text-align : CENTER;
 	border     : 1px SOLID #888888;
-	background : #ffffff;
+	background : WHITE;
 	cursor     : POINTER;
 }
 
@@ -106,7 +106,7 @@
 	font-weight: BOLD;
 	border     : 1px OUTSET #888888;
 	background : #888888;
-	color      : #ffffff;
+	color      : WHITE;
 	text-align : CENTER;
 	width      : 25px;
 	height     : 20px;
