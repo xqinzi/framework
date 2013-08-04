@@ -4,12 +4,12 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Estilo que define o componente.
  */
 .treeView{
-	background           : #ffffff;
+	background           : WHITE;
 	padding              : 5px;
     border-spacing       : 0px;
 	-webkit-border-radius: 3px;
