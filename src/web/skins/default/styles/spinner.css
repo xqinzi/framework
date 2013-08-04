@@ -1,3 +1,13 @@
+/**
+ * Arquivo que contém as definições dos estilos utilizados pelo componente visual spinner (controle de valores numéricos).
+ * 
+ * @author fvilarinho
+ * @version 3.0
+ */
+
+/**
+ * Estilo que define o botão de acréscimo de valores.
+ */
 .addSpinnerButton{
 	-webkit-border-top-left-radius    : 3px;
 	-webkit-border-top-right-radius   : 0px;
@@ -24,7 +34,10 @@
 	cursor                            : POINTER;
 	white-space                       : NOWRAP;
 }
-
+ 
+/**
+ * Estilo que define o botão de acréscimo de valores ao passar o mouse sobre.
+ */
 .addSpinnerButton:hover{
 	-webkit-border-top-left-radius    : 3px;
 	-webkit-border-top-right-radius   : 0px;
@@ -52,6 +65,9 @@
 	white-space                       : NOWRAP;
 }
 
+/**
+ * Estilo que define o botão de decréscimo de valores.
+ */
 .subtractSpinnerButton{
 	-webkit-border-top-left-radius    : 0px;
 	-webkit-border-top-right-radius   : 3px;
@@ -79,6 +95,9 @@
 	white-space                       : NOWRAP;
 }
 
+/**
+ * Estilo que define o botão de decréscimo de valores ao passar o mouse sobre.
+ */
 .subtractSpinnerButton:hover{
 	-webkit-border-top-left-radius    : 0px;
 	-webkit-border-top-right-radius   : 3px;
@@ -106,6 +125,9 @@
 	white-space                       : NOWRAP;
 }
 
+/**
+ * Estilo que define o label dos botões do componente.
+ */
 .spinnerButtonLabel{
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 18px;
