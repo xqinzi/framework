@@ -1377,11 +1377,11 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				if(!propertyInfo.isCollection()){
 					if(nodeIsSelected){
 					    content = new StringBuilder();
-					    content.append("setObject('");
+					    content.append("setObjectValue('");
 					    content.append(name);
 					    content.append("', '");
 					    content.append(nodeValue);
-					    content.append("'); setObject('");
+					    content.append("'); setObjectValue('");
 					    content.append(name);
 					    content.append(".");
 					    content.append(AttributeConstants.CURRENT_NODE_KEY);
