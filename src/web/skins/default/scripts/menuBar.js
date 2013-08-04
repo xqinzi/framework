@@ -47,9 +47,9 @@ function selectMenuItem(menuItem, menuItemClass){
        	var menu          = getObject(menuItemId + ".menuBox");
 
        	if(parentMenuId.indexOf(".menuBar") < 0)
-	     	changeStyle(menuItem.parentNode, menuItemClass);
+	     	menuItem.parentNode.className = menuItemClass;
 
-    	changeStyle(menuItem, menuItemClass);
+    	menuItem.className = menuItemClass;
 	    
        	if(currentMenu){
        		currentMenuId = currentMenu.id;
@@ -103,8 +103,8 @@ function unselectMenuItem(menuItem, menuItemClass){
 		var parentMenu   = findAncestorMenu(menuItem);
        	var parentMenuId = parentMenu.id;
         
-   		changeStyle(menuItem.parentNode, menuItemClass);
-       	changeStyle(menuItem, menuItemClass);
+   		menuItem.parentNode.className = menuItemClass;
+       	menuItem.className            = menuItemClass;
     }
 }
 
@@ -144,7 +144,7 @@ function hideAllParentMenus(){
 	catch(e){
 	}
 }
-
+ 
 /**
  * Mantém o componente com posição fixa.
  * 
