@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Define qual deve ser a guia atual.
  * 
@@ -13,28 +13,23 @@
  * @param guideOnSelect Método a ser executado no momento que a guia for selecionada.
  */
 function setCurrentGuide(guideName, guidesName, guideOnSelect){
-	var currentGuideName = "";
-	var currentGuide     = getObject(guidesName + ".currentGuide");
+	var currentGuideName = getObjectValue(guidesName + ".currentGuide");
 	
-	if(currentGuide){
-		currentGuideName = currentGuide.value;
-		
-		currentGuide.value = guideName;
-	}
+	setObjectValue(guidesName + ".currentGuide", guideName);
 	
-	var currentGuideDefinition = getObject(guidesName + "." + currentGuideName + ".guideDefinition");
-	var currentGuideContent    = getObject(guidesName + "." + currentGuideName + ".guideContent");
-	var guideDefinition        = getObject(guidesName + "." + guideName + ".guideDefinition");
-	var guideContent           = getObject(guidesName + "." + guideName + ".guideContent");
+	var currentGuide        = getObject(guidesName + "." + currentGuideName + ".guide");
+	var currentGuideContent = getObject(guidesName + "." + currentGuideName + ".guideContent");
+	var guide               = getObject(guidesName + "." + guideName + ".guide");
+	var guideContent        = getObject(guidesName + "." + guideName + ".guideContent");
 	
-	if(currentGuideDefinition && currentGuideContent){
-		changeStyle(currentGuideDefinition, "guide");
+	if(currentGuide && currentGuideContent){
+		currentGuide.className = "guide";
 
 		currentGuideContent.style.display = "NONE";
 	}
 		
 	if(guideDefinition && guideContent){
-		changeStyle(guideDefinition, "currentGuide");
+		guide.className = "currentGuide";
 
 		guideContent.style.display = "";
 	}
