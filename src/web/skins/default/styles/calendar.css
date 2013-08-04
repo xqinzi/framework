@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Estilo que define o dia corrente.
  */
@@ -28,6 +28,9 @@
 	border-collapse: COLLAPSE;
 }
 
+/**
+ * Estilo que define os textos do componente.
+ */
 .calendarText{
 	border-spacing : 0px;
 	padding        : 0px;
