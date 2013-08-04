@@ -26,15 +26,6 @@
 }
 
 /**
- * Estilo que define uma linha tracejada, usada na ligação entre os nós.
- */
-.trace{
-	background: url(../images/trace.gif) NO-REPEAT;
-	width     : 16px;
-	height    : 20px;
-}
-
-/**
  * Estilo que define o label de um nó do treeView (árvore).
  */
 .nodeLabel{
