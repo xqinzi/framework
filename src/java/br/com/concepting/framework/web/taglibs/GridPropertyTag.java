@@ -1949,13 +1949,13 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     				}
     
     				if(columnName.length() > 0){
-        				print(" href=\"javascript: setObject('");
+        				print(" href=\"javascript: setObjectValue('");
         				print(name);
         				print(".");
         				print(AttributeConstants.SORT_PROPERTY_KEY);
         				print("', '");
         				print(columnName);
-        				print("'); setObject('");
+        				print("'); setObjectValue('");
         				print(name);
         				print(".");
         				print(AttributeConstants.SORT_ORDER_KEY);
@@ -1973,7 +1973,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         				print("');");
 
         				if(pagerTag != null){
-            				print(" setObject('");
+            				print(" setObjectValue('");
             				print(name);
             				print(".");
             				print(AttributeConstants.PAGER_ACTION_KEY);
