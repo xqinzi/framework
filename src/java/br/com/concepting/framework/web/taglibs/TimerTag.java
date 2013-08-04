@@ -270,7 +270,7 @@ public class TimerTag extends BasePropertyTag{
                 content.append(name);
                 content.append("TimerDisplay(){");
                 content.append(StringUtil.getLineBreak());
-                content.append("\tsetObject(\"");
+                content.append("\tsetObjectValue(\"");
                 content.append(name);
                 content.append("\", (parseInt(timerObject.value) - 1));");
                 content.append(StringUtil.getLineBreak());
@@ -304,7 +304,7 @@ public class TimerTag extends BasePropertyTag{
                         content.append(";");
                 }
                 else{
-                    content.append("setObject(\"");
+                    content.append("setObjectValue(\"");
                     content.append(name);
                     content.append("\", (parseInt(timerObject.value) - 1));");
                     content.append(StringUtil.getLineBreak());
