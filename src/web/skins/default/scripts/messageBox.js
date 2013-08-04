@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Exibe/Esconde o detalhamento do erro.
  * 
