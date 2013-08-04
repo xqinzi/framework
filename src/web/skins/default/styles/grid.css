@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Estilo que define o ícone de ordenação ascendente.
  */
@@ -36,7 +36,7 @@
  */
 .gridHeader{
 	background : url(../images/gridHeader.gif);
-	color      : #ffffff;
+	color      : WHITE;
 	font-family: Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size  : 14px;
 	font-weight: BOLD;
@@ -52,7 +52,7 @@
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 14px;
 	text-decoration: NONE;
-	color          : #ffffff;
+	color          : WHITE;
 	cursor         : POINTER;
 }
 
@@ -63,7 +63,7 @@
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 14px;
 	text-decoration: UNDERLINE;
-	color          : #ffffff;
+	color          : WHITE;
 }
 
 /**
@@ -73,7 +73,7 @@
 	font-family    : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
 	font-size      : 14px;
 	text-decoration: NONE;
-	color          : #ffffff;
+	color          : WHITE;
 }
 
 /**
