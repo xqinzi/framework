@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 3.0
  */
-
+ 
 /**
  * Exibe uma caixa de diálogo.
  * 
