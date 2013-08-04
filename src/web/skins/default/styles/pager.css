@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Estilo que define o botão da primeira página.
  */
@@ -106,7 +106,7 @@
 	font-weight          : BOLD;
 	color                : #5393a6;
 	width                : 20px;
-	background           : #ffffff;
+	background           : WHITE;
 	-webkit-border-radius: 3px;
 	-moz-border-radius   : 3px;
 	border-radius        : 3px;
