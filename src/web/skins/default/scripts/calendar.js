@@ -6,7 +6,7 @@
  */
 var weekNames  = null;
 var monthNames = null;
-
+ 
 /**
  * Inicializa lista de nomes dos meses a serem utilizados pelo componente.
  */
@@ -102,97 +102,92 @@ function moveToPreviousYear(name){
  * @returns Instância do objeto de data/hora desejado.
  */
 function parseCalendar(name){
-	var property        = getObject(name);
-	var propertyPattern = getObject(name + ".pattern");
-	
-	if(property && propertyPattern){
-		var value       = property.value;
-		var currentDate = new Date();
-	    var pattern     = propertyPattern.value; 
-		var values      = value.split(" ");
-		var patterns    = pattern.split(" ");
-		var dateValue   = values[0];
-		var datePattern = patterns[0];
-		var timeValue   = (values.length > 1 ? values[1] : "");
-		var timePattern = (patterns.length > 1 ? patterns[1] : "");
-	
-		if(datePattern.length > 0){
-			var dateSeparator = "";
-			var pos           = datePattern.indexOf("/");
+	var currentDate = new Date();
+	var value       = getObjectValue(name);
+    var pattern     = getObjectValue(name + ".pattern"); 
+	var values      = value.split(" ");
+	var patterns    = pattern.split(" ");
+	var dateValue   = values[0];
+	var datePattern = patterns[0];
+	var timeValue   = (values.length > 1 ? values[1] : "");
+	var timePattern = (patterns.length > 1 ? patterns[1] : "");
+
+	if(datePattern.length > 0){
+		var dateSeparator = "";
+		var pos           = datePattern.indexOf("/");
+		
+		if(pos < 0){
+			pos = datePattern.indexOf(".");
 			
-			if(pos < 0){
-				pos = datePattern.indexOf(".");
-				
-				if(pos < 0)
-					pos = datePattern.indexOf("-");
-			}
-			
-			if(pos >= 0){
-				dateSeparator = datePattern.substring(pos, pos + 1);
-			
-				var dateValueParts   = dateValue.split(dateSeparator);
-				var datePatternParts = datePattern.split(dateSeparator);
-				
-				if(datePatternParts.length == dateValueParts.length){
-					var datePos          = -1;
-					var monthPos         = -1;
-					var yearPos          = -1;
-					
-					for(index = 0 ; index < datePatternParts.length ; index++){
-						if(datePatternParts[index].indexOf("d") == 0)
-							datePos = index;
-						else if(datePatternParts[index].indexOf("M") == 0)
-							monthPos = index;
-						else if(datePatternParts[index].indexOf("y") == 0)
-							yearPos = index;
-					}
-	
-					if(datePos >= 0)
-						currentDate.setDate(dateValueParts[datePos]);
-				
-					if(monthPos >= 0)
-						currentDate.setMonth(dateValueParts[monthPos] - 1);
-				
-					if(yearPos >= 0)
-						currentDate.setYear(dateValueParts[yearPos]);
-				}
-			}
+			if(pos < 0)
+				pos = datePattern.indexOf("-");
 		}
 		
-		if(timeValue.length > 0){
-			var timeSeparator    = ":";
-			var timeValueParts   = timeValue.split(timeSeparator);
-			var timePatternParts = timePattern.split(timeSeparator);
+		if(pos >= 0){
+			dateSeparator = datePattern.substring(pos, pos + 1);
+		
+			var dateValueParts   = dateValue.split(dateSeparator);
+			var datePatternParts = datePattern.split(dateSeparator);
 			
-			if(timePatternParts.length == timeValueParts.length){
-				var hoursPos         = -1;
-				var minutesPos       = -1;
-				var secondsPos       = -1;
-				var millisecondsPos  = -1;
+			if(datePatternParts.length == dateValueParts.length){
+				var datePos          = -1;
+				var monthPos         = -1;
+				var yearPos          = -1;
 				
-				for(index = 0 ; index < timePatternParts.length ; index++){
-					if(timePatternParts[index].indexOf("h") == 0 || timePatternParts[index].indexOf("H") == 0)
-						hoursPos = index;
-					else if(timePatternParts[index].indexOf("m") == 0)
-						minutesPos = index;
-					else if(timePatternParts[index].indexOf("s") == 0)
-						secondsPos = index;
-					else if(timePatternParts[index].indexOf("S") == 0)
-						millisecondsPos = index;
+				for(index = 0 ; index < datePatternParts.length ; index++){
+					if(datePatternParts[index].indexOf("d") == 0)
+						datePos = index;
+					else if(datePatternParts[index].indexOf("M") == 0)
+						monthPos = index;
+					else if(datePatternParts[index].indexOf("y") == 0)
+						yearPos = index;
 				}
-	
-				if(hoursPos >= 0)
-					currentDate.setHours(timeValueParts[hoursPos]);
-				
-				if(minutesPos >= 0)
-					currentDate.setMinutes(timeValueParts[minutesPos]);
-	
-				if(secondsPos >= 0)
-					currentDate.setSeconds(timeValueParts[secondsPos]);
-	
-				if(millisecondsPos >= 0)
-					currentDate.setMilliseconds(timeValueParts[millisecondsPos]);
+
+				if(datePos >= 0)
+					currentDate.setDate(dateValueParts[datePos]);
+			
+				if(monthPos >= 0)
+					currentDate.setMonth(dateValueParts[monthPos] - 1);
+			
+				if(yearPos >= 0)
+					currentDate.setYear(dateValueParts[yearPos]);
 			}
+		}
+	}
+		
+	if(timeValue.length > 0){
+		var timeSeparator    = ":";
+		var timeValueParts   = timeValue.split(timeSeparator);
+		var timePatternParts = timePattern.split(timeSeparator);
+		
+		if(timePatternParts.length == timeValueParts.length){
+			var hoursPos         = -1;
+			var minutesPos       = -1;
+			var secondsPos       = -1;
+			var millisecondsPos  = -1;
+			
+			for(index = 0 ; index < timePatternParts.length ; index++){
+				if(timePatternParts[index].indexOf("h") == 0 || timePatternParts[index].indexOf("H") == 0)
+					hoursPos = index;
+				else if(timePatternParts[index].indexOf("m") == 0)
+					minutesPos = index;
+				else if(timePatternParts[index].indexOf("s") == 0)
+					secondsPos = index;
+				else if(timePatternParts[index].indexOf("S") == 0)
+					millisecondsPos = index;
+			}
+
+			if(hoursPos >= 0)
+				currentDate.setHours(timeValueParts[hoursPos]);
+			
+			if(minutesPos >= 0)
+				currentDate.setMinutes(timeValueParts[minutesPos]);
+
+			if(secondsPos >= 0)
+				currentDate.setSeconds(timeValueParts[secondsPos]);
+
+			if(millisecondsPos >= 0)
+				currentDate.setMilliseconds(timeValueParts[millisecondsPos]);
 		}
 		
 		return currentDate;
@@ -376,10 +371,9 @@ function updateCurrentCalendarDay(name, day){
  * @param currentDate Instância do objeto de data/hora desejado. 
  */
 function updateCalendar(name, currentDate){
-	var property        = getObject(name);
-	var propertyPattern = getObject(name + ".pattern");
+	var property = getObject(name);
 	
-	if(property && propertyPattern){
+	if(property){
 		var date          = "" + currentDate.getDate();
 		var month         = "" + (currentDate.getMonth() + 1);
 		var year          = "" + currentDate.getFullYear();
@@ -387,7 +381,7 @@ function updateCalendar(name, currentDate){
 		var minutes       = "" + currentDate.getMinutes();
 		var seconds       = "" + currentDate.getSeconds();
 		var milliseconds  = "" + currentDate.getMilliseconds();
-	    var pattern       = propertyPattern.value; 
+	    var pattern       = getObjectValue(name + ".pattern"); 
 		var patterns      = pattern.split(" ");
 		var datePattern   = patterns[0];
 		var timePattern   = (patterns.length > 1 ? patterns[1] : "");
