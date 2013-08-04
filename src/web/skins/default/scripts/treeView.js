@@ -4,7 +4,7 @@
  * @author fvilarinho
  * @version 1.0
  */
-
+ 
 /**
  * Esconde/Exibe o contéudo de um nó.
  * 
@@ -46,14 +46,12 @@ function showHideNode(nodeId, expandedNodeIconClass, collapsedNodeIconClass, ope
 			nodeIcon.className = closedNodeIconClass;
 	}
 	
-	var nodeExpanded = getObject(nodeId + ".isNodeExpanded");
+	var nodeExpanded = getObjectValue(nodeId + ".isNodeExpanded");
 	
-	if(nodeExpanded){
-		if(nodeExpanded.value == "false")
-			nodeExpanded.value = "true";
-		else
-			nodeExpanded.value = "false";
-	}
+	if(nodeExpanded == "false")
+		setObjectValue(nodeId + ".isNodeExpanded", true);
+	else
+		setObjectValue(nodeId + ".isNodeExpanded", false);
 	
 	if(onExpand)
 		onExpand();
@@ -117,8 +115,7 @@ function selectUnSelectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass
  * @param onUnSelect Função a ser executada no momento da deseleção do nó.
  */
 function unselectNode(name, nodeId, nodeLabelClass, hasMultipleSelection, onUnSelect){
-	var nodeLabel   = getObject(nodeId + ".label");
-	var currentNode = getObject(name + ".currentNode");
+	var nodeLabel = getObject(nodeId + ".label");
 		
 	if(nodeLabel){
 		nodeLabel.className = nodeLabelClass;
@@ -193,12 +190,8 @@ function unselectNode(name, nodeId, nodeLabelClass, hasMultipleSelection, onUnSe
 			}
 		}
 		else{
-			currentNode.value = "";	
-
-			var option = getObject(name);
-			
-			if(option)
-				option.value = "";
+			setObjectValue(name + ".currentNode", "");
+			setObjectValue(name, "");
 		}
 	}
 
@@ -221,7 +214,6 @@ function unselectNode(name, nodeId, nodeLabelClass, hasMultipleSelection, onUnSe
  */
 function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, hasMultipleSelection, onSelect, dontSelectChilds){
 	var nodeLabel   = getObject(nodeId + ".label");
-	var currentNode = getObject(name + ".currentNode");
 	
 	if(currentNode && nodeLabel){
 		nodeLabel.className = nodeLabelSelectedClass;
@@ -267,18 +259,15 @@ function selectNode(name, nodeId, nodeLabelClass, nodeLabelSelectedClass, hasMul
 			}
 		}
 		else{
-			var nodeLabel = getObject(currentNode.value + ".label");
+			var currentNode = getObjectValue(name + ".currentNode");
+			var nodeLabel   = getObject(currentNode + ".label");
 			
 			if(nodeLabel)
-				if(currentNode.value != nodeId)
+				if(currentNode != nodeId)
 					nodeLabel.className = nodeLabelClass;
 	
-			currentNode.value = nodeId;	
-
-			var option = getObject(name);
-			
-			if(option)
-				option.value = nodeValue;
+			setObjectValue(name + ".currentNode", nodeId);
+			setObjectValue(name, nodeValue);
 		}
 
 		if(onSelect)
