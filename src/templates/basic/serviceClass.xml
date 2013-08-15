@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-
+ 
 <serviceClass xmlns:concepting="default namespace">
 	<set var="modelName" value="#{clazz.simpleName}"/>
 	<set var="servicePackage" value="br.com.concepting.framework.service.util.ServiceUtil.getServicePackageByModel(#{clazz})"/>
@@ -10,6 +10,7 @@
 	
 	import br.com.concepting.framework.service.BaseService;
 	<if expr="#{serviceType} == 'WEB_SERVICE'">
+        import br.com.concepting.framework.service.annotations.Service;
 		import br.com.concepting.framework.service.types.ServiceType;
 		
 		import #{clazz};
