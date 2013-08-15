@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-
+ 
 <persistenceInterface xmlns:concepting="default namespace">
 	<set var="modelName" value="#{clazz.simpleName}"/>
 	<set var="persistenceInterfacePackage" value="br.com.concepting.framework.persistence.util.PersistenceUtil.getPersistenceInterfacePackageByModel(#{clazz})"/>
