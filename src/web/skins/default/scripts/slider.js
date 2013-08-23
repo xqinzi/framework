@@ -2,7 +2,7 @@ var sliderBarControl           = null;
 var sliderBarControlName       = null;
 var sliderBarControlCurrentPos = null;
 var sliderBarControlStartPos   = null;
-
+ 
 function dragSliderBarControl(object, event){
 	sliderBarControl           = object;
 	sliderBarControlName       = replaceAll(object.id, ".sliderBarControl", "");
