@@ -9,7 +9,7 @@ var clockTimer     = null;
 var requestHandler = null;
 var submittedForm  = null;
 var timers         = [];
-
+ 
 function clearAllTimers(){
 	if(timers){
 		for(cont = 0 ; cont < timers.length ; cont++){
@@ -387,6 +387,14 @@ function formatNumberObject(object, pattern, event){
   	object.value = objectValue;
 }
 
+/**
+ * Retorna a instância de um objeto da página.
+ * 
+ * @param name String contendo o identificador do objeto desejado.
+ * @param target String contendo o identificador da página onde o
+ * objeto está localizado.
+ * @returns Instância do objeto da página.
+ */
 function getObject(name, target){
 	var object = null;
 	
@@ -398,8 +406,16 @@ function getObject(name, target){
 	return object;
 }
 
-function getObjectValue(name){
-	var object = getObject(name);
+/**
+ * Retorna o valor de um objeto da página.
+ * 
+ * @param name String contendo o identificador do objeto desejado.
+ * @param target String contendo o identificador da página onde o
+ * objeto está localizado.
+ * @returns Valor do objeto da página.
+ */
+function getObjectValue(name, target){
+	var object = getObject(name, target);
 	
 	if(object)
 		return object.value;
@@ -407,6 +423,12 @@ function getObjectValue(name){
 	return null;
 }
 
+/**
+ * Define o valor de um objeto da página.
+ * 
+ * @param name String contendo o identificador do objeto desejado.
+ * @param value Valor do objeto da página.
+ */
 function setObjectValue(name, value){
 	var object = getObject(name);
 	
@@ -503,6 +525,11 @@ function addResizeEvent(functionId){
 	}
 } 
 
+/**
+ * Adiciona um novo método ao evento do mouse na página.
+ * 
+ * @param functionId String contendo a identificação do método.
+ */
 function addMouseMoveEvent(functionId){
 	var mouseMoveHistory = window.onmousemove;
 
@@ -519,7 +546,7 @@ function addMouseMoveEvent(functionId){
 }
 
 /**
- * Adiciona um novo método ao evento de scrolling da página.
+ * Adiciona um novo método ao evento de rolagem da página.
  * 
  * @param functionId String contendo a identificação do método.
  */
@@ -539,7 +566,7 @@ function addScrollEvent(functionId){
 }
 
 /**
- * Adiciona um novo método ao evento de click da página.
+ * Adiciona um novo método ao evento de clicar na página.
  * 
  * @param functionId String contendo a identificação do método.
  */
