@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -385,83 +386,64 @@ public class StringUtil{
 		ByteArrayOutputStream out               = new ByteArrayOutputStream();
 		BufferedReader        reader            = new BufferedReader(new InputStreamReader(in));
 		PrintWriter           writer            = new PrintWriter(out);
-		Stack<Indent>         rulesQueue        = new Stack<Indent>();                 
-		Indent                queueRule         = null;
-		Indent                currentRule       = null;
-		Boolean               closeSameLine     = false;
+		List<Indent>          rulesQueue        = new LinkedList<Indent>();  
+		Indent                lastRule          = null;
 		String                line              = "";
 		Integer               currentIdentCount = 0;
-		Integer               startPos          = 0;
-		Integer               endPos            = 0;
+		Integer               pos               = 0;
 
 		while((line = reader.readLine()) != null){
-			currentRule   = null;
-			closeSameLine = false;
-			line          = StringUtil.trim(line);
-			line          = StringUtil.replaceAll(line, String.valueOf(StringUtil.chr(9)), "");
+			line = StringUtil.trim(line);
+			line = StringUtil.replaceAll(line, String.valueOf(StringUtil.chr(9)), "");
 
-			if(line.length() > 0){
-     			for(Indent rule : rules){
-     				if(rule.getStartChar().length() > 0){
-     					startPos = line.indexOf(rule.getStartChar());
-     					if(startPos >= 0){
-     						endPos = line.indexOf(rule.getEndChar());
-     						if(endPos < 0){
-     							queueRule   = rule;
-          						currentRule = rule;
-     						}
-     						else{
-     							if(!startPos.equals(endPos))
-     								closeSameLine = true;
-     							
-     							currentRule = null;
-     						     
-          						break;
-     						}
-     					}
-     				}
-     			}
-     		}
+            if(rulesQueue.size() > 0){
+                lastRule = rulesQueue.get(rulesQueue.size() - 1);
+                
+                if(!lastRule.backAfterEndChar()){
+                    if(lastRule.getEndChar().length() > 0){
+                        pos = line.indexOf(lastRule.getEndChar());
+                        
+                        if(pos >= 0){
+                            currentIdentCount -= lastRule.getIndentCount();
+                           
+                            rulesQueue.remove(rulesQueue.size() - 1);
+                        }
+                    }
+                }
+            }
 
-			if(currentRule != null){
-				rulesQueue.push(queueRule);
-				
-				writer.print(StringUtil.replicate(" ", currentIdentCount));
-				writer.println(line);
-				
-				if(line.indexOf(currentRule.getEndChar()) < 0)
-					currentIdentCount += currentRule.getIndentCount();
-			}
-			else{
-				if(!closeSameLine && line.length() > 0){
-     				for(Indent rule : rules){
-     					if(rule.getEndChar().length() > 0){
-     						endPos = line.indexOf(rule.getEndChar());
-     						if(endPos >= 0){
-     							if(queueRule != null && rule.getStartChar().equals(queueRule.getStartChar())){
-     								if(rulesQueue.size() > 0)
-     									queueRule = rulesQueue.pop();
-     								else
-     									queueRule = null;
-     								
-          							currentRule = rule;
-          							
-          							if(!currentRule.isBackAfterEndChar())
-          								currentIdentCount -= currentRule.getIndentCount();
-          							
-          							break;
-     							}
-     						}
-     					}
-     				}
-				}
+            writer.print(StringUtil.replicate(" ", currentIdentCount));
+            writer.println(line);
 
-				writer.print(StringUtil.replicate(" ", currentIdentCount));
-				writer.println(line);
-				
-				if(currentRule != null && currentRule.isBackAfterEndChar())
-					currentIdentCount -= currentRule.getIndentCount();
-			}
+            for(Indent rule : rules){
+ 				if(rule.getStartChar().length() > 0){
+ 					pos = line.indexOf(rule.getStartChar());
+ 					
+ 					if(pos >= 0){
+ 					    currentIdentCount += rule.getIndentCount();
+ 					    
+ 					    rulesQueue.add(rule);
+ 					    
+ 					    break;
+ 					}
+ 				}
+ 			}
+            
+            if(rulesQueue.size() > 0){
+                lastRule = rulesQueue.get(rulesQueue.size() - 1);
+                
+                if(lastRule.backAfterEndChar()){
+                    if(lastRule.getEndChar().length() > 0){
+                        pos = line.indexOf(lastRule.getEndChar());
+                        
+                        if(pos >= 0){
+                            currentIdentCount -= lastRule.getIndentCount();
+                           
+                            rulesQueue.remove(rulesQueue.size() - 1);
+                        }
+                    }
+                }
+            }
 		}
 
 		writer.close();
