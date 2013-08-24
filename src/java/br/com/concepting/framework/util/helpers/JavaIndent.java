@@ -16,9 +16,9 @@ public class JavaIndent extends Indent{
 		rules = new LinkedList<JavaIndent>();
 		rules.add(new JavaIndent("{", "}"));
 		rules.add(new JavaIndent("/*", "*/", 1, true));
-		rules.add(new JavaIndent("if(", ";"));
-		rules.add(new JavaIndent("while(", ";"));
-		rules.add(new JavaIndent("for(", ";"));
+		rules.add(new JavaIndent("if(", ";", true));
+		rules.add(new JavaIndent("while(", ";", true));
+		rules.add(new JavaIndent("for(", ";", true));
 	}
 
 	/**
@@ -54,6 +54,11 @@ public class JavaIndent extends Indent{
 	public JavaIndent(String startChar, String endChar, Integer indentCount, Boolean backAfterEndChar){
 		super(startChar, endChar, indentCount, backAfterEndChar);
 	}
+	
+	public JavaIndent(String startChar, String endChar, Boolean backAfterEndChar){
+        super(startChar, endChar, backAfterEndChar);
+    }
+
 
 	/**
 	 * Construtor - Define os caracteres iniciais e finais para indentação.

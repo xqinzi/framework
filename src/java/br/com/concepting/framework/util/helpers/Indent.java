@@ -55,6 +55,20 @@ public abstract class Indent{
 
 		setBackAfterEndChar(backAfterEndChar);
 	}
+	
+    /**
+     * Construtor - Define os caracteres iniciais e finais para indentação.
+     * 
+     * @param startChar String contendo os caracteres iniciais.
+     * @param endChar String contendo os caracteres finais.
+     * @param backAfterEndChar Indica que a indentação deve voltar quando os caracteres 
+     * finais forem encontrados.
+     */
+	public Indent(String startChar, String endChar, Boolean backAfterEndChar){
+	    this(startChar, endChar);
+	    
+	    setBackAfterEndChar(backAfterEndChar);
+	}
 
 	/**
 	 * Construtor - Define os caracteres iniciais e finais para indentação.
@@ -91,7 +105,7 @@ public abstract class Indent{
 	 * 
 	 * @return True/False
 	 */
-	public Boolean isBackAfterEndChar(){
+	public Boolean backAfterEndChar(){
 		return backAfterEndChar;
 	}
 
