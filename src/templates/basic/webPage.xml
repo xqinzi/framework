@@ -41,6 +41,9 @@
 			<table class="content">
 				<tr>
 					<td align="center">
+                        <span class="subtitle">#{useCase}</span>
+                        <hr width="90%" size="1"/>
+                        <br/>
 						<table class="panel">
 							<tr>
 								<td align="center">
