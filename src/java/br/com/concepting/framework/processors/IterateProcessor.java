@@ -3,6 +3,7 @@ package br.com.concepting.framework.processors;
 import java.util.Collection;
 import java.util.Locale;
 
+import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
@@ -154,6 +155,9 @@ public class IterateProcessor extends ExpressionProcessor{
 			}
 		}
 
+		if(buffer.length() == 0)
+		    return Constants.REMOVE_TAG;
+		    
 		return buffer.toString();
 	}
 }
