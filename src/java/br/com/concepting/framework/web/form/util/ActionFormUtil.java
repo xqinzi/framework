@@ -137,8 +137,12 @@ public class ActionFormUtil{
             String actionName = StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "");
             
             url.append("/");
-            url.append(actionPrefix);
-            url.append("/");
+            
+            if(actionPrefix.length() > 0){
+                url.append(actionPrefix);
+                url.append("/");
+            }
+            
             url.append(actionName.substring(0, 1).toLowerCase());
             url.append(actionName.substring(1));
         }
