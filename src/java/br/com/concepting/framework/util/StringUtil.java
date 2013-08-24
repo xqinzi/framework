@@ -388,6 +388,7 @@ public class StringUtil{
 		PrintWriter           writer            = new PrintWriter(out);
 		List<Indent>          rulesQueue        = new LinkedList<Indent>();  
 		Indent                lastRule          = null;
+		Indent                currentRule       = null;
 		String                line              = "";
 		Integer               currentIdentCount = 0;
 		Integer               pos               = 0;
@@ -414,20 +415,30 @@ public class StringUtil{
 
             writer.print(StringUtil.replicate(" ", currentIdentCount));
             writer.println(line);
+            
+            currentRule = null;
 
             for(Indent rule : rules){
  				if(rule.getStartChar().length() > 0){
  					pos = line.indexOf(rule.getStartChar());
  					
  					if(pos >= 0){
- 					    currentIdentCount += rule.getIndentCount();
- 					    
- 					    rulesQueue.add(rule);
- 					    
- 					    break;
+                        currentRule = rule;
+                        
+ 					    if(line.indexOf(rule.getEndChar()) >= 0){
+ 					        currentRule = null;
+ 					        
+ 					        break;
+ 					    }
  					}
  				}
- 			}
+            }
+            
+            if(currentRule != null){
+			    currentIdentCount += currentRule.getIndentCount();
+			    
+			    rulesQueue.add(currentRule);
+		    }
             
             if(rulesQueue.size() > 0){
                 lastRule = rulesQueue.get(rulesQueue.size() - 1);
