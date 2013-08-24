@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-
+ 
 <webPageI18nResource xmlns:concepting="default namespace">
 	<iterate var="mainPropertyInfo" values="#{propertiesInfo}" start="0" end="0">
 		<set var="mainPropertyId" value="@{mainPropertyInfo.id}"/>
-		<set var="mainPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{mainPropertyInfo.clazz})"/>
-		<set var="capitalizedMainPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{mainPropertyId})"/>
+        <set var="mainPropertyClass" value="@{mainPropertyInfo.clazz}"/>
+		<set var="mainPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{mainPropertyClass})"/>
 	</iterate>
-	list.label=Lista de @{capitalizedMainPropertyId}s    	
+	list.label=Lista de itens    	
 	list.tooltip=
 	
-	input.label=Incluir/Editar um @{capitalizedMainPropertyId}
+	input.label=Incluir/Editar um item
 	input.tooltip=
-	inputFieldset.label=Dados de @{capitalizedMainPropertyId}
+    
+	inputFieldset.label=Dados do item
 	inputFieldset.tooltip=
 	
 	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
 		<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'NONE'">
 			<set var="propertyId" value="@{propertyInfo.id}"/>
-			<set var="capitalizedPropertyId" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyId})"/>
-			@{mainPropertyId}.@{propertyId}.label=@{capitalizedPropertyId}
-			@{mainPropertyId}.@{propertyId}.tooltip=
+            <set var="propertyId" value="@{mainPropertyId}.concat('.').concat(@{propertyId})"/>
+            <set var="propertyLabel" value="br.com.concepting.framework.util.StringUtil.capitalize(@{propertyInfo.id})"/>
+
+            @{propertyId}.label=@{propertyLabel}
+            @{propertyId}.tooltip=
 		</if>
 	</iterate>
 </webPageI18nResource>

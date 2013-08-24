@@ -46,10 +46,10 @@
 								<td align="center">
 									<concepting:guides name="guides" width="60%">
 										<concepting:guide name="list">
+                                            <set var="searchPropertiesInfo" value="@{mainPropertyModelInfo.searchPropertiesInfo}"/>
+                                            <set var="searchPropertiesInfoSize" value="@{searchPropertiesInfo}.size()"/>
 											<if expr="@{searchPropertiesInfoSize} > 0">
 												<concepting:searchPropertiesGroup>
-                                                    <set var="searchPropertiesInfo" value="@{mainPropertyModelInfo.searchPropertiesInfo}"/>
-                                                    <set var="searchPropertiesInfoSize" value="@{searchPropertiesInfo}.size()"/>
 													<iterate var="searchPropertyInfo" values="@{searchPropertiesInfo}">
 														<if expr="@{searchPropertyInfo.mappedPropertyId} != '' or @{searchPropertyInfo.relationType} != 'NONE'">
                                                             <set var="searchPropertyId" value="@{searchPropertyInfo.id}"/>
@@ -87,7 +87,7 @@
 												<iterate var="propertyInfo" values="@{propertiesInfo}">
                                                     <set var="propertyId" value="@{propertyInfo.id}"/>
 													<if expr="@{propertyInfo.mappedPropertyId} != '' or (@{propertyInfo.relationType} != 'NONE' and @{propertyInfo.relationJoinType} != 'NONE')">
-                                                        <set var="propertyResourceKey" value="@{mainPropertyId}.@{propertyId}"/>
+                                                        <set var="propertyResourceKey" value="@{mainPropertyId}.concat('.').concat(@{propertyId})"/>
 														<if expr="@{propertyInfo.isByteArray}">
 															<concepting:gridColumn name="@{propertyId}" resourceKey="@{propertyResourceKey}" isImage="true" imageWidth="60"/>
 														</if>
@@ -112,72 +112,64 @@
 												<table>
 													<tr>
 														<td>
-                                                            <concepting:label name="@{mainPropertyId}.@{identityPropertyInfo.id}" rendered="${@{actionFormObjectId}.action == 'edit'}"/>
-                                                            <set var="identityPropertiesInfo" values="@{mainPropertyModelInfo.identityPropertiesInfo}"/>
-                                                            <iterate var="identityPropertyInfo" values="@{identityPropertiesInfo}">
-																<if expr="!@{identityPropertyInfo.autoGenerateIdentity} or !@{identityPropertyInfo.isNumber} or @{hasMultipleIdentities}">
+                                                            <if expr="!@{hasMultipleIdentities}">
+                                                                <set var="identityPropertyId" value="@{identityPropertyInfo.id}"/>
+                                                                <set var="identityPropertyIdentityId" value="@{mainPropertyId}.concat('.').concat(@{identityPropertyId})"/>
+                                                                <if expr="@{identityPropertyInfo.autoGenerateIdentity}">
+                                                                    <concepting:label name="@{identityPropertyIdentityId}" rendered="${@{actionFormObjectId}.action == 'edit' or (@{actionFormObjectId}.action == 'refresh' and (@{actionFormObjectId}.lastAction == 'edit'))}"/>
+                                                                </if>
+                                                                <if expr="!@{identityPropertyInfo.autoGenerateIdentity}">
+                                                                    <concepting:text name="@{identityPropertyIdentityId}"/>
+                                                                </if>
+                                                            </if>
+                                                            <if expr="@{hasMultipleIdentities}">
+                                                                <iterate var="identityPropertyInfo" values="@{identityPropertiesInfo}">
                                                                     <set var="identityPropertyId" value="@{identityPropertyInfo.id}"/>
                                                                     <set var="identityPropertyIdentityId" value="@{mainPropertyId}.concat('.').concat(@{identityPropertyId})"/>
-																	<if expr="@{identityPropertyInfo.isModel}">
+                                                                    <if expr="@{identityPropertyInfo.isModel}">
                                                                         <set var="identityPropertyData" value="@{identityPropertyId}"/>
                                                                         <if expr="!@{identityPropertyData}.endsWith('s')">
                                                                             <set var="identityPropertyData" value="@{identityPropertyData}.concat('s')"/>
                                                                         </if>
-                                                                        <set var="identityPropertyClass" value="@{identityPropertyInfo.clazz}"/>
-                                                                        <set var="identityPropertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{identityPropertyClass})"/>
-                                                                        <iterate var="identityPropertyInfo" values="@{identityPropertyModelInfo.identityPropertiesInfo}" start="0" end="0">
-                                                                            <set var="identityPropertyIdentityId" value="@{identityPropertyIdentityId}.concat('.').concat(@{identityPropertyInfo.id})"/>
-                                                                        </iterate>
                                                                         <concepting:list name="@{identityPropertyIdentityId}" data="@{identityPropertyData}"/>
-																	</if>
-																	<if expr="@{identityPropertyInfo.isDate}">
-																		<concepting:calendar name="@{identityPropertyIdentityId}" rendered="${@{actionFormObjectId}.action == 'add'}"/>
-																	</if>
-																	<if expr="@{identityPropertyInfo.isBoolean}">
-																		<concepting:check name="@{identityPropertyIdentityId}" rendered="${@{actionFormObjectId}.action == 'add'}"/>
-																	</if>
-																	<if expr="!@{identityPropertyInfo.isDate} and !@{identityPropertyInfo.isBoolean} and !@{identityPropertyInfo.isModel}">
-																		<concepting:text name="@{identityPropertyIdentityId}" rendered="${@{actionFormObjectId}.action == 'add'}"/>
-																	</if>
-																</if>
-															</iterate>
+                                                                    </if>   
+                                                                    <if expr="@{identityPropertyInfo.isDate}">
+                                                                        <concepting:calendar name="@{identityPropertyIdentityId}"/>
+                                                                    </if>
+                                                                    <if expr="@{identityPropertyInfo.isBoolean}">
+                                                                        <concepting:check name="@{identityPropertyIdentityId}"/>
+                                                                    </if>
+                                                                    <if expr="!@{identityPropertyInfo.isDate} and !@{identityPropertyInfo.isBoolean} and !@{identityPropertyInfo.isModel}">
+                                                                        <concepting:text name="@{identityPropertyIdentityId}"/>
+                                                                    </if>
+                                                                </iterate>
+                                                            </if>
                                                             <set var="propertiesInfo" values="@{mainPropertyModelInfo.propertiesInfo}"/>
                                                             <iterate var="propertyInfo" values="@{propertiesInfo}">
-																<if expr="@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'NONE'">
-                                                                    <if expr="!@{propertyInfo.isIdentity}">
-                                                                        <set var="propertyId" value="@{propertyInfo.id}"/>
-                                                                        <set var="propertyIdentityId" value="@{mainPropertyId}.concat('.').concat(@{propertyId})"/>
-																		<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
-                                                                            <set var="propertyData" value="@{propertyId}"/>
-                                                                            <if expr="!@{propertyData}.endsWith('s')">
-                                                                                <set var="propertyData" value="@{propertyData}.concat('s')"/>
-                                                                            </if>
-                                                                            <if expr="@{propertyInfo.isModel}">
-                                                                                <set var="propertyClass" value="@{propertyInfo.clazz}"/>
-                                                                                <set var="propertyModelInfo" value="br.com.concepting.framework.model.util.ModelUtil.getModelInfo(@{propertyClass})"/>
-                                                                                <set var="propertyIdentityId" value="@{mainPropertyId}.concat('.').concat(@{propertyId})"/>
-                                                                                <iterate var="identityPropertyInfo" values="@{propertyModelInfo.identityPropertiesInfo}" start="0" end="0">
-                                                                                    <set var="identityPropertyId" value="@{identityPropertyInfo.id}"/>
-                                                                                    <set var="propertyIdentityId" value="@{propertyIdentityId}.concat('.').concat(@{identityPropertyId})"/>
-                                                                                </iterate>
-                                                                            </if>
-																			<concepting:list name="@{propertyIdentityId}" data="@{propertyData}"/>
-																		</if>
-																		<if expr="@{propertyInfo.isDate}">
-																			<concepting:calendar name="@{propertyIdentityId}"/>
-																		</if>
-																		<if expr="@{propertyInfo.isBoolean}">
-																			<concepting:check name="@{propertyIdentityId}"/>
-																		</if>
-																		<if expr="@{propertyInfo.isByteArray}">
-																			<concepting:image name="@{propertyIdentityId}" width="50"/>
-																		</if>
-																		<if expr="!@{propertyInfo.isDate} and !@{propertyInfo.isBoolean} and !@{propertyInfo.isModel} and !@{propertyInfo.hasModel} and !@{propertyInfo.isByteArray}">
-																			<concepting:text name="@{propertyIdentityId}"/>
-																		</if>
-																    </if>
-                                                                </if>      
-															</iterate>
+                                                                <if expr="!@{propertyInfo.isIdentity} and (@{propertyInfo.mappedPropertyId} != '' or @{propertyInfo.relationType} != 'NONE')">
+                                                                    <set var="propertyId" value="@{propertyInfo.id}"/>
+                                                                    <set var="propertyIdentityId" value="@{mainPropertyId}.concat('.').concat(@{propertyId})"/>
+                                                                    <if expr="@{propertyInfo.isModel}">
+                                                                        <set var="propertyData" value="@{propertyId}"/>
+                                                                        <if expr="!@{propertyData}.endsWith('s')">
+                                                                            <set var="propertyData" value="@{propertyData}.concat('s')"/>
+                                                                        </if>
+                                                                        <concepting:list name="@{propertyIdentityId}" data="@{propertyData}"/>
+                                                                    </if>   
+                                                                    <if expr="@{propertyInfo.isDate}">
+                                                                        <concepting:calendar name="@{propertyIdentityId}"/>
+                                                                    </if>
+                                                                    <if expr="@{propertyInfo.isBoolean}">
+                                                                        <concepting:check name="@{propertyIdentityId}"/>
+                                                                    </if>
+                                                                    <if expr="@{propertyInfo.isByteArray}">
+                                                                        <concepting:image name="@{propertyIdentityId}" width="50"/>
+                                                                    </if>
+                                                                    <if expr="!@{propertyInfo.isDate} and !@{propertyInfo.isBoolean} and !@{propertyInfo.isModel} and !@{propertyInfo.hasModel} and !@{propertyInfo.isByteArray}">
+                                                                        <concepting:text name="@{propertyIdentityId}"/>
+                                                                    </if>
+                                                                </if>
+                                                            </iterate>
 														</td>
 													</tr>
 												</table>
