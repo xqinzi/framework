@@ -1216,7 +1216,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
         print(labelAlignment);
 	    print("\"");
 	    
-	    if(labelVerticalAlignment != null){
+	    if(labelVerticalAlignment.length() > 0){
 	        print(" valign=\"");
             print(labelVerticalAlignment);
             print("\"");
@@ -1318,7 +1318,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 
 		GridColumnTag columnTag = (GridColumnTag)findAncestorWithClass(this, GridColumnTag.class);
 		
-		print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\"");
+		print("<table");
 		
         if(columnTag != null){
             print(" class=\"");
