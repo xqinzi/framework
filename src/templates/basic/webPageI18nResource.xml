@@ -12,7 +12,7 @@
 	input.label=Incluir/Editar um item
 	input.tooltip=
     
-	inputFieldset.label=Dados do item
+	inputFieldset.label=Dados do formulário
 	inputFieldset.tooltip=
 	
 	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
