@@ -1800,7 +1800,8 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 
 				print(" align=\"");
 				print(AlignmentType.CENTER);
-				print("\" width=\"1\"><b>");
+				println("\" width=\"1\">");
+				print("<b>");
 
 				if(propertyInfo != null && propertyInfo.isCollection()){
 					print("<a class=\"");
@@ -1829,11 +1830,12 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 					print(selectionColumnLabel);
 
 				if(propertyInfo != null && propertyInfo.isCollection())
-					println("(*)</a>");
+					print("(*)</a>");
 				else if(selectionColumnLabel.length() == 0)
-					println("&nbsp;");
+					print("&nbsp;");
 
-				println("</b></td>");
+				println("</b>");
+				println("</td>");
 			}
 
             String  columnWidth     = "";
