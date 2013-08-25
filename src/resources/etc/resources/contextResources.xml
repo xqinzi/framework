@@ -5,6 +5,6 @@
 	<context id="weblogic-localhost" factoryResourceId="weblogic-factory"/>
 	<context id="websphere-localhost" factoryResourceId="websphere-factory"/>
 	<context id="jboss-localhost" factoryResourceId="jboss-factory"/>
-	<context id="glassfish-localhost" factoryResourceId="glassfish-factory" default="true"/>
-	<context id="tomcat-localhost"/>
+	<context id="glassfish-localhost" factoryResourceId="glassfish-factory"/>
+	<context id="tomcat-localhost" default="true"/>
 </contextResources>
