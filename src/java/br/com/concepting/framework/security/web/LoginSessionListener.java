@@ -93,11 +93,19 @@ public class LoginSessionListener implements HttpSessionListener{
      * @throws Throwable
      */
     protected void onCreate() throws Throwable{
-        SecurityController            securityController = systemController.getSecurityController();
-        LoginSessionModel             loginSession       = securityController.getLoginSession();
-        SystemModuleModel             systemModule       = loginSession.getSystemModule();
-        IService                      service            = getService(systemModule.getClass());
-        Collection<SystemModuleModel> systemModules      = service.search(systemModule);
+        SecurityController securityController = systemController.getSecurityController();
+        LoginSessionModel  loginSession       = securityController.getLoginSession();
+        SystemModuleModel  systemModule       = loginSession.getSystemModule();
+        IService           service            = null;
+        
+        try{
+            service = getService(systemModule.getClass()); 
+        }
+        catch(Throwable e){
+            return;
+        }
+        
+        Collection<SystemModuleModel> systemModules = service.search(systemModule);
     
         if(systemModules.size() > 0){
             systemModule = systemModules.iterator().next();
@@ -146,7 +154,14 @@ public class LoginSessionListener implements HttpSessionListener{
             UserModel user = loginSession.getUser();
             
             if(user != null && user.getId() > 0 && user.getId() > 0){
-                LoginSessionService service = getService(loginSession.getClass());
+                LoginSessionService service = null;
+                
+                try{
+                    service = getService(loginSession.getClass());
+                }
+                catch(Throwable e){
+                    return;
+                }
 
                 service.logOut(loginSession);
             }
