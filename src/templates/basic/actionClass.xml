@@ -205,7 +205,7 @@
                 @{mainPropertyId} = service.find(@{mainPropertyId});
                 <iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
                     <set var="propertyId" value="@{propertyInfo.id}"/>
-                    <if expr="@{propertyInfo.relationJoinType} == 'NONE' and (@{propertyInfo.isModel} or @{propertyInfo.hasModel})">
+                    <if expr="@{propertyInfo.relationType} != 'NONE' and @{propertyInfo.relationJoinType} == 'NONE' and (@{propertyInfo.isModel} or @{propertyInfo.hasModel})">
                         @{mainPropertyId} = service.loadReference(@{mainPropertyId}, "@{propertyId}");
                     </if>
                 </iterate>
