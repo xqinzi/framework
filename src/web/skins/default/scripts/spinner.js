@@ -2,7 +2,7 @@
  * Arquivo que contém as funções/propriedades para manipulação do componente visual spinner (controle de valores numéricos).
  * 
  * @author fvilarinho
- * @version 1.0
+ * @version 3.0
  */
 
 /**
