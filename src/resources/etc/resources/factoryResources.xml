@@ -11,11 +11,11 @@
 			<class>com.ibm.websphere.naming.WsnInitialContextFactory</class>
 			<url>corbaloc:iiop:#{serverName}:#{serverPort}</url>
 		</factory>
-		<factory id="glassfish-factory" type="GLASSFISH" default="true">
+		<factory id="glassfish-factory" type="GLASSFISH">
 			<class>com.sun.enterprise.naming.SerialInitContextFactory</class>
 			<url>iiop://#{serverName}:#{serverPort}</url>
 		</factory>
-		<factory id="jboss-factory" type="JBOSS">
+		<factory id="jboss-factory" type="JBOSS" default="true">
 			<class>org.jnp.interfaces.NamingContextFactory</class>
 			<url>jnp://#{serverName}:#{serverPort}</url>
 		</factory>
