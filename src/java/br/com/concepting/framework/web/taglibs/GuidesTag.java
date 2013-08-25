@@ -71,7 +71,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 	}
 	
 	/**
-]	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#render()
+	 * @see br.com.concepting.framework.web.taglibs.BaseActionFormElementTag#render()
 	 */
 	protected void render() throws Throwable{
 	    if(hasPermission()){
@@ -105,7 +105,7 @@ public class GuidesTag extends BaseActionFormElementTag{
         
         println(">");
         println("<tr>");
-        print("<td>");
+        println("<td>");
 	}
 	
 	/**
@@ -315,7 +315,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 		println("</tr>");
 		
 		println("<tr>");
-		print("<td>");
+		println("<td>");
 
 		Integer                cont                   = 0;
 		NextGuideButtonTag     nextGuideButtonTag     = null;
