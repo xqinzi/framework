@@ -152,6 +152,9 @@ public enum ComponentType{
 	private String id   = "";
 	private String type = "";
 	
+    /**
+     * Construtor - Inicializa objetos e/ou variáveis internas.
+     */
 	private ComponentType(){
         String        parts[]     = StringUtil.split(toString(), "_");
         StringBuilder componentId = new StringBuilder();
@@ -160,7 +163,7 @@ public enum ComponentType{
             if(cont == 0)
                 componentId.append(parts[cont].toLowerCase());
             else
-                componentId.append(StringUtil.capitalize(parts[cont]));
+                componentId.append(StringUtil.capitalize(parts[cont].toLowerCase()));
         }
         
         setId(componentId.toString());
@@ -168,6 +171,11 @@ public enum ComponentType{
         
 	}
 	
+    /**
+     * Construtor - Inicializa objetos e/ou variáveis internas.
+     * 
+     * @param type String contendo o identificador do tipo do componente.
+     */
 	private ComponentType(String type){
 	    setId(toString());
 	    setType(type);
