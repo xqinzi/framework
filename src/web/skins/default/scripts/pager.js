@@ -17,7 +17,7 @@ function pagerAction(name, action, updateViews, form){
 	if(!form)
 		return;
 
-	setObject(name + ".pagerAction", action);
+	setObjectValue(name + ".pagerAction", action);
 	
 	var object = document.forms[form].elements["updateViews"];
 	
