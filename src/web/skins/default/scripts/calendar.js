@@ -189,9 +189,9 @@ function parseCalendar(name){
 			if(millisecondsPos >= 0)
 				currentDate.setMilliseconds(timeValueParts[millisecondsPos]);
 		}
-		
-		return currentDate;
 	}		
+	
+	return currentDate;
 }
 
 /**
