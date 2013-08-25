@@ -20,7 +20,7 @@
 			<table class="content">
 				<tr>
 					<td align="center">
-          				<span class="subtitle">#{useCase}</span>
+          				<span class="title">#{useCase}</span>
           				<hr width="90%"/>
 						<table>
 							<tr>
