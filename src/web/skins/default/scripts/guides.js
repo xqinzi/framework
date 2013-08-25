@@ -28,7 +28,7 @@ function setCurrentGuide(guideName, guidesName, guideOnSelect){
 		currentGuideContent.style.display = "NONE";
 	}
 		
-	if(guideDefinition && guideContent){
+	if(guide && guideContent){
 		guide.className = "currentGuide";
 
 		guideContent.style.display = "";
