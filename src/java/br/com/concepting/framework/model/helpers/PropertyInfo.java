@@ -5,6 +5,7 @@ import br.com.concepting.framework.model.types.ContextSearchType;
 import br.com.concepting.framework.model.types.ValidationType;
 import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.persistence.types.RelationType;
+import br.com.concepting.framework.util.types.FormulaType;
 import br.com.concepting.framework.util.types.SortOrderType;
 
 /**
@@ -58,7 +59,8 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private String            mappedPropertiesIds[]         = null;
 	private String            mappedRelationPropertiesIds[] = null;
 	private String            mappedRelationRepositoryId    = "";
-	private String            formula                       = "";
+	private String            formulaExpression             = "";
+	private FormulaType       formulaType                   = null;
 	private SortOrderType     sortOrder                     = null;
 	private ValidationType    validations[]                 = null;
 	private Integer           minimumLength                 = 0;
@@ -84,7 +86,15 @@ public class PropertyInfo implements Comparable, Cloneable{
 	    super();
 	}
 	
-	/**
+	public FormulaType getFormulaType(){
+        return formulaType;
+    }
+
+    public void setFormulaType(FormulaType formulaType){
+        this.formulaType = formulaType;
+    }
+
+    /**
 	 * Retorna o tipo do mapeamento da propriedade no repositório de persistência.
 	 * 
 	 * @return String contendo o tipo de mapeamento da propriedade.
@@ -1259,21 +1269,21 @@ public class PropertyInfo implements Comparable, Cloneable{
 	}
 
 	/**
-	 * Retorna uma fórmula para a propriedade.
+	 * Retorna a expressão da fórmula vinculada à propriedade.
 	 * 
-	 * @return String contendo a fórmula.
+	 * @return String contendo a expressão da fórmula.
 	 */
-	public String getFormula(){
-		return formula;
+	public String getFormulaExpression(){
+		return formulaExpression;
 	}
 
-	/**
-	 * Define uma fórmula para a propriedade.
-	 * 
-	 * @param formula String contendo a fórmula.
-	 */
-	public void setFormula(String formula){
-		this.formula = formula;
+    /**
+     * Define a expressão da fórmula vinculada à propriedade.
+     * 
+     * @param formulaExpression String contendo a expressão da fórmula.
+     */
+	public void setFormulaExpression(String formulaExpression){
+		this.formulaExpression = formulaExpression;
 	}
 
 	/**
