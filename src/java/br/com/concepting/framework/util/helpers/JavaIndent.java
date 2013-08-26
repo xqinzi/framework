@@ -14,11 +14,11 @@ public class JavaIndent extends Indent{
 
 	static{
 		rules = new LinkedList<JavaIndent>();
-		rules.add(new JavaIndent("{", "}"));
 		rules.add(new JavaIndent("/*", "*/", 1, true));
 		rules.add(new JavaIndent("if(", ";", true));
 		rules.add(new JavaIndent("while(", ";", true));
 		rules.add(new JavaIndent("for(", ";", true));
+        rules.add(new JavaIndent("{", "}"));
 	}
 
 	/**
