@@ -109,7 +109,7 @@ public class AccessListModel extends BaseModel{
     /**
      * Define o título da lista.
      * 
-     * @param name String contendo o título da lista.
+     * @param title String contendo o título da lista.
      */
     public void setTitle(String title){
         this.title = title;
