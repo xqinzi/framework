@@ -10,6 +10,7 @@ import br.com.concepting.framework.model.types.ContextSearchType;
 import br.com.concepting.framework.model.types.ValidationType;
 import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.persistence.types.RelationType;
+import br.com.concepting.framework.util.types.FormulaType;
 import br.com.concepting.framework.util.types.SortOrderType;
 
 /**
@@ -247,11 +248,18 @@ public @interface Property{
 	String mappedRelationRepositoryId() default "";
 	
 	/**
-	 * Define uma fórmula para a propriedade.
+	 * Define a expressão da fórmula vinculada à propriedade.
 	 * 
-	 * @return String contendo a fórmula.
+	 * @return String contendo a expressão da fórmula.
 	 */
-	String formula() default "";
+	String formulaExpression() default "";
+	
+    /**
+     * Define o tipo de fórmula vinculada à propriedade.
+     * 
+     * @return Constante que define o tipo de fórmula.
+     */
+	FormulaType formulaType() default FormulaType.NONE;
 
 	/**
 	 * Define o tipo de ordenação a ser utilizada.
