@@ -1112,7 +1112,8 @@ public abstract class PropertyUtil extends PropertyUtils{
     		propertyInfo.setMappedRelationPropertiesIds(propertyAnnotation.mappedRelationPropertiesIds());
     		propertyInfo.setMappedRelationRepositoryId(propertyAnnotation.mappedRelationRepositoryId());
     		propertyInfo.setUseGroupSeparator(propertyAnnotation.useGroupSeparator());
-    		propertyInfo.setFormula(propertyAnnotation.formula());
+    		propertyInfo.setFormulaExpression(propertyAnnotation.formulaExpression());
+    		propertyInfo.setFormulaType(propertyAnnotation.formulaType());
     		propertyInfo.setSortOrder(propertyAnnotation.sortOrder());
     		propertyInfo.setSimilarityAccuracy(propertyAnnotation.similarityAccuracy());
     		propertyInfo.setCompareCondition(propertyAnnotation.compareCondition());
