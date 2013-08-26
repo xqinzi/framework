@@ -3,12 +3,8 @@ package br.com.concepting.framework.persistence;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.beanutils.ConstructorUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.LockOptions;
 import org.hibernate.NonUniqueObjectException;
@@ -20,7 +16,6 @@ import org.hibernate.Session;
 import org.hibernate.StaleStateException;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.transform.Transformers;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
@@ -28,22 +23,15 @@ import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
-import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.persistence.constants.PersistenceConstants;
 import br.com.concepting.framework.persistence.helpers.ModelFilter;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.types.QueryType;
-import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.persistence.types.RelationType;
+import br.com.concepting.framework.persistence.util.HibernateQueryBuilder;
 import br.com.concepting.framework.persistence.util.HibernateUtil;
-import br.com.concepting.framework.util.MethodUtil;
-import br.com.concepting.framework.util.NumberUtil;
-import br.com.concepting.framework.util.PhoneticUtil;
-import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.util.types.SortOrderType;
 
 /**
  * Classe que define a estrutura básica para as classes de persistência de modelos de dados 
@@ -53,10 +41,6 @@ import br.com.concepting.framework.util.types.SortOrderType;
  * @since 1.0
  */
 public abstract class HibernateDAO extends BaseDAO{
-	private List<PropertyInfo> similarityPropertiesInfo = null;
-	private List<String>       similarityPropertiesIds  = null;
-	private Collection<String> processedRelations       = null;
-
     /**
      * Construtor - Inicializa a classe de persistência.
      */
@@ -191,916 +175,17 @@ public abstract class HibernateDAO extends BaseDAO{
         }
     }
 
-    /**
-	 * Monta a query HQL baseada no modelo de dados.
-	 * 
-	 * @param model Instância do modelo de dados.
-	 * @param referenceProperty Instância do modelo de dados de relacionamento.
-	 * @param modelFilter Lista contendo os filtros específicos da query.
-	 * @param queryType Constante que define o tipo de query a ser realizado.
-	 * @throws InternalErrorException
-	 */
-	private <M extends BaseModel> Query buildQuery(M model, Object referenceProperty, ModelFilter modelFilter, QueryType queryType) throws InternalErrorException{
-		try{
-    		Session             connection       = getConnection();
-    		String              statementId      = MethodUtil.getMethodFromStackTrace(2).getName();
-    		Map<String, Object> clauseParameters = new LinkedHashMap<String, Object>();
-    		String              queryString      = buildQueryString(model, modelFilter, clauseParameters, queryType);
-    		Query               query            = connection.createQuery(queryString);
-    
-    		query.setComment(statementId);
-    		
-    		if(modelFilter != null && modelFilter.getReturnProperties() != null && modelFilter.getReturnProperties().size() > 0)
-    			query.setResultTransformer(Transformers.aliasToBean(model.getClass()));
-    
-    		Object clauseParameterValue = null;
-    
-    		for(String clauseParameter : clauseParameters.keySet()){
-    			clauseParameterValue = clauseParameters.get(clauseParameter);
-    
-    			if(clauseParameterValue instanceof Collection)
-    				query.setParameterList(clauseParameter, (Collection)clauseParameterValue);
-    			else
-    				query.setParameter(clauseParameter, clauseParameterValue);
-    		}
-    
-    		if(queryType == QueryType.FIND)
-    			query.setMaxResults(1);
-    		else{
-    			Map<String, String> persistenceOptions = getPersistenceResource().getOptions();
-    		    
-    			try{
-    				String queryMaxResultsBuffer = StringUtil.trim(persistenceOptions.get(PersistenceConstants.DEFAULT_QUERY_MAXIMUM_RESULTS_KEY));
-    
-    				if(queryMaxResultsBuffer.length() > 0)
-    					query.setMaxResults(NumberUtil.parseInt(queryMaxResultsBuffer));
-    				else
-    					query.setMaxResults(PersistenceConstants.DEFAULT_QUERY_MAXIMUM_RESULTS);
-    			}
-    			catch(Throwable e){
-    				query.setMaxResults(PersistenceConstants.DEFAULT_QUERY_MAXIMUM_RESULTS);
-    			}
-    		}
-    
-    		return query;
-		}
-		catch(ClassNotFoundException e){
-	        throw new InternalErrorException(e);
-		}
-        catch(NoSuchMethodException e){
-            throw new InternalErrorException(e);
-        }
-        catch(IllegalAccessException e){
-            throw new InternalErrorException(e);
-        }
-        catch(InvocationTargetException e){
-            throw new InternalErrorException(e);
-        }
-        catch(InstantiationException e){
-            throw new InternalErrorException(e);
-        }
-	}
-	
-	/**
-	 * Monta a string da query HQL baseada no modelo de dados.
-	 * 
-	 * @param model Instância do modelo de dados.
-	 * @param modelFilter Lista contendo os filtros específicos da query.
-	 * @param whereClauseParameters Mapa contendo os parâmetros da cláusula where.
-	 * @param queryType Constante que define o tipo de query a ser realizado.
-	 * @throws InstantiationException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
-	 * @throws NoSuchMethodException 
-	 * @throws ClassNotFoundException 
-	 */
-	private <M extends BaseModel> String buildQueryString(M model, ModelFilter modelFilter, Map<String, Object> whereClauseParameters, QueryType queryType) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
-		similarityPropertiesInfo = null;
-		similarityPropertiesIds  = null;
-		processedRelations       = null;
-
-		StringBuilder selectClause   = new StringBuilder();
-		StringBuilder fromClause     = new StringBuilder();
-		StringBuilder whereClause    = new StringBuilder();
-		StringBuilder joinClause     = new StringBuilder();
-		StringBuilder groupByClause  = new StringBuilder();
-		StringBuilder orderByClause  = new StringBuilder();
-		StringBuilder queryBuffer    = new StringBuilder();
-		String        propertyPrefix = "";
-
-		buildQueryString(queryType, model, propertyPrefix, propertyPrefix, selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, true, true);
-
-		if(selectClause.length() > 0){
-			queryBuffer.append(StringUtil.trim(selectClause));
-			queryBuffer.append(" ");
-		}
-
-		queryBuffer.append(StringUtil.trim(fromClause));
-
-		if(joinClause.length() > 0){
-			queryBuffer.append(" ");
-			queryBuffer.append(StringUtil.trim(joinClause));
-		}
-
-		if(whereClause.length() > 0){
-			queryBuffer.append(" ");
-			queryBuffer.append(StringUtil.trim(whereClause));
-		}
-
-		if(groupByClause.length() > 0){
-			queryBuffer.append(" ");
-			queryBuffer.append(StringUtil.trim(groupByClause));
-		}
-
-		if(orderByClause.length() > 0){
-			queryBuffer.append(" ");
-			queryBuffer.append(StringUtil.trim(orderByClause));
-		}
-		
-		return queryBuffer.toString();
-	}
-
-	/**
-	 * Monta a string da query HQL baseada no modelo de dados.
-	 * 
-	 * @param queryType
-	 * @param model
-	 * @param propertyPrefix
-	 * @param propertyAlias
-	 * @param selectClause
-	 * @param fromClause
-	 * @param joinClause
-	 * @param whereClause
-	 * @param groupByClause
-	 * @param orderByClause
-	 * @param whereClauseParameters
-	 * @param modelFilter
-	 * @param considerConditions
-	 * @throws ClassNotFoundException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws InstantiationException
-	 */
-    private <M extends BaseModel> void buildQueryString(QueryType queryType, M model, String propertyPrefix, String propertyAlias, StringBuilder selectClause, StringBuilder fromClause, StringBuilder joinClause, StringBuilder whereClause, StringBuilder groupByClause, StringBuilder orderByClause, Map<String, Object> whereClauseParameters, ModelFilter modelFilter, Boolean considerConditions, Boolean needToGroupBy) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
-		Boolean   modelIsNull = (model == null);
-		Class     modelClass  = (modelIsNull ? ModelUtil.getModelClassByPersistence(getClass()) : model.getClass());
-		ModelInfo modelInfo   = ModelUtil.getModelInfo(modelClass);
-
-		if(modelIsNull)
-			model = (M)ConstructorUtils.invokeConstructor(modelClass, null);
-
-		if(modelInfo != null){
-			StringBuilder propertyAliasBuffer = null;
-
-			if(fromClause.length() == 0){
-				propertyAliasBuffer = new StringBuilder();
-				propertyAliasBuffer.append(modelInfo.getClazz().getSimpleName().toLowerCase());
-				propertyAliasBuffer.append((int)(Math.random() * 1000));
-
-				propertyAlias = propertyAliasBuffer.toString();
-
-				fromClause.append("from ");
-				fromClause.append(modelInfo.getClazz().getSimpleName());
-				fromClause.append(" ");
-				fromClause.append(propertyAlias);
-			}
-
-			if(processedRelations == null)
-				processedRelations = new LinkedList<String>();
-
-			Collection<String>         returnProperties               = (modelFilter != null ? modelFilter.getReturnProperties() : null);
-			Map<String, ConditionType> propertyConditions             = (modelFilter != null ? modelFilter.getPropertyConditions() : null);
-			Map<String, Object>        propertyValues                 = (modelFilter != null ? modelFilter.getPropertyValues() : null);
-			Collection<PropertyInfo>   propertiesInfo                 = modelInfo.getPropertiesInfo();
-			Collection<PropertyInfo>   identitiesPropertiesInfo       = modelInfo.getIdentityPropertiesInfo();
-			Collection<PropertyInfo>   identitiesPropertiesInfoBuffer = new LinkedList<PropertyInfo>();
-			StringBuilder              propertyIdBuffer               = null;
-			StringBuilder              propertyPrefixBuffer           = null;
-			StringBuilder              propertyParamBuffer            = null;
-			Object                     propertyValue                  = null;
-			Object                     propertyValueBuffer            = null;
-			SortOrderType              propertySortOrder              = null;
-			ConditionType              propertyCondition              = null;
-            Map<String, SortOrderType> propertySortOrders             = (modelFilter != null ? modelFilter.getSortOrders() : null);
-			ModelInfo                  relationModelInfo              = null;
-			M                          relationModel                  = null;
-			RelationJoinType           relationJoinType               = null;
-			Boolean                    processRelation                = false;
-			Boolean                    processCondition               = false;
-			Boolean                    needToGroupByBuffer            = needToGroupBy;
-
-			for(PropertyInfo propertyInfo : propertiesInfo){
-			    if(needToGroupBy && propertyInfo.getMappedPropertyId().length() > 0){
-                    if(groupByClause.length() == 0)
-                        groupByClause.append("group by ");
-                    else
-                        groupByClause.append(", ");
-                        
-                    groupByClause.append(propertyAlias);
-                    groupByClause.append(".");
-                    groupByClause.append(propertyInfo.getId());
-			    }
-			    
-				if(propertyPrefixBuffer == null)
-					propertyPrefixBuffer = new StringBuilder();
-				else
-					propertyPrefixBuffer.delete(0, propertyPrefixBuffer.length());
-
-				if(propertyPrefix.length() > 0){
-					propertyPrefixBuffer.append(propertyPrefix);
-					propertyPrefixBuffer.append(".");
-				}
-
-				propertyPrefixBuffer.append(propertyInfo.getId());
-
-				if(propertyIdBuffer == null)
-					propertyIdBuffer = new StringBuilder();
-				else
-					propertyIdBuffer.delete(0, propertyIdBuffer.length());
-
-				if(propertyAlias.length() > 0){
-					propertyIdBuffer.append(propertyAlias);
-					propertyIdBuffer.append(".");
-				}
-
-				propertyIdBuffer.append(propertyInfo.getId());
-
-				if(returnProperties != null && returnProperties.contains(propertyPrefixBuffer.toString())){
-					if(selectClause.length() == 0)
-						selectClause.append("select ");
-					else
-						selectClause.append(",");
-
-					selectClause.append(propertyIdBuffer);
-				}
-				else if(returnProperties == null){
-					if(selectClause.length() == 0){
-						selectClause.append("select ");
-						selectClause.append(propertyAlias);
-					}
-				}
-				
-				propertySortOrder = (propertySortOrders != null ? propertySortOrders.get(propertyPrefixBuffer.toString()) : null);
-
-				if(propertySortOrder == null)
-					propertySortOrder = propertyInfo.getSortOrder();
-
-				if(propertySortOrder != null && propertySortOrder != SortOrderType.NONE){
-					if(orderByClause.length() == 0)
-						orderByClause.append("order by ");
-					else
-						orderByClause.append(", ");
-
-					orderByClause.append(propertyIdBuffer.toString());
-					orderByClause.append(" ");
-					orderByClause.append(propertySortOrder.getOperator());
-				}
-
-				if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE || (propertyInfo.isForSearch() && (propertyInfo.hasModel() || propertyInfo.isModel()))){
-					relationModel     = null;
-					relationModelInfo = null;
-					relationJoinType  = null;
-					processRelation   = !processedRelations.contains(propertyPrefixBuffer.toString()) && !propertyPrefixBuffer.toString().contains("parent.parent");
-					
-					if(processRelation){
-						if(propertyInfo.hasModel())
-							relationModelInfo = ModelUtil.getModelInfo(propertyInfo.getCollectionItemsClass());
-						else if(propertyInfo.isModel())
-						    relationModelInfo = ModelUtil.getModelInfo(propertyInfo.getClazz());
-						
-						if(relationModelInfo != null){
-                            if(propertyInfo.getRelationJoinType() != RelationJoinType.NONE){
-                                if(propertyInfo.isModel())
-                                    relationModel = (M)PropertyUtil.getProperty(model, propertyInfo.getId());
-                                else if(propertyInfo.hasModel())
-                                    relationModel = (M)ConstructorUtils.invokeConstructor(relationModelInfo.getClazz(), null);
-                                
-                                relationJoinType = propertyInfo.getRelationJoinType();
-                            }
-                            else if(propertyInfo.isForSearch()){
-                                if(propertyInfo.getSearchPropertyId().length() > 0){
-    						        PropertyInfo relationSearchPropertyInfo = modelInfo.getPropertyInfo(propertyInfo.getSearchPropertyId());
-    						        
-    						        if(relationSearchPropertyInfo != null){
-    						            if(relationSearchPropertyInfo.isModel()){
-    						                relationModel       = (M)PropertyUtil.getProperty(model, propertyInfo.getSearchPropertyId());
-    						                relationJoinType    = RelationJoinType.INNER_JOIN;
-    						                needToGroupByBuffer = false;
-    						            }
-    						        }
-                                }
-                                else
-                                    relationModel = (M)PropertyUtil.getProperty(model, propertyInfo.getId());
-						    }
-						}
-						
-						if(relationModelInfo != null && relationModel != null){
-							processedRelations.add(propertyPrefixBuffer.toString());
-							
-							if(relationJoinType != null){
-    							if(propertyAliasBuffer == null)
-    								propertyAliasBuffer = new StringBuilder();
-    							else
-    								propertyAliasBuffer.delete(0, propertyAliasBuffer.length());
-    
-    							propertyAliasBuffer.append(relationModelInfo.getClazz().getSimpleName().toLowerCase());
-    							propertyAliasBuffer.append((int)(Math.random() * 1000));
-    						
-                                if(joinClause.length() > 0)
-                                    joinClause.append(" ");
-    
-                                joinClause.append(relationJoinType.getOperator());
-                                joinClause.append(" ");
-                                joinClause.append(propertyIdBuffer);
-                                joinClause.append(" ");
-                                joinClause.append(propertyAliasBuffer);
-							}
-    
-                            buildQueryString(queryType, relationModel, propertyPrefixBuffer.toString(), propertyAliasBuffer.toString(), selectClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, modelFilter, considerConditions, needToGroupByBuffer);
-						}
-					}
-
-					continue;
-				}
-
-				if(propertyInfo.isIdentity() || propertyInfo.isForSearch()){
-					if(considerConditions){
-						processCondition = true;
-						
-						try{
-							propertyValue     = (propertyValues != null ? propertyValues.get(propertyPrefixBuffer.toString()) : null);
-							propertyCondition = (propertyConditions != null ? propertyConditions.get(propertyPrefixBuffer.toString()) : null);
-							
-							if(queryType != QueryType.FIND)
-    							if(propertyCondition == null)
-    								propertyCondition = propertyInfo.getSearchCondition();
-							
-							if(propertyCondition == null)
-								propertyCondition = ConditionType.EQUAL;
-
-							if(propertyValue == null){
-							    if(propertyInfo.isForSearch()){
-							        if(propertyInfo.getSearchPropertyId().length() > 0)
-							            propertyValue = PropertyUtil.getProperty(model, propertyInfo.getSearchPropertyId());
-							        else if(propertyCondition == ConditionType.SIMILARITY && propertyInfo.getPhoneticPropertyId().length() > 0)
-							            propertyValue = PropertyUtil.getProperty(model, propertyInfo.getPhoneticPropertyId());
-							        else
-							            propertyValue = PropertyUtil.getProperty(model, propertyInfo.getId());
-							    }
-							    else if(propertyInfo.isIdentity())
-							        propertyValue = PropertyUtil.getProperty(model, propertyInfo.getId());
-							}
-
-							switch(propertyCondition){
-								case IS_NULL:{
-									if(whereClause.length() == 0)
-										whereClause.append("where ");
-									else
-										whereClause.append(" and ");
-
-									whereClause.append(propertyIdBuffer);
-									whereClause.append(" ");
-									whereClause.append(propertyCondition.getOperator());
-									
-									break;
-								}
-								case NOT_IS_NULL:{
-									if(whereClause.length() == 0)
-										whereClause.append("where ");
-									else
-										whereClause.append(" and ");
-
-									whereClause.append(propertyIdBuffer);
-									whereClause.append(" ");
-                                    whereClause.append(propertyCondition.getOperator());
-									
-									break;
-								}
-    							case NOT_EQUAL: {
-									if(propertyParamBuffer == null)
-										propertyParamBuffer = new StringBuilder();
-									else
-										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-
-									propertyParamBuffer.append("param");
-
-									if(whereClauseParameters == null)
-										whereClauseParameters = new LinkedHashMap<String, Object>();
-
-									propertyParamBuffer.append(whereClauseParameters.size());
-
-									if(!(propertyValue instanceof String))
-										whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-									else{
-										if(propertyInfo.isCaseSensitiveSearch())
-											whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-										else
-											whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
-									}
-
-									if(whereClause.length() == 0)
-										whereClause.append("where ");
-									else
-										whereClause.append(" and ");
-
-									if(!(propertyValue instanceof String))
-										whereClause.append(propertyIdBuffer);
-									else{
-										if(propertyInfo.isCaseSensitiveSearch())
-											whereClause.append(propertyIdBuffer);
-										else{
-											whereClause.append("lower(");
-											whereClause.append(propertyIdBuffer);
-											whereClause.append(")");
-										}
-									}
-
-									whereClause.append(" ");
-                                    whereClause.append(propertyCondition.getOperator());
-									whereClause.append(" :");
-									whereClause.append(propertyParamBuffer);
-    
-    								break;
-    							}
-    							case GREATER_EQUAL_THAN: {
-    								if(propertyValue == null)
-    									processCondition = false;
-    
-    								if(processCondition){
-    									if(propertyParamBuffer == null)
-    										propertyParamBuffer = new StringBuilder();
-    									else
-    										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-    									propertyParamBuffer.append("param");
-    
-    									if(whereClauseParameters == null)
-    										whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-    									propertyParamBuffer.append(whereClauseParameters.size());
-    
-    									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    
-    									if(whereClause.length() == 0)
-    										whereClause.append("where ");
-    									else
-    										whereClause.append(" and ");
-    
-    									whereClause.append(propertyIdBuffer);
-    									whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-    									whereClause.append(" :");
-    									whereClause.append(propertyParamBuffer);
-    								}
-    
-    								break;
-    							}
-    							case GREATER_THAN: {
-    								if(propertyValue == null)
-    									processCondition = false;
-    
-    								if(processCondition){
-    									if(propertyParamBuffer == null)
-    										propertyParamBuffer = new StringBuilder();
-    									else
-    										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-    									propertyParamBuffer.append("param");
-    
-    									if(whereClauseParameters == null)
-    										whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-    									propertyParamBuffer.append(whereClauseParameters.size());
-    
-    									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    
-    									if(whereClause.length() == 0)
-    										whereClause.append("where ");
-    									else
-    										whereClause.append(" and ");
-    
-    									whereClause.append(propertyIdBuffer);
-    									whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-    									whereClause.append(" :");
-    									whereClause.append(propertyParamBuffer);
-    								}
-    
-    								break;
-    							}
-    							case LESS_EQUAL_THAN: {
-    								if(propertyValue == null)
-    									processCondition = false;
-    
-    								if(processCondition){
-    									if(propertyParamBuffer == null)
-    										propertyParamBuffer = new StringBuilder();
-    									else
-    										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-    									propertyParamBuffer.append("param");
-    
-    									if(whereClauseParameters == null)
-    										whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-    									propertyParamBuffer.append(whereClauseParameters.size());
-    
-    									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    
-    									if(whereClause.length() == 0)
-    										whereClause.append("where ");
-    									else
-    										whereClause.append(" and ");
-    
-    									whereClause.append(propertyIdBuffer);
-    									whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-    									whereClause.append(" :");
-    									whereClause.append(propertyParamBuffer);
-    								}
-    
-    								break;
-    							}
-    							case LESS_THAN: {
-    								if(propertyValue == null)
-    									processCondition = false;
-    
-    								if(processCondition){
-    									if(propertyParamBuffer == null)
-    										propertyParamBuffer = new StringBuilder();
-    									else
-    										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-    									propertyParamBuffer.append("param");
-    
-    									if(whereClauseParameters == null)
-    										whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-    									propertyParamBuffer.append(whereClauseParameters.size());
-    
-    									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    
-    									if(whereClause.length() == 0)
-    										whereClause.append("where ");
-    									else
-    										whereClause.append(" and ");
-    
-    									whereClause.append(propertyIdBuffer);
-    									whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-    									whereClause.append(" :");
-    									whereClause.append(propertyParamBuffer);
-    								}
-    
-    								break;
-    							}
-    							case BETWEEN: {
-                                    propertyValue       = PropertyUtil.getProperty(model, propertyInfo.getId());
-									propertyValueBuffer = PropertyUtil.getProperty(model, propertyInfo.getSearchPropertyId());
-    
-    								if(propertyValue instanceof String && StringUtil.trim(propertyValue).length() == 0)
-    									processCondition = false;
-    
-                                    if(propertyValueBuffer instanceof String && StringUtil.trim(propertyValueBuffer).length() == 0)
-                                        processCondition = false;
-
-                                    if(propertyValue == null || propertyValueBuffer == null)
-    									processCondition = false;
-    
-    								if(processCondition){
-										if(propertyParamBuffer == null)
-											propertyParamBuffer = new StringBuilder();
-										else
-											propertyParamBuffer.delete(0, propertyParamBuffer.length());
-
-										propertyParamBuffer.append("param");
-
-										if(whereClauseParameters == null)
-											whereClauseParameters = new LinkedHashMap<String, Object>();
-
-										propertyParamBuffer.append(whereClauseParameters.size());
-
-										if(!(propertyValue instanceof String))
-											whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-										else{
-											if(propertyInfo.isCaseSensitiveSearch())
-												whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-											else
-												whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
-										}
-
-										if(whereClause.length() == 0)
-											whereClause.append("where ");
-										else
-											whereClause.append(" and ");
-
-										if(!(propertyValue instanceof String))
-											whereClause.append(propertyIdBuffer);
-										else{
-											if(propertyInfo.isCaseSensitiveSearch())
-												whereClause.append(propertyIdBuffer);
-											else{
-												whereClause.append("lower(");
-												whereClause.append(propertyIdBuffer);
-												whereClause.append(")");
-											}
-										}
-
-    									whereClause.append(" ");
-    									whereClause.append(propertyCondition.getOperator());
-    									whereClause.append(" :");
-										whereClause.append(propertyParamBuffer);
-
-										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-										propertyParamBuffer.append("param");
-										propertyParamBuffer.append(whereClauseParameters.size());
-
-										if(!(propertyValueBuffer instanceof String))
-											whereClauseParameters.put(propertyParamBuffer.toString(), propertyValueBuffer);
-										else{
-											if(propertyInfo.isCaseSensitiveSearch())
-												whereClauseParameters.put(propertyParamBuffer.toString(), propertyValueBuffer);
-											else
-												whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValueBuffer).toLowerCase());
-										}
-
-										whereClause.append(" and :");
-										whereClause.append(propertyParamBuffer);
-    								}
-    								
-    								break;
-    							}
-    							case SIMILARITY: {
-    								processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0 && propertyInfo.getPhoneticPropertyId().length() > 0);
-    								
-    								if(processCondition){
-    									if(propertyParamBuffer == null)
-    										propertyParamBuffer = new StringBuilder();
-    									else
-    										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-    									propertyParamBuffer.append("param");
-    
-    									if(whereClauseParameters == null)
-    										whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-    									propertyParamBuffer.append(whereClauseParameters.size());
-    
-										propertyValueBuffer = new StringBuilder();
-    									((StringBuilder)propertyValueBuffer).append(PhoneticUtil.soundCode(StringUtil.trim(propertyValue)));
-    									((StringBuilder)propertyValueBuffer).append("%");
-    
-    									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValueBuffer.toString());
-    
-    									if(whereClause.length() == 0)
-    										whereClause.append("where ");
-    									else
-    										whereClause.append(" and ");
-    
-										propertyIdBuffer.delete(0, propertyIdBuffer.length());
-    
-    									if(propertyAlias.length() > 0){
-    										propertyIdBuffer.append(propertyAlias);
-    										propertyIdBuffer.append(".");
-    									}
-    
-    									propertyIdBuffer.append(propertyInfo.getPhoneticPropertyId());
-    
-    									whereClause.append(propertyIdBuffer);
-    									whereClause.append(" like :");
-    									whereClause.append(propertyParamBuffer);
-    									whereClauseParameters.put(propertyParamBuffer.toString(), propertyValueBuffer.toString());
-    
-    									if(similarityPropertiesInfo == null){
-    										similarityPropertiesInfo = new LinkedList<PropertyInfo>();
-    										similarityPropertiesIds = new LinkedList<String>();
-    									}
-    
-    									similarityPropertiesInfo.add(propertyInfo);
-    									similarityPropertiesIds.add(propertyPrefixBuffer.toString());
-    								}
-    
-    								break;
-    							}
-    							case CONTEXT: {
-    								processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0);
-    								
-    								if(processCondition){
-										propertyValueBuffer = new StringBuilder();
-    									((StringBuilder)propertyValueBuffer).append(propertyValue);
-    
-    									switch(propertyInfo.getContextSearchType()){
-        									case BOTH: {
-        										((StringBuilder)propertyValueBuffer).insert(0, "%");
-        										((StringBuilder)propertyValueBuffer).append("%");
-        
-        										propertyValue = propertyValueBuffer.toString();
-        
-        										break;
-        									}
-        									case SUFFIX: {
-        										((StringBuilder)propertyValueBuffer).append("%");
-        
-        										propertyValue = propertyValueBuffer.toString();
-        
-        										break;
-        									}
-        									case PREFIX: {
-        										((StringBuilder)propertyValueBuffer).insert(0, "%");
-        
-        										propertyValue = propertyValueBuffer.toString();
-        
-        										break;
-        									}
-    									}
-    
-    									if(propertyParamBuffer == null)
-    										propertyParamBuffer = new StringBuilder();
-    									else
-    										propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-    									propertyParamBuffer.append("param");
-    
-    									if(whereClauseParameters == null)
-    										whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-    									propertyParamBuffer.append(whereClauseParameters.size());
-    
-    									if(propertyInfo.isCaseSensitiveSearch())
-    										whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    									else
-    										whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
-    
-    									if(whereClause.length() == 0)
-    										whereClause.append("where ");
-    									else
-    										whereClause.append(" and ");
-    
-    									if(propertyInfo.isCaseSensitiveSearch())
-    										whereClause.append(propertyIdBuffer);
-    									else{
-    										whereClause.append("lower(");
-    										whereClause.append(propertyIdBuffer);
-    										whereClause.append(")");
-    									}
-    
-    									whereClause.append(" ");
-    									whereClause.append(propertyCondition.getOperator());
-    									whereClause.append(" :");
-    									whereClause.append(propertyParamBuffer);
-    								}
-    
-    								break;
-    							}
-    							case IN: {
-                                    if(propertyValue != null && ((Collection)propertyValue).size() > 0)
-                                        processCondition = false;
-    
-                                    if(processCondition){
-                                        if(propertyParamBuffer == null)
-                                            propertyParamBuffer = new StringBuilder();
-                                        else
-                                            propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-                                        propertyParamBuffer.append("param");
-    
-                                        if(whereClauseParameters == null)
-                                            whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-                                        propertyParamBuffer.append(whereClauseParameters.size());
-    
-                                        whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    
-                                        if(whereClause.length() == 0)
-                                            whereClause.append("where ");
-                                        else
-                                            whereClause.append(" and ");
-    
-                                        whereClause.append(propertyIdBuffer);
-                                        whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-                                        whereClause.append(" :");
-                                        whereClause.append(propertyParamBuffer);
-                                    }
-    
-                                    break;
-    							}
-    							case NOT_IN: {
-                                    if(propertyValue != null && ((Collection)propertyValue).size() > 0)
-                                        processCondition = false;
-    
-                                    if(processCondition){
-                                        if(propertyParamBuffer == null)
-                                            propertyParamBuffer = new StringBuilder();
-                                        else
-                                            propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-                                        propertyParamBuffer.append("param");
-    
-                                        if(whereClauseParameters == null)
-                                            whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-                                        propertyParamBuffer.append(whereClauseParameters.size());
-    
-                                        whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-    
-                                        if(whereClause.length() == 0)
-                                            whereClause.append("where ");
-                                        else
-                                            whereClause.append(" and ");
-    
-                                        whereClause.append(propertyIdBuffer);
-                                        whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-                                        whereClause.append(" :");
-                                        whereClause.append(propertyParamBuffer);
-                                    }
-    
-                                    break;
-    							}
-                                default: {
-                                    if(propertyValue instanceof Number && propertyValue.toString().equals("0"))
-                                        processCondition = false;
-    
-                                    if(propertyValue instanceof String && StringUtil.trim(propertyValue).length() == 0)
-                                        processCondition = false;
-    
-                                    if(propertyValue == null)
-                                        processCondition = false;
-    
-                                    if(processCondition){
-                                        if(propertyParamBuffer == null)
-                                            propertyParamBuffer = new StringBuilder();
-                                        else
-                                            propertyParamBuffer.delete(0, propertyParamBuffer.length());
-    
-                                        propertyParamBuffer.append("param");
-    
-                                        if(whereClauseParameters == null)
-                                            whereClauseParameters = new LinkedHashMap<String, Object>();
-    
-                                        propertyParamBuffer.append(whereClauseParameters.size());
-    
-                                        if(!(propertyValue instanceof String))
-                                            whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-                                        else{
-                                            if(propertyInfo.isCaseSensitiveSearch())
-                                                whereClauseParameters.put(propertyParamBuffer.toString(), propertyValue);
-                                            else
-                                                whereClauseParameters.put(propertyParamBuffer.toString(), StringUtil.trim(propertyValue).toLowerCase());
-                                        }
-    
-                                        if(whereClause.length() == 0)
-                                            whereClause.append("where ");
-                                        else
-                                            whereClause.append(" and ");
-    
-                                        if(!(propertyValue instanceof String))
-                                            whereClause.append(propertyIdBuffer);
-                                        else{
-                                            if(propertyInfo.isCaseSensitiveSearch())
-                                                whereClause.append(propertyIdBuffer);
-                                            else{
-                                                whereClause.append("lower(");
-                                                whereClause.append(propertyIdBuffer);
-                                                whereClause.append(")");
-                                            }
-                                        }
-
-                                        whereClause.append(" ");
-                                        whereClause.append(propertyCondition.getOperator());
-                                        whereClause.append(" :");
-                                        whereClause.append(propertyParamBuffer);
-
-                                        if(considerConditions){
-                                            identitiesPropertiesInfoBuffer.add(propertyInfo);
-
-                                            if(identitiesPropertiesInfoBuffer.containsAll(identitiesPropertiesInfo))
-                                                considerConditions = false;
-                                        }
-                                    }
-    
-                                    break;
-                                }        							
-							}
-						}
-						catch(Throwable e){
-						}
-					}
-				}
-			}
-		}
-	}
-
 	/**
 	 * @see br.com.concepting.framework.persistence.BaseDAO#delete(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void delete(M model) throws InternalErrorException{
-		Session connection = getConnection();
+	    if(model == null)
+	        return;
 
-		try{
-			connection.delete(model);
+        try{
+            Query query = HibernateQueryBuilder.build(QueryType.DELETE, model, this);
+        
+            query.executeUpdate();
 		}
 		catch(ObjectNotFoundException e){
 		}
@@ -1117,11 +202,11 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#find(br.com.concepting.framework.model.BaseModel)
 	 */
     public <M extends BaseModel> M find(M model) throws InternalErrorException, ItemNotFoundException{
-		try{
-			if(model == null)
-				throw new ItemNotFoundException();
+        if(model == null)
+            throw new ItemNotFoundException();
 
-			Query query       = buildQuery(model, null, null, QueryType.FIND);
+        try{
+			Query query       = HibernateQueryBuilder.build(QueryType.FIND, model, this);
 			M     queryResult = (M)query.uniqueResult();
 
 			if(queryResult == null)
@@ -1159,10 +244,10 @@ public abstract class HibernateDAO extends BaseDAO{
 	 */
     public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		try{
-			Query   query     = buildQuery(model, null, modelFilter, QueryType.SEARCH);
+			Query   query     = HibernateQueryBuilder.build(QueryType.SEARCH, model, modelFilter, this);
 			List<M> modelList = query.list();
 			
-			modelList = filterBySimilarity(modelList, model);
+			modelList = ModelUtil.filterBySimilarity(model, modelList);
 
 			return (C)modelList;
 		}
@@ -1178,67 +263,6 @@ public abstract class HibernateDAO extends BaseDAO{
 		catch(HibernateException e){
             throw new InternalErrorException(e);
 		}
-	}
-
-	/**
-	 * Filtra uma lista de modelos de dados por similaridade.
-	 * 
-	 * @param modelList Lista contendo os modelos de dados.
-	 * @param model Instância contendo o modelo de dados que servirá como base de comparação.
-	 * @return Lista contendo os modelos de dados que satisfazem a(s) regra(s) de similaridade.
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalAccessException 
-	 */
-	private <M extends BaseModel> List<M> filterBySimilarity(List<M> modelList, M model) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
-		if(model != null){
-    		M modelListItem = null;
-    
-    		if(similarityPropertiesInfo != null && similarityPropertiesInfo.size() != 0){
-    			String  propertyValueBuffer       = "";
-    			String  propertyValue             = "";
-    			Double  compareSimilarityAccuracy = 0d;
-    			Integer similarityAccuracyCount   = 0;
-    			Double  similarityAccuracy        = 0d;
-    
-    			for(Integer cont1 = 0; cont1 < modelList.size() ; cont1++){
-    				modelListItem             = modelList.get(cont1);
-    				similarityAccuracyCount   = 0;
-    				compareSimilarityAccuracy = 0d;
-    				similarityAccuracy        = 0d;
-    
-    				for(Integer cont2 = 0; cont2 < similarityPropertiesInfo.size() ; cont2++){
-    					propertyValueBuffer = StringUtil.trim(PropertyUtil.getProperty(modelListItem, similarityPropertiesIds.get(cont2)));
-    					propertyValue       = StringUtil.trim(PropertyUtil.getProperty(model, similarityPropertiesIds.get(cont2)));
-    
-    					if(propertyValue.length() > 0){
-    						similarityAccuracy        += PhoneticUtil.similarityAccuracy(propertyValue, propertyValueBuffer);
-    						compareSimilarityAccuracy += similarityPropertiesInfo.get(cont2).getSimilarityAccuracy();
-    
-    						similarityAccuracyCount++;
-    					}
-    				}
-    
-    				similarityAccuracy        = similarityAccuracy / similarityAccuracyCount;
-    				compareSimilarityAccuracy = compareSimilarityAccuracy / similarityAccuracyCount;
-    
-    				if(similarityAccuracy < compareSimilarityAccuracy){
-    					modelList.remove(modelListItem);
-    
-    					cont1--;
-    				}
-    				else{
-						modelListItem.setSimilarityAccuracy(similarityAccuracy);
-
-						modelList.set(cont1, modelListItem);
-    				}
-    			}
-    
-    			ModelUtil.sort(modelList, "similarityAccuracy", SortOrderType.DESCEND);
-    		}
-		}
-		
-		return modelList;
 	}
 
 	/**
@@ -1322,24 +346,13 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	    
-		Session connection = getConnection();
+		M           model    = null;
+		Iterator<M> iterator = modelList.iterator();
 
-		try{
-    		M           model    = null;
-    		Iterator<M> iterator = modelList.iterator();
-
-    		while(iterator.hasNext()){
-    			model = iterator.next();
-    			
-    			connection.delete(model);
-    		}
-		}
-		catch(ObjectNotFoundException e){
-		}
-		catch(ObjectDeletedException e){
-		}
-		catch(HibernateException e){
-			throw new InternalErrorException(e);
+		while(iterator.hasNext()){
+			model = iterator.next();
+			
+			delete(model);
 		}
 	}
 
@@ -1356,9 +369,12 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#save(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void save(M model) throws ItemAlreadyExistsException, InternalErrorException{
-		Session connection = getConnection();
+        if(model == null)
+            return;
 
-		try{
+        try{
+            Session connection = getConnection();
+
 			connection.saveOrUpdate(model);
 		}
 		catch(NonUniqueObjectException e){
@@ -1383,9 +399,12 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#insert(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void insert(M model) throws ItemAlreadyExistsException, InternalErrorException{
-		Session connection = getConnection();
+        if(model == null)
+            return;
 
 		try{
+	        Session connection = getConnection();
+
             connection.save(model);
 		}
 		catch(NonUniqueObjectException e){
@@ -1410,10 +429,13 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#update(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void update(M model) throws InternalErrorException{
-		Session connection = getConnection();
-
+	    if(model == null)
+	        return;
+	    
 		try{
-            connection.merge(model);
+	        Session connection = getConnection();
+
+	        connection.merge(model);
 		}
 		catch(NonUniqueObjectException e){
 		}
@@ -1436,11 +458,10 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	     
-		Session connection = getConnection();
-
 		try{
-            M           model    = null;
-			Iterator<M> iterator = modelList.iterator();
+	        Session     connection = getConnection();
+            M           model      = null;
+			Iterator<M> iterator   = modelList.iterator();
 			
 			while(iterator.hasNext()){
 				model = iterator.next();
@@ -1473,11 +494,10 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	    
-		Session connection = getConnection();
-
 		try{
-			M           model    = null;
-			Iterator<M> iterator = modelList.iterator();
+	        Session     connection = getConnection();
+			M           model      = null;
+			Iterator<M> iterator   = modelList.iterator();
 			
 			while(iterator.hasNext()){
     			model = iterator.next();
@@ -1510,11 +530,10 @@ public abstract class HibernateDAO extends BaseDAO{
 	    if(modelList == null || modelList.size() == 0)
 	        return;
 	    
-		Session connection = getConnection();
-
 		try{
-    		M           model    = null;
-    		Iterator<M> iterator = modelList.iterator();
+	        Session     connection = getConnection();
+    		M           model      = null;
+    		Iterator<M> iterator   = modelList.iterator();
     		
     		while(iterator.hasNext()){
     			model = iterator.next();
