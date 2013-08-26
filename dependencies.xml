@@ -63,7 +63,6 @@
 	<dependency source="${JUNIT_HOME}/junit-4.4.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${LOG4J_HOME}/log4j-1.2.15.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${POI_HOME}/poi-3.6-20091214.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
-	<dependency source="${RRD4J_HOME}/lib/rrd4j-2.0.2.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${SNMP4J_HOME}/dist/lib/SNMP4J.jar" targets="compile,ejb,web,webServices" overwrite="true"/>
 	<dependency source="${STRUTS_HOME}/lib/struts-core-1.3.10.jar" targets="compile,web" overwrite="true"/>
 	<dependency source="${STRUTS_HOME}/lib/struts-el-1.3.10.jar" targets="compile,web" overwrite="true"/>
