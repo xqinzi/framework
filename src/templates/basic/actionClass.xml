@@ -139,7 +139,16 @@
 			<if expr="(@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != '')">
                 @{actionFormName} form = getActionForm();
 				@{modelName} model = form.getSearchModel();
-				@{mainPropertyName} @{mainPropertyId} = model.get@{capitalizedMainPropertyId}();
+                @{mainPropertyName} @{mainPropertyId} = model.get@{capitalizedMainPropertyId}();
+                
+                if(@{mainPropertyId} == null){
+                    @{mainPropertyId} = new @{mainPropertyName}();
+                    
+                    model.set@{capitalizedMainPropertyId}(@{mainPropertyId});
+                    
+                    form.setSearchModel(model);
+                }    
+                
 				@{mainPropertyServiceInterfaceName} service = getService(@{mainPropertyName}.class);
 				Collection&lt;@{mainPropertyName}&gt; @{mainPropertyId}s = service.search(@{mainPropertyId});
 		  	   
@@ -156,8 +165,12 @@
 		public void add() throws Throwable{
             <if expr="(@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != '')">
     			@{actionFormName} form = getActionForm();
+                @{modelName} model = form.getModel();
+                @{mainPropertyName} @{mainPropertyId} = new @{mainPropertyName}();
+                
+                model.set@{capitalizedMainPropertyId}(@{mainPropertyId});
     
-    			form.setModel(null);
+    			form.setModel(model);
                 
     			<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">
     				<if expr="@{propertyInfo.isModel} or @{propertyInfo.hasModel}">
