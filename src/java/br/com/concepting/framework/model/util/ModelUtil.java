@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.dom4j.DocumentException;
@@ -24,12 +27,14 @@ import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
+import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.util.ByteUtil;
 import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
+import br.com.concepting.framework.util.PhoneticUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;
@@ -465,6 +470,14 @@ public class ModelUtil{
         return fromXmlStream(in, LanguageUtil.getDefaultLanguage());
     }
     
+    /**
+     * Transforma um stream de dados com conteúdo XML em uma lista de modelo de dados.
+     * 
+     * @param in Instância do stream de dados desejado.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @return Lista de modelo de dados.
+     * @throws IOException
+     */
 	public static <M extends BaseModel> List<M> fromXmlStream(InputStream in, Locale language) throws IOException{
 	    XmlReader     reader     = new XmlReader(in);
 	    XmlNode       node       = reader.getRoot();
@@ -473,10 +486,23 @@ public class ModelUtil{
 	    return fromXmlNodes(childNodes, language);
 	}
 	
+	/**
+	 * Transforma uma lista de nós XML em uma lista de modelo de dados.
+	 * 
+	 * @param nodes Lista contendo os nós XML.
+     * @return Lista de modelo de dados.
+	 */
     public static <M extends BaseModel> List<M> fromXmlNodes(List<XmlNode> nodes){
         return fromXmlNodes(nodes, LanguageUtil.getDefaultLanguage());
     }
     
+    /**
+     * Transforma uma lista de nós XML em uma lista de modelo de dados.
+     * 
+     * @param nodes Lista contendo os nós XML.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @return Lista de modelo de dados.
+     */
 	public static <M extends BaseModel> List<M> fromXmlNodes(List<XmlNode> nodes, Locale language){
 	    List<M> result = new LinkedList<M>();
 	    M       item   = null;
@@ -490,10 +516,23 @@ public class ModelUtil{
 	    return result;
 	}
 	
+	/**
+	 * Transforma um nó XML em um modelo de dados.
+	 * 
+	 * @param node Instância contendo as propriedades do nó.
+	 * @return Instância do modelo de dados.
+	 */
 	public static <M extends BaseModel> M fromXmlNode(XmlNode node){
 	    return fromXmlNode(node, LanguageUtil.getDefaultLanguage());
 	}
 	
+    /**
+     * Transforma um nó XML em um modelo de dados.
+     * 
+     * @param node Instância contendo as propriedades do nó.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @return Instância do modelo de dados.
+     */
     public static <M extends BaseModel> M fromXmlNode(XmlNode node, Locale language){
 	    if(language == null)
 	        return fromXmlNode(node);
@@ -572,10 +611,27 @@ public class ModelUtil{
 	    return model;
 	}
 	
+    /**
+     * Grava, em um arquivo, uma lista de modelo de dados.
+     * 
+     * @param file Instância contendo as propriedades do arquivo.
+     * @param list Lista contendo os modelos de dados.
+     * @throws IOException
+     * @throws DocumentException
+     */
 	public static <M extends BaseModel> void toXmlFile(File file, List<M> list) throws IOException, DocumentException{
 	    toXmlFile(file, list, LanguageUtil.getDefaultLanguage());
 	}
 	
+    /**
+     * Grava, em um arquivo, uma lista de modelo de dados.
+     * 
+     * @param file Instância contendo as propriedades do arquivo.
+     * @param list Lista contendo os modelos de dados.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @throws IOException
+     * @throws DocumentException
+     */
     public static <M extends BaseModel> void toXmlFile(File file, List<M> list, Locale language) throws IOException, DocumentException{
         XmlNode node = new XmlNode("modelList");
         
@@ -586,11 +642,28 @@ public class ModelUtil{
         
         writer.write(node);
     }
-    
+
+    /**
+     * Grava, em um arquivo, um modelo de dados.
+     * 
+     * @param file Instância contendo as propriedades do arquivo.
+     * @param model Instância do modelo de dados.
+     * @throws IOException
+     * @throws DocumentException
+     */
     public static <M extends BaseModel> void toXmlFile(File file, M model) throws IOException, DocumentException{
         toXmlFile(file, model, LanguageUtil.getDefaultLanguage());
     }
     
+    /**
+     * Grava, em um arquivo, um modelo de dados.
+     * 
+     * @param file Instância contendo as propriedades do arquivo.
+     * @param model Instância do modelo de dados.
+     * @param language Instância contendo as propriedades do idioma desejado.
+     * @throws IOException
+     * @throws DocumentException
+     */
 	public static <M extends BaseModel> void toXmlFile(File file, M model, Locale language) throws IOException, DocumentException{
 	    XmlNode   node   = toXmlNode(model, language);
 	    XmlWriter writer = new XmlWriter(file);
@@ -717,4 +790,127 @@ public class ModelUtil{
 	    
 	    return node;
 	}
+	
+    /**
+     * Monta o mapa de filtro de similaridade.
+     * 
+     * @param modelClass Classe que define o modelo de dados.
+     */
+	private static <M extends BaseModel> Map<String, PropertyInfo> buildSimilarityMap(Class<M> modelClass){
+	    Map<String, PropertyInfo> similarityMap      = new LinkedHashMap<String, PropertyInfo>();
+	    Collection<String>        processedRelations = new LinkedList<String>();
+	    
+	    buildFilterSimilarityMap(modelClass, null, processedRelations, similarityMap);
+	    
+	    return similarityMap;
+	}
+	
+	/**
+	 * Monta o mapa de filtro de similaridade.
+	 * 
+	 * @param modelClass Classe que define o modelo de dados.
+	 * @param propertyPrefix String contendo o prefixo das propriedades.
+	 * @param processedRelations Lista contendo as propriedades já processadas.
+	 * @param similarityMap Instância do mapa de similaridade.
+	 */
+	private static <M extends BaseModel> void buildFilterSimilarityMap(Class<M> modelClass, StringBuilder propertyPrefix, Collection<String> processedRelations, Map<String, PropertyInfo> similarityMap){
+	    if(modelClass == null)
+	        return;
+	    
+	    ModelInfo modelInfo = ModelUtil.getModelInfo(modelClass);
+	    
+	    if(modelInfo == null)
+	        return;
+	    
+	    Collection<PropertyInfo> propertiesInfo = modelInfo.getPropertiesInfo();
+	    
+	    if(propertiesInfo != null && propertiesInfo.size() > 0){
+	        if(similarityMap == null)
+	            similarityMap = new LinkedHashMap<String, PropertyInfo>();
+	        
+	        for(PropertyInfo propertyInfo : propertiesInfo){
+	            if(propertyInfo.isModel()){
+	                if(propertyPrefix == null)
+	                    propertyPrefix = new StringBuilder();
+	                else
+	                    propertyPrefix.append(".");
+	                    
+	                propertyPrefix.append(propertyInfo.getId());
+	                
+	                if(!processedRelations.contains(propertyPrefix.toString()) && !propertyPrefix.toString().contains("parent.parent")){
+	                    processedRelations.add(propertyPrefix.toString());
+	                
+	                    buildFilterSimilarityMap(propertyInfo.getClazz(), propertyPrefix, processedRelations, similarityMap);
+	                }
+	            }
+	            else if(propertyInfo.getSearchCondition() == ConditionType.SIMILARITY)
+	                similarityMap.put(propertyInfo.getPhoneticPropertyId(), propertyInfo);
+	        }
+	    }
+	}
+	
+    /**
+     * Filtra uma lista de modelos de dados por similaridade.
+     * 
+     * @param model Instância contendo o modelo de dados que servirá como base de comparação.
+     * @param modelList Lista contendo os modelos de dados.
+     * @return Lista contendo os modelos de dados que satisfazem a(s) regra(s) de similaridade.
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalAccessException 
+     */
+    public static <M extends BaseModel> List<M> filterBySimilarity(M model, List<M> modelList) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+        if(model == null)
+            return null;
+        
+        Map<String, PropertyInfo> similarityMap = buildSimilarityMap(model.getClass());
+        
+        if(similarityMap != null && similarityMap.size() > 0){
+            String       comparePropertyValue      = "";
+            String       propertyValue             = "";
+            Double       compareSimilarityAccuracy = 0d;
+            Integer      similarityAccuracyCount   = 0;
+            Double       similarityAccuracy        = 0d;
+            PropertyInfo similarityPropertyInfo    = null;
+            M            modelListItem             = null;
+
+            for(Integer cont = 0; cont < modelList.size() ; cont++){
+                modelListItem             = modelList.get(cont);
+                similarityAccuracyCount   = 0;
+                compareSimilarityAccuracy = 0d;
+                similarityAccuracy        = 0d;
+
+                for(String similarityPropertyId : similarityMap.keySet()){
+                    comparePropertyValue = StringUtil.trim(PropertyUtil.getProperty(modelListItem, similarityPropertyId));
+                    propertyValue        = StringUtil.trim(PropertyUtil.getProperty(model, similarityPropertyId));
+
+                    if(propertyValue.length() > 0){
+                        similarityPropertyInfo     = similarityMap.get(similarityPropertyId);
+                        similarityAccuracy        += PhoneticUtil.similarityAccuracy(propertyValue, comparePropertyValue);
+                        compareSimilarityAccuracy += similarityPropertyInfo.getSimilarityAccuracy();
+
+                        similarityAccuracyCount++;
+                    }
+                }
+
+                similarityAccuracy        = similarityAccuracy / similarityAccuracyCount;
+                compareSimilarityAccuracy = compareSimilarityAccuracy / similarityAccuracyCount;
+
+                if(similarityAccuracy < compareSimilarityAccuracy){
+                    modelList.remove(modelListItem);
+
+                    cont--;
+                }
+                else{
+                    modelListItem.setSimilarityAccuracy(similarityAccuracy);
+
+                    modelList.set(cont, modelListItem);
+                }
+            }
+
+            ModelUtil.sort(modelList, "similarityAccuracy", SortOrderType.DESCEND);
+        }
+        
+        return modelList;
+    }
 }
