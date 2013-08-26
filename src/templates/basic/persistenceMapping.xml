@@ -191,10 +191,15 @@
     								</if>
     							</if>
     							<if expr="@{propertyInfo.mappedPropertyId} == ''">
-    								<if expr="@{propertyInfo.formula} != ''">
+    								<if expr="@{propertyInfo.formulaExpression} != ''">
     									<property name="@{propertyInfo.id}" type="@{propertyInfo.mappedPropertyType}" not-null="@{nullable}">
     										<formula>
-    											@{propertyInfo.formula}
+                                                <if expr="@{propertyInfo.formulaType} == 'NONE'">
+    											     @{propertyInfo.formulaExpression}
+                                                </if>
+                                                <if expr="@{propertyInfo.formulaType} != 'NONE'">
+                                                     @{propertyInfo.formulaType.id}(@{propertyInfo.formulaExpression})
+                                                </if>
     										</formula>
     									</property>
     								</if>
@@ -282,11 +287,16 @@
                                     </if>
                                 </if>
                                 <if expr="@{propertyInfo.mappedPropertyId} == ''">
-                                    <if expr="@{propertyInfo.formula} != ''">
+                                    <if expr="@{propertyInfo.formulaExpression} != ''">
                                         <property name="@{propertyInfo.id}" not-null="@{nullable}">
-                                            <formula>
-                                                @{propertyInfo.formula}
-                                            </formula>
+    										<formula>
+                                                <if expr="@{propertyInfo.formulaType} == 'NONE'">
+    											     @{propertyInfo.formulaExpression}
+                                                </if>
+                                                <if expr="@{propertyInfo.formulaType} != 'NONE'">
+                                                     @{propertyInfo.formulaType.id}(@{propertyInfo.formulaExpression})
+                                                </if>
+    										</formula>
                                             <type name="@{propertyInfo.mappedPropertyType}">
                                                 <param name="enumClass">@{propertyInfo.clazz.name}</param>
                                                 <param name="type">12</param>
