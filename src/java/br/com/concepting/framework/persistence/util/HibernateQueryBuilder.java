@@ -28,8 +28,25 @@ import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.PhoneticUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.SortOrderType;
-
+ 
+/**
+ * Classe auxiliar responsável por montar queries HQL baseadas em modelos de dados.
+ * 
+ * @author fvilarinho
+ * @since 3.0
+ */
 public abstract class HibernateQueryBuilder{
+    /**
+     * Monta a query HQL (Hibernate Query Language) baseada no modelo de dados especificado.
+     * 
+     * @param queryType Constante que define o tipo da query.
+     * @param model Instância do modelo de dados desejado.
+     * @param modelFilter Instância contendo os filtros adicionais do modelo de dados.
+     * @param whereClauseParameters Mapa contendo os parâmetros da cláusula WHERE.
+     * @param dao Instância do DAO a ser utilizado.
+     * @return Instância da query desejada.
+     * @throws InternalErrorException
+     */
     private static <M extends BaseModel> String buildExpression(QueryType queryType, M model, ModelFilter modelFilter, Map<String, Object> whereClauseParameters, HibernateDAO dao) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
         StringBuilder      expression         = new StringBuilder();
         String             propertyPrefix     = "";
@@ -46,9 +63,11 @@ public abstract class HibernateQueryBuilder{
 
         buildExpression(queryType, model, modelFilter, propertyPrefix, propertyAlias, fieldsClause, fromClause, joinClause, whereClause, groupByClause, orderByClause, whereClauseParameters, processedRelations, considerConditions, needToGroupBy, dao);
 
-        if(fieldsClause.length() > 0){
-            expression.append(StringUtil.trim(fieldsClause));
-            expression.append(" ");
+        if(queryType != QueryType.DELETE){
+            if(fieldsClause.length() > 0){
+                expression.append(StringUtil.trim(fieldsClause));
+                expression.append(" ");
+            }
         }
 
         expression.append(StringUtil.trim(fromClause));
@@ -63,20 +82,45 @@ public abstract class HibernateQueryBuilder{
             expression.append(StringUtil.trim(whereClause));
         }
 
-        if(groupByClause.length() > 0){
-            expression.append(" ");
-            expression.append(StringUtil.trim(groupByClause));
-        }
-
-        if(orderByClause.length() > 0){
-            expression.append(" ");
-            expression.append(StringUtil.trim(orderByClause));
+        if(queryType != QueryType.DELETE){
+            if(needToGroupBy){
+                if(groupByClause.length() > 0){
+                    expression.append(" ");
+                    expression.append(StringUtil.trim(groupByClause));
+                }
+            }
+    
+            if(orderByClause.length() > 0){
+                expression.append(" ");
+                expression.append(StringUtil.trim(orderByClause));
+            }
         }
         
         return expression.toString();
     }
     
-
+    /**
+     * Monta a query HQL (Hibernate Query Language) baseada no modelo de dados especificado.
+     * 
+     * @param queryType Constante que define o tipo da query.
+     * @param model Instância do modelo de dados desejado.
+     * @param modelFilter Instância contendo os filtros adicionais do modelo de dados.
+     * @param propertyPrefix String contendo o prefixo das propriedades.
+     * @param propertyAlias String contendo o apelido das propriedades.
+     * @param fieldsClause String contendo os campos que serão retornados pela query.
+     * @param fromClause String contendo a cláusula FROM.
+     * @param joinClause String contendo a cláusula JOIN.
+     * @param whereClause String contendo a cláusula WHERE.
+     * @param groupByClause String contendo a cláusula GROUP BY.
+     * @param orderByClause String contendo a cláusula ORDER BY.
+     * @param whereClauseParameters Mapa contendo os parâmetros da cláusula WHERE.
+     * @param processedRelations Lista contendo os relacionamentos já processados.
+     * @param considerConditions Indica se as condições de pesquisa serão consideradas.
+     * @param needToGroupBy Indica se a cláusula GROUP BY deve ser considerada.
+     * @param dao Instância do DAO a ser utilizado.
+     * @return Instância da query desejada.
+     * @throws InternalErrorException
+     */
     private static <M extends BaseModel> void buildExpression(QueryType queryType, M model, ModelFilter modelFilter, String propertyPrefix, String propertyAlias, StringBuilder fieldsClause, StringBuilder fromClause, StringBuilder joinClause, StringBuilder whereClause, StringBuilder groupByClause, StringBuilder orderByClause, Map<String, Object> whereClauseParameters, Collection<String> processedRelations, Boolean considerConditions, Boolean needToGroupBy, HibernateDAO dao) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
         Boolean   modelIsNull = (model == null);
         Class     modelClass  = (modelIsNull ? ModelUtil.getModelClassByPersistence(dao.getClass()) : model.getClass());
@@ -827,10 +871,29 @@ public abstract class HibernateQueryBuilder{
         }
     }    
     
+    /**
+     * Monta a query HQL (Hibernate Query Language) baseada no modelo de dados especificado.
+     * 
+     * @param queryType Constante que define o tipo da query.
+     * @param model Instância do modelo de dados desejado.
+     * @param dao Instância do DAO a ser utilizado.
+     * @return Instância da query desejada.
+     * @throws InternalErrorException
+     */
     public static <M extends BaseModel> Query build(QueryType queryType, M model, HibernateDAO dao) throws InternalErrorException{
         return build(queryType, model, null, dao);
     }
 
+    /**
+     * Monta a query HQL (Hibernate Query Language) baseada no modelo de dados especificado.
+     * 
+     * @param queryType Constante que define o tipo da query.
+     * @param model Instância do modelo de dados desejado.
+     * @param modelFilter Instância contendo os filtros adicionais do modelo de dados.
+     * @param dao Instância do DAO a ser utilizado.
+     * @return Instância da query desejada.
+     * @throws InternalErrorException
+     */
     public static <M extends BaseModel> Query build(QueryType queryType, M model, ModelFilter modelFilter, HibernateDAO dao) throws InternalErrorException{
         try{
             Session             connection            = dao.getConnection();
