@@ -18,4 +18,10 @@ public enum QueryType{
 	 * propriedade(s) de pesquisa.
 	 */
 	SEARCH,
+	
+    /**
+     * Constante que define o tipo de query para exclusão de um ou mais modelos de dados a partir da(s) 
+     * propriedade(s) de pesquisa.
+     */
+	DELETE;
 }
