@@ -1,7 +1,8 @@
 package br.com.concepting.framework.exceptions;
 
 /**
- * Classe que define a exceção quando um conteúdo possui conteúdo inválido.
+ * Classe que define a exceção quando for identificado um conteúdo com problema de sintaxe 
+ * em uma expressão.
  * 
  * @author fvilarinho
  * @since 3.0
@@ -19,7 +20,7 @@ public class IncorrectSyntaxException extends InternalErrorException{
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
-     * @param content String do conteúdo inválido.
+     * @param content String do conteúdo com problema de sintaxe.
      */
     public IncorrectSyntaxException(String content){
         super();
@@ -30,7 +31,7 @@ public class IncorrectSyntaxException extends InternalErrorException{
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
-     * @param content String do conteúdo inválido.
+     * @param content String do conteúdo com problema de sintaxe.
      * @param exception Instância da exceção a ser encapsulada.
      */
     public IncorrectSyntaxException(String content, Throwable exception){
@@ -51,7 +52,7 @@ public class IncorrectSyntaxException extends InternalErrorException{
     /**
      * Retorna o conteúdo inválido.
      * 
-     * @return String do conteúdo inválido.
+     * @return String do conteúdo com problema de sintaxe.
      */
     public String getContent(){
         return content;
@@ -60,7 +61,7 @@ public class IncorrectSyntaxException extends InternalErrorException{
     /**
      * Define o conteúdo inválido.
      * 
-     * @param content String do conteúdo inválido.
+     * @param content String do conteúdo com problema de sintaxe.
      */
     public void setContent(String content){
         this.content = content;
