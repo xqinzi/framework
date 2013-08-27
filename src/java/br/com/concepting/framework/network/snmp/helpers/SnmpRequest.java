@@ -7,9 +7,9 @@ package br.com.concepting.framework.network.snmp.helpers;
  * @since 1.0
  */
 public class SnmpRequest{
-	private String oid          = "";
+	private String oid        = "";
 	private String expression = "";
-	private String formula      = "";
+	private String formula    = "";
 	
 	/**
 	 * Retorna a fórmula que deve ser aplicada aos resultados da requisição.
