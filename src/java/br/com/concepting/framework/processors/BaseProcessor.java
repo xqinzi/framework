@@ -3,8 +3,8 @@ package br.com.concepting.framework.processors;
 import java.util.Collection;
 import java.util.Locale;
 
-import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.util.PropertyUtil;
+import br.com.concepting.framework.processors.constants.ProcessorConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.XmlNode;
 
@@ -158,8 +158,8 @@ public class BaseProcessor{
 			}
 		}
 
-		nodeText = StringUtil.replaceAll(nodeText, Constants.REMOVE_TAG.concat(StringUtil.getLineBreak()), "");
-		nodeText = StringUtil.replaceAll(nodeText, Constants.REMOVE_TAG, "");
+		nodeText = StringUtil.replaceAll(nodeText, ProcessorConstants.REMOVE_TAG.concat(StringUtil.getLineBreak()), "");
+		nodeText = StringUtil.replaceAll(nodeText, ProcessorConstants.REMOVE_TAG, "");
 		nodeText = ExpressionProcessorUtil.fillVariablesInString(domain, nodeText, language);
 		nodeText = PropertyUtil.fillPropertiesInString(declaration, nodeText, language);
         nodeText = StringUtil.trim(nodeText);
