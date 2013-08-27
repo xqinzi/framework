@@ -8,18 +8,18 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
  * @author fvilarinho
  * @since 3.0
  */
-public abstract class PersistenceConstants extends ResourceConstants{
+public abstract class PersistenceConstants{
     /**
      * Constante que define o diretório de armazenamento default dos mapeamentos de 
      * persistência dos modelos de dados.
      */
-    public static final String DEFAULT_MAPPINGS_DIR = DEFAULT_RESOURCES_DIR.concat("mappings/");
+    public static final String DEFAULT_MAPPINGS_DIR = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("mappings/");
     
     /**
      * Constante que define o identificador do arquivo de configuraões de persistência 
      * default. 
      */
-    public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("persistenceResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("persistenceResources.xml");
     
     /**
      * Constante que define o identificador da chave que define o atributo de número máximo de 
