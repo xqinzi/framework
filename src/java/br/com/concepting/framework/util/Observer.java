@@ -16,7 +16,7 @@ import br.com.concepting.framework.exceptions.InternalErrorException;
  *
  * @author fvilarinho
  * @since 1.0
- */
+ */ 
 public class Observer implements InvocationHandler{
 	private Object      interceptableInstance       = null;
 	private Class       interceptableInterfaceClass = null;
@@ -24,11 +24,28 @@ public class Observer implements InvocationHandler{
 	private Interceptor interceptor                 = null;
 	private Boolean     auditable                   = true;
 
-	public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Boolean audit){
-		return getInstance(interceptableInstance, interceptableInterfaceClass, null, audit);
+	/**
+	 * Retorna a instância única do observador para interceptação.
+	 * 
+	 * @param interceptableInstance Instância da classe interceptável.
+	 * @param interceptableInterfaceClass Interfaces da classe interceptável.
+	 * @param auditable Indica se a interceptação será auditada.
+	 * @return Inst&ancia do observador.
+	 */
+	public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Boolean auditable){
+		return getInstance(interceptableInstance, interceptableInterfaceClass, null, auditable);
 	}
 	
-    public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Class interceptorClass, Boolean audit){
+    /**
+     * Retorna a instância única do observador para interceptação.
+     * 
+     * @param interceptableInstance Instância da classe interceptável.
+     * @param interceptableInterfaceClass Interfaces da classe interceptável.
+     * @param interceptorClass Classe do interceptador.
+     * @param auditable Indica se a interceptação será auditada.
+     * @return Inst&ancia do observador.
+     */
+    public static <I> I getInstance(I interceptableInstance, Class interceptableInterfaceClass, Class interceptorClass, Boolean auditable){
 		if(interceptableInstance == null || interceptableInterfaceClass == null)
 			return interceptableInstance;
 		
@@ -47,7 +64,7 @@ public class Observer implements InvocationHandler{
 		else
 		    interceptableClass = interceptableInstance.getClass();
 
-        return (I)Proxy.newProxyInstance(interceptableClass.getClassLoader(), interceptableInstanceInterfaces, new Observer(interceptableInstance, interceptableInterfaceClass, interceptorClass, audit));
+        return (I)Proxy.newProxyInstance(interceptableClass.getClassLoader(), interceptableInstanceInterfaces, new Observer(interceptableInstance, interceptableInterfaceClass, interceptorClass, auditable));
 	}
 	
     /**
