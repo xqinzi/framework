@@ -335,7 +335,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 			print(".");
 			print(guideName);
 			print(".");
-			print(TaglibConstants.GUIDE_CONTENT_KEY);
+			print(TaglibConstants.GUIDE_CONTENT_ID);
 			print("\"");
 
 			if(!guideName.equals(currentGuide)){
