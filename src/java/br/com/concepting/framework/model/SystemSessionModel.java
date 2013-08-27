@@ -33,7 +33,7 @@ public class SystemSessionModel extends BaseModel{
     private Locale currentLanguage = null;
     
     /**
-     * Retorna o identificador do tema (skin) atual.
+     * Retorna o identificador do skin (tema) atual.
      * 
      * @return String contendo o identificador do tema.
      */
@@ -42,7 +42,7 @@ public class SystemSessionModel extends BaseModel{
     }
 
     /**
-     * Define o identificador do tema (skin) atual.
+     * Define o identificador do skin (tema) atual.
      * 
      * @param currentSkin String contendo o identificador do tema.
      */
