@@ -9,57 +9,22 @@ import br.com.concepting.framework.web.types.ScopeType;
  * @author fvilarinho
  * @since 3.0
  */
-public abstract class SystemConstants extends ResourceConstants{
-    /**
-     * Constante que define o diretório de armazenamento default dos scripts de página.
-     */
-    public static final String DEFAULT_SCRIPTS_RESOURCES_DIR = "/scripts/";
-    
-    /**
-     * Constante que define o script de página comum para todos os componentes da página.
-     */
-    public static final String DEFAULT_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("common.js");
-    
-    /**
-     * Constante que define o diretório de armazenamento default dos estilos de página.
-     */
-    public static final String DEFAULT_STYLES_RESOURCES_DIR = "/styles/";
-    
-    /**
-     * Constante que define o estilo CSS da página comum.
-     */
-    public static final String DEFAULT_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("common.css");
-    
+public abstract class SystemConstants{
     /**
      * Constante que define a URL default da página de erros default. 
      */
     public static final String DEFAULT_ERROR_PAGE = "/errorPage.jsp";
-    
-    /**
-     * Constante que define o diretório de armazenamento default das imagens da página.
-     */
-    public static final String DEFAULT_IMAGES_RESOURCES_DIR = "/images/";
-    
+
     /**
      * Constante que define o identificador do arquivo de configurações default.
      */
-    public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("systemResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("systemResources.xml");
     
     /**
      * Constante que define o escopo de armazemamento default das propriedades da página.
      */
     public static final ScopeType DEFAULT_SCOPE_TYPE = ScopeType.FORM;
 
-    /**
-     * Constante que define o script de página default.
-     */
-    public static final String DEFAULT_PAGE_SCRIPT_RESOURCE_ID = "/scripts/script.js";
-    
-    /**
-     * Constante que define o estilo CSS da página default.
-     */
-    public static final String DEFAULT_PAGE_STYLE_RESOURCE_ID = "/styles/style.css";
-    
     /**
      * Constante que define o skin (tema) default para a página.
      */
