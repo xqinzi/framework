@@ -60,7 +60,7 @@ import br.com.concepting.framework.util.helpers.Node;
  * @author fvilarinho
  * @since 1.0 
  */
-public abstract class PropertyUtil extends PropertyUtils{
+public class PropertyUtil extends PropertyUtils{
 	/**
 	 * Limpa todas as propriedades de uma instância específica. 
 	 *
