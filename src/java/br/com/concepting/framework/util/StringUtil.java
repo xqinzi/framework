@@ -18,6 +18,7 @@ import javax.swing.text.MaskFormatter;
 import org.htmlparser.util.Translate;
 
 import br.com.concepting.framework.constants.Constants;
+import br.com.concepting.framework.processors.constants.ProcessorConstants;
 import br.com.concepting.framework.util.helpers.Indent;
 import br.com.concepting.framework.util.types.AlignmentType;
 
@@ -502,11 +503,11 @@ public class StringUtil{
      * @return String contendo a expressão regular.
      */
     public static String toRegex(String expression){
-        expression = StringUtil.replaceAll(expression, ".*", "\\..".concat(Constants.REGEX_ANY_TAG));
-        expression = StringUtil.replaceAll(expression, "*.", ".".concat(Constants.REGEX_ANY_TAG).concat("\\."));
-        expression = StringUtil.replaceAll(expression, "*", ".".concat(Constants.REGEX_ANY_TAG));
+        expression = StringUtil.replaceAll(expression, ".*", "\\..".concat(ProcessorConstants.REGEX_ANY_TAG));
+        expression = StringUtil.replaceAll(expression, "*.", ".".concat(ProcessorConstants.REGEX_ANY_TAG).concat("\\."));
+        expression = StringUtil.replaceAll(expression, "*", ".".concat(ProcessorConstants.REGEX_ANY_TAG));
         expression = StringUtil.replaceAll(expression, "?", ".");
-        expression = StringUtil.replaceAll(expression, Constants.REGEX_ANY_TAG, "*");
+        expression = StringUtil.replaceAll(expression, ProcessorConstants.REGEX_ANY_TAG, "*");
         
         return expression;
     }
