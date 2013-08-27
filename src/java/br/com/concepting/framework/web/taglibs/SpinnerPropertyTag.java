@@ -109,8 +109,8 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 
                 addButtonTag.setPageContext(pageContext);
                 addButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
-                addButtonTag.setName(TaglibConstants.DEFAULT_ADD_SPINNER_BUTTON);
-                addButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL);
+                addButtonTag.setName(TaglibConstants.DEFAULT_ADD_SPINNER_BUTTON_STYLE_CLASS);
+                addButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS);
                 
                 StringBuilder onClick = new StringBuilder();
                 
@@ -133,8 +133,8 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 
                 subtractButtonTag.setPageContext(pageContext);
                 subtractButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
-                subtractButtonTag.setName(TaglibConstants.DEFAULT_SUBTRACT_SPINNER_BUTTON);
-                subtractButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL);
+                subtractButtonTag.setName(TaglibConstants.DEFAULT_SUBTRACT_SPINNER_BUTTON_STYLE_CLASS);
+                subtractButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS);
                 
                 onClick = new StringBuilder();
                 onClick.append("subtractSpinnerValue('");
