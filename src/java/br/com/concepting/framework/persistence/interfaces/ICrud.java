@@ -38,11 +38,11 @@ public interface ICrud{
 	 * pesquisa de um modelo de dados.
 	 *
 	 * @param model Instância do modelo de dados contendo os valores para pesquisa.
-	 * @param filterParameters Instância contendo as propriedades de filtro para a pesquisa.
+	 * @param modelFilter Instância contendo as propriedades de filtro para a pesquisa.
 	 * @return Lista contendo os modelos de dados encontrados.
 	 * @throws InternalErrorException
 	 */
-	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter filterParameters) throws InternalErrorException;
+	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException;
 
 	/**
 	 * Carrega um único modelo de dados.
