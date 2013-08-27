@@ -86,7 +86,7 @@ public class AnnotationProcessorFactory extends AbstractProcessor{
 	 * @return String contendo o identificador do projeto.
 	 */
 	public String getProjectName(){
-	    return StringUtil.trim(this.environment.getOptions().get("projectName"));
+	    return StringUtil.trim(this.environment.getOptions().get(ProjectConstants.PROJECT_NAME_KEY));
 	}
 	
     /**
