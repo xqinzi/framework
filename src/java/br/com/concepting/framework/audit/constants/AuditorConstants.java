@@ -8,7 +8,7 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
  * @author fvilarinho
  * @since 3.0
  */
-public class AuditorConstants extends ResourceConstants{
+public abstract class AuditorConstants{
     /**
      * Constante que define o tamanho default da fila de registros de auditoria.
      */
@@ -17,7 +17,7 @@ public class AuditorConstants extends ResourceConstants{
     /**
      * Constante que define o identificador do arquivo de configurações de auditoria.
      */
-    public static final String  DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("auditorResources.xml");
+    public static final String  DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("auditorResources.xml");
     
     /**
      * Constante que define o identificador da configuração de auditoria para a 
