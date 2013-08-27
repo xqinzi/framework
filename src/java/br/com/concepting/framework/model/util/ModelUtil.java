@@ -848,6 +848,36 @@ public class ModelUtil{
 	        }
 	    }
 	}
+	   
+	/**
+	 * Preenche as propriedades de um modelo de dados marcados com pesquisa de similaridade com 
+	 * os seus respectivos valores fonéticos.
+	 * 
+	 * @param model Instância do modelo de dados desejado.
+	 * @throws InvocationTargetException
+	 * @throws IllegalAccessException
+	 * @throws NoSuchMethodException
+	 */
+    public static <M extends BaseModel> void fillSimilarityProperties(M model) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+        if(model == null)
+            return;
+        
+        Class<M>                  modelClass    = (Class<M>)model.getClass();
+        Map<String, PropertyInfo> similarityMap = buildSimilarityMap(modelClass);
+
+        if(similarityMap != null && similarityMap.size() > 0){
+            PropertyInfo similarityPropertyInfo = null;
+            String       phoneticValue          = "";
+            
+            for(String similarityPropertyId : similarityMap.keySet()){
+                similarityPropertyInfo = similarityMap.get(similarityPropertyId);
+                phoneticValue          = StringUtil.trim(PropertyUtil.getProperty(model, similarityPropertyId));
+                phoneticValue          = PhoneticUtil.soundCode(phoneticValue);
+                
+                PropertyUtil.setProperty(model, similarityPropertyInfo.getPhoneticPropertyId(), phoneticValue);
+            }
+        }
+    }
 	
     /**
      * Filtra uma lista de modelos de dados por similaridade.
