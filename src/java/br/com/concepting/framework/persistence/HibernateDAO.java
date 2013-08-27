@@ -239,9 +239,9 @@ public abstract class HibernateDAO extends BaseDAO{
 		return (C)search(model, null);
 	}
 
-	/**
-	 * @see br.com.concepting.framework.persistence.BaseDAO#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.persistence.helpers.ModelFilter)
-	 */
+    /**
+     * @see br.com.concepting.framework.persistence.BaseDAO#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.model.helpers.ModelFilter)
+     */
     public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		try{
 			Query   query     = HibernateQueryBuilder.build(QueryType.SEARCH, model, modelFilter, this);
@@ -297,10 +297,9 @@ public abstract class HibernateDAO extends BaseDAO{
 		if(propertyInfo.hasModel()){
 			List<M> modelList = (List<M>)referenceProperty;
 			
-			if(modelList != null){
+			if(modelList != null)
 				for(Integer cont = 0 ; cont < modelList.size() ; cont++)
 					modelList.get(cont);
-			}
 		}
 
 		return model;
@@ -373,6 +372,8 @@ public abstract class HibernateDAO extends BaseDAO{
             return;
 
         try{
+            ModelUtil.fillSimilarityProperties(model);
+            
             Session connection = getConnection();
 
 			connection.saveOrUpdate(model);
@@ -393,6 +394,15 @@ public abstract class HibernateDAO extends BaseDAO{
 		catch(HibernateException e){
 			throw new InternalErrorException(e);
 		}
+        catch(InvocationTargetException e){
+            throw new InternalErrorException(e);
+        }
+        catch(IllegalAccessException e){
+            throw new InternalErrorException(e);        
+        }
+        catch(NoSuchMethodException e){
+            throw new InternalErrorException(e);
+        }
 	}
 
 	/**
@@ -403,6 +413,8 @@ public abstract class HibernateDAO extends BaseDAO{
             return;
 
 		try{
+		    ModelUtil.fillSimilarityProperties(model);
+		    
 	        Session connection = getConnection();
 
             connection.save(model);
@@ -423,6 +435,15 @@ public abstract class HibernateDAO extends BaseDAO{
 		catch(HibernateException e){
 			throw new InternalErrorException(e);
 		}
+        catch(InvocationTargetException e){
+            throw new InternalErrorException(e);
+        }
+        catch(IllegalAccessException e){
+            throw new InternalErrorException(e);        
+        }
+        catch(NoSuchMethodException e){
+            throw new InternalErrorException(e);
+        }
 	}
 
 	/**
@@ -433,6 +454,8 @@ public abstract class HibernateDAO extends BaseDAO{
 	        return;
 	    
 		try{
+            ModelUtil.fillSimilarityProperties(model);
+            
 	        Session connection = getConnection();
 
 	        connection.merge(model);
@@ -449,6 +472,15 @@ public abstract class HibernateDAO extends BaseDAO{
 		catch(HibernateException e){
 			throw new InternalErrorException(e);
 		}
+        catch(InvocationTargetException e){
+            throw new InternalErrorException(e);
+        }
+        catch(IllegalAccessException e){
+            throw new InternalErrorException(e);        
+        }
+        catch(NoSuchMethodException e){
+            throw new InternalErrorException(e);
+        }
 	}
 
 	/**
@@ -465,6 +497,8 @@ public abstract class HibernateDAO extends BaseDAO{
 			
 			while(iterator.hasNext()){
 				model = iterator.next();
+				
+				ModelUtil.fillSimilarityProperties(model);
 				
 				connection.saveOrUpdate(model);
 			}
@@ -485,6 +519,15 @@ public abstract class HibernateDAO extends BaseDAO{
 		catch(HibernateException e){
 			throw new InternalErrorException(e);
 		}
+        catch(InvocationTargetException e){
+            throw new InternalErrorException(e);
+        }
+        catch(IllegalAccessException e){
+            throw new InternalErrorException(e);        
+        }
+        catch(NoSuchMethodException e){
+            throw new InternalErrorException(e);
+        }
 	}
 
 	/**
@@ -502,6 +545,8 @@ public abstract class HibernateDAO extends BaseDAO{
 			while(iterator.hasNext()){
     			model = iterator.next();
     			
+                ModelUtil.fillSimilarityProperties(model);
+                
     			connection.save(model);
     		}
     	}
@@ -521,6 +566,15 @@ public abstract class HibernateDAO extends BaseDAO{
     	catch(HibernateException e){
     		throw new InternalErrorException(e);
     	}
+        catch(InvocationTargetException e){
+            throw new InternalErrorException(e);
+        }
+        catch(IllegalAccessException e){
+            throw new InternalErrorException(e);        
+        }
+        catch(NoSuchMethodException e){
+            throw new InternalErrorException(e);
+        }
 	}
 
 	/**
@@ -537,6 +591,8 @@ public abstract class HibernateDAO extends BaseDAO{
     		
     		while(iterator.hasNext()){
     			model = iterator.next();
+                
+                ModelUtil.fillSimilarityProperties(model);
     			
     			connection.merge(model);
     		}
@@ -553,5 +609,14 @@ public abstract class HibernateDAO extends BaseDAO{
 		catch(HibernateException e){
 			throw new InternalErrorException(e);
 		}
+        catch(InvocationTargetException e){
+            throw new InternalErrorException(e);
+        }
+        catch(IllegalAccessException e){
+            throw new InternalErrorException(e);        
+        }
+        catch(NoSuchMethodException e){
+            throw new InternalErrorException(e);
+        }
 	}
 }
