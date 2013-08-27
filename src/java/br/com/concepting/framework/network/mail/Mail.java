@@ -40,7 +40,7 @@ import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
 
 /** 
- * Classe responsável pela envio/recebimento de mensagens de e-Mail.
+ * Classe responsável pela envio/recebimento de mensagens.
  * 
  * @author fvilarinho
  * @since 1.0
@@ -51,7 +51,7 @@ public class Mail{
 	private Collection<File> attachments    = null;
 
 	/**
-	 * Construtor - Inicializa o ambiente para envio/recebimento de mensagens de e-Mail a partir 
+	 * Construtor - Inicializa o ambiente para envio/recebimento de mensagens a partir 
 	 * de configurações específicas.
 	 * 
 	 * @param mailResource Instância contendo as configurações desejadas.
@@ -66,7 +66,7 @@ public class Mail{
 	}
 
 	/**
-	 * Inicializa ambiente para envio/recebimento de mensagens de e-Mail.
+	 * Inicializa ambiente para envio/recebimento de mensagens.
 	 * 
 	 * @throws NoSuchProviderException
 	 */
@@ -120,10 +120,10 @@ public class Mail{
 	}
 
 	/**
-	 * Carrega o cabeçalho de uma mensagem de e-Mail.
+	 * Carrega o cabeçalho de uma mensagem.
 	 * 
-	 * @param message Instância contendo os dados da mensagem de e-Mail.
-	 * @param sendMessage Instância contendo a estrutura da mensagem de e-Mail.
+	 * @param message Instância contendo os dados da mensagem.
+	 * @param sendMessage Instância contendo a estrutura da mensagem.
 	 * @throws AddressException
 	 * @throws MessagingException
 	 */
@@ -165,10 +165,10 @@ public class Mail{
 	}
 
 	/**
-	 * Carrega o corpo de uma mensagem de e-Mail.
+	 * Carrega o corpo de uma mensagem.
 	 * 
-	 * @param message Instância contendo os dados da mensagem de e-Mail.
-	 * @param sendMessage Instância contendo a estrutura da mensagem de e-Mail.
+	 * @param message Instância contendo os dados da mensagem.
+	 * @param sendMessage Instância contendo a estrutura da mensagem.
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
@@ -184,10 +184,10 @@ public class Mail{
 	}
 
 	/**
-	 * Carrega os anexos de uma mensagem de e-Mail.
+	 * Carrega os anexos de uma mensagem.
 	 * 
-	 * @param message Instância contendo os dados da mensagem de e-Mail.
-	 * @param sendMessage Instância contendo a estrutura da mensagem de e-Mail.
+	 * @param message Instância contendo os dados da mensagem.
+	 * @param sendMessage Instância contendo a estrutura da mensagem.
 	 * @param parts Instância contendo a estrutura dos anexos.
 	 * @throws IOException
 	 * @throws MessagingException
@@ -281,7 +281,7 @@ public class Mail{
     }
 
     /**
-	 * Envia uma mensagem de e-Mail.
+	 * Envia uma mensagem.
 	 * 
 	 * @param message Instância contendo os dados da mensagem.
 	 * @throws AddressException
@@ -320,7 +320,7 @@ public class Mail{
 	}
 
 	/**
-	 * Retorna uma lista de pastas da caixa de e-Mail.
+	 * Retorna uma lista de pastas da caixa.
 	 * 
 	 * @return Lista contendo as pastas encontradas.
 	 * @throws MessagingException
@@ -352,10 +352,10 @@ public class Mail{
 	}
 
 	/**
-	 * Prepara uma mensagem de e-Mail para envio.
+	 * Prepara uma mensagem para envio.
 	 * 
-	 * @param message Instância contendo a estrutura da mensagem de e-Mail.
-	 * @return Instância contendo os dados da mensagem de e-Mail.
+	 * @param message Instância contendo a estrutura da mensagem.
+	 * @return Instância contendo os dados da mensagem.
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
@@ -391,11 +391,11 @@ public class Mail{
 	}
 
 	/**
-	 * Retorna uma mensagem de e-Mail específica.
+	 * Retorna uma mensagem específica.
 	 * 
 	 * @param folderName String contendo o identificador da pasta onde a mensagem está armazenada.
 	 * @param messageNumber Valor inteiro contendo o identificador da mensagem desejada.
-	 * @return Instância contendo os dados da mensagem de e-Mail.
+	 * @return Instância contendo os dados da mensagem.
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
@@ -426,10 +426,10 @@ public class Mail{
 	}
 
 	/**
-	 * Retorna todas as mensagens de e-Mail.
+	 * Retorna todas as mensagens.
 	 * 
 	 * @param folderName String contendo o identificador da pasta onde a mensagem está armazenada.
-	 * @return Instância contendo os dados da mensagem de e-Mail.
+	 * @return Instância contendo os dados da mensagem.
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
@@ -468,10 +468,10 @@ public class Mail{
 	}
 
 	/**
-	 * Carrega um conteúdo de uma mensagem de e-Mail.
+	 * Carrega um conteúdo de uma mensagem.
 	 * 
 	 * @param part Instância do conteúdo desejado.
-	 * @param mailMessage Instância contendo os dados da mensagem de e-Mail.
+	 * @param mailMessage Instância contendo os dados da mensagem.
 	 * @return Instância do conteúdo carregado.
 	 * @throws MessagingException
 	 * @throws IOException

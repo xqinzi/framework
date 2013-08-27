@@ -9,7 +9,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
 
 /** 
  * Classe responsável pela leitura/manipulação das configurações do protocolo de envio/recebimento 
- * de mensagens de e-Mail.
+ * de mensagens.
  * 
  * @author fvilarinho
  * @since 1.0
@@ -17,7 +17,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
 public class MailResourceLoader extends NetworkResourceLoader{
 	/**
 	 * Construtor - Inicializa classe de leitura/manipulação do arquivo de configurações do 
-	 * protocolo de envio/recebimento de mensagens de e-Mail default.
+	 * protocolo de envio/recebimento de mensagens default.
 	 * 
 	 * @throws InvalidResourceException
 	 */

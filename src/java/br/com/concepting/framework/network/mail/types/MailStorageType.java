@@ -1,7 +1,7 @@
 package br.com.concepting.framework.network.mail.types;
 
 /**
- * Constante que define os protocolos de armazenamento de mensagens de e-Mail.
+ * Constante que define os protocolos de armazenamento de mensagens.
  * 
  * @author fvilarinho
  * @since 1.0

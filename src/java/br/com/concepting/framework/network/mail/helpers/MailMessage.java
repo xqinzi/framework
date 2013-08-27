@@ -17,7 +17,7 @@ import br.com.concepting.framework.util.helpers.Message;
 import br.com.concepting.framework.web.types.ContentType;
 
 /** 
- * Classe que define a estrutura básica para uma mensagem de e-Mail.
+ * Classe que define a estrutura básica para uma mensagem.
  * 
  * @author fvilarinho
  * @since 1.0

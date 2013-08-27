@@ -1,7 +1,7 @@
 package br.com.concepting.framework.network.mail.types;
 
 /**
- * Constante que define os protocolos de transporte de mensagens de e-Mail.
+ * Constante que define os protocolos de transporte de mensagens.
  * 
  * @author fvilarinho
  * @since 1.0
