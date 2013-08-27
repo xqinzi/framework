@@ -8,7 +8,7 @@ import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
-import br.com.concepting.framework.persistence.helpers.ModelFilter;
+import br.com.concepting.framework.model.helpers.ModelFilter;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.service.annotations.ServiceTransaction;
  
