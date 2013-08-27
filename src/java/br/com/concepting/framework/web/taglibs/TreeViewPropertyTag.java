@@ -626,25 +626,25 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
             setLabelPositionType(PositionType.TOP);
         
         if(nodeIconStyleClass.length() == 0)
-            nodeIconStyleClass = TaglibConstants.DEFAULT_NODE_ICON_STYLE_CLASS;
+            nodeIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_NODE_ICON_STYLE_CLASS;
         
         if(nodeLabelStyleClass.length() == 0)
-            nodeLabelStyleClass = TaglibConstants.DEFAULT_NODE_LABEL_STYLE_CLASS;
+            nodeLabelStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_NODE_LABEL_STYLE_CLASS;
 
         if(nodeLabelSelectedStyleClass.length() == 0)
-            nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_NODE_LABEL_SELECTED_STYLE_CLASS;
+            nodeLabelSelectedStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_NODE_LABEL_SELECTED_STYLE_CLASS;
         
         if(expandedNodeIconStyleClass.length() == 0)
-            expandedNodeIconStyleClass = TaglibConstants.DEFAULT_EXPANDED_NODE_ICON_STYLE_CLASS;
+            expandedNodeIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_EXPANDED_NODE_ICON_STYLE_CLASS;
 
         if(collapsedNodeIconStyleClass.length() == 0)
-            collapsedNodeIconStyleClass = TaglibConstants.DEFAULT_COLLAPSED_NODE_ICON_STYLE_CLASS;
+            collapsedNodeIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_COLLAPSED_NODE_ICON_STYLE_CLASS;
 
         if(openedNodeIconStyleClass.length() == 0)
-            openedNodeIconStyleClass = TaglibConstants.DEFAULT_OPENED_NODE_ICON_STYLE_CLASS;
+            openedNodeIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_OPENED_NODE_ICON_STYLE_CLASS;
 
         if(closedNodeIconStyleClass.length() == 0)
-            closedNodeIconStyleClass = TaglibConstants.DEFAULT_CLOSED_NODE_ICON_STYLE_CLASS;
+            closedNodeIconStyleClass = TaglibConstants.DEFAULT_TREE_VIEW_CLOSED_NODE_ICON_STYLE_CLASS;
         
         setLabelAlignmentType(AlignmentType.LEFT);
         
@@ -914,7 +914,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		println("<td>");
 
 		print("<div id=\"");
-		print(TaglibConstants.TREE_VIEW_KEY);
+		print(TaglibConstants.TREE_VIEW_ID);
 		print("\" class=\"");
 		print(TaglibConstants.DEFAULT_TREE_VIEW_STYLE_CLASS);
 		print("\" style=\"overflow: AUTO;");
@@ -944,7 +944,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 	 */
 	protected void renderBody() throws Throwable{
 		println("<div id=\"");
-		print(TaglibConstants.TREE_VIEW_CONTENT_KEY);
+		print(TaglibConstants.TREE_VIEW_CONTENT_ID);
 		print("\" class=\"");
 		print(TaglibConstants.DEFAULT_TREE_VIEW_CONTENT_STYLE_CLASS);
 		println("\">");
@@ -956,7 +956,7 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 			renderNodes();
 		else{
 			print("<span class=\"");
-			print(TaglibConstants.DEFAULT_NODE_LABEL_STYLE_CLASS);
+			print(TaglibConstants.DEFAULT_TREE_VIEW_NODE_LABEL_STYLE_CLASS);
 			print("\">");
 
 			if(propertyInfo == null)
@@ -1186,14 +1186,14 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 				    trace.delete(0, trace.length());
 				    
 			    trace.append("<td class=\"");
-			    trace.append(TaglibConstants.DEFAULT_TRACE_STYLE_CLASS);
+			    trace.append(TaglibConstants.DEFAULT_TREE_VIEW_TRACE_STYLE_CLASS);
 			    trace.append("\"></td>");
 
 				println(StringUtil.replicate(trace.toString(), level));
 
 				if(!node.hasChildNodes() && onExpand.length() == 0){
 					print("<td class=\"");
-					print(TaglibConstants.DEFAULT_TRACE_STYLE_CLASS);
+					print(TaglibConstants.DEFAULT_TREE_VIEW_TRACE_STYLE_CLASS);
 					println("\"></td>");
 					
 					print("<td class=\"");
