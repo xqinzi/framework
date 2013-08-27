@@ -9,9 +9,9 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
  * @author fvilarinho
  * @since 3.0
  */
-public class ContextConstants extends ResourceConstants{
+public abstract class ContextConstants{
     /**
      * Constante que define o identificador do arquivo de configurações de contexto.
      */
-    public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("contextResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("contextResources.xml");
 }
