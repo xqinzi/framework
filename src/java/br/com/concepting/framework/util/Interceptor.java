@@ -39,10 +39,29 @@ public class Interceptor{
 		setAuditable(auditable);
 	}
 	
-	public Boolean getAuditable(){
+	/**
+	 * Indica se a interceptação será auditada.
+	 * 
+	 * @return True/False.
+	 */
+    public Boolean isAuditable(){
         return auditable;
     }
+	
+    /**
+     * Indica se a interceptação será auditada.
+     * 
+     * @return True/False.
+     */
+	public Boolean getAuditable(){
+        return isAuditable();
+    }
 
+    /**
+     * Define se a interceptação será auditada.
+     * 
+     * @param auditable True/False.
+     */
     public void setAuditable(Boolean auditable){
         this.auditable = auditable;
     }
