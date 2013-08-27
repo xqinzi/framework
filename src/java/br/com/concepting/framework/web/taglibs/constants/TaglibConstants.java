@@ -464,11 +464,6 @@ public abstract class TaglibConstants{
     public static final String DEFAULT_PAGER_ITEMS_PER_PAGE_TOOLTIP_KEY = "itemsPerPage.tooltip";
     
     /**
-     * Constante que define o número de itens por página default para o componente pager (paginador).
-     */
-    public static final Integer DEFAULT_PAGER_ITEMS_PER_PAGE_SIZE = 5;
-
-    /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente pager (paginador).
      */
     public static final String DEFAULT_PAGER_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("pager");
