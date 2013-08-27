@@ -933,31 +933,4 @@ public class SnmpSession{
 		 */
         public abstract void onResponse(Collection<SnmpData> result);
 	}
-	
-	public static void main(String args[]) throws Throwable{
-	    SnmpSession session = SnmpSession.getInstance("192.168.0.26", 161);
-	    
-	    session.setReadCommunity("public");
-	    session.setWriteCommunity("private");
-	    session.setVersion(1);
-	    
-	    SnmpRequest request = new SnmpRequest();
-	    
-	    request.setOid("1.3.6.1.4.1.905.1.1.1");
-	    
-	    SnmpData data = new SnmpData();
-	    
-	    data.setType(SMIConstants.SYNTAX_GAUGE32);
-	    data.setValue(10);
-	    data.setRequest(request);
-	    
-	    session.set(Arrays.asList(data));
-	    
-	    Collection<SnmpData> items = session.get("1.3.6.1.4.1.905.1.1.1");
-	    
-	    for(SnmpData item : items){
-	        System.out.println(item.getType());
-	        System.out.println(item.getValue());
-	    }
-	}
 }
