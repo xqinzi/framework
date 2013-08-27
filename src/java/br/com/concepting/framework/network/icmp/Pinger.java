@@ -13,7 +13,7 @@ import br.com.concepting.framework.network.icmp.helpers.PingerData;
  * @since 1.0
  */
 public class Pinger{
-	public static Pinger instance = null;
+	private static Pinger instance = null;
 
 	/**
 	 * Retorna a única instância da classe.
