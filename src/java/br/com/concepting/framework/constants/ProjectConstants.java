@@ -1,6 +1,5 @@
 package br.com.concepting.framework.constants;
 
-
 /**
  * Classe que define as constantes utilizada na definição da estrutura dos arquivos de uma
  * aplicação e também na geração de código.
