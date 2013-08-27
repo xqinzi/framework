@@ -10,7 +10,7 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
  * @author fvilarinho
  * @since 3.0
  */
-public abstract class NetworkConstants extends ResourceConstants{
+public abstract class NetworkConstants{
     /**
      * Constante que define o identificador do protocolo HTTP.
      */
@@ -42,22 +42,22 @@ public abstract class NetworkConstants extends ResourceConstants{
 	public static final String DEFAULT_LDAP_CONTEXT_FACTORY_ID = "com.sun.jndi.ldap.LdapCtxFactory";
     
 	/**
-     * Constante que define o protocolo de transporte default para mensagens de e-Mail.
+     * Constante que define o protocolo de transporte default para mensagens.
      */
     public static final MailTransportType DEFAULT_MAIL_TRANSPORT = MailTransportType.SMTP;
     
     /**
-     * Constante que define a porta default do protocolo de transporte para as mensagens de e-Mail.
+     * Constante que define a porta default do protocolo de transporte para as mensagens.
      */
     public static final Integer DEFAULT_MAIL_TRANSPORT_PORT = 25;
     
     /**
-     * Constante que define o protocolo de armazenamento default das mensagens de e-Mail.
+     * Constante que define o protocolo de armazenamento default das mensagens.
      */
     public static final MailStorageType DEFAULT_MAIL_STORAGE = MailStorageType.POP3;
     
     /**
-     * Constante que define a porta default do protocolo de armazenamento das as mensagens de e-Mail.
+     * Constante que define a porta default do protocolo de armazenamento das mensagens.
      */
     public static final Integer DEFAULT_MAIL_STORAGE_PORT = 110;
     
@@ -79,7 +79,7 @@ public abstract class NetworkConstants extends ResourceConstants{
     /**
      * Constante que define o identificador do arquivo de configurações default para as rotina de rede.
      */
-    public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("networkResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("networkResources.xml");
     
     /**
      * Constante que define o número máximo de registros que devem retornar em uma consulta SNMP.
