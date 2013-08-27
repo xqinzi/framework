@@ -50,7 +50,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
             print("<div id=\"");
             print(name);
             print(".");
-            print(TaglibConstants.CALENDAR_KEY);
+            print(TaglibConstants.CALENDAR_ID);
             print("\" class=\"");
             print(TaglibConstants.DEFAULT_CALENDAR_STYLE_CLASS);
             print("\" style=\"visibility: ");
@@ -84,7 +84,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
 			print("<span id=\"");
 			print(name);
 			print(".");
-			print(TaglibConstants.CALENDAR_DISPLAY_KEY);
+			print(TaglibConstants.CALENDAR_DISPLAY_ID);
 			print("\" class=\"");
 			print(TaglibConstants.DEFAULT_CALENDAR_DISPLAY_STYLE_CLASS);
 			println("\"></span>");
@@ -112,7 +112,7 @@ public class CalendarPropertyTag extends TextPropertyTag{
             print("<span id=\"");
             print(name);
             print(".");
-            print(TaglibConstants.CALENDAR_DAYS_KEY);
+            print(TaglibConstants.CALENDAR_DAYS_ID);
             print("\" class=\"");
             print(TaglibConstants.DEFAULT_CALENDAR_DAYS_STYLE_CLASS);
             println("\"></span>");
