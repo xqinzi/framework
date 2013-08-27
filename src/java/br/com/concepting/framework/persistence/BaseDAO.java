@@ -165,7 +165,7 @@ public abstract class BaseDAO implements IDAO{
 	}
 
 	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.ICrud#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.persistence.helpers.ModelFilter)
+	 * @see br.com.concepting.framework.persistence.interfaces.ICrud#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.model.helpers.ModelFilter)
 	 */
 	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		return null;
