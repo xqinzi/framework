@@ -1,14 +1,12 @@
 package br.com.concepting.framework.resource.constants;
 
-import br.com.concepting.framework.constants.Constants;
-
 /**
  * Classe que define as constantes utilizadas pelas rotinas de manipulação de configurações.
  * 
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class ResourceConstants extends Constants{
+public abstract class ResourceConstants{
     /**
      * Constante que define o caminho para armazenamento para os arquivos de configurações.
      */

@@ -7,10 +7,10 @@ package br.com.concepting.framework.resource.constants;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class FactoryConstants extends ResourceConstants{
+public abstract class FactoryConstants{
     /**
      * Constante que define o arquivo de configurações para comunicação de servidores de 
      * aplicações e/ou banco de dados default.
      */
-    public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("factoryResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("factoryResources.xml");
 }
