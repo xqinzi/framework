@@ -224,9 +224,9 @@ public abstract class BaseService implements IService{
 		return (C)persistence.search(model);
 	}
 
-	/**
-	 * @see br.com.concepting.framework.service.interfaces.IService#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.persistence.helpers.ModelFilter)
-	 */
+    /**
+     * @see br.com.concepting.framework.service.interfaces.IService#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.model.helpers.ModelFilter)
+     */
     public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		IDAO persistence = getPersistence();
 
@@ -282,7 +282,7 @@ public abstract class BaseService implements IService{
 	 * @see br.com.concepting.framework.persistence.interfaces.ICrud#insert(br.com.concepting.framework.model.BaseModel)
 	 */
 	public <M extends BaseModel> void insert(M model) throws ItemAlreadyExistsException, InternalErrorException{
-		IDAO persistence = getPersistence();
+        IDAO persistence = getPersistence();
 
 		persistence.insert(model);
 	}
