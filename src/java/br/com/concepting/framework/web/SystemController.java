@@ -99,9 +99,9 @@ public class SystemController{
 	}
 	
     /**
-     * Define o identificador do tema (skin) atual.
+     * Define o identificador do skin (tema) atual.
      * 
-     * @param currentSkin String contendo o identificador do tema (skin).
+     * @param currentSkin String contendo o identificador do skin (tema).
      */
 	public void setCurrentSkin(String currentSkin){
 	    if(currentSkin.length() == 0)
@@ -118,9 +118,9 @@ public class SystemController{
 	}
 	
     /**
-     * Retorna o identificador do tema (skin) atual.
+     * Retorna o identificador do skin (tema) atual.
      * 
-     * @return String contendo o identificador do tema (skin).
+     * @return String contendo o identificador do skin (tema).
      */
 	public String getCurrentSkin(){
 	    String currentSkin = "";
