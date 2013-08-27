@@ -6,7 +6,7 @@ import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
-import br.com.concepting.framework.persistence.helpers.ModelFilter;
+import br.com.concepting.framework.model.helpers.ModelFilter;
 
 /**
  * Interface que define a estrutura básica para uma classe de persistência.

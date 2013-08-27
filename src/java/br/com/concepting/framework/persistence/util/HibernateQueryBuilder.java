@@ -13,6 +13,7 @@ import org.hibernate.transform.Transformers;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
 import br.com.concepting.framework.model.BaseModel;
+import br.com.concepting.framework.model.helpers.ModelFilter;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.types.ConditionType;
@@ -20,7 +21,6 @@ import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.persistence.HibernateDAO;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
-import br.com.concepting.framework.persistence.helpers.ModelFilter;
 import br.com.concepting.framework.persistence.types.QueryType;
 import br.com.concepting.framework.persistence.types.RelationJoinType;
 import br.com.concepting.framework.util.MethodUtil;
