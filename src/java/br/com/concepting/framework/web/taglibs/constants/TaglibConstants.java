@@ -1,6 +1,6 @@
 package br.com.concepting.framework.web.taglibs.constants;
 
-import br.com.concepting.framework.web.constants.SystemConstants;
+import br.com.concepting.framework.resource.constants.ResourceConstants;
 
 /**
  * Classe que define as constantes utilizadas pelos componentes visuais.
@@ -8,7 +8,27 @@ import br.com.concepting.framework.web.constants.SystemConstants;
  * @author fvilarinho
  * @since 3.0
  */ 
-public abstract class TaglibConstants extends SystemConstants{
+public abstract class TaglibConstants{
+    /**
+     * Constante que define o diretório de armazenamento default dos scripts de página.
+     */
+    public static final String DEFAULT_SCRIPTS_RESOURCES_DIR = "/scripts/";
+
+    /**
+     * Constante que define o diretório de armazenamento default dos estilos de página.
+     */
+    public static final String DEFAULT_STYLES_RESOURCES_DIR = "/styles/";
+
+    /**
+     * Constante que define o script de página comum para todos os componentes da página.
+     */
+    public static final String DEFAULT_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("common.js");
+    
+    /**
+     * Constante que define o estilo CSS da página comum.
+     */
+    public static final String DEFAULT_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("common.css");
+
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual accordion (conjunto de seções).
      */
@@ -17,7 +37,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente visual accordion (guia de seções).
      */
-    public static final String DEFAULT_ACCORDION_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("accordion");
+    public static final String DEFAULT_ACCORDION_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("accordion");
     
     /**
      * Constante que define o identificador do arquivo de script default para o componente visual accordion (guia de seções).
@@ -42,7 +62,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador da caixa de autocomplete.
      */
-    public static final String AUTO_COMPLETE_BOX_KEY = "autoCompleteBox";
+    public static final String AUTO_COMPLETE_BOX_ID = "autoCompleteBox";
 
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual calendar (calendário).
@@ -74,7 +94,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente visual calendar (calendário).
      */
-    public static final String DEFAULT_CALENDAR_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("calendar");
+    public static final String DEFAULT_CALENDAR_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("calendar");
     
     /**
      * Constante que define o identificador do arquivo de script default para o componente visual calendar (calendário).
@@ -89,17 +109,17 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do componente visual calendar (calendário).
      */
-    public static final String CALENDAR_KEY = "calendar";
+    public static final String CALENDAR_ID = "calendar";
     
     /**
      * Constante que define o identificador do display do componente visual calendar (calendário).
      */
-    public static final String CALENDAR_DISPLAY_KEY = "calendarDisplay";
+    public static final String CALENDAR_DISPLAY_ID = "calendarDisplay";
     
     /**
      * Constante que define o identificador para os dias do componente visual calendar (calendário).
      */
-    public static final String CALENDAR_DAYS_KEY = "calendarDays";
+    public static final String CALENDAR_DAYS_ID = "calendarDays";
 
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual clock (relógio).
@@ -139,7 +159,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do componente visual dialogBox (caixa de diálogo).
      */
-    public static final String DIALOG_BOX_KEY = "dialogBox";
+    public static final String DIALOG_BOX_ID = "dialogBox";
 
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual downloadBox (caixa de download de arquivo).
@@ -219,7 +239,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do arquivo de internacionalização default do componente visual guides (guias).
      */
-    public static final String DEFAULT_GUIDES_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("guides");
+    public static final String DEFAULT_GUIDES_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("guides");
     
     /**
      * Constante que define o identificador para o arquivo de script default para o componente visual gyudes (guias).
@@ -234,7 +254,12 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador para o conteúdo do componente visual guides (guias).
      */
-    public static final String GUIDE_CONTENT_KEY = "guideContent";
+    public static final String GUIDE_CONTENT_ID = "guideContent";
+
+    /**
+     * Constante que define o diretório de armazenamento default das imagens da página.
+     */
+    public static final String DEFAULT_IMAGES_RESOURCES_DIR = "/images/";
 
     /**
      * Constante que define o identificador do estilo CSS default para a pré-visualização pequena de uma imagem.
@@ -276,7 +301,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador para a caixa de carregamento da página.
      */
-    public static final String LOADING_BOX_KEY = "loadingBox";
+    public static final String LOADING_BOX_ID = "loadingBox";
     
     /**
      * Constante que define o identificador da propriedade da mensagem de sucesso da caixa de carregamento da página.
@@ -340,7 +365,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componenten visual menuBar (barra de menus).
      */
-    public static final String DEFAULT_MENU_BAR_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("menuBar");
+    public static final String DEFAULT_MENU_BAR_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("menuBar");
     
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente visual menuBar (barra de menus).
@@ -352,16 +377,35 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_MENU_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("menuBar.css");
     
-    public static final String MENU_BAR_KEY                      = "menuBar";
-    public static final String MENU_BOX_KEY                      = "menuBox";
-    public static final String MENU_ITEM_KEY                     = "menuItem";
-    public static final String MENU_ITEM_ARROW_KEY               = "menuItemArrow";
-    public static final String MENU_ITEM_ICON_KEY                = "menuItemIcon";
+    /**
+     * Constante que define o identificador para o componente visual menuBar (barra de menus).
+     */
+    public static final String MENU_BAR_ID = "menuBar";
+    
+    /**
+     * Constante que define o identificador para o conteúdo de um item de menu do componente visual menuBar (barra de menus).
+     */
+    public static final String MENU_BOX_ID = "menuBox";
+    
+    /**
+     * Constante que define o identificador para um item de menu do componente visual menuBar (barra de menus).
+     */
+    public static final String MENU_ITEM_ID = "menuItem";
+    
+    /**
+     * Constante que define o identificador para a seta que indica que o item de menu possui submenu.
+     */
+    public static final String MENU_ITEM_ARROW_ID = "menuItemArrow";
+    
+    /**
+     * Constante que define o identificador para o ícone de um item de menu do componente visual menuBar (barra de menus).
+     */
+    public static final String MENU_ITEM_ICON_KEY = "menuItemIcon";
 
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente messageBox (caixa de mensagens).
      */
-    public static final String DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("messageBox");
+    public static final String DEFAULT_MESSAGE_BOX_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("messageBox");
     
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente messageBox (caixa de mensagens).
@@ -388,6 +432,16 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_OPTIONS_STYLE_CLASS = "group";
     
+    /**
+     * Constante que define o script de página default.
+     */
+    public static final String DEFAULT_PAGE_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("script.js");
+    
+    /**
+     * Constante que define o estilo CSS da página default.
+     */
+    public static final String DEFAULT_PAGE_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("style.css");
+
     /**
      * Constante que define o identificador do estilo CSS para o componente visual pager (paginador).
      */
@@ -417,7 +471,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do arquivo de internacionalização default para o componente pager (paginador).
      */
-    public static final String DEFAULT_PAGER_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("pager");
+    public static final String DEFAULT_PAGER_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("pager");
 
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente pager (paginador).
@@ -428,6 +482,11 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do arquivo de estilos CSS default para o componente pager (paginador).
      */
     public static final String DEFAULT_PAGER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("pager.css");
+    
+    /**
+     * Constante que define o identificador da chave do controle de paginadores.
+     */
+    public static final String PAGER_MAP_KEY = "pagerMap";
     
     /**
      * Constante que define o identificador do estilo CSS para tabelas na página.
@@ -486,7 +545,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador o arquivo de internacionalização default para o componente progressBar (barra de progresso).
      */
-    public static final String DEFAULT_PROGRESS_BAR_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("progressBar");
+    public static final String DEFAULT_PROGRESS_BAR_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("progressBar");
 
     /**
      * Constante que define o identificador o arquivo de script de página default para o componente progressBar (barra de progresso).
@@ -509,24 +568,24 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_SEARCH_PROPERTIES_GROUP_STYLE_CLASS = "group";
 
     /**
-     * Constante que define o identificador do estilo CSS default para o cabeçalho da seção.
+     * Constante que define o identificador do estilo CSS default para o cabeçalho de uma seção do componente accordion (guia de seções).
      */
     public static final String DEFAULT_SECTION_HEADER_STYLE_CLASS = "sectionHeader";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o conteúdo da seção.
+     * Constante que define o identificador do estilo CSS default para o conteúdo de uma seção do componente accordion (guia de seções).
      */
     public static final String DEFAULT_SECTION_CONTENT_STYLE_CLASS = "sectionContent";
 
     /**
-     * Constante que define o identificador do estilo CSS default para o cabeçalho da seção.
+     * Constante que define o identificador do cabeçalho de uma seção do componente accordion (guia de seções).
      */
-    public static final String SECTION_HEADER_KEY = "sectionHeader";
+    public static final String SECTION_HEADER_ID = "sectionHeader";
     
     /**
-     * Constante que define o identificador do estilo CSS default para o conteúdo da seção.
+     * Constante que define o identificador do conteúdo de uma seção do componente accordion (guia de seções).
      */
-    public static final String SECTION_CONTENT_KEY = "sectionContent";
+    public static final String SECTION_CONTENT_ID = "sectionContent";
 
     /**
      * Constante que define o estilo CSS default para uma sombra a ser carregada ao carregar uma modal.
@@ -541,7 +600,7 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador o arquivo de internacionalização default para o componente spinner (controle de valores numéricos).
      */
-    public static final String DEFAULT_SPINNER_I18N_RESOURCE_ID = DEFAULT_I18N_RESOURCES_DIR.concat("spinner");
+    public static final String DEFAULT_SPINNER_I18N_RESOURCE_ID = ResourceConstants.DEFAULT_I18N_RESOURCES_DIR.concat("spinner");
     
     /**
      * Constante que define o identificador o arquivo de script de página default para o componente spinner (controle de valores numéricos).
@@ -556,17 +615,17 @@ public abstract class TaglibConstants extends SystemConstants{
     /**
      * Constante que define o identificador do estilo CSS default para o botão de acréscimo do componente spinner (controle de valores numéricos).
      */
-    public static final String DEFAULT_ADD_SPINNER_BUTTON = "addSpinnerButton";
+    public static final String DEFAULT_ADD_SPINNER_BUTTON_STYLE_CLASS = "addSpinnerButton";
     
     /**
      * Constante que define o identificador do estilo CSS default para o botão de decréscimo do componente spinner (controle de valores numéricos).
      */
-    public static final String DEFAULT_SUBTRACT_SPINNER_BUTTON = "subtractSpinnerButton";
+    public static final String DEFAULT_SUBTRACT_SPINNER_BUTTON_STYLE_CLASS = "subtractSpinnerButton";
     
     /**
      * Constante que define o identificador do estilo CSS default para o label dos botões do componente spinner (controle de valores numéricos).
      */
-    public static final String DEFAULT_SPINNER_BUTTON_LABEL = "spinnerButtonLabel";
+    public static final String DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS = "spinnerButtonLabel";
     
     /**
      * Constante que define o identificador do estilo CSS default para o componente slider (barra de deslize).
@@ -604,9 +663,9 @@ public abstract class TaglibConstants extends SystemConstants{
     public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
 
     /**
-     * Constante que define o estilo CSS default para um tracejado.
+     * Constante que define o estilo CSS default para um tracejado de um nó do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_TRACE_STYLE_CLASS = "trace";
+    public static final String DEFAULT_TREE_VIEW_TRACE_STYLE_CLASS = "trace";
 
     /**
      * Constante que define o estilo CSS default para o componente visual treeView (árvore).
@@ -618,44 +677,50 @@ public abstract class TaglibConstants extends SystemConstants{
      */
     public static final String DEFAULT_TREE_VIEW_CONTENT_STYLE_CLASS = "treeViewContent";
     
-    public static final String TREE_VIEW_KEY = "treeView";
+    /**
+     * Constante que define o identificador para o componente visual treeView (árvore).
+     */
+    public static final String TREE_VIEW_ID = "treeView";
 
-    public static final String TREE_VIEW_CONTENT_KEY = "treeViewContent";
+    /**
+     * Constante que define o identificador para o conteúdo do componente visual treeView (árvore).
+     */
+    public static final String TREE_VIEW_CONTENT_ID = "treeViewContent";
 
     /**
      * Constante que define o estilo CSS default para um nó sem filhos do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_NODE_ICON_STYLE_CLASS = "nodeIcon";
+    public static final String DEFAULT_TREE_VIEW_NODE_ICON_STYLE_CLASS = "nodeIcon";
 
     /**
      * Constante que define o estilo CSS default para o label de um nó do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_NODE_LABEL_STYLE_CLASS = "nodeLabel";
+    public static final String DEFAULT_TREE_VIEW_NODE_LABEL_STYLE_CLASS = "nodeLabel";
     
     /**
      * Constante que define o estilo CSS default para o label de um nó selecionado do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_NODE_LABEL_SELECTED_STYLE_CLASS = "nodeLabelSelected";
+    public static final String DEFAULT_TREE_VIEW_NODE_LABEL_SELECTED_STYLE_CLASS = "nodeLabelSelected";
     
     /**
      * Constante que define o estilo CSS default para o ícone de um nó não expandido do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_COLLAPSED_NODE_ICON_STYLE_CLASS = "collapsedNodeIcon";
+    public static final String DEFAULT_TREE_VIEW_COLLAPSED_NODE_ICON_STYLE_CLASS = "collapsedNodeIcon";
 
     /**
      * Constante que define o estilo CSS default para o ícone de um nó expandido do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_EXPANDED_NODE_ICON_STYLE_CLASS = "expandedNodeIcon";
+    public static final String DEFAULT_TREE_VIEW_EXPANDED_NODE_ICON_STYLE_CLASS = "expandedNodeIcon";
 
     /**
      * Constante que define o estilo CSS default para o ícone de um nó expandido do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_OPENED_NODE_ICON_STYLE_CLASS  = "openedNodeIcon";
+    public static final String DEFAULT_TREE_VIEW_OPENED_NODE_ICON_STYLE_CLASS  = "openedNodeIcon";
     
     /**
      * Constante que define o estilo CSS default para o ícone de um nó não expandido do componente visual treeView (árvore).
      */
-    public static final String DEFAULT_CLOSED_NODE_ICON_STYLE_CLASS  = "closedNodeIcon";
+    public static final String DEFAULT_TREE_VIEW_CLOSED_NODE_ICON_STYLE_CLASS  = "closedNodeIcon";
     
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente treeView (árvore).
@@ -676,9 +741,4 @@ public abstract class TaglibConstants extends SystemConstants{
      * Constante que define o identificador do estilo CSS para a mensagem de validação de uma propriedade do modelo de dados.
      */
     public static final String DEFAULT_VALIDATION_LABEL_STYLE_CLASS = "validationLabel";
-    
-    /**
-     * Constante que define o identificador da chave do controle de paginadores.
-     */
-    public static final String PAGER_MAP_KEY = "pagerMap";
 }
