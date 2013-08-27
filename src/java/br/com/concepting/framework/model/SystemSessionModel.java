@@ -32,18 +32,38 @@ public class SystemSessionModel extends BaseModel{
     @Property(validations=ValidationType.REQUIRED)
     private Locale currentLanguage = null;
     
+    /**
+     * Retorna o identificador do tema (skin) atual.
+     * 
+     * @return String contendo o identificador do tema.
+     */
     public String getCurrentSkin(){
         return currentSkin;
     }
 
+    /**
+     * Define o identificador do tema (skin) atual.
+     * 
+     * @param currentSkin String contendo o identificador do tema.
+     */
     public void setCurrentSkin(String currentSkin){
         this.currentSkin = currentSkin;
     }
 
+    /**
+     * Retorna a instância contendo as propriedades do idioma atual.
+     * 
+     * @return Instância contendo as propriedades do idioma.
+     */
     public Locale getCurrentLanguage(){
         return currentLanguage;
     }
 
+    /**
+     * Define a instância contendo as propriedades do idioma atual.
+     * 
+     * @param currentLanguage Instância contendo as propriedades do idioma.
+     */
     public void setCurrentLanguage(Locale currentLanguage){
         this.currentLanguage = currentLanguage;
     }
