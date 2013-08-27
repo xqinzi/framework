@@ -8,11 +8,11 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
  * @author fvilarinho
  * @since 3.0
  */ 
-public abstract class SecurityConstants extends ResourceConstants{
+public abstract class SecurityConstants{
     /**
      * Constante que define o identificador do arquivo de configurações de auditoria.
      */
-    public static final String DEFAULT_RESOURCE_ID = DEFAULT_RESOURCES_DIR.concat("securityResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("securityResources.xml");
     
     /**
      * Constante que define o algoritmo de digest default.
