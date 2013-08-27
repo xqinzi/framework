@@ -55,10 +55,17 @@ public class JavaIndent extends Indent{
 		super(startChar, endChar, indentCount, backAfterEndChar);
 	}
 	
+    /**
+     * Construtor - Define os caracteres iniciais e finais para indentação.
+     * 
+     * @param startChar String contendo os caracteres iniciais.
+     * @param endChar String contendo os caracteres finais.
+     * @param backAfterEndChar Indica que a indentação deve voltar quando os caracteres 
+     * finais forem encontrados.
+     */
 	public JavaIndent(String startChar, String endChar, Boolean backAfterEndChar){
         super(startChar, endChar, backAfterEndChar);
     }
-
 
 	/**
 	 * Construtor - Define os caracteres iniciais e finais para indentação.
