@@ -534,7 +534,7 @@ public class TextPropertyTag extends BasePropertyTag{
         	    print("<div id=\"");
         	    print(getName());
         	    print(".");
-        	    print(TaglibConstants.AUTO_COMPLETE_BOX_KEY);
+        	    print(TaglibConstants.AUTO_COMPLETE_BOX_ID);
         	    print("\" class=\"");
         	    print(TaglibConstants.DEFAULT_AUTO_COMPLETE_BOX_STYLE_CLASS);
         	    println("\">");
