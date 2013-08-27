@@ -57,16 +57,6 @@ public abstract class Constants{
     public static final Integer DEFAULT_NUMBER_PRECISION = 2;
     
     /**
-     * Constante que define a tag de substituição de expressão regular que identifica qualquer caracter.
-     */
-    public static final String REGEX_ANY_TAG = "[any]";
-    
-    /**
-     * Constante que define a tag de remoção de conteúdo.
-     */
-    public static final String REMOVE_TAG = "[remove]";
-    
-    /**
      * Constante que define o tipo de timeout de operaçòes.
      */
     public static final Integer DEFAULT_TIMEOUT = 300;
