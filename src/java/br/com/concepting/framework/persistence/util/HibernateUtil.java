@@ -42,7 +42,7 @@ import br.com.concepting.framework.util.StringUtil;
  * @author fvilarinho
  * @since 1.0
  */ 
-public class HibernateUtil{
+public abstract class HibernateUtil{
 	/**
 	 * Retorna uma sessão Hibernate com o repositório de dados utilizando as configurações de conexão 
 	 * default.
