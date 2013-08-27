@@ -8,55 +8,259 @@ package br.com.concepting.framework.constants;
  * @author fvilarinho
  * @since 3.0
  */
-public abstract class ProjectConstants extends Constants{
-    public static final String COPY_DEPENDENCIES_TASK_ID                   = "copy.dependencies";
-    public static final String CONCEPTING_FRAMEWORK_ID                     = "ConceptingFramework";
-    public static final String CONCEPTING_FRAMEWORK_HOME_ID                = "${CONCEPTING_FRAMEWORK_HOME}";
-    public static final String DEFAULT_BUILD_ID                            = "build";
-    public static final String DEFAULT_BUILD_PROPERTIES_FILE_ID            = DEFAULT_BUILD_ID.concat(".properties");
-    public static final String DEFAULT_BUILD_FILE_ID                       = DEFAULT_BUILD_ID.concat(".xml");
-    public static final String DEFAULT_COMPILE_DIR                         = DEFAULT_BUILD_ID.concat("/compile/");
-    public static final String DEFAULT_MODULES_DIR                         = DEFAULT_BUILD_ID.concat("/modules/");
-    public static final String DEFAULT_EJB_MODULE_DIR                      = DEFAULT_MODULES_DIR.concat("ejb/");
-    public static final String DEFAULT_WEB_MODULE_DIR                      = DEFAULT_MODULES_DIR.concat("web/");
-    public static final String DEFAULT_WEB_SERVICES_MODULE_DIR             = DEFAULT_MODULES_DIR.concat("webServices/");
-    public static final String DEFAULT_DISTRIBUTION_DIR                    = "dist/";
-    public static final String DEFAULT_SOURCE_DIR                          = "src/";
-    public static final String DEFAULT_JAVA_DIR                            = DEFAULT_SOURCE_DIR.concat("java/");
-    public static final String DEFAULT_RESOURCES_DIR                       = DEFAULT_SOURCE_DIR.concat("resources/");
-    public static final String DEFAULT_TESTS_DIR                           = DEFAULT_SOURCE_DIR.concat("tests/");
-    public static final String DEFAULT_WEB_DIR                             = DEFAULT_SOURCE_DIR.concat("web/");
-    public static final String DEFAULT_REPORTS_DIR                         = DEFAULT_SOURCE_DIR.concat("reports/");
-    public static final String DEFAULT_SQL_DIR                             = DEFAULT_SOURCE_DIR.concat("sql/");
-    public static final String DEFAULT_TEMPLATES_DIR                       = DEFAULT_SOURCE_DIR.concat("templates/");
-    public static final String DEFAULT_APPLICATION_DESCRIPTOR_FILE_ID      = "META-INF/application.xml";
-    public static final String DEFAULT_ACTION_FORM_MAPPING_FILE_ID         = "WEB-INF/struts-config.xml";
-    public static final String DEFAULT_EJB_DESCRIPTOR_FILE_ID              = "META-INF/ejb-jar.xml";
-    public static final String DEFAULT_WEB_DESCRIPTOR_FILE_ID              = "WEB-INF/web.xml";
-    public static final String DEFAULT_WEB_SERVICES_DESCRIPTOR_FILE_ID     = "META-INF/services.xml";
-    public static final String DEFAULT_WEB_LIB_DIR                         = DEFAULT_WEB_DIR.concat("WEB-INF/lib");
-    public static final String DEFAULT_WEB_CLASSES_DIR                     = "WEB-INF/classes";
-    public static final String DEFAULT_WEB_TAGLIBS_FILE_ID                 = "WEB-INF/tld/ConceptingFramework.tld";
-    public static final String DEFAULT_WEB_TAGLIBS_ID                      = "http://www.concepting.com.br/framework/tags";
-    public static final String DEFAULT_DEPENDENCIES_DIR                    = "dependencies/";
-    public static final String DEFAULT_COMPILE_DEPENDENCIES_DIR            = DEFAULT_DEPENDENCIES_DIR.concat("compile/"); 
-    public static final String DEFAULT_EJB_DEPENDENCIES_DIR                = DEFAULT_DEPENDENCIES_DIR.concat("ejb/"); 
-    public static final String DEFAULT_WEB_SERVICES_DEPENDENCIES_DIR       = DEFAULT_DEPENDENCIES_DIR.concat("webServices/");
-    public static final String DEFAULT_DEPENDENCIES_FILE_ID                = "dependencies.xml";
-    public static final String DEFAULT_PERSISTENCE_CLASS_TEMPLATE_ID       = "persistenceClass.xml";
-    public static final String DEFAULT_PERSISTENCE_MAPPING_TEMPLATE_ID     = "persistenceMapping.xml";
-    public static final String DEFAULT_PERSISTENCE_INTERFACE_TEMPLATE_ID   = "persistenceInterface.xml";
-    public static final String DEFAULT_SERVICE_CLASS_TEMPLATE_ID           = "serviceClass.xml";
-    public static final String DEFAULT_SERVICE_INTERFACE_TEMPLATE_ID       = "serviceInterface.xml";
+public abstract class ProjectConstants{
+    /**
+     * Constante que define o identificador da task de cópia de dependências do projeto.
+     */
+    public static final String COPY_DEPENDENCIES_TASK_ID = "copy.dependencies";
+    
+    /**
+     * Constante que define o identificador do framework.
+     */
+    public static final String CONCEPTING_FRAMEWORK_ID = "ConceptingFramework";
+    
+    /**
+     * Constante que define o identificador do diretório de instalação do framework.
+     */
+    public static final String CONCEPTING_FRAMEWORK_HOME_ID = "${CONCEPTING_FRAMEWORK_HOME}";
+    
+    /**
+     * Constante que define o identificador da task de build do projeto.
+     */
+    public static final String DEFAULT_BUILD_ID = "build";
+    
+    /**
+     * Constante que define o identificador do arquivo de propriedades de build do projeto.
+     */
+    public static final String DEFAULT_BUILD_PROPERTIES_FILE_ID = DEFAULT_BUILD_ID.concat(".properties");
+    
+    /**
+     * Constante que define o identificador do arquivo de script de build do projeto.
+     */
+    public static final String DEFAULT_BUILD_FILE_ID = DEFAULT_BUILD_ID.concat(".xml");
+    
+    /**
+     * Constante que define o identificador do diretório de compilação do projeto.
+     */
+    public static final String DEFAULT_COMPILE_DIR = DEFAULT_BUILD_ID.concat("/compile/");
+    
+    /**
+     * Constante que define o identificador do diretório de build dos módulos do projeto.
+     */
+    public static final String DEFAULT_MODULES_DIR = DEFAULT_BUILD_ID.concat("/modules/");
+    
+    /**
+     * Constante que define o identificador do diretório do módulo EJB do projeto.
+     */
+    public static final String DEFAULT_EJB_MODULE_DIR = DEFAULT_MODULES_DIR.concat("ejb/");
+
+    /**
+     * Constante que define o identificador do diretório do módulo WEB do projeto.
+     */
+    public static final String DEFAULT_WEB_MODULE_DIR = DEFAULT_MODULES_DIR.concat("web/");
+    
+    /**
+     * Constante que define o identificador do diretório do módulo WEB Services do projeto.
+     */
+    public static final String DEFAULT_WEB_SERVICES_MODULE_DIR = DEFAULT_MODULES_DIR.concat("webServices/");
+    
+    /**
+     * Constante que define o identificador do diretório de distribuição dos módulos do projeto.
+     */
+    public static final String DEFAULT_DISTRIBUTION_DIR = "dist/";
+
+    /**
+     * Constante que define o identificador do diretório de fontes do projeto.
+     */
+    public static final String DEFAULT_SOURCE_DIR = "src/";
+    
+    /**
+     * Constante que define o identificador do diretório de fontes java do projeto.
+     */
+    public static final String DEFAULT_JAVA_DIR = DEFAULT_SOURCE_DIR.concat("java/");
+    
+    /**
+     * Constante que define o identificador do diretório dos arquivos de configuração do projeto.
+     */
+    public static final String DEFAULT_RESOURCES_DIR = DEFAULT_SOURCE_DIR.concat("resources/");
+    
+    /**
+     * Constante que define o identificador do diretório de testes unitários do projeto.
+     */
+    public static final String DEFAULT_TESTS_DIR = DEFAULT_SOURCE_DIR.concat("tests/");
+
+    /**
+     * Constante que define o identificador do diretório de fontes WEB do projeto.
+     */
+    public static final String DEFAULT_WEB_DIR = DEFAULT_SOURCE_DIR.concat("web/");
+    
+    /**
+     * Constante que define o identificador do diretório de relatórios do projeto.
+     */
+    public static final String DEFAULT_REPORTS_DIR = DEFAULT_SOURCE_DIR.concat("reports/");
+    
+    /**
+     * Constante que define o identificador do diretório de scripts SQL do projeto.
+     */
+    public static final String DEFAULT_SQL_DIR = DEFAULT_SOURCE_DIR.concat("sql/");
+    
+    /**
+     * Constante que define o identificador do diretório de templates do projeto.
+     */
+    public static final String DEFAULT_TEMPLATES_DIR = DEFAULT_SOURCE_DIR.concat("templates/");
+    
+    /**
+     * Constante que define o identificador do arquivo descritor para deploy do projeto.
+     */
+    public static final String DEFAULT_APPLICATION_DESCRIPTOR_FILE_ID = "META-INF/application.xml";
+    
+    /**
+     * Constante que define o identificador do arquivo de mapeamento dos formulários do projeto.
+     */
+    public static final String DEFAULT_ACTION_FORM_MAPPING_FILE_ID = "WEB-INF/struts-config.xml";
+    
+    /**
+     * Constante que define o identificador do arquivo descritor do módulo EJB do projeto.
+     */
+    public static final String DEFAULT_EJB_DESCRIPTOR_FILE_ID = "META-INF/ejb-jar.xml";
+
+    /**
+     * Constante que define o identificador do arquivo descritor do módulo WEB do projeto.
+     */
+    public static final String DEFAULT_WEB_DESCRIPTOR_FILE_ID = "WEB-INF/web.xml";
+
+    /**
+     * Constante que define o identificador do arquivo descritor do módulo WEB Service do projeto.
+     */
+    public static final String DEFAULT_WEB_SERVICES_DESCRIPTOR_FILE_ID = "META-INF/services.xml";
+    
+    /**
+     * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB do projeto..
+     */
+    public static final String DEFAULT_WEB_LIB_DIR = DEFAULT_WEB_DIR.concat("WEB-INF/lib");
+    
+    /**
+     * Constante que define o identificador do diretório de compilação do módulo WEB do projeto..
+     */
+    public static final String DEFAULT_WEB_CLASSES_DIR = "WEB-INF/classes";
+    
+    /**
+     * Constante que define o identificador do arquivo descritor dos componentes do módulo WEB do projeto.
+     */
+    public static final String DEFAULT_WEB_TAGLIBS_FILE_ID = "WEB-INF/tld/ConceptingFramework.tld";
+
+    /**
+     * Constante que define o identificador do import dos componentes do módulo WEB do projeto..
+     */
+    public static final String DEFAULT_WEB_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
+    
+    /**
+     * Constante que define o identificador do diretório de dependências do projeto.
+     */
+    public static final String DEFAULT_DEPENDENCIES_DIR = "dependencies/";
+    
+    /**
+     * Constante que define o identificador do diretório de armazenamento das dependências de compilação do projeto.
+     */
+    public static final String DEFAULT_COMPILE_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("compile/");
+    
+    /**
+     * Constante que define o identificador do diretório de armazenamento das dependências do módulo EJB do projeto.
+     */
+    public static final String DEFAULT_EJB_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("ejb/");
+    
+    /**
+     * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB Services do projeto.
+     */
+    public static final String DEFAULT_WEB_SERVICES_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("webServices/");
+    
+    /**
+     * Constante que define o identificador do arquivo que contém das definições de dependências do projeto.
+     */
+    public static final String DEFAULT_DEPENDENCIES_FILE_ID = "dependencies.xml";
+    
+    /**
+     * Constante que define o identificador do template para a implementação de persistência de um modelo de dados.
+     */
+    public static final String DEFAULT_PERSISTENCE_CLASS_TEMPLATE_ID = "persistenceClass.xml";
+
+    /**
+     * Constante que define o identificador do template para o mapeamento de persistência de um modelo de dados.
+     */
+    public static final String DEFAULT_PERSISTENCE_MAPPING_TEMPLATE_ID = "persistenceMapping.xml";
+    
+    /**
+     * Constante que define o identificador do template que define a interface da implementação de persistência de um modelo de dados.
+     */
+    public static final String DEFAULT_PERSISTENCE_INTERFACE_TEMPLATE_ID = "persistenceInterface.xml";
+    
+    /**
+     * Constante que define o identificador do template da implementação da regra de negócio de um modelo de dados.
+     */
+    public static final String DEFAULT_SERVICE_CLASS_TEMPLATE_ID = "serviceClass.xml";
+
+    /**
+     * Constante que define o identificador do template da interface da implementação da regra de negócio de um modelo de dados.
+     */
+    public static final String DEFAULT_SERVICE_INTERFACE_TEMPLATE_ID = "serviceInterface.xml";
+    /**
+     * Constante que define o identificador do template da interface remota para a implementação da regra de negócio de um modelo de dados.
+     */
+
     public static final String DEFAULT_SERVICE_REMOTE_INTEFACE_TEMPLATE_ID = "serviceRemoteInterface.xml";
+    
+    /**
+     * Constante que define o identificador do template da interface EJB para a implementação da regra de negócio de um modelo de dados.
+     */
     public static final String DEFAULT_SERVICE_HOME_INTERFACE_TEMPLATE_ID  = "serviceHomeInterface.xml";
-    public static final String DEFAULT_SERVICE_MAPPING_TEMPLATE_ID         = "serviceMapping.xml";
-    public static final String DEFAULT_ACTION_CLASS_TEMPLATE_ID            = "actionClass.xml";
-    public static final String DEFAULT_ACTION_FORM_CLASS_TEMPLATE_ID       = "actionFormClass.xml";
-    public static final String DEFAULT_ACTION_FORM_MAPPING_TEMPLATE_ID     = "actionFormMapping.xml";
-    public static final String DEFAULT_WEB_PAGE_TEMPLATE_ID                = "webPage.xml";
-    public static final String DEFAULT_WEB_PAGE_I18N_RESOURCE_TEMPLATE_ID  = "webPageI18nResource.xml";
-    public static final String DEFAULT_WEB_SERVICE_MAPPING_TEMPLATE_ID     = "webServiceMapping.xml";
-    public static final String INVALID_PROJECT_NAME_MESSAGE_KEY            = "invalid.project.name.message";
-    public static final String PROJECT_NAME_LABEL_KEY                      = "project.name.label";
+    
+    /**
+     * Constante que define o identificador do template do mapeamento das regras de negócio dos modelos de dados.
+     */
+    public static final String DEFAULT_SERVICE_MAPPING_TEMPLATE_ID = "serviceMapping.xml";
+
+    /**
+     * Constante que define o identificador do template das ações de um página WEB.
+     */
+    public static final String DEFAULT_ACTION_CLASS_TEMPLATE_ID = "actionClass.xml";
+    
+    /**
+     * Constante que define o identificador do template do formulário de um página WEB.
+     */
+    public static final String DEFAULT_ACTION_FORM_CLASS_TEMPLATE_ID = "actionFormClass.xml";
+    
+    /**
+     * Constante que define o identificador do template do mapeamento de ações dos formulários.
+     */
+    public static final String DEFAULT_ACTION_FORM_MAPPING_TEMPLATE_ID = "actionFormMapping.xml";
+
+    /**
+     * Constante que define o identificador do template de uma página WEB.
+     */
+    public static final String DEFAULT_WEB_PAGE_TEMPLATE_ID  = "webPage.xml";
+
+    /**
+     * Constante que define o identificador do template para o arquivo de internacionalização de uma página WEB.
+     */
+    public static final String DEFAULT_WEB_PAGE_I18N_RESOURCE_TEMPLATE_ID = "webPageI18nResource.xml";
+    
+    /**
+     * Constante que define o identificador do template para o mapeamento de um WEB Service.
+     */
+    public static final String DEFAULT_WEB_SERVICE_MAPPING_TEMPLATE_ID = "webServiceMapping.xml";
+    
+    /**
+     * Constante que define o identificador da propriedade da mensagem exibida quando o nome do projeto for inválido.
+     */
+    public static final String INVALID_PROJECT_NAME_MESSAGE_KEY = "invalid.project.name.message";
+    
+    /**
+     * Constante que define o identificador da propriedade que contém o label do nome do projeto.
+     */
+    public static final String PROJECT_NAME_LABEL_KEY = "project.name.label";
+
+    /**
+     * Constante que define o identificador da propriedade do nome do projeto.
+     */
+    public static final String PROJECT_NAME_KEY = "projectName";
 }
