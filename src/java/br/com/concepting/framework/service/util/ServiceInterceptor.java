@@ -9,6 +9,7 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.rpc.client.RPCServiceClient;
 
 import br.com.concepting.framework.audit.Auditor;
+import br.com.concepting.framework.constants.SystemConstants;
 import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.context.resource.ContextResourceLoader;
 import br.com.concepting.framework.context.types.ContextFactoryType;
@@ -22,7 +23,6 @@ import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.Interceptor;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.web.constants.SystemConstants;
 
 /**
  * Classe que implementa a interceptação dos métodos de uma classe de serviço.
