@@ -22,8 +22,10 @@ import org.apache.struts.Globals;
 
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
+import br.com.concepting.framework.constants.SystemConstants;
 import br.com.concepting.framework.controller.form.ActionFormMessageController;
 import br.com.concepting.framework.controller.form.BaseActionForm;
+import br.com.concepting.framework.controller.helpers.RequestInfo;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.security.controller.SecurityController;
@@ -32,12 +34,10 @@ import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
+import br.com.concepting.framework.util.types.ContentType;
 import br.com.concepting.framework.util.types.PagerActionType;
+import br.com.concepting.framework.util.types.ScopeType;
 import br.com.concepting.framework.util.types.SortOrderType;
-import br.com.concepting.framework.web.constants.SystemConstants;
-import br.com.concepting.framework.web.helpers.RequestInfo;
-import br.com.concepting.framework.web.types.ContentType;
-import br.com.concepting.framework.web.types.ScopeType;
 
 /**
  * Classe responsável pelo controle das requisições do sistema.
