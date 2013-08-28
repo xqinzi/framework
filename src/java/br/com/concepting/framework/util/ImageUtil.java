@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.MemoryCacheImageInputStream;
 
-import br.com.concepting.framework.web.types.ContentType;
+import br.com.concepting.framework.util.types.ContentType;
 
 /**
  * Classe utilitária para manipulação de imagens.

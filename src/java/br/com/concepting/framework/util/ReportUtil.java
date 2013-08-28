@@ -33,7 +33,7 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 import br.com.concepting.framework.util.constants.ReportConstants;
 import br.com.concepting.framework.util.helpers.ReportDataSource;
-import br.com.concepting.framework.web.types.ContentType;
+import br.com.concepting.framework.util.types.ContentType;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;

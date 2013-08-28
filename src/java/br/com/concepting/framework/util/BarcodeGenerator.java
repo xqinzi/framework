@@ -9,7 +9,7 @@ import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
 import net.sourceforge.barbecue.output.OutputException;
 import br.com.concepting.framework.util.types.BarcodeType;
-import br.com.concepting.framework.web.types.ContentType;
+import br.com.concepting.framework.util.types.ContentType;
 
 /**
  * Classe utilitária para geração de uma imagem de código de barra.
