@@ -5,8 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import br.com.concepting.framework.controller.form.util.ActionFormValidator;
 import br.com.concepting.framework.service.types.ServiceType;
-import br.com.concepting.framework.web.form.util.ActionFormValidator;
 
 /**
  * Classe que define as anotações de um modelo de dados.
