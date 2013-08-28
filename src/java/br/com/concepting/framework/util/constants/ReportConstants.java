@@ -1,6 +1,6 @@
 package br.com.concepting.framework.util.constants;
 
-import br.com.concepting.framework.web.types.ContentType;
+import br.com.concepting.framework.util.types.ContentType;
 
 /**
  * Classe que define as constantes utilizadas nas rotinas de emissão de relatórios.
