@@ -1,13 +1,13 @@
 package br.com.concepting.framework.security.controller.action;
 
 import br.com.concepting.framework.controller.action.BaseAction;
+import br.com.concepting.framework.controller.helpers.RequestInfo;
 import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.security.controller.form.LoginSessionActionForm;
 import br.com.concepting.framework.security.exceptions.LoginSessionExpiredException;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.security.service.interfaces.LoginSessionService;
-import br.com.concepting.framework.web.helpers.RequestInfo;
 
 /**
  * Classe que define as ações do login de um usuário.

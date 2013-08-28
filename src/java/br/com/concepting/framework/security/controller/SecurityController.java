@@ -18,7 +18,7 @@ import br.com.concepting.framework.security.model.UserModel;
 import br.com.concepting.framework.security.resource.SecurityResource;
 import br.com.concepting.framework.security.resource.SecurityResourceLoader;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.web.types.ScopeType;
+import br.com.concepting.framework.util.types.ScopeType;
 
 /**
  * Classe responsável pelo controle das requisições de segurança do sistema.
