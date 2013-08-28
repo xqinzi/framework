@@ -2,7 +2,7 @@ package br.com.concepting.framework.ui.taglibs.helpers;
 
 /**
  * Classe auxiliar que define as propriedades de uma coluna para o componente
- * visual de tabela de dados dinâmica.
+ * visual dynamicGrid (tabela de dados dinâmica).
  * 
  * @author fvilarinho
  * @since 3.0
