@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * Classe que define um nó em um estrutura de dados de árvore.
+ * Classe que define um nó em uma estrutura de dados de árvore.
  * 
  * @author fvilarinho
  * @since 1.0

@@ -10,7 +10,7 @@ import net.sf.jasperreports.engine.JRRewindableDataSource;
 import br.com.concepting.framework.model.util.PropertyUtil;
 
 /**
- * Classe que define um datasource a ser utilizado por um relatório.
+ * Classe que define um datasource (fonte de dados) a ser utilizado por um relatório.
  *
  * @author fvilarinho
  * @since 1.0
