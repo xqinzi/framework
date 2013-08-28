@@ -41,7 +41,7 @@ public class ActionFormValidator{
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
 	 * 
 	 * @param actionForm Instância do formulário desejado.
-	 * @param systemController Instância do controlador do fluxo de dados WEB.
+	 * @param systemController Instância do controlador do fluxo de dados.
 	 */
 	public ActionFormValidator(BaseActionForm actionForm, SystemController systemController){
 		super();

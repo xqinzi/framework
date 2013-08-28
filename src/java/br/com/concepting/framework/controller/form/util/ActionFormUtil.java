@@ -19,7 +19,7 @@ public class ActionFormUtil{
      * @return String contendo o nome do pacote.
      */
     public static <M extends BaseModel> String getActionPackageByModel(Class<M> modelClass){
-        return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".web.action");
+        return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".controller.action");
     }
 
     /**
@@ -31,7 +31,7 @@ public class ActionFormUtil{
     public static <M extends BaseModel> String getActionClassNameByModel(Class<M> modelClass){
         String actionClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "Action");
 
-        return StringUtil.replaceAll(actionClassId, ".model", ".web.action");
+        return StringUtil.replaceAll(actionClassId, ".model", ".controller.action");
     }
     
     /**
@@ -62,7 +62,7 @@ public class ActionFormUtil{
      * @return String contendo o nome do pacote.
      */
     public static <M extends BaseModel> String getActionFormPackageByModel(Class<M> modelClass){
-        return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".web.form");
+        return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".controller.form");
     }
 
     /**
@@ -74,7 +74,7 @@ public class ActionFormUtil{
     public static <M extends BaseModel> String getActionFormClassNameByModel(Class<M> modelClass){
         String actionFormClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "ActionForm");
 
-        return StringUtil.replaceAll(actionFormClassId, ".model", ".web.form");
+        return StringUtil.replaceAll(actionFormClassId, ".model", ".controller.form");
     }
     
     /**
