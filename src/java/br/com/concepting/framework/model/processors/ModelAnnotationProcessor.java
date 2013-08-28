@@ -20,6 +20,7 @@ import br.com.concepting.framework.audit.resource.AuditorResource;
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.constants.ProjectConstants;
+import br.com.concepting.framework.constants.SystemConstants;
 import br.com.concepting.framework.controller.form.util.ActionFormUtil;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
@@ -40,15 +41,14 @@ import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceUtil;
+import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
 import br.com.concepting.framework.util.XmlWriter;
+import br.com.concepting.framework.util.helpers.JSPIndent;
 import br.com.concepting.framework.util.helpers.JavaIndent;
 import br.com.concepting.framework.util.helpers.XmlNode;
-import br.com.concepting.framework.web.constants.SystemConstants;
-import br.com.concepting.framework.web.helpers.JSPIndent;
-import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
 /**
  * Classe que define o scripting para o processamento das anotações.
