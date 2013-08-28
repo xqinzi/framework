@@ -21,6 +21,8 @@ import org.dom4j.DocumentException;
 import br.com.concepting.framework.caching.Cacher;
 import br.com.concepting.framework.caching.CacherManager;
 import br.com.concepting.framework.constants.Constants;
+import br.com.concepting.framework.controller.action.BaseAction;
+import br.com.concepting.framework.controller.form.BaseActionForm;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
@@ -41,8 +43,6 @@ import br.com.concepting.framework.util.XmlWriter;
 import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.helpers.XmlNode;
 import br.com.concepting.framework.util.types.SortOrderType;
-import br.com.concepting.framework.web.action.BaseAction;
-import br.com.concepting.framework.web.form.BaseActionForm;
 
 /**
  * Classe utilitária responsável pela manipulação de propriedades e características de um 
