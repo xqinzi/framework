@@ -94,7 +94,7 @@ public class ModelUtil{
     public static <M extends BaseModel, F extends BaseActionForm> Class<M> getModelClassByActionForm(Class<F> actionFormClass) throws ClassNotFoundException{
 		String modelClassId = StringUtil.replaceLast(actionFormClass.getName(), "ActionForm", "Model");
 
-		modelClassId = StringUtil.replaceAll(modelClassId, ".web.form", ".model");
+		modelClassId = StringUtil.replaceAll(modelClassId, ".controller.form", ".model");
 
 		return (Class<M>)Class.forName(modelClassId);
 	}
@@ -109,7 +109,7 @@ public class ModelUtil{
     public static <M extends BaseModel, A extends BaseAction> Class<M> getModelClassByAction(Class<A> actionClass) throws ClassNotFoundException{
 		String modelClassId  = StringUtil.replaceLast(actionClass.getName(), "Action", "Model");
 
-		modelClassId = StringUtil.replaceAll(modelClassId, ".web.action", ".model");
+		modelClassId = StringUtil.replaceAll(modelClassId, ".controller.action", ".model");
 
 		return (Class<M>)Class.forName(modelClassId);
 	}
