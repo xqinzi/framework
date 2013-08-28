@@ -14,7 +14,7 @@ import javax.mail.Address;
 
 import br.com.concepting.framework.util.ByteUtil;
 import br.com.concepting.framework.util.helpers.Message;
-import br.com.concepting.framework.web.types.ContentType;
+import br.com.concepting.framework.util.types.ContentType;
 
 /** 
  * Classe que define a estrutura básica para uma mensagem.
