@@ -37,12 +37,12 @@ public abstract class SecurityConstants{
     /**
      * Constante que define o identificador da classe para listening (logIn/logOut) das sessões de login.
      */
-    public static final String DEFAULT_LOGIN_SESSION_LISTENER_CLASS_ID = "br.com.concepting.framework.security.web.LoginSessionListener";
+    public static final String DEFAULT_LOGIN_SESSION_LISTENER_CLASS_ID = "br.com.concepting.framework.security.controller.LoginSessionListener";
 
     /**
      * Constante que define o identificador da classe do filtro de segurança para as sessões de login.
      */
-    public static final String DEFAULT_SECURITY_FILTER_CLASS_ID = "br.com.concepting.framework.security.web.SecurityFilter";
+    public static final String DEFAULT_SECURITY_FILTER_CLASS_ID = "br.com.concepting.framework.security.controller.SecurityFilter";
     
     /**
      * Constante que define o identificador da propriedade que armazena o nome do usuário e senha para serem lembrados no login.
