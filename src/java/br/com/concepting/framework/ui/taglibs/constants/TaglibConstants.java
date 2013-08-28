@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs.constants;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 
 /**
- * Classe que define as constantes utilizadas pelos componentes visuais.
+ * Classe que define as constantes utilizadas pelos componentes visuais fa camada de apresentação.
  * 
  * @author fvilarinho
  * @since 3.0
