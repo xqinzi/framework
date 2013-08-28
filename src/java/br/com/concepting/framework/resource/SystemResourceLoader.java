@@ -5,13 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import br.com.concepting.framework.resource.BaseResource;
-import br.com.concepting.framework.resource.XmlResourceLoader;
+import br.com.concepting.framework.constants.SystemConstants;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.XmlNode;
-import br.com.concepting.framework.web.constants.SystemConstants;
 
 /**
  * Classe responsável pela leitura/manipulação das configurações do sistema.
