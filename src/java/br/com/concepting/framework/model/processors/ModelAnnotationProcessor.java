@@ -20,6 +20,7 @@ import br.com.concepting.framework.audit.resource.AuditorResource;
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.constants.ProjectConstants;
+import br.com.concepting.framework.controller.form.util.ActionFormUtil;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
@@ -46,7 +47,6 @@ import br.com.concepting.framework.util.XmlWriter;
 import br.com.concepting.framework.util.helpers.JavaIndent;
 import br.com.concepting.framework.util.helpers.XmlNode;
 import br.com.concepting.framework.web.constants.SystemConstants;
-import br.com.concepting.framework.web.form.util.ActionFormUtil;
 import br.com.concepting.framework.web.helpers.JSPIndent;
 import br.com.concepting.framework.web.taglibs.constants.TaglibConstants;
 
