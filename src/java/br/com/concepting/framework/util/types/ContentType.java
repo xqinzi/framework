@@ -1,7 +1,7 @@
 package br.com.concepting.framework.util.types;
 
 /** 
- * Classe que define as constantes para os tipos de conteúdo suportados no download.
+ * Classe que define as constantes para os tipos de conteúdo suportados.
  *
  * @author fvilarinho
  * @since 1.0

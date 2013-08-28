@@ -7,10 +7,29 @@ package br.com.concepting.framework.util.types;
  * @since 3.0
  */
 public enum FormulaType{
+    /**
+     * Constante que define nenhuma fórmula.
+     */
     NONE,
+    
+    /**
+     * Constante que define a fórmula de somatória.
+     */
     SUM,
+    
+    /**
+     * Constante que define a fórmula de mínimo.
+     */
     MIN,
+    
+    /**
+     * Constante que define a fórmula de máximo.
+     */
     MAX,
+    
+    /**
+     * Constante que define a fórmula de média.
+     */
     AVERAGE("avg");
     
     private String id;
