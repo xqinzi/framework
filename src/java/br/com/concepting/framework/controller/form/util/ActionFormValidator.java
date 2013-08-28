@@ -13,6 +13,7 @@ import org.apache.commons.beanutils.MethodUtils;
 import br.com.concepting.framework.controller.SystemController;
 import br.com.concepting.framework.controller.form.ActionFormMessageController;
 import br.com.concepting.framework.controller.form.BaseActionForm;
+import br.com.concepting.framework.controller.helpers.RequestInfo;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -23,7 +24,6 @@ import br.com.concepting.framework.security.controller.SecurityController;
 import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.web.helpers.RequestInfo;
 
 /** 
  * Classe que implementa a validação para as propriedades do modelo de dados vinculado ao formulário.

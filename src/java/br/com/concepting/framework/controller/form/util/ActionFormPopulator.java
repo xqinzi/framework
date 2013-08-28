@@ -11,6 +11,7 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.controller.SystemController;
 import br.com.concepting.framework.controller.form.ActionFormMessageController;
 import br.com.concepting.framework.controller.form.BaseActionForm;
+import br.com.concepting.framework.controller.helpers.RequestInfo;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -20,8 +21,7 @@ import br.com.concepting.framework.security.controller.SecurityController;
 import br.com.concepting.framework.util.DateTimeUtil;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.web.helpers.RequestInfo;
-import br.com.concepting.framework.web.types.ScopeType;
+import br.com.concepting.framework.util.types.ScopeType;
 
 /** 
  * Classe ulilitário responsável por popular automaticamente as propriedades de um formulário.
