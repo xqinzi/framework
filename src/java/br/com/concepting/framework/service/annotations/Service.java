@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceInterceptor;
-import br.com.concepting.framework.web.types.ScopeType;
+import br.com.concepting.framework.util.types.ScopeType;
  
 /** 
  * Classe que define as anotações para uma classe de serviço.
