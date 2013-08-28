@@ -14,7 +14,7 @@ import br.com.concepting.framework.controller.form.util.ActionFormMessageUtil;
 import br.com.concepting.framework.controller.form.util.ActionFormValidationMessageUtil;
 import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.util.StringUtil;
-import br.com.concepting.framework.web.types.ScopeType;
+import br.com.concepting.framework.util.types.ScopeType;
 
 /**
  * Classe responsável pelo controle das mensagens do sistema.
