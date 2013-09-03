@@ -1876,7 +1876,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 	protected void renderAttributes() throws Throwable{
 		super.renderAttributes();
 
-		String onKeyPress = StringUtil.trim(getOnKeyPress());
+		String onKeyPress = getOnKeyPress();
 		
 		if(onKeyPress.length() > 0){
 			print(" onKeyPress=\"");
@@ -1884,7 +1884,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 			print("\"");
 		}
 
-		String onKeyDown = StringUtil.trim(getOnKeyDown());
+		String onKeyDown = getOnKeyDown();
 		
 		if(onKeyDown.length() > 0){
 			print(" onKeyDown=\"");
@@ -1892,7 +1892,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 			print("\"");
 		}
 		
-		String onKeyUp = StringUtil.trim(getOnKeyUp());
+		String onKeyUp = getOnKeyUp();
 
 		if(onKeyUp.length() > 0){
 			print(" onKeyUp=\"");
@@ -1900,7 +1900,7 @@ public abstract class BasePropertyTag extends BaseActionFormElementTag{
 			print("\"");
 		}
 		
-		String onChange = StringUtil.trim(getOnChange());
+		String onChange = getOnChange();
 
 		if(onChange.length() > 0){
 			print(" onChange=\"");
