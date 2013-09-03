@@ -5,7 +5,7 @@ import br.com.concepting.framework.ui.types.VisibilityType;
 import br.com.concepting.framework.util.types.AlignmentType;
 
 /**
- * Classe que define o componente visual de um calendário.
+ * Classe que define o componente visual de um calendar (calendário).
  * 
  * @author fvilarinho
  * @since 2.0
