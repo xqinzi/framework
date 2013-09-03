@@ -11,7 +11,7 @@ import br.com.concepting.framework.security.resource.SecurityResourceLoader;
 import br.com.concepting.framework.ui.taglibs.BaseTag;
 
 /**
- * Classe que define o componente visual para inicialização da aplicação.
+ * Classe que define o componente visual system (inicialização da aplicação).
  * 
  * @author fvilarinho
  * @since 1.0
