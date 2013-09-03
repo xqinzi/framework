@@ -13,7 +13,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /** 
- * Classe que define o componente visual guides (guias de navegação).
+ * Classe que define o componente visual guides (guias).
  * 
  * @author fvilarinho
  * @since 1.0

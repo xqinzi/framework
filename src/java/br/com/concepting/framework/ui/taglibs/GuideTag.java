@@ -8,7 +8,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para uma guia.
+ * Classe que define o componente visual guide (guia).
  * 
  * @author fvilarinho
  * @since 1.0
