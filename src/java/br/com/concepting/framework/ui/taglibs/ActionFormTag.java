@@ -21,7 +21,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ScopeType;
  
 /**
- * Classe que define o componente visual do formulário para entrada de dados.
+ * Classe que define o componente visual actionForm (formulário).
  * 
  * @author fvilarinho
  * @since 2.0
