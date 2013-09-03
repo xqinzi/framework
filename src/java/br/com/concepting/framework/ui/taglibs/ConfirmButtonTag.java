@@ -5,7 +5,7 @@ import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
- * Classe que define o componente visual para o botão com a função de confirmação.
+ * Classe que define o componente visual confirmButton (botão de confirmação).
  * 
  * @author fvilarinho
  * @since 1.0
