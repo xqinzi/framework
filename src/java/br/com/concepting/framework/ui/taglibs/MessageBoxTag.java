@@ -22,7 +22,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 
 /**
- * Classe que define o componente visual para uma caixa de mensagem.
+ * Classe que define o componente visual messageBox (caixa de mensagens).
  * 
  * @author fvilarinho
  * @since 1.0
