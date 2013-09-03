@@ -10,7 +10,7 @@ import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
- * Classe que define o componente visual de um relógio.
+ * Classe que define o componente visual clock (relógio).
  * 
  * @author fvilarinho
  * @since 2.0
