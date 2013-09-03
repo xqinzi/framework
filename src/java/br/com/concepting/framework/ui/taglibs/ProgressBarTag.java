@@ -5,7 +5,7 @@ import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para uma barra de progressão.
+ * Classe que define o componente visual progressBar (barra de progressão_.
  * 
  * @author fvilarinho
  * @since 1.0
