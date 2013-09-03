@@ -17,7 +17,7 @@ import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 
 /**
- * Classe que define o componente visual para um grupo de seleção de opções.
+ * Classe que define o componente visual options (grupo de seleção de opções).
  * 
  * @author fvilarinho
  * @since 1.0
