@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para entrada de senhas.
+ * Classe que define o componente visual password (entrada de senhas).
  * 
  * @author fvilarinho
  * @since 1.0
