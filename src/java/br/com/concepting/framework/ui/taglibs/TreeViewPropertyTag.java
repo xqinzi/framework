@@ -18,7 +18,7 @@ import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.PositionType;
 
 /**
- * Classe que define o componente visual Treeview (Árvore de visualização).
+ * Classe que define o componente visual treeView (árvore).
  * 
  * @author fvilarinho
  * @since 2.0
