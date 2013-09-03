@@ -10,7 +10,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
  
 /**
- * Classe que define o componente visual para um timer de página.
+ * Classe que define o componente visual timer (temporizador).
  * 
  * @author fvilarinho
  * @since 3.0
@@ -238,10 +238,10 @@ public class TimerTag extends BasePropertyTag{
                 print(".");
                 print(AttributeConstants.TIMER_KEY);
                 print("\" class=\"");
-                print(StringUtil.trim(getStyleClass()));
+                print(getStyleClass());
                 print("\"");
                 
-                String style = StringUtil.trim(getStyle());
+                String style = getStyle();
                 
                 if(style.length() > 0){
                     print(" style=\"");
