@@ -9,7 +9,7 @@ import br.com.concepting.framework.ui.taglibs.helpers.DynamicGridColumn;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define o componente visual para uma tabela de dados dinâmica (colunas e botões).
+ * Classe que define o componente visual dynamicGrid (tabela de dados dinâmica=).
  * 
  * @author fvilarinho
  * @since 3.0
