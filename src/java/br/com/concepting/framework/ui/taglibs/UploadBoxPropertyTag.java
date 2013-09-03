@@ -7,7 +7,7 @@ import br.com.concepting.framework.ui.types.DisplayType;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para uma caixa de upload.
+ * Classe que define o componente visual uploadBox (caixa de upload).
  * 
  * @author fvilarinho
  * @since 3.0
