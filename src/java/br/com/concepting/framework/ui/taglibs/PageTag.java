@@ -18,7 +18,7 @@ import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
- * Classe que define o componente visual de uma página WEB.
+ * Classe que define o componente visual page (página WEB).
  *
  * @author fvilarinho
  * @since 1.0
@@ -156,7 +156,7 @@ public class PageTag extends HtmlTag{
  
         		out.println();
         		
-        		String encoding = StringUtil.trim(getEncoding());
+        		String encoding = getEncoding();
         		
         		if(encoding.length() == 0){
         		    encoding = Constants.DEFAULT_ENCODING;
