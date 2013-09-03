@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para um link.
+ * Classe que define o componente visual link.
  * 
  * @author fvilarinho
  * @since 3.0
