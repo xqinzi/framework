@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para entrada de texto em múltiplas linhas.
+ * Classe que define o componente visual textArea (entrada de texto em múltiplas linhas).
  * 
  * @author fvilarinho
  * @since 1.0
