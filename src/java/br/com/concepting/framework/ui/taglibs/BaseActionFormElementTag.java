@@ -19,7 +19,7 @@ import br.com.concepting.framework.util.types.PositionType;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define a estrutura básica para um componente de um formulário.
+ * Classe que define a estrutura básica para um objeto/componente de um formulário.
  * 
  * @author fvilarinho
  * @since 2.0
