@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import javax.servlet.jsp.tagext.BodyContent;
 
 /**
- * Classe que define o componente para definir uma view de renderização .
+ * Classe que define o componente view (agrupamento de renderização).
  * 
  * @author fvilarinho
  * @since 2.0
