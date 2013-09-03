@@ -1,10 +1,9 @@
 package br.com.concepting.framework.ui.taglibs;
 
 import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
-import br.com.concepting.framework.util.StringUtil;
  
 /**
- * Classe que define o componente visual slider (Barra de deslize). 
+ * Classe que define o componente visual slider (barra de deslize para controle de valores numéricos). 
  * 
  * @author fvilarinho
  * @since 3.0
@@ -72,8 +71,7 @@ public class SliderPropertyTag extends BasePropertyTag{
      * @see br.com.concepting.framework.ui.taglibs.BasePropertyTag#renderBody()
      */
     protected void renderBody() throws Throwable{
-        String name  = StringUtil.trim(getName());
-        String width = StringUtil.trim(getWidth());
+        String name = getName();
         
         println("<div>");
         
@@ -94,7 +92,7 @@ public class SliderPropertyTag extends BasePropertyTag{
         println("\">");
         
         print("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"");
-        print(width);
+        print(getWidth());
         println("\">");
         
         println("<tr>");

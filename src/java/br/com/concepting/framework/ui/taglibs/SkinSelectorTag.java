@@ -9,7 +9,7 @@ import br.com.concepting.framework.resource.SystemResourceLoader;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 
 /**
- * Classe que define o componente visual skinSelector (Seletor de tema).
+ * Classe que define o componente visual skinSelector (seletor de tema).
  * 
  * @author fvilarinho
  * @since 3.0
