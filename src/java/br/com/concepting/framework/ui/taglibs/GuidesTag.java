@@ -13,7 +13,7 @@ import br.com.concepting.framework.util.types.AlignmentType;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /** 
- * Classe que define o componente visual para um conjunto de guias de navegação.
+ * Classe que define o componente visual guides (guias de navegação).
  * 
  * @author fvilarinho
  * @since 1.0
@@ -321,14 +321,12 @@ public class GuidesTag extends BaseActionFormElementTag{
 		NextGuideButtonTag     nextGuideButtonTag     = null;
 		PreviousGuideButtonTag previousGuideButtonTag = null;
 		String                 guideHeight            = "";
-		String                 guideContent           = "";
         StringBuilder          content                = null;
 		ScriptTag              scriptTag              = null;
 
 		for(GuideTag guideTag : guidesTags){
 		    guideName    = guideTag.getName();
             guideHeight  = getHeight();
-            guideContent = StringUtil.trim(guideTag.getContent());
 		    
 			print("<div id=\"");
 			print(name);
@@ -359,7 +357,7 @@ public class GuidesTag extends BaseActionFormElementTag{
 			println(">");
 			println("<tr>");
 			println("<td>");
-			println(guideContent);
+			println(guideTag.getContent());
 			println("</td>");
 			println("</tr>");
 
