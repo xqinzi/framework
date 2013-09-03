@@ -4,7 +4,7 @@ import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para uma opção de marcação.
+ * Classe que define o componente visual check (opção de marcação).
  * 
  * @author fvilarinho
  * @since 1.0
