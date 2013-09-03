@@ -31,7 +31,7 @@ import br.com.concepting.framework.util.types.ScopeType;
 import br.com.concepting.framework.util.types.SortOrderType;
 
 /**
- * Classe que define o componente visual para uma tabela de dados.
+ * Classe que define o componente visual grid (tabela de dados).
  * 
  * @author fvilarinho
  * @since 2.0
@@ -1649,8 +1649,8 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			        
     				if(columnGroup.getName().length() > 0){
     					if(currentColumnGroupName.length() == 0){
-    						currentColumnGroupName      = StringUtil.trim(columnGroup.getName());
-    						currentColumnGroupLabel     = StringUtil.trim(columnGroup.getLabel());
+    						currentColumnGroupName      = columnGroup.getName();
+    						currentColumnGroupLabel     = columnGroup.getLabel();
     						currentColumnGroupTooltip   = columnGroup.getTooltip();
     						currentColumnGroupAlignment = columnGroup.getAlignmentType();
     					}
@@ -1695,7 +1695,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
         					else
         						println("<td></td>");
         						
-                            currentColumnGroupName      = StringUtil.trim(columnGroup.getName());
+                            currentColumnGroupName      = columnGroup.getName();
                             currentColumnGroupLabel     = columnGroup.getLabel();
                             currentColumnGroupTooltip   = columnGroup.getTooltip();
                             currentColumnGroupAlignment = columnGroup.getAlignmentType();
@@ -1875,8 +1875,8 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
 			    columnName      = columnTag.getName();
                 columnWidth     = columnTag.getWidth();
                 columnAlignment = columnTag.getAlignmentType();
-			    columnLabel     = StringUtil.trim(columnTag.getLabel());
-                columnTooltip   = StringUtil.trim(columnTag.getTooltip());
+			    columnLabel     = columnTag.getLabel();
+                columnTooltip   = columnTag.getTooltip();
 			    
 				if(columnTag.getParent() instanceof GridColumnGroupTag && dataValues != null && dataValues.size() > 0)
 					columnGroup = (GridColumnGroupTag)columnTag.getParent();
