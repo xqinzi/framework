@@ -14,7 +14,7 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
- * Classe que define o componente visual languageSelector (Seletor de idioma).
+ * Classe que define o componente visual languageSelector (seletor de idioma).
  * 
  * @author fvilarinho
  * @since 3.0
