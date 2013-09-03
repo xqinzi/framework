@@ -190,7 +190,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
                 setResourceId(resourceId);
             }
             
-            String encoding = StringUtil.trim(getEncoding());
+            String encoding = getEncoding();
             
             if(encoding.length() == 0){
                 encoding = pageTag.getEncoding();
