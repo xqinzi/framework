@@ -10,7 +10,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para um conjunto de seções.
+ * Classe que define o componente visual accordion (guia de seções).
  * 
  * @author fvilarinho
  * @since 3.0
