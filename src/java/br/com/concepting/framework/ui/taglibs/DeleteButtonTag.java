@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.controller.action.types.ActionType;
 
 /**
- * Classe que define o componente visual para o botão com a função excluir um item.
+ * Classe que define o componente visual deleteButton (botão excluir).
  * 
  * @author fvilarinho
  * @since 1.0

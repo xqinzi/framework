@@ -1,7 +1,7 @@
 package br.com.concepting.framework.ui.taglibs;
 
 /**
- * Classe que define o componente visual closeButton (botão com a função de fechar).
+ * Classe que define o componente visual closeButton (botão fechar).
  * 
  * @author fvilarinho
  * @since 3.0
