@@ -6,7 +6,7 @@ import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
- * Classe que declara a utilização de um conteúdo contendo javascripts.
+ * Classe que declara a utilização de um conteúdo javascript.
  * 
  * @author fvilarinho
  * @since 1.0
@@ -34,18 +34,18 @@ public class ScriptTag extends BaseTag{
 	}
 
 	/**
-	 * Retorna a URL onde o arquivo CSS está armazenado.
+	 * Retorna a URL onde o arquivo javascript está armazenado.
 	 * 
-	 * @return String contendo a URL do arquivo CSS.
+	 * @return String contendo a URL do arquivo javascript.
 	 */
 	public String getUrl(){
 		return url;
 	}
 
 	/**
-	 * Define a URL onde o arquivo CSS está armazenado.
+	 * Define a URL onde o arquivo javascript está armazenado.
 	 * 
-	 * @param url String contendo a URL do arquivo CSS.
+	 * @param url String contendo a URL do arquivo javascript.
 	 */
 	public void setUrl(String url){
 		this.url = url;
