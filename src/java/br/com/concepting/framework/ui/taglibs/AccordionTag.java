@@ -129,11 +129,11 @@ public class AccordionTag extends BaseActionFormElementTag{
      */
     protected void renderOpen() throws Throwable{
         print("<table class=\"");
-        print(StringUtil.trim(getStyleClass()));
+        print(getStyleClass());
         print("\"");
         
-        String style = StringUtil.trim(getStyle());
-        String width = StringUtil.trim(getWidth());
+        String style = getStyle();
+        String width = getWidth();
         
         if(style.length() > 0 || width.length() > 0){
             print(" style=\"");
@@ -256,7 +256,7 @@ public class AccordionTag extends BaseActionFormElementTag{
         print(TaglibConstants.SECTION_HEADER_ID);
         print("\" class=\"");
         
-        String headerStyleClass = StringUtil.trim(sectionTag.getHeaderStyleClass());
+        String headerStyleClass = sectionTag.getHeaderStyleClass();
         
         if(index == 0){
             print("first");
@@ -273,7 +273,7 @@ public class AccordionTag extends BaseActionFormElementTag{
                     isCurrentSection = ((List)currentSectionsNames).contains(sectionName);
             }
             else{
-                String currentSectionName = StringUtil.trim(getRequestInfo().getCurrentSection());
+                String currentSectionName = getRequestInfo().getCurrentSection();
                 
                 isCurrentSection = sectionName.equals(currentSectionName);
             }
@@ -290,7 +290,7 @@ public class AccordionTag extends BaseActionFormElementTag{
         
         print("\"");
         
-        String style = StringUtil.trim(sectionTag.getHeaderStyle());
+        String style = sectionTag.getHeaderStyle();
         
         if(style.length() > 0){
             print(" style=\"");
@@ -309,8 +309,8 @@ public class AccordionTag extends BaseActionFormElementTag{
         print(", ");
         print(hasMultipleSelection());
         
-        String onSelect   = StringUtil.trim(sectionTag.getOnSelect());
-        String onUnSelect = StringUtil.trim(sectionTag.getOnUnSelect());
+        String onSelect   = sectionTag.getOnSelect();
+        String onUnSelect = sectionTag.getOnUnSelect();
         
         if(onSelect.length() > 0){
             print(", function(){");
@@ -330,10 +330,10 @@ public class AccordionTag extends BaseActionFormElementTag{
         }
         
         print(");\" title=\"");
-        print(StringUtil.trim(sectionTag.getTooltip()));
+        print(sectionTag.getTooltip());
         println("\">");
         
-        println(StringUtil.trim(sectionTag.getLabel()));
+        println(sectionTag.getLabel());
         
         println("</div>");
     }
@@ -354,7 +354,7 @@ public class AccordionTag extends BaseActionFormElementTag{
         print(TaglibConstants.SECTION_CONTENT_ID);
         print("\" class=\"");
         
-        String contentStyleClass = StringUtil.trim(sectionTag.getContentStyleClass());
+        String contentStyleClass = sectionTag.getContentStyleClass();
         
         if(index == 0){
             print("first");
@@ -369,8 +369,8 @@ public class AccordionTag extends BaseActionFormElementTag{
         
         print("\"");
         
-        String style  = StringUtil.trim(sectionTag.getContentStyle());
-        String height = StringUtil.trim(sectionTag.getHeight());
+        String style  = sectionTag.getContentStyle();
+        String height = sectionTag.getHeight();
         
         Boolean isCurrentSection = false;
         
