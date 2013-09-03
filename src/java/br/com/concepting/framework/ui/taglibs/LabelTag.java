@@ -6,8 +6,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente de label vinculado a uma propriedade de um modelo de 
- * dados ou uma chave no arquivo de recursos.
+ * Classe que define o componente visual label (texto estático).
  * 
  * @author fvilarinho
  * @since 1.0

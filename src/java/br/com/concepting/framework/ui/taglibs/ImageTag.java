@@ -9,7 +9,7 @@ import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define o componente visual para exibição de uma imagem.
+ * Classe que define o componente visual image (imagem).
  * 
  * @author fvilarinho
  * @since 1.0
