@@ -15,7 +15,7 @@ import br.com.concepting.framework.util.types.ContentType;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define o componente visual para uma caixa de download.
+ * Classe que define o componente visual downloadBox (caixa de download).
  * 
  * @author fvilarinho
  * @since 3.0
@@ -246,7 +246,7 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
             print(getStyleClass());
             print("\"");
             
-            String style = StringUtil.trim(getStyle());
+            String style = getStyle();
             
             if(style.length() > 0){
                 print(" style=\"");

@@ -10,7 +10,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 
 /**
- * Classe que define o componente visual para uma caixa de diálogo.
+ * Classe que define o componente visual dialogBox (caixa de diálogo).
  * 
  * @author fvilarinho
  * @since 3.0
