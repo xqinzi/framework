@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.controller.action.types.ActionType;
 
 /**
- * Classe que define o componente visual para o botão com a função de pesquisa de dados.
+ * Classe que define o componente visual searchButton (botão pesquisar).
  * 
  * @author fvilarinho
  * @since 1.0
