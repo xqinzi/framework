@@ -13,7 +13,7 @@ import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
 
 /**
- * Classe que define a estrutura básica para o componente visual de uma opção de seleção.
+ * Classe que define a estrutura básica para o componente visual de seleção de uma opção.
  * 
  * @author fvilarinho
  * @since 1.0
