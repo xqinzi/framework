@@ -18,7 +18,7 @@ import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define o componente visual para itens de menus.
+ * Classe que define o componente visual menuBar (barra de menus).
  * 
  * @author fvilarinho
  * @since 1.0

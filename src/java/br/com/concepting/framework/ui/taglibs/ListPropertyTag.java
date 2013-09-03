@@ -14,7 +14,7 @@ import br.com.concepting.framework.util.helpers.Node;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual de uma lista de opções para seleção.
+ * Classe que define o componente visual list (lista de opções de seleção).
  * 
  * @author fvilarinho
  * @since 1.0
