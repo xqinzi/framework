@@ -1,7 +1,7 @@
 package br.com.concepting.framework.ui.taglibs;
 
 /**
- * Classe que define o componente visual para o botão de upload de arquivos..
+ * Classe que define o componente visual uploadButton (botão de upload).
  * 
  * @author fvilarinho
  * @since 3.0
