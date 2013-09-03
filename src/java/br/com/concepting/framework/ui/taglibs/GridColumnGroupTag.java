@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.util.types.AlignmentType;
 
 /**
- * Classe que define um agrupamento de colunas em uma tabela de dados.
+ * Classe que define o componente visual gridColumnGroup (agrupamento de colunas em uma tabela de dados).
  * 
  * @author fvilarinho
  * @since 1.0
