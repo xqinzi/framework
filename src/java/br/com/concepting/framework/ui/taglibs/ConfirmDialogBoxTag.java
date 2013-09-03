@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.controller.action.types.ActionType;
 
 /**
- * Classe que define o componente visual para uma caixa de confirmação.
+ * Classe que define o componente visual confirmDialogBox (caixa de confirmação).
  * 
  * @author fvilarinho
  * @since 3.0
