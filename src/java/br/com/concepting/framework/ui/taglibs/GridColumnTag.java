@@ -12,7 +12,7 @@ import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define o componente visual para uma coluna em uma tabela de dados.
+ * Classe que define o componente visual gridColumn (coluna em uma tabela de dados).
  * 
  * @author fvilarinho
  * @since 1.0
