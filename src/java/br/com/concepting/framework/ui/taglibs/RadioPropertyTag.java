@@ -5,7 +5,7 @@ import javax.servlet.jsp.tagext.Tag;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para uma opção de seleção.
+ * Classe que define o componente visual radio (opção de seleção).
  * 
  * @author fvilarinho
  * @since 1.0
