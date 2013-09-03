@@ -19,7 +19,7 @@ import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.ScopeType;
 
 /**
- * Classe que define o componente visual para paginação.
+ * Classe que define o componente visual pager (paginação).
  * 
  * @author fvilarinho
  * @since 3.0
