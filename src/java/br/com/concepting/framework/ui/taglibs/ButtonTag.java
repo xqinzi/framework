@@ -10,7 +10,7 @@ import br.com.concepting.framework.util.types.PagerActionType;
 import br.com.concepting.framework.util.types.PositionType;
 
 /**
- * Classe que define o componente visual para um botão genérico.
+ * Classe que define o componente visual button (botão genérico).
  * 
  * @author fvilarinho
  * @since 1.0
