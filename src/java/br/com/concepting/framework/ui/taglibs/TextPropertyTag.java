@@ -17,7 +17,7 @@ import br.com.concepting.framework.util.types.ComponentType;
 import br.com.concepting.framework.util.types.ScopeType;
  
 /**
- * Classe que define o componente visual para entrada de texto com ou sem mascaramento.
+ * Classe que define o componente visual text (entrada de texto com ou sem mascaramento).
  * 
  * @author fvilarinho
  * @since 1.0
