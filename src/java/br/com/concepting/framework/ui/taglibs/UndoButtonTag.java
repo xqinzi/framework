@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual para o botão com a função "undo" ou "reset".
+ * Classe que define o componente visual undoButton (botão undo/reset).
  * 
  * @author fvilarinho
  * @since 1.0
