@@ -638,7 +638,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
                 actionFormTag =  systemController.findAttribute(AttributeConstants.CURRENT_ACTION_FORM_KEY, ScopeType.REQUEST);
             
             if(actionFormTag != null && StringUtil.trim(actionFormName).length() == 0)
-                actionFormName = StringUtil.trim(actionFormTag.getBeanName());
+                actionFormName = actionFormTag.getBeanName();
         }
 
         return actionFormTag;
@@ -814,13 +814,13 @@ public abstract class BaseActionFormElementTag extends BaseTag{
         }
         
         ActionFormTag actionFormTag  = getActionFormTag();
-        String        actionFormName = StringUtil.trim(getActionFormName());
-        String        name           = StringUtil.trim(getName());
-        String        resourceId     = StringUtil.trim(getResourceId());
+        String        actionFormName = getActionFormName();
+        String        name           = getName();
+        String        resourceId     = getResourceId();
 
         if(actionFormTag != null){
             if(resourceId.length() == 0){
-                resourceId = StringUtil.trim(actionFormTag.getResourceId());
+                resourceId = actionFormTag.getResourceId();
                 
                 setResourceId(resourceId);
             }
@@ -830,7 +830,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             StringBuilder onBlurContent = new StringBuilder();
             
             if(onBlurAction.length() > 0){
-                String onBlur = StringUtil.trim(getOnBlur());
+                String onBlur = getOnBlur();
                 
                 if(onBlur.length() > 0){
                     onBlurContent.append(onBlur);
@@ -887,7 +887,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             StringBuilder onFocusContent = new StringBuilder();
             
             if(onFocusAction.length() > 0){
-                String onFocus = StringUtil.trim(getOnFocus());
+                String onFocus = getOnFocus();
                 
                 if(onFocus.length() > 0){
                     onFocusContent.append(onFocus);
@@ -944,7 +944,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             StringBuilder onClickContent = new StringBuilder();
             
             if(onClickAction.length() > 0){
-                String onClick = StringUtil.trim(getOnClick());
+                String onClick = getOnClick();
                 
                 if(onClick.length() > 0){
                     onClickContent.append(onClick);
@@ -1001,7 +1001,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             StringBuilder onMouseOverContent = new StringBuilder();
             
             if(onMouseOverAction.length() > 0){
-                String onMouseOver = StringUtil.trim(getOnMouseOver());
+                String onMouseOver = getOnMouseOver();
                 
                 if(onMouseOver.length() > 0){
                     onMouseOverContent.append(onMouseOver);
@@ -1058,7 +1058,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             StringBuilder onMouseOutContent = new StringBuilder();
             
             if(onMouseOutAction.length() > 0){
-                String onMouseOut = StringUtil.trim(getOnMouseOut());
+                String onMouseOut = getOnMouseOut();
                 
                 if(onMouseOut.length() > 0){
                     onMouseOutContent.append(onMouseOut);
@@ -1158,7 +1158,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		if(labelStyleClass.length() == 0)
 		    labelStyleClass = TaglibConstants.DEFAULT_LABEL_STYLE_CLASS;
 		
-		String        styleClass    = StringUtil.trim(getStyleClass());
+		String        styleClass    = getStyleClass();
 		ComponentType componentType = getComponentType();
 
 		if(styleClass.length() == 0 && componentType != null){
@@ -1167,7 +1167,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 			setStyleClass(styleClass);
 		}
 		
-        String resourceKey = StringUtil.trim(getResourceKey());
+        String resourceKey = getResourceKey();
 
         if(label == null && (name.length() > 0 || resourceKey.length() > 0)){
      		StringBuilder propertyId  = new StringBuilder();
@@ -1272,7 +1272,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	    if(componentType != null){
     		if(componentType != ComponentType.LIST){
          		print(" type=\"");
-     		    print(StringUtil.trim(componentType.getType()));
+     		    print(componentType.getType());
          		print("\"");
     		}
 	    }
