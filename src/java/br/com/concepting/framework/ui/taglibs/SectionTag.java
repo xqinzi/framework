@@ -8,7 +8,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 
 /**
- * Classe que define o componente visual de uma seção.
+ * Classe que define o componente visual section (seção).
  * 
  * @author fvilarinho
  * @since 3.0
@@ -414,21 +414,21 @@ public class SectionTag extends BaseActionFormElementTag{
 
         if(accordionTag != null){
             if(headerStyleClass.length() == 0)
-                headerStyleClass = StringUtil.trim(accordionTag.getSectionHeaderStyleClass());
+                headerStyleClass = accordionTag.getSectionHeaderStyleClass();
             
             if(headerStyleClass.length() == 0)
                 headerStyleClass = TaglibConstants.DEFAULT_SECTION_HEADER_STYLE_CLASS;
             
             if(contentStyleClass.length() == 0)
-                contentStyleClass = StringUtil.trim(accordionTag.getSectionContentStyleClass());
+                contentStyleClass = accordionTag.getSectionContentStyleClass();
             
             if(contentStyleClass.length() == 0)
                 contentStyleClass = TaglibConstants.DEFAULT_SECTION_CONTENT_STYLE_CLASS;
             
-            if(StringUtil.trim(accordionTag.getResourceId()).length() > 0 && StringUtil.trim(getResourceId()).length() == 0)
+            if(accordionTag.getResourceId().length() > 0 && getResourceId().length() == 0)
                 setResourceId(accordionTag.getResourceId());
 
-            if(StringUtil.trim(accordionTag.getHeight()).length() > 0 && StringUtil.trim(getHeight()).length() == 0)
+            if(accordionTag.getHeight().length() > 0 && getHeight().length() == 0)
                 setHeight(accordionTag.getHeight());
         }
         
@@ -613,11 +613,8 @@ public class SectionTag extends BaseActionFormElementTag{
                 BodyContent bodyContent    = sectionTag.getBodyContent();
                 String      sectionContent = sectionTag.getContent();
 
-                if(bodyContent != null && sectionContent == null){
-                    sectionContent = StringUtil.trim(bodyContent.getString());
-                    
-                    sectionTag.setContent(sectionContent);
-                }
+                if(bodyContent != null && sectionContent == null)
+                    sectionTag.setContent(StringUtil.trim(bodyContent.getString()));
 
                 accordionTag.addSectionTag(sectionTag);
             }
