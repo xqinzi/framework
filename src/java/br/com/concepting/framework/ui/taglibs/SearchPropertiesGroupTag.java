@@ -12,7 +12,7 @@ import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.AlignmentType;
 
 /**
- * Classe que define o componente visual que agrupo propriedades de pesquisa.
+ * Classe que define o componente visual searchPropertiesGroup (grupo propriedades de pesquisa).
  * 
  * @author fvilarinho
  * @since 1.0
@@ -344,11 +344,8 @@ public class SearchPropertiesGroupTag extends BaseActionFormElementTag{
 		
 		BodyContent bodyContent = getBodyContent();
 
-		if(bodyContent != null){
-		    String content = StringUtil.trim(getBodyContent().getString());
-		    
-			println(content);
-		}
+		if(bodyContent != null)
+		    println(StringUtil.trim(getBodyContent().getString()));
 
 		println("</td>");
 		
