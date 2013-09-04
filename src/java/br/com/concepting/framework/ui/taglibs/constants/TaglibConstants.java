@@ -1,6 +1,7 @@
 package br.com.concepting.framework.ui.taglibs.constants;
 
 import br.com.concepting.framework.resource.constants.ResourceConstants;
+import br.com.concepting.framework.ui.constants.UIConstants;
 
 /**
  * Classe que define as constantes utilizadas pelos componentes visuais fa camada de apresentação.
@@ -9,26 +10,6 @@ import br.com.concepting.framework.resource.constants.ResourceConstants;
  * @since 3.0
  */ 
 public abstract class TaglibConstants{
-    /**
-     * Constante que define o diretório de armazenamento default dos scripts de página.
-     */
-    public static final String DEFAULT_SCRIPTS_RESOURCES_DIR = "/scripts/";
-
-    /**
-     * Constante que define o diretório de armazenamento default dos estilos de página.
-     */
-    public static final String DEFAULT_STYLES_RESOURCES_DIR = "/styles/";
-
-    /**
-     * Constante que define o script de página comum para todos os componentes da página.
-     */
-    public static final String DEFAULT_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("common.js");
-    
-    /**
-     * Constante que define o estilo CSS da página comum.
-     */
-    public static final String DEFAULT_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("common.css");
-
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual accordion (conjunto de seções).
      */
@@ -42,12 +23,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script default para o componente visual accordion (guia de seções).
      */
-    public static final String DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("accordion.js");
+    public static final String DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("accordion.js");
     
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente visual accordion (guia de seções).
      */
-    public static final String DEFAULT_ACCORDION_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("accordion.css");
+    public static final String DEFAULT_ACCORDION_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("accordion.css");
 
     /**
      * Constante que define o estilo CSS default para a caixa de autocomplete.
@@ -99,12 +80,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script default para o componente visual calendar (calendário).
      */
-    public static final String DEFAULT_CALENDAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("calendar.js");
+    public static final String DEFAULT_CALENDAR_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("calendar.js");
     
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente visual calendar (calendário).
      */
-    public static final String DEFAULT_CALENDAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("calendar.css");
+    public static final String DEFAULT_CALENDAR_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("calendar.css");
     
     /**
      * Constante que define o identificador do componente visual calendar (calendário).
@@ -149,12 +130,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script default para o componente visual dialogBox (caixa de diálogo).
      */
-    public static final String DEFAULT_DIALOG_BOX_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("dialogBox.js");
+    public static final String DEFAULT_DIALOG_BOX_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("dialogBox.js");
     
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente visual dialogBox (caixa de diálogo).
      */
-    public static final String DEFAULT_DIALOG_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("dialogBox.css");
+    public static final String DEFAULT_DIALOG_BOX_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("dialogBox.css");
 
     /**
      * Constante que define o identificador do componente visual dialogBox (caixa de diálogo).
@@ -207,12 +188,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador para o arquivo de estilos CSS default para o componente visual grid (tabela de dados).
      */
-    public static final String DEFAULT_GRID_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("grid.css");
+    public static final String DEFAULT_GRID_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("grid.css");
 
     /**
      * Constante que define o identificador para o arquivo de script default para o componente visual grid (tabela de dados).
      */
-    public static final String DEFAULT_GRID_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("grid.js");
+    public static final String DEFAULT_GRID_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("grid.js");
     
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual guides (guias).
@@ -244,22 +225,17 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador para o arquivo de script default para o componente visual gyudes (guias).
      */
-    public static final String DEFAULT_GUIDES_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("guides.js");
+    public static final String DEFAULT_GUIDES_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("guides.js");
 
     /**
      * Constante que define o identificador para o arquivo de estilos CSS default para o componente visual guides (guias).
      */
-    public static final String DEFAULT_GUIDES_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("guides.css");
+    public static final String DEFAULT_GUIDES_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("guides.css");
     
     /**
      * Constante que define o identificador para o conteúdo do componente visual guides (guias).
      */
     public static final String GUIDE_CONTENT_ID = "guideContent";
-
-    /**
-     * Constante que define o diretório de armazenamento default das imagens da página.
-     */
-    public static final String DEFAULT_IMAGES_RESOURCES_DIR = "/images/";
 
     /**
      * Constante que define o identificador do estilo CSS default para a pré-visualização pequena de uma imagem.
@@ -370,12 +346,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente visual menuBar (barra de menus).
      */
-    public static final String DEFAULT_MENU_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("menuBar.js");
+    public static final String DEFAULT_MENU_BAR_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("menuBar.js");
     
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente visual menuBar (barra de menus).
      */
-    public static final String DEFAULT_MENU_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("menuBar.css");
+    public static final String DEFAULT_MENU_BAR_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("menuBar.css");
     
     /**
      * Constante que define o identificador para o componente visual menuBar (barra de menus).
@@ -410,12 +386,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente messageBox (caixa de mensagens).
      */
-    public static final String DEFAULT_MESSAGE_BOX_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("messageBox.js");
+    public static final String DEFAULT_MESSAGE_BOX_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("messageBox.js");
 
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente messageBox (caixa de mensagens).
      */
-    public static final String DEFAULT_MESSAGE_BOX_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("messageBox.css");
+    public static final String DEFAULT_MESSAGE_BOX_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("messageBox.css");
 
     /**
      * Constante que define o identificador do estilo CSS default para o label do componente visual options (opções de seleção).
@@ -435,12 +411,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o script de página default.
      */
-    public static final String DEFAULT_PAGE_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("script.js");
+    public static final String DEFAULT_PAGE_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("script.js");
     
     /**
      * Constante que define o estilo CSS da página default.
      */
-    public static final String DEFAULT_PAGE_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("style.css");
+    public static final String DEFAULT_PAGE_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("style.css");
 
     /**
      * Constante que define o identificador do estilo CSS para o componente visual pager (paginador).
@@ -471,12 +447,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente pager (paginador).
      */
-    public static final String DEFAULT_PAGER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("pager.js");
+    public static final String DEFAULT_PAGER_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("pager.js");
     
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente pager (paginador).
      */
-    public static final String DEFAULT_PAGER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("pager.css");
+    public static final String DEFAULT_PAGER_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("pager.css");
     
     /**
      * Constante que define o identificador da chave do controle de paginadores.
@@ -545,12 +521,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador o arquivo de script de página default para o componente progressBar (barra de progresso).
      */
-    public static final String DEFAULT_PROGRESS_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("progressBar.js");
+    public static final String DEFAULT_PROGRESS_BAR_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("progressBar.js");
     
     /**
      * Constante que define o identificador o arquivo de estilos CSS default para o componente progressBar (barra de progresso).
      */
-    public static final String DEFAULT_PROGRESS_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("progressBar.css");
+    public static final String DEFAULT_PROGRESS_BAR_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("progressBar.css");
 
     /**
      * Constante que define o identificador do estilo CSS default do label do componente searchPropertiesGroup (grupo de propriedades de pesquisa). 
@@ -600,12 +576,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador o arquivo de script de página default para o componente spinner (controle de valores numéricos).
      */
-    public static final String DEFAULT_SPINNER_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("spinner.js");
+    public static final String DEFAULT_SPINNER_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("spinner.js");
     
     /**
      * Constante que define o identificador o arquivo de estilos CSS default para o componente spinner (controle de valores numéricos).
      */
-    public static final String DEFAULT_SPINNER_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("spinner.css");
+    public static final String DEFAULT_SPINNER_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("spinner.css");
     
     /**
      * Constante que define o identificador do estilo CSS default para o botão de acréscimo do componente spinner (controle de valores numéricos).
@@ -650,12 +626,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador o arquivo de script de página default para o componente slider (barra de deslize).
      */
-    public static final String DEFAULT_SLIDER_BAR_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("slider.js");
+    public static final String DEFAULT_SLIDER_BAR_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("slider.js");
     
     /**
      * Constante que define o identificador o arquivo de estilos CSS default para o componente slider (barra de deslize).
      */
-    public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
+    public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
 
     /**
      * Constante que define o estilo CSS default para um tracejado de um nó do componente visual treeView (árvore).
@@ -720,12 +696,12 @@ public abstract class TaglibConstants{
     /**
      * Constante que define o identificador do arquivo de script de página default para o componente treeView (árvore).
      */
-    public static final String DEFAULT_TREE_VIEW_SCRIPT_RESOURCE_ID = DEFAULT_SCRIPTS_RESOURCES_DIR.concat("treeView.js");
+    public static final String DEFAULT_TREE_VIEW_SCRIPT_RESOURCE_ID = UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR.concat("treeView.js");
     
     /**
      * Constante que define o identificador do arquivo de estilos CSS default para o componente treeView (árvore).
      */
-    public static final String DEFAULT_TREE_VIEW_STYLE_RESOURCE_ID = DEFAULT_STYLES_RESOURCES_DIR.concat("treeView.css");
+    public static final String DEFAULT_TREE_VIEW_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("treeView.css");
     
     /**
      * Constante que define o identificador do estilo CSS default para o componente visual uploadBox (caixa de upload de arquivo).
