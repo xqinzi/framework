@@ -634,11 +634,6 @@ public abstract class TaglibConstants{
     public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
 
     /**
-     * Constante que define o identificador do import dos componentes visuais do framework.
-     */
-    public static final String DEFAULT_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
-
-    /**
      * Constante que define o estilo CSS default para um tracejado de um nó do componente visual treeView (árvore).
      */
     public static final String DEFAULT_TREE_VIEW_TRACE_STYLE_CLASS = "trace";
