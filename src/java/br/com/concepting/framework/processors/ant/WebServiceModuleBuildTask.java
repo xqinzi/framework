@@ -27,7 +27,7 @@ public class WebServiceModuleBuildTask extends Task{
         File moduleFile                       = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".jar"));
         File resourcesModuleFile              = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-resources.jar"));
         File webServicesModuleDir             = new File(ProjectConstants.DEFAULT_WEB_SERVICES_MODULE_DIR);
-        File webServicesModuleDependenciesDir = new File(ProjectConstants.DEFAULT_WEB_SERVICES_DEPENDENCIES_DIR);
+        File webServicesModuleDependenciesDir = new File(ProjectConstants.DEFAULT_WEB_SERVICES_MODULE_DEPENDENCIES_DIR);
         File webServicesModuleLibDir          = new File(webServicesModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat("lib"));
         File webServicesModuleAarFile         = new File(webServicesModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".aar"));
         
@@ -79,7 +79,7 @@ public class WebServiceModuleBuildTask extends Task{
 
         fileset = new FileSet();
         fileset.setDir(webServicesModuleDir);
-        fileset.setIncludes(ProjectConstants.DEFAULT_WEB_SERVICES_DESCRIPTOR_FILE_ID);
+        fileset.setIncludes(ProjectConstants.DEFAULT_WEB_SERVICES_MODULE_DESCRIPTOR_FILE_ID);
         
         jar.addFileset(fileset);
         jar.setUpdate(true);
