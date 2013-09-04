@@ -149,20 +149,15 @@ public abstract class ProjectConstants{
     public static final String DEFAULT_WEB_MODULE_CLASSES_DIR = "WEB-INF/classes";
     
     /**
-     * Constante que define o identificador do arquivo descritor dos componentes UI do projeto.
-     */
-    public static final String DEFAULT_UI_TAGLIBS_FILE_ID = "WEB-INF/tld/ConceptingFramework.tld";
-
-    /**
-     * Constante que define o identificador do import dos componentes UI do projeto..
-     */
-    public static final String DEFAULT_UI_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
-    
-    /**
      * Constante que define o identificador do diretório de dependências do projeto.
      */
     public static final String DEFAULT_DEPENDENCIES_DIR = "dependencies/";
     
+    /**
+     * Constante que define o identificador do arquivo que contém das definições de dependências do projeto.
+     */
+    public static final String DEFAULT_DEPENDENCIES_FILE_ID = "dependencies.xml";
+
     /**
      * Constante que define o identificador do diretório de armazenamento das dependências de compilação do projeto.
      */
@@ -178,80 +173,76 @@ public abstract class ProjectConstants{
      */
     public static final String DEFAULT_WEB_SERVICES_MODULE_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("webServices/");
     
-    /**
-     * Constante que define o identificador do arquivo que contém das definições de dependências do projeto.
-     */
-    public static final String DEFAULT_DEPENDENCIES_FILE_ID = "dependencies.xml";
     
     /**
      * Constante que define o identificador do template para a implementação de persistência de um modelo de dados.
      */
-    public static final String DEFAULT_PERSISTENCE_CLASS_TEMPLATE_ID = "persistenceClass.xml";
+    public static final String DEFAULT_PERSISTENCE_CLASS_TEMPLATE_FILE_ID = "persistenceClass.xml";
 
     /**
      * Constante que define o identificador do template para o mapeamento de persistência de um modelo de dados.
      */
-    public static final String DEFAULT_PERSISTENCE_MAPPING_TEMPLATE_ID = "persistenceMapping.xml";
+    public static final String DEFAULT_PERSISTENCE_MAPPING_TEMPLATE_FILE_ID = "persistenceMapping.xml";
     
     /**
      * Constante que define o identificador do template que define a interface da implementação de persistência de um modelo de dados.
      */
-    public static final String DEFAULT_PERSISTENCE_INTERFACE_TEMPLATE_ID = "persistenceInterface.xml";
+    public static final String DEFAULT_PERSISTENCE_INTERFACE_TEMPLATE_FILE_ID = "persistenceInterface.xml";
     
     /**
      * Constante que define o identificador do template da implementação da regra de negócio de um modelo de dados.
      */
-    public static final String DEFAULT_SERVICE_CLASS_TEMPLATE_ID = "serviceClass.xml";
+    public static final String DEFAULT_SERVICE_CLASS_TEMPLATE_FILE_ID = "serviceClass.xml";
 
     /**
      * Constante que define o identificador do template da interface da implementação da regra de negócio de um modelo de dados.
      */
-    public static final String DEFAULT_SERVICE_INTERFACE_TEMPLATE_ID = "serviceInterface.xml";
+    public static final String DEFAULT_SERVICE_INTERFACE_TEMPLATE_FILE_ID = "serviceInterface.xml";
     /**
      * Constante que define o identificador do template da interface remota para a implementação da regra de negócio de um modelo de dados.
      */
 
-    public static final String DEFAULT_SERVICE_REMOTE_INTEFACE_TEMPLATE_ID = "serviceRemoteInterface.xml";
+    public static final String DEFAULT_SERVICE_REMOTE_INTEFACE_TEMPLATE_FILE_ID = "serviceRemoteInterface.xml";
     
     /**
      * Constante que define o identificador do template da interface EJB para a implementação da regra de negócio de um modelo de dados.
      */
-    public static final String DEFAULT_SERVICE_HOME_INTERFACE_TEMPLATE_ID  = "serviceHomeInterface.xml";
+    public static final String DEFAULT_SERVICE_HOME_INTERFACE_TEMPLATE_FILE_ID  = "serviceHomeInterface.xml";
     
     /**
      * Constante que define o identificador do template do mapeamento das regras de negócio dos modelos de dados.
      */
-    public static final String DEFAULT_SERVICE_MAPPING_TEMPLATE_ID = "serviceMapping.xml";
+    public static final String DEFAULT_SERVICE_MAPPING_TEMPLATE_FILE_ID = "serviceMapping.xml";
 
     /**
      * Constante que define o identificador do template das ações de um página WEB.
      */
-    public static final String DEFAULT_ACTION_CLASS_TEMPLATE_ID = "actionClass.xml";
+    public static final String DEFAULT_ACTION_CLASS_TEMPLATE_FILE_ID = "actionClass.xml";
     
     /**
      * Constante que define o identificador do template do formulário de um página WEB.
      */
-    public static final String DEFAULT_ACTION_FORM_CLASS_TEMPLATE_ID = "actionFormClass.xml";
+    public static final String DEFAULT_ACTION_FORM_CLASS_TEMPLATE_FILE_ID = "actionFormClass.xml";
     
     /**
      * Constante que define o identificador do template do mapeamento de ações dos formulários.
      */
-    public static final String DEFAULT_ACTION_FORM_MAPPING_TEMPLATE_ID = "actionFormMapping.xml";
+    public static final String DEFAULT_ACTION_FORM_MAPPING_TEMPLATE_FILE_ID = "actionFormMapping.xml";
 
     /**
      * Constante que define o identificador do template de uma página WEB.
      */
-    public static final String DEFAULT_UI_PAGE_TEMPLATE_ID  = "uiPage.xml";
+    public static final String DEFAULT_UI_PAGE_TEMPLATE_FILE_ID  = "uiPage.xml";
 
     /**
      * Constante que define o identificador do template para o arquivo de internacionalização.
      */
-    public static final String DEFAULT_I18N_RESOURCE_TEMPLATE_ID = "i18nResource.xml";
+    public static final String DEFAULT_I18N_RESOURCE_TEMPLATE_FILE_ID = "i18nResource.xml";
     
     /**
      * Constante que define o identificador do template para o mapeamento de um WEB Service.
      */
-    public static final String DEFAULT_WEB_SERVICE_MAPPING_TEMPLATE_ID = "webServiceMapping.xml";
+    public static final String DEFAULT_WEB_SERVICE_MAPPING_TEMPLATE_FILE_ID = "webServiceMapping.xml";
     
     /**
      * Constante que define o identificador da propriedade da mensagem exibida quando o nome do projeto for inválido.
