@@ -30,6 +30,7 @@ import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.security.controller.SecurityController;
 import br.com.concepting.framework.security.model.LoginSessionModel;
+import br.com.concepting.framework.ui.constants.UIConstants;
 import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.NumberUtil;
@@ -595,7 +596,7 @@ public class SystemController{
 	public void forward(Throwable exception){
 		setCurrentException(exception);
 
-		forward(SystemConstants.DEFAULT_ERROR_PAGE);
+		forward(UIConstants.DEFAULT_ERROR_PAGE);
 	}
 
 	/**
@@ -628,7 +629,7 @@ public class SystemController{
 	public void redirect(Throwable exception){
 		setCurrentException(exception);
 
-		redirect(SystemConstants.DEFAULT_ERROR_PAGE);
+		redirect(UIConstants.DEFAULT_ERROR_PAGE);
 	}
 
 	/**
