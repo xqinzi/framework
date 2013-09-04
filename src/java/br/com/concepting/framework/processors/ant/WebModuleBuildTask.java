@@ -27,15 +27,15 @@ public class WebModuleBuildTask extends Task{
      * Efetua o empacotamento WEB da aplicação.
      */
     public void build() throws Throwable{
-        File modulesDir               = new File(ProjectConstants.DEFAULT_MODULES_DIR);
-        File moduleFile               = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".jar"));
-        File resourcesModuleFile      = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-resources.jar"));
-        File webDir                   = new File(ProjectConstants.DEFAULT_WEB_DIR);
-        File webModuleDir             = new File(ProjectConstants.DEFAULT_WEB_MODULE_DIR);
-        File webModuleLibDir          = new File(ProjectConstants.DEFAULT_WEB_LIB_DIR);
-        File webModuleWarFile         = new File(webModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".war"));
-        File webModuleEarFile         = new File(webModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-web.ear"));
-        File appDescriptorFile        = new File(webModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(ProjectConstants.DEFAULT_APPLICATION_DESCRIPTOR_FILE_ID));
+        File modulesDir          = new File(ProjectConstants.DEFAULT_MODULES_DIR);
+        File moduleFile          = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".jar"));
+        File resourcesModuleFile = new File(modulesDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-resources.jar"));
+        File uiDir               = new File(ProjectConstants.DEFAULT_UI_DIR);
+        File webModuleDir        = new File(ProjectConstants.DEFAULT_WEB_MODULE_DIR);
+        File webModuleLibDir     = new File(ProjectConstants.DEFAULT_WEB_MODULE_LIB_DIR);
+        File webModuleWarFile    = new File(webModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat(".war"));
+        File webModuleEarFile    = new File(webModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-web.ear"));
+        File appDescriptorFile   = new File(webModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(ProjectConstants.DEFAULT_APPLICATION_DESCRIPTOR_FILE_ID));
         
         if(!webModuleDir.exists())
             webModuleDir.mkdirs();
@@ -68,7 +68,7 @@ public class WebModuleBuildTask extends Task{
             
         FileSet fileset = new FileSet();
         
-        fileset.setDir(webDir);
+        fileset.setDir(uiDir);
         fileset.setIncludes("**/*");
 
         jar.addFileset(fileset);
