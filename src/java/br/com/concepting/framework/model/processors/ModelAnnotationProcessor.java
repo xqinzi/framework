@@ -41,7 +41,7 @@ import br.com.concepting.framework.service.annotations.Service;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.service.types.ServiceType;
 import br.com.concepting.framework.service.util.ServiceUtil;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.UIConstants;
 import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.XmlReader;
@@ -192,7 +192,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 persistenceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 persistenceClassTemplateFileName.append(getTemplateId());
                 persistenceClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                persistenceClassTemplateFileName.append(ProjectConstants.DEFAULT_PERSISTENCE_CLASS_TEMPLATE_ID);
+                persistenceClassTemplateFileName.append(ProjectConstants.DEFAULT_PERSISTENCE_CLASS_TEMPLATE_FILE_ID);
                 
                 File             persistenceClassTemplateFile    = new File(persistenceClassTemplateFileName.toString());
                 XmlReader        persistenceClassTemplateReader  = new XmlReader(persistenceClassTemplateFile);
@@ -236,7 +236,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 persistenceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 persistenceInterfaceClassTemplateFileName.append(getTemplateId());
                 persistenceInterfaceClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                persistenceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_PERSISTENCE_INTERFACE_TEMPLATE_ID);
+                persistenceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_PERSISTENCE_INTERFACE_TEMPLATE_FILE_ID);
 
                 File             persistenceInterfaceTemplate        = new File(persistenceInterfaceClassTemplateFileName.toString());
                 XmlReader        persistenceInterfaceTemplateReader  = new XmlReader(persistenceInterfaceTemplate);
@@ -296,7 +296,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 persistenceMappingTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 persistenceMappingTemplateFileName.append(getTemplateId());
                 persistenceMappingTemplateFileName.append(StringUtil.getDirectorySeparator());
-                persistenceMappingTemplateFileName.append(ProjectConstants.DEFAULT_PERSISTENCE_MAPPING_TEMPLATE_ID);
+                persistenceMappingTemplateFileName.append(ProjectConstants.DEFAULT_PERSISTENCE_MAPPING_TEMPLATE_FILE_ID);
 
                 File             persistenceMappingTemplateFile    = new File(persistenceMappingTemplateFileName.toString());
                 XmlReader        persistenceMappingTemplateReader  = new XmlReader(persistenceMappingTemplateFile);
@@ -387,7 +387,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 serviceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 serviceClassTemplateFileName.append(getTemplateId());
                 serviceClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                serviceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_CLASS_TEMPLATE_ID);
+                serviceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_CLASS_TEMPLATE_FILE_ID);
 
                 File             serviceClassTemplateFile    = new File(serviceClassTemplateFileName.toString());
                 XmlReader        serviceClassTemplateReader  = new XmlReader(serviceClassTemplateFile);
@@ -462,7 +462,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 serviceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 serviceInterfaceClassTemplateFileName.append(getTemplateId());
                 serviceInterfaceClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                serviceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_INTERFACE_TEMPLATE_ID);
+                serviceInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_INTERFACE_TEMPLATE_FILE_ID);
 
                 File             serviceInterfaceTemplateFile    = new File(serviceInterfaceClassTemplateFileName.toString());
                 XmlReader        serviceInterfaceTemplateReader  = new XmlReader(serviceInterfaceTemplateFile);
@@ -519,7 +519,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 serviceHomeInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 serviceHomeInterfaceClassTemplateFileName.append(getTemplateId());
                 serviceHomeInterfaceClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                serviceHomeInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_HOME_INTERFACE_TEMPLATE_ID);
+                serviceHomeInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_HOME_INTERFACE_TEMPLATE_FILE_ID);
 
                 File             serviceHomeInterfaceTemplateFile    = new File(serviceHomeInterfaceClassTemplateFileName.toString());
                 XmlReader        serviceHomeInterfaceTemplateReader  = new XmlReader(serviceHomeInterfaceTemplateFile);
@@ -578,7 +578,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 serviceRemoteInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 serviceRemoteInterfaceClassTemplateFileName.append(getTemplateId());
                 serviceRemoteInterfaceClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                serviceRemoteInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_REMOTE_INTEFACE_TEMPLATE_ID);
+                serviceRemoteInterfaceClassTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_REMOTE_INTEFACE_TEMPLATE_FILE_ID);
 
                 File             serviceRemoteInterfaceTemplateFile    = new File(serviceRemoteInterfaceClassTemplateFileName.toString());
                 XmlReader        serviceRemoteInterfaceTemplateReader  = new XmlReader(serviceRemoteInterfaceTemplateFile);
@@ -718,12 +718,12 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         serviceMappingTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
         serviceMappingTemplateFileName.append(getTemplateId());
         serviceMappingTemplateFileName.append(StringUtil.getDirectorySeparator());
-        serviceMappingTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_MAPPING_TEMPLATE_ID);
+        serviceMappingTemplateFileName.append(ProjectConstants.DEFAULT_SERVICE_MAPPING_TEMPLATE_FILE_ID);
         
         StringBuilder serviceMappingFileName = new StringBuilder();
 
         serviceMappingFileName.append(ProjectConstants.DEFAULT_EJB_MODULE_DIR);
-        serviceMappingFileName.append(ProjectConstants.DEFAULT_EJB_DESCRIPTOR_FILE_ID);
+        serviceMappingFileName.append(ProjectConstants.DEFAULT_EJB_MODULE_DESCRIPTOR_FILE_ID);
         
         File      serviceMappingTemplateFile    = new File(serviceMappingTemplateFileName.toString());
         File      serviceMappingFile            = new File(serviceMappingFileName.toString());
@@ -860,7 +860,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 actionClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 actionClassTemplateFileName.append(getTemplateId());
                 actionClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                actionClassTemplateFileName.append(ProjectConstants.DEFAULT_ACTION_CLASS_TEMPLATE_ID);
+                actionClassTemplateFileName.append(ProjectConstants.DEFAULT_ACTION_CLASS_TEMPLATE_FILE_ID);
 
                 File             actionClassTemplateFile    = new File(actionClassTemplateFileName.toString());
                 XmlReader        actionClassTemplateReader  = new XmlReader(actionClassTemplateFile);
@@ -903,7 +903,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                 actionFormClassTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                 actionFormClassTemplateFileName.append(getTemplateId());
                 actionFormClassTemplateFileName.append(StringUtil.getDirectorySeparator());
-                actionFormClassTemplateFileName.append(ProjectConstants.DEFAULT_ACTION_FORM_CLASS_TEMPLATE_ID);
+                actionFormClassTemplateFileName.append(ProjectConstants.DEFAULT_ACTION_FORM_CLASS_TEMPLATE_FILE_ID);
 
                 File             actionFormClassTemplateFile    = new File(actionFormClassTemplateFileName.toString());
                 XmlReader        actionFormClassTemplateReader  = new XmlReader(actionFormClassTemplateFile);
@@ -936,11 +936,11 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         actionFormMappingTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
         actionFormMappingTemplateFileName.append(getTemplateId());
         actionFormMappingTemplateFileName.append(StringUtil.getDirectorySeparator());
-        actionFormMappingTemplateFileName.append(ProjectConstants.DEFAULT_ACTION_FORM_MAPPING_TEMPLATE_ID);
+        actionFormMappingTemplateFileName.append(ProjectConstants.DEFAULT_ACTION_FORM_MAPPING_TEMPLATE_FILE_ID);
 
         StringBuilder actionFormMappingFileName = new StringBuilder();
 
-        actionFormMappingFileName.append(ProjectConstants.DEFAULT_WEB_DIR);
+        actionFormMappingFileName.append(ProjectConstants.DEFAULT_UI_DIR);
         actionFormMappingFileName.append(ProjectConstants.DEFAULT_ACTION_FORM_MAPPING_FILE_ID);
         
         File      actionFormMappingFile            = new File(actionFormMappingFileName.toString());
@@ -1101,66 +1101,66 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
     }
 
     /**
-     * Executa o script para geração de código da página WEB.
+     * Executa o script para geração de código da UI.
      * 
      * @throws Throwable
      */
-    public void generateWebPage() throws Throwable{
-        String        actionFormUrl         = ActionFormUtil.getActionFormUrlByModel(getDeclaration());
-        StringBuilder webPageDirName        = new StringBuilder();
-        StringBuilder webPageImagesDirName  = new StringBuilder();
-        StringBuilder webPageScriptsDirName = new StringBuilder();
-        StringBuilder webPageStylesDirName  = new StringBuilder();
-        StringBuilder webPageFileName       = new StringBuilder();
-        File          webPageDir            = null;
-        File          webPageImagesDir      = null;
-        File          webPageScriptsDir     = null;
-        File          webPageStylesDir      = null;
-        File          webPageFile           = null;
+    public void generateUiPage() throws Throwable{
+        String        actionFormUrl        = ActionFormUtil.getActionFormUrlByModel(getDeclaration());
+        StringBuilder uiPageDirName        = new StringBuilder();
+        StringBuilder uiPageImagesDirName  = new StringBuilder();
+        StringBuilder uiPageScriptsDirName = new StringBuilder();
+        StringBuilder uiPageStylesDirName  = new StringBuilder();
+        StringBuilder uiPageFileName       = new StringBuilder();
+        File          uiPageDir            = null;
+        File          uiPageImagesDir      = null;
+        File          uiPageScriptsDir     = null;
+        File          uiPageStylesDir      = null;
+        File          uiPageFile           = null;
 
-        webPageDirName.append(ProjectConstants.DEFAULT_WEB_DIR);
-        webPageDirName.append(actionFormUrl);
+        uiPageDirName.append(ProjectConstants.DEFAULT_UI_DIR);
+        uiPageDirName.append(actionFormUrl);
 
-        webPageImagesDirName.append(webPageDirName.toString());
-        webPageImagesDirName.append(TaglibConstants.DEFAULT_IMAGES_RESOURCES_DIR);
+        uiPageImagesDirName.append(uiPageDirName.toString());
+        uiPageImagesDirName.append(UIConstants.DEFAULT_IMAGES_RESOURCES_DIR);
 
-        webPageScriptsDirName.append(webPageDirName.toString());
-        webPageScriptsDirName.append(TaglibConstants.DEFAULT_SCRIPTS_RESOURCES_DIR);
+        uiPageScriptsDirName.append(uiPageDirName.toString());
+        uiPageScriptsDirName.append(UIConstants.DEFAULT_SCRIPTS_RESOURCES_DIR);
 
-        webPageStylesDirName.append(webPageDirName.toString());
-        webPageStylesDirName.append(TaglibConstants.DEFAULT_STYLES_RESOURCES_DIR);
+        uiPageStylesDirName.append(uiPageDirName.toString());
+        uiPageStylesDirName.append(UIConstants.DEFAULT_STYLES_RESOURCES_DIR);
 
-        webPageFileName.append(webPageDirName.toString());
-        webPageFileName.append(StringUtil.getDirectorySeparator());
-        webPageFileName.append("index.jsp");
+        uiPageFileName.append(uiPageDirName.toString());
+        uiPageFileName.append(StringUtil.getDirectorySeparator());
+        uiPageFileName.append("index.jsp");
 
-        webPageDir        = new File(webPageDirName.toString());
-        webPageImagesDir  = new File(webPageImagesDirName.toString());
-        webPageScriptsDir = new File(webPageScriptsDirName.toString());
-        webPageStylesDir  = new File(webPageStylesDirName.toString());
-        webPageFile       = new File(webPageFileName.toString());
+        uiPageDir        = new File(uiPageDirName.toString());
+        uiPageImagesDir  = new File(uiPageImagesDirName.toString());
+        uiPageScriptsDir = new File(uiPageScriptsDirName.toString());
+        uiPageStylesDir  = new File(uiPageStylesDirName.toString());
+        uiPageFile       = new File(uiPageFileName.toString());
 
         if(getModelInfo().getUseCase().length() > 0){
-            if(!webPageFile.exists() || !webPageDir.exists() || !webPageImagesDir.exists() || !webPageStylesDir.exists() || !webPageScriptsDir.exists()){
-                if(!webPageDir.exists())
-                    webPageDir.mkdirs();
+            if(!uiPageFile.exists() || !uiPageDir.exists() || !uiPageImagesDir.exists() || !uiPageStylesDir.exists() || !uiPageScriptsDir.exists()){
+                if(!uiPageDir.exists())
+                    uiPageDir.mkdirs();
 
-                if(!webPageImagesDir.exists())
-                    webPageImagesDir.mkdirs();
+                if(!uiPageImagesDir.exists())
+                    uiPageImagesDir.mkdirs();
 
-                if(!webPageScriptsDir.exists())
-                    webPageScriptsDir.mkdirs();
+                if(!uiPageScriptsDir.exists())
+                    uiPageScriptsDir.mkdirs();
 
-                if(!webPageStylesDir.exists())
-                    webPageStylesDir.mkdirs();
+                if(!uiPageStylesDir.exists())
+                    uiPageStylesDir.mkdirs();
 
-                if(!webPageFile.exists()){
+                if(!uiPageFile.exists()){
                     StringBuilder webPageTemplateFileName = new StringBuilder();
 
                     webPageTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                     webPageTemplateFileName.append(getTemplateId());
                     webPageTemplateFileName.append(StringUtil.getDirectorySeparator());
-                    webPageTemplateFileName.append(ProjectConstants.DEFAULT_WEB_PAGE_TEMPLATE_ID);
+                    webPageTemplateFileName.append(ProjectConstants.DEFAULT_UI_PAGE_TEMPLATE_FILE_ID);
 
                     File             webPageTemplateFile    = new File(webPageTemplateFileName.toString());
                     XmlReader        webPageTemplateReader  = new XmlReader(webPageTemplateFile);
@@ -1172,28 +1172,28 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                     
                     webPageContent = StringUtil.decode(webPageContent);
                     
-                    FileUtil.toTextFile(webPageFileName.toString(), webPageContent, encoding);
+                    FileUtil.toTextFile(uiPageFileName.toString(), webPageContent, encoding);
                 }
             }
             
             generateWebMapping();
         }
         else{
-            if(webPageFile.exists() || webPageDir.exists() || webPageImagesDir.exists() || webPageStylesDir.exists() || webPageScriptsDir.exists()){
-                if(webPageImagesDir.exists())
-                    webPageImagesDir.delete();
+            if(uiPageFile.exists() || uiPageDir.exists() || uiPageImagesDir.exists() || uiPageStylesDir.exists() || uiPageScriptsDir.exists()){
+                if(uiPageImagesDir.exists())
+                    uiPageImagesDir.delete();
 
-                if(webPageScriptsDir.exists())
-                    webPageScriptsDir.delete();
+                if(uiPageScriptsDir.exists())
+                    uiPageScriptsDir.delete();
 
-                if(webPageStylesDir.exists())
-                    webPageStylesDir.delete();
+                if(uiPageStylesDir.exists())
+                    uiPageStylesDir.delete();
 
-                if(webPageFile.exists())
-                    webPageFile.delete();
+                if(uiPageFile.exists())
+                    uiPageFile.delete();
 
-                if(webPageDir.exists())
-                    webPageDir.delete();
+                if(uiPageDir.exists())
+                    uiPageDir.delete();
             }
         }
     }
@@ -1204,8 +1204,8 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
      * @throws Throwable
      */
     private void generateWebMapping() throws Throwable{
-        File webDir            = new File(ProjectConstants.DEFAULT_WEB_DIR);
-        File webDescriptorFile = new File(webDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(ProjectConstants.DEFAULT_WEB_DESCRIPTOR_FILE_ID));
+        File webDir            = new File(ProjectConstants.DEFAULT_UI_DIR);
+        File webDescriptorFile = new File(webDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(ProjectConstants.DEFAULT_WEB_MODULE_DESCRIPTOR_FILE_ID));
 
         if(!webDescriptorFile.exists()){
             XmlNode node = new XmlNode("web-app");
@@ -1316,8 +1316,8 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
             XmlNode jspConfigNode = new XmlNode("jsp-config");
             XmlNode taglibNode    = new XmlNode("taglib");
             
-            taglibNode.addChildNode(new XmlNode("taglib-uri", ProjectConstants.DEFAULT_WEB_TAGLIBS_ID));
-            taglibNode.addChildNode(new XmlNode("taglib-location", "/".concat(ProjectConstants.DEFAULT_WEB_TAGLIBS_FILE_ID)));
+            taglibNode.addChildNode(new XmlNode("taglib-uri", ProjectConstants.DEFAULT_TAGLIBS_ID));
+            taglibNode.addChildNode(new XmlNode("taglib-location", "/".concat(ProjectConstants.DEFAULT_TAGLIBS_DESCRIPTOR_FILE_ID)));
             
             jspConfigNode.addChildNode(taglibNode);
             
@@ -1353,12 +1353,12 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         webServicesMappingTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
         webServicesMappingTemplateFileName.append(getTemplateId());
         webServicesMappingTemplateFileName.append(StringUtil.getDirectorySeparator());
-        webServicesMappingTemplateFileName.append(ProjectConstants.DEFAULT_WEB_SERVICE_MAPPING_TEMPLATE_ID);
+        webServicesMappingTemplateFileName.append(ProjectConstants.DEFAULT_WEB_SERVICE_MAPPING_TEMPLATE_FILE_ID);
         
         StringBuilder webServicesMappingFileName = new StringBuilder();
 
         webServicesMappingFileName.append(ProjectConstants.DEFAULT_WEB_SERVICES_MODULE_DIR);
-        webServicesMappingFileName.append(ProjectConstants.DEFAULT_WEB_SERVICES_DESCRIPTOR_FILE_ID);
+        webServicesMappingFileName.append(ProjectConstants.DEFAULT_WEB_SERVICES_MODULE_DESCRIPTOR_FILE_ID);
 
         File      webServicesMappingTemplateFile    = new File(webServicesMappingTemplateFileName.toString());
         File      webServicesMappingFile            = new File(webServicesMappingFileName.toString());
@@ -1502,7 +1502,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                     webPageI18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
                     webPageI18nResourceTemplateFileName.append(getTemplateId());
                     webPageI18nResourceTemplateFileName.append(StringUtil.getDirectorySeparator());
-                    webPageI18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_WEB_PAGE_I18N_RESOURCE_TEMPLATE_ID);
+                    webPageI18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_I18N_RESOURCE_TEMPLATE_FILE_ID);
 
                     File             webPageI18nResourceTemplateFile    = new File(webPageI18nResourceTemplateFileName.toString());
                     XmlReader        webPageI18nResourceTemplateReader  = new XmlReader(webPageI18nResourceTemplateFile);
