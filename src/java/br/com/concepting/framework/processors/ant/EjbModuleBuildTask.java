@@ -39,7 +39,7 @@ public class EjbModuleBuildTask extends Task{
         File ejbModuleDir             = new File(ProjectConstants.DEFAULT_EJB_MODULE_DIR);
         File ejbModuleJarFile         = new File(ejbModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-ejb.jar"));
         File ejbModuleEarFile         = new File(ejbModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(getProject().getName()).concat("-ejb.ear"));
-        File ejbModuleDependenciesDir = new File(ProjectConstants.DEFAULT_EJB_DEPENDENCIES_DIR);
+        File ejbModuleDependenciesDir = new File(ProjectConstants.DEFAULT_EJB_MODULE_DEPENDENCIES_DIR);
         File descriptorFile           = new File(ejbModuleDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(ProjectConstants.DEFAULT_APPLICATION_DESCRIPTOR_FILE_ID));
         File tempDir                  = new File(System.getProperty("java.io.tmpdir"));
         File dependenciesTempDir      = new File(tempDir.getAbsolutePath().concat(StringUtil.getDirectorySeparator()).concat(ProjectConstants.DEFAULT_DEPENDENCIES_DIR));
@@ -116,7 +116,7 @@ public class EjbModuleBuildTask extends Task{
             
                 fileset = new FileSet();
                 fileset.setDir(ejbModuleDir);
-                fileset.setIncludes(ProjectConstants.DEFAULT_EJB_DESCRIPTOR_FILE_ID);
+                fileset.setIncludes(ProjectConstants.DEFAULT_EJB_MODULE_DESCRIPTOR_FILE_ID);
             
                 StringBuilder classPathBuffer              = new StringBuilder(".");
                 File          ejbModuleDependenciesFiles[] = ejbModuleDependenciesDir.listFiles();
