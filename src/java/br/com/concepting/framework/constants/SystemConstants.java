@@ -11,11 +11,6 @@ import br.com.concepting.framework.util.types.ScopeType;
  */
 public abstract class SystemConstants{
     /**
-     * Constante que define a URL default da página de erros default. 
-     */
-    public static final String DEFAULT_ERROR_PAGE = "/errorPage.jsp";
-
-    /**
      * Constante que define o identificador do arquivo de configurações default.
      */
     public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("systemResources.xml");
@@ -39,9 +34,4 @@ public abstract class SystemConstants{
      * Constante que define o identificador do servlet que efetua o carregamento de conteúdo.
      */
     public static final String DEFAULT_CONTENT_LOADER_SERVLET_CLASS_ID = "br.com.concepting.framework.controller.ContentLoaderServlet";
-
-    /**
-     * Constante que define o identificador do repositório de WEB Services.
-     */
-    public static final String DEFAULT_WEB_SERVICES_REPOSITORY_ID = "/axis2/services/";
 }
