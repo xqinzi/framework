@@ -64,6 +64,11 @@ public abstract class ProjectConstants{
     public static final String DEFAULT_WEB_SERVICES_MODULE_DIR = DEFAULT_MODULES_DIR.concat("webServices/");
     
     /**
+     * Constante que define o identificador do repositório de WEB Services.
+     */
+    public static final String DEFAULT_WEB_SERVICES_REPOSITORY_ID = "/axis2/services/";
+
+    /**
      * Constante que define o identificador do diretório de distribuição dos módulos do projeto.
      */
     public static final String DEFAULT_DISTRIBUTION_DIR = "dist/";
@@ -239,9 +244,9 @@ public abstract class ProjectConstants{
     public static final String DEFAULT_UI_PAGE_TEMPLATE_ID  = "uiPage.xml";
 
     /**
-     * Constante que define o identificador do template para o arquivo de internacionalização de uma página WEB.
+     * Constante que define o identificador do template para o arquivo de internacionalização.
      */
-    public static final String DEFAULT_UI_I18N_RESOURCE_TEMPLATE_ID = "uiI18nResource.xml";
+    public static final String DEFAULT_I18N_RESOURCE_TEMPLATE_ID = "i18nResource.xml";
     
     /**
      * Constante que define o identificador do template para o mapeamento de um WEB Service.
