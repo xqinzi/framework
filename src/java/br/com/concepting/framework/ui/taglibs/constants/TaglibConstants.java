@@ -1,7 +1,7 @@
 package br.com.concepting.framework.ui.taglibs.constants;
 
-import br.com.concepting.framework.constants.UIConstants;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
+import br.com.concepting.framework.ui.constants.UIConstants;
 
 /**
  * Classe que define as constantes utilizadas pelos componentes visuais fa camada de apresentação.
@@ -632,6 +632,11 @@ public abstract class TaglibConstants{
      * Constante que define o identificador o arquivo de estilos CSS default para o componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_STYLE_RESOURCE_ID = UIConstants.DEFAULT_STYLES_RESOURCES_DIR.concat("slider.css");
+
+    /**
+     * Constante que define o identificador do import dos componentes visuais do framework.
+     */
+    public static final String DEFAULT_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
 
     /**
      * Constante que define o estilo CSS default para um tracejado de um nó do componente visual treeView (árvore).
