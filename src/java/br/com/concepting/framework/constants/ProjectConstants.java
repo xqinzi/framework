@@ -132,6 +132,16 @@ public abstract class ProjectConstants{
      * Constante que define o identificador do arquivo descritor do módulo WEB do projeto.
      */
     public static final String DEFAULT_WEB_MODULE_DESCRIPTOR_FILE_ID = "WEB-INF/web.xml";
+    
+    /**
+     * Constante que define o identificador do import dos componentes visuais do framework.
+     */
+    public static final String DEFAULT_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
+    
+    /**
+     * Constante que define o identificador do arquivo que contém as definições dos componentes visuais do framework.
+     */
+    public static final String DEFAULT_TAGLIBS_DESCRIPTOR_FILE_ID = "WEB-INF/ConceptingFramework.tld";
 
     /**
      * Constante que define o identificador do arquivo descritor do módulo WEB Services do projeto.
