@@ -172,7 +172,7 @@ public class ProjectTask extends Task{
             
             entry = new XmlNode("classpathentry");
             entry.addAttribute("kind", "output");
-            entry.addAttribute("path", ProjectConstants.DEFAULT_WEB_DIR.concat(ProjectConstants.DEFAULT_WEB_CLASSES_DIR));
+            entry.addAttribute("path", ProjectConstants.DEFAULT_UI_DIR.concat(ProjectConstants.DEFAULT_WEB_MODULE_CLASSES_DIR));
 
             root.addChildNode(entry);
 
@@ -420,7 +420,7 @@ public class ProjectTask extends Task{
         destination.append(StringUtil.getDirectorySeparator());
         destination.append(name);
         destination.append(StringUtil.getDirectorySeparator());
-        destination.append(ProjectConstants.DEFAULT_WEB_DIR);
+        destination.append(ProjectConstants.DEFAULT_UI_DIR);
         
         destinationFile = new File(destination.toString());
         if(!destinationFile.exists())
@@ -535,7 +535,7 @@ public class ProjectTask extends Task{
         sourceBuffer.delete(0, sourceBuffer.length());
         sourceBuffer.append(ProjectConstants.CONCEPTING_FRAMEWORK_HOME_ID);
         sourceBuffer.append(StringUtil.getDirectorySeparator());
-        sourceBuffer.append(ProjectConstants.DEFAULT_WEB_DIR);
+        sourceBuffer.append(ProjectConstants.DEFAULT_UI_DIR);
         
         source = PropertyUtil.fillPropertiesResourceInString(propertiesResource, sourceBuffer.toString());
         
@@ -544,7 +544,7 @@ public class ProjectTask extends Task{
         destination.append(StringUtil.getDirectorySeparator());
         destination.append(name);
         destination.append(StringUtil.getDirectorySeparator());
-        destination.append(ProjectConstants.DEFAULT_WEB_DIR);
+        destination.append(ProjectConstants.DEFAULT_UI_DIR);
         
         sourceFile      = new File(source);
         destinationFile = new File(destination.toString());
@@ -570,7 +570,7 @@ public class ProjectTask extends Task{
             destination.append(StringUtil.getDirectorySeparator());
             destination.append(name);
             destination.append(StringUtil.getDirectorySeparator());
-            destination.append(ProjectConstants.DEFAULT_WEB_LIB_DIR);
+            destination.append(ProjectConstants.DEFAULT_WEB_MODULE_LIB_DIR);
         
             Delete deleteTask = new Delete();
             
@@ -649,7 +649,7 @@ public class ProjectTask extends Task{
                                     destination.append(target);
                                 }
                                 else
-                                    destination.append(ProjectConstants.DEFAULT_WEB_LIB_DIR);
+                                    destination.append(ProjectConstants.DEFAULT_WEB_MODULE_LIB_DIR);
                                 
                                 destinationFile = new File(destination.toString());
                                 if(!destinationFile.exists())
