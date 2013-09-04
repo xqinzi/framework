@@ -9,7 +9,7 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.rpc.client.RPCServiceClient;
 
 import br.com.concepting.framework.audit.Auditor;
-import br.com.concepting.framework.constants.SystemConstants;
+import br.com.concepting.framework.constants.ProjectConstants;
 import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.context.resource.ContextResourceLoader;
 import br.com.concepting.framework.context.types.ContextFactoryType;
@@ -213,7 +213,7 @@ public class ServiceInterceptor extends Interceptor{
         else
             endPointUrl.append(contextResource.getServerPort());
         
-        endPointUrl.append(SystemConstants.DEFAULT_WEB_SERVICES_REPOSITORY_ID);
+        endPointUrl.append(ProjectConstants.DEFAULT_WEB_SERVICES_REPOSITORY_ID);
         endPointUrl.append(serviceAnnotation.name());
 
         serviceOptions.setTo(new EndpointReference(endPointUrl.toString()));
