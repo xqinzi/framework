@@ -89,9 +89,9 @@ public abstract class ProjectConstants{
     public static final String DEFAULT_TESTS_DIR = DEFAULT_SOURCE_DIR.concat("tests/");
 
     /**
-     * Constante que define o identificador do diretório de fontes WEB do projeto.
+     * Constante que define o identificador do diretório de fontes do UI do projeto.
      */
-    public static final String DEFAULT_WEB_DIR = DEFAULT_SOURCE_DIR.concat("web/");
+    public static final String DEFAULT_UI_DIR = DEFAULT_SOURCE_DIR.concat("ui/");
     
     /**
      * Constante que define o identificador do diretório de relatórios do projeto.
@@ -121,37 +121,37 @@ public abstract class ProjectConstants{
     /**
      * Constante que define o identificador do arquivo descritor do módulo EJB do projeto.
      */
-    public static final String DEFAULT_EJB_DESCRIPTOR_FILE_ID = "META-INF/ejb-jar.xml";
+    public static final String DEFAULT_EJB_MODULE_DESCRIPTOR_FILE_ID = "META-INF/ejb-jar.xml";
 
     /**
      * Constante que define o identificador do arquivo descritor do módulo WEB do projeto.
      */
-    public static final String DEFAULT_WEB_DESCRIPTOR_FILE_ID = "WEB-INF/web.xml";
+    public static final String DEFAULT_WEB_MODULE_DESCRIPTOR_FILE_ID = "WEB-INF/web.xml";
 
     /**
-     * Constante que define o identificador do arquivo descritor do módulo WEB Service do projeto.
+     * Constante que define o identificador do arquivo descritor do módulo WEB Services do projeto.
      */
-    public static final String DEFAULT_WEB_SERVICES_DESCRIPTOR_FILE_ID = "META-INF/services.xml";
+    public static final String DEFAULT_WEB_SERVICES_MODULE_DESCRIPTOR_FILE_ID = "META-INF/services.xml";
     
     /**
      * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB do projeto..
      */
-    public static final String DEFAULT_WEB_LIB_DIR = DEFAULT_WEB_DIR.concat("WEB-INF/lib");
+    public static final String DEFAULT_WEB_MODULE_LIB_DIR = DEFAULT_UI_DIR.concat("WEB-INF/lib");
     
     /**
      * Constante que define o identificador do diretório de compilação do módulo WEB do projeto..
      */
-    public static final String DEFAULT_WEB_CLASSES_DIR = "WEB-INF/classes";
+    public static final String DEFAULT_WEB_MODULE_CLASSES_DIR = "WEB-INF/classes";
     
     /**
-     * Constante que define o identificador do arquivo descritor dos componentes do módulo WEB do projeto.
+     * Constante que define o identificador do arquivo descritor dos componentes UI do projeto.
      */
-    public static final String DEFAULT_WEB_TAGLIBS_FILE_ID = "WEB-INF/tld/ConceptingFramework.tld";
+    public static final String DEFAULT_UI_TAGLIBS_FILE_ID = "WEB-INF/tld/ConceptingFramework.tld";
 
     /**
-     * Constante que define o identificador do import dos componentes do módulo WEB do projeto..
+     * Constante que define o identificador do import dos componentes UI do projeto..
      */
-    public static final String DEFAULT_WEB_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
+    public static final String DEFAULT_UI_TAGLIBS_ID = "http://www.concepting.com.br/framework/tags";
     
     /**
      * Constante que define o identificador do diretório de dependências do projeto.
@@ -166,12 +166,12 @@ public abstract class ProjectConstants{
     /**
      * Constante que define o identificador do diretório de armazenamento das dependências do módulo EJB do projeto.
      */
-    public static final String DEFAULT_EJB_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("ejb/");
+    public static final String DEFAULT_EJB_MODULE_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("ejb/");
     
     /**
      * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB Services do projeto.
      */
-    public static final String DEFAULT_WEB_SERVICES_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("webServices/");
+    public static final String DEFAULT_WEB_SERVICES_MODULE_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("webServices/");
     
     /**
      * Constante que define o identificador do arquivo que contém das definições de dependências do projeto.
@@ -236,12 +236,12 @@ public abstract class ProjectConstants{
     /**
      * Constante que define o identificador do template de uma página WEB.
      */
-    public static final String DEFAULT_WEB_PAGE_TEMPLATE_ID  = "webPage.xml";
+    public static final String DEFAULT_UI_PAGE_TEMPLATE_ID  = "uiPage.xml";
 
     /**
      * Constante que define o identificador do template para o arquivo de internacionalização de uma página WEB.
      */
-    public static final String DEFAULT_WEB_PAGE_I18N_RESOURCE_TEMPLATE_ID = "webPageI18nResource.xml";
+    public static final String DEFAULT_UI_I18N_RESOURCE_TEMPLATE_ID = "uiI18nResource.xml";
     
     /**
      * Constante que define o identificador do template para o mapeamento de um WEB Service.
