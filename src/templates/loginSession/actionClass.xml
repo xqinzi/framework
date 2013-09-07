@@ -2,8 +2,8 @@
 
 <actionClass>
 	<set var="modelName" value="#{clazz.simpleName}"/>
-	<set var="actionPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
-	<set var="actionName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
+	<set var="actionPackage" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
+	<set var="actionName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
 	package @{actionPackage};
 
 	/**
@@ -13,6 +13,6 @@
 	 * @version 1.0
 	 * @since @{now}
 	 */
-	public class @{actionName} extends br.com.concepting.framework.security.web.action.LoginSessionAction{
+	public class @{actionName} extends br.com.concepting.framework.security.controller.action.LoginSessionAction{
 	}
 </actionClass>

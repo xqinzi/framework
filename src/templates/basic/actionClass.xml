@@ -3,10 +3,10 @@
 <actionClass>
 	<set var="modelName" value="#{clazz.simpleName}"/>
 	<set var="modelClassName" value="#{clazz.name}"/>
-	<set var="actionPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
-	<set var="actionName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
-	<set var="actionFormClassName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
-	<set var="actionFormName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
+	<set var="actionPackage" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
+	<set var="actionName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
+	<set var="actionFormClassName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
+	<set var="actionFormName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
 	<iterate var="mainPropertyInfo" values="#{propertiesInfo}" start="0" end="0">
 		<set var="mainPropertyId" value="@{mainPropertyInfo.id}"/>
 		<set var="mainPropertyClass" value="@{mainPropertyInfo.clazz}"/>
@@ -28,7 +28,7 @@
 	</if>
 	package @{actionPackage};
 
-	import br.com.concepting.framework.web.action.BaseAction;
+	import br.com.concepting.framework.controller.action.BaseAction;
 	 
 	<if expr="@{mainPropertyModelInfo.generatePersistence} or @{mainPropertyModelInfo.mappedRepositoryId} != ''">
 		import java.util.Collection;
@@ -103,7 +103,7 @@
 		</iterate>
 
         /**
-         * @see br.com.concepting.framework.web.action.BaseAction#init()
+         * @see br.com.concepting.framework.controller.action.BaseAction#init()
          */
         public void init() throws Throwable{
             super.init();

@@ -2,11 +2,11 @@
 
 <actionClass>
 	<set var="modelName" value="#{clazz.simpleName}"/>
-	<set var="actionPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
-	<set var="actionName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
+	<set var="actionPackage" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionPackageByModel(#{clazz})"/>
+	<set var="actionName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionNameByModel(#{clazz})"/>
 	package @{actionPackage};
 	
-	import br.com.concepting.framework.web.action.BaseAction;
+	import br.com.concepting.framework.controller.action.BaseAction;
 	
 	/**
 	 * Classe que define as ações a serem executadas pelo formulário vinculado ao modelo de dados '@{modelName}'.
@@ -17,7 +17,7 @@
 	 */
 	public class @{actionName} extends BaseAction{
 		/**
-		 * @see br.com.concepting.framework.web.action.BaseAction#init()
+		 * @see br.com.concepting.framework.controller.action.BaseAction#init()
 		 */
 		public void init() throws Throwable{
 			super.init();

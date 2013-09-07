@@ -2,8 +2,8 @@
 
 <actionFormClass xmlns:concepting="default namespace">
 	<set var="modelName" value="#{clazz.simpleName}"/>
-	<set var="actionFormPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormPackageByModel(#{clazz})"/>
-	<set var="actionFormName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
+	<set var="actionFormPackage" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormPackageByModel(#{clazz})"/>
+	<set var="actionFormName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
 	package @{actionFormPackage};
 	
 	/**
@@ -13,6 +13,6 @@
 	 * @version 1.0
 	 * @since @{now}
 	 */
-	public class @{actionFormName} extends br.com.concepting.framework.security.web.form.LoginSessionActionForm{
+	public class @{actionFormName} extends br.com.concepting.framework.security.controller.form.LoginSessionActionForm{
 	}
 </actionFormClass>

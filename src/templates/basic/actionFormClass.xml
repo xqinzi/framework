@@ -2,9 +2,9 @@
  
 <actionFormClass xmlns:concepting="default namespace">
 	<set var="modelName" value="#{clazz.simpleName}"/>
-	<set var="actionFormPackage" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormPackageByModel(#{clazz})"/>
-	<set var="actionFormName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
-	<set var="actionFormClassName" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
+	<set var="actionFormPackage" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormPackageByModel(#{clazz})"/>
+	<set var="actionFormName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormNameByModel(#{clazz})"/>
+	<set var="actionFormClassName" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormClassNameByModel(#{clazz})"/>
 	<iterate var="propertyInfo" values="#{propertiesInfo}" start="0" end="0">
 		<set var="mainPropertyId" value="@{propertyInfo.id}"/>
         <set var="mainPropertyClass" value="@{propertyInfo.clazz}"/>
@@ -17,7 +17,7 @@
 	
 	import java.util.Collection;
 	
-	import br.com.concepting.framework.web.form.BaseActionForm;
+	import br.com.concepting.framework.controller.form.BaseActionForm;
 	 
 	import @{mainPropertyClassName};
 	<iterate var="propertyInfo" values="@{mainPropertyModelInfo.propertiesInfo}">

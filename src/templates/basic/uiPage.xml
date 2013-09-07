@@ -4,9 +4,9 @@
          xmlns:jsp="default namespace" 
          xmlns:c="default namespace">
     <set var="modelInfo" value="#{this}"/>
-    <set var="actionFormObjectId" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormObjectIdByModel(#{clazz})"/>
-    <set var="actionFormUrl" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormUrlByModel(#{clazz})"/>
-    <set var="actionFormResourceId" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormResourceIdByModel(#{clazz})"/>
+    <set var="actionFormObjectId" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormObjectIdByModel(#{clazz})"/>
+    <set var="actionFormUrl" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormUrlByModel(#{clazz})"/>
+    <set var="actionFormResourceId" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormResourceIdByModel(#{clazz})"/>
 	<iterate var="mainPropertyInfo" values="@{modelInfo.propertiesInfo}" start="0" end="0">
 		<set var="mainPropertyId" value="@{mainPropertyInfo.id}"/>
         <set var="mainPropertyData" value="@{mainPropertyId}"/>

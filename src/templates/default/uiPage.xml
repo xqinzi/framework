@@ -3,8 +3,8 @@
 <webPage xmlns:concepting="default namespace"
          xmlns:jsp="default namespace"
          xmlns:c="default namespace">
-    <set var="actionFormUrl" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormUrlByModel(#{clazz})"/>
-    <set var="actionFormResourceId" value="br.com.concepting.framework.web.form.util.ActionFormUtil.getActionFormResourceIdByModel(#{clazz})"/>
+    <set var="actionFormUrl" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormUrlByModel(#{clazz})"/>
+    <set var="actionFormResourceId" value="br.com.concepting.framework.controller.form.util.ActionFormUtil.getActionFormResourceIdByModel(#{clazz})"/>
 	&lt;%@ page errorPage="/errorPage.jsp"%&gt;
 	&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;
 	&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%&gt;
