@@ -6,7 +6,7 @@ package br.com.concepting.framework.constants;
  * @author fvilarinho
  * @since 3.0
  */
-public abstract class AttributeConstants extends Constants{
+public abstract class AttributeConstants{
     public static final String ACTION_KEY                        = "action";
     public static final String AUTO_COMPLETE_KEY                 = "autoComplete";
     public static final String AUTO_COMPLETE_DATA_KEY            = "autoCompleteData";
