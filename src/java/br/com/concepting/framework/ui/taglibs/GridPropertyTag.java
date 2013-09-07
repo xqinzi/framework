@@ -20,7 +20,7 @@ import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.processors.ExpressionProcessor;
 import br.com.concepting.framework.processors.ExpressionProcessorUtil;
 import br.com.concepting.framework.security.constants.SecurityConstants;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.Pager;
 import br.com.concepting.framework.util.StringUtil;

@@ -3,7 +3,7 @@ package br.com.concepting.framework.ui.taglibs;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import br.com.concepting.framework.constants.AttributeConstants;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 

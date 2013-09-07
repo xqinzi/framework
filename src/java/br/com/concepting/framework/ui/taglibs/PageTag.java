@@ -12,7 +12,7 @@ import org.apache.struts.taglib.html.HtmlTag;
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.controller.SystemController;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.ui.types.VisibilityType;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;

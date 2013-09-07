@@ -15,7 +15,7 @@ import br.com.concepting.framework.controller.form.types.ActionFormMessageType;
 import br.com.concepting.framework.controller.form.util.ActionFormMessageUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.resource.PropertiesResource;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.ui.types.DisplayType;
 import br.com.concepting.framework.util.ExceptionUtil;
 import br.com.concepting.framework.util.StringUtil;

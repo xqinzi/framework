@@ -9,7 +9,7 @@ import br.com.concepting.framework.model.ObjectModel;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.resource.PropertiesResource;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.ui.types.DisplayType;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.Node;

@@ -9,7 +9,7 @@ import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.resource.PropertiesResource;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.ui.types.VisibilityType;
 import br.com.concepting.framework.util.ImageUtil;
 import br.com.concepting.framework.util.StringUtil;

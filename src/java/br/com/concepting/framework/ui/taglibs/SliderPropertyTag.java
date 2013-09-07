@@ -1,6 +1,6 @@
 package br.com.concepting.framework.ui.taglibs;
 
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
  
 /**
  * Classe que define o componente visual slider (barra de deslize para controle de valores numéricos). 

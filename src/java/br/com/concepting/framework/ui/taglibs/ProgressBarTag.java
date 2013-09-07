@@ -1,6 +1,6 @@
 package br.com.concepting.framework.ui.taglibs;
 
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.util.NumberUtil;
 import br.com.concepting.framework.util.types.ComponentType;
 

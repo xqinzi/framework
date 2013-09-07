@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.com.concepting.framework.constants.AttributeConstants;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.util.StringUtil;
 
 /**

@@ -1,6 +1,6 @@
 package br.com.concepting.framework.ui.taglibs;
 
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 
 /**
  * Classe que declara a utilização de um arquivo CSS (Cascade Style Sheet).

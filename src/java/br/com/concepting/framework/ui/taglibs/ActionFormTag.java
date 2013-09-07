@@ -13,7 +13,7 @@ import br.com.concepting.framework.controller.SystemController;
 import br.com.concepting.framework.controller.form.types.ActionFormMessageType;
 import br.com.concepting.framework.resource.I18nResourceLoader;
 import br.com.concepting.framework.resource.PropertiesResource;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.ui.types.DisplayType;
 import br.com.concepting.framework.ui.types.VisibilityType;
 import br.com.concepting.framework.util.StringUtil;

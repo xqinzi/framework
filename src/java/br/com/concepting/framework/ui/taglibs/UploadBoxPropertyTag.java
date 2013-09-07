@@ -2,7 +2,7 @@ package br.com.concepting.framework.ui.taglibs;
 
 import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.controller.action.types.ActionType;
-import br.com.concepting.framework.ui.taglibs.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.TaglibConstants;
 import br.com.concepting.framework.ui.types.DisplayType;
 import br.com.concepting.framework.util.types.ComponentType;
 
