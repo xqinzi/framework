@@ -644,7 +644,7 @@ public class SystemController{
 			getRequest().getRequestDispatcher(url).forward(getRequest(), getResponse());
 		}
 		catch(Throwable e){
-			hasForwardOrRedirect = false;
+		    forward(e);
 		}
 	}
 	

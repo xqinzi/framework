@@ -146,7 +146,7 @@ public abstract class ProjectConstants{
     /**
      * Constante que define o identificador do arquivo que contém as definições dos componentes visuais do framework.
      */
-    public static final String DEFAULT_TAGLIBS_DESCRIPTOR_FILE_ID = "WEB-INF/ConceptingFramework.tld";
+    public static final String DEFAULT_TAGLIBS_DESCRIPTOR_FILE_ID = "WEB-INF/tld/ConceptingFramework.tld";
     
     /**
      * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB do projeto..
