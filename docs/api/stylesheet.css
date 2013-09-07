@@ -3,7 +3,7 @@
 Overall document style
 */
 body {
-    background-color:#ffffff;
+    background-color:WHITE;
     color:#353833;
     font-family:Arial, Helvetica, sans-serif;
     font-size:76%;
@@ -95,7 +95,7 @@ Document title and Copyright styles
     background-image:url(resources/titlebar.gif);
     background-position:left top;
     background-repeat:no-repeat;
-    color:#ffffff;
+    color:WHITE;
     padding:8px;
     width:5em;
     font-weight:bold;
@@ -315,7 +315,7 @@ ul.blockList ul.blockList li.blockList, ul.blockList ul.blockListLast li.blockLi
 }
 ul.blockList ul.blockList ul.blockList li.blockList, ul.blockList ul.blockList ul.blockListLast li.blockList {
     padding:0 0 5px 8px;
-    background-color:#ffffff;
+    background-color:WHITE;
     border:1px solid #9eadc0;
     border-top:none;
 }
@@ -400,7 +400,7 @@ ul.blockList ul.blockList li.blockList table {
     background-color:#eeeeef;
 }
 .rowColor {
-    background-color:#ffffff;
+    background-color:WHITE;
 }
 .overviewSummary td, .packageSummary td, .contentContainer ul.blockList li.blockList td, .summary td, .classUseContainer td, .constantValuesContainer td {
     text-align:left;

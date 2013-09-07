@@ -46,7 +46,7 @@
 	<property name="remoteServices" value="${java.io.tmpdir}/${ant.project.name}/remoteServices.xml"/>
 	<property name="ejbDescriptor" value="build/modules/ejb/META-INF/ejb-jar.xml"/>
 	<property name="webServiceDescriptor" value="build/modules/webServices/META-INF/services.xml"/>
-	<property name="webDescriptor" value="src/web/WEB-INF/web.xml"/>
+	<property name="webDescriptor" value="src/ui/WEB-INF/web.xml"/>
 	<condition property="build.ejb.module">
 		<or>
 			<available file="${ejbDescriptor}"/>
@@ -90,8 +90,8 @@
 			<fileset file="${remoteServices}"/>
 			<fileset dir="build/modules/" includes="**/*.xml"/>
 			<fileset dir="src/resources/etc/resources/mappings" includes="**/*.xml"/>
-			<fileset dir="src/web/META-INF" includes="**/*.xml"/>
-			<fileset dir="src/web/WEB-INF" includes="**/*.xml"/>
+			<fileset dir="src/ui/META-INF" includes="**/*.xml"/>
+			<fileset dir="src/ui/WEB-INF" includes="**/*.xml"/>
 		</delete>
 
 		<antcall target="clean.compile" taskname="clean"/>

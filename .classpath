@@ -43,7 +43,6 @@
 	<classpathentry kind="lib" path="dependencies/compile/oscache-2.1.jar"/>
 	<classpathentry kind="lib" path="dependencies/compile/platform.jar"/>
 	<classpathentry kind="lib" path="dependencies/compile/poi-3.6-20091214.jar"/>
-	<classpathentry kind="lib" path="dependencies/compile/rrd4j-2.0.2.jar"/>
 	<classpathentry kind="lib" path="dependencies/compile/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="dependencies/compile/SNMP4J.jar"/>
 	<classpathentry kind="lib" path="dependencies/compile/standard.jar"/>
