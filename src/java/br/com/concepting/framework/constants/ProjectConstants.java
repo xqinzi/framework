@@ -62,6 +62,11 @@ public abstract class ProjectConstants{
      * Constante que define o identificador do diretório do módulo WEB Services do projeto.
      */
     public static final String DEFAULT_WEB_SERVICES_MODULE_DIR = DEFAULT_MODULES_DIR.concat("webServices/");
+
+    /**
+     * Constante que define o identificador do arquivo descritor do módulo WEB Services do projeto.
+     */
+    public static final String DEFAULT_WEB_SERVICES_MODULE_DESCRIPTOR_FILE_ID = "META-INF/services.xml";
     
     /**
      * Constante que define o identificador do repositório de WEB Services.
@@ -142,11 +147,6 @@ public abstract class ProjectConstants{
      * Constante que define o identificador do arquivo que contém as definições dos componentes visuais do framework.
      */
     public static final String DEFAULT_TAGLIBS_DESCRIPTOR_FILE_ID = "WEB-INF/ConceptingFramework.tld";
-
-    /**
-     * Constante que define o identificador do arquivo descritor do módulo WEB Services do projeto.
-     */
-    public static final String DEFAULT_WEB_SERVICES_MODULE_DESCRIPTOR_FILE_ID = "META-INF/services.xml";
     
     /**
      * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB do projeto..
@@ -182,7 +182,6 @@ public abstract class ProjectConstants{
      * Constante que define o identificador do diretório de armazenamento das dependências do módulo WEB Services do projeto.
      */
     public static final String DEFAULT_WEB_SERVICES_MODULE_DEPENDENCIES_DIR = DEFAULT_DEPENDENCIES_DIR.concat("webServices/");
-    
     
     /**
      * Constante que define o identificador do template para a implementação de persistência de um modelo de dados.
