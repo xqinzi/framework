@@ -18,7 +18,7 @@ public class JSPIndent extends Indent{
 		rules = new LinkedList<JSPIndent>();
         rules.add(new JSPIndent("<%", "%>"));
         rules.add(new JSPIndent("<", "/>"));
-		rules.add(new JSPIndent("<", "</"));
+		rules.add(new JSPIndent("<", "</", true));
 		rules.add(new JSPIndent("/*", "*/", 1, true));
 	}
 
@@ -43,7 +43,21 @@ public class JSPIndent extends Indent{
 		super(startChar, endChar, indentCount);
 	}
 
-	/**
+    /**
+     * Construtor - Define os caracteres iniciais e finais para indentação.
+     * 
+     * @param startChar String contendo os caracteres iniciais.
+     * @param endChar String contendo os caracteres finais.
+     * @param backAfterEndChar Indica que a indentação deve voltar quando os caracteres finais forem 
+     * encontrados.
+     */
+    public JSPIndent(String startChar, String endChar, Boolean backAfterEndChar){
+        super(startChar, endChar);
+        
+        setBackAfterEndChar(backAfterEndChar);
+    }
+
+    /**
 	 * Construtor - Define os caracteres iniciais e finais para indentação.
 	 * 
 	 * @param startChar String contendo os caracteres iniciais.
