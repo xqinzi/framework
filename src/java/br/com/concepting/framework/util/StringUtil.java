@@ -402,13 +402,24 @@ public class StringUtil{
                 lastRule = rulesQueue.get(rulesQueue.size() - 1);
                 
                 if(!lastRule.backAfterEndChar()){
-                    if(lastRule.getEndChar().length() > 0){
+                    if(lastRule.getEndChar().length() >= 0){
                         pos = line.indexOf(lastRule.getEndChar());
                         
                         if(pos >= 0){
-                            currentIdentCount -= lastRule.getIndentCount();
-                           
-                            rulesQueue.remove(rulesQueue.size() - 1);
+                            if(pos == 0){
+                                currentIdentCount -= lastRule.getIndentCount();
+                                
+                                rulesQueue.remove(rulesQueue.size() - 1);
+                            }
+                            else{
+                                pos = line.indexOf(lastRule.getStartChar());
+                                
+                                if(pos < 0){
+                                    currentIdentCount -= lastRule.getIndentCount();
+                                   
+                                    rulesQueue.remove(rulesQueue.size() - 1);
+                                }
+                            }
                         }
                     }
                 }
@@ -425,8 +436,9 @@ public class StringUtil{
  					
  					if(pos >= 0){
                         currentRule = rule;
+                        pos         = line.indexOf(rule.getEndChar());
                         
- 					    if(line.indexOf(rule.getEndChar()) >= 0){
+ 					    if(pos >= 0){
  					        currentRule = null;
  					        
  					        break;
@@ -449,9 +461,20 @@ public class StringUtil{
                         pos = line.indexOf(lastRule.getEndChar());
                         
                         if(pos >= 0){
-                            currentIdentCount -= lastRule.getIndentCount();
-                           
-                            rulesQueue.remove(rulesQueue.size() - 1);
+                            if(pos == 0){
+                                currentIdentCount -= lastRule.getIndentCount();
+                                
+                                rulesQueue.remove(rulesQueue.size() - 1);
+                            }
+                            else{
+                                pos = line.indexOf(lastRule.getStartChar());
+                                
+                                if(pos < 0){
+                                    currentIdentCount -= lastRule.getIndentCount();
+                                   
+                                    rulesQueue.remove(rulesQueue.size() - 1);
+                                }
+                            }
                         }
                     }
                 }

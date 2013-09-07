@@ -18,7 +18,7 @@ public class JSPIndent extends Indent{
 		rules = new LinkedList<JSPIndent>();
         rules.add(new JSPIndent("<%", "%>"));
         rules.add(new JSPIndent("<", "/>"));
-		rules.add(new JSPIndent("<", "</", true));
+		rules.add(new JSPIndent("<", "</"));
 		rules.add(new JSPIndent("/*", "*/", 1, true));
 	}
 
