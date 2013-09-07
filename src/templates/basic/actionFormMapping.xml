@@ -6,7 +6,7 @@
 			<form-bean name="" type=""/>
 		</form-beans>
 		<global-exceptions>
-			<exception type="java.lang.Exception" key="" handler="br.com.concepting.framework.web.ActionExceptionHandler" path="/errorPage.jsp" scope="session"/>
+			<exception type="java.lang.Exception" key="" handler="br.com.concepting.framework.controller.action.ActionExceptionHandler" path="/errorPage.jsp" scope="session"/>
 		</global-exceptions>
 		<global-forwards>
 			<forward name="index" path="/index.jsp"/>
