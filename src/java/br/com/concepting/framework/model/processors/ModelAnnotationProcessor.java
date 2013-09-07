@@ -1101,7 +1101,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
     }
 
     /**
-     * Executa o script para geração de código da UI.
+     * Executa o script para geração da UI.
      * 
      * @throws Throwable
      */
@@ -1155,24 +1155,24 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
                     uiPageStylesDir.mkdirs();
 
                 if(!uiPageFile.exists()){
-                    StringBuilder webPageTemplateFileName = new StringBuilder();
+                    StringBuilder uiPageTemplateFileName = new StringBuilder();
 
-                    webPageTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
-                    webPageTemplateFileName.append(getTemplateId());
-                    webPageTemplateFileName.append(StringUtil.getDirectorySeparator());
-                    webPageTemplateFileName.append(ProjectConstants.DEFAULT_UI_PAGE_TEMPLATE_FILE_ID);
+                    uiPageTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
+                    uiPageTemplateFileName.append(getTemplateId());
+                    uiPageTemplateFileName.append(StringUtil.getDirectorySeparator());
+                    uiPageTemplateFileName.append(ProjectConstants.DEFAULT_UI_PAGE_TEMPLATE_FILE_ID);
 
-                    File             webPageTemplateFile    = new File(webPageTemplateFileName.toString());
-                    XmlReader        webPageTemplateReader  = new XmlReader(webPageTemplateFile);
-                    XmlNode          webPageTemplateContent = webPageTemplateReader.getRoot();
-                    String           encoding               = webPageTemplateReader.getEncoding(); 
-                    ProcessorFactory processorFactory       = ProcessorFactory.getInstance();
-                    BaseProcessor    processor              = processorFactory.getProcessor(getModelInfo(), webPageTemplateContent);
-                    String           webPageContent         = StringUtil.indent(processor.process(), JSPIndent.getRules());
+                    File             uiPageTemplateFile    = new File(uiPageTemplateFileName.toString());
+                    XmlReader        uiPageTemplateReader  = new XmlReader(uiPageTemplateFile);
+                    XmlNode          uiPageTemplateContent = uiPageTemplateReader.getRoot();
+                    String           encoding              = uiPageTemplateReader.getEncoding(); 
+                    ProcessorFactory processorFactory      = ProcessorFactory.getInstance();
+                    BaseProcessor    processor             = processorFactory.getProcessor(getModelInfo(), uiPageTemplateContent);
+                    String           uiPageContent         = StringUtil.indent(processor.process(), JSPIndent.getRules());
                     
-                    webPageContent = StringUtil.decode(webPageContent);
+                    uiPageContent = StringUtil.decode(uiPageContent);
                     
-                    FileUtil.toTextFile(uiPageFileName.toString(), webPageContent, encoding);
+                    FileUtil.toTextFile(uiPageFileName.toString(), uiPageContent, encoding);
                 }
             }
             
@@ -1471,55 +1471,55 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
     }
 
     /**
-     * Executa o script para geração dos arquivos de internacionalização da página WEB.
+     * Executa o script para geração dos arquivos de internacionalização.
      * 
      * @throws Throwable
      */
-    public void generateWebPageI18nResource() throws Throwable{
-        SystemResourceLoader loader                      = new SystemResourceLoader(getAnnotationProcessorFactory().getProjectResourcesDir(), SystemConstants.DEFAULT_RESOURCE_ID);
-        SystemResource       resource                    = loader.getDefault();
-        List<Locale>         languages                   = resource.getLanguages();
-        String               actionFormUrl               = ActionFormUtil.getActionFormUrlByModel(getDeclaration());
-        StringBuilder        webPageI18nResourceFileName = new StringBuilder();
+    public void generateI18nResource() throws Throwable{
+        SystemResourceLoader loader               = new SystemResourceLoader(getAnnotationProcessorFactory().getProjectResourcesDir(), SystemConstants.DEFAULT_RESOURCE_ID);
+        SystemResource       resource             = loader.getDefault();
+        List<Locale>         languages            = resource.getLanguages();
+        String               actionFormUrl        = ActionFormUtil.getActionFormUrlByModel(getDeclaration());
+        StringBuilder        i18nResourceFileName = new StringBuilder();
         
         for(Locale language : languages){
-            if(webPageI18nResourceFileName.length() > 0)
-                webPageI18nResourceFileName.delete(0, webPageI18nResourceFileName.length());
+            if(i18nResourceFileName.length() > 0)
+                i18nResourceFileName.delete(0, i18nResourceFileName.length());
             
-            webPageI18nResourceFileName.append(ProjectConstants.DEFAULT_RESOURCES_DIR);
-            webPageI18nResourceFileName.append(ResourceConstants.DEFAULT_I18N_RESOURCES_DIR);
-            webPageI18nResourceFileName.append(actionFormUrl.toString());
-            webPageI18nResourceFileName.append("_");
-            webPageI18nResourceFileName.append(language.toString());
-            webPageI18nResourceFileName.append(".properties");
+            i18nResourceFileName.append(ProjectConstants.DEFAULT_RESOURCES_DIR);
+            i18nResourceFileName.append(ResourceConstants.DEFAULT_I18N_RESOURCES_DIR);
+            i18nResourceFileName.append(actionFormUrl.toString());
+            i18nResourceFileName.append("_");
+            i18nResourceFileName.append(language.toString());
+            i18nResourceFileName.append(".properties");
             
-            File webPageI18nResourceFile = new File(webPageI18nResourceFileName.toString());
+            File i18nResourceFile = new File(i18nResourceFileName.toString());
 
             if(getModelInfo().getUseCase().length() > 0){
-                if(!webPageI18nResourceFile.exists()){
-                    StringBuilder webPageI18nResourceTemplateFileName = new StringBuilder();
+                if(!i18nResourceFile.exists()){
+                    StringBuilder i18nResourceTemplateFileName = new StringBuilder();
 
-                    webPageI18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
-                    webPageI18nResourceTemplateFileName.append(getTemplateId());
-                    webPageI18nResourceTemplateFileName.append(StringUtil.getDirectorySeparator());
-                    webPageI18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_I18N_RESOURCE_TEMPLATE_FILE_ID);
+                    i18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_TEMPLATES_DIR);
+                    i18nResourceTemplateFileName.append(getTemplateId());
+                    i18nResourceTemplateFileName.append(StringUtil.getDirectorySeparator());
+                    i18nResourceTemplateFileName.append(ProjectConstants.DEFAULT_I18N_RESOURCE_TEMPLATE_FILE_ID);
 
-                    File             webPageI18nResourceTemplateFile    = new File(webPageI18nResourceTemplateFileName.toString());
-                    XmlReader        webPageI18nResourceTemplateReader  = new XmlReader(webPageI18nResourceTemplateFile);
-                    XmlNode          webPageI18nResourceTemplateContent = webPageI18nResourceTemplateReader.getRoot();
-                    String           encoding                           = webPageI18nResourceTemplateReader.getEncoding(); 
-                    ProcessorFactory processorFactory                   = ProcessorFactory.getInstance();
-                    BaseProcessor    processor                          = processorFactory.getProcessor(getModelInfo(), webPageI18nResourceTemplateContent);
-                    String           webPageI18nResourceContent         = StringUtil.indent(processor.process(), JavaIndent.getRules());
+                    File             i18nResourceTemplateFile    = new File(i18nResourceTemplateFileName.toString());
+                    XmlReader        i18nResourceTemplateReader  = new XmlReader(i18nResourceTemplateFile);
+                    XmlNode          i18nResourceTemplateContent = i18nResourceTemplateReader.getRoot();
+                    String           encoding                    = i18nResourceTemplateReader.getEncoding(); 
+                    ProcessorFactory processorFactory            = ProcessorFactory.getInstance();
+                    BaseProcessor    processor                   = processorFactory.getProcessor(getModelInfo(), i18nResourceTemplateContent);
+                    String           i18nResourceContent         = StringUtil.indent(processor.process(), JavaIndent.getRules());
                     
-                    webPageI18nResourceContent = StringUtil.decode(webPageI18nResourceContent);
+                    i18nResourceContent = StringUtil.decode(i18nResourceContent);
 
-                    FileUtil.toTextFile(webPageI18nResourceFileName.toString(), webPageI18nResourceContent, encoding);
+                    FileUtil.toTextFile(i18nResourceFileName.toString(), i18nResourceContent, encoding);
                 }
             }
             else{
-                if(webPageI18nResourceFile.exists() && getModelInfo().getMappedRepositoryId().length() == 0)
-                    webPageI18nResourceFile.delete();
+                if(i18nResourceFile.exists() && getModelInfo().getMappedRepositoryId().length() == 0)
+                    i18nResourceFile.delete();
             }
         }
     }
