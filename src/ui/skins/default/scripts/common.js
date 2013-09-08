@@ -19,6 +19,15 @@ function clearAllTimers(){
 	}
 }
 
+function showHideAutoCompleteBox(name){
+	var object = document.getElementById(name + ".autoCompleteBox");
+	
+	if(object.style.visibility.toUpperCase() == "VISIBLE")
+		object.style.visibility = "HIDDEN";
+	else
+		object.style.visibility = "VISIBLE";
+}
+
 /**
  * Indica se o browser é o Internet Explorer.
  * 

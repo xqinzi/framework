@@ -275,15 +275,15 @@ public abstract class BaseOptionsPropertyTag extends BasePropertyTag{
             setMultipleSelection(propertyInfo != null && propertyInfo.isCollection());
 		
         if(dataValues == null || dataValues.size() == 0){
-    		if(data.length() > 0 && dataScope != null){
-    		    ScopeType dataScope = getDataScopeType();
-    		    
-    		    if(dataScope == null){
-    		        dataScope = ScopeType.FORM;
-    		        
-    		        setDataScopeType(dataScope);
-    		    }
-    		    
+            ScopeType dataScope = getDataScopeType();
+            
+            if(dataScope == null){
+                dataScope = ScopeType.FORM;
+                
+                setDataScopeType(dataScope);
+            }
+
+            if(data.length() > 0){
     	        String actionFormName = getActionFormName();
 
     			if(!data.startsWith(actionFormName)){
