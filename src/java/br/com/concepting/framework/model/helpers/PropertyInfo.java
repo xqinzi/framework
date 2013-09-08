@@ -41,7 +41,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private ConditionType     searchCondition               = null;
 	private ContextSearchType contextSearchType             = null;
 	private Boolean           caseSensitiveSearch           = false;
-	private Double            similarityAccuracy            = 0d;
+	private Double            phoneticAccuracy              = 0d;
 	private Boolean           useGroupSeparator             = false;
 	private Class             collectionItemsClass          = null;
 	private RelationType      relationType                  = null;
@@ -50,8 +50,8 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private Boolean           cascadeOnDelete               = false;
 	private Class             propertyClass                 = null;
 	private String            propertyId                    = "";
-	private String            similarityPropertyId          = "";
-	private String            classPropertyId               = "";
+    private String            classPropertyId               = "";
+	private String            phoneticPropertyId            = "";
 	private String            searchPropertyId              = "";
 	private String            propertiesIds[]               = null;
 	private String            mappedPropertyId              = "";
@@ -472,23 +472,23 @@ public class PropertyInfo implements Comparable, Cloneable{
 
 	/**
 	 * Retorna o identificador da propriedade que será considerada para 
-	 * efetuar pesquisa por similaridade.
+	 * efetuar pesquisa fonética.
 	 * 
 	 * @return String contendo o identificador da propriedade.
 	 */
-	public String getSimilarityPropertyId(){
-		return similarityPropertyId;
+	public String getPhoneticPropertyId(){
+		return phoneticPropertyId;
 	}
 
 	/**
 	 * Define o identificador da propriedade que será considerada para 
-	 * efetuar pesquisa por similaridade.
+	 * efetuar pesquisa fonética.
 	 * 
-	 * @param similarityPropertyId String contendo o identificador da 
+	 * @param phoneticPropertyId String contendo o identificador da 
 	 * propriedade.
 	 */
-	public void setSimilarityPropertyId(String similarityPropertyId){
-		this.similarityPropertyId = similarityPropertyId;
+	public void setPhoneticPropertyId(String phoneticPropertyId){
+		this.phoneticPropertyId = phoneticPropertyId;
 	}
 
 	/**
@@ -1305,25 +1305,25 @@ public class PropertyInfo implements Comparable, Cloneable{
 	}
 
 	/**
-	 * Retorna a porcentagem de similaridade a ser utilizada quando a 
-	 * condição de pesquisa definida for por similaridade.
+	 * Retorna a porcentagem de acertividade a ser utilizada quando a 
+	 * condição de pesquisa definida for por fonética.
 	 * 
 	 * @return Valor em ponto flutuante contendo a porcentagem de 
-	 * similaridade.
+	 * acertividade.
 	 */
-	public Double getSimilarityAccuracy(){
-		return similarityAccuracy;
+	public Double getPhoneticAccuracy(){
+		return phoneticAccuracy;
 	}
 
 	/**
-	 * Define a porcentagem de similaridade a ser utilizada quando a condição 
-	 * de pesquisa definida for por similaridade.
+	 * Define a porcentagem de acertividade a ser utilizada quando a 
+	 * condição de pesquisa definida for por fonética.
 	 * 
-	 * @param similarityAccuracy Valor em ponto flutuante contendo a 
-	 * porcentagem de similaridade.
+	 * @param phoneticAccuracy Valor em ponto flutuante contendo a 
+	 * porcentagem de acertividade.
 	 */
-	public void setSimilarityAccuracy(Double similarityAccuracy){
-		this.similarityAccuracy = similarityAccuracy;
+	public void setPhoneticAccuracy(Double phoneticAccuracy){
+		this.phoneticAccuracy = phoneticAccuracy;
 	}
 
 	/**

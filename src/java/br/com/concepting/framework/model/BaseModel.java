@@ -22,25 +22,25 @@ import br.com.concepting.framework.util.helpers.Node;
 @Model
 public abstract class BaseModel extends Node implements Comparable{
     @Property(useGroupSeparator=true, pattern="0.00")
-	private Double similarityAccuracy = 0.0;
-	private String sortProperty       = "";
+	private Double compareAccuracy = 0.0;
+	private String sortProperty    = "";
 
     /**
-	 * Retorna a porcentagem de similaridade do modelo de dados.
+	 * Retorna a porcentagem de acertividade de comparação entre modelo de dados.
 	 *
-	 * @return Valor em ponto flutuante contendo a porcentagem de similaridade.
+	 * @return Valor em ponto flutuante contendo a porcentagem de acertividade.
 	 */
-	public Double getSimilarityAccuracy(){
-     	return similarityAccuracy;
+	public Double getCompareAccuracy(){
+     	return compareAccuracy;
     }
 
 	/**
-	 * Define a porcentagem de similaridade do modelo de dados.
+	 * Define a porcentagem de acertividade de comparação entre modelo de dados.
 	 *
-	 * @param similarityAccuracy Valor em ponto flutuante contendo a porcentagem de similaridade.
+	 * @param compareAccuracy Valor em ponto flutuante contendo a porcentagem de acertividade.
 	 */
-	public void setSimilarityAccuracy(Double similarityAccuracy){
-     	this.similarityAccuracy = similarityAccuracy;
+	public void setCompareAccuracy(Double compareAccuracy){
+     	this.compareAccuracy = compareAccuracy;
     }
 
 	/**

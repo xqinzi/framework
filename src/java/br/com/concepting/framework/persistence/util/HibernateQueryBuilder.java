@@ -615,8 +615,8 @@ public abstract class HibernateQueryBuilder{
                                     
                                     break;
                                 }
-                                case SIMILARITY: {
-                                    processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0 && propertyInfo.getSimilarityPropertyId().length() > 0);
+                                case PHONETIC: {
+                                    processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0 && propertyInfo.getPhoneticPropertyId().length() > 0);
                                     
                                     if(processCondition){
                                         if(propertyParamBuffer == null)
@@ -649,7 +649,7 @@ public abstract class HibernateQueryBuilder{
                                             propertyIdBuffer.append(".");
                                         }
     
-                                        propertyIdBuffer.append(propertyInfo.getSimilarityPropertyId());
+                                        propertyIdBuffer.append(propertyInfo.getPhoneticPropertyId());
     
                                         whereClause.append(propertyIdBuffer);
                                         whereClause.append(" like :");

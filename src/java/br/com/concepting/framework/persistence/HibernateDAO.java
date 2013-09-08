@@ -247,7 +247,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			Query   query     = HibernateQueryBuilder.build(QueryType.SEARCH, model, modelFilter, this);
 			List<M> modelList = query.list();
 			
-			modelList = ModelUtil.filterBySimilarity(model, modelList);
+			modelList = ModelUtil.filterByPhonetic(model, modelList);
 
 			return (C)modelList;
 		}
@@ -372,7 +372,7 @@ public abstract class HibernateDAO extends BaseDAO{
             return;
 
         try{
-            ModelUtil.fillSimilarityProperties(model);
+            ModelUtil.fillPhoneticProperties(model);
             
             Session connection = getConnection();
 
@@ -413,7 +413,7 @@ public abstract class HibernateDAO extends BaseDAO{
             return;
 
 		try{
-		    ModelUtil.fillSimilarityProperties(model);
+		    ModelUtil.fillPhoneticProperties(model);
 		    
 	        Session connection = getConnection();
 
@@ -454,7 +454,7 @@ public abstract class HibernateDAO extends BaseDAO{
 	        return;
 	    
 		try{
-            ModelUtil.fillSimilarityProperties(model);
+            ModelUtil.fillPhoneticProperties(model);
             
 	        Session connection = getConnection();
 
@@ -498,7 +498,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			while(iterator.hasNext()){
 				model = iterator.next();
 				
-				ModelUtil.fillSimilarityProperties(model);
+				ModelUtil.fillPhoneticProperties(model);
 				
 				connection.saveOrUpdate(model);
 			}
@@ -545,7 +545,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			while(iterator.hasNext()){
     			model = iterator.next();
     			
-                ModelUtil.fillSimilarityProperties(model);
+                ModelUtil.fillPhoneticProperties(model);
                 
     			connection.save(model);
     		}
@@ -592,7 +592,7 @@ public abstract class HibernateDAO extends BaseDAO{
     		while(iterator.hasNext()){
     			model = iterator.next();
                 
-                ModelUtil.fillSimilarityProperties(model);
+                ModelUtil.fillPhoneticProperties(model);
     			
     			connection.merge(model);
     		}

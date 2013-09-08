@@ -15,7 +15,6 @@ import com.wcohen.ss.MongeElkan;
  * @since 1.0
  */
 public class PhoneticUtil{
-	private static RefinedSoundex      soundexInstance  = null;
 	private static Map<String, String> firstSoundexMap  = null;
 	private static Map<String, String> middleSoundexMap = null;
 	private static Map<String, String> lastSoundexMap   = null;
@@ -42,7 +41,7 @@ public class PhoneticUtil{
 		firstSoundexMap.put("jo", "xio");
 		firstSoundexMap.put("ju", "xiu");
 		firstSoundexMap.put("phe", "fe");
-        firstSoundexMap.put("phi", "fe");
+        firstSoundexMap.put("phi", "fi");
         firstSoundexMap.put("pha", "fa");
         firstSoundexMap.put("pho", "fo");
 
@@ -95,49 +94,28 @@ public class PhoneticUtil{
 		String buffer   = StringUtil.trim(value).toLowerCase();
 		String tokens[] = StringUtil.split(buffer, " ");
 
-		for(String soundexKey : firstSoundexMap.keySet()){
-			for(Integer cont = 0 ; cont < tokens.length ; cont++){
+		for(String soundexKey : firstSoundexMap.keySet())
+			for(Integer cont = 0 ; cont < tokens.length ; cont++)
 				if(tokens[cont].indexOf(soundexKey) == 0)
 					tokens[cont] = StringUtil.replaceAll(tokens[cont], soundexKey, firstSoundexMap.get(soundexKey));
-			}
-		}
 
-		for(String soundexKey : lastSoundexMap.keySet()){
-			for(Integer cont = 0 ; cont < tokens.length ; cont++){
+		for(String soundexKey : lastSoundexMap.keySet())
+			for(Integer cont = 0 ; cont < tokens.length ; cont++)
 				if(tokens[cont].indexOf(soundexKey) == (tokens[cont].length() - soundexKey.length()))
 					tokens[cont] = StringUtil.replaceAll(tokens[cont], soundexKey, lastSoundexMap.get(soundexKey));
-			}
-		}
 
-		for(String soundexKey : middleSoundexMap.keySet()){
-			for(Integer cont = 0 ; cont < tokens.length ; cont++){
+		for(String soundexKey : middleSoundexMap.keySet())
+			for(Integer cont = 0 ; cont < tokens.length ; cont++)
 				tokens[cont] = StringUtil.replaceAll(tokens[cont], soundexKey, middleSoundexMap.get(soundexKey));
-			}
-		}
-
-		if(soundexInstance == null)
-			soundexInstance = new RefinedSoundex();
-
+		
+		RefinedSoundex encoder = new RefinedSoundex();
+		
 		for(Integer cont = 0 ; cont < tokens.length ; cont++)
-			tokens[cont] = soundexInstance.encode(tokens[cont]);
+		    tokens[cont] = encoder.encode(tokens[cont]);
 
 		buffer = StringUtil.merge(tokens, " ");
 
 		return buffer;
-	}
-
-	/**
-	 * Indica se duas strings são similares a partir de uma porcentagem de similaridade 
-	 * especificada.
-	 * 
-	 * @param value1 Primeira string.
-	 * @param value2 Segunda string.
-	 * @param similarityAccuracy Valor em ponto flutuante contendo a porcentagem de 
-	 * similaridade
-	 * @return True/False.
-	 */
-	public static Boolean isSimilar(String value1, String value2, double similarityAccuracy){
-		return similarityAccuracy(value1, value2) >= similarityAccuracy;
 	}
 
 	/**
@@ -147,7 +125,7 @@ public class PhoneticUtil{
 	 * @param value2 Segunda string.
 	 * @return Valor em ponto flutuante contendo a porcentagem de similaridade.
 	 */
-	public static Double similarityAccuracy(String value1, String value2){
+	public static Double getAccuracy(String value1, String value2){
 		String        valueTokens1[] = StringUtil.split(value1, " ");
 		String        valueTokens2[] = StringUtil.split(value2, " ");
 		StringBuilder valueBuffer1   = new StringBuilder();
@@ -165,5 +143,11 @@ public class PhoneticUtil{
 			return 0d;
 
 		return ((new MongeElkan().score(valueBuffer1.toString().trim(), value2) + new Jaro().score(valueBuffer1.toString().trim(), value2)) / 2d) * 100d;
+	}
+	
+	public static void main(String args[]){
+	    System.out.println(soundCode("Felipe"));
+	    System.out.println(soundCode("Filipi"));
+	    System.out.println(soundCode("philip"));
 	}
 }

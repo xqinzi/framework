@@ -792,28 +792,28 @@ public class ModelUtil{
 	}
 	
     /**
-     * Monta o mapa de filtro de similaridade.
+     * Monta o mapa fonético.
      * 
      * @param modelClass Classe que define o modelo de dados.
      */
-	private static <M extends BaseModel> Map<String, PropertyInfo> buildSimilarityMap(Class<M> modelClass){
-	    Map<String, PropertyInfo> similarityMap      = new LinkedHashMap<String, PropertyInfo>();
+	private static <M extends BaseModel> Map<String, PropertyInfo> buildPhoneticMap(Class<M> modelClass){
+	    Map<String, PropertyInfo> phoneticMap        = new LinkedHashMap<String, PropertyInfo>();
 	    Collection<String>        processedRelations = new LinkedList<String>();
 	    
-	    buildFilterSimilarityMap(modelClass, null, processedRelations, similarityMap);
+	    buildPhoneticMap(modelClass, null, processedRelations, phoneticMap);
 	    
-	    return similarityMap;
+	    return phoneticMap;
 	}
 	
 	/**
-	 * Monta o mapa de filtro de similaridade.
+	 * Monta o mapa fonético.
 	 * 
 	 * @param modelClass Classe que define o modelo de dados.
 	 * @param propertyPrefix String contendo o prefixo das propriedades.
 	 * @param processedRelations Lista contendo as propriedades já processadas.
-	 * @param similarityMap Instância do mapa de similaridade.
+	 * @param phoneticMap Instância do mapa fonético.
 	 */
-	private static <M extends BaseModel> void buildFilterSimilarityMap(Class<M> modelClass, StringBuilder propertyPrefix, Collection<String> processedRelations, Map<String, PropertyInfo> similarityMap){
+	private static <M extends BaseModel> void buildPhoneticMap(Class<M> modelClass, StringBuilder propertyPrefix, Collection<String> processedRelations, Map<String, PropertyInfo> phoneticMap){
 	    if(modelClass == null)
 	        return;
 	    
@@ -825,8 +825,8 @@ public class ModelUtil{
 	    Collection<PropertyInfo> propertiesInfo = modelInfo.getPropertiesInfo();
 	    
 	    if(propertiesInfo != null && propertiesInfo.size() > 0){
-	        if(similarityMap == null)
-	            similarityMap = new LinkedHashMap<String, PropertyInfo>();
+	        if(phoneticMap == null)
+	            phoneticMap = new LinkedHashMap<String, PropertyInfo>();
 	        
 	        for(PropertyInfo propertyInfo : propertiesInfo){
 	            if(propertyInfo.isModel()){
@@ -840,110 +840,110 @@ public class ModelUtil{
 	                if(!processedRelations.contains(propertyPrefix.toString()) && !propertyPrefix.toString().contains("parent.parent")){
 	                    processedRelations.add(propertyPrefix.toString());
 	                
-	                    buildFilterSimilarityMap(propertyInfo.getClazz(), propertyPrefix, processedRelations, similarityMap);
+	                    buildPhoneticMap(propertyInfo.getClazz(), propertyPrefix, processedRelations, phoneticMap);
 	                }
 	            }
-	            else if(propertyInfo.getSearchCondition() == ConditionType.SIMILARITY)
-	                similarityMap.put(propertyInfo.getId(), propertyInfo);
+	            else if(propertyInfo.getSearchCondition() == ConditionType.PHONETIC)
+	                phoneticMap.put(propertyInfo.getId(), propertyInfo);
 	        }
 	    }
 	}
 	   
 	/**
-	 * Preenche as propriedades de um modelo de dados marcados com pesquisa de similaridade com 
-	 * os seus respectivos valores fonéticos.
+	 * Preenche as propriedades de um modelo de dados marcados com pesquisa fonética com 
+	 * os seus respectivos valores.
 	 * 
 	 * @param model Instância do modelo de dados desejado.
 	 * @throws InvocationTargetException
 	 * @throws IllegalAccessException
 	 * @throws NoSuchMethodException
 	 */
-    public static <M extends BaseModel> void fillSimilarityProperties(M model) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
+    public static <M extends BaseModel> void fillPhoneticProperties(M model) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException{
         if(model == null)
             return;
         
-        Class<M>                  modelClass    = (Class<M>)model.getClass();
-        Map<String, PropertyInfo> similarityMap = buildSimilarityMap(modelClass);
+        Class<M>                  modelClass  = (Class<M>)model.getClass();
+        Map<String, PropertyInfo> phoneticMap = buildPhoneticMap(modelClass);
 
-        if(similarityMap != null && similarityMap.size() > 0){
-            PropertyInfo similarityPropertyInfo  = null;
-            String       similarityPropertyId    = "";
-            String       similarityPropertyValue = "";
+        if(phoneticMap != null && phoneticMap.size() > 0){
+            PropertyInfo phoneticPropertyInfo  = null;
+            String       phoneticPropertyId    = "";
+            String       phoneticPropertyValue = "";
             
-            for(String propertyId : similarityMap.keySet()){
-                similarityPropertyInfo  = similarityMap.get(propertyId);
-                similarityPropertyId    = similarityPropertyInfo.getSimilarityPropertyId();
-                similarityPropertyValue = StringUtil.trim(PropertyUtil.getProperty(model, propertyId));
-                similarityPropertyValue = PhoneticUtil.soundCode(similarityPropertyValue);
+            for(String propertyId : phoneticMap.keySet()){
+                phoneticPropertyInfo  = phoneticMap.get(propertyId);
+                phoneticPropertyId    = phoneticPropertyInfo.getPhoneticPropertyId();
+                phoneticPropertyValue = StringUtil.trim(PropertyUtil.getProperty(model, propertyId));
+                phoneticPropertyValue = PhoneticUtil.soundCode(phoneticPropertyValue);
                 
-                PropertyUtil.setProperty(model, similarityPropertyId, similarityPropertyValue);
+                PropertyUtil.setProperty(model, phoneticPropertyId, phoneticPropertyValue);
             }
         }
     }
 	
     /**
-     * Filtra uma lista de modelos de dados por similaridade.
+     * Filtra uma lista de modelos de dados por fonética.
      * 
      * @param model Instância contendo o modelo de dados que servirá como base de comparação.
      * @param modelList Lista contendo os modelos de dados.
-     * @return Lista contendo os modelos de dados que satisfazem a(s) regra(s) de similaridade.
+     * @return Lista contendo os modelos de dados que satisfazem a(s) regra(s) de fonética.
      * @throws NoSuchMethodException 
      * @throws InvocationTargetException 
      * @throws IllegalAccessException 
      */
-    public static <M extends BaseModel> List<M> filterBySimilarity(M model, List<M> modelList) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+    public static <M extends BaseModel> List<M> filterByPhonetic(M model, List<M> modelList) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
         if(model == null)
             return null;
         
-        Map<String, PropertyInfo> similarityMap = buildSimilarityMap(model.getClass());
+        Map<String, PropertyInfo> phoneticMap = buildPhoneticMap(model.getClass());
         
-        if(similarityMap != null && similarityMap.size() > 0){
-            String       comparePropertyValue      = "";
-            String       propertyValue             = "";
-            Double       compareSimilarityAccuracy = 0d;
-            Integer      similarityAccuracyCount   = 0;
-            Double       similarityAccuracy        = 0d;
-            PropertyInfo similarityPropertyInfo    = null;
-            String       similarityPropertyId      = "";
-            M            modelListItem             = null;
+        if(phoneticMap != null && phoneticMap.size() > 0){
+            String       comparePropertyValue    = "";
+            String       propertyValue           = "";
+            Double       comparePhoneticAccuracy = 0d;
+            Double       phoneticAccuracy        = 0d;
+            Integer      phoneticAccuracyCount   = 0;
+            PropertyInfo phoneticPropertyInfo    = null;
+            String       phoneticPropertyId      = "";
+            M            modelListItem           = null;
 
             for(Integer cont = 0; cont < modelList.size() ; cont++){
-                modelListItem             = modelList.get(cont);
-                compareSimilarityAccuracy = 0d;
-                similarityAccuracyCount   = 0;
-                similarityAccuracy        = 0d;
+                modelListItem           = modelList.get(cont);
+                comparePhoneticAccuracy = 0d;
+                phoneticAccuracy        = 0d;
+                phoneticAccuracyCount   = 0;
 
-                for(String propertyId : similarityMap.keySet()){
-                    similarityPropertyInfo = similarityMap.get(propertyId);
-                    similarityPropertyId   = similarityPropertyInfo.getSimilarityPropertyId();
-                    comparePropertyValue   = StringUtil.trim(PropertyUtil.getProperty(modelListItem, similarityPropertyId));
-                    propertyValue          = StringUtil.trim(PropertyUtil.getProperty(model, propertyId));
-                    propertyValue          = PhoneticUtil.soundCode(propertyValue);
+                for(String propertyId : phoneticMap.keySet()){
+                    phoneticPropertyInfo = phoneticMap.get(propertyId);
+                    phoneticPropertyId   = phoneticPropertyInfo.getPhoneticPropertyId();
+                    comparePropertyValue = StringUtil.trim(PropertyUtil.getProperty(modelListItem, phoneticPropertyId));
+                    propertyValue        = StringUtil.trim(PropertyUtil.getProperty(model, propertyId));
+                    propertyValue        = PhoneticUtil.soundCode(propertyValue);
 
                     if(propertyValue.length() > 0){
-                        similarityAccuracy        += PhoneticUtil.similarityAccuracy(propertyValue, comparePropertyValue);
-                        compareSimilarityAccuracy += similarityPropertyInfo.getSimilarityAccuracy();
+                        phoneticAccuracy        += PhoneticUtil.getAccuracy(propertyValue, comparePropertyValue);
+                        comparePhoneticAccuracy += phoneticPropertyInfo.getPhoneticAccuracy();
 
-                        similarityAccuracyCount++;
+                        phoneticAccuracyCount++;
                     }
                 }
 
-                similarityAccuracy        = similarityAccuracy / similarityAccuracyCount;
-                compareSimilarityAccuracy = compareSimilarityAccuracy / similarityAccuracyCount;
+                phoneticAccuracy        = phoneticAccuracy / phoneticAccuracyCount;
+                comparePhoneticAccuracy = comparePhoneticAccuracy / phoneticAccuracyCount;
 
-                if(similarityAccuracy < compareSimilarityAccuracy){
+                if(phoneticAccuracy < comparePhoneticAccuracy){
                     modelList.remove(modelListItem);
 
                     cont--;
                 }
                 else{
-                    modelListItem.setSimilarityAccuracy(similarityAccuracy);
+                    modelListItem.setCompareAccuracy(phoneticAccuracy);
 
                     modelList.set(cont, modelListItem);
                 }
             }
 
-            ModelUtil.sort(modelList, "similarityAccuracy", SortOrderType.DESCEND);
+            ModelUtil.sort(modelList, "compareAccuracy", SortOrderType.DESCEND);
         }
         
         return modelList;

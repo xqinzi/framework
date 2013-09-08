@@ -1100,7 +1100,7 @@ public class PropertyUtil extends PropertyUtils{
     		propertyInfo.setPersistPattern(propertyAnnotation.persistPattern());
     		propertyInfo.setPropertyId(propertyAnnotation.propertyId());
     		propertyInfo.setSearchPropertyId(propertyAnnotation.searchPropertyId());
-    		propertyInfo.setSimilarityPropertyId(propertyAnnotation.similarityPropertyId());
+    		propertyInfo.setPhoneticPropertyId(propertyAnnotation.phoneticPropertyId());
     		propertyInfo.setClassPropertyId(propertyAnnotation.classPropertyId());
     		propertyInfo.setPropertiesIds(propertyAnnotation.propertiesIds());
     		propertyInfo.setMappedPropertyId(propertyAnnotation.mappedPropertyId());
@@ -1115,7 +1115,7 @@ public class PropertyUtil extends PropertyUtils{
     		propertyInfo.setFormulaExpression(propertyAnnotation.formulaExpression());
     		propertyInfo.setFormulaType(propertyAnnotation.formulaType());
     		propertyInfo.setSortOrder(propertyAnnotation.sortOrder());
-    		propertyInfo.setSimilarityAccuracy(propertyAnnotation.similarityAccuracy());
+    		propertyInfo.setPhoneticAccuracy(propertyAnnotation.phoneticAccuracy());
     		propertyInfo.setCompareCondition(propertyAnnotation.compareCondition());
     		propertyInfo.setComparePropertyId(propertyAnnotation.comparePropertyId());
     		propertyInfo.setWordCount(propertyAnnotation.wordCount());

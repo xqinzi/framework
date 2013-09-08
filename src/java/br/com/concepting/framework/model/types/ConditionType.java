@@ -54,9 +54,9 @@ public enum ConditionType{
 	BETWEEN("between"),
 
 	/**
-	 * Constante que define a condição de pesquisa por similaridade.
+	 * Constante que define a condição de pesquisa fonética.
 	 */
-	SIMILARITY("similarity"),
+	PHONETIC,
 
 	/**
 	 * Constante que define a condição de pesquisa que irá considerar uma lista de valores.

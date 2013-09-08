@@ -104,12 +104,12 @@ public @interface Property{
 	boolean caseSensitiveSearch() default true;
 
 	/**
-	 * Define a porcentagem de similaridade a ser utilizada quando a condição de pesquisa definida 
-	 * for por similaridade.
+	 * Define a porcentagem de acertividade a ser utilizada quando a condição de pesquisa
+	 * fonética.
 	 * 
-	 * @return Valor em ponto flutuante contendo a porcentagem de similaridade.
+	 * @return Valor em ponto flutuante contendo a porcentagem de acertividade.
 	 */
-	double similarityAccuracy() default 50.0;
+	double phoneticAccuracy() default 50.0;
 
 	/**
 	 * Define que a propriedade será auditada.
@@ -134,11 +134,11 @@ public @interface Property{
 
 	/**
 	 * Define o identificador da propriedade que será considerada para efetuar pesquisa 
-	 * por similaridade.
+	 * fonética.
 	 * 
 	 * @return String contendo o identificador da propriedade.
 	 */
-	String similarityPropertyId() default "";
+	String phoneticPropertyId() default "";
 	
 	/**
 	 * Define o identificador da propriedade que será considerada para efetuar uma 
