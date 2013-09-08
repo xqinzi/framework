@@ -312,9 +312,7 @@ public class GridColumnTag extends BaseOptionsPropertyTag{
                     propertyId.append(".");
                     propertyId.append(name);
                     
-                    name = gridTag.getName();
-                    
-                    propertyId.insert(0, name);
+                    propertyId.insert(0, gridTag.getName());
                     
                     resourceKey = propertyId.toString();
                     

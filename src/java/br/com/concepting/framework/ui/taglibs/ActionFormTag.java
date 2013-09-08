@@ -66,7 +66,7 @@ public class ActionFormTag extends org.apache.struts.taglib.html.FormTag{
 	 * @return String contendo a codificação atual.
 	 */
 	public String getEncoding(){
-	    return getAcceptCharset();
+	    return StringUtil.trim(getAcceptCharset());
 	}
 	
     /**

@@ -41,6 +41,10 @@ public class PhoneticUtil{
 		firstSoundexMap.put("je", "xie");
 		firstSoundexMap.put("jo", "xio");
 		firstSoundexMap.put("ju", "xiu");
+		firstSoundexMap.put("phe", "fe");
+        firstSoundexMap.put("phi", "fe");
+        firstSoundexMap.put("pha", "fa");
+        firstSoundexMap.put("pho", "fo");
 
 		middleSoundexMap = new LinkedHashMap<String, String>();
 		middleSoundexMap.put("8", "b");
@@ -78,7 +82,7 @@ public class PhoneticUtil{
 		lastSoundexMap.put("ix", "ikis");
 		lastSoundexMap.put("ox", "okis");
 		lastSoundexMap.put("ux", "ukis");
-		lastSoundexMap.put("di", "d");
+		lastSoundexMap.put("pi", "p");
 	}
 
 	/**

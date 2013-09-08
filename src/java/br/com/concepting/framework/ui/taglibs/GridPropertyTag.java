@@ -835,6 +835,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     				ExpressionProcessorUtil.addVariable(AttributeConstants.ROW_NUMBER_KEY, cont1);
     
     				currentModel = (BaseModel)(cont1 < dataValues.size() ? dataValues.get(cont1) : null);
+    				
     				if(currentModel != null){
     					expressionProcessor.setDeclaration(currentModel);
     					
@@ -850,6 +851,7 @@ public class GridPropertyTag extends BaseOptionsPropertyTag{
     						    
     							try{
         							expressionResult = expressionProcessor.evaluate(rowStateTag.getExpression());
+        							
         							if(expressionResult)
         							    break;
     							}

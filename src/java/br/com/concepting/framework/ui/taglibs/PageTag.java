@@ -13,6 +13,7 @@ import br.com.concepting.framework.constants.AttributeConstants;
 import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.controller.SystemController;
 import br.com.concepting.framework.ui.constants.TaglibConstants;
+import br.com.concepting.framework.ui.constants.UIConstants;
 import br.com.concepting.framework.ui.types.VisibilityType;
 import br.com.concepting.framework.util.LanguageUtil;
 import br.com.concepting.framework.util.StringUtil;
@@ -274,20 +275,37 @@ public class PageTag extends HtmlTag{
     	StyleTag    styleTag    = new StyleTag();
     	
         scriptTag.setPageContext(pageContext);
-        scriptTag.setUrl(TaglibConstants.DEFAULT_PAGE_SCRIPT_RESOURCE_ID);
-        scriptTag.doStartTag();
-        scriptTag.doEndTag();
-
-        styleTag.setPageContext(pageContext);
-        styleTag.setUrl(TaglibConstants.DEFAULT_PAGE_STYLE_RESOURCE_ID);
-        styleTag.doStartTag();
-        styleTag.doEndTag();
-
         scriptTag.setUrl(TaglibConstants.DEFAULT_PAGE_SCRIPT_RESOURCE_ID.substring(1));
         scriptTag.doStartTag();
         scriptTag.doEndTag();
 
+        styleTag.setPageContext(pageContext);
         styleTag.setUrl(TaglibConstants.DEFAULT_PAGE_STYLE_RESOURCE_ID.substring(1));
+        styleTag.doStartTag();
+        styleTag.doEndTag();
+
+        scriptTag.setUrl(TaglibConstants.DEFAULT_PAGE_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
+
+        styleTag.setUrl(TaglibConstants.DEFAULT_PAGE_STYLE_RESOURCE_ID);
+        styleTag.doStartTag();
+        styleTag.doEndTag();
+
+        scriptTag.setUrl(UIConstants.DEFAULT_COMMON_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
+
+        styleTag.setPageContext(pageContext);
+        styleTag.setUrl(UIConstants.DEFAULT_COMMON_STYLE_RESOURCE_ID);
+        styleTag.doStartTag();
+        styleTag.doEndTag();
+
+        scriptTag.setUrl(TaglibConstants.DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
+
+        styleTag.setUrl(TaglibConstants.DEFAULT_ACCORDION_STYLE_RESOURCE_ID);
         styleTag.doStartTag();
         styleTag.doEndTag();
 
@@ -347,14 +365,6 @@ public class PageTag extends HtmlTag{
 		styleTag.setUrl(TaglibConstants.DEFAULT_CALENDAR_STYLE_RESOURCE_ID);
 		styleTag.doStartTag();
 		styleTag.doEndTag();
-
-        scriptTag.setUrl(TaglibConstants.DEFAULT_ACCORDION_SCRIPT_RESOURCE_ID);
-        scriptTag.doStartTag();
-        scriptTag.doEndTag();
-
-        styleTag.setUrl(TaglibConstants.DEFAULT_ACCORDION_STYLE_RESOURCE_ID);
-        styleTag.doStartTag();
-        styleTag.doEndTag();
 
         scriptTag.setUrl(TaglibConstants.DEFAULT_DIALOG_BOX_SCRIPT_RESOURCE_ID);
         scriptTag.doStartTag();

@@ -1100,7 +1100,7 @@ public class PropertyUtil extends PropertyUtils{
     		propertyInfo.setPersistPattern(propertyAnnotation.persistPattern());
     		propertyInfo.setPropertyId(propertyAnnotation.propertyId());
     		propertyInfo.setSearchPropertyId(propertyAnnotation.searchPropertyId());
-    		propertyInfo.setPhoneticPropertyId(propertyAnnotation.phoneticPropertyId());
+    		propertyInfo.setSimilarityPropertyId(propertyAnnotation.similarityPropertyId());
     		propertyInfo.setClassPropertyId(propertyAnnotation.classPropertyId());
     		propertyInfo.setPropertiesIds(propertyAnnotation.propertiesIds());
     		propertyInfo.setMappedPropertyId(propertyAnnotation.mappedPropertyId());

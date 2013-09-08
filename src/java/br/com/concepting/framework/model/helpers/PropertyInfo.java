@@ -50,7 +50,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private Boolean           cascadeOnDelete               = false;
 	private Class             propertyClass                 = null;
 	private String            propertyId                    = "";
-	private String            phoneticPropertyId            = "";
+	private String            similarityPropertyId          = "";
 	private String            classPropertyId               = "";
 	private String            searchPropertyId              = "";
 	private String            propertiesIds[]               = null;
@@ -472,23 +472,23 @@ public class PropertyInfo implements Comparable, Cloneable{
 
 	/**
 	 * Retorna o identificador da propriedade que será considerada para 
-	 * efetuar pesquisa fonética.
+	 * efetuar pesquisa por similaridade.
 	 * 
 	 * @return String contendo o identificador da propriedade.
 	 */
-	public String getPhoneticPropertyId(){
-		return phoneticPropertyId;
+	public String getSimilarityPropertyId(){
+		return similarityPropertyId;
 	}
 
 	/**
 	 * Define o identificador da propriedade que será considerada para 
-	 * efetuar pesquisa fonética.
+	 * efetuar pesquisa por similaridade.
 	 * 
-	 * @param phoneticPropertyId String contendo o identificador da 
+	 * @param similarityPropertyId String contendo o identificador da 
 	 * propriedade.
 	 */
-	public void setPhoneticPropertyId(String phoneticPropertyId){
-		this.phoneticPropertyId = phoneticPropertyId;
+	public void setSimilarityPropertyId(String similarityPropertyId){
+		this.similarityPropertyId = similarityPropertyId;
 	}
 
 	/**

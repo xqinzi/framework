@@ -844,7 +844,7 @@ public class ModelUtil{
 	                }
 	            }
 	            else if(propertyInfo.getSearchCondition() == ConditionType.SIMILARITY)
-	                similarityMap.put(propertyInfo.getPhoneticPropertyId(), propertyInfo);
+	                similarityMap.put(propertyInfo.getId(), propertyInfo);
 	        }
 	    }
 	}
@@ -866,15 +866,17 @@ public class ModelUtil{
         Map<String, PropertyInfo> similarityMap = buildSimilarityMap(modelClass);
 
         if(similarityMap != null && similarityMap.size() > 0){
-            PropertyInfo similarityPropertyInfo = null;
-            String       phoneticValue          = "";
+            PropertyInfo similarityPropertyInfo  = null;
+            String       similarityPropertyId    = "";
+            String       similarityPropertyValue = "";
             
-            for(String similarityPropertyId : similarityMap.keySet()){
-                similarityPropertyInfo = similarityMap.get(similarityPropertyId);
-                phoneticValue          = StringUtil.trim(PropertyUtil.getProperty(model, similarityPropertyId));
-                phoneticValue          = PhoneticUtil.soundCode(phoneticValue);
+            for(String propertyId : similarityMap.keySet()){
+                similarityPropertyInfo  = similarityMap.get(propertyId);
+                similarityPropertyId    = similarityPropertyInfo.getSimilarityPropertyId();
+                similarityPropertyValue = StringUtil.trim(PropertyUtil.getProperty(model, propertyId));
+                similarityPropertyValue = PhoneticUtil.soundCode(similarityPropertyValue);
                 
-                PropertyUtil.setProperty(model, similarityPropertyInfo.getPhoneticPropertyId(), phoneticValue);
+                PropertyUtil.setProperty(model, similarityPropertyId, similarityPropertyValue);
             }
         }
     }
@@ -902,20 +904,23 @@ public class ModelUtil{
             Integer      similarityAccuracyCount   = 0;
             Double       similarityAccuracy        = 0d;
             PropertyInfo similarityPropertyInfo    = null;
+            String       similarityPropertyId      = "";
             M            modelListItem             = null;
 
             for(Integer cont = 0; cont < modelList.size() ; cont++){
                 modelListItem             = modelList.get(cont);
-                similarityAccuracyCount   = 0;
                 compareSimilarityAccuracy = 0d;
+                similarityAccuracyCount   = 0;
                 similarityAccuracy        = 0d;
 
-                for(String similarityPropertyId : similarityMap.keySet()){
-                    comparePropertyValue = StringUtil.trim(PropertyUtil.getProperty(modelListItem, similarityPropertyId));
-                    propertyValue        = StringUtil.trim(PropertyUtil.getProperty(model, similarityPropertyId));
+                for(String propertyId : similarityMap.keySet()){
+                    similarityPropertyInfo = similarityMap.get(propertyId);
+                    similarityPropertyId   = similarityPropertyInfo.getSimilarityPropertyId();
+                    comparePropertyValue   = StringUtil.trim(PropertyUtil.getProperty(modelListItem, similarityPropertyId));
+                    propertyValue          = StringUtil.trim(PropertyUtil.getProperty(model, propertyId));
+                    propertyValue          = PhoneticUtil.soundCode(propertyValue);
 
                     if(propertyValue.length() > 0){
-                        similarityPropertyInfo     = similarityMap.get(similarityPropertyId);
                         similarityAccuracy        += PhoneticUtil.similarityAccuracy(propertyValue, comparePropertyValue);
                         compareSimilarityAccuracy += similarityPropertyInfo.getSimilarityAccuracy();
 

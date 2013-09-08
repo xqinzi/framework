@@ -640,6 +640,8 @@ public abstract class BaseActionFormElementTag extends BaseTag{
             if(actionFormTag != null && StringUtil.trim(actionFormName).length() == 0)
                 actionFormName = actionFormTag.getBeanName();
         }
+        
+        actionFormName = StringUtil.trim(actionFormName);
 
         return actionFormTag;
     }

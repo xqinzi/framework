@@ -329,8 +329,6 @@ public abstract class HibernateQueryBuilder{
                                 if(propertyInfo.isForSearch()){
                                     if(propertyInfo.getSearchPropertyId().length() > 0)
                                         propertyValue = PropertyUtil.getProperty(model, propertyInfo.getSearchPropertyId());
-                                    else if(propertyCondition == ConditionType.SIMILARITY && propertyInfo.getPhoneticPropertyId().length() > 0)
-                                        propertyValue = PropertyUtil.getProperty(model, propertyInfo.getPhoneticPropertyId());
                                     else
                                         propertyValue = PropertyUtil.getProperty(model, propertyInfo.getId());
                                 }
@@ -618,7 +616,7 @@ public abstract class HibernateQueryBuilder{
                                     break;
                                 }
                                 case SIMILARITY: {
-                                    processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0 && propertyInfo.getPhoneticPropertyId().length() > 0);
+                                    processCondition = (propertyValue instanceof String && StringUtil.trim(propertyValue).length() > 0 && propertyInfo.getSimilarityPropertyId().length() > 0);
                                     
                                     if(processCondition){
                                         if(propertyParamBuffer == null)
@@ -651,7 +649,7 @@ public abstract class HibernateQueryBuilder{
                                             propertyIdBuffer.append(".");
                                         }
     
-                                        propertyIdBuffer.append(propertyInfo.getPhoneticPropertyId());
+                                        propertyIdBuffer.append(propertyInfo.getSimilarityPropertyId());
     
                                         whereClause.append(propertyIdBuffer);
                                         whereClause.append(" like :");

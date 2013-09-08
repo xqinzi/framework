@@ -71,7 +71,7 @@ public @interface Property{
 	 * 
 	 * @return True/False.
 	 */
-	boolean nullable() default false;
+	boolean nullable() default true;
 
 	/**
 	 * Define que a propriedade será considerada para pesquisa.
@@ -134,11 +134,11 @@ public @interface Property{
 
 	/**
 	 * Define o identificador da propriedade que será considerada para efetuar pesquisa 
-	 * fonética.
+	 * por similaridade.
 	 * 
 	 * @return String contendo o identificador da propriedade.
 	 */
-	String phoneticPropertyId() default "";
+	String similarityPropertyId() default "";
 	
 	/**
 	 * Define o identificador da propriedade que será considerada para efetuar uma 
