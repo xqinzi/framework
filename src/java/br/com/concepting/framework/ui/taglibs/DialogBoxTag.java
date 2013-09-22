@@ -167,15 +167,31 @@ public class DialogBoxTag extends BaseActionFormElementTag{
         print(TaglibConstants.DEFAULT_DIALOG_BOX_CONTENT_STYLE_CLASS);
         print("\"");
         
-        if(getWidth().length() > 0){
-            print(" width=\"");
-            print(getWidth());
-            print("\"");
-        }
+        String width  = getWidth();
+        String height = getHeight();
         
-        if(getHeight().length() > 0){
-            print(" height=\"");
-            print(getHeight());
+        if(width.length() > 0 || height.length() > 0){
+            print(" style=\"");
+            
+            if(width.length() > 0){
+                print("width: ");
+                print(width);
+                
+                if(!width.endsWith(";"))
+                    print(";");
+            }
+            
+            if(height.length() > 0){
+                if(width.length() > 0)
+                    print(" ");
+                
+                print("height: ");
+                print(height);
+                
+                if(!height.endsWith(";"))
+                    print(";");
+            }
+
             print("\"");
         }
         
