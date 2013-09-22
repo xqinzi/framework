@@ -923,15 +923,19 @@ public class TreeViewPropertyTag extends BaseOptionsPropertyTag{
 		String height = getHeight();
 
 		if(width.length() > 0){
-			print("width: ");
+			print(" width: ");
 			print(width);
-			print(";");
+			
+			if(!width.endsWith(";"))
+			    print(";");
 		}
 
 		if(height.length() > 0){
-			print("height: ");
+			print(" height: ");
 			print(height);
-			print(";");
+			
+            if(!height.endsWith(";"))
+                print(";");
 		}
 
 		renderTooltip();
