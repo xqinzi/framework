@@ -91,18 +91,23 @@ public class SpinnerPropertyTag extends TextPropertyTag{
     /**
      * @see br.com.concepting.framework.ui.taglibs.BaseActionFormElementTag#render()
      */
-    protected void render() throws Throwable{
+    protected void renderBody() throws Throwable{
         if(isRendered()){
             PropertyInfo propertyInfo = getPropertyInfo();
             
             if(propertyInfo != null && propertyInfo.isNumber()){
                 println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
+                
                 println("<tr>");
+                
                 println("<td>");
                 
-                super.render();
+                super.renderBody();
                 
                 println("</td>");
+                
+                println("<td width=\"5\"></td>");
+
                 println("<td>");
                 
                 ButtonTag addButtonTag = new ButtonTag();
@@ -123,6 +128,12 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 onClick.append(");");
                 
                 addButtonTag.setOnClick(onClick.toString());
+                
+                if(getEnabled() && !getReadOnly())
+                    addButtonTag.setEnabled(true);
+                else
+                    addButtonTag.setEnabled(false);
+                
                 addButtonTag.doStartTag();
                 addButtonTag.doEndTag();
                 
@@ -146,15 +157,28 @@ public class SpinnerPropertyTag extends TextPropertyTag{
                 onClick.append(");");
 
                 subtractButtonTag.setOnClick(onClick.toString());
+                
+                if(getEnabled() && !getReadOnly())
+                    subtractButtonTag.setEnabled(true);
+                else
+                    subtractButtonTag.setEnabled(false);
+                
                 subtractButtonTag.doStartTag();
                 subtractButtonTag.doEndTag();
                 
                 println("</td>");
+                
                 println("</tr>");
+                
                 println("</table>");
             }
-            else
-                super.render();
+            else{
+                print("<span class=\"");
+                print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
+                println("\">");
+                println(getInvalidPropertyMessage());
+                println("</span>");
+            }
         }
     }
     
