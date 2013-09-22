@@ -197,6 +197,9 @@ public class DownloadBoxPropertyTag extends BasePropertyTag{
             }
 
             if(iconHeight.length() > 0){
+                if(iconWidth.length() > 0)
+                    print(" ");
+                
                 print("height: ");
                 print(iconHeight);
                 
