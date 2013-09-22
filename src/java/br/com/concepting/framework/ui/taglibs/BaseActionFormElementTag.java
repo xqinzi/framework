@@ -26,6 +26,7 @@ import br.com.concepting.framework.util.types.ScopeType;
  */
 public abstract class BaseActionFormElementTag extends BaseTag{
     private   String                      alignment                      = "";
+    private   String                      verticalAlignment              = "";
 	private   String                      label                          = null;
 	private   String                      labelStyleClass                = "";
 	private   String                      labelStyle                     = "";
@@ -60,6 +61,38 @@ public abstract class BaseActionFormElementTag extends BaseTag{
     private   String                      onMouseOutActionUpdateViews    = "";
     protected ActionFormMessageController actionFormMessageController    = null;
     
+    protected AlignmentType getVerticalAlignmentType(){
+        try{
+            return AlignmentType.valueOf(verticalAlignment);
+        }
+        catch(Throwable e){
+            return null;
+        }
+    }
+    
+    public String getVerticalAlignment(){
+        return verticalAlignment;
+    }
+    
+    protected void setVerticalAlignmentType(AlignmentType verticalAlignment){
+        if(verticalAlignment != null)
+            this.verticalAlignment = verticalAlignment.toString();
+        else
+            this.verticalAlignment = "";
+    }
+
+    public void setVerticalAlignment(String verticalAlignment){
+        this.verticalAlignment = verticalAlignment;
+    }
+
+    public Boolean getShowLabel(){
+        return showLabel();
+    }
+
+    public Boolean getHasPermission(){
+        return hasPermission();
+    }
+
    /**
     * Indica se o componente terá múltipla seleção.
     * 
@@ -600,7 +633,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
      * 
      * @param labelAlignment Constante que define o tipo de alinhamento vertical.
      */
-    protected void setLabelVerticalAlignment(AlignmentType labelVerticalAlignment){
+    protected void setLabelVerticalAlignmentType(AlignmentType labelVerticalAlignment){
         if(labelVerticalAlignment != null)
             this.labelVerticalAlignment = labelVerticalAlignment.toString();
         else
@@ -796,6 +829,9 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	 * @see br.com.concepting.framework.ui.taglibs.BaseTag#initialize()
 	 */
 	protected void initialize() throws Throwable{
+	    if(getVerticalAlignmentType() == null)
+	        setVerticalAlignmentType(AlignmentType.TOP);
+	    
 	    PositionType labelPosition = getLabelPositionType();
 	    
 		if(labelPosition == null){
@@ -1344,7 +1380,7 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 		}
 
 		print("<td valign=\"");
-		print(AlignmentType.TOP);
+		print(verticalAlignment);
 		print("\" align=\"");
 		print(alignment);
 		println("\">");
@@ -1398,13 +1434,15 @@ public abstract class BaseActionFormElementTag extends BaseTag{
 	protected void clearAttributes(){
 		super.clearAttributes();
 		
+		setAlignmentType(null);
+		setVerticalAlignmentType(null);
 		setComponentType(null);
 		setLabel(null);
 		setLabelStyle("");
 		setLabelStyleClass("");
-		setLabelPosition("");
-		setLabelAlignment("");
-		setLabelVerticalAlignment("");
+		setLabelPositionType(null);
+		setLabelAlignmentType(null);
+		setLabelVerticalAlignmentType(null);
 		setShowLabel(true);
 		setActionFormName("");
 		setActionFormTag(null);
