@@ -622,25 +622,29 @@ public abstract class BaseTag extends BodyTagSupport implements Cloneable{
 	 * @throws Throwable
 	 */
 	protected void initialize() throws Throwable{
-	    StringBuilder buffer = new StringBuilder(style);
-	    
-	    if(width.length() > 0){
-	        if(style.indexOf("width:") < 0){
-	            buffer.append("width: ");
-	            buffer.append(width);
-	            
-	            if(!width.endsWith("%"))
-	                buffer.append("px; ");
-	        }
-	    }
-	    
-        if(height.length() > 0){
-            if(style.indexOf("height:") < 0){
+        StringBuilder buffer = new StringBuilder(style);
+
+        if(style.length() > 0  || width.length() > 0 || height.length() > 0){
+            if(style.length() > 0)
+                buffer.append(" ");
+            
+            if(width.length() > 0){
+                buffer.append("width: ");
+                buffer.append(width);
+
+                if(!width.endsWith(";"))
+                    buffer.append(";");
+            }
+
+            if(height.length() > 0){
+                if(width.length() > 0)
+                    buffer.append(" ");
+                
                 buffer.append("height: ");
                 buffer.append(height);
-                
-                if(!height.endsWith("%"))
-                    buffer.append("px; ");
+
+                if(!height.endsWith(";"))
+                    buffer.append(";");
             }
         }
         
