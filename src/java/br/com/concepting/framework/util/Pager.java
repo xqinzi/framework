@@ -180,7 +180,7 @@ public class Pager implements java.io.Serializable{
 	 * @return Valor inteiro contendo o índice.
 	 */
 	public Integer getEndIndex(){
-		Integer index = (((currentPage - 1) * itemsPerPage) + itemsPerPage);
+		Integer index = (((currentPage - 1) * itemsPerPage) + itemsPerPage) - 1;
 
 		if(data != null)
 			if(index > data.size())
