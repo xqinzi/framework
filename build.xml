@@ -86,7 +86,7 @@
 
 		<echo message="${clean.message}" taskname="clean"/>
 		
-		<delete includeemptydirs="true" failonerror="false" taskname="clean.modules">
+		<delete includeemptydirs="true" failonerror="off" taskname="clean.modules">
 			<fileset file="${remoteServices}"/>
 			<fileset dir="build/modules/" includes="**/*.xml"/>
 			<fileset dir="src/resources/etc/resources/mappings" includes="**/*.xml"/>
@@ -103,7 +103,7 @@
 		
 		<echo message="${clean.compile.message}" taskname="clean.compile"/>
 
-		<delete includeemptydirs="true" failonerror="false" taskname="clean.compile">
+		<delete includeemptydirs="true" failonerror="off" taskname="clean.compile">
 			<fileset dir="build/compile" includes="**/*.class"/>
 		</delete>
 	</target>
@@ -113,7 +113,7 @@
 
 		<echo message="${clean.modules.message}" taskname="clean.modules"/>
 
-		<delete includeemptydirs="true" taskname="clean.modules">
+		<delete includeemptydirs="true" failonerror="off" taskname="clean.modules">
 			<fileset dir="build/modules" includes="**/*.?ar"/>
 		</delete>
 	</target>
@@ -194,8 +194,8 @@
 
 		<echo message="${dist.shared.modules.message}" taskname="dist.shared.modules"/>
 
-		<copy todir="dist" file="build/modules/${ant.project.name}.jar" failonerror="false" overwrite="true" taskname="dist"/>
-		<copy todir="dist" file="build/modules/${ant.project.name}-resources.jar" failonerror="false" overwrite="true" taskname="dist"/>
+		<copy todir="dist" file="build/modules/${ant.project.name}.jar" failonerror="off" overwrite="true" taskname="dist"/>
+		<copy todir="dist" file="build/modules/${ant.project.name}-resources.jar" failonerror="off" overwrite="true" taskname="dist"/>
 	</target>
 
 	<target name="dist.ejb.module" if="build.ejb.module">
@@ -203,8 +203,8 @@
 
 		<echo message="${dist.ejb.module.message}" taskname="dist.ejb.module"/>
 
-		<copy todir="dist/ejb" file="build/modules/ejb/${ant.project.name}-ejb.jar" failonerror="false" overwrite="true" taskname="dist.ejb.module"/>
-		<copy todir="dist/ejb" file="build/modules/ejb/${ant.project.name}-ejb.ear" failonerror="false" overwrite="true" taskname="dist.ejb.module"/>
+		<copy todir="dist/ejb" file="build/modules/ejb/${ant.project.name}-ejb.jar" failonerror="off" overwrite="true" taskname="dist.ejb.module"/>
+		<copy todir="dist/ejb" file="build/modules/ejb/${ant.project.name}-ejb.ear" failonerror="off" overwrite="true" taskname="dist.ejb.module"/>
 	</target>
 
 	<target name="dist.web.module" if="build.web.module">
@@ -212,8 +212,8 @@
 
 		<echo message="${dist.web.module.message}" taskname="dist.web.module"/>
 
-		<copy todir="dist/web" file="build/modules/web/${ant.project.name}.war" failonerror="false" overwrite="true" taskname="dist.web.module"/>
-		<copy todir="dist/web" file="build/modules/web/${ant.project.name}-web.ear" failonerror="false" overwrite="true" taskname="dist.web.module"/>
+		<copy todir="dist/web" file="build/modules/web/${ant.project.name}.war" failonerror="off" overwrite="true" taskname="dist.web.module"/>
+		<copy todir="dist/web" file="build/modules/web/${ant.project.name}-web.ear" failonerror="off" overwrite="true" taskname="dist.web.module"/>
 	</target>
 
 	<target name="dist.web.services.module" if="build.web.services.module">
@@ -221,7 +221,7 @@
 
 		<echo message="${dist.web.services.module.message}" taskname="dist.web.services.module"/>
 
-		<copy todir="dist/webServices" file="build/modules/webServices/${ant.project.name}.aar" failonerror="false" overwrite="true" taskname="dist.web.services.module"/>
+		<copy todir="dist/webServices" file="build/modules/webServices/${ant.project.name}.aar" failonerror="off" overwrite="true" taskname="dist.web.services.module"/>
 	</target>
 
 	<target name="deploy">
@@ -239,7 +239,7 @@
 
 		<echo message="${deploy.ejb.module.message}" taskname="deploy.ejb.module"/>
 
-		<copy todir="${APPSERVER_DEPLOY_HOME}" file="dist/ejb/${ant.project.name}-ejb.ear" failonerror="false" overwrite="true" taskname="deploy.ejb.module"/>
+		<copy todir="${APPSERVER_DEPLOY_HOME}" file="dist/ejb/${ant.project.name}-ejb.ear" failonerror="off" overwrite="true" taskname="deploy.ejb.module"/>
 	</target>
 
 	<target name="deploy.web.module" if="build.web.module">
@@ -247,7 +247,7 @@
 
 		<echo message="${deploy.web.module.message}" taskname="deploy.web.module"/>
 
-		<copy todir="${APPSERVER_DEPLOY_HOME}" file="dist/web/${ant.project.name}-web.ear" failonerror="false" overwrite="true" taskname="deploy.web.module"/>
+		<copy todir="${APPSERVER_DEPLOY_HOME}" file="dist/web/${ant.project.name}-web.ear" failonerror="off" overwrite="true" taskname="deploy.web.module"/>
 	</target>
 
 	<target name="deploy.web.services.module" if="build.web.services.module">
@@ -255,7 +255,7 @@
 
 		<echo message="${deploy.web.services.module.message}" taskname="deploy.web.services.module"/>
 
-		<copy todir="${APPSERVER_DEPLOY_HOME}/axis2/WEB-INF/services" file="dist/webServices/${ant.project.name}.aar" failonerror="false" overwrite="true" taskname="deploy.web.services.module"/>
+		<copy todir="${APPSERVER_DEPLOY_HOME}/axis2/WEB-INF/services" file="dist/webServices/${ant.project.name}.aar" failonerror="off" overwrite="true" taskname="deploy.web.services.module"/>
 	</target>
 
 	<target name="undeploy">
@@ -263,7 +263,7 @@
 
 		<echo message="${undeploy.message}" taskname="undeploy"/>
 		
-		<delete failonerror="false" taskname="undeploy">
+		<delete failonerror="off" taskname="undeploy">
 			<fileset dir="${APPSERVER_DEPLOY_HOME}">
 				<include name="**/${ant.project.name}*.?ar"/>
 			</fileset>
