@@ -151,7 +151,9 @@ public class AccordionTag extends BaseActionFormElementTag{
                 
                 print("width: ");
                 print(width);
-                print(";");
+                
+                if(!width.endsWith(";"))
+                    print(";");
             }
             
             print("\"");
