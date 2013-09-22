@@ -1,10 +1,10 @@
 /**
- * Arquivo que contém as funções/propriedades para manipulação do componente visual slider (barra de deslize para controle de valores numéricos).
+ * Arquivo que contém as funções/propriedades para manipulação do componente visual 
+ * slider (barra de deslize para controle de valores numéricos).
  * 
  * @author fvilarinho
  * @version 3.0
  */
-
 var pagePosition         = null;
 var currentSliderBarName = null;
 var slidersBar           = new Object();
@@ -98,7 +98,7 @@ function initializeSlider(name, width, maximumValue){
 }
 
 /**
- * Define a posição da barra de deslize de acordo com o valor atual.
+ * Define a posição da barra de controle de acordo com o valor atual.
  * 
  * @param name String contendo o identificador do componente.
  */
