@@ -599,29 +599,24 @@ public abstract class TaglibConstants{
     public static final String DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS = "spinnerButtonLabel";
     
     /**
+     * Constante que define o identificador do componente slider (barra de deslize para controle de valores numéricos).
+     */
+    public static final String SLIDER_BAR_ID = "sliderBar";
+    
+    /**
      * Constante que define o identificador do estilo CSS default para o componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_STYLE_CLASS = "sliderBar";
     
     /**
+     * Constante que define o identificador da barra de controle do componente slider (barra de deslize para controle de valores numéricos).
+     */
+    public static final String SLIDER_BAR_CONTROL_ID = "sliderBarControl";
+    
+    /**
      * Constante que define o identificador do estilo CSS default para a barra de controle do componente slider (barra de deslize).
      */
     public static final String DEFAULT_SLIDER_BAR_CONTROL_STYLE_CLASS = "sliderBarControl";
-    
-    /**
-     * Constante que define o identificador do estilo CSS default para o lado esquerdo do componente slider (barra de deslize).
-     */
-    public static final String DEFAULT_LEFT_SLIDER_BAR_STYLE_CLASS = "leftSliderBar";
-    
-    /**
-     * Constante que define o identificador do estilo CSS default para o corpo do componente slider (barra de deslize).
-     */
-    public static final String DEFAULT_SLIDER_BAR_BODY_STYLE_CLASS = "sliderBarBody";
-
-    /**
-     * Constante que define o identificador do estilo CSS default para o lado direito do componente slider (barra de deslize).
-     */
-    public static final String DEFAULT_RIGHT_SLIDER_BAR_STYLE_CLASS = "rightSliderBar";
 
     /**
      * Constante que define o identificador o arquivo de script de página default para o componente slider (barra de deslize).
