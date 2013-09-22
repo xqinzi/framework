@@ -5,20 +5,12 @@
  * @version 3.0
  */
 
-/**
- * Estilo que define o lado esquerdo do componente.
- */
-.leftSliderBar{
-	background: url(../images/leftSliderBar.png) no-repeat;
-	width     : 2px;
-	height    : 5px;
-}
- 
-/**
- * Estilo que define o corpo do componente.
- */
-.sliderBarBody{
-	background: url(../images/sliderBarBody.png) repeat-x;
+.sliderBar{
+	background: url(../images/sliderBar.png) repeat-x;
+	position  : relative;
+	left      : 0px;
+	top       : 10px;
+	width     : 100%;
 	height    : 5px;
 }
 
@@ -26,19 +18,12 @@
  * Estilo que define o controle de deslize do componente.
  */
 .sliderBarControl{
+	background: url(../images/sliderBarControl.png) no-repeat;
 	position  : relative;
 	left      : 0px;
 	top       : 0px;
-	background: url(../images/sliderBarControl.png) repeat-x;
 	width     : 17px;
 	height    : 19px;
-}
-
-/**
- * Estilo que define o lado esquerdo do componente.
- */
-.rightSliderBar{
-	background: url(../images/rightSliderBar.png) no-repeat;
-	width     : 2px;
-	height    : 5px;
+	float     : left;
+	z-index   : 1;
 }

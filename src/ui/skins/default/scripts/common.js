@@ -9,7 +9,10 @@ var clockTimer     = null;
 var requestHandler = null;
 var submittedForm  = null;
 var timers         = [];
- 
+
+/**
+ * Limpa todos os timers da página.
+ */
 function clearAllTimers(){
 	if(timers){
 		for(cont = 0 ; cont < timers.length ; cont++){
@@ -19,6 +22,11 @@ function clearAllTimers(){
 	}
 }
 
+/**
+ * Esconde/Exibe a caixa de autocomplete do componente de entrada de dados.
+ * 
+ * @param name String contendo o identificador do componente.
+ */
 function showHideAutoCompleteBox(name){
 	var object = document.getElementById(name + ".autoCompleteBox");
 	
