@@ -366,6 +366,14 @@ public class PageTag extends HtmlTag{
 		styleTag.doStartTag();
 		styleTag.doEndTag();
 
+        scriptTag.setUrl(TaglibConstants.DEFAULT_COLOR_PICKER_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
+
+        styleTag.setUrl(TaglibConstants.DEFAULT_COLOR_PICKER_STYLE_RESOURCE_ID);
+        styleTag.doStartTag();
+        styleTag.doEndTag();
+
         scriptTag.setUrl(TaglibConstants.DEFAULT_DIALOG_BOX_SCRIPT_RESOURCE_ID);
         scriptTag.doStartTag();
         scriptTag.doEndTag();
@@ -421,6 +429,14 @@ public class PageTag extends HtmlTag{
 		styleTag.setUrl(TaglibConstants.DEFAULT_PROGRESS_BAR_STYLE_RESOURCE_ID);
 		styleTag.doStartTag();
 		styleTag.doEndTag();
+
+        scriptTag.setUrl(TaglibConstants.DEFAULT_RICH_TEXT_AREA_SCRIPT_RESOURCE_ID);
+        scriptTag.doStartTag();
+        scriptTag.doEndTag();
+
+        styleTag.setUrl(TaglibConstants.DEFAULT_RICH_TEXT_AREA_STYLE_RESOURCE_ID);
+        styleTag.doStartTag();
+        styleTag.doEndTag();
 
         scriptTag.setUrl(TaglibConstants.DEFAULT_SPINNER_SCRIPT_RESOURCE_ID);
         scriptTag.doStartTag();
