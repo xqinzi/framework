@@ -449,8 +449,12 @@ function getObjectValue(name, target){
 function setObjectValue(name, value){
 	var object = getObject(name);
 	
-	if(object)
-		object.value = value;
+	try{
+		if(object)
+			object.value = value;
+	}
+	catch(e){
+	}
 }
 
 /**
