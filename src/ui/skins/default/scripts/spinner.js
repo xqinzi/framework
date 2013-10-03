@@ -28,6 +28,8 @@ function addSpinnerValue(name, maximumValue, step){
 		}
 		
 		object.value = currentValue + step;
+		
+		object.onchange;
 	}
 }
  
@@ -54,5 +56,7 @@ function subtractSpinnerValue(name, minimumValue, step){
 		}
 		
 		object.value = currentValue - step;
+		
+		object.onchange;
 	}
 }
