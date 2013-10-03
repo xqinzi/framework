@@ -16,21 +16,18 @@ public class ColorUtil{
      * @return String que representa a cor desejada em hexadecimal.
      */
 	public static String toString(Color color){
-		Integer       red         = color.getRed();
-		Integer       green       = color.getGreen();
-		Integer       blue        = color.getBlue();
-		String        redString   = Integer.toString(red, 16);
-		String        greenString = Integer.toString(green, 16);
-		String        blueString  = Integer.toString(blue, 16);
-		StringBuilder value       = new StringBuilder();
+		Integer       red   = color.getRed();
+		Integer       green = color.getGreen();
+		Integer       blue  = color.getBlue();
+		StringBuilder value = new StringBuilder();
 		
-		value.append("#");
-		value.append(StringUtil.replicate("0", 2 - redString.length()));
-		value.append(redString);
-		value.append(StringUtil.replicate("0", 2 - greenString.length()));
-		value.append(greenString);
-		value.append(StringUtil.replicate("0", 2 - blueString.length()));
-		value.append(blueString);
+		value.append("rgb(");
+		value.append(red);
+		value.append(", ");
+		value.append(green);
+		value.append(",");
+		value.append(blue);
+		value.append(")");
 		
 		return value.toString();		
 	}
@@ -43,6 +40,12 @@ public class ColorUtil{
 	 * @return Instância contendo as propriedades da cor. 
 	 */
 	public static Color toColor(String color){
-		return Color.decode(color);
+	    String value = StringUtil.replaceAll(color, "rgb(", "");
+	    
+	    value = StringUtil.replaceAll(value, ")", "");
+	    
+	    String values[] = StringUtil.split(value);
+	    
+	    return new Color(Integer.parseInt(StringUtil.trim(values[0])), Integer.parseInt(StringUtil.trim(values[1])), Integer.parseInt(StringUtil.trim(values[2])));
 	}
 }
