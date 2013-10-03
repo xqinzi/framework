@@ -35,87 +35,86 @@ public class SliderPropertyTag extends TextPropertyTag{
      * @see br.com.concepting.framework.ui.taglibs.BasePropertyTag#renderBody()
      */
     protected void renderBody() throws Throwable{
-        if(isRendered()){
-            PropertyInfo propertyInfo = getPropertyInfo();
+        Object       value        = getValue();
+        PropertyInfo propertyInfo = getPropertyInfo();
+        
+        if(value instanceof Number || (propertyInfo != null && propertyInfo.isNumber())){
+            println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
             
-            if(propertyInfo != null && propertyInfo.isNumber()){
-                println("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">");
-                
-                println("<tr>");
-                
-                println("<td>");
-                
-                String name = getName();
-        
-                println("<div>");
-                
-                print("<div id=\"");
+            println("<tr>");
+            
+            println("<td>");
+            
+            String name = getName();
+    
+            println("<div>");
+            
+            print("<div id=\"");
+            print(name);
+            print(".");
+            print(TaglibConstants.SLIDER_BAR_CONTROL_ID);
+            print("\" class=\"");
+            print(TaglibConstants.DEFAULT_SLIDER_BAR_CONTROL_STYLE_CLASS);
+            print("\"");
+            
+            if(getEnabled() && !getReadOnly()){
+                print(" onMouseDown=\"dragSliderBarControl('");
                 print(name);
-                print(".");
-                print(TaglibConstants.SLIDER_BAR_CONTROL_ID);
-                print("\" class=\"");
-                print(TaglibConstants.DEFAULT_SLIDER_BAR_CONTROL_STYLE_CLASS);
-                print("\"");
-                
-                if(getEnabled() && !getReadOnly()){
-                    print(" onMouseDown=\"dragSliderBarControl('");
-                    print(name);
-                    print("', event);\" onMouseUp=\"dropSliderBarControl();\" onMouseOut=\"dropSliderBarControl();\" onMouseMove=\"slideIt(event);\"");
-                }
-                
-                println("></div>");
-        
-                print("<div id=\"");
-                print(name);
-                print(".");
-                print(TaglibConstants.SLIDER_BAR_ID);
-                print("\" class=\"");
-                print(TaglibConstants.DEFAULT_SLIDER_BAR_STYLE_CLASS);
-                print("\"></div>");
-        
-                println("</div>");
-                
-                println("</td>");
-                
-                println("<td width=\"5\"></td>");
-        
-                println("<td>");
-                
-                super.renderBody();
-                
-                println("</td>");
-                
-                println("</tr>");
-                
-                println("</table>");
-                
-                String        width         = getWidth();  
-                StringBuilder scriptContent = new StringBuilder();
-                
-                scriptContent.append("initializeSlider('");
-                scriptContent.append(name);
-                scriptContent.append("', ");
-                scriptContent.append(NumberUtil.parseInt(width));
-                scriptContent.append(", ");
-                scriptContent.append(maximumValue);
-                scriptContent.append(", ");
-                scriptContent.append(getValue());
-                scriptContent.append(");");
-                
-                ScriptTag scriptTag = new ScriptTag();
-                
-                scriptTag.setPageContext(pageContext);
-                scriptTag.setContent(scriptContent.toString());
-                scriptTag.doStartTag();
-                scriptTag.doEndTag();
+                print("', event);\" onMouseUp=\"dropSliderBarControl();\" onMouseOut=\"dropSliderBarControl();\" onMouseMove=\"slideIt(event);\"");
             }
-            else{
-                print("<span class=\"");
-                print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
-                println("\">");
-                println(getInvalidPropertyMessage());
-                println("</span>");
-            }
+            
+            println("></div>");
+    
+            print("<div id=\"");
+            print(name);
+            print(".");
+            print(TaglibConstants.SLIDER_BAR_ID);
+            print("\" class=\"");
+            print(TaglibConstants.DEFAULT_SLIDER_BAR_STYLE_CLASS);
+            print("\"></div>");
+    
+            println("</div>");
+            
+            println("</td>");
+            
+            println("<td width=\"5\"></td>");
+    
+            println("<td>");
+            
+            super.renderBody();
+            
+            println("</td>");
+            
+            println("</tr>");
+            
+            println("</table>");
+            
+            String        width         = getWidth();  
+            StringBuilder scriptContent = new StringBuilder();
+            
+            scriptContent.append("initializeSlider('");
+            scriptContent.append(name);
+            scriptContent.append("', ");
+            scriptContent.append(NumberUtil.parseInt(width));
+            scriptContent.append(", ");
+            scriptContent.append(maximumValue);
+            scriptContent.append(", ");
+            scriptContent.append(getValue());
+            scriptContent.append(");");
+            
+            ScriptTag scriptTag = new ScriptTag();
+            
+            scriptTag.setPageContext(pageContext);
+            scriptTag.setContent(scriptContent.toString());
+            scriptTag.doStartTag();
+            scriptTag.doEndTag();
+        }
+        else{
+            print("<span class=\"");
+            print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
+            println("\">");
+            println(getInvalidPropertyMessage());
+            println("</span>");
         }
     }
     
@@ -125,19 +124,23 @@ public class SliderPropertyTag extends TextPropertyTag{
     protected void initialize() throws Throwable{
         String width = getWidth();
         
+        if(width.length() == 0)
+            width = TaglibConstants.DEFAULT_SLIDER_BAR_WIDTH.toString();
+        
         setWidth("");
         
         super.initialize();
         
+        Object       value        = getValue();
         PropertyInfo propertyInfo = getPropertyInfo();
         
-        if(propertyInfo.isNumber()){
+        if(value instanceof Number || (propertyInfo != null && propertyInfo.isNumber())){
             setWidth(width);
     
             if(maximumValue == null)
-                maximumValue = NumberUtil.getMaximumRange(propertyInfo.getClazz()).longValue();
+                maximumValue = NumberUtil.getMaximumRange((propertyInfo != null ? propertyInfo.getClazz() : value.getClass())).longValue();
             
-            setSize((int)(Math.log10(maximumValue)));
+            setSize((int)(Math.log10(maximumValue)) + 1);
             setMaxlength(getSize());
     
             StringBuilder onBlurContent = new StringBuilder();

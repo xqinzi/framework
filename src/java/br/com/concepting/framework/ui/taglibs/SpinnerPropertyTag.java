@@ -77,14 +77,15 @@ public class SpinnerPropertyTag extends TextPropertyTag{
         
         setReadOnly(true);
         
+        Object       value        = getValue();
         PropertyInfo propertyInfo = getPropertyInfo();
         
-        if(propertyInfo.isNumber()){
+        if(value instanceof Number || (propertyInfo != null && propertyInfo.isNumber())){
             if(maximumValue == null)
-                maximumValue = NumberUtil.getMaximumRange(propertyInfo.getClazz()).longValue();
+                maximumValue = NumberUtil.getMaximumRange((propertyInfo != null ? propertyInfo.getClazz() : value.getClass())).longValue();
 
             if(minimumValue == null)
-                minimumValue = NumberUtil.getMinimumRange(propertyInfo.getClazz()).longValue();
+                minimumValue = NumberUtil.getMinimumRange((propertyInfo != null ? propertyInfo.getClazz() : value.getClass())).longValue();
         }
     }
 
@@ -92,93 +93,92 @@ public class SpinnerPropertyTag extends TextPropertyTag{
      * @see br.com.concepting.framework.ui.taglibs.BaseActionFormElementTag#render()
      */
     protected void renderBody() throws Throwable{
-        if(isRendered()){
-            PropertyInfo propertyInfo = getPropertyInfo();
+        Object       value        = getValue();
+        PropertyInfo propertyInfo = getPropertyInfo();
+        
+        if(value instanceof Number || (propertyInfo != null && propertyInfo.isNumber())){
+            println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
             
-            if(propertyInfo != null && propertyInfo.isNumber()){
-                println("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">");
-                
-                println("<tr>");
-                
-                println("<td>");
-                
-                super.renderBody();
-                
-                println("</td>");
-                
-                println("<td width=\"5\"></td>");
+            println("<tr>");
+            
+            println("<td>");
+            
+            super.renderBody();
+            
+            println("</td>");
+            
+            println("<td width=\"5\"></td>");
 
-                println("<td>");
-                
-                ButtonTag addButtonTag = new ButtonTag();
-                
-                addButtonTag.setPageContext(pageContext);
-                addButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
-                addButtonTag.setName(TaglibConstants.DEFAULT_ADD_SPINNER_BUTTON_STYLE_CLASS);
-                addButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS);
-                
-                StringBuilder onClick = new StringBuilder();
-                
-                onClick.append("addSpinnerValue('");
-                onClick.append(getName());
-                onClick.append("', ");
-                onClick.append(maximumValue);
-                onClick.append(", ");
-                onClick.append(step);
-                onClick.append(");");
-                
-                addButtonTag.setOnClick(onClick.toString());
-                
-                if(getEnabled() && !getReadOnly())
-                    addButtonTag.setEnabled(true);
-                else
-                    addButtonTag.setEnabled(false);
-                
-                addButtonTag.doStartTag();
-                addButtonTag.doEndTag();
-                
-                println("</td>");
-                println("<td>");
-                
-                ButtonTag subtractButtonTag = new ButtonTag();
-                
-                subtractButtonTag.setPageContext(pageContext);
-                subtractButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
-                subtractButtonTag.setName(TaglibConstants.DEFAULT_SUBTRACT_SPINNER_BUTTON_STYLE_CLASS);
-                subtractButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS);
-                
-                onClick = new StringBuilder();
-                onClick.append("subtractSpinnerValue('");
-                onClick.append(getName());
-                onClick.append("', ");
-                onClick.append(minimumValue);
-                onClick.append(", ");
-                onClick.append(step);
-                onClick.append(");");
+            println("<td>");
+            
+            ButtonTag addButtonTag = new ButtonTag();
+            
+            addButtonTag.setPageContext(pageContext);
+            addButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
+            addButtonTag.setName(TaglibConstants.DEFAULT_ADD_SPINNER_BUTTON_STYLE_CLASS);
+            addButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS);
+            
+            StringBuilder onClick = new StringBuilder();
+            
+            onClick.append("addSpinnerValue('");
+            onClick.append(getName());
+            onClick.append("', ");
+            onClick.append(maximumValue);
+            onClick.append(", ");
+            onClick.append(step);
+            onClick.append(");");
+            
+            addButtonTag.setOnClick(onClick.toString());
+            
+            if(getEnabled() && !getReadOnly())
+                addButtonTag.setEnabled(true);
+            else
+                addButtonTag.setEnabled(false);
+            
+            addButtonTag.doStartTag();
+            addButtonTag.doEndTag();
+            
+            println("</td>");
+            println("<td>");
+            
+            ButtonTag subtractButtonTag = new ButtonTag();
+            
+            subtractButtonTag.setPageContext(pageContext);
+            subtractButtonTag.setResourceId(TaglibConstants.DEFAULT_SPINNER_I18N_RESOURCE_ID);
+            subtractButtonTag.setName(TaglibConstants.DEFAULT_SUBTRACT_SPINNER_BUTTON_STYLE_CLASS);
+            subtractButtonTag.setLabelStyleClass(TaglibConstants.DEFAULT_SPINNER_BUTTON_LABEL_STYLE_CLASS);
+            
+            onClick = new StringBuilder();
+            onClick.append("subtractSpinnerValue('");
+            onClick.append(getName());
+            onClick.append("', ");
+            onClick.append(minimumValue);
+            onClick.append(", ");
+            onClick.append(step);
+            onClick.append(");");
 
-                subtractButtonTag.setOnClick(onClick.toString());
-                
-                if(getEnabled() && !getReadOnly())
-                    subtractButtonTag.setEnabled(true);
-                else
-                    subtractButtonTag.setEnabled(false);
-                
-                subtractButtonTag.doStartTag();
-                subtractButtonTag.doEndTag();
-                
-                println("</td>");
-                
-                println("</tr>");
-                
-                println("</table>");
-            }
-            else{
-                print("<span class=\"");
-                print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
-                println("\">");
-                println(getInvalidPropertyMessage());
-                println("</span>");
-            }
+            subtractButtonTag.setOnClick(onClick.toString());
+            
+            if(getEnabled() && !getReadOnly())
+                subtractButtonTag.setEnabled(true);
+            else
+                subtractButtonTag.setEnabled(false);
+            
+            subtractButtonTag.doStartTag();
+            subtractButtonTag.doEndTag();
+            
+            println("</td>");
+            
+            println("</tr>");
+            
+            println("</table>");
+        }
+        else{
+            print("<span class=\"");
+            print(TaglibConstants.DEFAULT_LABEL_STYLE_CLASS);
+            println("\">");
+            println(getInvalidPropertyMessage());
+            println("</span>");
         }
     }
     
