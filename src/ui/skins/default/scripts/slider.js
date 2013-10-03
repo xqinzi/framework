@@ -86,7 +86,12 @@ function initializeSlider(name, width, maximumValue){
 		if(!sliderBar){
 			sliderBar = new SliderBar();
 			sliderBar.setName(name);
-			sliderBar.setWidth(width);
+			
+			if(width != null)
+				sliderBar.setWidth(width);
+			else
+				sliderBar.setWidth(sliderBarObject.offsetWidth);
+			
 			sliderBar.setControlWidth(sliderBarControlObject.offsetWidth);
 			sliderBar.setMaximumValue(maximumValue);
 			
@@ -129,6 +134,11 @@ function setSliderPosition(name){
 		sliderBarObject.style.width = (sliderBar.getWidth() + sliderBar.getControlWidth()) + "px";
 		
 		sliderBarControlObject.style.left = currentPosition + "px";
+		
+		var object = getObject(name);
+		
+		if(object)
+			object.onchange();
 	}
 }
  
@@ -184,6 +194,12 @@ function slideIt(event){
 		if(sliderBarControlObject)
 			sliderBarControlObject.style.left = currentPosition; 
 			
-		setObjectValue(currentSliderBarName, value);
+		var object = getObject(currentSliderBarName);
+		
+		if(object){
+			object.value = value;
+
+			object.onchange();
+		}
 	}
 }
