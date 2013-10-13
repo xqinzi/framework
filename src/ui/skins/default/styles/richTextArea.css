@@ -1,0 +1,25 @@
+.richTextArea{
+	border               : 1px SOLID #888888;
+	background           : WHITE;
+	width                : 300px;
+	height               : 150px;	
+	outline              : NONE;
+	-webkit-transition   : all 0.25s ease-in-out;
+	-moz-transition      : all 0.25s ease-in-out;
+	transition           : all 0.25s ease-in-out;
+	-webkit-border-radius: 3px;
+	-moz-border-radius   : 3px;
+	border-radius        : 3px;
+	font-family          : Trebuchet MS, Verdana, Tahoma, Arial, Sans-Serif;
+	font-size            : 14px; 
+	color                : #666666;
+}
+
+.richTextArea:focus{
+    -webkit-box-shadow: 0 0 5px #1e8fad;
+    -moz-box-shadow   : 0 0 5px #1e8fad;
+	box-shadow        : 0 0 5px #1e8fad;
+	-ms-filter        : "progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad')";
+	filter            : progid:DXImageTransform.Microsoft.Shadow(Strength=5, Direction=0, Color='#1e8fad');
+	border            : 1px SOLID #1e8fad;
+}
