@@ -2,7 +2,6 @@ package br.com.concepting.framework.network.mail.resource;
 
 import br.com.concepting.framework.network.mail.types.MailTransportType;
 import br.com.concepting.framework.network.resource.NetworkResourceLoader;
-import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
 import br.com.concepting.framework.util.StringUtil;
 import br.com.concepting.framework.util.helpers.XmlNode;
@@ -14,7 +13,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 1.0
  */
-public class MailResourceLoader extends NetworkResourceLoader{
+public class MailResourceLoader extends NetworkResourceLoader<MailResource>{
 	/**
 	 * Construtor - Inicializa classe de leitura/manipulação do arquivo de configurações do 
 	 * protocolo de envio/recebimento de mensagens default.
@@ -28,7 +27,7 @@ public class MailResourceLoader extends NetworkResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
 	 */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public MailResource get(String id) throws InvalidResourceException{
 		MailResource mailResource = super.get(id);
 		XmlNode      resource     = mailResource.getContent();
         XmlNode      resourceNode = resource.getNode("storage");
@@ -164,19 +163,20 @@ public class MailResourceLoader extends NetworkResourceLoader{
             }
 		}
 
-		return (R)mailResource;
+		return mailResource;
 	}
 
 	/**
 	 * @see br.com.concepting.framework.resource.BaseResourceLoader#parseResource()
 	 */
-    protected <C> C parseResource() throws InvalidResourceException{
+    protected XmlNode parseResource() throws InvalidResourceException{
 		XmlNode content = super.parseResource();
 
 		content = content.getNode("mailResources");
+
 		if(content == null) 
 			throw new InvalidResourceException(getResourceId());
 
-		return (C)content;
+		return content;
 	}
 }

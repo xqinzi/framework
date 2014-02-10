@@ -4,6 +4,7 @@ import br.com.concepting.framework.network.constants.NetworkConstants;
 import br.com.concepting.framework.network.mail.types.MailStorageType;
 import br.com.concepting.framework.network.mail.types.MailTransportType;
 import br.com.concepting.framework.resource.BaseResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /** 
  * Classe responsável pelo armazenamento das configurações dos protocolos de envio e recebimento 
@@ -12,8 +13,10 @@ import br.com.concepting.framework.resource.BaseResource;
  * @author fvilarinho
  * @since 1.0
  */
-public class MailResource extends BaseResource{
-	private MailTransportType transport           = NetworkConstants.DEFAULT_MAIL_TRANSPORT;
+public class MailResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = -4631808238382919312L;
+    
+    private MailTransportType transport           = NetworkConstants.DEFAULT_MAIL_TRANSPORT;
     private MailStorageType   storage             = NetworkConstants.DEFAULT_MAIL_STORAGE;
 	private String            transportServerName = NetworkConstants.LOCALHOST_ID;
 	private Integer           transportServerPort = NetworkConstants.DEFAULT_MAIL_TRANSPORT_PORT;

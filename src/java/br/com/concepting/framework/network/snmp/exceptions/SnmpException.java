@@ -9,7 +9,9 @@ import br.com.concepting.framework.exceptions.InternalErrorException;
  * @since 1.0
  */
 public class SnmpException extends InternalErrorException{
-	private Integer responseCode = 0;
+    private static final long serialVersionUID = -7340118007198776318L;
+    
+    private Integer responseCode = 0;
 	
 	/**
 	 * Construtor - Define os retornos do erro.

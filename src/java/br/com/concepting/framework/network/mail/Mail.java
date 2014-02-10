@@ -40,7 +40,7 @@ import br.com.concepting.framework.util.FileUtil;
 import br.com.concepting.framework.util.StringUtil;
 
 /** 
- * Classe responsável pela envio/recebimento de mensagens.
+ * Classe responsável pela envio/recebimento de mensagens de e-Mail.
  * 
  * @author fvilarinho
  * @since 1.0
@@ -248,6 +248,12 @@ public class Mail{
 				file.delete();
 	}
 	
+    /**
+     * Retorna a sessão do serviço de transporte de mensagens.
+     * 
+     * @return Instância da sessão do serviço de transporte de mensagens.
+     * @throws NoSuchProviderException
+     */
 	private Session getTransportSession() throws NoSuchProviderException{
 	    Session session = null;
 	    
@@ -264,6 +270,12 @@ public class Mail{
         return session;
 	}
 
+	/**
+	 * Retorna a sessão do serviço de armazenamento de mensagens.
+	 * 
+	 * @return Instância da sessão do serviço de armazenamento de mensagens.
+	 * @throws NoSuchProviderException
+	 */
     private Session getStorageSession() throws NoSuchProviderException{
         Session session = null;
         
@@ -325,7 +337,7 @@ public class Mail{
 	 * @return Lista contendo as pastas encontradas.
 	 * @throws MessagingException
 	 */
-	public Collection getFolders() throws MessagingException{
+	public Collection<Folder> getFolders() throws MessagingException{
 		Collection<Folder> folders = null;
         Session            session = getStorageSession();
         Store              storage = session.getStore();

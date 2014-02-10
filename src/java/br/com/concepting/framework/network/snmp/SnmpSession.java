@@ -375,7 +375,7 @@ public class SnmpSession{
 	 */
 	private void initialize() throws SnmpException{
 		try{
-            TransportMapping transport = new DefaultUdpTransportMapping();
+            TransportMapping<?> transport = new DefaultUdpTransportMapping();
 
             session = new Snmp(transport);
 		
@@ -503,8 +503,9 @@ public class SnmpSession{
     		if(getResponseCode() > 0)
     			throw new SnmpException(getResponseCode(), getResponseMessage());
     		
-    		VariableBinding         variable            = null;
-    		Vector<VariableBinding> variables           = response.getVariableBindings();
+            @SuppressWarnings("unchecked")
+            Vector<VariableBinding> variables           = (Vector<VariableBinding>)response.getVariableBindings();
+            VariableBinding         variable            = null;
     		Object                  value               = null;
     		SnmpData                result              = null;
     		SnmpRequest             request             = null;

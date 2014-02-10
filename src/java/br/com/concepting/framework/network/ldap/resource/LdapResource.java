@@ -1,6 +1,7 @@
 package br.com.concepting.framework.network.ldap.resource;
 
 import br.com.concepting.framework.resource.BaseResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /** 
  * Classe responsável pelo armazenamento das configurações do serviço de diretórios LDAP.
@@ -8,8 +9,10 @@ import br.com.concepting.framework.resource.BaseResource;
  * @author fvilarinho
  * @since 1.0
  */
-public class LdapResource extends BaseResource{
-	private String  serverName         = "";
+public class LdapResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = 3052749946121399692L;
+    
+    private String  serverName         = "";
 	private Integer serverPort         = 0;
 	private String  authenticationType = "";
 	private String  user               = "";

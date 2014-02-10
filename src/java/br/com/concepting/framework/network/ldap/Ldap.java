@@ -98,6 +98,7 @@ public class Ldap{
 	 * @return Instância contendo a lista de nós encontrados.
 	 * @throws NamingException
 	 */
+    @SuppressWarnings("unchecked")
     public XmlNode list(String dn) throws NamingException{
 		NamingEnumeration<NameClassPair> list                 = getContext().list(dn);
 		NameClassPair                    item                 = null;
@@ -128,7 +129,7 @@ public class Ldap{
 					
 					attributeValueBuffer.delete(0, attributeValueBuffer.length());
 					
-					for(NamingEnumeration e = attribute.getAll() ; e.hasMore() ; attributeValue = e.next()){
+					for(NamingEnumeration<Attribute> e = (NamingEnumeration<Attribute>)attribute.getAll() ; e.hasMore() ; attributeValue = e.next()){
 						if(attributeValueBuffer.length() > 0)
 							attributeValueBuffer.append(";");
 						
