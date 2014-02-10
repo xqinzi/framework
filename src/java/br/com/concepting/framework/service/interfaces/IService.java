@@ -60,20 +60,20 @@ public interface IService{
 	public <L extends LoginSessionModel> void setLoginSession(L loginSession) throws RemoteException;
 	
     /**
-     * Retorna o tempo do timeout do bloqueio da transação.
+     * Retorna o tempo do timeout da execução das operações.
      * 
-     * @return Valor inteiro contendo o timeout do bloqueio.
+     * @return Valor inteiro contendo o timeout.
      * @throws RemoteException
      */
-    public Integer getTransactionTimeout() throws RemoteException;
+    public Integer getTimeout() throws RemoteException;
     
     /**
-     * Define o tempo do timeout do bloqueio da transação.
+     * Define o tempo do timeout da execução das operações.
      * 
-     * @param transactionTimeout Valor inteiro contendo o timeout do bloqueio.
+     * @param transactionTimeout Valor inteiro contendo o timeout.
      * @throws RemoteException
      */
-    public void setTransactionTimeout(Integer transactionTimeout) throws RemoteException;
+    public void setTimeout(Integer timeout) throws RemoteException;
 
     /**
 	 * Retorna todos os modelos de dados vinculados a classe de serviço.
@@ -83,7 +83,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
     @ServiceTransaction
-	public <C extends Collection> C list() throws InternalErrorException, RemoteException;
+	public <M extends BaseModel, C extends Collection<M>> C list() throws InternalErrorException, RemoteException;
 
 	/**
 	 * Retorna uma lista contendo os modelos de dados a partir dos valores das propriedades de 
@@ -95,7 +95,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
     @ServiceTransaction
-	public <M extends BaseModel, C extends Collection> C search(M model) throws InternalErrorException, RemoteException;
+	public <M extends BaseModel, C extends Collection<M>> C search(M model) throws InternalErrorException, RemoteException;
 
 	/**
 	 * Retorna uma lista contendo os modelos de dados a partir dos valores das propriedades de pesquisa 
@@ -108,7 +108,7 @@ public interface IService{
 	 * @throws InternalErrorException
 	 */
     @ServiceTransaction
-	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException, RemoteException;
+	public <M extends BaseModel, C extends Collection<M>> C search(M model, ModelFilter modelFilter) throws InternalErrorException, RemoteException;
 
 	/**
 	 * Carrega um único modelo de dados.
