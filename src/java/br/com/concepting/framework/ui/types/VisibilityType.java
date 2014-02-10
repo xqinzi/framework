@@ -1,5 +1,5 @@
 package br.com.concepting.framework.ui.types;
-
+ 
 /**
  * Classe que define as constantes dos modos de visibilidade de um objeto/componente.
  * 

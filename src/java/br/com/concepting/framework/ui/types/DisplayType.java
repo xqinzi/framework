@@ -1,5 +1,5 @@
 package br.com.concepting.framework.ui.types;
-
+ 
 /**
  * Classe que define as constantes dos modos de renderização de um objeto/componente.
  * 
