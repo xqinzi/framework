@@ -52,7 +52,7 @@ public abstract class BaseAction extends DispatchAction{
 	 * @return Instância da classe de serviço.
 	 * @throws InternalErrorException
 	 */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+    protected <S extends IService> S getService(Class<?> modelClass) throws InternalErrorException{
 		if(modelClass == null){
 		    try{
 		        modelClass = ModelUtil.getModelClassByAction(getClass());
@@ -89,6 +89,7 @@ public abstract class BaseAction extends DispatchAction{
 	 * 
 	 * @return Instância da classe do formulário.
 	 */
+    @SuppressWarnings("unchecked")
     protected <F extends BaseActionForm> F getActionForm(){
 		return (F)actionForm;
 	}

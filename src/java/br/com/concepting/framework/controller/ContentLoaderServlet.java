@@ -18,7 +18,9 @@ import br.com.concepting.framework.util.types.ScopeType;
  * @since 1.0
  */
 public class ContentLoaderServlet extends HttpServlet{
-	/**
+    private static final long serialVersionUID = -3793068341779351821L;
+
+    /**
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

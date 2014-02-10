@@ -25,7 +25,7 @@ import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.constants.SystemConstants;
 import br.com.concepting.framework.controller.form.ActionFormMessageController;
 import br.com.concepting.framework.controller.form.BaseActionForm;
-import br.com.concepting.framework.controller.helpers.RequestInfo;
+import br.com.concepting.framework.controller.form.helpers.ActionFormRequestInfo;
 import br.com.concepting.framework.model.SystemSessionModel;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.security.controller.SecurityController;
@@ -495,6 +495,7 @@ public class SystemController{
 	 * @param attributeId String contendo o identificador do atributo.
 	 * @param scopeType Constante que define o escopo de armazenamento do atributo.
 	 */
+    @SuppressWarnings("unchecked")
     public <T> T findAttribute(String attributeId, ScopeType scopeType){
     	Object instance = null;
     	
@@ -745,12 +746,12 @@ public class SystemController{
 	 * @param name String contendo o identificador do parâmetro da requisição.
 	 * @return Instância contendo as propriedades do parâmetro da requisição.
 	 */
-	public RequestInfo getRequestInfo(String name){
-		RequestInfo requestInfo = new RequestInfo();
+	public ActionFormRequestInfo getActionFormRequestInfo(String name){
+		ActionFormRequestInfo requestInfo = new ActionFormRequestInfo();
 		
         requestInfo.setCurrentGuide(getRequestInfoCurrentGuide(name));
         requestInfo.setCurrentNode(getRequestInfoCurrentNode(name));
-        requestInfo.setCurrentSection(getRequestInfoCurrentSection(name));
+        requestInfo.setCurrentSections(getRequestInfoCurrentSections(name));
         requestInfo.setData(getRequestInfoData(name, false));
         requestInfo.setDataScope(getRequestInfoDataScope(name, false));
         requestInfo.setDataStartIndex(getRequestInfoDataStartIndex(name));
@@ -865,11 +866,11 @@ public class SystemController{
     }
 
     /**
-     * Retorna a seção atual.
+     * Retorna lista dos identificadores das seções selecionadas.
      * 
-     * @param name String contendo o identificador do componente.
+     * @param name Lista contendo os identificadores das seções selecionadas.
      */
-    private <O> O getRequestInfoCurrentSection(String name){
+    private List<String> getRequestInfoCurrentSections(String name){
         StringBuilder key = new StringBuilder();
 
         key.append(name);
@@ -883,7 +884,7 @@ public class SystemController{
             for(String value : values)
                 result.add(value);
         
-        return (O)result;
+        return result;
     }
 
     /**
@@ -1148,11 +1149,13 @@ public class SystemController{
      * 
      * @return Instância contendo a lista de requisições.
      */
-    public Collection<RequestInfo> getRequestInfos(){
-		List<String>        requestInfoNames = new LinkedList<String>();
-		String              requestInfoName  = "";
-		Enumeration<String> enumeration      = getRequest().getParameterNames();
-		List<RequestInfo>   requestInfos     = new LinkedList<RequestInfo>();
+    public Collection<ActionFormRequestInfo> getActionFormRequestInfos(){
+		List<String> requestInfoNames = new LinkedList<String>();
+		String       requestInfoName  = "";
+		
+		@SuppressWarnings("unchecked")
+        Enumeration<String>         enumeration  = getRequest().getParameterNames();
+		List<ActionFormRequestInfo> requestInfos = new LinkedList<ActionFormRequestInfo>();
 
 		while(enumeration.hasMoreElements()){
 			requestInfoName = enumeration.nextElement();
@@ -1196,7 +1199,7 @@ public class SystemController{
 		for(Integer cont = 0 ; cont < requestInfoNames.size() ; cont++){
 		    requestInfoName = requestInfoNames.get(cont);
 		    
-		    requestInfos.add(getRequestInfo(requestInfoName));
+		    requestInfos.add(getActionFormRequestInfo(requestInfoName));
 		}
 		
 		return requestInfos;
