@@ -9,7 +9,9 @@ import br.com.concepting.framework.exceptions.IncorrectSyntaxException;
  * @since 1.0
  */
 public class InvalidResourceException extends IncorrectSyntaxException{
-	private String resourceId = "";
+    private static final long serialVersionUID = -2484544753246799231L;
+    
+    private String resourceId = "";
 	
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.

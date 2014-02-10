@@ -1,9 +1,9 @@
 package br.com.concepting.framework.resource;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Locale;
 
-import br.com.concepting.framework.resource.BaseResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**
  * Classe responsável por armazenar as configurações do sistema.
@@ -11,13 +11,15 @@ import br.com.concepting.framework.resource.BaseResource;
  * @author fvilarinho
  * @since 3.0
  */
-public class SystemResource extends BaseResource{
-    private String       loginPage       = "";
-    private String       mainPage        = "";
-    private List<Locale> languages       = null;
-    private Locale       defaultLanguage = null;
-    private List<String> skins           = null;
-    private String       defaultSkin     = "";
+public class SystemResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = -1115220620296191917L;
+    
+    private String             loginPage       = "";
+    private String             mainPage        = "";
+    private Collection<Locale> languages       = null;
+    private Locale             defaultLanguage = null;
+    private Collection<String> skins           = null;
+    private String             defaultSkin     = "";
     
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -67,7 +69,7 @@ public class SystemResource extends BaseResource{
      * 
      * @return Lista de skins (temas) disponíveis.
      */
-    public List<String> getSkins(){
+    public Collection<String> getSkins(){
         return skins;
     }
     
@@ -76,7 +78,7 @@ public class SystemResource extends BaseResource{
      * 
      * @param skins Lista de skins (temas) disponíveis.
      */
-    public void setSkins(List<String> skins){
+    public void setSkins(Collection<String> skins){
         this.skins = skins;
     }
 
@@ -85,7 +87,7 @@ public class SystemResource extends BaseResource{
      * 
      * @return Lista de idiomas disponíveis.
      */
-    public List<Locale> getLanguages(){
+    public Collection<Locale> getLanguages(){
         return languages;
     }
 
@@ -94,7 +96,7 @@ public class SystemResource extends BaseResource{
      * 
      * @param languages Lista de idiomas disponíveis.
      */
-    public void setLanguages(List<Locale> languages){
+    public void setLanguages(Collection<Locale> languages){
         this.languages = languages;
     }
 

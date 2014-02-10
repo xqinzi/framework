@@ -2,6 +2,7 @@ package br.com.concepting.framework.resource;
 
 import java.io.FileInputStream;
 import java.util.Properties;
+
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
 
 /**
@@ -10,7 +11,7 @@ import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
  * @author fvilarinho
  * @since 1.0
  */
-public class PropertiesResourceLoader extends BaseResourceLoader{
+public class PropertiesResourceLoader extends BaseResourceLoader<PropertiesResource>{
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
 	 */
@@ -42,12 +43,12 @@ public class PropertiesResourceLoader extends BaseResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.BaseResourceLoader#parseResource()
 	 */
-    protected <C> C parseResource() throws InvalidResourceException{
+    protected PropertiesResource parseResource() throws InvalidResourceException{
         PropertiesResource content = null;
 
         try{
-			Properties         properties       = new Properties();
-			StringBuilder      resourceIdBuffer = new StringBuilder();
+			Properties    properties       = new Properties();
+			StringBuilder resourceIdBuffer = new StringBuilder();
 
 			resourceIdBuffer.append(getResourceId());
 			resourceIdBuffer.append(".properties");
@@ -59,7 +60,7 @@ public class PropertiesResourceLoader extends BaseResourceLoader{
 
 			content = new PropertiesResource(properties);
 
-			return (C)content;
+			return content;
 		}
 		catch(Throwable e){
 			throw new InvalidResourceException(getResourceId());

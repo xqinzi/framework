@@ -13,11 +13,11 @@ import br.com.concepting.framework.util.StringUtil;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class BaseResourceLoader{
-	protected Cacher cacher      = null;
-	private   Object content     = null;
-	private   String resourceDir = "";
-	private   String resourceId  = "";
+public abstract class BaseResourceLoader<R>{
+	protected Cacher<R> cacher      = null;
+	private   R         content     = null;
+	private   String    resourceDir = "";
+	private   String    resourceId  = "";
 
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
@@ -72,7 +72,7 @@ public abstract class BaseResourceLoader{
 	 * @return Instância do cache.
 	 * @throws ItemNotFoundException
 	 */
-	protected CachedObject getCachedResource() throws ItemNotFoundException{
+	protected CachedObject<R> getCachedResource() throws ItemNotFoundException{
 		return cacher.get(resourceId);
 	}
 
@@ -82,7 +82,7 @@ public abstract class BaseResourceLoader{
 	 * @throws InvalidResourceException
 	 */
 	protected void loadResource() throws InvalidResourceException{
-		CachedObject object = null;
+		CachedObject<R> object = null;
 
 		try{
 			object  = getCachedResource();
@@ -91,7 +91,7 @@ public abstract class BaseResourceLoader{
 		catch(ItemNotFoundException e){
 			setContent(parseResource());
 
-			object = new CachedObject();
+			object = new CachedObject<R>();
 			object.setId(resourceId);
 			object.setContent(content);
 
@@ -109,7 +109,7 @@ public abstract class BaseResourceLoader{
 	 * @return Instância contendo os dados após processamento.
 	 * @throws InvalidResourceException
 	 */
-	protected <C> C parseResource() throws InvalidResourceException{
+	protected R parseResource() throws InvalidResourceException{
 		return null;
 	}
 
@@ -118,8 +118,8 @@ public abstract class BaseResourceLoader{
 	 * 
 	 * @return Instância contendo os dados do recurso.
 	 */
-    public <C> C getContent(){
-		return (C)content;
+    public R getContent(){
+		return content;
 	}
 
 	/**
@@ -127,7 +127,7 @@ public abstract class BaseResourceLoader{
 	 * 
 	 * @param content Instância contendo os dados do recurso.
 	 */
-	protected <C> void setContent(C content){
+	protected void setContent(R content){
 		this.content = content;
 	}
 
@@ -172,7 +172,7 @@ public abstract class BaseResourceLoader{
 	 * 
 	 * @return Instância do cache.
 	 */
-	protected Cacher getCacher(){
+	protected Cacher<R> getCacher(){
 		return cacher;
 	}
 }

@@ -86,7 +86,7 @@ public class I18nResourceLoader extends PropertiesResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.BaseResourceLoader#getCachedResource()
 	 */
-    protected CachedObject getCachedResource() throws ItemNotFoundException{
+    protected CachedObject<PropertiesResource> getCachedResource() throws ItemNotFoundException{
     	StringBuilder buffer = new StringBuilder();
     	
     	buffer.append(getResourceId());
@@ -99,7 +99,7 @@ public class I18nResourceLoader extends PropertiesResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.BaseResourceLoader#parseResource()
 	 */
-    protected <C> C parseResource() throws InvalidResourceException{
+    protected PropertiesResource parseResource() throws InvalidResourceException{
 		try{
 			StringBuilder resourceId = new StringBuilder();
 			
@@ -125,7 +125,7 @@ public class I18nResourceLoader extends PropertiesResourceLoader{
 				content = new PropertiesResource(properties);
 			}
 
-			return (C)content;
+			return content;
 		}
 		catch(Throwable e){
 			throw new InvalidResourceException(getResourceId());

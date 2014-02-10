@@ -17,7 +17,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class XmlResourceLoader extends BaseResourceLoader{
+public abstract class XmlResourceLoader<R extends BaseResource<XmlNode>> extends BaseResourceLoader<XmlNode>{
 	/**
 	 * Construtor - Efetua a leitura de um arquivo de configurações específico.
 	 * 
@@ -42,7 +42,7 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.BaseResourceLoader#parseResource()
 	 */
-    protected <C> C parseResource() throws InvalidResourceException{
+    protected XmlNode parseResource() throws InvalidResourceException{
 		try{
 			XmlReader   content = null;
 			InputStream stream  = null;
@@ -57,7 +57,7 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 
 			content = new XmlReader(stream);
 
-			return (C)content.getRoot();
+			return content.getRoot();
 		}
 		catch(Throwable e){
 			throw new InvalidResourceException(getResourceId(), e);
@@ -78,10 +78,11 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 	 *
 	 * @return Classe que armazenamento das propriedades.
 	 */
-	protected Class getResourceClass() throws ClassNotFoundException{
+	@SuppressWarnings("unchecked")
+    protected Class<R> getResourceClass() throws ClassNotFoundException{
 		String resourceClassId = StringUtil.replaceAll(getClass().getName(), "Loader", "");
 		
-		return Class.forName(resourceClassId);
+		return (Class<R>)Class.forName(resourceClassId);
 	}
 
 	/**
@@ -91,7 +92,7 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 	 * @return Instância contendo as configurações.
 	 * @throws InvalidResourceException
 	 */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public R get(String id) throws InvalidResourceException{
 		XmlNode content             = getContent();
 		XmlNode resourceNode        = null;
 		XmlNode defaultResourceNode = null;
@@ -100,6 +101,7 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 
 		while(true){
 			resourceNode = content.getNode(cont);
+			
 			if(resourceNode == null)
 				break;
 
@@ -121,12 +123,13 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 			throw new InvalidResourceException(getResourceId());
 
 		id = StringUtil.trim(resourceNode.getAttribute("id"));
+		
 		if(id.length() == 0)
 			throw new InvalidResourceException(getResourceId(), resourceNode.getText());
 		
 		try{
-			Class        resourceClass    = getResourceClass();
-			BaseResource resourceInstance = (BaseResource)ConstructorUtils.invokeConstructor(resourceClass, null);
+			Class<R> resourceClass    = getResourceClass();
+            R        resourceInstance = (R)ConstructorUtils.invokeConstructor(resourceClass, null);
 	
 			resourceInstance.setId(id);
 			resourceInstance.setContent(resourceNode);
@@ -145,7 +148,7 @@ public abstract class XmlResourceLoader extends BaseResourceLoader{
 	 * @return Instância contendo as configurações.
 	 * @throws InvalidResourceException
 	 */
-    public <R extends BaseResource> R getDefault() throws InvalidResourceException{
-		return (R)get("default");
+    public R getDefault() throws InvalidResourceException{
+		return get("default");
 	}
 }

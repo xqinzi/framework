@@ -12,7 +12,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class FactoryResourceLoader extends XmlResourceLoader{
+public abstract class FactoryResourceLoader extends XmlResourceLoader<FactoryResource>{
 	/**
 	 * Construtor - Efetua a leitura do arquivo de configurações default.
 	 * 
@@ -53,14 +53,14 @@ public abstract class FactoryResourceLoader extends XmlResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#getResourceClass()
 	 */
-    protected Class getResourceClass() throws ClassNotFoundException{
+    protected Class<FactoryResource> getResourceClass() throws ClassNotFoundException{
     	return FactoryResource.class;
     }
 
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
 	 */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public FactoryResource get(String id) throws InvalidResourceException{
 		FactoryResource factoryResource = super.get(id);
 		XmlNode         resource        = factoryResource.getContent();
         String          type            = StringUtil.trim(resource.getAttribute("type"));
@@ -69,6 +69,7 @@ public abstract class FactoryResourceLoader extends XmlResourceLoader{
         factoryResource.setType(type);
 
 		resourceNode = resource.getNode("class");
+		
 		if(resourceNode != null){
 			String clazz = StringUtil.trim(resourceNode.getValue());
 
@@ -79,6 +80,7 @@ public abstract class FactoryResourceLoader extends XmlResourceLoader{
 		}
 
 		resourceNode = resource.getNode("url");
+		
 		if(resourceNode != null){
 			String url = StringUtil.trim(resourceNode.getValue());
 
@@ -89,6 +91,7 @@ public abstract class FactoryResourceLoader extends XmlResourceLoader{
 		}
 
         resourceNode = resource.getNode("options");
+        
 		if(resourceNode != null){
 			XmlNode resourceOption = null;
 			Integer cont           = 0;
@@ -111,6 +114,6 @@ public abstract class FactoryResourceLoader extends XmlResourceLoader{
 			}
 		}
 
-		return (R)factoryResource;
+		return factoryResource;
 	}
 }

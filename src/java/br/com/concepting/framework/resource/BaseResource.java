@@ -8,8 +8,10 @@ import br.com.concepting.framework.caching.CachedObject;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class BaseResource extends CachedObject{
-	private Boolean isDefault = false;
+public abstract class BaseResource<O> extends CachedObject<O>{
+    private static final long serialVersionUID = 8856089972323762812L;
+    
+    private Boolean isDefault = false;
 	
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.

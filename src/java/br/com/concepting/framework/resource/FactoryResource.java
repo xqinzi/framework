@@ -3,6 +3,8 @@ package br.com.concepting.framework.resource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import br.com.concepting.framework.util.helpers.XmlNode;
+
 /**
  * Classe responsável pelo armazenamento das configurações de comunicação com servidores de aplicações
  * e/ou banco de dados.
@@ -10,8 +12,10 @@ import java.util.Map;
  * @author fvilarinho
  * @since 1.0
  */
-public class FactoryResource extends BaseResource{
-	private String              clazz   = "";
+public class FactoryResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = 4087229074759796309L;
+    
+    private String              clazz   = "";
 	private String              url     = "";
 	private String              type    = "";
 	private Map<String, String> options = null;

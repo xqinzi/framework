@@ -11,10 +11,9 @@ import br.com.concepting.framework.util.StringUtil;
  * @author fvilarinho
  * @since 1.0
  */
-public class PropertiesResource extends BaseResource{
-	private Properties     properties = null;
-	private ResourceBundle bundle     = null;
-
+public class PropertiesResource extends BaseResource<Object>{
+    private static final long serialVersionUID = -2809340386475717260L;
+    
 	/**
 	 * Construtor - Inicializa objetos e/ou variáveis internas.
 	 * 
@@ -23,7 +22,7 @@ public class PropertiesResource extends BaseResource{
 	public PropertiesResource(Properties properties){
 		super();
 
-		this.properties = properties;
+		setContent(properties);
 	}
 
 	/**
@@ -34,25 +33,7 @@ public class PropertiesResource extends BaseResource{
 	public PropertiesResource(ResourceBundle bundle){
 		super();
 
-		this.bundle = bundle;
-	}
-
-	/**
-	 * Retorna a instância contendo as propriedades.
-	 * 
-	 * @return Instância contendo as propriedades.
-	 */
-	public ResourceBundle getBundle(){
-		return bundle;
-	}
-
-	/**
-	 * Retorna a instância contendo as propriedades.
-	 * 
-	 * @return Instância contendo as propriedades.
-	 */
-	public Properties getProperties(){
-		return properties;
+        setContent(bundle);
 	}
 
 	/**
@@ -124,8 +105,18 @@ public class PropertiesResource extends BaseResource{
 		propertyIdBuffer.append(propertyId);
 		
 		try{
-			if(bundle == null){
-				value = properties.getProperty(propertyId);
+		    Object content = getContent();
+		    
+		    if(content instanceof ResourceBundle){
+		        ResourceBundle bundle = (ResourceBundle)content;
+		        
+                value = bundle.getString(propertyId);
+		    }
+		    else{
+		        Properties properties = (Properties)content;
+		        
+                value = properties.getProperty(propertyId);
+                
 				if(value == null){
 					if(returnInvalidIdentifier){
 						propertyIdBuffer.insert(0, "???");
@@ -135,8 +126,6 @@ public class PropertiesResource extends BaseResource{
 					}
 				}
 			}
-			else
-				value = bundle.getString(propertyId);
 		}
 		catch(Throwable e){
 			if(returnInvalidIdentifier){

@@ -17,7 +17,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 3.0
  */
-public class SystemResourceLoader extends XmlResourceLoader{
+public class SystemResourceLoader extends XmlResourceLoader<SystemResource>{
     /**
      * Construtor - Inicializa classe de leitura/manipulação do arquivo de configurações 
      * do sistema.
@@ -55,7 +55,7 @@ public class SystemResourceLoader extends XmlResourceLoader{
      * @return Instância contendo as configurações.
      * @throws InvalidResourceException
      */
-    public <R extends BaseResource> R get() throws InvalidResourceException{
+    public SystemResource get() throws InvalidResourceException{
         SystemResource systemResource = new SystemResource();
         
         systemResource.setId("default");
@@ -155,13 +155,13 @@ public class SystemResourceLoader extends XmlResourceLoader{
         systemResource.setLanguages(languages);
         systemResource.setDefaultLanguage(defaultLanguage);
         
-        return (R)systemResource;
+        return systemResource;
     }
 
     /**
      * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
      */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public SystemResource get(String id) throws InvalidResourceException{
         return get();
     }
 }
