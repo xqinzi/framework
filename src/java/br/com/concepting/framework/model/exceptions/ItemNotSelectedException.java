@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedWarningException;
  * @since 1.0
  */
 public class ItemNotSelectedException extends ExpectedWarningException{
+    private static final long serialVersionUID = 8458680901984273582L;
 }

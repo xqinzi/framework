@@ -22,6 +22,7 @@ import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.constants.ProjectConstants;
 import br.com.concepting.framework.constants.SystemConstants;
 import br.com.concepting.framework.controller.form.util.ActionFormUtil;
+import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
@@ -66,7 +67,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
      * @param declaration Classe contendo a anotação a ser processada.
      * @param annotationProcessorFactory Instância do fábrica de processadores de anotação.
      */
-    public ModelAnnotationProcessor(Class declaration, AnnotationProcessorFactory annotationProcessorFactory){
+    public ModelAnnotationProcessor(Class<? extends BaseModel> declaration, AnnotationProcessorFactory annotationProcessorFactory){
         super(declaration, annotationProcessorFactory);
         
         this.modelInfo = ModelUtil.getModelInfo(declaration);
@@ -131,7 +132,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
         File templateFilesDir = new File(templateFilesDirName.toString());
         
         if(templateFilesDir.exists()){
-            File           templateFiles[]     = templateFilesDir.listFiles();
+            File            templateFiles[]     = templateFilesDir.listFiles();
             StringBuilder   templateMethodName = null;
             Auditor         auditor            = null;
             AuditorResource auditorResource    = getAnnotationProcessorFactory().getAuditorResource();
@@ -1478,7 +1479,7 @@ public class ModelAnnotationProcessor extends BaseAnnotationProcessor{
     public void generateI18nResource() throws Throwable{
         SystemResourceLoader loader               = new SystemResourceLoader(getAnnotationProcessorFactory().getProjectResourcesDir(), SystemConstants.DEFAULT_RESOURCE_ID);
         SystemResource       resource             = loader.getDefault();
-        List<Locale>         languages            = resource.getLanguages();
+        Collection<Locale>   languages            = resource.getLanguages();
         String               actionFormUrl        = ActionFormUtil.getActionFormUrlByModel(getDeclaration());
         StringBuilder        i18nResourceFileName = new StringBuilder();
         

@@ -1,10 +1,11 @@
 package br.com.concepting.framework.model.helpers;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.concepting.framework.caching.CachedObject;
+import br.com.concepting.framework.controller.form.util.ActionFormValidator;
 import br.com.concepting.framework.model.annotations.Property;
 import br.com.concepting.framework.model.types.ValidationType;
 import br.com.concepting.framework.model.util.ModelUtil;
@@ -16,24 +17,26 @@ import br.com.concepting.framework.service.types.ServiceType;
  * @author fvilarinho
  * @since 1.0
  */
-public class ModelInfo extends CachedObject{
-	private Class              clazz                    = null;
-	private List<PropertyInfo> propertiesInfo           = null;
-	private List<PropertyInfo> identityPropertiesInfo   = null;
-	private List<PropertyInfo> uniquePropertiesInfo     = null;
-	private List<PropertyInfo> searchPropertiesInfo     = null;
-	private List<PropertyInfo> validationPropertiesInfo = null;
-	private List<PropertyInfo> auditablePropertiesInfo  = null;
-	private Property           mappedProperties[]       = null;
-    private String             mappedRepositoryId       = "";
-	private String             persistenceResourceId    = "";
-	private Class              validatorClass           = null;
-	private String             useCase                  = "";
-	private String             templateId               = "";
-	private String             descriptionPattern       = "";
-	private Boolean            generatePersistence      = false;
-	private Boolean            generateService          = false;
-	private ServiceType        serviceType              = ServiceType.CLASS;
+public class ModelInfo implements Serializable{
+    private static final long serialVersionUID = 6308444019551333703L;
+    
+    private Class<?>                             clazz                    = null;
+	private List<PropertyInfo>                   propertiesInfo           = null;
+	private List<PropertyInfo>                   identityPropertiesInfo   = null;
+	private List<PropertyInfo>                   uniquePropertiesInfo     = null;
+	private List<PropertyInfo>                   searchPropertiesInfo     = null;
+	private List<PropertyInfo>                   validationPropertiesInfo = null;
+	private List<PropertyInfo>                   auditablePropertiesInfo  = null;
+	private Property                             mappedProperties[]       = null;
+    private String                               mappedRepositoryId       = "";
+	private String                               persistenceResourceId    = "";
+	private Class<? extends ActionFormValidator> actionFormValidatorClass = null;
+	private String                               useCase                  = "";
+	private String                               templateId               = "";
+	private String                               descriptionPattern       = "";
+	private Boolean                              generatePersistence      = false;
+	private Boolean                              generateService          = false;
+	private ServiceType                          serviceType              = ServiceType.CLASS;
 	
 	/**
 	 * Retorna o identificador das configurações de persistência vinculada ao
@@ -115,7 +118,7 @@ public class ModelInfo extends CachedObject{
 	 * 
 	 * @return Classe do modelo de dados.
 	 */
-	public Class getClazz(){
+	public Class<?> getClazz(){
 		return clazz;
 	}
 
@@ -124,7 +127,7 @@ public class ModelInfo extends CachedObject{
 	 * 
 	 * @param clazz Classe do modelo de dados.
 	 */
-	public void setClazz(Class clazz){
+	public void setClazz(Class<?> clazz){
 		this.clazz = clazz;
 	}
 
@@ -297,8 +300,8 @@ public class ModelInfo extends CachedObject{
 	 * 
 	 * @return Classe que implementa a validação.
 	 */
-	public Class getValidatorClass(){
-		return validatorClass;
+	public Class<? extends ActionFormValidator> getActionFormValidatorClass(){
+		return actionFormValidatorClass;
 	}
 
 	/**
@@ -306,8 +309,8 @@ public class ModelInfo extends CachedObject{
 	 * 
 	 * @param validatorClass Classe que implementa a validação.
 	 */
-	public void setValidatorClass(Class validatorClass){
-		this.validatorClass = validatorClass;
+	public void setActionFormValidatorClass(Class<? extends ActionFormValidator> actionFormValidatorClass){
+		this.actionFormValidatorClass = actionFormValidatorClass;
 	}
 
 	/**

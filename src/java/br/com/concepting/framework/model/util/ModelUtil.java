@@ -18,6 +18,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.dom4j.DocumentException;
 
+import br.com.concepting.framework.caching.CachedObject;
 import br.com.concepting.framework.caching.Cacher;
 import br.com.concepting.framework.caching.CacherManager;
 import br.com.concepting.framework.constants.Constants;
@@ -59,6 +60,7 @@ public class ModelUtil{
      * @return Classe do modelo de dados desejado.
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel, D extends IDAO> Class<M> getModelClassByPersistence(Class<D> persistenceClass) throws ClassNotFoundException{
 		String modelClassId = StringUtil.replaceLast(persistenceClass.getName(), "DAOImpl", "Model");
 
@@ -75,6 +77,7 @@ public class ModelUtil{
      * @return Classe do modelo de dados desejado.
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel, S extends IService> Class<M> getModelClassByService(Class<S> serviceClass) throws ClassNotFoundException{
 		String modelClassId = StringUtil.replaceLast(serviceClass.getName(), "ServiceImpl", "Model");
 
@@ -91,6 +94,7 @@ public class ModelUtil{
      * @return Classe do modelo de dados desejado.
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel, F extends BaseActionForm> Class<M> getModelClassByActionForm(Class<F> actionFormClass) throws ClassNotFoundException{
 		String modelClassId = StringUtil.replaceLast(actionFormClass.getName(), "ActionForm", "Model");
 
@@ -106,6 +110,7 @@ public class ModelUtil{
      * @return Classe do modelo de dados desejado.
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel, A extends BaseAction> Class<M> getModelClassByAction(Class<A> actionClass) throws ClassNotFoundException{
 		String modelClassId  = StringUtil.replaceLast(actionClass.getName(), "Action", "Model");
 
@@ -137,10 +142,12 @@ public class ModelUtil{
 				}
 			}
 				
-			Cacher cacher = CacherManager.getInstance().getCacher(ModelUtil.class);
+			Cacher<ModelInfo>       cacher       = CacherManager.getInstance().getCacher(ModelUtil.class);
+			CachedObject<ModelInfo> cachedObject = null;
 
 			try{
-				modelInfo = (ModelInfo)cacher.get(modelClassName);
+			    cachedObject = cacher.get(modelClassName);
+			    modelInfo    = cachedObject.getContent();
 			}
 			catch(ItemNotFoundException e){
 				Model modelAnnotation = modelClass.getAnnotation(Model.class);
@@ -149,9 +156,8 @@ public class ModelUtil{
 					Property mappedProperties[] = modelAnnotation.mappedProperties();
 
 					modelInfo = new ModelInfo();
-					modelInfo.setId(modelClassName);
 					modelInfo.setClazz(modelClass);
-					modelInfo.setValidatorClass(modelAnnotation.validatorClass());
+					modelInfo.setActionFormValidatorClass(modelAnnotation.actionFormValidatorClass());
 					modelInfo.setMappedRepositoryId(modelAnnotation.mappedRepositoryId());
 					modelInfo.setDescriptionPattern(modelAnnotation.descriptionPattern());
 					modelInfo.setMappedProperties(mappedProperties);
@@ -195,9 +201,13 @@ public class ModelUtil{
 					}
 
 					modelInfo.setPropertiesInfo(propertiesInfo);
+					
+					cachedObject = new CachedObject<ModelInfo>();
+					cachedObject.setId(modelClassName);
+					cachedObject.setContent(modelInfo);
 
 					try{
-						cacher.add(modelInfo);
+						cacher.add(cachedObject);
 					}
 					catch(Throwable e1){
 					}
@@ -217,6 +227,7 @@ public class ModelUtil{
 	 * @param propertyValue Instância contendo o valor desejado.
 	 * @return Sub-lista contendo os modelos de dados.
 	 */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel, C extends List<M>> C subList(C list, String propertyId, Object propertyValue){
 		List<M> resultList           = new LinkedList<M>();
 		M       item                 = null;
@@ -224,9 +235,11 @@ public class ModelUtil{
 		
 		for(Integer cont = 0 ; cont < list.size() ; cont++){
 			item = list.get(cont);
+			
 			if(item != null){
 				try{
     				comparePropertyValue = PropertyUtil.getProperty(item, propertyId);
+    				
     				if(comparePropertyValue != null && propertyValue.equals(comparePropertyValue))
 						resultList.add(item);
 				}
@@ -243,7 +256,7 @@ public class ModelUtil{
 
 	 * @param list Instância contendo a lista de modelos de dados.
 	 */
-	public static <M extends BaseModel, C extends List<M>> void sort(C list){
+	public static <M extends BaseModel, C extends Collection<M>> void sort(C list){
 		sort(list, Constants.DEFAULT_SORT_ORDER_TYPE);
 	}
 
@@ -253,7 +266,7 @@ public class ModelUtil{
 	 * @param list Instância contendo a lista de modelos de dados.
 	 * @param sortProperty String contendo o identificador da propriedade.
 	 */
-	public static <M extends BaseModel, C extends List<M>> void sort(C list, String sortProperty){
+	public static <M extends BaseModel, C extends Collection<M>> void sort(C list, String sortProperty){
 		sort(list, sortProperty, Constants.DEFAULT_SORT_ORDER_TYPE);
 	}
 
@@ -263,11 +276,11 @@ public class ModelUtil{
 	 * @param list Instância contendo a lista de modelos de dados.
 	 * @param sortOrder Constante contendo o tipo de ordenação.
 	 */
-    public static <M extends BaseModel, C extends List<M>> void sort(C list, SortOrderType sortOrder){
+    public static <M extends BaseModel, C extends Collection<M>> void sort(C list, SortOrderType sortOrder){
 		if(sortOrder == SortOrderType.ASCEND)
-			Collections.sort(list);
+			Collections.sort((List<M>)list);
 		else
-			Collections.sort(list, Collections.reverseOrder());
+			Collections.sort((List<M>)list, Collections.reverseOrder());
 	}
 	
 	/**
@@ -278,7 +291,7 @@ public class ModelUtil{
 	 * @param sortProperty String contendo o identificador da propriedade.
 	 * @param sortOrder Constante contendo o tipo de ordenação.
 	 */
-	public static <M extends BaseModel, C extends List<M>> void sort(C list, String sortProperty, SortOrderType sortOrder){
+	public static <M extends BaseModel, C extends Collection<M>> void sort(C list, String sortProperty, SortOrderType sortOrder){
 		if(list != null){
     		for(BaseModel item : list)
     			item.setSortProperty(sortProperty);
@@ -307,6 +320,7 @@ public class ModelUtil{
 	 * @param sortOrders Array contendo os tipos de ordenação da propriedades.
 	 * @return Lista contendo os modelos de dados já agrupados.
 	 */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel, C extends List<M>> C aggregateAndSort(C list, String propertiesIds[], SortOrderType sortOrders[]){
 		M         bufferItem            = null;
 		List<M>   bufferList            = new LinkedList<M>();
@@ -359,6 +373,7 @@ public class ModelUtil{
 	 * @param propertyId String contendo o identificador do modelo de dados.
 	 * @return Valor numérico contendo a somatória calculada.
 	 */
+    @SuppressWarnings("unchecked")
     public static <N extends Number, C extends List<M>, M extends BaseModel> N sum(C list, String propertyId){
 		Number result = null;
 		Number buffer = null;
@@ -386,6 +401,7 @@ public class ModelUtil{
 	 * @param propertyId String contendo o identificador do modelo de dados.
 	 * @return Valor numérico contendo a média calculada.
 	 */
+    @SuppressWarnings("unchecked")
     public static <N extends Number, C extends List<M>, M extends BaseModel> N average(C list, String propertyId){
 		Number result = sum(list, propertyId);
 		
@@ -533,6 +549,7 @@ public class ModelUtil{
      * @param language Instância contendo as propriedades do idioma desejado.
      * @return Instância do modelo de dados.
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static <M extends BaseModel> M fromXmlNode(XmlNode node, Locale language){
 	    if(language == null)
 	        return fromXmlNode(node);
@@ -541,7 +558,7 @@ public class ModelUtil{
 	    
 	    if(node != null){
 	        try{
-    	        Class     modelClass = Class.forName(node.getAttribute("class"));
+    	        Class<?>  modelClass = Class.forName(node.getAttribute("class"));
                 ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);               
     	        
                 if(modelInfo != null){
@@ -566,9 +583,6 @@ public class ModelUtil{
                                     
                                     PropertyUtil.setProperty(model, propertyName, propertyValue);
                                 }
-                                else if(propertyInfo.isCollection()){
-                                    
-                                }
                                 else if(propertyInfo.isDate()){
                                     propertyValue = DateTimeUtil.parse(childNode.getValue(), language);
                                     
@@ -590,7 +604,7 @@ public class ModelUtil{
                                     PropertyUtil.setProperty(model, propertyName, propertyValue);
                                 }
                                 else if(propertyInfo.isEnum()){
-                                    propertyValue = Enum.valueOf(propertyInfo.getClazz(), childNode.getValue().toUpperCase());
+                                    propertyValue = Enum.valueOf((Class)propertyInfo.getClazz(), childNode.getValue().toUpperCase());
 
                                     PropertyUtil.setProperty(model, propertyName, propertyValue);
                                 }
@@ -707,7 +721,7 @@ public class ModelUtil{
 	            Collection<PropertyInfo> propertiesInfo = modelInfo.getPropertiesInfo();
 	            String                   propertyName   = "";
 	            Object                   propertyValue  = null;
-	            Collection               propertyValues = null;
+	            Collection<?>            propertyValues = null;
 	            
 	            for(PropertyInfo propertyInfo : propertiesInfo){
                     try{
@@ -725,7 +739,7 @@ public class ModelUtil{
         	                if(propertyInfo.isModel())
         	                    childNode.addChildNode(toXmlNode((BaseModel)propertyValue, language));
         	                else if(propertyInfo.isCollection()){
-        	                    propertyValues = (Collection)propertyValue;
+        	                    propertyValues = (Collection<?>)propertyValue;
                             
         	                    for(Object item : propertyValues){
         	                        if(propertyInfo.hasModel())
@@ -796,7 +810,7 @@ public class ModelUtil{
      * 
      * @param modelClass Classe que define o modelo de dados.
      */
-	private static <M extends BaseModel> Map<String, PropertyInfo> buildPhoneticMap(Class<M> modelClass){
+	private static <M extends BaseModel> Map<String, PropertyInfo> buildPhoneticMap(Class<?> modelClass){
 	    Map<String, PropertyInfo> phoneticMap        = new LinkedHashMap<String, PropertyInfo>();
 	    Collection<String>        processedRelations = new LinkedList<String>();
 	    
@@ -813,7 +827,7 @@ public class ModelUtil{
 	 * @param processedRelations Lista contendo as propriedades já processadas.
 	 * @param phoneticMap Instância do mapa fonético.
 	 */
-	private static <M extends BaseModel> void buildPhoneticMap(Class<M> modelClass, StringBuilder propertyPrefix, Collection<String> processedRelations, Map<String, PropertyInfo> phoneticMap){
+	private static void buildPhoneticMap(Class<?> modelClass, StringBuilder propertyPrefix, Collection<String> processedRelations, Map<String, PropertyInfo> phoneticMap){
 	    if(modelClass == null)
 	        return;
 	    
@@ -862,7 +876,7 @@ public class ModelUtil{
         if(model == null)
             return;
         
-        Class<M>                  modelClass  = (Class<M>)model.getClass();
+        Class<?>                  modelClass  = model.getClass();
         Map<String, PropertyInfo> phoneticMap = buildPhoneticMap(modelClass);
 
         if(phoneticMap != null && phoneticMap.size() > 0){
@@ -891,7 +905,7 @@ public class ModelUtil{
      * @throws InvocationTargetException 
      * @throws IllegalAccessException 
      */
-    public static <M extends BaseModel> List<M> filterByPhonetic(M model, List<M> modelList) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+    public static <M extends BaseModel, L extends Collection<M>> L filterByPhonetic(M model, L modelList) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
         if(model == null)
             return null;
         
@@ -908,7 +922,7 @@ public class ModelUtil{
             M            modelListItem           = null;
 
             for(Integer cont = 0; cont < modelList.size() ; cont++){
-                modelListItem           = modelList.get(cont);
+                modelListItem           = ((List<M>)modelList).get(cont);
                 comparePhoneticAccuracy = 0d;
                 phoneticAccuracy        = 0d;
                 phoneticAccuracyCount   = 0;
@@ -939,7 +953,7 @@ public class ModelUtil{
                 else{
                     modelListItem.setCompareAccuracy(phoneticAccuracy);
 
-                    modelList.set(cont, modelListItem);
+                    ((List<M>)modelList).set(cont, modelListItem);
                 }
             }
 

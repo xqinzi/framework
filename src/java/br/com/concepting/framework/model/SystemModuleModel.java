@@ -1,5 +1,6 @@
 package br.com.concepting.framework.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import br.com.concepting.framework.model.annotations.Model;
@@ -17,7 +18,9 @@ import br.com.concepting.framework.persistence.types.RelationType;
  */
 @Model(descriptionPattern="#{title} - #{version}")
 public class SystemModuleModel extends BaseModel{
-	@Property(isIdentity = true, isForSearch = true)
+    private static final long serialVersionUID = 2148773632677122349L;
+
+    @Property(isIdentity = true, isForSearch = true)
 	private Integer id = null;
 
 	@Property(isForSearch = true, validations = ValidationType.REQUIRED)
@@ -48,7 +51,7 @@ public class SystemModuleModel extends BaseModel{
 	private Boolean active = true;
 
 	@Property(relationType = RelationType.ONE_TO_MANY)
-	private List<FormModel> forms = null;
+	private Collection<FormModel> forms = null;
 
 	/**
 	 * Retorna o nome do arquivo de logo.
@@ -146,6 +149,7 @@ public class SystemModuleModel extends BaseModel{
 	 * @param formName String contendo o identificador do formulário desejado.
 	 * @return Instância contendo as propriedades de um formulário.
 	 */
+    @SuppressWarnings("unchecked")
     public <F extends FormModel> F getForm(String formName){
 		if(forms != null)
 			for(FormModel form : forms)
@@ -161,12 +165,12 @@ public class SystemModuleModel extends BaseModel{
 	 *
 	 * @param formModel Instância contendo as propriedades do formulário.
 	 */
-	public <F extends FormModel> void setForm(FormModel formModel){
+	public void setForm(FormModel formModel){
 		if(forms != null){
-			Integer pos = forms.indexOf(formModel);
+			Integer pos = ((List<FormModel>)forms).indexOf(formModel);
 			
 			if(pos >= 0)
-				forms.set(pos, formModel);
+			    ((List<FormModel>)forms).set(pos, formModel);
 		}
 	}
 
@@ -175,8 +179,9 @@ public class SystemModuleModel extends BaseModel{
 	 * 
 	 * @return Lista contendo os dados dos formulários vinculados.
 	 */
+    @SuppressWarnings("unchecked")
     public <F extends FormModel> List<F> getForms(){
-		return (List)forms;
+		return (List<F>)forms;
 	}
 
 	/**
@@ -184,8 +189,8 @@ public class SystemModuleModel extends BaseModel{
 	 * 
 	 * @param forms Lista contendo os dados dos formulários vinculados.
 	 */
-    public <F extends FormModel> void setForms(List<F> forms){
-		this.forms = (List)forms;
+    public void setForms(List<FormModel> forms){
+		this.forms = forms;
 	}
 
 	/**

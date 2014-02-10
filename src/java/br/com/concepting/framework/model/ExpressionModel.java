@@ -13,6 +13,8 @@ import br.com.concepting.framework.model.types.ValidationType;
  */
 @Model 
 public class ExpressionModel extends BaseModel{
+    private static final long serialVersionUID = 46362858892792145L;
+
     @Property(isIdentity=true)
     private Integer id = 0;
     

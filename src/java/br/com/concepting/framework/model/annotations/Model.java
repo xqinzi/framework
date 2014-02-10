@@ -60,7 +60,7 @@ public @interface Model{
 	 * 
 	 * @return Classe responsável pela validação do modelo de dados.
 	 */
-	Class validatorClass() default ActionFormValidator.class;
+	Class<? extends ActionFormValidator> actionFormValidatorClass() default ActionFormValidator.class;
 
 	/**
 	 * Define a máscara de descrição do modelo de dados.

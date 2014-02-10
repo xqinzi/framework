@@ -30,6 +30,13 @@ public @interface Property{
 	boolean isIdentity() default false;
 	
 	/**
+	 * Define o identificador do gerador da chave de identificação de um modelo de dados.
+	 * 
+	 * @return String contendo o identificador do gerador.
+	 */
+	String sequenceId() default "";
+	
+	/**
 	 * Define que a chave de identificação do modelo de dados deverá ser gerada 
 	 * automaticamente.
 	 *
@@ -161,14 +168,14 @@ public @interface Property{
 	 * 
 	 * @return Classe do relacionamento.
 	 */
-	Class relationClass() default Object.class;
+	Class<?> relationClass() default Object.class;
 
 	/**
 	 * Define a classe de um relacionamento NxN ou 1xN.
 	 * 
 	 * @return Classe do relacionamento.
 	 */
-	Class relationCollectionItemsClass() default Object.class;
+	Class<?> relationCollectionItemsClass() default Object.class;
 	
 	/**
 	 * Define se deve ser feito cascade nas operações de gravação dos dados.
@@ -231,7 +238,7 @@ public @interface Property{
 	 *
 	 * @return Classe que define o tipo de dado da propriedade.
 	 */
-	Class propertyClass() default Object.class;
+	Class<?> propertyClass() default Object.class;
 
 	/**
 	 * Define os identificadores das chaves do relacionamento.

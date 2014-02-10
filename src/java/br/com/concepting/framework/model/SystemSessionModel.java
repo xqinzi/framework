@@ -17,6 +17,8 @@ import br.com.concepting.framework.model.types.ValidationType;
  */
 @Model
 public class SystemSessionModel extends BaseModel{
+    private static final long serialVersionUID = -6089610099334045707L;
+
     @Property(isUnique=true, isAuditable=true)
     private String id = "";
     

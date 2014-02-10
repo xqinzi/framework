@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedWarningException;
  * @since 1.0
  */
 public class ItemNotFoundException extends ExpectedWarningException{
+    private static final long serialVersionUID = 3101514179420977157L;
 }

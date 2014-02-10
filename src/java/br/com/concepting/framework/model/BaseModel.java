@@ -20,7 +20,9 @@ import br.com.concepting.framework.util.helpers.Node;
  * @since 1.0
  */
 @Model
-public abstract class BaseModel extends Node implements Comparable{
+public abstract class BaseModel extends Node implements Comparable<BaseModel>{
+    private static final long serialVersionUID = -7144498720569063721L;
+    
     @Property(useGroupSeparator=true, pattern="0.00")
 	private Double compareAccuracy = 0.0;
 	private String sortProperty    = "";
@@ -67,15 +69,15 @@ public abstract class BaseModel extends Node implements Comparable{
 	 * @param object Instância do modelo de dados desejado.
 	 * @return Valor inteiro contendo o resultado da comparação. 0 = Igual, 1 ou -1 = Diferente.
 	 */
-	public int compareTo(Object object){
+	public int compareTo(BaseModel compareObject){
 		Integer result = 0;
 
 		try{
-			BaseModel compareObject = (BaseModel)object;
-			Object    compareValue  = null;
-			Object    currentValue  = null;
+			Object compareValue  = null;
+			Object currentValue  = null;
 
 			sortProperty = StringUtil.trim(sortProperty);
+			
 			if(sortProperty.length() == 0){
 				currentValue = toString();
 				compareValue = compareObject.toString();
@@ -88,6 +90,7 @@ public abstract class BaseModel extends Node implements Comparable{
 			result = (Integer)(MethodUtils.invokeMethod(currentValue, "compareTo", compareValue));
 		}
 		catch(Throwable e){
+		    result = -1;
 		}
 		
 		if(result < 0)
@@ -99,15 +102,14 @@ public abstract class BaseModel extends Node implements Comparable{
 			
 		return result;
 	}
-
+	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object object){
+	public boolean equals(BaseModel compareModel){
 		Boolean compareFlag = false;
 
-		if(object instanceof BaseModel && (object.getClass().equals(getClass()) || object.getClass().getSuperclass().equals(getClass().getSuperclass()))){
-			BaseModel compareModel = (BaseModel)object;
+		if(compareModel.getClass().equals(getClass()) || compareModel.getClass().getSuperclass().equals(getClass().getSuperclass())){
 			Object    compareValue = null;
 			Object    value        = null;
 			ModelInfo modelInfo    = ModelUtil.getModelInfo(getClass());

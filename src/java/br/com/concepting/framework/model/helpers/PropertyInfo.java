@@ -14,12 +14,13 @@ import br.com.concepting.framework.util.types.SortOrderType;
  * @author fvilarinho
  * @since 1.0
  */
-public class PropertyInfo implements Comparable, Cloneable{
+public class PropertyInfo implements Comparable<PropertyInfo>, Cloneable{
 	private String            id                            = "";
-	private Class             clazz                         = null;
+	private Class<?>          clazz                         = null;
 	private Boolean           isModel                       = false;
 	private Boolean           hasModel                      = false;
 	private Boolean           isIdentity                    = false;
+	private String            sequenceId                    = "";
 	private Boolean           isUnique                      = false;
 	private Boolean           isForSearch                   = false;
 	private Boolean           isAuditable                   = false;
@@ -43,12 +44,12 @@ public class PropertyInfo implements Comparable, Cloneable{
 	private Boolean           caseSensitiveSearch           = false;
 	private Double            phoneticAccuracy              = 0d;
 	private Boolean           useGroupSeparator             = false;
-	private Class             collectionItemsClass          = null;
+	private Class<?>          collectionItemsClass          = null;
 	private RelationType      relationType                  = null;
 	private RelationJoinType  relationJoinType              = null;
 	private Boolean           cascadeOnSave                 = false;
 	private Boolean           cascadeOnDelete               = false;
-	private Class             propertyClass                 = null;
+	private Class<?>          propertyClass                 = null;
 	private String            propertyId                    = "";
     private String            classPropertyId               = "";
 	private String            phoneticPropertyId            = "";
@@ -85,11 +86,39 @@ public class PropertyInfo implements Comparable, Cloneable{
 	public PropertyInfo(){
 	    super();
 	}
-	
-	public FormulaType getFormulaType(){
+
+	/**
+	 * Retorna o identificador do gerador da chave de identificação de um modelo de dados.
+	 * 
+	 * @return String contendo o identificador do gerador da chave de identificação.
+	 */
+	public String getSequenceId(){
+        return sequenceId;
+    }
+
+    /**
+     * Define o identificador do gerador da chave de identificação de um modelo de dados.
+     * 
+     * @param sequenceId String contendo o identificador do gerador da chave de identificação.
+     */
+    public void setSequenceId(String sequenceId){
+        this.sequenceId = sequenceId;
+    }
+
+    /**
+     * Retorna o tipo de fórmula de cálculo da propriedade.
+     * 
+     * @return Constante que define o tipo de fórmula de cálculo.
+     */
+    public FormulaType getFormulaType(){
         return formulaType;
     }
 
+    /**
+     * Define o tipo de fórmula de cálculo da propriedade.
+     * 
+     * @param formulaType Constante que define o tipo de fórmula de cálculo.
+     */
     public void setFormulaType(FormulaType formulaType){
         this.formulaType = formulaType;
     }
@@ -354,7 +383,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	 *
 	 * @return Instância contendo o tipo de dado da propriedade.
 	 */
-	public Class getPropertyClass(){
+    public Class<?> getPropertyClass(){
 		return propertyClass;
 	}
 
@@ -363,7 +392,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	 *
 	 * @param propertyClass Instância contendo o tipo de dado da propriedade.
 	 */
-	public void setPropertyClass(Class propertyClass){
+	public void setPropertyClass(Class<?> propertyClass){
 		this.propertyClass = propertyClass;
 	}
 
@@ -735,7 +764,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	 * 
 	 * @return Classe do tipo da propriedade.
 	 */
-	public Class getClazz(){
+    public Class<?> getClazz(){
 		return clazz;
 	}
 
@@ -744,7 +773,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	 * 
 	 * @param clazz Classe do tipo da propriedade.
 	 */
-	public void setClazz(Class clazz){
+	public void setClazz(Class<?> clazz){
 		this.clazz = clazz;
 	}
 
@@ -753,7 +782,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	 * 
 	 * @return Classe do tipo dos itens da coleção.
 	 */
-	public Class getCollectionItemsClass(){
+    public Class<?> getCollectionItemsClass(){
 		return collectionItemsClass;
 	}
 	
@@ -762,7 +791,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	 * 
 	 * @param collectionItemsClass Classe do tipo dos itens da coleção.
 	 */
-	public void setCollectionItemsClass(Class collectionItemsClass){
+	public void setCollectionItemsClass(Class<?> collectionItemsClass){
 		this.collectionItemsClass = collectionItemsClass;
 	}
 
@@ -1516,9 +1545,7 @@ public class PropertyInfo implements Comparable, Cloneable{
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-    public int compareTo(Object object){
-        PropertyInfo comparePropertyInfo = (PropertyInfo)object;
-
+    public int compareTo(PropertyInfo comparePropertyInfo){
         if(comparePropertyInfo == null)
             return -1;
 

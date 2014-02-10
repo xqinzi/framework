@@ -70,9 +70,9 @@ public class PropertyUtil extends PropertyUtils{
 		if(instance == null)
 			return;
 		
-		Class superClass = instance.getClass();
-		Class clazz      = null;
-		Field fields[]   = null;
+		Class<?> superClass = instance.getClass();
+		Class<?> clazz      = null;
+		Field    fields[]   = null;
 		
 		while(superClass != null){
 			fields = superClass.getDeclaredFields();
@@ -104,7 +104,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-	public static Boolean isString(Class clazz){
+	public static Boolean isString(Class<?> clazz){
 	    return (clazz.equals(String.class));
 	}
 	
@@ -114,7 +114,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-	public static Boolean isBoolean(Class clazz){
+	public static Boolean isBoolean(Class<?> clazz){
         return (clazz.equals(boolean.class) || clazz.equals(Boolean.class));
 	}
 	
@@ -124,7 +124,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-	public static Boolean isDate(Class clazz){
+	public static Boolean isDate(Class<?> clazz){
 	    return clazz.equals(Date.class) || clazz.equals(DateTime.class);
 	}
 	
@@ -134,7 +134,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isTime(Class clazz){
+    public static Boolean isTime(Class<?> clazz){
         return clazz.equals(DateTime.class);
     }
 
@@ -144,7 +144,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isByteArray(Class clazz){
+    public static Boolean isByteArray(Class<?> clazz){
 	    return (clazz.equals(byte[].class) || clazz.equals(Byte[].class));
 	}
 	
@@ -154,7 +154,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-	public static Boolean isInteger(Class clazz){
+	public static Boolean isInteger(Class<?> clazz){
 	    return (clazz.equals(int.class) || clazz.equals(Integer.class));
 	}
 	
@@ -164,7 +164,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isLong(Class clazz){
+    public static Boolean isLong(Class<?> clazz){
         return (clazz.equals(long.class) || clazz.equals(Long.class));
     }
     
@@ -174,7 +174,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isShort(Class clazz){
+    public static Boolean isShort(Class<?> clazz){
         return (clazz.equals(short.class) || clazz.equals(Short.class));
     }
     
@@ -184,7 +184,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isByte(Class clazz){
+    public static Boolean isByte(Class<?> clazz){
         return (clazz.equals(byte.class) || clazz.equals(Byte.class));
     }
     
@@ -194,7 +194,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isFloat(Class clazz){
+    public static Boolean isFloat(Class<?> clazz){
         return (clazz.equals(float.class) || clazz.equals(Float.class));
     }
 
@@ -204,7 +204,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isDouble(Class clazz){
+    public static Boolean isDouble(Class<?> clazz){
         return (clazz.equals(double.class) || clazz.equals(Double.class));
     }
 
@@ -214,7 +214,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isBigInteger(Class clazz){
+    public static Boolean isBigInteger(Class<?> clazz){
         return (clazz.equals(BigInteger.class));
     }
 
@@ -224,7 +224,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isBigDecimal(Class clazz){
+    public static Boolean isBigDecimal(Class<?> clazz){
         return (clazz.equals(BigDecimal.class));
     }
 
@@ -234,7 +234,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isNumber(Class clazz){
+    public static Boolean isNumber(Class<?> clazz){
         return (isByte(clazz) || isShort(clazz) || isInteger(clazz) || isLong(clazz) || isFloat(clazz) || isDouble(clazz) || isBigInteger(clazz) || isBigDecimal(clazz));
 	}
 	
@@ -244,7 +244,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isCurrency(Class clazz){
+    public static Boolean isCurrency(Class<?> clazz){
         return (clazz.equals(Currency.class));
     }
 
@@ -254,8 +254,8 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-    public static Boolean isModel(Class clazz){
-        Class superClass = clazz;
+    public static Boolean isModel(Class<?> clazz){
+        Class<?> superClass = clazz;
         
         while(true){
             if(superClass.getSuperclass() == null || superClass.getSuperclass().equals(Node.class))
@@ -273,8 +273,8 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-	public static Boolean isCollection(Class clazz){
-        Class superClass = clazz;
+	public static Boolean isCollection(Class<?> clazz){
+        Class<?> superClass = clazz;
         
         while(true){
             if(superClass.getSuperclass() == null || superClass.getSuperclass().equals(Object.class))
@@ -292,7 +292,7 @@ public class PropertyUtil extends PropertyUtils{
      * @param clazz Classe a ser verificada.
      * @return True/False.
      */
-	public static Boolean isEnum(Class clazz){
+	public static Boolean isEnum(Class<?> clazz){
 	    return clazz.isEnum();
 	}
 
@@ -310,11 +310,11 @@ public class PropertyUtil extends PropertyUtils{
 		if(instance2 == null)
 			return instance1;
 
-		Object propertyValue1 = null;
-		Object propertyValue2 = null;
-		String propertyValue  = "";
-		Class  clazz          = instance1.getClass();
-		Field  fields[]       = null;
+		Object   propertyValue1 = null;
+		Object   propertyValue2 = null;
+		String   propertyValue  = "";
+		Class<?> clazz          = instance1.getClass();
+		Field    fields[]       = null;
 		
 		while(clazz != null){
 			fields = clazz.getDeclaredFields();
@@ -458,7 +458,7 @@ public class PropertyUtil extends PropertyUtils{
 	 * @param language Instância contendo as propriedades do idioma desejado.
 	 * @return String formatada.
 	 */
-	public static String format(Object instance, Map valueMap, String pattern, Boolean useAdditionalFormatting, Integer precision, Locale language){
+    public static String format(Object instance, Map<String, ?> valueMap, String pattern, Boolean useAdditionalFormatting, Integer precision, Locale language){
 		String result = "";
 		
 		if(instance instanceof Date){
@@ -494,7 +494,7 @@ public class PropertyUtil extends PropertyUtils{
 		else if(instance instanceof Collection){
 			StringBuilder resultBuffer = new StringBuilder();
 			
-			for(Object item : (Collection)instance){
+			for(Object item : (Collection<?>)instance){
 				if(resultBuffer.length() > 0)
 					resultBuffer.append(", ");
 
@@ -754,7 +754,7 @@ public class PropertyUtil extends PropertyUtils{
 	 * @throws ClassNotFoundException
 	 * @throws NoSuchFieldException 
 	 */
-	public static Class getGenericPropertyClass(Class instanceClass, String name) throws ClassNotFoundException, NoSuchFieldException{
+	public static Class<?> getGenericPropertyClass(Class<?> instanceClass, String name) throws ClassNotFoundException, NoSuchFieldException{
 		Field propertyField = getPropertyField(instanceClass, name);
 		
 		return getGenericPropertyClass(propertyField);
@@ -767,11 +767,11 @@ public class PropertyUtil extends PropertyUtils{
 	 * @return Classe do tipo genérico da propriedade.
 	 * @throws ClassNotFoundException
 	 */
-	public static Class getGenericPropertyClass(Field field) throws ClassNotFoundException{
-		Type   genericType   = field.getGenericType();
-		Type   type          = field.getType();
-		String typeName      = field.getType().getName();
-		Class  propertyClass = null;
+	public static Class<?> getGenericPropertyClass(Field field) throws ClassNotFoundException{
+		Type     genericType   = field.getGenericType();
+		Type     type          = field.getType();
+		String   typeName      = field.getType().getName();
+		Class<?> propertyClass = null;
 
 		if(!genericType.equals(type)){
 			String buffer = StringUtil.replaceAll(genericType.toString(), typeName, "");
@@ -795,10 +795,10 @@ public class PropertyUtil extends PropertyUtils{
 	 * @return Instância contendo as definições da propriedade.
 	 * @throws NoSuchFieldException 
 	 */
-	public static Field getPropertyField(Class instanceClass, String name) throws NoSuchFieldException{
-		String  names[] = StringUtil.split(name, ".");
-		Class   clazz   = instanceClass;
-		Field   field   = null;
+	public static Field getPropertyField(Class<?> instanceClass, String name) throws NoSuchFieldException{
+		String   names[] = StringUtil.split(name, ".");
+		Class<?> clazz   = instanceClass;
+		Field    field   = null;
 		
 		for(String nameItem : names){
 			while(clazz != null){
@@ -828,9 +828,9 @@ public class PropertyUtil extends PropertyUtils{
 	 * @return Classe do tipo da propriedade.
 	 * @throws NoSuchFieldException 
 	 */
-	public static Class getPropertyClass(Class instanceClass, String name) throws NoSuchFieldException{
+	public static Class<?> getPropertyClass(Class<?> instanceClass, String name) throws NoSuchFieldException{
 		ModelInfo modelInfo     = ModelUtil.getModelInfo(instanceClass);
-		Class     propertyClass = null;
+		Class<?>  propertyClass = null;
 		
 		if(modelInfo != null){
 			PropertyInfo propertyInfo = modelInfo.getPropertyInfo(name);
@@ -853,9 +853,9 @@ public class PropertyUtil extends PropertyUtils{
 	 * @param propertyField Instância contendo as definições da propriedade.
 	 * @return Classe do tipo genérico da propriedade.
 	 */
-	private static Class getPropertyClass(Field propertyField){
+	private static Class<?> getPropertyClass(Field propertyField){
 		if(propertyField != null){
-			Class propertyClass = propertyField.getType();
+			Class<?> propertyClass = propertyField.getType();
 
 			return getPropertyClass(propertyClass);
 		}
@@ -869,7 +869,7 @@ public class PropertyUtil extends PropertyUtils{
 	 * @param propertyClass Classe desejada.
 	 * @return Classe do tipo instanciável.
 	 */
-	public static Class getPropertyClass(Class propertyClass){
+	public static Class<?> getPropertyClass(Class<?> propertyClass){
 		if(propertyClass.equals(Collection.class) || propertyClass.equals(List.class))
 			propertyClass = LinkedList.class;
 		else if(propertyClass.equals(Set.class))
@@ -892,11 +892,11 @@ public class PropertyUtil extends PropertyUtils{
 		if(instance == null)
 			return;
 
-		String propertyNames[]     = StringUtil.split(name, ".");
-		String propertyName        = "";
-		Class  propertyClass       = null;
-		Object propertyValue       = instance;
-		Object propertyValueBuffer = null;
+		String   propertyNames[]     = StringUtil.split(name, ".");
+		String   propertyName        = "";
+		Class<?> propertyClass       = null;
+		Object   propertyValue       = instance;
+		Object   propertyValueBuffer = null;
 
 		try{
     		for(Integer cont = 0 ; cont < (propertyNames.length - 1) ; cont++){
@@ -976,7 +976,7 @@ public class PropertyUtil extends PropertyUtils{
 		        String className = StringUtil.trim(PropertyUtil.getProperty(instance, classPropertyId));
 			
 		        if(className.length() > 0){
-		            Class clazz = Class.forName(className);
+		            Class<?> clazz = Class.forName(className);
 				
 		            propertyInfo.setClazz(clazz);
 		        }
@@ -995,7 +995,7 @@ public class PropertyUtil extends PropertyUtils{
 	 * @throws ClassNotFoundException 
 	 * @throws NoSuchFieldException 
 	 */
-	public static PropertyInfo getPropertyInfo(Class instanceClass, String name) throws ClassNotFoundException, NoSuchFieldException{
+	public static PropertyInfo getPropertyInfo(Class<?> instanceClass, String name) throws ClassNotFoundException, NoSuchFieldException{
 	    if(instanceClass == null)
 	        return null;
 	    
@@ -1019,7 +1019,7 @@ public class PropertyUtil extends PropertyUtils{
 	 * @throws ClassNotFoundException 
 	 * @throws NoSuchFieldException 
 	 */
-	public static PropertyInfo getPropertyInfo(Class instanceClass, Property propertyAnnotation) throws ClassNotFoundException, NoSuchFieldException{
+	public static PropertyInfo getPropertyInfo(Class<?> instanceClass, Property propertyAnnotation) throws ClassNotFoundException, NoSuchFieldException{
 		Field propertyField = getPropertyField(instanceClass, propertyAnnotation.propertyId());
 		
 		return getPropertyInfo(propertyField, propertyAnnotation);
@@ -1035,7 +1035,7 @@ public class PropertyUtil extends PropertyUtils{
 	 */
 	private static PropertyInfo getPropertyInfo(Field propertyField, Property propertyAnnotation) throws ClassNotFoundException{
 		PropertyInfo propertyInfo  = new PropertyInfo();
-		Class        propertyClass = null;
+		Class<?>     propertyClass = null;
 		
 		propertyInfo.setId(propertyField.getName());
 
@@ -1063,7 +1063,7 @@ public class PropertyUtil extends PropertyUtils{
 		propertyInfo.setIsString(isString(propertyClass));
 		
 		if(propertyInfo.isCollection()){
-			Class collectionItemsClass = null;
+			Class<?> collectionItemsClass = null;
 
 			if(propertyAnnotation != null && !propertyAnnotation.relationCollectionItemsClass().equals(Object.class))
 				collectionItemsClass = propertyAnnotation.relationCollectionItemsClass();
@@ -1168,7 +1168,7 @@ public class PropertyUtil extends PropertyUtils{
 	 * @param instanceClass Classe desejada.
 	 * @return Lista contendo as características das propriedades.
 	 */
-	public static Collection<PropertyInfo> getPropertiesInfo(Class instanceClass){
+	public static Collection<PropertyInfo> getPropertiesInfo(Class<?> instanceClass){
 		Collection<PropertyInfo> propertiesInfo     = new LinkedList<PropertyInfo>();
 		PropertyInfo             propertyInfo       = null;
 		Field                    propertyFields[]   = null;

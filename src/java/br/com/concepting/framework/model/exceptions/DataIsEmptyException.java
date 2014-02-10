@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedWarningException;
  * @since 1.0
  */
 public class DataIsEmptyException extends ExpectedWarningException{
+    private static final long serialVersionUID = -2340658698246819789L;
 }

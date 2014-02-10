@@ -1,6 +1,6 @@
 package br.com.concepting.framework.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
@@ -20,7 +20,9 @@ import br.com.concepting.framework.util.types.ComponentType;
  */
 @Model(descriptionPattern="#{title}")
 public class ObjectModel extends BaseModel{
-	@Property(isIdentity = true, isForSearch = true)
+    private static final long serialVersionUID = 4904881181797474284L;
+
+    @Property(isIdentity = true, isForSearch = true)
 	private Long id = 0l; 
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
@@ -60,7 +62,7 @@ public class ObjectModel extends BaseModel{
 	private Long sequence = 0l;
 	
 	@Property(relationType = RelationType.MANY_TO_MANY)
-	private List<GroupModel> groups = null;
+	private Collection<GroupModel> groups = null;
 	
     /**
 	 * Retorna a URL que armazena o ícone do objeto.
@@ -139,8 +141,9 @@ public class ObjectModel extends BaseModel{
 	 * 
 	 * @return Lista contendo a lista de grupos.
 	 */
-	public List<GroupModel> getGroups(){
-        return groups;
+	@SuppressWarnings("unchecked")
+    public <G extends GroupModel, C extends Collection<G>> C getGroups(){
+        return (C)groups;
     }
 
     /**
@@ -148,8 +151,9 @@ public class ObjectModel extends BaseModel{
      * 
      * @param groups Lista contendo a lista de grupos.
      */
-    public <G extends GroupModel> void setGroups(List<G> groups){
-        this.groups = (List)groups;
+    @SuppressWarnings("unchecked")
+    public <G extends GroupModel, C extends Collection<G>> void setGroups(C groups){
+        this.groups = (Collection<GroupModel>)groups;
     }
 
     /**
@@ -211,6 +215,7 @@ public class ObjectModel extends BaseModel{
 	 * 
 	 * @return Instância contendo os dados do formulário.
 	 */
+    @SuppressWarnings("unchecked")
     public <F extends FormModel> F getForm(){
 		return (F)form;
 	}

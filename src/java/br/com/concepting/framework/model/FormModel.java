@@ -1,6 +1,6 @@
 package br.com.concepting.framework.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.concepting.framework.model.annotations.Model;
 import br.com.concepting.framework.model.annotations.Property;
@@ -19,7 +19,9 @@ import br.com.concepting.framework.util.types.SortOrderType;
  */
 @Model
 public class FormModel extends BaseModel{
-	@Property(isIdentity = true, isForSearch = true)
+    private static final long serialVersionUID = -2926108936145777194L;
+
+    @Property(isIdentity = true, isForSearch = true)
 	private Integer id = 0;
 
 	@Property(isForSearch = true, relationType = RelationType.ONE_TO_ONE, relationJoinType = RelationJoinType.INNER_JOIN, validations = ValidationType.REQUIRED)
@@ -32,7 +34,7 @@ public class FormModel extends BaseModel{
 	private String title = "";
 
 	@Property(relationType = RelationType.ONE_TO_MANY)
-	private List<ObjectModel> objects = null;
+	private Collection<ObjectModel> objects = null;
 
 	/**
 	 * Retorna o identificador do formulário.
@@ -75,8 +77,9 @@ public class FormModel extends BaseModel{
 	 * 
 	 * @return Instância contendo a lista de objetos do formulário.
 	 */
-    public <O extends ObjectModel> List<O> getObjects(){
-		return (List)objects;
+    @SuppressWarnings("unchecked")
+    public <O extends ObjectModel, C extends Collection<O>> C getObjects(){
+		return (C)objects;
 	}
 
 	/**
@@ -84,8 +87,9 @@ public class FormModel extends BaseModel{
 	 * 
 	 * @param objects Instância contendo a lista de objetos do formulário.
 	 */
-    public <O extends ObjectModel> void setObjects(List<O> objects){
-		this.objects = (List)objects;
+    @SuppressWarnings("unchecked")
+    public <O extends ObjectModel, C extends Collection<O>> void setObjects(C objects){
+		this.objects = (Collection<ObjectModel>)objects;
 	}
 
 	/**
@@ -93,6 +97,7 @@ public class FormModel extends BaseModel{
 	 * 
 	 * @return Instância contendo os dados do módulo do sistema.
 	 */
+    @SuppressWarnings("unchecked")
     public <S extends SystemModuleModel> S getSystemModule(){
 		return (S)systemModule;
 	}
@@ -130,6 +135,7 @@ public class FormModel extends BaseModel{
 	 * @param objectName String contendo o identificador do objeto.
 	 * @return Instância do objeto vinculado.
 	 */
+    @SuppressWarnings("unchecked")
     public <O extends ObjectModel> O getObject(String objectName){
 		if(objects != null)
 			for(ObjectModel object : objects)

@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedWarningException;
  * @since 1.0
  */
 public class ItemAlreadyExistsException extends ExpectedWarningException{
+    private static final long serialVersionUID = 908032705065220440L;
 }
