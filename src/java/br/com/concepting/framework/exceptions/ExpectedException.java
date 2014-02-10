@@ -7,6 +7,8 @@ package br.com.concepting.framework.exceptions;
  * @since 1.0
  */
 public class ExpectedException extends Exception{
+    private static final long serialVersionUID = -2046392122293087621L;
+
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */

@@ -7,6 +7,8 @@ package br.com.concepting.framework.exceptions;
  * @since 1.0
  */
 public class InternalErrorException extends Exception{
+    private static final long serialVersionUID = -8931105241132588446L;
+
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */

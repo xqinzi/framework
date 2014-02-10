@@ -8,6 +8,8 @@ package br.com.concepting.framework.exceptions;
  * @since 3.0
  */
 public class IncorrectSyntaxException extends InternalErrorException{
+    private static final long serialVersionUID = 7841992449047707815L;
+    
     private String content = "";
     
     /**
