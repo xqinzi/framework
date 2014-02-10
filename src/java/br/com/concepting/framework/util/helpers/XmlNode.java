@@ -17,6 +17,8 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public class XmlNode extends Node{
+    private static final long serialVersionUID = 3468250465462747310L;
+    
     private String              namespace  = "";
 	private String              name       = "";
 	private String              value      = "";
@@ -71,7 +73,11 @@ public class XmlNode extends Node{
         this.body      = removeNamespaces(node.asXML());
         
         buildChildNodes(node);
-        buildAttributes(node.attributes());
+        
+        @SuppressWarnings("unchecked")
+        List<Attribute> attributes = node.attributes();
+        
+        buildAttributes(attributes);
 
         this.level = level;
         this.index = index;
@@ -152,6 +158,7 @@ public class XmlNode extends Node{
      */
     private void buildChildNodes(Element node){
         if(node != null){
+            @SuppressWarnings("unchecked")
             Collection<Element> nodes = node.elements();
 
             if(nodes != null && nodes.size() > 0){
