@@ -11,15 +11,18 @@ import java.util.LinkedList;
  * @since 1.0
  */
 public abstract class Node implements Serializable, Cloneable{
-	private Node             parent         = null;
-	private Collection<Node> childNodes     = null;
+    private static final long serialVersionUID = -9107989395547430445L;
+    
+    private Node             parent     = null;
+	private Collection<Node> childNodes = null;
 
 	/**
 	 * Retorna a instância do nó pai.
 	 * 
 	 * @return Instância do nó pai.
 	 */
-	public <N extends Node> N getParent(){
+    @SuppressWarnings("unchecked")
+    public <N extends Node> N getParent(){
 		return (N)parent;
 	}
 
@@ -29,7 +32,7 @@ public abstract class Node implements Serializable, Cloneable{
 	 * @param parent Instância do nó pai.
 	 * @param sync Flag que indica se deve sincronizar o nó pai.
 	 */
-	protected <N extends Node> void setParent(N parent, Boolean sync){
+	protected void setParent(Node parent, Boolean sync){
 		this.parent = parent;
 
 		try{
@@ -48,7 +51,7 @@ public abstract class Node implements Serializable, Cloneable{
 	 * 
 	 * @param parent Instância do nó pai.
 	 */
-	public <N extends Node> void setParent(N parent){
+	public void setParent(Node parent){
 		setParent(parent, true);
 	}
 
@@ -57,7 +60,8 @@ public abstract class Node implements Serializable, Cloneable{
 	 * 
 	 * @return Lista de nós filhos.
 	 */
-    public <N extends Node, C extends Collection> C getChildNodes(){
+    @SuppressWarnings("unchecked")
+    public <C extends Collection<? extends Node>> C getChildNodes(){
 		return (C)childNodes;
 	}
 
@@ -66,7 +70,7 @@ public abstract class Node implements Serializable, Cloneable{
 	 * 
 	 * @param childNode Instância do nó filho.
 	 */
-	public <N extends Node> void addChildNode(N childNode){
+	public void addChildNode(Node childNode){
 		try{
     		if(childNodes == null)
     			childNodes = new LinkedList<Node>();
@@ -86,7 +90,7 @@ public abstract class Node implements Serializable, Cloneable{
 	 * 
 	 * @param childNode Instância contendo a propriedade do nó a ser removido.
 	 */
-	public <N extends Node> void removeChildNode(N childNode){
+	public void removeChildNode(Node childNode){
         try{
             if(childNodes != null)
                 childNodes.remove(childNode);
@@ -100,7 +104,8 @@ public abstract class Node implements Serializable, Cloneable{
 	 * 
 	 * @param childNodes Lista de nós filhos.
 	 */
-    public <N extends Node> void setChildNodes(Collection<N> childNodes){
+    @SuppressWarnings("unchecked")
+    public <C extends Collection<? extends Node>> void setChildNodes(C childNodes){
 		this.childNodes = (Collection<Node>)childNodes;
 	}
 
@@ -127,7 +132,7 @@ public abstract class Node implements Serializable, Cloneable{
 	/**
 	 * @see java.lang.Object#clone()
 	 */
-	public Object clone() throws CloneNotSupportedException{
-		return super.clone();
+    public Node clone() throws CloneNotSupportedException{
+		return (Node)super.clone();
 	}
 }
