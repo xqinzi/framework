@@ -72,8 +72,8 @@ public enum RobotCommandType{
 	 */
 	MOUSE_RIGHT_CLICK("mouseRightClick", new Class[]{int.class, int.class});
 	
-	private String method;
-	private Class  argumentsTypes[];
+	private String   method;
+	private Class<?> argumentsTypes[];
 	
 	/**
 	 * Construtor - Define o valor da constante.
@@ -81,7 +81,7 @@ public enum RobotCommandType{
 	 * @param method String contendo o tipo de comando.
 	 * @param argumentsTypes Array contendo os tipos de argumentos do tipo de comando.
 	 */
-	private RobotCommandType(String method, Class argumentsTypes[]){
+	private RobotCommandType(String method, Class<?> argumentsTypes[]){
 		setMethod(method);
 		setArgumentsTypes(argumentsTypes);
 	}
@@ -91,7 +91,7 @@ public enum RobotCommandType{
 	 *  
 	 * @return Array contendo os tipos de argumentos do tipo de comando.
 	 */
-	public Class[] getArgumentsTypes(){
+	public Class<?>[] getArgumentsTypes(){
 		return argumentsTypes;
 	}
 	
@@ -100,7 +100,7 @@ public enum RobotCommandType{
 	 *  
 	 * @param argumentsTypes Array contendo os tipos de argumentos do tipo de comando.
 	 */
-	public void setArgumentsTypes(Class[] argumentsTypes){
+	public void setArgumentsTypes(Class<?>[] argumentsTypes){
 		this.argumentsTypes = argumentsTypes;
 	}
 	
