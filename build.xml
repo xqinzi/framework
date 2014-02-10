@@ -8,6 +8,12 @@
 			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
 				<include name="**/*.jar"/>
 			</fileset>
+			<fileset dir="${DOM4J_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${BEANUTILS_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
 		</classpath>
 	</taskdef>
 	
@@ -24,12 +30,18 @@
 			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
 				<include name="**/*.jar"/>
 			</fileset>
+			<fileset dir="${DOM4J_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
 		</classpath>
 	</taskdef>
 
 	<taskdef classname="br.com.concepting.framework.processors.ant.WebModuleBuildTask" name="webModuleBuild">
 		<classpath>
 			<fileset dir="${CONCEPTING_FRAMEWORK_HOME}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${DOM4J_HOME}">
 				<include name="**/*.jar"/>
 			</fileset>
 		</classpath>
