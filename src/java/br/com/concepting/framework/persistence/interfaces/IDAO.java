@@ -11,6 +11,13 @@ import br.com.concepting.framework.persistence.resource.PersistenceResource;
  */
 public interface IDAO extends ICrud{
     /**
+     * Inicializa persistência.
+     * 
+     * @throws InternalErrorException
+     */
+    public void initialize() throws InternalErrorException;
+    
+    /**
      * Inicia a transação.
      * 
      * @throws InternalErrorException
@@ -32,18 +39,18 @@ public interface IDAO extends ICrud{
     public void rollback() throws InternalErrorException;
     
     /**
-     * Retorna o tempo do timeout do bloqueio da transação.
+     * Retorna o tempo do timeout de execução das operações.
      * 
-     * @return Valor inteiro contendo o timeout do bloqueio.
+     * @return Valor inteiro contendo o timeout.
      */
-    public Integer getTransactionTimeout();
+    public Integer getTimeout();
     
     /**
-     * Define o tempo do timeout do bloqueio da transação.
+     * Define o tempo do timeout de execução das operações.
      * 
-     * @param transactionTimeout Valor inteiro contendo o timeout do bloqueio.
+     * @param timeout Valor inteiro contendo o timeout.
      */
-    public void setTransactionTimeout(Integer transactionTimeout);
+    public void setTimeout(Integer timeout);
     
     /**
      * Define a instância contendo as configurações de persistência.
@@ -58,45 +65,4 @@ public interface IDAO extends ICrud{
      * @return Instância contendo as configurações de persistência.
      */
     public PersistenceResource getPersistenceResource();
-    
-    /**
-     * Abre uma conexão com o repositório de persistência.
-     * 
-     * @return Instância da conexão com o repositório de persistência.
-     * @throws InternalErrorException
-     */
-    public <C> C openConnection() throws InternalErrorException;
-    
-    /**
-     * Fecha a conexão com o repositório de persistência.
-     */
-    public void closeConnection();
-    
-	/**
-	 * Retorna a conexão com o repositório de persistência.
-	 *
-	 * @return Instância contendo a conexão com o repositório.
-	 */
-	public <C> C getConnection();
-	
-    /**
-     * Define a conexão com o repositório de persistência.
-     *
-     * @param connection Instância contendo a conexão com o repositório.
-     */
-	public <C> void setConnection(C connection);
-	
-    /**
-     * Retorna a transação com o repositório de persistência.
-     *
-     * @return Instância contendo a transação com o repositório.
-     */
-	public <T> T getTransaction();
-	
-    /**
-     * Define a transação com o repositório de persistência.
-     *
-     * @param transaction Instância contendo a transação com o repositório.
-     */
-	public <T> void setTransaction(T transaction);
 }

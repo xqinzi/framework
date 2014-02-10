@@ -1,6 +1,5 @@
 package br.com.concepting.framework.persistence;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 
 import org.apache.commons.beanutils.ConstructorUtils;
@@ -10,11 +9,9 @@ import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.model.helpers.ModelFilter;
-import br.com.concepting.framework.persistence.annotations.Query;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.util.PersistenceUtil;
-import br.com.concepting.framework.util.MethodUtil;
 
 /**
  * Classe que define a estrutura básica para as classes de persistência de modelos de dados.
@@ -22,11 +19,11 @@ import br.com.concepting.framework.util.MethodUtil;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class BaseDAO implements IDAO{
+public abstract class BaseDAO<C, T> implements IDAO{
     private PersistenceResource persistenceResource = null;
-    private Object              connection          = null;
-    private Object              transaction         = null;
-    private Integer             transactionTimeout  = null;
+    private C                   connection          = null;
+    private T                   transaction         = null;
+    private Integer             timeout             = null;
 
 	/**
 	 * Construtor - Inicializa a classe de persistência.
@@ -40,35 +37,35 @@ public abstract class BaseDAO implements IDAO{
      * 
      * @param dao Instância da classe de persistência a ser encapsulada.
      */
-	public BaseDAO(IDAO dao){
+	public <D extends BaseDAO<C, T>> BaseDAO(D dao){
 	    this();
 	
 	    if(dao != null){
 	        setConnection(dao.getConnection());
 	        setPersistenceResource(dao.getPersistenceResource());
-	        setTransactionTimeout(dao.getTransactionTimeout());
+	        setTimeout(dao.getTimeout());
 	    }
 	    
 	    setTransaction(null);
 	}
-
+	
 	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getTransactionTimeout()
+	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getTimeout()
 	 */
-    public Integer getTransactionTimeout(){
-        return transactionTimeout;
+    public Integer getTimeout(){
+        return timeout;
     }
 
     /**
-     * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTransactionTimeout(java.lang.Integer)
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTimeout(java.lang.Integer)
      */
-    public void setTransactionTimeout(Integer transactionTimeout){
-        this.transactionTimeout = transactionTimeout;
+    public void setTimeout(Integer timeout){
+        this.timeout = timeout;
     }
 
     /**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#setPersistenceResource(br.com.concepting.framework.persistence.resource.PersistenceResource)
-	 */
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#setPersistenceResource(br.com.concepting.framework.persistence.resource.PersistenceResource)
+     */
     public void setPersistenceResource(PersistenceResource persistenceResource){
        this.persistenceResource = persistenceResource;
     }
@@ -79,56 +76,52 @@ public abstract class BaseDAO implements IDAO{
     public PersistenceResource getPersistenceResource(){
         return persistenceResource;
     }
+    
+    /**
+     * 
+     * @return
+     * @throws InternalErrorException
+     */
+    protected C openConnection() throws InternalErrorException{
+        return connection;
+    }
+    
+    /**
+     * 
+     */
+    protected void closeConnection(){
+    }
 
     /**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getConnection()
-	 */
-    public <C> C getConnection(){
-        return (C)connection;
+     * 
+     * @return
+     */
+    protected C getConnection(){
+        return connection;
 	}
 
     /**
-     * @see br.com.concepting.framework.persistence.interfaces.IDAO#setConnection(java.lang.Object)
+     * 
+     * @param connection
      */
-	public <C> void setConnection(C connection){
+	protected void setConnection(C connection){
 	    this.connection = connection;
 	}
 	
 	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#getTransaction()
+	 * 
+	 * @return
 	 */
-	public <T> T getTransaction(){
-	    return (T)transaction;
+	protected T getTransaction(){
+	    return transaction;
 	}
 	
 	/**
-	 * @see br.com.concepting.framework.persistence.interfaces.IDAO#setTransaction(java.lang.Object)
-	 */
-	public <T> void setTransaction(T transaction){
-	    this.transaction = transaction;
-	}
-
-	/**
-	 * Retorna a query vinculada ao método.
-	 * A query é definida na anotação Query.
 	 * 
-	 * @return String contendo a query.
-	 * @throws InternalErrorException
+	 * @param transaction
 	 */
-	protected String getQueryStatement() throws InternalErrorException{
-		try{
-    		Method method         = MethodUtil.getMethodFromStackTrace(2);
-    		Query  annotation     = method.getAnnotation(Query.class);
-    		String queryStatement = "";
-    
-    		if(annotation != null)
-    			queryStatement = annotation.value();
-    
-    		return queryStatement;
-		}
-		catch(Throwable e){
-			throw new InternalErrorException(e);
-		}
+	protected void setTransaction(T transaction){
+	    this.transaction = transaction;
 	}
 
 	/**
@@ -138,10 +131,10 @@ public abstract class BaseDAO implements IDAO{
 	 * @return Instância da classe de persistência desejada.
 	 * @throws InternalErrorException
 	 */
-    protected <D extends IDAO, M extends BaseModel> D getPersistence(Class<M> modelClass) throws InternalErrorException{
+    protected <D extends BaseDAO<C, T>> D getPersistence(Class<?> modelClass) throws InternalErrorException{
 		try{
 			Class<D> persistenceClass    = PersistenceUtil.getPersistenceClassByModel(modelClass);
-			D        persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, this);
+            D        persistenceInstance = (D)ConstructorUtils.invokeConstructor(persistenceClass, this);
 
 			return persistenceInstance;
 		}
@@ -149,25 +142,32 @@ public abstract class BaseDAO implements IDAO{
 			throw new InternalErrorException(e);
 		}
 	}
+    
+    /**
+     * @see br.com.concepting.framework.persistence.interfaces.IDAO#initialize()
+     */
+    public void initialize() throws InternalErrorException{
+        openConnection();
+    }
 
 	/**
 	 * @see br.com.concepting.framework.persistence.interfaces.ICrud#list()
 	 */
-	public <C extends Collection> C list() throws InternalErrorException{
+	public <M extends BaseModel, L extends Collection<M>> L list() throws InternalErrorException{
 		return null;
 	}
 
 	/**
 	 * @see br.com.concepting.framework.persistence.interfaces.ICrud#search(br.com.concepting.framework.model.BaseModel)
 	 */
-	public <M extends BaseModel, C extends Collection> C search(M model) throws InternalErrorException{
+	public <M extends BaseModel, L extends Collection<M>> L search(M model) throws InternalErrorException{
 		return null;
 	}
 
 	/**
 	 * @see br.com.concepting.framework.persistence.interfaces.ICrud#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.model.helpers.ModelFilter)
 	 */
-	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
+	public <M extends BaseModel, L extends Collection<M>> L search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		return null;
 	}
 

@@ -10,16 +10,18 @@ import java.util.Properties;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
-import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.dialect.DB2Dialect;
 import org.hibernate.dialect.FirebirdDialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.dialect.Oracle10gDialect;
-import org.hibernate.dialect.PostgreSQLDialect;
+import org.hibernate.dialect.PostgresPlusDialect;
 import org.hibernate.dialect.SQLServerDialect;
 import org.hibernate.dialect.SybaseASE15Dialect;
+import org.hibernate.jdbc.Work;
+import org.hibernate.metamodel.MetadataSources;
+import org.hibernate.service.ServiceRegistry;
 
 import br.com.concepting.framework.caching.CachedObject;
 import br.com.concepting.framework.caching.Cacher;
@@ -28,7 +30,6 @@ import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
-import br.com.concepting.framework.persistence.helpers.HibernateSession;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.types.RepositoryType;
@@ -66,8 +67,7 @@ public abstract class HibernateUtil{
      * @throws IllegalArgumentException
      */
     public static <D extends IDAO> Session getSession(PersistenceResource persistenceResource) throws HibernateException, IllegalArgumentException{
-        HibernateSession hibernateSession = buildHibernateSession(persistenceResource);
-        SessionFactory   sessionFactory   = hibernateSession.getFactory();
+        SessionFactory sessionFactory = buildHibernateSessionFactory(persistenceResource);
 
         return sessionFactory.getCurrentSession();
     }
@@ -97,10 +97,42 @@ public abstract class HibernateUtil{
      * @throws IllegalArgumentException
      */
     public static <D extends IDAO> Connection getConnection(PersistenceResource persistenceResource) throws SQLException, HibernateException, IllegalArgumentException{
-        HibernateSession   hibernateSession = buildHibernateSession(persistenceResource);
-        ConnectionProvider provider         = hibernateSession.getProvider();
-    
-        return provider.getConnection();
+        Session session = getSession(persistenceResource);
+        
+        class ConnectionGetter implements Work{
+            private Connection connection = null;
+            
+            /**
+             * Retorna a instância da conexão com repositório de dados.
+             * 
+             * @return Instância da conexão. 
+             */
+            public Connection getConnection(){
+                return connection;
+            }
+            
+            /**
+             * Define a instância da conexão com repositório de dados.
+             * 
+             * @param connection Instância da conexão. 
+             */
+            public void setConnection(Connection connection){
+                this.connection = connection;
+            }
+            
+            /**
+             * @see org.hibernate.jdbc.Work#execute(java.sql.Connection)
+             */
+            public void execute(Connection connection) throws SQLException{
+                setConnection(connection);
+            }
+        }
+        
+        ConnectionGetter connectionGetter = new ConnectionGetter();
+        
+        session.doWork(connectionGetter);
+
+        return connectionGetter.getConnection();
     }
 
     /**
@@ -111,17 +143,16 @@ public abstract class HibernateUtil{
 	 * @throws HibernateException
 	 * @throws IllegalArgumentException
 	 */
-	private static HibernateSession buildHibernateSession(PersistenceResource persistenceResource) throws HibernateException, IllegalArgumentException{
-		Cacher           cacher  = CacherManager.getInstance().getCacher(HibernateUtil.class);
-		CachedObject     object  = null;
-		HibernateSession session = null;
+	private static SessionFactory buildHibernateSessionFactory(PersistenceResource persistenceResource) throws HibernateException, IllegalArgumentException{
+		Cacher<SessionFactory>       cacher  = CacherManager.getInstance().getCacher(HibernateUtil.class);
+		CachedObject<SessionFactory> object  = null;
+		SessionFactory               session = null;
 
 		try{
 			object  = cacher.get(StringUtil.trim(persistenceResource.getId()));
 			session = object.getContent();
 		}
 		catch(ItemNotFoundException e){
-			Configuration   configuration              = new Configuration();
 			Properties      hibernateProperties        = new Properties();
 			FactoryResource persistenceFactoryResource = persistenceResource.getFactoryResource();
 			RepositoryType  repositoryType             = RepositoryType.valueOf(persistenceFactoryResource.getType().toUpperCase());
@@ -135,7 +166,7 @@ public abstract class HibernateUtil{
 			else if(repositoryType == RepositoryType.ORACLE)
 				hibernateProperties.setProperty(Environment.DIALECT, Oracle10gDialect.class.getName());
 			else if(repositoryType == RepositoryType.POSTGRESQL)
-				hibernateProperties.setProperty(Environment.DIALECT, PostgreSQLDialect.class.getName());
+				hibernateProperties.setProperty(Environment.DIALECT, PostgresPlusDialect.class.getName());
 			else if(repositoryType == RepositoryType.DB2)
 				hibernateProperties.setProperty(Environment.DIALECT, DB2Dialect.class.getName());
 			else if(repositoryType == RepositoryType.FIREBIRD)
@@ -179,9 +210,10 @@ public abstract class HibernateUtil{
 				for(String optionId : options.keySet())
 					hibernateProperties.setProperty(optionId, options.get(optionId));
 			
-			configuration.setProperties(hibernateProperties);
-			
-			List<String> persistenceMappings = persistenceResource.getMappings();
+			StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
+            ServiceRegistry                serviceRegistry        = serviceRegistryBuilder.applySettings(hibernateProperties).build();
+            MetadataSources                metadataSources        = new MetadataSources(serviceRegistry);
+			List<String>                   persistenceMappings    = persistenceResource.getMappings();
 			
 			if(persistenceMappings != null && persistenceMappings.size() > 0){
 			    StringBuilder persistenceMappingResource = new StringBuilder();
@@ -196,10 +228,10 @@ public abstract class HibernateUtil{
 			        persistenceMappingStream = HibernateUtil.class.getClassLoader().getResourceAsStream(persistenceMappingResource.toString());
 			        
 			        if(persistenceMappingStream != null)
-			            configuration.addInputStream(persistenceMappingStream);
+			            metadataSources.addInputStream(persistenceMappingStream);
 			        else{
 			            try{
-                            configuration.addClass(Class.forName(persistenceMapping));
+			                metadataSources.addClass(Class.forName(persistenceMapping));
                         }
                         catch(ClassNotFoundException e1){
                         }
@@ -207,11 +239,9 @@ public abstract class HibernateUtil{
 			    }
 			}
 			
-			session = new HibernateSession();
-			session.setProvider(configuration.buildSettings().getConnectionProvider());
-			session.setFactory(configuration.buildSessionFactory());
+			session = metadataSources.buildMetadata().buildSessionFactory();
 			
-			object = new CachedObject();
+			object = new CachedObject<SessionFactory>();
 			object.setId(persistenceResource.getId());
 			object.setContent(session);
 

@@ -1,6 +1,7 @@
 package br.com.concepting.framework.persistence.util;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -121,9 +122,10 @@ public abstract class HibernateQueryBuilder{
      * @return Instância da query desejada.
      * @throws InternalErrorException
      */
+    @SuppressWarnings("unchecked")
     private static <M extends BaseModel> void buildExpression(QueryType queryType, M model, ModelFilter modelFilter, String propertyPrefix, String propertyAlias, StringBuilder fieldsClause, StringBuilder fromClause, StringBuilder joinClause, StringBuilder whereClause, StringBuilder groupByClause, StringBuilder orderByClause, Map<String, Object> whereClauseParameters, Collection<String> processedRelations, Boolean considerConditions, Boolean needToGroupBy, HibernateDAO dao) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException{
         Boolean   modelIsNull = (model == null);
-        Class     modelClass  = (modelIsNull ? ModelUtil.getModelClassByPersistence(dao.getClass()) : model.getClass());
+        Class<?>  modelClass  = (modelIsNull ? ModelUtil.getModelClassByPersistence(dao.getClass()) : model.getClass());
         ModelInfo modelInfo   = ModelUtil.getModelInfo(modelClass);
 
         if(modelIsNull)
@@ -730,7 +732,7 @@ public abstract class HibernateQueryBuilder{
                                     break;
                                 }
                                 case IN: {
-                                    if(propertyValue != null && ((Collection)propertyValue).size() > 0)
+                                    if(propertyValue != null && ((Collection<M>)propertyValue).size() > 0)
                                         processCondition = false;
     
                                     if(processCondition){
@@ -763,7 +765,7 @@ public abstract class HibernateQueryBuilder{
                                     break;
                                 }
                                 case NOT_IN: {
-                                    if(propertyValue != null && ((Collection)propertyValue).size() > 0)
+                                    if(propertyValue != null && ((Collection<M>)propertyValue).size() > 0)
                                         processCondition = false;
     
                                     if(processCondition){
@@ -873,6 +875,18 @@ public abstract class HibernateQueryBuilder{
      * Monta a query HQL (Hibernate Query Language) baseada no modelo de dados especificado.
      * 
      * @param queryType Constante que define o tipo da query.
+     * @param dao Instância do DAO a ser utilizado.
+     * @return Instância da query desejada.
+     * @throws InternalErrorException
+     */
+    public static <M extends BaseModel> Query build(QueryType queryType, HibernateDAO dao) throws InternalErrorException{
+        return build(queryType, null, null, dao);
+    }
+
+    /**
+     * Monta a query HQL (Hibernate Query Language) baseada no modelo de dados especificado.
+     * 
+     * @param queryType Constante que define o tipo da query.
      * @param model Instância do modelo de dados desejado.
      * @param dao Instância do DAO a ser utilizado.
      * @return Instância da query desejada.
@@ -892,10 +906,11 @@ public abstract class HibernateQueryBuilder{
      * @return Instância da query desejada.
      * @throws InternalErrorException
      */
+    @SuppressWarnings("unchecked")
     public static <M extends BaseModel> Query build(QueryType queryType, M model, ModelFilter modelFilter, HibernateDAO dao) throws InternalErrorException{
         try{
             Session             connection            = dao.getConnection();
-            String              statementId           = MethodUtil.getMethodFromStackTrace(2).getName();
+            String              statementId           = MethodUtil.getMethodFromStackTrace(3).getName();
             Map<String, Object> whereClauseParameters = new LinkedHashMap<String, Object>();
             String              expression            = buildExpression(queryType, model, modelFilter, whereClauseParameters, dao);
             Query               query                 = connection.createQuery(expression);
@@ -911,7 +926,7 @@ public abstract class HibernateQueryBuilder{
                 clauseParameterValue = whereClauseParameters.get(clauseParameter);
     
                 if(clauseParameterValue instanceof Collection)
-                    query.setParameterList(clauseParameter, (Collection)clauseParameterValue);
+                    query.setParameterList(clauseParameter, (Collection<M>)clauseParameterValue);
                 else
                     query.setParameter(clauseParameter, clauseParameterValue);
             }
@@ -949,6 +964,55 @@ public abstract class HibernateQueryBuilder{
             throw new InternalErrorException(e);
         }
         catch(InstantiationException e){
+            throw new InternalErrorException(e);
+        }
+    }
+
+    /**
+     * Retorna a query vinculada ao método.
+     * A query é definida pela anotação Query.
+     * 
+     * @return String contendo a query.
+     * @throws InternalErrorException
+     */
+    @SuppressWarnings("unchecked")
+    public <Q extends Query> Q build(HibernateDAO dao) throws InternalErrorException{
+        try{
+            Q                                                         query      = null;
+            Method                                                    method     = MethodUtil.getMethodFromStackTrace(3);
+            br.com.concepting.framework.persistence.annotations.Query annotation = method.getAnnotation(br.com.concepting.framework.persistence.annotations.Query.class);
+            String                                                    statement  = "";
+    
+            if(annotation != null){
+                statement = StringUtil.trim(annotation.value());
+            
+                if(statement.length() > 0){
+                    String  statementId = method.getName(); 
+                    Session session     = dao.getConnection();
+                    
+                    query = (Q)(annotation.isNative() ? session.createQuery(statement) : session.createSQLQuery(statement));
+                    
+                    query.setComment(statementId);
+                    
+                    Map<String, String> persistenceOptions = dao.getPersistenceResource().getOptions();
+                    
+                    try{
+                        String queryMaxResultsBuffer = StringUtil.trim(persistenceOptions.get(PersistenceConstants.DEFAULT_QUERY_MAXIMUM_RESULTS_KEY));
+        
+                        if(queryMaxResultsBuffer.length() > 0)
+                            query.setMaxResults(NumberUtil.parseInt(queryMaxResultsBuffer));
+                        else
+                            query.setMaxResults(PersistenceConstants.DEFAULT_QUERY_MAXIMUM_RESULTS);
+                    }
+                    catch(Throwable e){
+                        query.setMaxResults(PersistenceConstants.DEFAULT_QUERY_MAXIMUM_RESULTS);
+                    }
+                }
+            }
+            
+            return query;
+        }
+        catch(Throwable e){
             throw new InternalErrorException(e);
         }
     }

@@ -21,7 +21,7 @@ public interface ICrud{
 	 * @return Lista contendo os modelos de dados.
 	 * @throws InternalErrorException
 	 */
-	public <C extends Collection> C list() throws InternalErrorException;
+	public <M extends BaseModel, C extends Collection<M>> C list() throws InternalErrorException;
 
 	/**
 	 * Retorna uma lista contendo os modelos de dados a partir dos valores das propriedades de 
@@ -31,7 +31,7 @@ public interface ICrud{
 	 * @return Lista contendo os modelos de dados encontrados.
 	 * @throws InternalErrorException
 	 */
-	public <M extends BaseModel, C extends Collection> C search(M model) throws InternalErrorException;
+	public <M extends BaseModel, C extends Collection<M>> C search(M model) throws InternalErrorException;
 
 	/**
 	 * Retorna uma lista contendo os modelos de dados a partir dos valores das propriedades de 
@@ -42,7 +42,7 @@ public interface ICrud{
 	 * @return Lista contendo os modelos de dados encontrados.
 	 * @throws InternalErrorException
 	 */
-	public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException;
+	public <M extends BaseModel, C extends Collection<M>> C search(M model, ModelFilter modelFilter) throws InternalErrorException;
 
 	/**
 	 * Carrega um único modelo de dados.

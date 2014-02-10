@@ -8,6 +8,7 @@ import java.util.Map;
 import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**
  * Classe responsável pelo armazenamento das configurações de persistência.
@@ -15,8 +16,10 @@ import br.com.concepting.framework.resource.FactoryResource;
  * @author fvilarinho
  * @since 1.0
  */
-public class PersistenceResource extends BaseResource{
-	private Integer             timeout         = 0;
+public class PersistenceResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = 5519581642532631902L;
+    
+    private Integer             timeout         = 0;
 	private String              serverName      = "";
 	private Integer             serverPort      = 0;
 	private String              repositoryId    = "";

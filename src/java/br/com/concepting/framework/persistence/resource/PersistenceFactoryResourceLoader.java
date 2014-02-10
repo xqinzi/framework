@@ -45,13 +45,14 @@ public class PersistenceFactoryResourceLoader extends FactoryResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#parseResource()
 	 */
-    protected <C> C parseResource() throws InvalidResourceException{
+    protected XmlNode parseResource() throws InvalidResourceException{
 		XmlNode content = super.parseResource();
 
 		content = content.getNode("persistenceFactory");
+
 		if(content == null)
 			throw new InvalidResourceException(getResourceId());
 
-		return (C)content;
+		return content;
 	}
 }

@@ -6,7 +6,6 @@ import br.com.concepting.framework.context.constants.ContextConstants;
 import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.context.resource.ContextResourceLoader;
 import br.com.concepting.framework.persistence.constants.PersistenceConstants;
-import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.resource.XmlResourceLoader;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
@@ -20,7 +19,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 1.0
  */
-public class PersistenceResourceLoader extends XmlResourceLoader{
+public class PersistenceResourceLoader extends XmlResourceLoader<PersistenceResource>{
 	/**
 	 * Construtor - Inicializa classe de leitura/manipulação do arquivo de configurações de 
 	 * persistência default.
@@ -58,12 +57,11 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
 	 */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public PersistenceResource get(String id) throws InvalidResourceException{
 		PersistenceResource persistenceResource = super.get(id);
 		XmlNode             resource            = persistenceResource.getContent();
 		XmlNode             resourceNode        = null;
-
-		String timeout = resource.getAttribute("timeout");
+		String              timeout             = resource.getAttribute("timeout");
 
 		if(timeout.length() > 0){
 			try{
@@ -75,6 +73,7 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 		}
 
 		resourceNode = resource.getNode("lookupName");
+		
 		if(resourceNode != null){
 			String lookupName = StringUtil.trim(resourceNode.getValue());
 
@@ -101,6 +100,7 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 		}
 		else{
 			resourceNode = resource.getNode("serverName");
+			
 			if(resourceNode != null){
 				String serverName = StringUtil.trim(resourceNode.getValue());
 
@@ -113,6 +113,7 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 				throw new InvalidResourceException(getResourceId(), resource.getText());
 
 			resourceNode = resource.getNode("serverPort");
+			
 			if(resourceNode != null){
 				try{
 					String serverPort = StringUtil.trim(resourceNode.getValue());
@@ -127,6 +128,7 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 				throw new InvalidResourceException(getResourceId(), resource.getText());
 
 			resourceNode = resource.getNode("user");
+			
 			if(resourceNode != null){
 				String user = StringUtil.trim(resourceNode.getValue());
 
@@ -139,6 +141,7 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 				throw new InvalidResourceException(getResourceId(), resource.getText());
 
 			resourceNode = resource.getNode("password");
+			
 			if(resourceNode != null){
 				String password = StringUtil.trim(resourceNode.getValue());
 
@@ -146,6 +149,7 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 			}
 
 			resourceNode = resource.getNode("repositoryId");
+			
 			if(resourceNode!= null){
 				String repositoryId = StringUtil.trim(resourceNode.getValue());
 
@@ -183,10 +187,12 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 		    
 		    for(XmlNode childNode : childNodes){
 				optionResourceId = StringUtil.trim(childNode.getAttribute("id"));
+				
 				if(optionResourceId.length() == 0)
 					throw new InvalidResourceException(getResourceId(), childNode.getText());
 
 				optionResourceValue = StringUtil.trim(childNode.getAttribute("value"));
+				
 				if(optionResourceValue.length() == 0)
 					throw new InvalidResourceException(getResourceId(), childNode.getText());
 
@@ -204,6 +210,6 @@ public class PersistenceResourceLoader extends XmlResourceLoader{
 		        persistenceResource.addMapping(childNode.getValue());
 		}
 
-		return (R)persistenceResource;
+		return persistenceResource;
 	}
 }

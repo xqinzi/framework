@@ -26,7 +26,6 @@ import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
 import br.com.concepting.framework.model.util.PropertyUtil;
-import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.types.QueryType;
 import br.com.concepting.framework.persistence.types.RelationType;
@@ -40,7 +39,7 @@ import br.com.concepting.framework.persistence.util.HibernateUtil;
  * @author fvilarinho
  * @since 1.0
  */
-public abstract class HibernateDAO extends BaseDAO{
+public abstract class HibernateDAO extends BaseDAO<Session, Transaction>{
     /**
      * Construtor - Inicializa a classe de persistência.
      */
@@ -53,7 +52,7 @@ public abstract class HibernateDAO extends BaseDAO{
      * 
      * @param dao Instância da classe de persistência a ser encapsulada.
      */
-    public HibernateDAO(IDAO dao){
+    public <D extends HibernateDAO> HibernateDAO(D dao){
         super(dao);
     }
     
@@ -81,11 +80,14 @@ public abstract class HibernateDAO extends BaseDAO{
     	    Transaction transaction = connection.getTransaction();
     	    
     	    if(transaction != null){
-    	        Integer transactionTimeout = getTransactionTimeout();
+    	        Integer timeout = getTimeout();
+    	        
+    	        if(timeout == null || timeout <= 0)
+    	            timeout = getPersistenceResource().getTimeout();
     	        
     	        try{
-        	        if(transactionTimeout != null && transactionTimeout > 0)
-        	            transaction.setTimeout(getTransactionTimeout());
+        	        if(timeout != null && timeout > 0)
+        	            transaction.setTimeout(timeout);
     	        }
     	        catch(Throwable e){
     	        }
@@ -139,11 +141,18 @@ public abstract class HibernateDAO extends BaseDAO{
             closeConnection();
         }
     }
+    
+    /**
+     * @see br.com.concepting.framework.persistence.BaseDAO#getConnection()
+     */
+    public Session getConnection(){
+        return super.getConnection();
+    }
 
     /**
-     * @see br.com.concepting.framework.persistence.interfaces.IDAO#openConnection()
+     * @see br.com.concepting.framework.persistence.BaseDAO#openConnection()
      */
-    public <C> C openConnection() throws InternalErrorException{
+    protected Session openConnection() throws InternalErrorException{
         Session connection = getConnection();
         
         try{
@@ -155,7 +164,7 @@ public abstract class HibernateDAO extends BaseDAO{
                 setConnection(connection);
             }
             
-            return (C)connection;
+            return connection;
         }
         catch(Throwable e){
             throw new InternalErrorException(e);
@@ -163,9 +172,9 @@ public abstract class HibernateDAO extends BaseDAO{
     }
 
     /**
-     * @see br.com.concepting.framework.persistence.interfaces.IDAO#closeConnection()
+     * @see br.com.concepting.framework.persistence.BaseDAO#closeConnection()
      */
-    public void closeConnection(){
+    protected void closeConnection(){
         try{
             Session connection = getConnection();
             
@@ -206,8 +215,10 @@ public abstract class HibernateDAO extends BaseDAO{
             throw new ItemNotFoundException();
 
         try{
-			Query query       = HibernateQueryBuilder.build(QueryType.FIND, model, this);
-			M     queryResult = (M)query.uniqueResult();
+			Query query = HibernateQueryBuilder.build(QueryType.FIND, model, this);
+			
+			@SuppressWarnings("unchecked")
+            M queryResult = (M)query.uniqueResult();
 
 			if(queryResult == null)
 				throw new ItemNotFoundException();
@@ -228,28 +239,32 @@ public abstract class HibernateDAO extends BaseDAO{
 	/**
 	 * @see br.com.concepting.framework.persistence.BaseDAO#list()
 	 */
-    public <C extends Collection> C list() throws InternalErrorException{
-		return (C)search(null);
+    @SuppressWarnings("unchecked")
+    public <M extends BaseModel, L extends Collection<M>> L list() throws InternalErrorException{
+		return (L)search(null);
 	}
 
 	/**
 	 * @see br.com.concepting.framework.persistence.BaseDAO#search(br.com.concepting.framework.model.BaseModel)
 	 */
-    public <M extends BaseModel, C extends Collection> C search(M model) throws InternalErrorException{
-		return (C)search(model, null);
+    @SuppressWarnings("unchecked")
+    public <M extends BaseModel, L extends Collection<M>> L search(M model) throws InternalErrorException{
+		return (L)search(model, null);
 	}
 
     /**
      * @see br.com.concepting.framework.persistence.BaseDAO#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.model.helpers.ModelFilter)
      */
-    public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
+    public <M extends BaseModel, L extends Collection<M>> L search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		try{
-			Query   query     = HibernateQueryBuilder.build(QueryType.SEARCH, model, modelFilter, this);
-			List<M> modelList = query.list();
+			Query query = HibernateQueryBuilder.build(QueryType.SEARCH, model, modelFilter, this);
+			
+			@SuppressWarnings("unchecked")
+            L modelList = (L)query.list();
 			
 			modelList = ModelUtil.filterByPhonetic(model, modelList);
 
-			return (C)modelList;
+			return modelList;
 		}
         catch(IllegalAccessException e){
             throw new InternalErrorException(e);
@@ -273,8 +288,8 @@ public abstract class HibernateDAO extends BaseDAO{
 			return model;
 		
         reattachModel(model);
-        
-		Class     modelClass = model.getClass();
+
+		Class<?>  modelClass = model.getClass();
 		ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);
 
 		if(modelInfo == null)
@@ -295,7 +310,8 @@ public abstract class HibernateDAO extends BaseDAO{
         }
 		
 		if(propertyInfo.hasModel()){
-			List<M> modelList = (List<M>)referenceProperty;
+			@SuppressWarnings("unchecked")
+            List<M> modelList = (List<M>)referenceProperty;
 			
 			if(modelList != null)
 				for(Integer cont = 0 ; cont < modelList.size() ; cont++)
@@ -313,7 +329,7 @@ public abstract class HibernateDAO extends BaseDAO{
 			if(model == null)
 				return;
 
-			Class     modelClass = model.getClass();
+			Class<?>  modelClass = model.getClass();
 			ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass); 
 
 			if(modelInfo == null) 
@@ -359,9 +375,20 @@ public abstract class HibernateDAO extends BaseDAO{
 	 * @see br.com.concepting.framework.persistence.BaseDAO#deleteAll()
 	 */
 	public <M extends BaseModel> void deleteAll() throws InternalErrorException{
-		Collection<M> modelList = list();
-
-		deleteAll(modelList);
+	    try{
+    	    Query query = HibernateQueryBuilder.build(QueryType.DELETE, this);
+    	    
+    	    query.executeUpdate();
+        }
+        catch(ObjectNotFoundException e){
+        }
+        catch(ObjectDeletedException e){
+        }
+        catch(StaleStateException e){
+        }
+        catch(HibernateException e){
+            throw new InternalErrorException(e);
+        }
 	}
 
 	/**

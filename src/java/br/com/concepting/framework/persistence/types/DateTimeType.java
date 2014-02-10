@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 
 import br.com.concepting.framework.util.helpers.DateTime;
@@ -27,7 +28,7 @@ public class DateTimeType implements UserType{
     public Object assemble(Serializable cached, Object owner) throws HibernateException{
         return disassemble(cached);
     }
-    
+     
     /**
      * @see org.hibernate.usertype.UserType#deepCopy(java.lang.Object)
      */
@@ -110,7 +111,7 @@ public class DateTimeType implements UserType{
     /**
      * @see org.hibernate.usertype.UserType#returnedClass()
      */
-    public Class returnedClass(){
+    public Class<DateTime> returnedClass(){
         return DateTime.class;
     }
     
@@ -119,5 +120,19 @@ public class DateTimeType implements UserType{
      */
     public int[] sqlTypes(){
         return new int[]{Types.TIMESTAMP};
+    }
+
+    /**
+     * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[], org.hibernate.engine.spi.SessionImplementor, java.lang.Object)
+     */
+    public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor si, Object owner) throws HibernateException, SQLException{
+        return nullSafeGet(rs, names, owner);
+    }
+
+    /**
+     * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement, java.lang.Object, int, org.hibernate.engine.spi.SessionImplementor)
+     */
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor si) throws HibernateException, SQLException{
+        nullSafeSet(st, value, index);
     }
 }

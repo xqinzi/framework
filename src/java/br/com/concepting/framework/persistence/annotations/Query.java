@@ -14,6 +14,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Query{
+    /**
+     * Indica se a linguagem é nativa do banco de dados.
+     * 
+     * @return True/False.
+     */
+    boolean isNative() default false;
+    
 	/**
 	 * Define a query vinculada.
 	 * 

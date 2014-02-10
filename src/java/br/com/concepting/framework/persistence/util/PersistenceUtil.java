@@ -1,6 +1,5 @@
 package br.com.concepting.framework.persistence.util;
 
-import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.persistence.interfaces.IDAO;
 import br.com.concepting.framework.persistence.resource.PersistenceResource;
 import br.com.concepting.framework.persistence.resource.PersistenceResourceLoader;
@@ -33,7 +32,7 @@ public class PersistenceUtil{
 	 * @return Instância contendo as configurações de persistência.
 	 * @throws InvalidResourceException
 	 */
-    public static <R extends PersistenceResource> R getPersistenceResource(String persistenceResourceId) throws InvalidResourceException{
+    public static PersistenceResource getPersistenceResource(String persistenceResourceId) throws InvalidResourceException{
 		PersistenceResourceLoader resourceLoader = new PersistenceResourceLoader();
 		PersistenceResource       resource = null;
 
@@ -42,7 +41,7 @@ public class PersistenceUtil{
 		else
 			resource = resourceLoader.get(persistenceResourceId);
 
-		return (R)resource;
+		return resource;
 	}
 
 	/**
@@ -51,7 +50,7 @@ public class PersistenceUtil{
 	 * @param modelClass Classe do modelo de dados desejado.
 	 * @return String contendo o identificador da classe de persistência.
 	 */
-	public static <M extends BaseModel> String getPersistenceClassNameByModel(Class<M> modelClass){
+	public static String getPersistenceClassNameByModel(Class<?> modelClass){
 		String persistenceClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "DAOImpl");
 		
 		return StringUtil.replaceAll(persistenceClassId, ".model", ".persistence");
@@ -63,7 +62,7 @@ public class PersistenceUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o identificador da classe de persistência.
      */
-    public static <M extends BaseModel> String getPersistenceNameByModel(Class<M> modelClass){
+    public static String getPersistenceNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "DAOImpl");
     }
 
@@ -74,7 +73,8 @@ public class PersistenceUtil{
 	 * @return Classe de persistência.
 	 * @throws ClassNotFoundException
 	 */
-    public static <M extends BaseModel, D extends IDAO> Class<D> getPersistenceClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <D extends IDAO> Class<D> getPersistenceClassByModel(Class<?> modelClass) throws ClassNotFoundException{
 		return (Class<D>)Class.forName(getPersistenceClassNameByModel(modelClass));
 	}
 
@@ -84,7 +84,7 @@ public class PersistenceUtil{
 	 * @param modelClass Classe do modelo de dados desejado.
 	 * @return String contendo o identificador da interface da classe de persistência.
 	 */
-	public static <M extends BaseModel> String getPersistenceInterfaceClassNameByModel(Class<M> modelClass){
+	public static String getPersistenceInterfaceClassNameByModel(Class<?> modelClass){
 		String persistenceClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "DAO");
 
 		return StringUtil.replaceAll(persistenceClassId, ".model", ".persistence.interfaces");
@@ -96,7 +96,7 @@ public class PersistenceUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o identificador da interface da classe de persistência.
      */
-    public static <M extends BaseModel> String getPersistenceInterfaceNameByModel(Class<M> modelClass){
+    public static String getPersistenceInterfaceNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "DAO");
     }
 
@@ -107,7 +107,8 @@ public class PersistenceUtil{
 	 * @return String contendo o identificador da interface da classe de persistência.
 	 * @throws ClassNotFoundException 
 	 */
-    public static <M extends BaseModel, D extends IDAO> Class<D> getPersistenceInterfaceClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <D extends IDAO> Class<D> getPersistenceInterfaceClassByModel(Class<?> modelClass) throws ClassNotFoundException{
 		return (Class<D>)Class.forName(getPersistenceInterfaceClassNameByModel(modelClass));
 	}
 	
@@ -117,7 +118,7 @@ public class PersistenceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o nome do pacote.
      */
-    public static <M extends BaseModel> String getPersistencePackageByModel(Class<M> modelClass){
+    public static String getPersistencePackageByModel(Class<?> modelClass){
         return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".persistence");
     }
 
@@ -127,7 +128,7 @@ public class PersistenceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o nome do pacote.
      */
-    public static <M extends BaseModel> String getPersistenceInterfacePackageByModel(Class<M> modelClass){
+    public static String getPersistenceInterfacePackageByModel(Class<?> modelClass){
         return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".persistence.interfaces");
     }
 }
