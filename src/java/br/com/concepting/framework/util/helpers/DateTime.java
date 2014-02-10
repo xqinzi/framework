@@ -9,6 +9,8 @@ import java.util.Date;
  * @since 3.0
  */
 public class DateTime extends Date{
+    private static final long serialVersionUID = -6296515216038853856L;
+
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      */

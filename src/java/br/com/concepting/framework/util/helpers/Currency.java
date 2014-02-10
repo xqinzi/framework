@@ -10,6 +10,8 @@ import java.math.BigInteger;
  * @since 3.0
  */
 public class Currency extends BigDecimal{
+    private static final long serialVersionUID = -7656916438807040055L;
+
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
