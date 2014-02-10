@@ -14,15 +14,15 @@ import br.com.concepting.framework.util.types.DateFieldType;
 public class CacherManager{
 	private static CacherManager instance = null;
 
-	private Map<String, Cacher> cachers = null;
+	private Map<String, Cacher<?>> cachers = null;
 
 	/**
 	 * Construtor - Inicializa variáveis e/ou objetos internos.
 	 */
-	private CacherManager(){
+	private <O> CacherManager(){
 		super();
 
-		cachers = new LinkedHashMap<String, Cacher>();
+		cachers = new LinkedHashMap<String, Cacher<?>>();
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class CacherManager{
 	 * @param timeout Valor inteiro contendo o tempo de expiração.
 	 * @return Instância do cache desejado.
 	 */
-	public Cacher getCacher(String id, Integer timeout){
-		Cacher cacher = getCacher(id);
+	public <O> Cacher<O> getCacher(String id, Integer timeout){
+		Cacher<O> cacher = getCacher(id);
 
 		cacher.setTimeout(timeout);
 
@@ -60,8 +60,8 @@ public class CacherManager{
 	 * @param timeoutType Constante que define o tipo do valor do timeout.
 	 * @return Instância do cache desejado.
 	 */
-	public Cacher getCacher(String id, Integer timeout, DateFieldType timeoutType){
-		Cacher cacher = getCacher(id, timeout);
+	public <O> Cacher<O> getCacher(String id, Integer timeout, DateFieldType timeoutType){
+		Cacher<O> cacher = getCacher(id, timeout);
 
 		cacher.setTimeoutType(timeoutType);
 
@@ -74,17 +74,18 @@ public class CacherManager{
 	 * @param id String contendo o identificador.
 	 * @return Instância do cache desejado.
 	 */
-	public Cacher getCacher(String id){
+	public <O> Cacher<O> getCacher(String id){
 		StringBuilder cacheId = new StringBuilder();
 
 		cacheId.append(Cacher.class.getName());
 		cacheId.append("@");
 		cacheId.append(id);
 
-		Cacher cacher = cachers.get(cacheId.toString());
+        @SuppressWarnings("unchecked")
+        Cacher<O> cacher = (Cacher<O>)cachers.get(cacheId.toString());
 
 		if(cacher == null){
-			cacher = new Cacher(cacheId.toString());
+			cacher = new Cacher<O>(cacheId.toString());
 
 			cachers.put(cacheId.toString(), cacher);
 		}
@@ -98,7 +99,7 @@ public class CacherManager{
 	 * @param clazz Classe que identifica o cache.
 	 * @return Instância do cache desejado.
 	 */
-	public Cacher getCacher(Class clazz){
+	public <O> Cacher<O> getCacher(Class<?> clazz){
 		return getCacher(clazz.getName());
 	}
 
@@ -109,7 +110,7 @@ public class CacherManager{
 	 * @param timeout Valor inteiro contendo o tempo de expiração.
 	 * @return Instância do cache desejado.
 	 */
-	public Cacher getCacher(Class clazz, Integer timeout){
+	public <O> Cacher<O> getCacher(Class<?> clazz, Integer timeout){
 		return getCacher(clazz.getName(), timeout);
 	}
 
@@ -121,7 +122,7 @@ public class CacherManager{
 	 * @param timeoutType Constante que define o tipo do valor do timeout.
 	 * @return Instância do cache desejado.
 	 */
-	public Cacher getCacher(Class clazz, Integer timeout, DateFieldType timeoutType){
+	public <O> Cacher<O> getCacher(Class<?> clazz, Integer timeout, DateFieldType timeoutType){
 		return getCacher(clazz.getName(), timeout, timeoutType);
 	}
 }

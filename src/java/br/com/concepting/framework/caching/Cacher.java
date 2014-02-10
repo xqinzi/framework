@@ -9,6 +9,7 @@ import br.com.concepting.framework.constants.Constants;
 import br.com.concepting.framework.model.exceptions.ItemAlreadyExistsException;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.util.DateTimeUtil;
+import br.com.concepting.framework.util.helpers.DateTime;
 import br.com.concepting.framework.util.types.DateFieldType;
 
 /**
@@ -17,11 +18,13 @@ import br.com.concepting.framework.util.types.DateFieldType;
  * @author fvilarinho
  * @since 1.0
  */
-public class Cacher implements Serializable{
-	private String                    id          = null;
-	private Map<String, CachedObject> history     = null;
-	private Integer                   timeout     = null;
-	private DateFieldType             timeoutType = Constants.DEFAULT_TIMEOUT_TYPE;
+public class Cacher<O> implements Serializable{
+    private static final long serialVersionUID = -441305081843827888L;
+    
+    private String                       id          = null;
+	private Map<String, CachedObject<O>> history     = null;
+	private Integer                      timeout     = null;
+	private DateFieldType                timeoutType = Constants.DEFAULT_TIMEOUT_TYPE;
 
 	/**
 	 * Construtor - Inicializa variáveis e/ou objetos internos.
@@ -29,7 +32,7 @@ public class Cacher implements Serializable{
 	private Cacher(){
 		super();
 
-		history = new TreeMap<String, CachedObject>();
+		history = new TreeMap<String, CachedObject<O>>();
 	}
 
 	/**
@@ -108,10 +111,10 @@ public class Cacher implements Serializable{
 	 * @param object Instância do conteúdo.
 	 * @throws ItemAlreadyExistsException
 	 */
-	public synchronized void add(CachedObject object) throws ItemAlreadyExistsException{
+	public synchronized void add(CachedObject<O> object) throws ItemAlreadyExistsException{
 		if(object != null){
 			if(!contains(object)){
-				object.setCacheDate(new Date());
+				object.setCacheDate(new DateTime());
 				object.setLastAccess(null);
 
 				history.put(object.getId(), object);
@@ -127,10 +130,10 @@ public class Cacher implements Serializable{
 	 * @param object Instância do conteúdo.
 	 * @throws ItemNotFoundException
 	 */
-	public synchronized void set(CachedObject object) throws ItemNotFoundException{
+	public synchronized void set(CachedObject<O> object) throws ItemNotFoundException{
 		if(object != null){
 			if(contains(object)){
-				object.setCacheDate(new Date());
+				object.setCacheDate(new DateTime());
 				object.setLastAccess(null);
 
 				history.put(object.getId(), object);
@@ -146,7 +149,7 @@ public class Cacher implements Serializable{
 	 * @param object Instância do conteúdo
 	 * @throws ItemNotFoundException
 	 */
-	public synchronized void remove(CachedObject object) throws ItemNotFoundException{
+	public synchronized void remove(CachedObject<O> object) throws ItemNotFoundException{
 		if(object != null){
 			if(contains(object))
 				history.remove(object.getId());
@@ -162,24 +165,25 @@ public class Cacher implements Serializable{
 	 * @return Instância do conteúdo.
 	 * @throws ItemNotFoundException
 	 */
-	public synchronized CachedObject get(String id) throws ItemNotFoundException{
+	public synchronized CachedObject<O> get(String id) throws ItemNotFoundException{
 		Date timeoutDate = null;
 
-		for(CachedObject cachedObject : history.values()){
+		for(CachedObject<O> cachedObject : history.values()){
 			if(cachedObject.getId().equals(id)){
 				if(getTimeout() != null && getTimeout() > 0){
 					timeoutDate = cachedObject.getLastAccess();
+					
 					if(timeoutDate == null)
 						timeoutDate = cachedObject.getCacheDate();
 
-					if(DateTimeUtil.diff(new Date(), timeoutDate, getTimeoutType()) >= timeout){
+					if(DateTimeUtil.diff(new DateTime(), timeoutDate, getTimeoutType()) >= timeout){
 						remove(cachedObject);
 
 						throw new ItemNotFoundException();
 					}
 				}
 
-				cachedObject.setLastAccess(new Date());
+				cachedObject.setLastAccess(new DateTime());
 
 				return cachedObject;
 			}
@@ -194,7 +198,7 @@ public class Cacher implements Serializable{
 	 * @param object Instância do conteúdo.
 	 * @return True/False.
 	 */
-	public Boolean contains(CachedObject object){
+	public Boolean contains(CachedObject<O> object){
 		return history.containsKey(object.getId());
 	}
 

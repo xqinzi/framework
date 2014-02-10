@@ -3,18 +3,22 @@ package br.com.concepting.framework.caching;
 import java.io.Serializable;
 import java.util.Date;
 
+import br.com.concepting.framework.util.helpers.DateTime;
+
 /**
  * Classe responsável por armazenar um conteúdo em cache.
  * 
  * @author fvilarinho
  * @since 1.0
  */
-public class CachedObject implements Serializable{
-	private String id         = null;
-	private Date   lastAccess = null;
-	private Date   cacheDate  = null;
-	private Object content    = null;
-	private Cacher cache      = null;
+public class CachedObject<O> implements Serializable{
+    private static final long serialVersionUID = 8165512408423991030L;
+    
+    private String    id         = null;
+	private DateTime  lastAccess = null;
+	private DateTime  cacheDate  = null;
+	private O         content    = null;
+	private Cacher<O> cache      = null;
 
 	/**
 	 * Retorna o identificador do conteúdo.
@@ -51,8 +55,8 @@ public class CachedObject implements Serializable{
 	 * 
 	 * @return Instância do objeto que define o conteúdo.
 	 */
-    public <C> C getContent(){
-		return (C)content;
+    public O getContent(){
+		return content;
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class CachedObject implements Serializable{
 	 * 
 	 * @param content Instância do objeto que define o conteúdo.
 	 */
-	public <C> void setContent(C content){
+	public void setContent(O content){
 		this.content = content;
 	}
 
@@ -80,7 +84,7 @@ public class CachedObject implements Serializable{
 	 * 
 	 * @param cacheDate Data de entrada do conteúdo no cache.
 	 */
-	public void setCacheDate(Date cacheDate){
+	public void setCacheDate(DateTime cacheDate){
 		this.cacheDate = cacheDate;
 	}
 
@@ -90,7 +94,7 @@ public class CachedObject implements Serializable{
 	 * 
 	 * @return Data do último acesso.
 	 */
-	public Date getLastAccess(){
+	public DateTime getLastAccess(){
 		return lastAccess;
 	}
 
@@ -100,7 +104,7 @@ public class CachedObject implements Serializable{
 	 * 
 	 * @param lastAccess Data do último acesso.
 	 */
-	public void setLastAccess(Date lastAccess){
+	public void setLastAccess(DateTime lastAccess){
 		this.lastAccess = lastAccess;
 	}
 
@@ -109,7 +113,7 @@ public class CachedObject implements Serializable{
 	 * 
 	 * @param cache Instância do cache.
 	 */
-	protected void attach(Cacher cache){
+	protected void attach(Cacher<O> cache){
 		this.cache = cache;
 	}
 }
