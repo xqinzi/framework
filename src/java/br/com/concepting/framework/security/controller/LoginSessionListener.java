@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSessionListener;
 import br.com.concepting.framework.controller.SystemController;
 import br.com.concepting.framework.controller.form.ActionFormMessageController;
 import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.SystemModuleModel;
 import br.com.concepting.framework.security.model.LoginSessionModel;
 import br.com.concepting.framework.security.model.UserModel;
@@ -36,7 +35,7 @@ public class LoginSessionListener implements HttpSessionListener{
      * @return Instância da classe de serviço desejada.
      * @throws InternalErrorException
      */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+    protected <S extends IService> S getService(Class<?> modelClass) throws InternalErrorException{
         SecurityController  securityController = systemController.getSecurityController();
         LoginSessionModel   loginSession       = securityController.getLoginSession();
         S                   service            = ServiceUtil.getService(modelClass);

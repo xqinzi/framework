@@ -9,4 +9,5 @@ import br.com.concepting.framework.controller.form.BaseActionForm;
  * @since 1.0
  */
 public class LoginSessionActionForm extends BaseActionForm{
+    private static final long serialVersionUID = 389098674784967719L;
 }

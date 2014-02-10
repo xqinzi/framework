@@ -9,6 +9,8 @@ import br.com.concepting.framework.exceptions.ExpectedWarningException;
  * @since 1.0
  */
 public class PasswordWillExpireException extends ExpectedWarningException{
+    private static final long serialVersionUID = 5978487541406636762L;
+    
     private Integer daysUntilExpiration    = 0;
     private Integer hoursUntilExpiration   = 0;
     private Integer minutesUntilExpiration = 0;

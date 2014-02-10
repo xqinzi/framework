@@ -76,13 +76,14 @@ public class SecurityController{
      *
      * @return Instância contendo as propriedades do login.
      */
+    @SuppressWarnings("unchecked")
     public <L extends LoginSessionModel, U extends UserModel> L getLoginSession(){
         L loginSession = null;
         
         try{
             SecurityResourceLoader loader            = new SecurityResourceLoader();
             SecurityResource       securityResource  = loader.getDefault();
-            Class                  loginSessionClass = null;
+            Class<?>               loginSessionClass = null;
 
             loginSession = systemController.findAttribute(SecurityConstants.LOGIN_SESSION_KEY, ScopeType.SESSION);
         

@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedErrorException;
  * @since 1.0
  */
 public class UserBlockedException extends ExpectedErrorException{
+    private static final long serialVersionUID = -2093850286555318403L;
 }

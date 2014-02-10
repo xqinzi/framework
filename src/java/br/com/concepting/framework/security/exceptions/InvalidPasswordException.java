@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedErrorException;
  * @since 1.0
  */
 public class InvalidPasswordException extends ExpectedErrorException{
+    private static final long serialVersionUID = 7500961044196619757L;
 }

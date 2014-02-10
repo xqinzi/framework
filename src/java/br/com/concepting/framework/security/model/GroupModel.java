@@ -1,6 +1,6 @@
 package br.com.concepting.framework.security.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.FormModel;
@@ -21,7 +21,9 @@ import br.com.concepting.framework.persistence.types.RelationType;
  */
 @Model
 public class GroupModel extends BaseModel{
-	@Property(isIdentity = true, isForSearch = true)
+    private static final long serialVersionUID = -5618172953127972175L;
+
+    @Property(isIdentity = true, isForSearch = true)
 	private Integer id = 0;
 
 	@Property(isForSearch = true, searchCondition = ConditionType.CONTEXT, contextSearchType = ContextSearchType.BOTH, validations = ValidationType.REQUIRED)
@@ -31,18 +33,19 @@ public class GroupModel extends BaseModel{
 	private String description = "";
 
 	@Property(relationType = RelationType.MANY_TO_MANY)
-	private List<UserModel> users = null;
+	private Collection<? extends UserModel> users = null;
 
 	@Property(relationType = RelationType.MANY_TO_MANY)
-	private List<ObjectModel> objects = null;
+	private Collection<? extends ObjectModel> objects = null;
 	
 	/**
 	 * Retorna os usuários vinculados ao grupo.
 	 * 
 	 * @return Lista contendo os usuários do grupo.
 	 */
-    public <U extends UserModel> List<U> getUsers(){
-    	return (List<U>)users;
+    @SuppressWarnings("unchecked")
+    public <U extends UserModel, C extends Collection<U>> C getUsers(){
+    	return (C)users;
     }
 
 	/**
@@ -50,8 +53,8 @@ public class GroupModel extends BaseModel{
 	 * 
 	 * @param users Lista contendo os usuários do grupo.
 	 */
-    public <U extends UserModel> void setUsers(List<U> users){
-    	this.users = (List)users;
+    public void setUsers(Collection<UserModel> users){
+    	this.users = users;
     }
 
 	/**
@@ -113,8 +116,9 @@ public class GroupModel extends BaseModel{
 	 * 
 	 * @return Lista contendo os objetos vinculados.
 	 */
-    public <O extends ObjectModel> List<O> getObjects(){
-    	return (List<O>)objects;
+    @SuppressWarnings("unchecked")
+    public <O extends ObjectModel, C extends Collection<O>> C getObjects(){
+    	return (C)objects;
     }
 
 	/**
@@ -122,8 +126,8 @@ public class GroupModel extends BaseModel{
 	 * 
 	 * @param objects Lista contendo os objetos vinculados.
 	 */
-    public <O extends ObjectModel> void setObjects(List<O> objects){
-    	this.objects = (List)objects;
+    public void setObjects(Collection<ObjectModel> objects){
+    	this.objects = objects;
     }
 
 	/**

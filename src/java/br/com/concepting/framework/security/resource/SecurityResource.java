@@ -3,6 +3,7 @@ package br.com.concepting.framework.security.resource;
 import java.util.Collection;
 
 import br.com.concepting.framework.resource.BaseResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**
  * Classe responsável pelo armazenamento das configurações de segurança.
@@ -10,7 +11,9 @@ import br.com.concepting.framework.resource.BaseResource;
  * @author fvilarinho
  * @since 3.0
  */
-public class SecurityResource extends BaseResource{
+public class SecurityResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = -2135486169744118837L;
+    
     private String             sessionClass    = "";
     private Integer            sessionTimeout  = 0;
     private Collection<String> excludePatterns = null;

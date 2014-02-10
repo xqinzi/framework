@@ -1,6 +1,6 @@
 package br.com.concepting.framework.security.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.ExpressionModel;
@@ -19,6 +19,8 @@ import br.com.concepting.framework.persistence.types.RelationType;
  */
 @Model 
 public class AccessListModel extends BaseModel{
+    private static final long serialVersionUID = -9218930045043763630L;
+
     @Property(isIdentity=true)
     private Integer id = 0;
     
@@ -29,7 +31,7 @@ public class AccessListModel extends BaseModel{
     private String description = "";
 
     @Property(relationType=RelationType.MANY_TO_MANY, cascadeOnSave=true)
-    private List<ExpressionModel> expressions = null;
+    private Collection<? extends ExpressionModel> expressions = null;
     
     @Property
     private Boolean whitelist = true;
@@ -120,8 +122,9 @@ public class AccessListModel extends BaseModel{
      * 
      * @return Lista contendo as expressões.
      */
-    public <E extends ExpressionModel> List<E> getExpressions(){
-        return (List<E>)expressions;
+    @SuppressWarnings("unchecked")
+    public <E extends ExpressionModel, C extends Collection<E>> C getExpressions(){
+        return (C)expressions;
     }
 
     /**
@@ -129,7 +132,7 @@ public class AccessListModel extends BaseModel{
      * 
      * @param expressions Lista contendo as expressões.
      */
-    public <E extends ExpressionModel> void setExpressions(List<E> expressions){
-        this.expressions = (List)expressions;
+    public void setExpressions(Collection<ExpressionModel> expressions){
+        this.expressions = expressions;
     }
 }

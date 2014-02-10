@@ -44,6 +44,8 @@ import br.com.concepting.framework.util.types.DateFieldType;
  * @since 1.0
  */
 public abstract class LoginSessionServiceImpl extends BaseRemoteService implements LoginSessionService{
+    private static final long serialVersionUID = -2559276809638316352L;
+
     /**
      * @see br.com.concepting.framework.security.service.interfaces.LoginSessionService#logIn(br.com.concepting.framework.security.model.LoginSessionModel)
      */
@@ -105,12 +107,12 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                     
                     loginParameters = loginParametersDao.loadReference(loginParameters, "accessLists");
                     
-                    List<AccessListModel> accessLists = loginParameters.getAccessLists();
+                    Collection<AccessListModel> accessLists = loginParameters.getAccessLists();
                     
                     if(accessLists != null && accessLists.size() > 0){
-                        IDAO                  accessListDao = getPersistence(accessLists.iterator().next().getClass());
-                        List<ExpressionModel> expressions   = null;
-                        Boolean               found         = false;
+                        IDAO                        accessListDao = getPersistence(accessLists.iterator().next().getClass());
+                        Collection<ExpressionModel> expressions   = null;
+                        Boolean                     found         = false;
                         
                         for(AccessListModel accessList : accessLists){
                             accessList  = accessListDao.loadReference(accessList, "hosts");
@@ -343,12 +345,20 @@ public abstract class LoginSessionServiceImpl extends BaseRemoteService implemen
                 throw new UserNotFoundException();
             
             user = users.iterator().next();
+            
             if(!user.isActive())
                 throw new UserBlockedException();
             
             sendForgottenPasswordMessage(user);
         }
     }
-    
+
+    /**
+     * Envia mensagem contendo a nova senha do usuário.
+     * 
+     * @param user Instância do modelo de dados contendo as informações do usuário.
+     * @throws InternalErrorException
+     * @throws RemoteException
+     */
     protected abstract <L extends LoginSessionModel, U extends UserModel> void sendForgottenPasswordMessage(U user) throws InternalErrorException, RemoteException;
 }

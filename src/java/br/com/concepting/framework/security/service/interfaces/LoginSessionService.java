@@ -25,6 +25,15 @@ import br.com.concepting.framework.service.interfaces.IService;
  */
 @Auditable
 public interface LoginSessionService extends IService{
+    /**
+     * Envia a senha perdida do usuário.
+     * 
+     * @param loginSession Instância do modelo de dados da sessão de login do usuário.
+     * @throws UserNotFoundException
+     * @throws UserBlockedException
+     * @throws InternalErrorException
+     * @throws RemoteException
+     */
     @Auditable
     @ServiceTransaction
     public <L extends LoginSessionModel> void sendForgottenPassword(L loginSession) throws UserNotFoundException, UserBlockedException, InternalErrorException, RemoteException;

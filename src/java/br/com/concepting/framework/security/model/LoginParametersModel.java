@@ -1,6 +1,6 @@
 package br.com.concepting.framework.security.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.annotations.Model;
@@ -15,6 +15,8 @@ import br.com.concepting.framework.persistence.types.RelationType;
  */
 @Model 
 public class LoginParametersModel extends BaseModel{
+    private static final long serialVersionUID = -6631335675531065211L;
+
     @Property(isIdentity=true)
     private Integer id = 0;
     
@@ -31,7 +33,7 @@ public class LoginParametersModel extends BaseModel{
 	private Integer loginTries = 0;
 	
 	@Property(relationType=RelationType.MANY_TO_MANY, cascadeOnDelete = true, cascadeOnSave = true)
-	private List<AccessListModel> accessLists = null;
+	private Collection<? extends AccessListModel> accessLists = null;
 
 	/**
 	 * Retorna o identificador da parametrização do login.
@@ -74,8 +76,9 @@ public class LoginParametersModel extends BaseModel{
      * 
      * @return Listas de acesso do login.
      */
-    public <A extends AccessListModel> List<A> getAccessLists(){
-        return (List<A>)accessLists;
+    @SuppressWarnings("unchecked")
+    public <A extends AccessListModel, C extends Collection<A>> C getAccessLists(){
+        return (C)accessLists;
     }
 
     /**
@@ -83,8 +86,8 @@ public class LoginParametersModel extends BaseModel{
      * 
      * @param accessLists Listas de acesso do login.
      */
-    public <A extends AccessListModel> void setAccessLists(List<A> accessLists){
-        this.accessLists = (List)accessLists;
+    public <A extends AccessListModel> void setAccessLists(Collection<AccessListModel> accessLists){
+        this.accessLists = accessLists;
     }
 
     /**

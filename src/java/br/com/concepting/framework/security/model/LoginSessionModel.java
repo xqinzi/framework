@@ -17,7 +17,9 @@ import br.com.concepting.framework.util.types.SortOrderType;
  */
 @Model(descriptionPattern="#{title} #{version}")
 public class LoginSessionModel extends BaseModel{
-	@Property(isIdentity = true, isForSearch = true)
+    private static final long serialVersionUID = -8507789965528582224L;
+
+    @Property(isIdentity = true, isForSearch = true)
 	private Long id = 0l;
 
 	@Property(sortOrder=SortOrderType.DESCEND)
@@ -67,6 +69,7 @@ public class LoginSessionModel extends BaseModel{
      * 
      * @return Instância do modelo de dados.
      */
+    @SuppressWarnings("unchecked")
     public <SS extends SystemSessionModel> SS getSystemSession(){
         return (SS)systemSession;
     }
@@ -122,8 +125,9 @@ public class LoginSessionModel extends BaseModel{
 	 * 
 	 * @return Instância contendo as propriedades do usuário.
 	 */
-    public <L extends UserModel> L getUser(){
-		return (L)user;
+    @SuppressWarnings("unchecked")
+    public <U extends UserModel> U getUser(){
+		return (U)user;
 	}
 
 	/**
@@ -131,7 +135,7 @@ public class LoginSessionModel extends BaseModel{
 	 * 
 	 * @param user Instância contendo as propriedades do usuário.
 	 */
-	public <L extends UserModel> void setUser(L user){
+	public <U extends UserModel> void setUser(U user){
 		this.user = user;
 	}
 
@@ -140,6 +144,7 @@ public class LoginSessionModel extends BaseModel{
 	 * 
 	 * @return Instância contendo as propriedades do sistema.
 	 */
+    @SuppressWarnings("unchecked")
     public <S extends SystemModuleModel> S getSystemModule(){
 		return (S)systemModule;
 	}

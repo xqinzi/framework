@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedErrorException;
  * @since 1.0
  */
 public class PermissionDeniedException extends ExpectedErrorException{
+    private static final long serialVersionUID = 2218995807861634081L;
 }

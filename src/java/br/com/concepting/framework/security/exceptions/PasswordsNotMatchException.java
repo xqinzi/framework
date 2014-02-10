@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedErrorException;
  * @since 1.0
  */
 public class PasswordsNotMatchException extends ExpectedErrorException{
+    private static final long serialVersionUID = 7732613785655203712L;
 }

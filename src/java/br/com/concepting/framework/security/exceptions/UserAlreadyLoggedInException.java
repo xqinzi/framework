@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedErrorException;
  * @since 1.0
  */
 public class UserAlreadyLoggedInException extends ExpectedErrorException{
+    private static final long serialVersionUID = 7385854870847137681L;
 }

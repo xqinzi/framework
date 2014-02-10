@@ -1,7 +1,7 @@
 package br.com.concepting.framework.security.controller.action;
 
 import br.com.concepting.framework.controller.action.BaseAction;
-import br.com.concepting.framework.controller.helpers.RequestInfo;
+import br.com.concepting.framework.controller.form.helpers.ActionFormRequestInfo;
 import br.com.concepting.framework.security.constants.SecurityConstants;
 import br.com.concepting.framework.security.controller.form.LoginSessionActionForm;
 import br.com.concepting.framework.security.exceptions.LoginSessionExpiredException;
@@ -138,7 +138,7 @@ public class LoginSessionAction extends BaseAction{
                 
                 securityController.forgetUserAndPassword();
                 
-                RequestInfo requestInfo = systemController.getRequestInfo("user.name");
+                ActionFormRequestInfo requestInfo = systemController.getActionFormRequestInfo("user.name");
                 
                 actionFormMessageController.addValidationRequiredMessage(requestInfo.getName(), requestInfo.getLabel());
             }

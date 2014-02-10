@@ -9,4 +9,5 @@ import br.com.concepting.framework.exceptions.ExpectedErrorException;
  * @since 1.0
  */
 public class UserNotFoundException extends ExpectedErrorException{
+    private static final long serialVersionUID = 6479802973806490611L;
 }

@@ -3,7 +3,6 @@ package br.com.concepting.framework.security.resource;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.XmlResourceLoader;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
 import br.com.concepting.framework.security.constants.SecurityConstants;
@@ -15,7 +14,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 3.0
  */
-public class SecurityResourceLoader extends XmlResourceLoader{
+public class SecurityResourceLoader extends XmlResourceLoader<SecurityResource>{
     /**
      * Construtor - Inicializa classe de leitura/manipulação do arquivo de configurações de segurança 
      * default.
@@ -32,7 +31,7 @@ public class SecurityResourceLoader extends XmlResourceLoader{
      * @return Instância contendo as configurações.
      * @throws InvalidResourceException
      */
-    public <R extends BaseResource> R get() throws InvalidResourceException{
+    public SecurityResource get() throws InvalidResourceException{
         SecurityResource securityResource = new SecurityResource();
         
         securityResource.setId("default");
@@ -91,13 +90,13 @@ public class SecurityResourceLoader extends XmlResourceLoader{
             }
         }
         
-        return (R)securityResource;
+        return securityResource;
     }
 
     /**
      * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
      */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public SecurityResource get(String id) throws InvalidResourceException{
         return get();
     }
 }

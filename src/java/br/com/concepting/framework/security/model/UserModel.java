@@ -1,6 +1,6 @@
 package br.com.concepting.framework.security.model;
 
-import java.util.List;
+import java.util.Collection;
 
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.ObjectModel;
@@ -22,7 +22,9 @@ import br.com.concepting.framework.util.helpers.DateTime;
  */
 @Model
 public class UserModel extends BaseModel{
-	@Property(isIdentity = true, isForSearch = true)
+    private static final long serialVersionUID = -5952606948187054532L;
+
+    @Property(isIdentity = true, isForSearch = true)
 	private Integer id = 0;
 
 	@Property(isForSearch = true, validations = ValidationType.REQUIRED, isAuditable=true)
@@ -77,7 +79,7 @@ public class UserModel extends BaseModel{
 	private LoginParametersModel loginParameters = null;
 
 	@Property(relationType = RelationType.MANY_TO_MANY)
-	private List<GroupModel> groups = null;
+	private Collection<? extends GroupModel> groups = null;
 	
 	public Boolean getSystem(){
         return system;
@@ -173,8 +175,9 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @return Instância contendo a lista de grupos.
 	 */
-    public <G extends GroupModel> List<G> getGroups(){
-		return (List<G>)groups;
+    @SuppressWarnings("unchecked")
+    public <G extends GroupModel, C extends Collection<G>> C getGroups(){
+		return (C)groups;
 	}
 
 	/**
@@ -182,8 +185,8 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @param groups Instância contendo a lista de grupos.
 	 */
-    public <G extends GroupModel> void setGroups(List<G> groups){
-		this.groups = (List)groups;
+    public void setGroups(Collection<GroupModel> groups){
+		this.groups = groups;
 	}
 
 	/**
@@ -426,7 +429,8 @@ public class UserModel extends BaseModel{
 	 * 
 	 * @return Instância contendo os parâmetros de login.
 	 */
-	public <LP extends LoginParametersModel> LP getLoginParameters(){
+	@SuppressWarnings("unchecked")
+    public <LP extends LoginParametersModel> LP getLoginParameters(){
     	return (LP)loginParameters;
     }
 
