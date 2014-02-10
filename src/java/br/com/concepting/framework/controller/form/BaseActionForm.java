@@ -23,7 +23,9 @@ import br.com.concepting.framework.model.util.ModelUtil;
  * @since 1.0
  */  
 public abstract class BaseActionForm extends ActionForm{
-	private String    name                      = "";
+    private static final long serialVersionUID = -4308647670235033678L;
+
+    private String    name                      = "";
 	private String    lastAction                = "";
 	private String    action                    = "";
 	private String    forward                   = "";
@@ -286,6 +288,7 @@ public abstract class BaseActionForm extends ActionForm{
 	 * 
 	 * @return Instância do modelo de dados.
 	 */
+    @SuppressWarnings("unchecked")
     public <M extends BaseModel> M getModel(){
 		if(model == null){
 			Class<M> modelClass = null;
@@ -315,6 +318,7 @@ public abstract class BaseActionForm extends ActionForm{
 	 * 
 	 * @return Instância do modelo de dados de pesquisa.
 	 */
+    @SuppressWarnings("unchecked")
     public <M extends BaseModel> M getSearchModel(){
 		if(searchModel == null){
 			Class<M> modelClass = null;
@@ -404,7 +408,7 @@ public abstract class BaseActionForm extends ActionForm{
 		
 		if(validateModel() || validateSearchModel()){
 			ModelInfo modelInfo  = null;
-			Class     modelClass = null;
+			Class<?>  modelClass = null;
 			
 			try{
 				modelClass = ModelUtil.getModelClassByActionForm(getClass());
@@ -420,13 +424,13 @@ public abstract class BaseActionForm extends ActionForm{
 			if(modelInfo == null)
 				return null;
 			
-			Class validatorClass = modelInfo.getValidatorClass();
+			Class<? extends ActionFormValidator> actionFormValidatorClass = modelInfo.getActionFormValidatorClass();
 			
-			if(validatorClass != null){
+			if(actionFormValidatorClass != null){
 				try{
-					ActionFormValidator validator = (ActionFormValidator)ConstructorUtils.invokeConstructor(validatorClass, new Object[]{this, systemController});
+					ActionFormValidator actionFormValidator = (ActionFormValidator)ConstructorUtils.invokeConstructor(actionFormValidatorClass, new Object[]{this, systemController});
 					
-					validator.validate();
+					actionFormValidator.validate();
 				}
 				catch(Throwable e){
 				    actionFormMessageController.addMessage(e);

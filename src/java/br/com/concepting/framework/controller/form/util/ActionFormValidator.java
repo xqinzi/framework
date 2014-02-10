@@ -13,7 +13,7 @@ import org.apache.commons.beanutils.MethodUtils;
 import br.com.concepting.framework.controller.SystemController;
 import br.com.concepting.framework.controller.form.ActionFormMessageController;
 import br.com.concepting.framework.controller.form.BaseActionForm;
-import br.com.concepting.framework.controller.helpers.RequestInfo;
+import br.com.concepting.framework.controller.form.helpers.ActionFormRequestInfo;
 import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
@@ -56,9 +56,9 @@ public class ActionFormValidator{
 	 * Efetua a validação do formulário.
 	 */
 	public void validate(){
-		Collection<RequestInfo> requestInfos = systemController.getRequestInfos();
+		Collection<ActionFormRequestInfo> requestInfos = systemController.getActionFormRequestInfos();
 
-		for(RequestInfo requestInfo : requestInfos){
+		for(ActionFormRequestInfo requestInfo : requestInfos){
 		    if(requestInfo.isEditable())
 		        validateEditable(requestInfo);
 		    else
@@ -71,7 +71,7 @@ public class ActionFormValidator{
      * 
      * @param requestInfo Instância contendo as propriedades da requisição.
      */
-	private void validate(RequestInfo requestInfo){
+	private void validate(ActionFormRequestInfo requestInfo){
 		String  name     = requestInfo.getName();
 		Boolean validate = false;
 		
@@ -91,8 +91,8 @@ public class ActionFormValidator{
 			if(model == null)
 				return;
 
-			Class     modelClass = model.getClass();
-			ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);	
+			Class<? extends BaseModel> modelClass = model.getClass();
+			ModelInfo                  modelInfo  = ModelUtil.getModelInfo(modelClass);	
 
 			if(modelInfo == null)
 				return;
@@ -115,7 +115,7 @@ public class ActionFormValidator{
 	 * 
 	 * @param requestInfo Instância contendo as propriedades do parâmetro da requisição.
 	 */
-	private void validateEditable(RequestInfo requestInfo){
+	private void validateEditable(ActionFormRequestInfo requestInfo){
 		String    name      = requestInfo.getName();
 		BaseModel model     = (name.contains("search.") ? actionForm.getSearchModel() : actionForm.getModel());
 		ModelInfo modelInfo = (model != null ? ModelUtil.getModelInfo(model.getClass()) : null);
@@ -156,7 +156,7 @@ public class ActionFormValidator{
 	 * @param requestInfo Instância contendo as propriedades da requisição.
 	 * @param propertyInfo Instância contendo os dados da propriedade.
 	 */
-	private void validate(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validate(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String value = requestInfo.getValue();
 
 		if(value != null){
@@ -233,7 +233,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateCustom(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateCustom(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
         StringBuilder validationMethodId = null;
         String        customValidationId = propertyInfo.getCustomValidationId();
         
@@ -262,7 +262,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-    private void validateRequired(RequestInfo requestInfo, PropertyInfo propertyInfo){
+    private void validateRequired(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String  value  = requestInfo.getValue();
 		Boolean result = true;
 
@@ -274,9 +274,9 @@ public class ActionFormValidator{
 			    result = false;
 			else{
     			if(propertyInfo.isNumber()){
-    				Locale currentLanguage = systemController.getCurrentLanguage();
-    				String pattern         = requestInfo.getPattern();
-    				Class  clazz           = propertyInfo.getClazz();
+    				Locale   currentLanguage = systemController.getCurrentLanguage();
+    				String   pattern         = requestInfo.getPattern();
+    				Class<?> clazz           = propertyInfo.getClazz();
     				
     				try{
     	                Number number = NumberUtil.parse(clazz, value, pattern, currentLanguage);
@@ -300,7 +300,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateDateTime(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateDateTime(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String value = requestInfo.getValue();
 
 		if(value.length() > 0){
@@ -326,16 +326,16 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-    private void validateNumber(RequestInfo requestInfo, PropertyInfo propertyInfo){
+    private void validateNumber(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String value = requestInfo.getValue();
 
 		if(value.length() > 0){
-            Locale  currentLanguage = systemController.getCurrentLanguage();
-            String  name            = requestInfo.getName();
-            String  label           = requestInfo.getLabel();
-            String  pattern         = requestInfo.getPattern();
-            Class   clazz           = propertyInfo.getClazz();
-            Number  number          = null;
+            Locale   currentLanguage = systemController.getCurrentLanguage();
+            String   name            = requestInfo.getName();
+            String   label           = requestInfo.getLabel();
+            String   pattern         = requestInfo.getPattern();
+            Class<?> clazz           = propertyInfo.getClazz();
+            Number   number          = null;
 
 			try{
 				number = NumberUtil.parse(clazz, value, pattern, currentLanguage);
@@ -354,7 +354,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-    private void validateCompare(RequestInfo requestInfo, PropertyInfo propertyInfo){
+    private void validateCompare(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String        name        = requestInfo.getName();
 		String        label       = requestInfo.getLabel();
         Integer       pos         = name.lastIndexOf(".");
@@ -367,21 +367,21 @@ public class ActionFormValidator{
 
 		compareName.append(propertyInfo.getComparePropertyId());
 
-        Locale        currentLanguage    = systemController.getCurrentLanguage();
-		RequestInfo   compareRequestInfo = systemController.getRequestInfo(compareName.toString());
-		String        compareLabel       = compareRequestInfo.getLabel();
-		ConditionType compareCondition   = propertyInfo.getCompareCondition();
-        String        compareValue       = compareRequestInfo.getValue();
-        Integer       compareFlag        = 0;
-		String        pattern            = requestInfo.getPattern();
-		String        value              = requestInfo.getValue();
-        Class         clazz              = propertyInfo.getClazz();
-		Boolean       result             = true;
+        Locale                currentLanguage    = systemController.getCurrentLanguage();
+		ActionFormRequestInfo compareRequestInfo = systemController.getActionFormRequestInfo(compareName.toString());
+		String                compareLabel       = compareRequestInfo.getLabel();
+		ConditionType         compareCondition   = propertyInfo.getCompareCondition();
+        String                compareValue       = compareRequestInfo.getValue();
+        Integer               compareFlag        = 0;
+		String                pattern            = requestInfo.getPattern();
+		String                value              = requestInfo.getValue();
+		Boolean               result             = true;
 
 		if(propertyInfo.isNumber()){
 			try{
-				Number number        = NumberUtil.parse(clazz, value, pattern, currentLanguage);
-				Number compareNumber = NumberUtil.parse(clazz, compareValue, pattern, currentLanguage);
+			    Class<?> clazz         = propertyInfo.getClazz();
+				Number   number        = NumberUtil.parse(clazz, value, pattern, currentLanguage);
+				Number   compareNumber = NumberUtil.parse(clazz, compareValue, pattern, currentLanguage);
 
 				switch(compareCondition){
     				case GREATER_THAN: {
@@ -483,7 +483,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateWordCount(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateWordCount(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String value = requestInfo.getValue();
 
 		if(value.length() > 0){
@@ -503,7 +503,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateMinimumLength(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateMinimumLength(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 	    String  name          = requestInfo.getName();
 	    String  label         = requestInfo.getLabel();
 		Integer minimumLength = propertyInfo.getMinimumLength();
@@ -519,7 +519,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateMaximumLength(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateMaximumLength(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
         String  name          = requestInfo.getName();
         String  label         = requestInfo.getLabel();
 		Integer maximumLength = propertyInfo.getMaximumLength();
@@ -535,7 +535,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-    private void validateRange(RequestInfo requestInfo, PropertyInfo propertyInfo){
+    private void validateRange(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 	    Locale  currentLanguage = systemController.getCurrentLanguage();
 	    String  name            = requestInfo.getName();
 	    String  label           = requestInfo.getLabel();
@@ -548,9 +548,7 @@ public class ActionFormValidator{
 		Date    endDate         = null;
 		String  startRange      = propertyInfo.getStartRange();
 		String  endRange        = propertyInfo.getEndRange();
-		Class   clazz           = propertyInfo.getClazz();
 		String  pattern         = requestInfo.getPattern();
-		Number  numberRange[]   = NumberUtil.getRange(clazz);
 		String  value           = requestInfo.getValue();
         Boolean result          = true;
 
@@ -599,6 +597,9 @@ public class ActionFormValidator{
                 actionFormMessageController.addValidationRangeMessage(name, label, startDate, endDate);
 		}
     	else if(propertyInfo.isNumber()){
+            Class<?> clazz         = propertyInfo.getClazz();
+            Number   numberRange[] = NumberUtil.getRange(clazz);
+    	    
             try{
                 number = NumberUtil.parse(clazz, value, pattern, currentLanguage);
             }
@@ -654,7 +655,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateRegularExpression(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateRegularExpression(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 	    String value = requestInfo.getValue();
         
         if(value.length() > 0){
@@ -675,7 +676,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
      */
-	private void validateEmail(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validateEmail(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 		String value = requestInfo.getValue();
 
 		if(value.length() > 0){
@@ -696,7 +697,7 @@ public class ActionFormValidator{
      * @param requestInfo Instância contendo as propriedades da requisição.
      * @param propertyInfo Instância contendo os dados da propriedade.
 	 */
-	private void validatePattern(RequestInfo requestInfo, PropertyInfo propertyInfo){
+	private void validatePattern(ActionFormRequestInfo requestInfo, PropertyInfo propertyInfo){
 	    String  name    = requestInfo.getName();
 	    String  label   = requestInfo.getLabel();
 		String  pattern = requestInfo.getPattern();

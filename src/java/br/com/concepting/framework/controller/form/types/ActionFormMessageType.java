@@ -1,5 +1,5 @@
 package br.com.concepting.framework.controller.form.types;
-
+ 
 /**
  * Classe que define as constantes para os tipos de mensagens.
  * 

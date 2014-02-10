@@ -1,7 +1,6 @@
 package br.com.concepting.framework.controller.form.util;
 
 import br.com.concepting.framework.controller.action.BaseAction;
-import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.resource.constants.ResourceConstants;
 import br.com.concepting.framework.util.StringUtil;
 
@@ -18,7 +17,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome do pacote.
      */
-    public static <M extends BaseModel> String getActionPackageByModel(Class<M> modelClass){
+    public static String getActionPackageByModel(Class<?> modelClass){
         return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".controller.action");
     }
 
@@ -28,7 +27,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome da classe de ações.
      */
-    public static <M extends BaseModel> String getActionClassNameByModel(Class<M> modelClass){
+    public static String getActionClassNameByModel(Class<?> modelClass){
         String actionClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "Action");
 
         return StringUtil.replaceAll(actionClassId, ".model", ".controller.action");
@@ -40,7 +39,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome da classe de ações.
      */
-    public static <M extends BaseModel> String getActionNameByModel(Class<M> modelClass){
+    public static String getActionNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "Action");
     }
 
@@ -51,7 +50,8 @@ public class ActionFormUtil{
      * @return Classe de ações desejada.
      * @throws ClassNotFoundException
      */
-    public static <M extends BaseModel, A extends BaseAction> Class<A> getActionClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <A extends BaseAction> Class<A> getActionClassByModel(Class<?> modelClass) throws ClassNotFoundException{
         return (Class<A>)Class.forName(getActionClassNameByModel(modelClass));
     }
     
@@ -61,7 +61,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome do pacote.
      */
-    public static <M extends BaseModel> String getActionFormPackageByModel(Class<M> modelClass){
+    public static String getActionFormPackageByModel(Class<?> modelClass){
         return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".controller.form");
     }
 
@@ -71,7 +71,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome da classe de formulário.
      */
-    public static <M extends BaseModel> String getActionFormClassNameByModel(Class<M> modelClass){
+    public static String getActionFormClassNameByModel(Class<?> modelClass){
         String actionFormClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "ActionForm");
 
         return StringUtil.replaceAll(actionFormClassId, ".model", ".controller.form");
@@ -83,7 +83,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome da classe do formulário.
      */
-    public static <M extends BaseModel> String getActionFormNameByModel(Class<M> modelClass){
+    public static String getActionFormNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "ActionForm");
     }
 
@@ -94,7 +94,8 @@ public class ActionFormUtil{
      * @return Classe de ações desejada.
      * @throws ClassNotFoundException
      */
-    public static <M extends BaseModel, A extends BaseAction> Class<A> getActionFormClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <A extends BaseAction> Class<A> getActionFormClassByModel(Class<?> modelClass) throws ClassNotFoundException{
         return (Class<A>)Class.forName(getActionFormNameByModel(modelClass));
     }
     
@@ -105,7 +106,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome do objeto.
      */
-    public static <M extends BaseModel> String getActionFormObjectIdByModel(Class<M> modelClass){
+    public static String getActionFormObjectIdByModel(Class<?> modelClass){
         String actionFormName = getActionFormNameByModel(modelClass);
         
         return actionFormName.substring(0, 1).toLowerCase().concat(actionFormName.substring(1));
@@ -117,7 +118,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o nome do objeto.
      */
-    public static <M extends BaseModel> String getActionFormUrlByModel(Class<M> modelClass){
+    public static String getActionFormUrlByModel(Class<?> modelClass){
         StringBuilder url          = new StringBuilder();
         String        actionPrefix = modelClass.getPackage().getName();
         Integer       pos          = actionPrefix.indexOf(".model");
@@ -156,7 +157,7 @@ public class ActionFormUtil{
      * @param modelClass Classe do modelo de dados desejado.
      * @return String contendo o identificador do arquivo de internacionalização.
      */
-    public static <M extends BaseModel> String getActionFormResourceIdByModel(Class<M> modelClass){
+    public static String getActionFormResourceIdByModel(Class<?> modelClass){
         String        actionFormUrl = getActionFormUrlByModel(modelClass).substring(1);
         StringBuilder resourceId    = new StringBuilder();
         

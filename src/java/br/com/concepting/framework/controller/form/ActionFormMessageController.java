@@ -95,9 +95,11 @@ public class ActionFormMessageController{
         List<ActionFormMessage> validationMessages = null;
 
         if(actionMessages != null && actionMessages.size() > 0){
-            ActionFormMessage           validationMessage = null;
-            String                      value             = "";
-            Iterator<ActionFormMessage> iterator          = actionMessages.get();
+            ActionFormMessage validationMessage = null;
+            String            value             = "";
+            
+            @SuppressWarnings("unchecked")
+            Iterator<ActionFormMessage> iterator = actionMessages.get();
 
             while(iterator.hasNext()){
                 validationMessage = iterator.next();
@@ -128,7 +130,9 @@ public class ActionFormMessageController{
             actionFormMessages = new ActionMessages();
 
         if(actionFormMessages.size() > 0){
-            ActionFormMessage           item        = null;
+            ActionFormMessage item = null;
+            
+            @SuppressWarnings("unchecked")
             Iterator<ActionFormMessage> iterator    = actionFormMessages.get();
             String                      key         = actionFormMessage.getKey();
             String                      name        = "";

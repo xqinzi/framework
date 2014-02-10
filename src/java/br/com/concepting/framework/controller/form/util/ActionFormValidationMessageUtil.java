@@ -1,7 +1,7 @@
 package br.com.concepting.framework.controller.form.util;
 
 import br.com.concepting.framework.constants.AttributeConstants;
-import br.com.concepting.framework.controller.form.helpers.ValidationFormMessage;
+import br.com.concepting.framework.controller.form.helpers.ValidationActionFormMessage;
 import br.com.concepting.framework.model.types.ConditionType;
 import br.com.concepting.framework.model.types.ValidationType;
 
@@ -19,8 +19,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param name String contendo o identificador da propriedade.
      * @param label String contendo o label da propriedade.
      */
-    public static ValidationFormMessage createValidationRequiredMessage(String name, String label){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.REQUIRED);
+    public static ValidationActionFormMessage createValidationRequiredMessage(String name, String label){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.REQUIRED);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -36,8 +36,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param label String contendo o label da propriedade.
      * @param pattern String contendo a máscara de validação da data/horário.
      */
-    public static ValidationFormMessage createValidationDateTimeMessage(String name, String label, String pattern){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.DATE_TIME);
+    public static ValidationActionFormMessage createValidationDateTimeMessage(String name, String label, String pattern){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.DATE_TIME);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -53,8 +53,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param name String contendo o identificador da propriedade.
      * @param label String contendo o label da propriedade.
      */
-    public static ValidationFormMessage createValidationNumberMessage(String name, String label){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.NUMBER);
+    public static ValidationActionFormMessage createValidationNumberMessage(String name, String label){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.NUMBER);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -71,8 +71,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param compareName String contendo o identificador da propriedade para comparação.
      * @param compareLabel String contendo o label da propriedade para comparação.
      */
-    public static ValidationFormMessage createValidationCompareMessage(String name, String label, ConditionType compareCondition, String compareName, String compareLabel){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.COMPARE);
+    public static ValidationActionFormMessage createValidationCompareMessage(String name, String label, ConditionType compareCondition, String compareName, String compareLabel){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.COMPARE);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -91,8 +91,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param label String contendo o label da propriedade.
      * @param wordCount Valor inteiro contendo o número máximo de palavras aceitas.
      */
-    public static ValidationFormMessage createValidationWordCountMessage(String name, String label, Integer wordCount){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.WORD_COUNT);
+    public static ValidationActionFormMessage createValidationWordCountMessage(String name, String label, Integer wordCount){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.WORD_COUNT);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -109,8 +109,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param label String contendo o label da propriedade.
      * @param minimumLength Valor numérico contendo o número mínimo de caracteres aceito.
      */
-    public static ValidationFormMessage createValidationMinimumLengthMessage(String name, String label, Integer minimumLength){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.MINIMUM_LENGTH);
+    public static ValidationActionFormMessage createValidationMinimumLengthMessage(String name, String label, Integer minimumLength){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.MINIMUM_LENGTH);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -127,8 +127,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param label String contendo o label da propriedade.
      * @param maximumLength Valor numérico contendo o número máximo de caracteres aceito.
      */
-    public static ValidationFormMessage createValidationMaximumLengthMessage(String name, String label, Integer maximumLength){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.MAXIMUM_LENGTH);
+    public static ValidationActionFormMessage createValidationMaximumLengthMessage(String name, String label, Integer maximumLength){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.MAXIMUM_LENGTH);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -145,8 +145,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param label String contendo o label da propriedade.
      * @param regularExpression String contendo a expressão regular desejada.
      */
-    public static ValidationFormMessage createValidationRegularExpressionMessage(String name, String label, String regularExpression){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.REGULAR_EXPRESSION);
+    public static ValidationActionFormMessage createValidationRegularExpressionMessage(String name, String label, String regularExpression){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.REGULAR_EXPRESSION);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -162,8 +162,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param name String contendo o identificador da propriedade.
      * @param label String contendo o label da propriedade.
      */
-    public static ValidationFormMessage createValidationEmailMessage(String name, String label){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.EMAIL);
+    public static ValidationActionFormMessage createValidationEmailMessage(String name, String label){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.EMAIL);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -178,8 +178,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param label String contendo o label da propriedade.
      * @param pattern String contendo a máscara de validação.
      */
-    public static ValidationFormMessage createValidationPatternMessage(String name, String label, String pattern){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.PATTERN);
+    public static ValidationActionFormMessage createValidationPatternMessage(String name, String label, String pattern){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.PATTERN);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -197,8 +197,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param startRange Instância contendo o range inicial.
      * @param endRange Instância contendo o range final.
      */
-    public static ValidationFormMessage createValidationRangeMessage(String name, String label, Object startRange, Object endRange){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(ValidationType.RANGE);
+    public static ValidationActionFormMessage createValidationRangeMessage(String name, String label, Object startRange, Object endRange){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(ValidationType.RANGE);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
@@ -215,8 +215,8 @@ public class ActionFormValidationMessageUtil extends ActionFormMessageUtil{
      * @param name String contendo o identificador da propriedade.
      * @param label String contendo o label da propriedade.
      */
-    public static ValidationFormMessage createValidationCustomMessage(String validation, String name, String label){
-        ValidationFormMessage validationFormMessage = new ValidationFormMessage(validation);
+    public static ValidationActionFormMessage createValidationCustomMessage(String validation, String name, String label){
+        ValidationActionFormMessage validationFormMessage = new ValidationActionFormMessage(validation);
         
         validationFormMessage.addAttribute(AttributeConstants.NAME_KEY, name);
         validationFormMessage.addAttribute(AttributeConstants.LABEL_KEY, label);
