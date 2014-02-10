@@ -7,7 +7,7 @@ import org.apache.struts.action.ActionMessage;
 
 import br.com.concepting.framework.controller.form.types.ActionFormMessageType;
 import br.com.concepting.framework.util.StringUtil;
-
+ 
 /**
  * Classe que define uma mensagem de sistema.
  * 
@@ -15,6 +15,8 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 3.0
  */
 public class ActionFormMessage extends ActionMessage{
+    private static final long serialVersionUID = -7121791309962868261L;
+    
     private ActionFormMessageType type       = null;
     private Map<String, Object>   attributes = null;
     private Boolean               displayed  = false;
@@ -95,6 +97,7 @@ public class ActionFormMessage extends ActionMessage{
      * @param name String contendo o nome do atributo.
      * @return Instância contendo o valor do atributo.
      */
+    @SuppressWarnings("unchecked")
     public <O> O getAttribute(String name){
         if(attributes != null)
             return (O)attributes.get(name);
@@ -107,8 +110,9 @@ public class ActionFormMessage extends ActionMessage{
      * 
      * @return Mapa contendo os atributos da mensagem.
      */
-    public Map<String, Object> getAttributes(){
-        return attributes;
+    @SuppressWarnings("unchecked")
+    public <O> Map<String, O> getAttributes(){
+        return (Map<String, O>)attributes;
     }
 
     /**
@@ -116,7 +120,8 @@ public class ActionFormMessage extends ActionMessage{
      * 
      * @param attributes Mapa contendo os atributos da mensagem.
      */
-    public void setAttributes(Map<String, Object> attributes){
-        this.attributes = attributes;
+    @SuppressWarnings("unchecked")
+    public <O> void setAttributes(Map<String, O> attributes){
+        this.attributes = (Map<String, Object>)attributes;
     }
 }
