@@ -13,7 +13,9 @@ import javax.ejb.SessionContext;
  * @since 1.0
  */
 public abstract class BaseRemoteService extends BaseService implements SessionBean{
-	private SessionContext sessionContext = null;
+    private static final long serialVersionUID = 8259171457875387099L;
+
+    private SessionContext sessionContext = null;
 
 	/**
 	 * @see javax.ejb.SessionBean#setSessionContext(javax.ejb.SessionContext)

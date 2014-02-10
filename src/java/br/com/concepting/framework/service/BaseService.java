@@ -32,11 +32,12 @@ import br.com.concepting.framework.service.util.ServiceUtil;
 public abstract class BaseService implements IService{
     private IDAO              currentPersistence = null;
     private LoginSessionModel loginSession       = null;
-    private Integer           transactionTimeout = null;
+    private Integer           timeout            = null;
 
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#getLoginSession()
      */
+    @SuppressWarnings("unchecked")
     public <L extends LoginSessionModel> L getLoginSession(){
         return (L)loginSession;
     }
@@ -54,12 +55,12 @@ public abstract class BaseService implements IService{
      * @return True/False.
      */
     private Boolean useTransaction(){
-        Class   serviceClass = getClass();
-        Class   interfaces[] = serviceClass.getInterfaces();
-        Service annotation   = null;
+        Class<? extends BaseService> serviceClass = getClass();
+        Class<?>                     interfaces[] = serviceClass.getInterfaces();
+        Service                      annotation   = null;
 
-        for(Class interfaceItem : interfaces){
-            annotation = (Service)interfaceItem.getAnnotation(Service.class);
+        for(Class<?> interfaceItem : interfaces){
+            annotation = interfaceItem.getAnnotation(Service.class);
             
             if(annotation != null)
                 break;
@@ -72,17 +73,17 @@ public abstract class BaseService implements IService{
     }
 
     /**
-     * @see br.com.concepting.framework.service.interfaces.IService#getTransactionTimeout()
+     * @see br.com.concepting.framework.service.interfaces.IService#getTimeout()
      */
-    public Integer getTransactionTimeout(){
-        return transactionTimeout;
+    public Integer getTimeout(){
+        return timeout;
     }
 
     /**
-     * @see br.com.concepting.framework.service.interfaces.IService#setTransactionTimeout(java.lang.Integer)
+     * @see br.com.concepting.framework.service.interfaces.IService#setTimeout(java.lang.Integer)
      */
-    public void setTransactionTimeout(Integer transactionTimeout){
-        this.transactionTimeout = transactionTimeout;
+    public void setTimeout(Integer timeout){
+        this.timeout = timeout;
     }
 
     /**
@@ -97,10 +98,10 @@ public abstract class BaseService implements IService{
 	    }
 	    
 	    if(currentPersistence != null){
-            currentPersistence.openConnection();
-    
-            if(currentPersistence != null && useTransaction()){
-                currentPersistence.setTransactionTimeout(transactionTimeout);
+	        currentPersistence.initialize();
+	        
+            if(!useTransaction()){
+                currentPersistence.setTimeout(timeout);
                 currentPersistence.begin();
             }
 	    }
@@ -194,6 +195,7 @@ public abstract class BaseService implements IService{
 	 * @return Instância da classe de persistência.
 	 * @throws InternalErrorException
 	 */
+    @SuppressWarnings("unchecked")
     protected <D extends IDAO, M extends BaseModel> D getPersistence() throws InternalErrorException{
 		try{
 			Class<M> modelClass  = ModelUtil.getModelClassByService(getClass());
@@ -209,7 +211,8 @@ public abstract class BaseService implements IService{
 	/**
 	 * @see br.com.concepting.framework.service.interfaces.IService#list()
 	 */
-    public <C extends Collection> C list() throws InternalErrorException{
+    @SuppressWarnings("unchecked")
+    public <M extends BaseModel, C extends Collection<M>> C list() throws InternalErrorException{
 		IDAO persistence = getPersistence();
 
 		return (C)persistence.list();
@@ -218,7 +221,8 @@ public abstract class BaseService implements IService{
 	/**
 	 * @see br.com.concepting.framework.service.interfaces.IService#search(br.com.concepting.framework.model.BaseModel)
 	 */
-    public <M extends BaseModel, C extends Collection> C search(M model) throws InternalErrorException{
+    @SuppressWarnings("unchecked")
+    public <M extends BaseModel, C extends Collection<M>> C search(M model) throws InternalErrorException{
 		IDAO persistence = getPersistence();
 
 		return (C)persistence.search(model);
@@ -227,7 +231,8 @@ public abstract class BaseService implements IService{
     /**
      * @see br.com.concepting.framework.service.interfaces.IService#search(br.com.concepting.framework.model.BaseModel, br.com.concepting.framework.model.helpers.ModelFilter)
      */
-    public <M extends BaseModel, C extends Collection> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
+    @SuppressWarnings("unchecked")
+    public <M extends BaseModel, C extends Collection<M>> C search(M model, ModelFilter modelFilter) throws InternalErrorException{
 		IDAO persistence = getPersistence();
 
 		return (C)persistence.search(model, modelFilter);
