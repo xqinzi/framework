@@ -17,7 +17,6 @@ import br.com.concepting.framework.context.resource.ContextResource;
 import br.com.concepting.framework.context.resource.ContextResourceLoader;
 import br.com.concepting.framework.context.types.ContextFactoryType;
 import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.exceptions.ItemNotFoundException;
 import br.com.concepting.framework.model.util.PropertyUtil;
 import br.com.concepting.framework.resource.FactoryResource;
@@ -35,16 +34,16 @@ import br.com.concepting.framework.util.StringUtil;
  * @since 1.0
  */
 public class ServiceLocator{
-	private Cacher  contextInstances = CacherManager.getInstance().getCacher(getClass());
-    private Class   modelClass       = null;
-    private Boolean auditable        = true;
+	private Cacher<Context> contextInstances = CacherManager.getInstance().getCacher(getClass());
+    private Class<?>        modelClass       = null;
+    private Boolean         auditable        = true;
     
     /**
      * Construtor - Inicializa objetos e/ou variáveis internas.
      * 
      * @param modelClass Classe do modelo de dados desejado.
      */
-	public <M extends BaseModel> ServiceLocator(Class<M> modelClass, Boolean auditable){
+    public ServiceLocator(Class<?> modelClass, Boolean auditable){
 		super();
 		
 		this.modelClass = modelClass;
@@ -57,16 +56,17 @@ public class ServiceLocator{
 	 * @return Instância do serviço vinculado ao modelo de dados.
 	 * @throws InternalErrorException
 	 */
+    @SuppressWarnings("unchecked")
     public <S extends IService> S lookup() throws InternalErrorException{
 	    try{
-    	    S           serviceInstance         = null;
-            Class<S>    serviceInterfaceClass   = ServiceUtil.getServiceInterfaceClassByModel(modelClass);
-            Class<S>    serviceClass            = ServiceUtil.getServiceClassByModel(modelClass);
-            Service     serviceAnnotation       = serviceInterfaceClass.getAnnotation(Service.class);
-            Stateless   statelessAnnotation     = serviceClass.getAnnotation(Stateless.class);
-            Stateful    statefulAnnotation      = serviceClass.getAnnotation(Stateful.class);
-            Class       serviceInterceptorClass = (serviceAnnotation != null ? serviceAnnotation.interceptor() : ServiceInterceptor.class);
-            ServiceType serviceType             = null;
+    	    S                                   serviceInstance         = null;
+            Class<S>                            serviceInterfaceClass   = ServiceUtil.getServiceInterfaceClassByModel(modelClass);
+            Class<S>                            serviceClass            = ServiceUtil.getServiceClassByModel(modelClass);
+            Service                             serviceAnnotation       = serviceInterfaceClass.getAnnotation(Service.class);
+            Stateless                           statelessAnnotation     = serviceClass.getAnnotation(Stateless.class);
+            Stateful                            statefulAnnotation      = serviceClass.getAnnotation(Stateful.class);
+            Class<? extends ServiceInterceptor> serviceInterceptorClass = (serviceAnnotation != null ? serviceAnnotation.interceptor() : ServiceInterceptor.class);
+            ServiceType                         serviceType             = null;
             
             if(statelessAnnotation != null)
                 serviceType = ServiceType.STATELESS;
@@ -90,7 +90,7 @@ public class ServiceLocator{
                 ContextResource       contextResource        = contextResourceLoader.get(contextResourceId); 
                 FactoryResource       contextFactoryResource = contextResource.getFactoryResource();
                 Context               context                = null; 
-                CachedObject          cachedObject           = null;
+                CachedObject<Context> cachedObject           = null;
                 
                 try{
                     cachedObject = contextInstances.get(contextResourceId);
@@ -116,7 +116,7 @@ public class ServiceLocator{
                     else
                         context = new InitialContext();
     
-                    cachedObject = new CachedObject();
+                    cachedObject = new CachedObject<Context>();
                     cachedObject.setId(contextResource.getId());
                     cachedObject.setContent(context);
     
@@ -141,7 +141,7 @@ public class ServiceLocator{
                     serviceInstance = (S)PortableRemoteObject.narrow(context.lookup(lookupName), serviceInterfaceClass);
                 }
                 else{
-                    Class serviceHomeInterfaceClass = ServiceUtil.getServiceHomeInterfaceClassByModel(modelClass);
+                    Class<?> serviceHomeInterfaceClass = ServiceUtil.getServiceHomeInterfaceClassByModel(modelClass);
 
                     if(contextType == ContextFactoryType.GLASSFISH)
                         lookupName = serviceHomeInterfaceClass.getName();

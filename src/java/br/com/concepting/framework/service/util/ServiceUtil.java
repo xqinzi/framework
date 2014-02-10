@@ -1,7 +1,6 @@
 package br.com.concepting.framework.service.util;
 
 import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.service.interfaces.IService;
 import br.com.concepting.framework.util.StringUtil;
  
@@ -19,7 +18,7 @@ public class ServiceUtil{
      * @return Instância da classe de serviço.
      * @throws InternalErrorException
      */
-    public static <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+    public static <S extends IService> S getService(Class<?> modelClass) throws InternalErrorException{
         return getService(modelClass, true);
     }
 
@@ -31,7 +30,7 @@ public class ServiceUtil{
 	 * @return Instância da classe de serviço.
 	 * @throws InternalErrorException
 	 */
-	public static <S extends IService, M extends BaseModel> S getService(Class<M> modelClass, Boolean auditable) throws InternalErrorException{
+	public static <S extends IService> S getService(Class<?> modelClass, Boolean auditable) throws InternalErrorException{
 	    ServiceLocator serviceLocator = new ServiceLocator(modelClass, auditable);
 	    
 	    return serviceLocator.lookup();
@@ -44,7 +43,8 @@ public class ServiceUtil{
 	 * @return Classe de serviço.
 	 * @throws ClassNotFoundException
 	 */
-    public static <M extends BaseModel, S extends IService> Class<S> getServiceClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <S extends IService> Class<S> getServiceClassByModel(Class<?> modelClass) throws ClassNotFoundException{
 		return (Class<S>)Class.forName(getServiceClassNameByModel(modelClass));
 	}
 
@@ -54,7 +54,7 @@ public class ServiceUtil{
 	 * @param modelClass Classe do modelo de dados.
 	 * @return String contendo o identificador da classe de serviço.
 	 */
-	public static <M extends BaseModel> String getServiceClassNameByModel(Class<M> modelClass){
+	public static String getServiceClassNameByModel(Class<?> modelClass){
 		String serviceClassId = StringUtil.replaceLast(modelClass.getName(), "Model", "ServiceImpl");
 
 		serviceClassId = StringUtil.replaceAll(serviceClassId, ".model", ".service");
@@ -68,7 +68,7 @@ public class ServiceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o identificador do serviço.
      */
-    public static <M extends BaseModel> String getServiceNameByModel(Class<M> modelClass){
+    public static String getServiceNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "ServiceImpl");
     }
 
@@ -79,7 +79,7 @@ public class ServiceUtil{
 	 * @param modelClass Classe do modelo de dados.
 	 * @return String contendo o identificador da interface utilizada na classe de serviço.
 	 */
-	public static <M extends BaseModel> String getServiceInterfaceClassNameByModel(Class<M> modelClass){
+	public static String getServiceInterfaceClassNameByModel(Class<?> modelClass){
 		String serviceInterfaceId = StringUtil.replaceLast(modelClass.getName(), "Model", "Service");
 
 		serviceInterfaceId = StringUtil.replaceAll(serviceInterfaceId, ".model", ".service.interfaces");
@@ -94,7 +94,7 @@ public class ServiceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o identificador da interface utilizada na classe de serviço.
      */
-    public static <M extends BaseModel> String getServiceInterfaceNameByModel(Class<M> modelClass){
+    public static String getServiceInterfaceNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "Service");
     }
 
@@ -105,7 +105,8 @@ public class ServiceUtil{
 	 * @return Interface da classe de serviço.
 	 * @throws ClassNotFoundException
 	 */
-    public static <S extends IService, M extends BaseModel> Class<S> getServiceInterfaceClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <S extends IService> Class<S> getServiceInterfaceClassByModel(Class<?> modelClass) throws ClassNotFoundException{
 		return (Class<S>)Class.forName(getServiceInterfaceClassNameByModel(modelClass));
 	}
 
@@ -116,7 +117,7 @@ public class ServiceUtil{
 	 * @param modelClass Classe do modelo de dados.
 	 * @return String contendo o identificador da interface home utilizada na classe de serviço.
 	 */
-	public static <M extends BaseModel> String getServiceHomeInterfaceClassNameByModel(Class<M> modelClass){
+	public static String getServiceHomeInterfaceClassNameByModel(Class<?> modelClass){
 		String serviceHomeInterfaceId = StringUtil.replaceLast(modelClass.getName(), "Model", "ServiceHome");
 
 		serviceHomeInterfaceId = StringUtil.replaceAll(serviceHomeInterfaceId, ".model", ".service.interfaces");
@@ -131,7 +132,7 @@ public class ServiceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o identificador da interface home utilizada na classe de serviço.
      */
-    public static <M extends BaseModel> String getServiceHomeInterfaceNameByModel(Class<M> modelClass){
+    public static String getServiceHomeInterfaceNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "ServiceHome");
     }
     
@@ -142,7 +143,8 @@ public class ServiceUtil{
      * @return Interface da classe de serviço.
      * @throws ClassNotFoundException
      */
-    public static <S extends IService, M extends BaseModel> Class<S> getServiceHomeInterfaceClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <S extends IService>Class<S> getServiceHomeInterfaceClassByModel(Class<?> modelClass) throws ClassNotFoundException{
         return (Class<S>)Class.forName(getServiceHomeInterfaceClassNameByModel(modelClass));
     }
 
@@ -153,7 +155,7 @@ public class ServiceUtil{
 	 * @param modelClass Classe do modelo de dados.
 	 * @return String contendo o identificador da interface remota utilizada na classe de serviço.
 	 */
-	public static <M extends BaseModel> String getServiceRemoteInterfaceClassNameByModel(Class<M> modelClass){
+	public static String getServiceRemoteInterfaceClassNameByModel(Class<?> modelClass){
 		String serviceRemoteInterfaceId = StringUtil.replaceLast(modelClass.getName(), "Model", "ServiceRemote");
 
 		serviceRemoteInterfaceId = StringUtil.replaceAll(serviceRemoteInterfaceId, ".model", ".service.interfaces");
@@ -168,7 +170,7 @@ public class ServiceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o identificador da interface remota utilizada na classe de serviço.
      */
-    public static <M extends BaseModel> String getServiceRemoteInterfaceNameByModel(Class<M> modelClass){
+    public static String getServiceRemoteInterfaceNameByModel(Class<?> modelClass){
         return StringUtil.replaceLast(modelClass.getSimpleName(), "Model", "ServiceRemote");
     }
     
@@ -179,7 +181,8 @@ public class ServiceUtil{
      * @return Interface da classe de serviço.
      * @throws ClassNotFoundException
      */
-    public static <S extends IService, M extends BaseModel> Class<S> getServiceRemoteInterfaceClassByModel(Class<M> modelClass) throws ClassNotFoundException{
+    @SuppressWarnings("unchecked")
+    public static <S extends IService> Class<S> getServiceRemoteInterfaceClassByModel(Class<?> modelClass) throws ClassNotFoundException{
         return (Class<S>)Class.forName(getServiceRemoteInterfaceClassNameByModel(modelClass));
     }
 
@@ -189,7 +192,7 @@ public class ServiceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o nome do pacote.
      */
-    public static <M extends BaseModel> String getServicePackageByModel(Class<M> modelClass){
+    public static String getServicePackageByModel(Class<?> modelClass){
         return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".service");
     }
     
@@ -199,7 +202,7 @@ public class ServiceUtil{
      * @param modelClass Classe do modelo de dados.
      * @return String contendo o nome do pacote.
      */
-    public static <M extends BaseModel> String getServiceInterfacePackageByModel(Class<M> modelClass){
+    public static String getServiceInterfacePackageByModel(Class<?> modelClass){
         return StringUtil.replaceAll(modelClass.getPackage().getName(), ".model", ".service.interfaces");
     }
 }

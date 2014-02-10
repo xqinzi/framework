@@ -40,7 +40,7 @@ public class ServiceInterceptor extends Interceptor{
 	 * @param methodArguments Array contendo os parâmetros do método a ser interceptado.
 	 * @param auditable
 	 */
-	public <I> ServiceInterceptor(I interceptableInstance, Class interceptableInterfaceClass, Method method, Object methodArguments[], Boolean auditable){
+	public ServiceInterceptor(Object interceptableInstance, Class<? extends ServiceInterceptor> interceptableInterfaceClass, Method method, Object methodArguments[], Boolean auditable){
 		super(interceptableInstance, interceptableInterfaceClass, method, methodArguments, auditable);
 	}
 
@@ -61,7 +61,7 @@ public class ServiceInterceptor extends Interceptor{
             ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
             
             if(serviceTransaction != null)
-                service.setTransactionTimeout(serviceTransaction.transactionTimeout());
+                service.setTimeout(serviceTransaction.timeout());
             
             service.begin();
 		}
@@ -110,14 +110,14 @@ public class ServiceInterceptor extends Interceptor{
                 ServiceTransaction serviceTransaction = getMethod().getAnnotation(ServiceTransaction.class);
                 
                 if(serviceTransaction != null){
-                    Class   superClass    = ExceptionUtil.getOriginException(e).getClass();
-                    Class   rollbackFor[] = serviceTransaction.rollbackFor();
-                    Boolean found         = false;
+                    Class<?>                   superClass    = ExceptionUtil.getOriginException(e).getClass();
+                    Class<? extends Throwable> rollbackFor[] = serviceTransaction.rollbackFor();
+                    Boolean                    found         = false;
                     
                     while(superClass != null && !superClass.equals(Object.class)){
                         found = false;
                         
-                        for(Class item : rollbackFor){
+                        for(Class<? extends Throwable> item : rollbackFor){
                             if(item.equals(superClass)){
                                 service.rollback();
                                 
@@ -149,8 +149,8 @@ public class ServiceInterceptor extends Interceptor{
 	 * @see br.com.concepting.framework.util.Interceptor#execute()
 	 */
     public <O> O execute() throws Throwable{
-        Class   interceptableInterfaceClass = getInterceptableInterfaceClass();
-        Service serviceAnnotation           = (Service)interceptableInterfaceClass.getAnnotation(Service.class);
+        Class<?> interceptableInterfaceClass = getInterceptableInterfaceClass();
+        Service  serviceAnnotation           = interceptableInterfaceClass.getAnnotation(Service.class);
         
         if(serviceAnnotation == null || serviceAnnotation.type() != ServiceType.WEB_SERVICE)
             return executeLocalRemoteService();
@@ -174,9 +174,10 @@ public class ServiceInterceptor extends Interceptor{
      * @return Instância do resultado da execução do método.
      * @throws Throwable
      */
+    @SuppressWarnings("unchecked")
     private <O> O executeWebService() throws Throwable{
-        Class                 interceptableInterfaceClass = getInterceptableInterfaceClass();
-        Service               serviceAnnotation           = (Service)interceptableInterfaceClass.getAnnotation(Service.class);
+        Class<?>              interceptableInterfaceClass = getInterceptableInterfaceClass();
+        Service               serviceAnnotation           = interceptableInterfaceClass.getAnnotation(Service.class);
         ContextResourceLoader contextResourceLoader       = new ContextResourceLoader();
         ContextResource       contextResource             = contextResourceLoader.get(serviceAnnotation.contextResourceId());     
         RPCServiceClient      serviceClient               = new RPCServiceClient();
@@ -236,11 +237,11 @@ public class ServiceInterceptor extends Interceptor{
                 serviceNamespace.append(".");
         }
         
-        Method  serviceMethod            = getMethod();
-        Class   serviceReturnClass       = serviceMethod.getReturnType();
-        Object  serviceMethodArguments[] = getMethodArguments();
-        QName   serviceAction            = new QName(serviceNamespace.toString(), serviceMethod.getName());
-        Class[] serviceReturnTypes       = new Class[]{serviceReturnClass};
+        Method     serviceMethod            = getMethod();
+        Class<?>   serviceReturnClass       = serviceMethod.getReturnType();
+        Object     serviceMethodArguments[] = getMethodArguments();
+        QName      serviceAction            = new QName(serviceNamespace.toString(), serviceMethod.getName());
+        Class<?>[] serviceReturnTypes       = new Class<?>[]{serviceReturnClass};
 
         return (O)serviceClient.invokeBlocking(serviceAction, serviceMethodArguments, serviceReturnTypes);
    }
