@@ -2,6 +2,7 @@ package br.com.concepting.framework.context.resource;
 
 import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**
  * Classe responsável pelo armazenamento das configurações para comunicação com o 
@@ -10,8 +11,10 @@ import br.com.concepting.framework.resource.FactoryResource;
  * @author fvilarinho
  * @since 1.0
  */
-public class ContextResource extends BaseResource{
-	private String          serverName      = "";
+public class ContextResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = 3511303084297795291L;
+    
+    private String          serverName      = "";
 	private Integer         serverPort      = 0; 
 	private Integer         lookupPort      = 0;
 	private Boolean         useSsl          = false;

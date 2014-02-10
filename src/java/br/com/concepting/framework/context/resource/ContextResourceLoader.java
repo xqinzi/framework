@@ -3,7 +3,6 @@ package br.com.concepting.framework.context.resource;
 import br.com.concepting.framework.context.constants.ContextConstants;
 import br.com.concepting.framework.context.types.ContextFactoryType;
 import br.com.concepting.framework.network.constants.NetworkConstants;
-import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.resource.XmlResourceLoader;
 import br.com.concepting.framework.resource.constants.FactoryConstants;
@@ -19,7 +18,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 1.0
  */
-public class ContextResourceLoader extends XmlResourceLoader{
+public class ContextResourceLoader extends XmlResourceLoader<ContextResource>{
 	/**
 	 * Construtor - Inicializa classe de leitura/manipulação do arquivo de configurações default
 	 * para comunicação com o servidor de aplicações.
@@ -59,7 +58,7 @@ public class ContextResourceLoader extends XmlResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
 	 */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public ContextResource get(String id) throws InvalidResourceException{
 		ContextResource    contextResource    = super.get(id);
 		XmlNode            resource           = contextResource.getContent();
         String             factoryResourceId  = StringUtil.trim(resource.getAttribute("factoryResourceId"));
@@ -97,6 +96,7 @@ public class ContextResourceLoader extends XmlResourceLoader{
 		    contextResource.setServerName(NetworkConstants.LOCALHOST_ID);
 
         resourceNode = resource.getNode("lookupPort");
+        
         if(resourceNode != null){
             try{
                 Integer lookupPort = NumberUtil.parseInt(StringUtil.trim(resourceNode.getValue()));
@@ -111,6 +111,7 @@ public class ContextResourceLoader extends XmlResourceLoader{
             contextResource.setLookupPort(contextFactoryType.getDefaultLookupPort());
 
         resourceNode = resource.getNode("serverPort");
+        
 		if(resourceNode != null){
 			try{
 				Integer serverPort = NumberUtil.parseInt(StringUtil.trim(resourceNode.getValue()));
@@ -134,6 +135,6 @@ public class ContextResourceLoader extends XmlResourceLoader{
 
 		contextResource.setUseSsl(useSsl);
 
-		return (R)contextResource;
+		return contextResource;
 	}
 }

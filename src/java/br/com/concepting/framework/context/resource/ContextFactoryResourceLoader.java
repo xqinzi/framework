@@ -49,13 +49,14 @@ public class ContextFactoryResourceLoader extends FactoryResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.BaseResourceLoader#parseResource()
 	 */
-    protected <C> C parseResource() throws InvalidResourceException{
+    protected XmlNode parseResource() throws InvalidResourceException{
 		XmlNode content = super.parseResource();
 
 		content = content.getNode("contextFactory");
+		
 		if(content == null)
 			throw new InvalidResourceException(getResourceId());
 
-		return (C)content;
+		return content;
 	}
 }
