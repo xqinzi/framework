@@ -19,7 +19,9 @@ import br.com.concepting.framework.util.helpers.DateTime;
  */
 @Model
 public class AuditorModel extends BaseModel{
-	@Property(isIdentity=true)
+    private static final long serialVersionUID = 4560619844140960680L;
+
+    @Property(isIdentity=true)
 	private Long id = 0l;
 
 	@Property(isForSearch=true)
@@ -55,6 +57,7 @@ public class AuditorModel extends BaseModel{
      * 
      * @return Instância do modelo de dados do sistema.
      */
+    @SuppressWarnings("unchecked")
     public <S extends SystemModuleModel> S getSystemModule(){
 	    return (S)systemModule;
 	}
@@ -65,7 +68,7 @@ public class AuditorModel extends BaseModel{
      * 
      * @param systemModule Instância do modelo de dados do sistema.
      */
-    public <S extends SystemModuleModel> void setSystemModule(S systemModule){
+    public void setSystemModule(SystemModuleModel systemModule){
         this.systemModule = systemModule;
     }
     
@@ -74,6 +77,7 @@ public class AuditorModel extends BaseModel{
      * 
      * @return Instância contendo as propriedades da sessão do sistema.
      */
+    @SuppressWarnings("unchecked")
     public <S extends SystemSessionModel> S getSystemSession(){
         return (S)systemSession;
     }
@@ -83,7 +87,7 @@ public class AuditorModel extends BaseModel{
      * 
      * @param systemSession Instância contendo as propriedades da sessão do sistema.
      */
-    public <S extends SystemSessionModel> void setSystemSession(S systemSession){
+    public void setSystemSession(SystemSessionModel systemSession){
         this.systemSession = systemSession;
     }
 
@@ -147,8 +151,9 @@ public class AuditorModel extends BaseModel{
 	 *
 	 * @return Instância contendo as informações complementares.
 	 */
-    public <C extends AuditorBusinessComplementModel> Collection<C> getBusinessComplement(){
-		return (Collection<C>)businessComplement;
+    @SuppressWarnings("unchecked")
+    public <C extends Collection<? extends AuditorBusinessComplementModel>> C getBusinessComplement(){
+		return (C)businessComplement;
 	}
 
 	/**
@@ -157,8 +162,9 @@ public class AuditorModel extends BaseModel{
 	 *
 	 * @param businessComplement Instância contendo as informações complementares.
 	 */
-    public <C extends AuditorBusinessComplementModel> void setBusinessComplement(Collection<C> businessComplement){
-		this.businessComplement = (Collection)businessComplement;
+    @SuppressWarnings("unchecked")
+    public <C extends Collection<? extends AuditorBusinessComplementModel>> void setBusinessComplement(C businessComplement){
+		this.businessComplement = (Collection<AuditorBusinessComplementModel>)businessComplement;
 	}
 
 	/**

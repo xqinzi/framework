@@ -17,23 +17,23 @@ public abstract class AuditorConstants{
     /**
      * Constante que define o identificador do arquivo de configurações de auditoria.
      */
-    public static final String  DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("auditorResources.xml");
+    public static final String DEFAULT_RESOURCE_ID = ResourceConstants.DEFAULT_RESOURCES_DIR.concat("auditorResources.xml");
     
     /**
      * Constante que define o identificador da configuração de auditoria para a 
      * rotina de geração de código.
      */
-    public static final String  DEFAULT_GENERATE_CODE_RESOURCE_KEY = "generate.code";
+    public static final String DEFAULT_GENERATE_CODE_RESOURCE_KEY = "generate.code";
     
     /**
      * Constante que define o identificador do atributo da classe de layout para as 
      * mensagens de auditoria.
      */
-    public static final String  DEFAULT_LAYOUT_CLASS_KEY = "layoutClass";
+    public static final String DEFAULT_LAYOUT_CLASS_KEY = "layoutClass";
     
     /**
      * Constante que define o identificador do atributo da máscara de formatação 
      * das mensagens de auditoria.
      */
-    public static final String  DEFAULT_LAYOUT_PATTERN_KEY = "layoutPattern";
+    public static final String DEFAULT_LAYOUT_PATTERN_KEY = "layoutPattern";
 }

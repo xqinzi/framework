@@ -9,7 +9,6 @@ import br.com.concepting.framework.audit.Auditor;
 import br.com.concepting.framework.audit.model.AuditorBusinessComplementModel;
 import br.com.concepting.framework.audit.model.AuditorModel;
 import br.com.concepting.framework.exceptions.InternalErrorException;
-import br.com.concepting.framework.model.BaseModel;
 import br.com.concepting.framework.model.helpers.ModelInfo;
 import br.com.concepting.framework.model.helpers.PropertyInfo;
 import br.com.concepting.framework.model.util.ModelUtil;
@@ -51,7 +50,7 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
      * @return Instância da classe de serviço.
      * @throws InternalErrorException
      */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass, Boolean auditable) throws InternalErrorException{
+    protected <S extends IService> S getService(Class<?> modelClass, Boolean auditable) throws InternalErrorException{
         S                 service      = ServiceUtil.getService(modelClass, auditable);
         Auditor           auditor      = getAuditor();
         LoginSessionModel loginSession = auditor.getLoginSession();
@@ -74,7 +73,7 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
      * @return Instância da classe de serviço.
      * @throws InternalErrorException
      */
-    protected <S extends IService, M extends BaseModel> S getService(Class<M> modelClass) throws InternalErrorException{
+    protected <S extends IService> S getService(Class<?> modelClass) throws InternalErrorException{
         return getService(modelClass, true);
     }
     
@@ -99,7 +98,9 @@ public class PersistentAuditorAppender extends BaseAuditorAppender{
                         Collection<AuditorBusinessComplementModel> auditorInfoComplement = model.getBusinessComplement();
                         
                         if(auditorInfoComplement != null && auditorInfoComplement.size() > 0){
-                            service = getService(propertyInfo.getCollectionItemsClass(), false);
+                            Class<?> collectionItemsClass = propertyInfo.getCollectionItemsClass();
+                            
+                            service = getService(collectionItemsClass, false);
                             
                             service.saveAll(auditorInfoComplement);
                         }

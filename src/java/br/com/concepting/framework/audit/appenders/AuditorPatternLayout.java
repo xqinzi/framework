@@ -45,6 +45,7 @@ public class AuditorPatternLayout extends SimpleLayout{
 	 * 
 	 * @return Instância contendo o modelo de dados de auditoria.
 	 */
+    @SuppressWarnings("unchecked")
     public <A extends AuditorModel> A getModel(){
 		return (A)model;
 	}
@@ -54,7 +55,7 @@ public class AuditorPatternLayout extends SimpleLayout{
      * 
      * param model Instância contendo o modelo de dados de auditoria.
      */
-	public <A extends AuditorModel> void setModel(A model){
+	public void setModel(AuditorModel model){
 		this.model = model;
 	}
 
@@ -85,16 +86,16 @@ public class AuditorPatternLayout extends SimpleLayout{
 	 * 
 	 * @return String contendo o complemento da auditoria formatado.
 	 */
-	private <C extends AuditorBusinessComplementModel> String formatBusinessComplement(){
-        String        currentClass          = "";
-        Collection<C> businessComplement    = model.getBusinessComplement();
-        Boolean       hasBusinessComplement = false;
-		Object        itemValue             = null;
-        StringBuilder result                = new StringBuilder();
-        Integer       cont                  = 0;
+	private String formatBusinessComplement(){
+        String                                     currentClass          = "";
+        Collection<AuditorBusinessComplementModel> businessComplement    = model.getBusinessComplement();
+        Boolean                                    hasBusinessComplement = false;
+		Object                                     itemValue             = null;
+        StringBuilder                              result                = new StringBuilder();
+        Integer                                    cont                  = 0;
 		
 		if(businessComplement != null){ 
-			for(C item : businessComplement){
+			for(AuditorBusinessComplementModel item : businessComplement){
     			itemValue = item.getPropertyValue();
     			
     			if(!currentClass.equals(item.getModelClass())){

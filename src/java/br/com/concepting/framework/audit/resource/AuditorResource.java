@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
+import br.com.concepting.framework.util.helpers.XmlNode;
 
 /**
  * Classe que define a estrutura básica para armazenamento das configurações de 
@@ -13,8 +14,10 @@ import br.com.concepting.framework.resource.FactoryResource;
  * @author fvilarinho
  * @since 1.0
  */
-public class AuditorResource extends BaseResource{
-	private String                      level     = "";
+public class AuditorResource extends BaseResource<XmlNode>{
+    private static final long serialVersionUID = -4997789974946981759L;
+    
+    private String                      level     = "";
 	private Collection<FactoryResource> appenders = null;
 	
 	/**
@@ -48,8 +51,9 @@ public class AuditorResource extends BaseResource{
 	 * 
 	 * @return Lista contendo as configurações definidas.
 	 */
-	public Collection<FactoryResource> getAppenders(){
-		return appenders;
+	@SuppressWarnings("unchecked")
+    public <C extends Collection<FactoryResource>> C getAppenders(){
+		return (C)appenders;
 	}
 
 	/**

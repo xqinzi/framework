@@ -12,7 +12,9 @@ import br.com.concepting.framework.model.annotations.Property;
  */
 @Model
 public class AuditorBusinessComplementModel extends BaseModel{
-	@Property(isIdentity=true)
+    private static final long serialVersionUID = -5973758121126490161L;
+
+    @Property(isIdentity=true)
 	private AuditorModel auditor = null;
 	
 	@Property(isIdentity=true)
@@ -104,6 +106,7 @@ public class AuditorBusinessComplementModel extends BaseModel{
 	 *
 	 * @return Instância do valor da propriedade. 
 	 */
+    @SuppressWarnings("unchecked")
     public <O> O getPropertyValue(){
     	return (O)propertyValue;
     }

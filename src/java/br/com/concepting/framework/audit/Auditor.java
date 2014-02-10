@@ -33,7 +33,7 @@ import br.com.concepting.framework.util.StringUtil;
  */
 public class Auditor{
 	private Logger            logger                  = null;
-	private Class             entity                  = null;
+	private Class<?>          entity                  = null;
 	private Method            business                = null;
 	private String            businessArgumentsIds[]  = null;
 	private Object            businessArgumentsValues = null;
@@ -47,7 +47,7 @@ public class Auditor{
      * @param business Instância contendo as propriedades do método da entidade.
      * @param businessArguments Instâncias dos argumentos do método.
      */
-	public Auditor(Class entity, Method business, Object businessArguments){
+	public Auditor(Class<?> entity, Method business, Object businessArguments){
 		this(entity, business, businessArguments, null, null);
 	}
 
@@ -59,7 +59,7 @@ public class Auditor{
      * @param businessArguments Instâncias dos argumentos do método.
      * @param auditorResource Instância das configurações de auditoria.
      */
-	public Auditor(Class entity, Method business, Object businessArguments, AuditorResource auditorResource){
+	public Auditor(Class<?> entity, Method business, Object businessArguments, AuditorResource auditorResource){
 		this(entity, business, businessArguments, null, auditorResource);
 	}
 	
@@ -72,7 +72,7 @@ public class Auditor{
      * @param loginSession Instância contendo as propriedades da sessão de login.
      * @param auditorResource Instância das configurações de auditoria.
      */
-	public Auditor(Class entity, Method business, Object businessArguments, LoginSessionModel loginSession, AuditorResource auditorResource){
+	public Auditor(Class<?> entity, Method business, Object businessArguments, LoginSessionModel loginSession, AuditorResource auditorResource){
 		super();
 
 		setEntity(entity);
@@ -83,8 +83,6 @@ public class Auditor{
 
 		logger = Logger.getLogger(entity);
 		
-		Logger.getRootLogger().removeAllAppenders();
-
 		loadAuditorResource();
 		loadLevel();
 		loadAppenders();
@@ -113,6 +111,7 @@ public class Auditor{
 	 *
 	 * @return Instâncias dos argumentos do método.
 	 */
+    @SuppressWarnings("unchecked")
     public <O> O getBusinessArgumentsValues(){
     	return (O)businessArgumentsValues;
     }
@@ -131,7 +130,7 @@ public class Auditor{
 	 * 
 	 * @return Classe da entidade a ser auditada.
 	 */
-	public Class getEntity(){
+	public Class<?> getEntity(){
 		return entity;
 	}
 
@@ -140,7 +139,7 @@ public class Auditor{
 	 *
 	 * @param entity Classe que define a entidade a ser auditada.
 	 */
-	public void setEntity(Class entity){
+	public void setEntity(Class<?> entity){
     	this.entity = entity;
     }
 
@@ -172,8 +171,9 @@ public class Auditor{
 	 *
 	 * @return Instância contendo as propriedades da sessão de login.
 	 */
-	public LoginSessionModel getLoginSession(){
-    	return loginSession;
+	@SuppressWarnings("unchecked")
+    public <L extends LoginSessionModel> L getLoginSession(){
+    	return (L)loginSession;
     }
 
 	/**
@@ -209,13 +209,13 @@ public class Auditor{
     private void loadAuditorResource(){
 		if(auditorResource == null){
     		if(entity != null){
-    	        Auditable annotation = (Auditable)entity.getAnnotation(Auditable.class);
+    	        Auditable annotation = entity.getAnnotation(Auditable.class);
     	        
     	        if(annotation == null){
-    	            Class superClasses[] = entity.getInterfaces();
+    	            Class<?> superClasses[] = entity.getInterfaces();
 
     	            if(superClasses != null && superClasses.length > 0){
-    	                for(Class superClass : superClasses){
+    	                for(Class<?> superClass : superClasses){
     	                    annotation = (Auditable)superClass.getAnnotation(Auditable.class);
     	                    
     	                    if(annotation != null)
@@ -263,14 +263,16 @@ public class Auditor{
 			Collection<FactoryResource> appendersResources = auditorResource.getAppenders();
 
 			if(appendersResources != null){
-				Class                 appenderClass         = null;
-				Appender              appenderInstance      = null;
-				Map<String, String>   appenderOptions       = null;
-				Class                 appenderLayoutClass   = null;
-				Layout                appenderLayout        = null;
-				String                appenderLayoutPattern = "";
-				Enumeration<Appender> allAppenders          = logger.getAllAppenders();
-				Boolean               hasAppender           = false;
+				Class<?>            appenderClass         = null;
+				Appender            appenderInstance      = null;
+				Map<String, String> appenderOptions       = null;
+				Class<?>            appenderLayoutClass   = null;
+				Layout              appenderLayout        = null;
+				String              appenderLayoutPattern = "";
+				
+				@SuppressWarnings("unchecked")
+                Enumeration<Appender> allAppenders = logger.getAllAppenders();
+				Boolean               hasAppender  = false;
 
 				for(FactoryResource appenderResource : appendersResources){
 					appenderOptions = appenderResource.getOptions();

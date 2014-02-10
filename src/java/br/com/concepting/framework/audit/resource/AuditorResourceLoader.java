@@ -1,7 +1,6 @@
 package br.com.concepting.framework.audit.resource;
 
 import br.com.concepting.framework.audit.constants.AuditorConstants;
-import br.com.concepting.framework.resource.BaseResource;
 import br.com.concepting.framework.resource.FactoryResource;
 import br.com.concepting.framework.resource.XmlResourceLoader;
 import br.com.concepting.framework.resource.exceptions.InvalidResourceException;
@@ -15,7 +14,7 @@ import br.com.concepting.framework.util.helpers.XmlNode;
  * @author fvilarinho
  * @since 1.0
  */
-public class AuditorResourceLoader extends XmlResourceLoader{
+public class AuditorResourceLoader extends XmlResourceLoader<AuditorResource>{
 	/**
 	 * Construtor - Efetua a leitura do arquivo de configurações default.
 	 * 
@@ -49,7 +48,7 @@ public class AuditorResourceLoader extends XmlResourceLoader{
 	/**
 	 * @see br.com.concepting.framework.resource.XmlResourceLoader#get(java.lang.String)
 	 */
-    public <R extends BaseResource> R get(String id) throws InvalidResourceException{
+    public AuditorResource get(String id) throws InvalidResourceException{
 		AuditorResource auditorResource   = super.get(id);
 		XmlNode         resource          = auditorResource.getContent();
 		XmlNode         appendersResource = resource.getNode("appenders");
@@ -89,10 +88,12 @@ public class AuditorResourceLoader extends XmlResourceLoader{
 						
 						while(true){
 							optionResource = optionsResource.getNode(cont2);
+							
 							if(optionResource == null)
 								break;
 
 							optionResourceId = StringUtil.trim(optionResource.getAttribute("id"));
+							
 							if(optionResourceId.length() == 0)
 								throw new InvalidResourceException(getResourceId(), optionResource.getText());
 
@@ -111,6 +112,6 @@ public class AuditorResourceLoader extends XmlResourceLoader{
 			}
 		}
 
-		return (R)auditorResource;
+		return auditorResource;
 	}
 }

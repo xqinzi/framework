@@ -94,7 +94,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
 	 * @param entity Classe que define a entidade a ser auditada.
 	 * @return String contendo o identificador da entidade.
 	 */
-	private String getEntityId(Class entity){
+	private String getEntityId(Class<?> entity){
 	    return getEntityId(entity, true);
 	}
 	
@@ -105,17 +105,17 @@ public abstract class BaseAuditorAppender extends WriterAppender{
      * @param lastIteration True/False.
      * @return String contendo o identificador da entidade.
      */
-	private String getEntityId(Class entity, Boolean lastIteration){
+	private String getEntityId(Class<?> entity, Boolean lastIteration){
 	    String entityId = "";
 	    
 	    if(entity != null){
-            Auditable annotation = (Auditable)entity.getAnnotation(Auditable.class);
+            Auditable annotation = entity.getAnnotation(Auditable.class);
             
             if(annotation == null){
-                Class superClasses[] = entity.getInterfaces();
+                Class<?> superClasses[] = entity.getInterfaces();
     
                 if(superClasses != null && superClasses.length > 0){
-                    for(Class superClass : superClasses){
+                    for(Class<?> superClass : superClasses){
                         entityId = StringUtil.trim(getEntityId(superClass, false));
                         
                         if(entityId.length() > 0)
@@ -159,16 +159,17 @@ public abstract class BaseAuditorAppender extends WriterAppender{
 	 * @param event Instância contendo as propriedades do evento a ser auditado.
 	 * @return Instância do modelo de dados de auditoria.
 	 */
+    @SuppressWarnings("unchecked")
     public <A extends AuditorModel> A getModel(LoggingEvent event){
-        AuditorModel model = null;
+        A model = null;
         
         try{
-            Class modelClass = Class.forName(this.modelClass);
+            Class<A> modelClass = (Class<A>)Class.forName(this.modelClass);
             
             model = (A)ConstructorUtils.invokeConstructor(modelClass, null);
         }
         catch(Throwable e){
-            model = new AuditorModel();
+            model = (A)new AuditorModel();
         }
 
         model.setCreateDate(new DateTime());
@@ -211,22 +212,24 @@ public abstract class BaseAuditorAppender extends WriterAppender{
      * @param model Instância do modelo de dados de auditoria.
      * @return Lista de complementos da auditoria.
      */
-    private <A extends AuditorModel, O, C extends AuditorBusinessComplementModel> Collection<C> buildBusinessComplement(A model){
-        O             businessArgumentsValues = auditor.getBusinessArgumentsValues();
-        Collection<C> businessComplements     = null;
+    private Collection<AuditorBusinessComplementModel> buildBusinessComplement(AuditorModel model){
+        Object                                     businessArgumentsValues = auditor.getBusinessArgumentsValues();
+        Collection<AuditorBusinessComplementModel> businessComplements     = null;
 
         if(businessArgumentsValues != null){
-            String     businessArgumentsIds[] = auditor.getBusinessArgumentsIds();
-            String     businessArgumentId     = "";
-            Object     businessArgumentValue  = businessArgumentsValues;
-            Collection businessComplement     = null;
+            String                                     businessArgumentsIds[] = auditor.getBusinessArgumentsIds();
+            String                                     businessArgumentId     = "";
+            Object                                     businessArgumentValue  = businessArgumentsValues;
+            Collection<AuditorBusinessComplementModel> businessComplement     = null;
 
             if(businessArgumentsValues instanceof Object[]){
-                if(((Object[])businessArgumentsValues).length > 0){
-                    businessComplements = new LinkedList<C>();
+                Object businessArgumentsValuesArray[] = (Object[])businessArgumentsValues;
+                
+                if(businessArgumentsValuesArray.length > 0){
+                    businessComplements = new LinkedList<AuditorBusinessComplementModel>();
                     
-                    for(Integer cont = 0 ; cont < ((Object[])businessArgumentsValues).length ; cont++){
-                        businessArgumentValue = ((Object[])businessArgumentsValues)[cont];
+                    for(Integer cont = 0 ; cont < businessArgumentsValuesArray.length ; cont++){
+                        businessArgumentValue = businessArgumentsValuesArray[cont];
                         
                         if(businessArgumentsIds != null && businessArgumentsIds.length >= (cont + 1))
                             businessArgumentId = businessArgumentsIds[cont];
@@ -241,7 +244,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                 }
             }
             else{
-                businessComplements = new LinkedList();
+                businessComplements = new LinkedList<AuditorBusinessComplementModel>();
                 
                 if(businessArgumentsIds != null && businessArgumentsIds.length > 0)
                     businessArgumentId = businessArgumentsIds[0];
@@ -263,7 +266,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
      * @param businessArgumentValue Instância do complemento.
      * @return Lista de complementos da auditoria.
      */
-    private <A extends AuditorModel, O, C extends AuditorBusinessComplementModel> Collection<C> buildBusinessComplement(A model, O businessArgumentValue){
+    private Collection<AuditorBusinessComplementModel> buildBusinessComplement(AuditorModel model, Object businessArgumentValue){
         return buildBusinessComplement(model, "", businessArgumentValue);
     }
 
@@ -275,18 +278,18 @@ public abstract class BaseAuditorAppender extends WriterAppender{
      * @param businessArgumentValue Instância do complemento.
      * @return Lista de complementos da auditoria.
      */
-    private <A extends AuditorModel, O, C extends AuditorBusinessComplementModel> Collection<C> buildBusinessComplement(A model, String businessArgumentId, O businessArgumentValue){
-        Collection<C> businessComplements = null;
+    private Collection<AuditorBusinessComplementModel> buildBusinessComplement(AuditorModel model, String businessArgumentId, Object businessArgumentValue){
+        Collection<AuditorBusinessComplementModel> businessComplements = null;
         
         if(businessArgumentValue != null){
-            Class     modelClass = model.getClass();
+            Class<?>  modelClass = model.getClass();
             ModelInfo modelInfo  = ModelUtil.getModelInfo(modelClass);
             
             if(modelInfo != null){
                 PropertyInfo propertyInfo = modelInfo.getPropertyInfo("businessComplement");
                 
                 if(propertyInfo != null){
-                    C item = null;
+                    AuditorBusinessComplementModel item = null;
 
                     modelInfo = ModelUtil.getModelInfo(businessArgumentValue.getClass());
                     
@@ -294,8 +297,8 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                         Collection<PropertyInfo> auditablePropertiesInfo = modelInfo.getAuditablePropertiesInfo();
                         
                         if(auditablePropertiesInfo != null && auditablePropertiesInfo.size() > 0){
-                            Object        value              = null;
-                            Collection<C> businessComplement = null;
+                            Object                                     value              = null;
+                            Collection<AuditorBusinessComplementModel> businessComplement = null;
                             
                             for(PropertyInfo auditablePropertyInfo : auditablePropertiesInfo){
                                 try{
@@ -303,7 +306,7 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                                     
                                     if(value != null){
                                         if(businessComplements == null)
-                                            businessComplements = new LinkedList<C>();
+                                            businessComplements = new LinkedList<AuditorBusinessComplementModel>();
     
                                         if(value instanceof BaseModel){
                                             businessComplement = buildBusinessComplement(model, value);
@@ -312,7 +315,9 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                                                 businessComplements.addAll(businessComplement);
                                         }
                                         else{
-                                            item = (C)ConstructorUtils.invokeConstructor((propertyInfo.getCollectionItemsClass().equals(Object.class) ? AuditorBusinessComplementModel.class : propertyInfo.getCollectionItemsClass()), null);
+                                            Class<?> collectionItemsClass = propertyInfo.getCollectionItemsClass();
+                                            
+                                            item = (AuditorBusinessComplementModel)ConstructorUtils.invokeConstructor((collectionItemsClass.equals(Object.class) ? AuditorBusinessComplementModel.class : propertyInfo.getCollectionItemsClass()), null);
                                         
                                             item.setAuditor(model);
                                             item.setModelClass(modelInfo.getClazz().getName());
@@ -331,10 +336,10 @@ public abstract class BaseAuditorAppender extends WriterAppender{
                     }
                     else{
                         if(businessComplements == null)
-                            businessComplements = new LinkedList<C>();
+                            businessComplements = new LinkedList<AuditorBusinessComplementModel>();
 
                         try{
-                            item = (C)ConstructorUtils.invokeConstructor((propertyInfo.getCollectionItemsClass().equals(Object.class) ? AuditorBusinessComplementModel.class : propertyInfo.getCollectionItemsClass()), null);
+                            item = (AuditorBusinessComplementModel)ConstructorUtils.invokeConstructor((propertyInfo.getCollectionItemsClass().equals(Object.class) ? AuditorBusinessComplementModel.class : propertyInfo.getCollectionItemsClass()), null);
                         
                             item.setAuditor(model);
                             item.setPropertyId(businessArgumentId);
