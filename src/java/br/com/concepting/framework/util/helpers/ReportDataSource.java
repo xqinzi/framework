@@ -16,16 +16,16 @@ import br.com.concepting.framework.model.util.PropertyUtil;
  * @since 1.0
  */
 public class ReportDataSource implements JRRewindableDataSource{
-	private Collection data        = null;
-	private Iterator   iterator    = null;
-	private Object     currentItem = null;
+	private Collection<?> data        = null;
+	private Iterator<?>   iterator    = null;
+	private Object        currentItem = null;
 
 	/**
 	 * Construtor - Define os dados do datasource de um relatório.
 	 *
 	 * @param data Instância contendo a lista de dados a ser utilizada no datasource.
 	 */
-	public ReportDataSource(Collection data){
+	public ReportDataSource(Collection<?> data){
 		super();
 
 		this.data = data;
@@ -56,9 +56,9 @@ public class ReportDataSource implements JRRewindableDataSource{
 			String fieldName = field.getName();
 
 			try{
-				Class  clazz      = PropertyUtil.getPropertyType(currentItem, fieldName);
-				Object fieldValue = PropertyUtil.getProperty(currentItem, fieldName);
-				Class  superClass = clazz;
+				Class<?> clazz      = PropertyUtil.getPropertyType(currentItem, fieldName);
+				Object   fieldValue = PropertyUtil.getProperty(currentItem, fieldName);
+				Class<?> superClass = clazz;
 
 				while(true){
 					if(superClass.getSuperclass() == null || superClass.getSuperclass().equals(Object.class))
@@ -68,7 +68,7 @@ public class ReportDataSource implements JRRewindableDataSource{
 				}
 
 				if(clazz.equals(AbstractCollection.class))
-					return new ReportDataSource((Collection)fieldValue);
+					return new ReportDataSource((Collection<?>)fieldValue);
 
 				return fieldValue;
 			}
